@@ -60,7 +60,12 @@ NOTE = {
         "T1": "mot français bien formé, seulement absent du vocabulaire connu",
         "T2": "« ist … zu » allemand rendu par « doit être … »",
         "T3": "les nombres changent exactement comme dans l'allemand",
-        "T4": "chiffre romain ou sigle, pas de l'allemand"},
+        "T4": "chiffre romain ou sigle, pas de l'allemand",
+        "T5": "seuls des nombres changent hors du passage modifié, exactement ceux que l'allemand change ailleurs",
+        "T6": "le changement allemand n'est qu'orthographique (umlaut, trait d'union, majuscule, ponctuation, terminaison)",
+        "T7": "négation comptée comme un lecteur la compte (« nicht- » préfixe, « ne … pas » une seule fois) : le compte suit l'allemand",
+        "T8": "mêmes valeurs ajoutées et retirées des deux côtés, seul le nombre d'occurrences diffère",
+        "product_nodate": "{product} ; limitation {code}"},
  "it": {"ready": "Pronta: tutti i controlli automatici superati. Verificata dal codice, non ancora da una persona: da rivedere.",
         "flagged": "Segnalata: un controllo automatico ha rilevato un problema (vedi le note). La destinazione è la bozza, da correggere.",
         "human": "Affidata a un traduttore: il tedesco è stato riscritto per oltre il 60%; nessuna bozza automatica.",
@@ -89,7 +94,12 @@ NOTE = {
         "T1": "parola italiana ben formata, solo assente dal vocabolario noto",
         "T2": "«ist … zu» tedesco reso con «deve essere …»",
         "T3": "i numeri cambiano esattamente come nel tedesco",
-        "T4": "numero romano o sigla, non tedesco"}}
+        "T4": "numero romano o sigla, non tedesco",
+        "T5": "cambiano solo numeri fuori dal passo modificato, esattamente quelli che il tedesco cambia altrove",
+        "T6": "la modifica tedesca è solo ortografica (umlaut, trattino, maiuscola, punteggiatura, desinenza)",
+        "T7": "negazione contata come la conta un lettore («nicht-» prefisso, «ne … pas» una volta sola): il conteggio segue il tedesco",
+        "T8": "stessi valori aggiunti e tolti da entrambe le parti, cambia solo il numero di occorrenze",
+        "product_nodate": "{product}; limitazione {code}"}}
 
 
 def nt(lang, k, **kw):
@@ -169,6 +179,13 @@ def change_summary(v, n=320):
     return t if len(t) <= n else t[:n].rsplit(" ", 1)[0] + " …"
 
 
+def product_note(v, lang):
+    """'<product> ; limitation <code> ; LS <old> → <new>', without the LS part when either snapshot date is unknown."""
+    o, n = v.get("snap_old"), v.get("snap_new")
+    if o in (None, "", "?") or n in (None, "", "?"): return nt(lang, "product_nodate", product=v["product"], code=v["cud_id"])
+    return nt(lang, "product", product=v["product"], code=v["cud_id"], old=date(o), new=date(n))
+
+
 def date(s):
     """20260219 -> 19.02.2026 (other values unchanged)."""
     return f"{s[6:8]}.{s[4:6]}.{s[:4]}" if isinstance(s, str) and len(s) == 8 and s.isdigit() else (s or "?")
@@ -187,8 +204,7 @@ def unit(file_el, v, dec=None, final=False):
     if model: _note(notes, nt(L, "model_nums", x=", ".join(model)), "gleichlaut:model-numbers", "model-numbers", "target", "1")
     _note(notes, nt(L, "prev_de", t=v["de_old"]), "context:previous-source", "de-old", "source", "5")
     _note(notes, nt(L, "prev_tgt", t=v["tgt_old"]), "context:previous-target", "tgt-old", "target", "5")
-    _note(notes, nt(L, "product", product=v["product"], code=v["cud_id"], old=date(v["snap_old"]), new=date(v["snap_new"])),
-          "context:product", "product", None, "5")
+    _note(notes, product_note(v, L), "context:product", "product", None, "5")
     state, sub = STATE[v["status"]]; text = None
     d = (dec or {}).get("decision")
     if d in ("accept", "accept-edited") and (v["draft"] or (dec.get("text") or "").strip()):
@@ -207,8 +223,7 @@ def segments(u, v, state, sub, text=None, with_target=True):
     """One <segment> per aligned sentence bead. text: a reviewer's edited target (then no number markers)."""
     src = v["de_new"]; tgt = (v["draft"] if text is None else text) if with_target else ""
     nums = [(a, b, who, slot) for a, b, _, who, slot in v["numbers"]] if text is None and with_target else []
-    beads = segment.align(src, tgt) if with_target else [(a, b, 0, 0) for a, b in segment.sentences(src)]
-    beads = segment.keep_whole(beads, [(a, b) for a, b, *_ in nums], 1)
+    beads = segment.beads(src, tgt if with_target else None, [(a, b) for a, b, *_ in nums])
     ch = segment.changed(v["de_old"], src); cnt = {"c": 0, "t": 0}
 
     def mk_changed(span):

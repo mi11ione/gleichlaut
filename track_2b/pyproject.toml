@@ -1,0 +1,37 @@
+# pip install -e track_2b            -> the `gleichlaut` console script (= python -m gleichlaut), Python >= 3.9
+# pip install -e "track_2b[xliff]"   -> plus lxml for the XLIFF / FHIR schema validation
+# Editable install only: the package reads the test items, recorded runs, results and certificates from the checkout
+# (core.ROOT = the directory of this file, resolved from src/gleichlaut/core.py, which an editable install keeps in place).
+# A non-editable wheel would carry the code and the frozen checks, but not data/ and eval/, so `run`, `replay` and the
+# certification gate would not find them. The frozen research code and its resources ship as package data either way.
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gleichlaut"
+version = "0.1.0"
+description = "Guarded DE->FR/IT drafting of amendments to Swiss reimbursement conditions with Apertus, and a congruence audit"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Apache-2.0" }
+dependencies = []
+
+[project.optional-dependencies]
+xliff = ["lxml==6.0.2"]
+offline = ["llama-cpp-python==0.3.35", "numpy==2.2.6"]
+
+[project.scripts]
+gleichlaut = "gleichlaut.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+include-package-data = false
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["gleichlaut*"]
+
+[tool.setuptools.package-data]
+gleichlaut = ["frozen/*.py", "frozen/*.md", "frozen/g3/*.py", "frozen/g3/*.json", "frozen/gl/*.py", "frozen/s2/*.py",
+              "ui/fonts/*", "fed/research/*"]

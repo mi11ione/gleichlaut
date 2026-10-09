@@ -2,27 +2,46 @@
 
   run        what `make run` executes: replay (freeze, re-execution, re-scoring), live slice, emit + validate, review UI
   replay     steps 1-3 only (`--write` regenerates eval/results after a deliberate change)
-  certify    certify an endpoint on the frozen fresh-166 suite, or `--canary` it (see gleichlaut.certify)
+  certify    certify a model on the frozen fresh-166 suite: a local GGUF build (--backend llamacpp --gguf PATH, or
+             --import-run RECORDS --gguf-sha256 SHA --labels TSV) or an endpoint (--backend openai); `--canary` an endpoint
   month      one month in operation: --from YYYYMMDD --to YYYYMMDD [--snapshots DIR] [--fetch]  (shadow mode on the public
              feed), or --items FILE (pre-publication: the SL team's own German changes); mines, routes, drafts, summarises
   draft      draft FR/IT for an item file (docs/item-schema.json) through a backend; resumable records + summary
   live       the live slice alone (5 Fedlex items) through LLM_BASE_URL or a local GGUF
   emit, ui   XLIFF 2.1 / FHIR and the review page (over a recorded run; --records/--items where the build supports them)
-  audit      the DE<->FR/IT congruence audit of the whole register (gleichlaut.audit; no model, arguments passed through)
+  audit      the DE<->FR/IT congruence audit of the whole register (gleichlaut.audit; no model; arguments passed through;
+             --fail-on-findings exits 8 when a finding is not marked likely equivalent, --fail-on-findings=KIND,...
+             when any finding of those kinds exists: for monitoring)
   feeds      list the BAG ePL FHIR feed dates that are published (resources API + polite HEAD probes), and which are local
   items      build an item file from ePL FHIR exports: --from-fhir OLD NEW [--lang fr,it] --out items.json (gleichlaut.sl.epl)
+  resources  rebuild the G5-G7 check resources from your own corpus (`resources build --corpus F --out DIR`), or `show`
+             the ones in use (GLEICHLAUT_RESOURCES=DIR; uncertified: every certificate is void, every draft reviewed)
   fetch-gguf download the pinned Apertus 8B GGUF and verify its sha256
 
-Routing (vision §3): corpus fedlex -> 8B, every draft reviewed; corpus sl -> 70B on a certified endpoint (exact endpoint +
-model, `gleichlaut certify`) whose latest canary passed within 31 days, or any model with --air-gapped, in which case every
-item is marked for review whatever the guards say. Items whose German changed > 60% of its tokens go to a human; so do items
-longer than 2500 characters that need the model (a change the code lane applies by itself, numbers or months only, is drafted
-whatever its length).
+Routing (PREREG R1, vision §3):
+  corpus sl, default lane -> the local Apertus 8B GGUF on CPU (4 cores, 8 GiB RAM; offline image), in process,
+             air-gapped, when the GGUF has a build certificate (sha256 of the file + llama-cpp-python version + frozen
+             code; `gleichlaut certify`, shipped: eval/certificates/8b-q4_k_m-fresh166.json): drafts get the guards'
+             ready / flagged status. A GGUF without a build certificate drafts with every item marked for review.
+  corpus sl, fewer edits  -> Apertus 70B on a certified endpoint (--backend openai: exact endpoint + model) whose latest
+             canary passed within 31 days.
+  corpus fedlex -> the 8B, every draft reviewed (neither model size passes the rule on statutes).
+  --air-gapped, --prompt-domain TEXT (another kind of text than SL conditions) and GLEICHLAUT_RESOURCES (custom check
+             resources) are uncertified: any model, every item marked for review whatever the guards say.
+Default backend of month / draft: llamacpp when a GGUF with a valid build certificate is in GLEICHLAUT_MODELS (default
+models/) or given with --gguf; else openai when LLM_BASE_URL is set; else exit 2. Items whose German changed > 60% of
+its tokens go to a human; so do items longer than 2500 characters that need the model (a change the code lane applies
+by itself, numbers or months only, is drafted whatever its length).
 
-Exit codes: 0 ok | 1 reproduction or validation failed | 2 usage / bad input / missing configuration | 3 canary outside
-tolerance, or drafting refused because the latest canary failed or is stale | 4 refused: endpoint not certified | 5
-certificate FAIL | 6 endpoint or feed failed (records so far are kept; re-run to resume) | 7 certificate PENDING_REVIEW |
-130 interrupted.  GLEICHLAUT_DEBUG=1 shows tracebacks."""
+Monitoring: --metrics-file PATH (or GLEICHLAUT_METRICS_DIR=DIR -> DIR/gleichlaut_<command>.prom) on month, draft, audit
+and certify writes a Prometheus textfile (node_exporter textfile collector): exit code, duration, last run time, item
+counts by status, model calls, shadow comparison, audit findings by kind.
+
+Exit codes: 0 ok | 1 reproduction or validation failed | 2 usage / bad input / missing configuration (incl. the local
+8B lane without llama-cpp-python: use the offline image) | 3 canary outside tolerance, or drafting refused because the
+latest canary failed or is stale | 4 refused: endpoint not certified | 5 certificate FAIL | 6 endpoint or feed failed
+(records so far are kept; re-run to resume) | 7 certificate PENDING_REVIEW | 8 audit --fail-on-findings found
+divergences | 130 interrupted.  GLEICHLAUT_DEBUG=1 shows tracebacks."""
 import argparse, datetime, inspect, json, os, re, sys, time, urllib.error, urllib.request
 from collections import Counter
 from . import core, backends
@@ -31,11 +50,15 @@ GGUF_URL = os.environ.get("GLEICHLAUT_MODEL_URL",
                           "https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf")
 GGUF_SHA = os.environ.get("GLEICHLAUT_MODEL_SHA256", "a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299")
 MODELS = os.environ.get("GLEICHLAUT_MODELS", os.path.join(core.ROOT, "models"))
+
+
+def models_dir(): return os.environ.get("GLEICHLAUT_MODELS") or MODELS
 OUT = os.environ.get("GLEICHLAUT_OUT", os.path.join(core.ROOT, "out"))
 SCHEMA = os.path.join(core.ROOT, "docs", "item-schema.json")
 MAXRATIO, MAXCH = 0.60, 2500                 # = sl.mine.MAXRATIO / MAXCH (the evaluated range)
 CHF_PER_MTOK = (0.70, 2.50)                  # Swiss provider's published price, CHF per million input / output tokens (score.economics)
-EXIT_OK, EXIT_FAIL, EXIT_USAGE, EXIT_CANARY, EXIT_UNCERTIFIED, EXIT_CERT_FAIL, EXIT_ENDPOINT, EXIT_PENDING = range(8)
+EXIT_OK, EXIT_FAIL, EXIT_USAGE, EXIT_CANARY, EXIT_UNCERTIFIED, EXIT_CERT_FAIL, EXIT_ENDPOINT, EXIT_PENDING, EXIT_FINDINGS = range(9)
+_METRICS = {}                                # filled by summarise / cmd_audit; written by main() with --metrics-file
 
 
 class UsageError(Exception):
@@ -59,8 +82,8 @@ def _now(): return datetime.datetime.now(datetime.timezone.utc).isoformat(timesp
 
 
 def fetch_gguf():
-    os.makedirs(MODELS, exist_ok=True)
-    p = os.path.join(MODELS, os.path.basename(GGUF_URL))
+    M = models_dir(); os.makedirs(M, exist_ok=True)
+    p = os.path.join(M, os.path.basename(GGUF_URL))
     if not (os.path.exists(p) and core.sha256(p) == GGUF_SHA):
         print(f"downloading {GGUF_URL} (~5 GB) ...", flush=True)
         req = urllib.request.Request(GGUF_URL, headers={"User-Agent": "gleichlaut/0.1"})
@@ -71,7 +94,7 @@ def fetch_gguf():
                 f.write(b)
         os.replace(p + ".part", p)
     got = core.sha256(p)
-    if got != GGUF_SHA: raise SystemExit(f"GGUF sha256 mismatch: {got} != {GGUF_SHA}")
+    if got != GGUF_SHA: raise backends.ConfigError(f"GGUF sha256 mismatch: {p} has {got}, expected {GGUF_SHA} (GLEICHLAUT_MODEL_SHA256)")
     print("GGUF verified", p, got[:16]); return p
 
 
@@ -255,10 +278,10 @@ class _Captured(Exception):
 def _capture(prompt, tag, cap, max_tokens): raise _Captured(prompt, max_tokens)
 
 
-def dry_run(items, corpus, gate=None, out=None):
+def dry_run(items, corpus, gate=None, out=None, domain=None):
     """print, per item, the routing, the slot map and the exact first prompt; no backend is constructed, nothing is sent."""
     out = out or sys.stdout
-    P = core.Pipeline(_capture, "g3") if corpus == "sl" else None
+    P = core.Pipeline(backends.DomainAsk(_capture, domain) if domain else _capture, "g3") if corpus == "sl" else None
     n = Counter()
     if gate: print(gate, file=out)
     for x in items:
@@ -291,18 +314,70 @@ def dry_run(items, corpus, gate=None, out=None):
 
 
 # ------------------------------------------------------------------ backends for draft / month
+def local_ggufs():
+    d = models_dir()
+    return sorted(os.path.join(d, f) for f in os.listdir(d) if f.endswith(".gguf")) if os.path.isdir(d) else []
+
+
+def certified_gguf(paths=None):
+    """-> (path, sha256, certificate, reason) of the first GGUF with a valid build certificate, else (None, None, None, reason).
+    Every candidate file is hashed (about 10 s for the 5 GB Q4_K_M)."""
+    from . import certify
+    paths = local_ggufs() if paths is None else paths
+    if not paths: return None, None, None, f"no GGUF in {models_dir()} (GLEICHLAUT_MODELS)"
+    whys = []
+    for p in paths:
+        sha = backends.file_sha256(p)
+        cert, why = certify.build_lookup(sha, backends.llama_version())
+        if cert: return p, sha, cert, why
+        whys.append(f"{os.path.basename(p)}: {why}")
+    return None, None, None, "; ".join(whys)
+
+
+def resolve_backend(a):
+    """month / draft without --backend: the certified local 8B when present, else the endpoint in LLM_BASE_URL."""
+    if a.backend: return a.backend
+    if a.gguf:
+        a.backend = "llamacpp"; return a.backend
+    p, sha, cert, why = certified_gguf()
+    if p:
+        a.gguf, a._gguf_sha, a.backend = p, sha, "llamacpp"
+        print(f"backend: llamacpp (default): {os.path.basename(p)} has a valid build certificate", flush=True)
+    elif os.environ.get("LLM_BASE_URL"):
+        a.backend = "openai"
+        print(f"backend: openai (default: no certified GGUF; {why})", flush=True)
+    else:
+        raise backends.ConfigError(f"no drafting backend: no certified GGUF ({why}) and LLM_BASE_URL is not set. Run the "
+                                   "offline image with the 8B (make month; gleichlaut fetch-gguf downloads it), set LLM_BASE_URL "
+                                   "to a certified 70B endpoint (make month-70b), or pass --backend")
+    return a.backend
+
+
+def _uncertified_reason(a):
+    """the reason every item goes to review whatever the model, or None: --prompt-domain, custom resources, --air-gapped."""
+    from . import resources
+    if getattr(a, "prompt_domain", None):
+        return f"custom prompt domain (--prompt-domain): uncertified, every draft is reviewed"
+    if resources.active(): return resources.review_reason()
+    if a.air_gapped: return "air-gapped: every item is reviewed"
+    return None
+
+
 def make_backend(a, out):
     """-> (ask, label, review_reason). Raises ConfigError, Uncertified, CanaryRefused."""
     log = os.path.join(out, "calls.jsonl")
     review = None
+    if getattr(a, "prompt_domain", None) and a.corpus != "sl":
+        raise UsageError("--prompt-domain rewrites the SL drafting prompt; the statute lane (--corpus fedlex) has its own prompt")
+    unc = _uncertified_reason(a)
     if a.backend == "openai":
         ask = backends.OpenAI(log=log, record_to=os.path.join(out, "cache"))
         label = f"openai {ask.endpoint} {ask.model}"
-        if a.corpus == "sl" and not a.air_gapped:
+        if a.corpus == "sl" and not unc:
             from . import certify
             cert, why = certify.lookup(ask.base, ask.model)
             if cert is None:
-                raise Uncertified(f"{why}. Run `gleichlaut certify` (make certify) against this endpoint first, or use "
+                raise Uncertified(f"{why}. Run `gleichlaut certify --backend openai` (make certify-endpoint) against this endpoint first, draft with the certified local 8B (make month), or use "
                                   f"--air-gapped (every item then goes to review).")
             ask.expect_served = set(cert.get("models_served") or []) or None
             print(f"certification gate: {why}", flush=True)
@@ -319,14 +394,32 @@ def make_backend(a, out):
                 print(f"canary gate: {cwhy}", flush=True)
             a._gate = gate
     elif a.backend == "llamacpp":
-        ask = backends.LlamaCpp(a.gguf or fetch_gguf(), backends.lang_of_prompt, log=log); label = f"llamacpp {ask.model}"
-        if a.corpus == "sl": review = "SL lane on a local, uncertified model: every item is reviewed"
+        backends.require_llama()                 # one line + exit 2 with the fix (the offline image), never a traceback
+        path = a.gguf or next(iter(local_ggufs()), None)
+        if not path:
+            raise backends.ConfigError(f"no GGUF in {models_dir()} (GLEICHLAUT_MODELS): `gleichlaut fetch-gguf` downloads the pinned "
+                                       "Apertus 8B build (sha256-checked), or pass --gguf PATH")
+        ask = backends.LlamaCpp(path, backends.lang_of_prompt, log=log,
+                                gguf_sha256=getattr(a, "_gguf_sha", None) if path == a.gguf else None)
+        label = f"llamacpp {ask.model}"
+        if a.corpus == "sl" and not unc:
+            from . import certify
+            cert, why = certify.build_lookup(ask.gguf_sha256, ask.runtime)
+            if cert:
+                print(f"certification gate: {why}", flush=True)
+                a._gate = dict(certificate=cert.get("name"), kind="build", certification=why, gguf_sha256=ask.gguf_sha256,
+                               llama_cpp_python=ask.runtime)
+            else:
+                review = f"SL lane on a local, uncertified model build: every item is reviewed ({why})"
+                print(f"WARNING: {review}", flush=True)
     elif a.backend == "cache":
         ask = backends.Cache(os.path.join(core.ROOT, "data", "cache", "responses")); label = "cache (recorded responses)"
     else:
         ask = backends.Stub(log=log); label = "stub"; review = "stub backend (wiring test): the draft is the old text, not a translation"
-    if a.air_gapped and not review: review = "air-gapped: every item is reviewed"
+    if unc and not review: review = unc
     if a.corpus == "fedlex" and not review: review = "statute lane: every draft is reviewed (neither model size passes the rule on statutes)"
+    if getattr(a, "prompt_domain", None):
+        ask = backends.DomainAsk(ask, a.prompt_domain); label += f" (prompt domain: {ask.sentence})"
     return ask, label, review
 
 
@@ -406,7 +499,12 @@ def summarise(items, out, mode, extra=None):
     sh = [r for r in recs if "shadow_exact" in r]
     if sh:
         rd = [r for r in sh if r["status"] == "ready"]
-        s["shadow"] = dict(compared=len(sh), exact=sum(r["shadow_exact"] for r in sh), ready=len(rd), ready_exact=sum(r["shadow_exact"] for r in rd),
+        ex = sum(r["shadow_exact"] for r in sh)
+        s["shadow"] = dict(compared=len(sh), exact=ex, ready=len(rd), ready_exact=sum(r["shadow_exact"] for r in rd),
+                           exact_rate=round(100 * ex / len(sh), 1), ready_rate=round(100 * len(rd) / len(sh), 1),
+                           flag_rate=round(100 * sum(r["status"] == "flagged" for r in sh) / len(sh), 1),
+                           ready_exact_rate=round(100 * sum(r["shadow_exact"] for r in rd) / len(rd), 1) if rd else None,
+                           rates_note="percent of the drafted items with a published target (status human excluded)",
                            ready_not_exact=[r["key"] for r in rd if not r["shadow_exact"]],
                            note="tgt_new = the FR/IT text BAG already published; it was never shown to the model")
     calls = []
@@ -424,6 +522,8 @@ def summarise(items, out, mode, extra=None):
     s["next"] = [f"gleichlaut emit --records {os.path.join(out, 'records.jsonl')} --items {os.path.join(out, 'items.json')} --n 0 --out {os.path.join(out, 'emit')}",
                  f"gleichlaut ui --records {os.path.join(out, 'records.jsonl')} --items {os.path.join(out, 'items.json')} --out {os.path.join(out, 'ui', 'index.html')}"]
     with open(os.path.join(out, "summary.json"), "w", encoding="utf-8") as f: json.dump(s, f, ensure_ascii=False, indent=1)
+    _METRICS.update(items=len(items), status=dict(st), calls=len(calls), prompt_tokens=pt, completion_tokens=ct,
+                    shadow=s.get("shadow"), rule_only=s["rule_only"], reasked=s["reasked"])
     print(f"\nSUMMARY ({mode}): {len(recs)}/{len(items)} items: " + ", ".join(f"{k} {v}" for k, v in sorted(st.items()))
           + f"; rule-only {s['rule_only']}, re-asked {s['reasked']}")
     for k, v in s["human_reasons"].items(): print(f"  human: {v} x {k}")
@@ -444,9 +544,19 @@ def _write_items(items, out):
 
 
 def _gate_text(a):
+    unc = _uncertified_reason(a)
+    if a.backend == "llamacpp":
+        if a.corpus != "sl" or unc: return f"backend llamacpp (no certification needed: {unc or 'fedlex'})"
+        path = a.gguf or next(iter(local_ggufs()), None)
+        if not path: return f"backend llamacpp: no GGUF in {models_dir()} (a real run would stop here)"
+        from . import certify
+        cert, why = certify.build_lookup(getattr(a, "_gguf_sha", None) or backends.file_sha256(path), backends.llama_version())
+        return (f"build certificate gate: would PASS: {why}" if cert else
+                f"build certificate gate: no valid certificate, every item would go to review: {why}") + \
+               ("" if backends.llama_version() else "; llama-cpp-python is not installed here (a real run needs the offline image)")
     if a.backend != "openai": return f"backend {a.backend}"
     if not os.environ.get("LLM_BASE_URL"): return "backend openai: LLM_BASE_URL is not set (a real run would stop here)"
-    if a.corpus != "sl" or a.air_gapped: return f"backend openai {backends.endpoint_id(os.environ['LLM_BASE_URL'])} (no certification needed: {'air-gapped' if a.air_gapped else 'fedlex'})"
+    if a.corpus != "sl" or unc: return f"backend openai {backends.endpoint_id(os.environ['LLM_BASE_URL'])} (no certification needed: {unc or 'fedlex'})"
     from . import certify
     cert, why = certify.lookup(os.environ["LLM_BASE_URL"], os.environ.get("LLM_NAME") or core.M70)
     if not cert: return f"certification gate: would REFUSE: {why}"
@@ -459,11 +569,13 @@ def _drafting(a, items, out, mode, extra=None):
     if getattr(a, "restart", False) and os.path.exists(os.path.join(out, "records.jsonl")):
         bak = os.path.join(out, f"records.{datetime.datetime.now().strftime('%Y%m%dT%H%M%S')}.jsonl")
         os.replace(os.path.join(out, "records.jsonl"), bak); print("previous records moved to", bak)
-    if a.dry_run: return dry_run(items, a.corpus, _gate_text(a))
+    resolve_backend(a)
+    if a.dry_run: return dry_run(items, a.corpus, _gate_text(a), domain=getattr(a, "prompt_domain", None))
     ask, label, review = make_backend(a, out)
     print(f"drafting {len(items)} items through {label} -> {out}", flush=True)
     draft_items(items, ask, out, a.corpus, review, label)
     if getattr(a, "_gate", None): extra = dict(extra or {}, gate=a._gate)
+    extra = dict(extra or {}, backend=dict(name=a.backend, label=label, review_policy=review))
     summarise(items, out, mode, extra)
     if getattr(a, "emit", False):
         rc = passthrough("emit", ["--records", os.path.join(out, "records.jsonl"), "--items", os.path.join(out, "items.json"), "--n", "0", "--out", os.path.join(out, "emit")])
@@ -472,11 +584,19 @@ def _drafting(a, items, out, mode, extra=None):
     return EXIT_OK
 
 
-def _common(ap, default_backend="openai"):
+def _common(ap, default_backend=None):
     ap.add_argument("--backend", choices=["openai", "llamacpp", "cache", "stub"], default=default_backend,
-                    help="openai = LLM_BASE_URL (SL: must be certified); llamacpp = local GGUF; cache = recorded responses; stub = wiring test")
+                    help="default: llamacpp when a GGUF with a valid build certificate is in GLEICHLAUT_MODELS (models/) or given "
+                         "with --gguf (the SL default lane: local 8B, air-gapped), else openai when LLM_BASE_URL is set. "
+                         "openai = LLM_BASE_URL (SL: endpoint certificate + canary; the 70B fewer-edits lane); llamacpp = local GGUF "
+                         "(SL: build certificate, else every item reviewed; needs the offline image); cache = recorded responses; "
+                         "stub = wiring test")
     ap.add_argument("--corpus", choices=["sl", "fedlex"], default="sl")
-    ap.add_argument("--gguf"); ap.add_argument("--air-gapped", action="store_true", help="any model; every item goes to review")
+    ap.add_argument("--gguf", help="the GGUF for --backend llamacpp (default: the first *.gguf in GLEICHLAUT_MODELS)")
+    ap.add_argument("--air-gapped", action="store_true", help="any model; every item goes to review")
+    ap.add_argument("--prompt-domain", metavar="TEXT", help="replace the first sentence of the SL prompt ('A Swiss reimbursement "
+                    "limitation (Spezialitätenliste, BAG) was amended in German.') for another kind of text: a noun phrase "
+                    "('paragraph of a cantonal ordinance') or a whole sentence. UNCERTIFIED: every draft goes to review")
     ap.add_argument("--dry-run", action="store_true", help="print routing, slot maps and the exact prompts; send nothing")
     ap.add_argument("--restart", action="store_true", help="set existing records aside and start over (default: resume)")
     ap.add_argument("--emit", action="store_true", help="afterwards run `emit` and `ui` on the records (where the build supports it)")
@@ -576,6 +696,113 @@ def passthrough(kind, rest):
     return m(rest) or 0
 
 
+# ------------------------------------------------------------------ audit with --fail-on-findings, metrics textfile
+AUDIT_KINDS = ("number", "unit", "language", "editorial", "terminology")
+
+
+def _audit_kinds():
+    try:
+        from . import audit
+        return tuple(getattr(audit, "KINDS_ALL", AUDIT_KINDS))
+    except ImportError: return AUDIT_KINDS
+
+
+def cmd_audit(rest):
+    """gleichlaut audit [--fail-on-findings | --fail-on-findings=KIND,...] <audit arguments>.
+    --fail-on-findings      passed through to gleichlaut.audit, which fails when a finding is not marked likely equivalent
+                            (its own triage); reported here as exit 8, the monitoring code (not 1, a broken build)
+    --fail-on-findings=K,.. exit 8 when the summary counts any finding of these kinds (number, unit, language, editorial,
+                            terminology), read from audit_<date>_summary.json
+    The summary's counts also feed the metrics textfile (--metrics-file / GLEICHLAUT_METRICS_DIR)."""
+    from . import audit
+    kinds_all = _audit_kinds()
+    bare, kinds, args = False, None, []
+    for x in rest:
+        if x == "--fail-on-findings": bare = True
+        elif x.startswith("--fail-on-findings="):
+            kinds = tuple(k for k in x.split("=", 1)[1].split(",") if k)
+            bad = [k for k in kinds if k not in kinds_all]
+            if bad or not kinds: raise UsageError(f"--fail-on-findings=KINDS takes a comma-separated subset of {','.join(kinds_all)}")
+        else: args.append(x)
+    native = bare and _accepts("gleichlaut.audit", "--fail-on-findings")
+    rc = audit.main(args + (["--fail-on-findings"] if native else [])) or 0
+    ap = argparse.ArgumentParser(add_help=False); ap.add_argument("--date", default=None)
+    ap.add_argument("--out", default=getattr(audit, "DEST", os.path.join(OUT, "audit")))
+    k, _ = ap.parse_known_args(args); date = k.date or "20261006"
+    p = os.path.join(k.out, f"audit_{date}_summary.json")
+    summ = None
+    if os.path.exists(p):
+        try: summ = json.load(open(p, encoding="utf-8"))
+        except (OSError, ValueError): summ = None
+    if isinstance(summ, dict):
+        _METRICS.update(audit_date=date, audit_findings=dict(summ.get("by_kind") or {}), audit_kinds=kinds_all,
+                        audit_limitations_with_finding=summ.get("limitations_with_any_finding"))
+    if native and rc == 1:
+        print(f"audit {date}: findings not marked likely equivalent (--fail-on-findings): exit {EXIT_FINDINGS}; details in {p}",
+              file=sys.stderr)
+        return EXIT_FINDINGS
+    if (kinds is None and not bare) or rc: return rc
+    if not isinstance(summ, dict): raise UsageError(f"--fail-on-findings: the audit wrote no summary at {p}")
+    kinds = kinds or kinds_all
+    n = sum(int((summ.get("by_kind") or {}).get(x, 0)) for x in kinds)
+    if n:
+        print(f"audit {date}: {n} finding(s) of kind {','.join(kinds)} (--fail-on-findings): exit {EXIT_FINDINGS}; details in {p}",
+              file=sys.stderr)
+        return EXIT_FINDINGS
+    return rc
+
+
+def _pop_metrics(argv):
+    """-> (argv without --metrics-file PATH, path or None). GLEICHLAUT_METRICS_DIR gives DIR/gleichlaut_<command>.prom."""
+    out, path, i = [], None, 0
+    while i < len(argv):
+        x = argv[i]
+        if x == "--metrics-file" and i + 1 < len(argv): path = argv[i + 1]; i += 2; continue
+        if x.startswith("--metrics-file="): path = x.split("=", 1)[1]; i += 1; continue
+        out.append(x); i += 1
+    cmd = out[0] if out else ""
+    if path is None and os.environ.get("GLEICHLAUT_METRICS_DIR") and cmd in ("month", "draft", "audit", "certify"):
+        path = os.path.join(os.environ["GLEICHLAUT_METRICS_DIR"], f"gleichlaut_{cmd}.prom")
+    return out, path
+
+
+def _esc(v): return str(v).replace("\\", "\\\\").replace('"', '\\"').replace("\n", " ")
+
+
+def write_metrics(path, cmd, rc, secs, m=None):
+    """Prometheus text exposition format, written atomically (tmp file + rename) for node_exporter's textfile collector."""
+    m = _METRICS if m is None else m; job = _esc(cmd)
+    L = []
+    def g(name, help_, rows):
+        L.append(f"# HELP {name} {help_}"); L.append(f"# TYPE {name} gauge")
+        for labels, v in rows:
+            lab = ",".join([f'job="{job}"'] + [f'{a}="{_esc(b)}"' for a, b in labels])
+            L.append(f"{name}{{{lab}}} {v}")
+    g("gleichlaut_last_run_timestamp_seconds", "end of the last run (unix time)", [((), int(time.time()))])
+    g("gleichlaut_last_run_exit_code", "exit code of the last run (docs/operations.md section 6)", [((), rc)])
+    g("gleichlaut_last_run_success", "1 if the last run exited 0", [((), int(rc == 0))])
+    g("gleichlaut_last_run_duration_seconds", "wall time of the last run", [((), round(secs, 1))])
+    if "status" in m:
+        g("gleichlaut_items", "items of the last run by record status", [((("status", k),), v) for k, v in sorted(m["status"].items())] or [((("status", "none"),), 0)])
+        g("gleichlaut_items_total", "items of the last run", [((), m.get("items", 0))])
+        g("gleichlaut_model_calls", "model calls of the last run", [((), m.get("calls", 0))])
+        g("gleichlaut_tokens", "tokens of the last run", [((("direction", "in"),), m.get("prompt_tokens", 0)), ((("direction", "out"),), m.get("completion_tokens", 0))])
+        sh = m.get("shadow")
+        if sh:
+            g("gleichlaut_shadow_items", "shadow mode: drafts compared with BAG's published text", [((("what", k),), sh[k]) for k in ("compared", "exact", "ready", "ready_exact")])
+            g("gleichlaut_shadow_rate_percent", "shadow mode: rates over the compared drafts",
+              [((("what", k),), sh[k]) for k in ("exact_rate", "ready_rate", "flag_rate", "ready_exact_rate") if sh.get(k) is not None])
+    if "audit_findings" in m:
+        g("gleichlaut_audit_findings", "audit findings by kind",
+          [((("kind", k),), m["audit_findings"].get(k, 0)) for k in m.get("audit_kinds") or AUDIT_KINDS])
+        if m.get("audit_limitations_with_finding") is not None:
+            g("gleichlaut_audit_limitations_with_finding", "limitations with at least one finding", [((), m["audit_limitations_with_finding"])])
+    d = os.path.dirname(os.path.abspath(path)); os.makedirs(d, exist_ok=True)
+    tmp = os.path.join(d, f".{os.path.basename(path)}.{os.getpid()}.tmp")
+    with open(tmp, "w", encoding="utf-8") as f: f.write("\n".join(L) + "\n")
+    os.replace(tmp, path)
+
+
 def _dispatch(argv):
     if not argv or argv[0] in ("-h", "--help"): print(__doc__); return 0
     c, rest = argv[0], argv[1:]
@@ -585,14 +812,22 @@ def _dispatch(argv):
     if c == "certify":
         from . import certify; return certify.main(rest)
     if c == "live": return cmd_live()
-    if c == "fetch-gguf": fetch_gguf(); return 0
+    if c == "fetch-gguf":
+        try: fetch_gguf(); return 0
+        except (urllib.error.URLError, OSError) as e:
+            raise FeedError(f"cannot download the GGUF from {GGUF_URL}: {getattr(e, 'reason', None) or e} (air-gapped: copy the "
+                            f"file into {models_dir()} and check its sha256 {GGUF_SHA})")
     if c in ("emit", "ui"): return passthrough(c, rest)
     if c == "backtest":
         from . import backtest; return backtest.main(rest) or 0
-    if c == "draft": return cmd_draft(rest)
-    if c == "month": return cmd_month(rest)
-    if c == "audit":
-        from . import audit; return audit.main(rest) or 0
+    if c in ("draft", "month"):
+        from . import resources
+        if resources.apply():                       # GLEICHLAUT_RESOURCES: custom G5-G7 resources, uncertified
+            print(f"WARNING: {resources.review_reason()}", flush=True)
+        return cmd_draft(rest) if c == "draft" else cmd_month(rest)
+    if c == "audit": return cmd_audit(rest)
+    if c == "resources":
+        from . import resources; return resources.main(rest)
     if c == "feeds":
         from .sl import feeds; return feeds.main(rest) or 0
     if c == "items":
@@ -604,6 +839,19 @@ def _dispatch(argv):
 
 def main(argv=None):
     argv = argv if argv is not None else sys.argv[1:]
+    argv, mpath = _pop_metrics(list(argv))
+    if not mpath: return _main(argv)
+    _METRICS.clear(); t0 = time.time(); rc = EXIT_FAIL
+    try:
+        rc = _main(argv); return rc
+    except SystemExit as e:
+        rc = e.code if isinstance(e.code, int) else EXIT_FAIL; raise
+    finally:
+        try: write_metrics(mpath, argv[0] if argv else "", rc if rc is not None else 0, time.time() - t0)
+        except OSError as e: print(f"warning: cannot write the metrics file {mpath}: {e}", file=sys.stderr)
+
+
+def _main(argv):
     if os.environ.get("GLEICHLAUT_DEBUG") == "1": return _dispatch(argv)
     try:
         return _dispatch(argv)

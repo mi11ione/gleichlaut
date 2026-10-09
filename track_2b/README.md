@@ -22,7 +22,7 @@ In today's register:
 | Diaphin `DIAPHIN.6-` | surcharge **6**% | Italian: **12**% |
 | Etanercept ×3 `NEPEXTO` `BENEPALI4` `ERELZI2` | no weight limit for juvenile arthritis | French adds **≥ 62.5** kg |
 | Cresemba `CRESE.Kps.IM` | body weight **≥ 16** kg | French drops the limit |
-| Dupixent ×4 `DUPIXENT.02` `.02P` `.05a` `.05P` | dose tier from **15** kg | French starts at **30** kg or omits the tier |
+| Dupixent ×4 `DUPIXENT.02` `.02P` `.05a` `.05P` | a dose tier starting at **15** kg | French omits the 15–30 kg tier (`.02`, `.02P`) or starts it at **30** kg (`.05a`, `.05P`) |
 
 ## Two tools, one rule: numbers are code's job
 
@@ -34,8 +34,13 @@ reviewer's own language. One re-ask with the complaints; the new draft is kept o
 
 **Audit.** Reads every current limitation in all three languages and lists numbers that disagree, fields written in the
 wrong language and typos next to numbers. On the 6 Oct 2026 feed it reduces 1,688 limitations to **27 findings**: all
-**10** known divergent limitations, plus **6** problems nobody had listed, among them Keytruda's Italian field, which has
-held the French text since 1 Aug 2026. A blind annotator confirms 16 of the 27. No model is involved.
+**10** known divergent limitations, plus **6** more problems: five typos next to numbers that nobody had listed, and
+Keytruda's Italian field (which we had spotted by hand before), which has held the French text since 1 Aug 2026. It
+also learns from BAG's own corrections: where BAG replaced a term in some texts, it flags the texts that still use the
+old one. That finds four French texts naming the wrong drug class and four ungrammatical Italian ones (8 of 11 findings
+confirmed). On two lists it was never designed on, MiGeL and the Analysenliste, **7 of 11** findings are real; the
+Analysenliste's Italian, for example, makes a test billable after 13 repetitions where German and French say 14. A blind
+annotator confirms every count here. No model is involved.
 
 The two meet in the review register. Nemluvio's old Italian already says "every 4 weeks"; Apertus' draft writes "every
 8 weeks", matching the German. BAG's own update kept the 4. The register shows the draft as a correction to check, not
@@ -63,8 +68,9 @@ at a Swiss provider's published price: CHF 0.14 a month at today's volume, CHF 1
 produce it.
 
 **Model size is measured, not assumed.** On SL conditions both sizes pass the same pre-registered safety rule, so the
-8B on a CPU is sufficient and is the default: nothing leaves the building. The 70B is where it pays: it halves the
-editing left (42.4% vs 20.9% fewer edits) and its ready drafts almost never need a fix (3 of 66 vs 33 of 60). On 120
+8B on a CPU is sufficient and is the default: nothing leaves the building. The 70B is where it pays: it saves twice as
+many edits (42.4% vs 20.9% fewer than the no-model start), and its ready drafts rarely need a fix to the amendment (3 of 66
+vs 33 of 60). On 120
 federal-statute amendments (Fedlex) the 70B is no better than the 8B (exact 48.3% vs 50.0%), so statutes run the 8B. Where Apertus fell short, with counts, and why those jobs are done by code: [docs/failure-modes.md](docs/failure-modes.md).
 
 ## Where it plugs in at BAG
@@ -94,8 +100,9 @@ re-scores every run against `eval/results/`; drafts 5 statute paragraphs live if
 
 ```bash
 make run-offline    # adds the local CPU Apertus 8B (GGUF, sha256-pinned): the air-gapped default lane
-make certify        # certify your Apertus endpoint on the frozen 166-item suite before it may draft SL conditions
-make month          # one monthly cycle on the public feed (shadow mode)
+make certify        # build certificate for the pinned 8B GGUF from its recorded held-out run (seconds, offline)
+make certify-endpoint # certify your own Apertus 70B endpoint on the frozen 166-item suite
+make month          # one monthly cycle on the public feed with the local 8B (shadow mode); make month-70b uses your endpoint
 make test           # the test suite
 ```
 
@@ -108,7 +115,7 @@ make test           # the test suite
 | SL conditions, default | Apertus 8B GGUF on CPU, in process (passes the pre-registered rule) | nothing |
 | SL conditions, fewer edits | Apertus 70B on an endpoint you control (own GPUs, or a Swiss provider such as Infomaniak, Swisscom, PHOENIQS), admitted only by an endpoint-bound certificate | one limitation text per request (in shadow mode a published one; in pre-publication use BAG's draft German, which is why the endpoint must be one BAG controls), numbers as slot codes |
 
-No provider-specific code: any OpenAI-compatible Apertus endpoint works once it passes `make certify`. Build-time and
+No provider-specific code: any OpenAI-compatible Apertus endpoint works once it passes `make certify-endpoint`. Build-time and
 runtime dependencies: [docs/dependencies.md](docs/dependencies.md); target architecture:
 [docs/target-architecture.md](docs/target-architecture.md).
 

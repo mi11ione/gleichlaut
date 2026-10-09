@@ -1,0 +1,12 @@
+id	kind	cud	lang	real	note
+C00	terminology	PERINDAMLIND	it	yes	"un cosiddetti antagonisti" is ungrammatical (singular article, plural noun); should be "un antagonista del recettore dell'angiotensina II".
+C01	terminology	PERAMLIND.me	it	yes	"un cosiddetti antagonisti" is ungrammatical (singular article, plural noun); should be "un antagonista del recettore dell'angiotensina II".
+C02	terminology	OPZELURA.01---Vitiligo-Erwachsene-und-Jugendliche-ab-12-Jahren	fr	no	"communiqué" and "transmis" are acceptable synonyms here; the meaning is unchanged and the term "limitation" is correct.
+C03	terminology	JEMPERLI.02---Endometriumkarzinom-Kombi	fr	no	"communiqué" and "transmis" are acceptable synonyms here; the meaning is unchanged and the term "limitation" is correct.
+C04	terminology	PERAMLIND.sp	fr	yes	The French names an ACE inhibitor (a different drug class), not an angiotensin II receptor antagonist, and duplicates "inhibiteur de l'ECA".
+C05	terminology	COVERAM-PLUS	fr	yes	The French names an ACE inhibitor (a different drug class), not an angiotensin II receptor antagonist, and duplicates "inhibiteur de l'ECA".
+C06	terminology	JEMPERLI.01---Endometriumkarzinom-Mono	fr	no	"communiqué" and "transmis" are acceptable synonyms here; the meaning is unchanged and the term "limitation" is correct.
+C07	terminology	PERAMLIND.sp	it	yes	"un cosiddetti antagonisti" is ungrammatical (singular article, plural noun); should be "un antagonista del recettore dell'angiotensina II".
+C08	terminology	PERAMLIND.me	fr	yes	The French names an ACE inhibitor (a different drug class), not an angiotensin II receptor antagonist, and duplicates "inhibiteur de l'ECA".
+C09	terminology	COVERAM-PLUS	it	yes	"un cosiddetti antagonisti" is ungrammatical (singular article, plural noun); should be "un antagonista del recettore dell'angiotensina II".
+C10	terminology	PERINDAMLIND	fr	yes	The French names an ACE inhibitor (a different drug class), not an angiotensin II receptor antagonist, and duplicates "inhibiteur de l'ECA".

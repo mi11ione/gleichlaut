@@ -1,0 +1,450 @@
+{
+ "meta": {
+  "generated_by": "python3 -m gleichlaut.audit --date 20261006",
+  "date": "20261006",
+  "snapshots": [
+   "20260219",
+   "20260304",
+   "20260401",
+   "20260601",
+   "20260701",
+   "20260801",
+   "20260901",
+   "20261001",
+   "20261006"
+  ],
+  "items": "data/items/items_fresh.json",
+  "units": {
+   "snapshots": 459,
+   "items": 166
+  },
+  "rules": {
+   "max_tokens": 8,
+   "rewrite_similarity": 0.5,
+   "position_tolerance": 0.15,
+   "min_support": 2,
+   "min_stem_letters": 6,
+   "dice": 0.5,
+   "context": 3
+  }
+ },
+ "pairs": [
+  {
+   "lang": "fr",
+   "old": "inhibiteur de l'enzyme de conversion",
+   "new": "antagoniste des récepteurs",
+   "old_phrase": "et ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine ii",
+   "new_phrase": "et ou d'un antagoniste des récepteurs de l'angiotensine ii",
+   "old_surface": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+   "new_surface": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+   "de_term": "angiotensin-ii-antagonist",
+   "de_surface": "Angiotensin-II-Antagonisten",
+   "dice": 1.0,
+   "de_term_texts": 23,
+   "n_limitations": 18,
+   "n_transitions": 1,
+   "n_instances": 18,
+   "sources": [
+    "items"
+   ],
+   "corrected_in": [
+    {
+     "id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb021-fr"
+    },
+    {
+     "id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb025-fr"
+    },
+    {
+     "id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb018-fr"
+    },
+    {
+     "id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb032-fr"
+    },
+    {
+     "id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb020-fr"
+    },
+    {
+     "id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb015-fr"
+    },
+    {
+     "id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb030-fr"
+    },
+    {
+     "id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb019-fr"
+    },
+    {
+     "id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb022-fr"
+    },
+    {
+     "id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb027-fr"
+    },
+    {
+     "id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb017-fr"
+    },
+    {
+     "id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb028-fr"
+    },
+    {
+     "id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb026-fr"
+    },
+    {
+     "id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb023-fr"
+    },
+    {
+     "id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb016-fr"
+    },
+    {
+     "id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb031-fr"
+    },
+    {
+     "id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb029-fr"
+    },
+    {
+     "id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb024-fr"
+    }
+   ]
+  },
+  {
+   "lang": "fr",
+   "old": "communiqué",
+   "new": "transmis",
+   "old_phrase": "limitation doit être communiqué à l'assureur maladie",
+   "new_phrase": "limitation doit être transmis à l'assureur maladie",
+   "old_surface": "limitation doit être communiqué à l’assureur-maladie",
+   "new_surface": "limitation doit être transmis à l'assureur-maladie",
+   "de_term": "limitierung",
+   "de_surface": "Limitierung",
+   "dice": 0.623,
+   "de_term_texts": 104,
+   "n_limitations": 11,
+   "n_transitions": 1,
+   "n_instances": 11,
+   "sources": [
+    "snapshots"
+   ],
+   "corrected_in": [
+    {
+     "id": "OPDIVO.02---Melanom-Monotherapie",
+     "before": "20260901",
+     "after": "20261001",
+     "source": "snapshots"
+    },
+    {
+     "id": "OPDIVO.03---Melanom-Kombitherapie",
+     "before": "20260901",
+     "after": "20261001",
+     "source": "snapshots"
+    },
+    {
+     "id": "OPDIVO.07---Melanom-adjuvant",
+     "before": "20260901",
+     "after": "20261001",
+     "source": "snapshots"
+    },
+    {
+     "id": "OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H",
+     "before": "20260901",
+     "after": "20261001",
+     "source": "snapshots"
+    },
+    {
+     "id": "OPDIVO.09---OC-oder-GEJC-adjuvant",
+     "before": "20260901",
+     "after": "20261001",
+     "source": "snapshots"
+    },
+    {
+     "id": "OPDIVO.10---RCC-Nierenzellkarzinom",
+     "before": "20260901",
+     "after": "20261001",
+     "source": "snapshots"
+    },
+    {
+     "id": "OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H",
+     "before": "20260901",
+     "after": "20261001",
+     "source": "snapshots"
+    },
+    {
+     "id": "OPDIVO.12---MIUC-adjuvant",
+     "before": "20260901",
+     "after": "20261001",
+     "source": "snapshots"
+    },
+    {
+     "id": "OPDIVO.13--",
+     "before": "20260901",
+     "after": "20261001",
+     "source": "snapshots"
+    },
+    {
+     "id": "OPDIVO.16---GC-GEJC-OC",
+     "before": "20260901",
+     "after": "20261001",
+     "source": "snapshots"
+    },
+    {
+     "id": "OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib",
+     "before": "20260901",
+     "after": "20261001",
+     "source": "snapshots"
+    }
+   ]
+  },
+  {
+   "lang": "it",
+   "old": "cosiddetti antagonisti",
+   "new": "antagonista",
+   "old_phrase": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+   "new_phrase": "o di un antagonista del recettore dell'angiotensina",
+   "old_surface": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+   "new_surface": "o di un antagonista del recettore dell'angiotensina",
+   "de_term": "angiotensin-ii-antagonist",
+   "de_surface": "Angiotensin-II-Antagonisten",
+   "dice": 1.0,
+   "de_term_texts": 23,
+   "n_limitations": 18,
+   "n_transitions": 1,
+   "n_instances": 18,
+   "sources": [
+    "items"
+   ],
+   "corrected_in": [
+    {
+     "id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb021-it"
+    },
+    {
+     "id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb025-it"
+    },
+    {
+     "id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb018-it"
+    },
+    {
+     "id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb032-it"
+    },
+    {
+     "id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb020-it"
+    },
+    {
+     "id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb015-it"
+    },
+    {
+     "id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb030-it"
+    },
+    {
+     "id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb019-it"
+    },
+    {
+     "id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb022-it"
+    },
+    {
+     "id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb027-it"
+    },
+    {
+     "id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb017-it"
+    },
+    {
+     "id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb028-it"
+    },
+    {
+     "id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb026-it"
+    },
+    {
+     "id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb023-it"
+    },
+    {
+     "id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb016-it"
+    },
+    {
+     "id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb031-it"
+    },
+    {
+     "id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb029-it"
+    },
+    {
+     "id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+     "before": "20250701",
+     "after": "20260219",
+     "source": "items:wb024-it"
+    }
+   ]
+  },
+  {
+   "lang": "it",
+   "old": "alla cassa malattia",
+   "new": "l'assicuratore malattie",
+   "old_phrase": "rimborserà alla cassa malattia presso",
+   "new_phrase": "rimborserà l'assicuratore malattie presso",
+   "old_surface": "rimborserà alla cassa malattia, presso",
+   "new_surface": "rimborserà l'assicuratore malattie, presso",
+   "de_term": "angiologi",
+   "de_surface": "Angiologie",
+   "dice": 1.0,
+   "de_term_texts": 3,
+   "n_limitations": 3,
+   "n_transitions": 1,
+   "n_instances": 3,
+   "sources": [
+    "snapshots"
+   ],
+   "corrected_in": [
+    {
+     "id": "RA:05e081f6-b780-4975-ac33-b28ef3bbab27#0",
+     "before": "20260219",
+     "after": "20260304",
+     "source": "snapshots"
+    },
+    {
+     "id": "RA:41d6bfea-c4b1-4d38-9884-56f36a217219#0",
+     "before": "20260219",
+     "after": "20260304",
+     "source": "snapshots"
+    },
+    {
+     "id": "RA:71f69c46-380c-40b1-a7d4-407c2efdcc5e#0",
+     "before": "20260219",
+     "after": "20260304",
+     "source": "snapshots"
+    }
+   ]
+  },
+  {
+   "lang": "it",
+   "old": "alla cassa malattia",
+   "new": "all'assicuratore malattie",
+   "old_phrase": "a comunicare alla cassa malattia l'ammontare del rimborso",
+   "new_phrase": "a comunicare all'assicuratore malattie l'ammontare del rimborso",
+   "old_surface": "a comunicare alla cassa malattia l’ammontare del rimborso",
+   "new_surface": "a comunicare all’assicuratore malattie l’ammontare del rimborso",
+   "de_term": "angiologi",
+   "de_surface": "Angiologie",
+   "dice": 0.8,
+   "de_term_texts": 3,
+   "n_limitations": 2,
+   "n_transitions": 1,
+   "n_instances": 2,
+   "sources": [
+    "snapshots"
+   ],
+   "corrected_in": [
+    {
+     "id": "RA:05e081f6-b780-4975-ac33-b28ef3bbab27#0",
+     "before": "20260219",
+     "after": "20260304",
+     "source": "snapshots"
+    },
+    {
+     "id": "RA:41d6bfea-c4b1-4d38-9884-56f36a217219#0",
+     "before": "20260219",
+     "after": "20260304",
+     "source": "snapshots"
+    }
+   ]
+  }
+ ]
+}

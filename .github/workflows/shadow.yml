@@ -1,0 +1,201 @@
+# Shadow-mode evidence: one month of the public BAG feed drafted by the certified local Apertus 8B (offline image, CPU,
+# no model endpoint, no secret) and graded against the French / Italian BAG published. Monthly on the 2nd at 06:00 UTC
+# (BAG publishes on the 1st) and on demand:
+#   gh workflow run shadow.yml -R mi11ione/gleichlaut -f from=20260901 -f to=20261001
+# Jobs:
+#   plan    resolves the dates (`gleichlaut feeds`; to=latest: BAG's resources API; from=previous: the feed published before
+#           `to`), fetches the de/fr/it feeds of both dates, mines the month's FR/IT items with `gleichlaut month --from --to
+#           --fetch --dry-run` (no model) and splits them into shards
+#   shard   `make month ITEMS=<shard>` on its own 4-core runner: builds the offline image (llama-cpp-python 0.3.35, hash-pinned),
+#           restores the GGUF (sha256-checked), and drafts with `gleichlaut month --backend llamacpp` under --network none.
+#           The gate verifies the shipped build certificate (eval/certificates/8b-q4_k_m-fresh166.json) for the loaded
+#           GGUF, so the drafts get their guards' ready / flagged status. ~153 s per item on 4 cores: a normal month
+#           (~57 items) is ~40 min per shard with 4 shards, inside the 6 h runner limit even at 4x the volume.
+#   gather  merges the shard records, writes summary.json (shadow: exact / ready / flag rates against the published text),
+#           the review register (gleichlaut ui --records --items) and XLIFF/FHIR (gleichlaut emit), and uploads everything
+#           as the artifact shadow-<from>-<to>.
+# The drafts are never shown the published FR/IT (tgt_new is used only to grade them).
+name: shadow
+on:
+  schedule:
+    - cron: "0 6 2 * *"
+  workflow_dispatch:
+    inputs:
+      from: { description: "old feed date YYYYMMDD, or previous", required: true, default: "previous" }
+      to: { description: "new feed date YYYYMMDD, or latest", required: true, default: "latest" }
+      shards: { description: "parallel 4-core runners", required: true, default: "4" }
+permissions: { contents: read }
+concurrency: { group: shadow, cancel-in-progress: false }
+env:
+  GGUF: models/apertus-v1.5-8b-text-q4_k_m.gguf
+  GGUF_URL: https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf
+  GLEICHLAUT_MODEL_SHA256: a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    defaults: { run: { working-directory: track_2b } }
+    outputs:
+      from: ${{ steps.dates.outputs.from }}
+      to: ${{ steps.dates.outputs.to }}
+      idx: ${{ steps.split.outputs.idx }}
+      n: ${{ steps.split.outputs.n }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: { python-version: "3.12" }
+      - run: pip install --require-hashes -r requirements.txt
+      - name: published feeds
+        run: PYTHONPATH=src python -m gleichlaut feeds
+      - name: resolve the two dates
+        id: dates
+        env: { IN_FROM: "${{ inputs.from || 'previous' }}", IN_TO: "${{ inputs.to || 'latest' }}" }
+        run: |
+          PYTHONPATH=src python - <<'EOF' >> "$GITHUB_OUTPUT"
+          import os, sys
+          from gleichlaut.sl import feeds
+          to = os.environ["IN_TO"]; fr = os.environ["IN_FROM"]
+          if to == "latest": to, how = feeds.resolve_latest(); print(f"to = {to} ({how})", file=sys.stderr)
+          if fr == "previous": fr, how = feeds.resolve_previous(to); print(f"from = {fr} ({how})", file=sys.stderr)
+          assert fr < to, (fr, to)
+          print(f"from={fr}"); print(f"to={to}")
+          EOF
+      - name: fetch both feeds and mine the month (no model)
+        run: |
+          set -o pipefail
+          mkdir -p out/plan
+          PYTHONPATH=src python -m gleichlaut month --from ${{ steps.dates.outputs.from }} --to ${{ steps.dates.outputs.to }} \
+            --fetch --dry-run --backend stub > out/plan/mine.log
+          grep -E "^mined|^dry run" out/plan/mine.log
+      - name: split into shards
+        id: split
+        env: { SHARDS: "${{ inputs.shards || '4' }}" }
+        run: |
+          PYTHONPATH=src python - <<'EOF' >> "$GITHUB_OUTPUT"
+          import json, os
+          from gleichlaut.sl import mine, hist_dir
+          a, b = "${{ steps.dates.outputs.from }}", "${{ steps.dates.outputs.to }}"
+          d = f"out/month/{a}-{b}"; items = json.load(open(f"{d}/items.json", encoding="utf-8"))
+          M = mine.month_items(mine.Hist(hist_dir()), a, b)
+          json.dump(M["stats"], open("out/plan/mining.json", "w"), indent=1)
+          k = max(1, min(int(os.environ["SHARDS"]), len(items) or 1))
+          for i in range(k):
+              json.dump(items[i::k], open(f"out/plan/shard-{i}.json", "w", encoding="utf-8"), ensure_ascii=False)
+          print(f"idx={json.dumps(list(range(k)))}"); print(f"n={len(items)}")
+          EOF
+      - uses: actions/upload-artifact@v7
+        with:
+          name: shadow-plan
+          path: |
+            track_2b/out/plan
+            track_2b/out/month/${{ steps.dates.outputs.from }}-${{ steps.dates.outputs.to }}/items.json
+            track_2b/out/month/${{ steps.dates.outputs.from }}-${{ steps.dates.outputs.to }}/unmatched.json
+          retention-days: 30
+  shard:
+    needs: plan
+    if: needs.plan.outputs.n != '0'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355
+    strategy: { fail-fast: false, matrix: { k: "${{ fromJson(needs.plan.outputs.idx) }}" } }
+    defaults: { run: { working-directory: track_2b } }
+    steps:
+      - uses: actions/checkout@v7
+      - name: runner
+        run: nproc; free -h; df -h /
+      - name: free disk (docker build + 5 GB GGUF)
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL; df -h /
+      - uses: actions/download-artifact@v7
+        with: { name: shadow-plan, path: track_2b/out }
+      - name: restore GGUF cache
+        id: gguf
+        uses: actions/cache/restore@v6
+        with: { path: track_2b/models, key: "gguf-apertus-v1.5-8b-text-q4_k_m-a037df8d" }
+      - name: fetch and verify the GGUF
+        run: |
+          mkdir -p models
+          [ -f "$GGUF" ] || curl -sSL -A gleichlaut/0.1 -o "$GGUF" "$GGUF_URL"
+          echo "$GLEICHLAUT_MODEL_SHA256  $GGUF" | sha256sum -c -
+      - name: draft with the certified local 8B (make month, offline image, --network none)
+        run: |
+          set -o pipefail
+          timeout --signal=INT 330m make month ITEMS=out/plan/shard-${{ matrix.k }}.json 2>&1 | tee month-${{ matrix.k }}.log
+      - name: save GGUF cache
+        if: always() && matrix.k == 0 && steps.gguf.outputs.cache-hit != 'true' && hashFiles('track_2b/models/*.gguf') != ''
+        uses: actions/cache/save@v6
+        with: { path: track_2b/models, key: "gguf-apertus-v1.5-8b-text-q4_k_m-a037df8d" }
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: shadow-shard-${{ matrix.k }}
+          path: |
+            track_2b/out/month/shard-${{ matrix.k }}
+            track_2b/month-${{ matrix.k }}.log
+          retention-days: 30
+  gather:
+    needs: [plan, shard]
+    if: always() && needs.plan.result == 'success'
+    runs-on: ubuntu-24.04
+    defaults: { run: { working-directory: track_2b } }
+    env:
+      RUN: out/month/${{ needs.plan.outputs.from }}-${{ needs.plan.outputs.to }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: { python-version: "3.12" }
+      - run: pip install --require-hashes -r requirements.txt
+      - uses: actions/download-artifact@v7
+        with: { name: shadow-plan, path: track_2b/out }
+      - uses: actions/download-artifact@v7
+        with: { pattern: "shadow-shard-*", path: track_2b/out/shards }
+      - name: merge the shards and grade against the published text
+        run: |
+          PYTHONPATH=src python - <<'EOF'
+          import glob, json, os
+          from gleichlaut import cli
+          run = os.environ["RUN"]; items = json.load(open(f"{run}/items.json", encoding="utf-8"))
+          recs, calls, gates, backends = [], [], [], []
+          for d in sorted(glob.glob("out/shards/shadow-shard-*")):
+              for p in glob.glob(f"{d}/**/records.jsonl", recursive=True): recs += [l for l in open(p, encoding="utf-8") if l.strip()]
+              for p in glob.glob(f"{d}/**/calls.jsonl", recursive=True): calls += [l for l in open(p, encoding="utf-8") if l.strip()]
+              for p in glob.glob(f"{d}/**/summary.json", recursive=True):
+                  s = json.load(open(p, encoding="utf-8")); gates.append(s.get("gate")); backends.append(s.get("backend"))
+          open(f"{run}/records.jsonl", "w", encoding="utf-8").write("".join(recs))
+          open(f"{run}/calls.jsonl", "w", encoding="utf-8").write("".join(calls))
+          extra = dict(mining=json.load(open("out/plan/mining.json")), gate=gates[0] if gates else None,
+                       backend=backends[0] if backends else None, shards=len(gates),
+                       gates_agree=len({json.dumps(g, sort_keys=True) for g in gates}) <= 1)
+          cli.summarise(items, run, "shadow (public feed), certified local 8B", extra)       # writes summary.json
+          EOF
+      - name: review register (gleichlaut ui --records --items)
+        if: always()
+        run: PYTHONPATH=src python -m gleichlaut ui --records $RUN/records.jsonl --items $RUN/items.json --out $RUN/ui/index.html
+      - name: XLIFF / FHIR (gleichlaut emit)
+        if: always()
+        continue-on-error: true
+        run: PYTHONPATH=src python -m gleichlaut emit --records $RUN/records.jsonl --items $RUN/items.json --n 0 --out $RUN/emit
+      - name: summary
+        if: always()
+        run: |
+          PYTHONPATH=src python - <<'EOF' >> "$GITHUB_STEP_SUMMARY"
+          import json, os
+          s = json.load(open(os.environ["RUN"] + "/summary.json", encoding="utf-8"))
+          sh = s.get("shadow") or {}; g = s.get("gate") or {}
+          print(f"### Shadow month {os.environ['RUN'].rsplit('/', 1)[-1]} (certified local Apertus 8B)\n")
+          print(f"- items {s['items']}, records {s['records']}, missing {s['missing']}; status {s['status']}")
+          print(f"- gate: {g['certification']}" if g.get("certification") else
+                "- gate: no build certificate recorded (no shard finished its summary, or the GGUF was not certified: "
+                "then every item is marked for review; see review_reasons)")
+          if s.get("review_reasons"): print(f"- review policies: {s['review_reasons']}")
+          if sh:
+              print(f"- against BAG's published FR/IT: identical {sh['exact']}/{sh['compared']} ({sh.get('exact_rate')}%), "
+                    f"ready {sh['ready']} ({sh.get('ready_rate')}%), flagged {sh.get('flag_rate')}%, ready and identical "
+                    f"{sh['ready_exact']} ({sh.get('ready_exact_rate')}%)")
+              print(f"- ready drafts that differ from the published text (check them): {', '.join(sh['ready_not_exact']) or 'none'}")
+          print(f"- model calls {s['calls']['n']}, served by {s['calls']['models_served']}")
+          EOF
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: shadow-${{ needs.plan.outputs.from }}-${{ needs.plan.outputs.to }}
+          path: track_2b/out/month/${{ needs.plan.outputs.from }}-${{ needs.plan.outputs.to }}
+          retention-days: 90

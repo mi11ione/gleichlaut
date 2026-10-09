@@ -1,9 +1,21 @@
-"""Certify an endpoint for the SL lane by re-running the frozen fresh-166 suite on it, and watch it with a canary.
+"""Certify a model for the SL lane by re-running the frozen fresh-166 suite on it, and watch endpoints with a canary.
+
+Two kinds authorise drafting:
+  "build"     a local GGUF build of Apertus 8B run in process by llama.cpp (the SL default lane, PREREG R1). Bound to the
+              GGUF's sha256, the llama-cpp-python version and the freeze hash. Made by running the suite locally
+              (`certify --backend llamacpp --gguf PATH`; about 7 h on 4 CPU cores at the measured 153.4 s per item) or by
+              importing a recorded run (`certify --import-run RECORDS --gguf-sha256 SHA --labels TSV`, e.g. the M1 run of
+              the GitHub Actions CPU runners). The shipped eval/certificates/8b-q4_k_m-fresh166.json is that import of the
+              M1 run: the gate accepts it (and any build certificate in the state directory) for exactly that GGUF and
+              llama-cpp-python version, after re-scoring its records like any other certificate (build_lookup()).
+              A build certificate does not expire and needs no canary: nothing it certifies can change under it (a file
+              hash, a library version, frozen code), unlike a remote serving stack.
+  "endpoint"  an OpenAI-compatible endpoint (--backend openai), the 70B "fewer edits" lane.
 
 A certificate records WHAT was certified, never a secret:
-  kind               "endpoint" (an OpenAI-compatible endpoint, --backend openai): the only kind that can authorise drafting;
-                     "replay" (--backend cache: the recorded responses re-run) and "evaluation" (--backend gateway: the
-                     development gateway to Public AI) are evidence only and never authorise anything
+  kind               "build" or "endpoint" (above); "replay" (--backend cache: the recorded responses re-run) and
+                     "evaluation" (--backend gateway: the development gateway to Public AI) are evidence only and never
+                     authorise anything
   endpoint           scheme://host[:port]/path of LLM_BASE_URL (backends.endpoint_id; never the key)
   model_requested    LLM_NAME;  models_served / system_fingerprints / seeds: everything the endpoint reported on the suite calls
   freeze_sha256, suite.sha256   the frozen code and items the run used (a certificate stops counting when either changes)
@@ -16,7 +28,11 @@ Labels are inherited only by identical outputs (after whitespace/apostrophe norm
 
 New certificates, their call logs, the suite records and recorded responses go to the state directory ($GLEICHLAUT_STATE,
 default track_2b/state, gitignored): state/certificates/, state/runs/, state/cache/, state/canary/. The certificates shipped
-in eval/certificates/ are evidence of the evaluation (a replay and the Public AI runs) and are never consulted by certified().
+in eval/certificates/ are evidence of the evaluation (a replay and the Public AI runs) and are never consulted by certified();
+the one exception is a build certificate there (kind "build"), which build_lookup() verifies and accepts like one in state/.
+With GLEICHLAUT_CERT_KEY set, unsigned certificates are refused, the shipped build certificate included: `make certify`
+imports a signed copy into state/.
+Custom check resources (GLEICHLAUT_RESOURCES, gleichlaut.resources) void every certificate: the gate refuses them all.
 
 Integrity (a certificate is a claim that is re-checked every time it is used, not trusted as written):
   run_records_sha256 / calls_log_sha256 / labels_sha256   sha256 of the suite records (state/runs/), the call log
@@ -59,6 +75,9 @@ CANARY_N = 40
 CANARY_MIN_FLAG_AGREEMENT = 0.85
 CANARY_MAX_EXACT_DROP = 5.0
 LABEL_CLASSES = ("equivalent", "preexisting", "cosmetic", "minor", "german", "stale", "REAL", "garble")
+BUILD_NAME = "8b-q4_k_m-fresh166"                                    # the shipped build certificate (M1, PREREG R1)
+M1_RUN, M1_LABELS = "data/runs/8b_q4_k_m_fresh166_g3_final.jsonl", "eval/labels/m1_q4_k_m_fresh166.tsv"
+GGUF_SHA_Q4 = "a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299"
 EXIT = dict(PASS=0, FAIL=5, PENDING_REVIEW=7)
 CERT_DAYS = 90
 CANARY_MAX_AGE_DAYS = 31
@@ -237,7 +256,10 @@ _VERIFIED = {}
 def verify(c, now=None):
     """-> None if the certificate holds, else the reason. Re-checks everything the certificate claims (see the module doc)."""
     now = now or _now(); name = c.get("name")
+    if c.get("kind") == "build": return verify_build(c)
     if c.get("kind") != "endpoint": return f"certificate {name} is of kind {c.get('kind')!r}: evidence only, never authorises"
+    void = _resources_void()
+    if void: return void
     if c.get("status") != "PASS": return f"certificate {name} has status {c.get('status')}"
     bad = check_signature(c)
     if bad: return f"certificate {name}: {bad}"
@@ -300,6 +322,212 @@ def _recheck(c, paths):
     if eps != {c.get("endpoint")}: return f"certificate {name}: its call log names other endpoints {sorted(e for e in eps if e)}"
     if sorted({x.get("model_served") or "" for x in calls}) != sorted(c.get("models_served") or []):
         return f"certificate {name}: the models served in its call log differ from the certificate"
+    return None
+
+
+def _resources_void():
+    from . import resources
+    if resources.active():
+        return (f"custom check resources are in use (GLEICHLAUT_RESOURCES={resources.active()}): every certificate is void "
+                f"with resources other than the frozen ones; every draft goes to review")
+    return None
+
+
+# ------------------------------------------------------------------ build certificates (local GGUF, the SL default lane)
+def read_label_table(path, R, extra_classes=()):
+    """labels file -> ({key: {norm(output): class}}, bad lines). Accepts 'key<TAB>class' or a table with a 'final' column
+    (the M1 annotation file: two blind annotators + tie-break). Rows for keys outside R are bad."""
+    lines = [l for l in open(path, encoding="utf-8").read().splitlines() if l.strip()]
+    if not lines: return None, ["the labels file is empty"]
+    hdr = lines[0].split("\t")
+    col = 1 if hdr[:2] == ["key", "class"] else (hdr.index("final") if hdr[0] == "key" and "final" in hdr else None)
+    if col is None: return None, ["the labels file must be a TSV with the header 'key<TAB>class' (or a 'final' column)"]
+    ok = set(LABEL_CLASSES) | set(extra_classes); extra, bad = {}, []
+    for l in lines[1:]:
+        c = l.split("\t") + [""] * len(hdr)
+        k, cls = c[0], c[col]
+        if cls not in ok or k not in R: bad.append(l); continue
+        extra[k] = {core.lock.norm(R[k]["out"]): cls}
+    return extra, bad
+
+
+def _base(c):
+    return core.ROOT if c.get("files_base") == "root" else state_dir()
+
+
+def build_dirs():
+    """where build certificates are looked up: the state directory, then the shipped evidence."""
+    return [state_dir("certificates"), EVIDENCE]
+
+
+def build_certificates():
+    out = []
+    for d in build_dirs():
+        if not os.path.isdir(d): continue
+        for f in sorted(os.listdir(d)):
+            if not f.endswith(".json"): continue
+            try:
+                with open(os.path.join(d, f), encoding="utf-8") as fh: c = json.load(fh)
+            except (OSError, ValueError): continue
+            if isinstance(c, dict) and c.get("kind") == "build": out.append((os.path.join(d, f), c))
+    return sorted(out, key=lambda pc: (pc[1].get("date", ""), os.path.getmtime(pc[0])))
+
+
+def verify_build(c):
+    """-> None if the build certificate holds, else the reason: signature, freeze and suite hashes, stored files against
+    their sha256, and the stored records re-scored with the frozen checks and the stored labels to the same PASS."""
+    name = c.get("name")
+    void = _resources_void()
+    if void: return void
+    if c.get("status") != "PASS": return f"build certificate {name} has status {c.get('status')}"
+    bad = check_signature(c)
+    if bad: return f"build certificate {name}: {bad}"
+    if c.get("freeze_sha256") != core.sha256(core.FREEZE):
+        return f"build certificate {name} was made with other frozen code (freeze sha256 changed): re-certify"
+    if (c.get("suite") or {}).get("sha256") != core.sha256(os.path.join(core.ROOT, "data", ITEMS)):
+        return f"build certificate {name} was made on another suite: re-certify"
+    if not ((c.get("gguf") or {}).get("sha256") and c.get("run_records_sha256") and c.get("labels_sha256")):
+        return f"build certificate {name} has no integrity fields"
+    files = [("run_records", c.get("run_records"), c["run_records_sha256"]), ("labels", c.get("labels_file"), c["labels_sha256"])]
+    if c.get("calls_log"): files.append(("call log", c["calls_log"], c.get("calls_log_sha256")))
+    paths = {}
+    for what, rel, want in files:
+        p = os.path.join(_base(c), rel or "-")
+        if not rel or not os.path.isfile(p): return f"build certificate {name}: its {what} file is missing ({rel})"
+        if core.sha256(p) != want: return f"build certificate {name}: its {what} file ({rel}) does not match the sha256 in the certificate"
+        paths[what] = p
+    ck = ("build", name, c["run_records_sha256"], c["labels_sha256"], json.dumps(c.get("metrics"), sort_keys=True), core.sha256(core.FREEZE))
+    if ck in _VERIFIED: return _VERIFIED[ck]
+    try:
+        R = [json.loads(l) for l in open(paths["run_records"], encoding="utf-8") if l.strip()]
+        I = score.load_items(ITEMS)
+        if [r.get("key") for r in R] != [x["key"] for x in I]:
+            why = f"build certificate {name}: its records do not cover the {len(I)} suite items in order"
+        else:
+            extra, bad = read_label_table(paths["labels"], {r["key"]: r for r in R}, ("exact",))
+            if extra is None: why = f"build certificate {name}: its labels file is not valid"
+            else:
+                s_, status, review, _ = evaluate(I, R, extra)
+                want = {k: s_[k] for k in (c.get("metrics") or {})}
+                if status != "PASS": why = f"build certificate {name}: its records re-score to {status}, not PASS"
+                elif json.loads(json.dumps(want)) != c.get("metrics") or review != c.get("needs_review"):
+                    why = f"build certificate {name}: the metrics in the certificate differ from its re-scored records"
+                else: why = None
+    except AssertionError as e:
+        why = f"build certificate {name}: a stored guard verdict differs from the frozen checks ({e})"
+    except (ValueError, KeyError, TypeError, OSError) as e:
+        why = f"build certificate {name}: its records cannot be re-scored ({type(e).__name__}: {e})"
+    _VERIFIED[ck] = why
+    return why
+
+
+def build_lookup(gguf_sha256, runtime=None):
+    """-> (certificate or None, reason) for a local GGUF: kind 'build', the same GGUF sha256 and (when given) the same
+    llama-cpp-python version; the newest such certificate decides (a later FAIL revokes an earlier PASS)."""
+    allc = [c for _, c in build_certificates() if (c.get("gguf") or {}).get("sha256") == gguf_sha256]
+    if not allc:
+        return None, (f"no build certificate for the GGUF with sha256 {gguf_sha256[:12]}... in "
+                      f"{' or '.join(build_dirs())} (certify it: gleichlaut certify --backend llamacpp --gguf PATH)")
+    cands = [c for c in allc if runtime is None or (c.get("runtime") or {}).get("llama_cpp_python") == runtime]
+    if not cands:
+        vs = sorted({str((c.get("runtime") or {}).get("llama_cpp_python")) for c in allc})
+        return None, (f"the build certificates for GGUF {gguf_sha256[:12]}... were made with llama-cpp-python {', '.join(vs)}, "
+                      f"this is {runtime}: use the offline image, or re-certify (gleichlaut certify --backend llamacpp --gguf PATH)")
+    c = cands[-1]
+    if c.get("status") != "PASS":
+        return None, f"the newest build certificate for GGUF {gguf_sha256[:12]}... ({c.get('name')}) has status {c.get('status')}"
+    why = verify_build(c)
+    if why: return None, why
+    return c, (f"build certificate {c.get('name')} ({c.get('date')}, GGUF sha256 {gguf_sha256[:12]}..., llama-cpp-python "
+               f"{(c.get('runtime') or {}).get('llama_cpp_python')}; verified: records re-scored, hashes match"
+               f"{', HMAC ok' if cert_key() else ''})")
+
+
+def m1_inherited_labels(R):
+    """labels of the M1 run (two blind annotators + tie-break) for outputs identical to the M1 output of the same item."""
+    p = os.path.join(core.ROOT, M1_LABELS)
+    if not os.path.exists(p): return {}
+    M = score.load_jsonl(M1_RUN.split("data/", 1)[1])
+    lab, _ = read_label_table(p, M, ("exact",))
+    out = {}
+    for k, d in (lab or {}).items():
+        if k in R and core.lock.norm(R[k]["out"]) in d: out[k] = d[core.lock.norm(R[k]["out"])]
+    return out
+
+
+def write_build_certificate(name, I, R, secs, gguf_sha256, gguf_file, runtime, runtime_source, source, labels_rows=None,
+                            labels_path=None, records_path=None, calls_log=None, dest=None, date=None):
+    """write a build certificate. Records and labels inside track_2b/ are referenced in place (files_base 'root', used for
+    the shipped evidence); otherwise they are copied into the state directory (files_base 'state')."""
+    dest = os.path.abspath(dest or state_dir("certificates")); os.makedirs(dest, exist_ok=True)
+    root = os.path.abspath(core.ROOT) + os.sep
+    in_root = lambda p: p is not None and os.path.abspath(p).startswith(root)
+    base = "root" if dest.startswith(root) and not dest.startswith(state_dir() + os.sep) and in_root(records_path) and in_root(labels_path) else "state"
+    if base == "root":
+        rec_rel, lab_rel = os.path.relpath(records_path, core.ROOT), os.path.relpath(labels_path, core.ROOT)
+    else:
+        os.makedirs(state_dir("runs"), exist_ok=True); os.makedirs(state_dir("certificates"), exist_ok=True)
+        rec_rel = os.path.join("runs", f"certify_{name}.jsonl")
+        with open(state_dir(rec_rel), "w", encoding="utf-8") as f:
+            for r in R: f.write(json.dumps(r, ensure_ascii=False) + "\n")
+        lab_rel = os.path.join("certificates", f"{name}.labels.tsv")
+        if labels_path:
+            with open(labels_path, encoding="utf-8") as src, open(state_dir(lab_rel), "w", encoding="utf-8") as dst: dst.write(src.read())
+        else:
+            with open(state_dir(lab_rel), "w", encoding="utf-8") as f:
+                f.write("key\tclass\n" + "".join(f"{k}\t{v}\n" for k, v in sorted((labels_rows or {}).items())))
+    bp = lambda rel: os.path.join(core.ROOT if base == "root" else state_dir(), rel)
+    extra, bad = read_label_table(bp(lab_rel), {r["key"]: r for r in R}, ("exact",))
+    if extra is None: raise backends.ConfigError(f"labels file {labels_path}: {bad[0]}")
+    s_, status, review, digits = evaluate(I, R, extra)
+    c = dict(name=name, kind="build", kind_note="a local GGUF build run in process by llama.cpp: authorises the SL lane for "
+             "exactly this GGUF sha256 and llama-cpp-python version (certify.build_lookup)",
+             date=date or _now().isoformat(timespec="seconds"), endpoint="local llama.cpp (in process)",
+             model_requested="Apertus v1.5 8B GGUF", models_served=["gguf:" + (gguf_file or "?")],
+             gguf=dict(sha256=gguf_sha256, file=gguf_file), runtime=dict(llama_cpp_python=runtime, source=runtime_source),
+             source=source, suite=dict(items=ITEMS, n=len(I), sha256=core.sha256(os.path.join(core.ROOT, "data", ITEMS))),
+             freeze_sha256=core.sha256(core.FREEZE), pass_rule=score.PASS_RULE, status=status,
+             metrics={k: s_[k] for k in ("exact", "ef1", "chrf", "flag_rate", "ready_rate", "unflagged", "unflagged_REAL",
+                                         "unflagged_stale", "unflagged_german", "pass_rule")},
+             needs_review=review, items_with_model_digits=digits, wall_secs=round(secs, 1),
+             files_base=base, run_records=rec_rel, run_records_sha256=core.sha256(bp(rec_rel)),
+             labels_file=lab_rel, labels_sha256=core.sha256(bp(lab_rel)), labels_n=len(extra), expires=None,
+             expires_note="a build certificate does not expire: the GGUF, the library version and the frozen code are hashed")
+    if calls_log and os.path.exists(calls_log):
+        c.update(calls_log=os.path.relpath(calls_log, state_dir()), calls_log_sha256=core.sha256(calls_log))
+    sign(c)
+    p = os.path.join(dest, f"{name}.json")
+    _write_json(p, c)
+    return p, c
+
+
+def import_run(records, gguf_sha256, labels, name=None, runtime=None, dest=None, gguf_file=None):
+    """certify a GGUF build from a recorded suite run (e.g. the M1 shards of the GitHub Actions CPU runners)."""
+    if not re.fullmatch(r"[0-9a-f]{64}", gguf_sha256 or ""): raise backends.ConfigError("--gguf-sha256 must be 64 hex digits")
+    for what, p in (("records", records), ("labels", labels)):
+        if not p or not os.path.isfile(p): raise backends.ConfigError(f"{what} file not found: {p!r}")
+    I = score.load_items(ITEMS)
+    try: R = {json.loads(l)["key"]: json.loads(l) for l in open(records, encoding="utf-8") if l.strip()}
+    except (ValueError, KeyError) as e: raise backends.ConfigError(f"records file {records} is not JSON Lines with a 'key' per line: {e}")
+    missing = [x["key"] for x in I if x["key"] not in R]
+    if missing: raise backends.ConfigError(f"records file {records} misses {len(missing)} of the {len(I)} suite items, e.g. {missing[:3]}")
+    RR = [R[x["key"]] for x in I]
+    if runtime is None:
+        runtime, src = pinned_llama(), "requirements-offline.txt pin (the version the M1 workflow installed)"
+    else: src = "--llama-cpp-version"
+    secs = sum(float(r.get("wall_secs") or 0) for r in RR)
+    gf = gguf_file or ("apertus-v1.5-8b-text-q4_k_m.gguf" if gguf_sha256 == GGUF_SHA_Q4 else None)
+    return write_build_certificate(name or f"build-{gguf_sha256[:12]}-{_now().strftime('%Y%m%dT%H%M%SZ')}", I, RR, secs, gguf_sha256, gf,
+                                   runtime, src, f"imported run {os.path.relpath(os.path.abspath(records), core.ROOT)}",
+                                   labels_path=labels, records_path=records, dest=dest)
+
+
+def pinned_llama():
+    try:
+        for l in open(os.path.join(core.ROOT, "requirements-offline.txt"), encoding="utf-8"):
+            m = re.match(r"\s*llama-cpp-python==([^\s\\;]+)", l)
+            if m: return m.group(1)
+    except OSError: pass
     return None
 
 
@@ -400,7 +628,7 @@ def canary_gate(cert, max_age_days=None, now=None):
         p, r = reps[-1]; when, what = _parse_date(r.get("date")), f"canary {os.path.basename(p)}"
         if not r.get("ok"):
             return "failed", (f"the latest canary for certificate {cert.get('name')} ({os.path.basename(p)}, {r.get('date')}) FAILED: "
-                              f"{'; '.join(r.get('reasons') or [])}. Re-certify (make certify), or draft with --air-gapped{note}")
+                              f"{'; '.join(r.get('reasons') or [])}. Re-certify (make certify-endpoint), or draft with the local 8B (make month){note}")
     else:
         when, what = _parse_date(cert.get("date")), f"certification {cert.get('name')}"
     if when is None: return "stale", f"the date of the latest check ({what}) cannot be read{note}"
@@ -429,6 +657,7 @@ def resolve(cert_path, labels_path):
     c = json.load(open(cert_path, encoding="utf-8"))
     bad = check_signature(c)
     if bad: print(f"error: certificate {cert_path}: {bad}"); return 2
+    if c.get("kind") == "build": return resolve_build(cert_path, c, labels_path)
     runs = state_dir(c["run_records"])
     if not os.path.exists(runs): print(f"error: the suite records of this certificate are missing: {runs}"); return 2
     if c.get("run_records_sha256") and core.sha256(runs) != c["run_records_sha256"]:
@@ -451,10 +680,74 @@ def resolve(cert_path, labels_path):
     return EXIT[new["status"]]
 
 
+def resolve_build(cert_path, c, labels_path):
+    """add human labels to a PENDING_REVIEW build certificate (its stored labels are kept; new rows win)."""
+    base = _base(c); runs = os.path.join(base, c["run_records"])
+    if not os.path.exists(runs) or core.sha256(runs) != c.get("run_records_sha256"):
+        print(f"error: the suite records of this certificate are missing or do not match: {runs}"); return 2
+    R = {json.loads(l)["key"]: json.loads(l) for l in open(runs, encoding="utf-8") if l.strip()}
+    new, bad = read_label_table(labels_path, R)
+    if new is None: print("error: " + bad[0]); return 2
+    if bad: print(f"error: {len(bad)} label line(s) with an unknown key or class (classes: {', '.join(LABEL_CLASSES)}): {bad[:3]}"); return 2
+    old, _ = read_label_table(os.path.join(base, c["labels_file"]), R, ("exact",))
+    rows = {k: next(iter(d.values())) for k, d in (old or {}).items()}
+    rows.update({k: next(iter(d.values())) for k, d in new.items()})
+    I = score.load_items(ITEMS)
+    p, n = write_build_certificate(c["name"], I, [R[x["key"]] for x in I], c.get("wall_secs", 0), c["gguf"]["sha256"], c["gguf"].get("file"),
+                                   (c.get("runtime") or {}).get("llama_cpp_python"), (c.get("runtime") or {}).get("source"),
+                                   c.get("source", "?"), labels_rows=rows, date=c["date"],
+                                   calls_log=state_dir(c["calls_log"]) if c.get("calls_log") else None)
+    print(f"build certificate {p}: {c['status']} -> {n['status']}  (still needs review: {len(n['needs_review'])})")
+    return EXIT[n["status"]]
+
+
+def run_build(a):
+    """certify --backend llamacpp --gguf PATH: the frozen suite on this machine's CPU (slow: about 7 h on 4 cores)."""
+    if not a.gguf: raise backends.ConfigError("--backend llamacpp needs --gguf PATH (the GGUF file to certify)")
+    backends.require_llama()
+    sha = backends.file_sha256(a.gguf)
+    name = a.name or f"build-{sha[:12]}-{_now().strftime('%Y%m%dT%H%M%SZ')}"
+    for d in ("certificates", "runs"): os.makedirs(state_dir(d), exist_ok=True)
+    log = state_dir("certificates", f"{name}.calls.jsonl")
+    ask = backends.LlamaCpp(a.gguf, backends.lang_of_prompt, log=log, gguf_sha256=sha)
+    n = a.n or len(score.load_items(ITEMS))
+    print(f"certify: build {os.path.basename(a.gguf)} sha256 {sha[:12]}... llama-cpp-python {ask.runtime}, {ask.n_threads} threads; "
+          f"{n} items one at a time (measured 153.4 s per item on 4 cores: about {n * 153.4 / 3600:.1f} h) -> {state_dir()}", flush=True)
+    I, R, secs = run_suite(ask, a.n, 1)
+    if a.n:
+        print(json.dumps(evaluate(I, R)[0], indent=1)); return 0
+    Rk = {r["key"]: r for r in R}
+    p, c = write_build_certificate(name, I, R, secs, sha, os.path.basename(a.gguf), ask.runtime, "installed (llama_cpp)",
+                                   "local run", labels_rows=m1_inherited_labels(Rk), calls_log=log)
+    _print_cert(p, c)
+    return EXIT[c["status"]]
+
+
+def _print_cert(p, c):
+    m = c["metrics"]; ci = m["exact"]["ci95"]
+    print(f"certificate {p}\n  kind {c['kind']}  status {c['status']}  exact {m['exact']['delta']:+.1f} pts vs rules-only "
+          f"(95% CI {ci[0]:+.1f} to {ci[1]:+.1f})  flagged {m['flag_rate']}%  ready {m['ready_rate']}%  "
+          f"needs review {len(c['needs_review'])}  served by {c['models_served']}")
+    if c["kind"] == "build":
+        print(f"  GGUF sha256 {c['gguf']['sha256']}  llama-cpp-python {c['runtime']['llama_cpp_python']}  records sha256 "
+              f"{c['run_records_sha256'][:12]}  labels sha256 {c['labels_sha256'][:12]}  "
+              f"{'HMAC-signed' if 'hmac_sha256' in c else 'unsigned (set GLEICHLAUT_CERT_KEY to sign)'}")
+    if c["status"] == "PENDING_REVIEW":
+        print(f"  label the {len(c['needs_review'])} outputs listed in needs_review, then: "
+              f"gleichlaut certify --resolve {p} --labels LABELS.tsv")
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="gleichlaut certify", description="certify an endpoint on the frozen fresh-166 suite, or run the canary")
-    ap.add_argument("--backend", choices=["openai", "cache", "gateway"], default="openai",
-                    help="openai: LLM_BASE_URL (the only kind that authorises); cache: replay of the recorded responses; gateway: development only")
+    ap.add_argument("--backend", choices=["openai", "llamacpp", "cache", "gateway"], default="openai",
+                    help="openai: LLM_BASE_URL (endpoint certificate); llamacpp: a local GGUF (--gguf; build certificate, slow on CPU); "
+                         "cache: replay of the recorded responses; gateway: development only")
+    ap.add_argument("--gguf", help="--backend llamacpp: the GGUF file to certify")
+    ap.add_argument("--import-run", metavar="RECORDS", help="certify a GGUF build from a recorded suite run (JSON Lines, one record per "
+                    "suite item) instead of running it; needs --gguf-sha256 and --labels")
+    ap.add_argument("--gguf-sha256", help="--import-run: sha256 of the GGUF the records were drafted with")
+    ap.add_argument("--llama-cpp-version", help="--import-run: llama-cpp-python version of the run (default: the requirements-offline.txt pin)")
+    ap.add_argument("--out", help="--import-run: certificate directory (default state/certificates; eval/certificates for shipped evidence)")
     ap.add_argument("--name", default=None)
     ap.add_argument("--n", type=int, default=None, help="first N items only (smoke test; never a certificate)")
     ap.add_argument("--seed", type=int, default=None)
@@ -465,7 +758,8 @@ def main(argv=None):
     ap.add_argument("--tag", default="gleichlaut-certify"); ap.add_argument("--cap", type=float, default=1.0)
     ap.add_argument("--workers", type=int, default=2)
     ap.add_argument("--resolve", metavar="CERT", help="apply human labels to a PENDING_REVIEW certificate (needs --labels)")
-    ap.add_argument("--labels", metavar="TSV")
+    ap.add_argument("--labels", metavar="TSV", help="--resolve: human labels (key<TAB>class); --import-run: the run's labels "
+                    "(key<TAB>class, or a table with a 'final' column)")
     ap.add_argument("--list", action="store_true", help="list the certificates in the state directory, each re-verified")
     ap.add_argument("--valid-days", type=float, default=None, help=f"certificate validity in days (default GLEICHLAUT_CERT_DAYS or {CERT_DAYS})")
     a = ap.parse_args(argv)
@@ -473,8 +767,23 @@ def main(argv=None):
         cert_key(); cert_days(); canary_max_age_days()
     except backends.ConfigError as e:
         print(f"error: {e}"); return 2
+    if a.import_run:
+        if not (a.gguf_sha256 and a.labels): ap.error("--import-run needs --gguf-sha256 and --labels")
+        try: p, c = import_run(a.import_run, a.gguf_sha256, a.labels, a.name, a.llama_cpp_version, a.out)
+        except backends.ConfigError as e: print(f"error: {e}"); return 2
+        _print_cert(p, c); return EXIT[c["status"]]
+    if a.backend == "llamacpp" and not a.list and not a.resolve:
+        if a.canary: print("error: a build certificate needs no canary (nothing it certifies can change); re-certify instead"); return 2
+        try: return run_build(a)
+        except backends.ConfigError as e: print(f"error: {e}"); return 2
     if a.list:
+        for p, c in build_certificates():
+            v = verify_build(c) if c.get("status") == "PASS" else None
+            print(f"{c.get('status', '?'):14s} {'build':10s} {c.get('date', '?')}  no expiry  GGUF {(c.get('gguf') or {}).get('sha256', '?')[:12]}  "
+                  f"llama-cpp-python {(c.get('runtime') or {}).get('llama_cpp_python')}  {p}\n{'':16s}gate: "
+                  f"{('holds' if not v else 'DOES NOT HOLD: ' + v) if c.get('status') == 'PASS' else '-'}")
         for p, c in certificates():
+            if c.get("kind") == "build": continue
             v = verify(c) if c.get("kind") == "endpoint" and c.get("status") == "PASS" else None
             gate = ("holds" if not v else "DOES NOT HOLD: " + v) if c.get("kind") == "endpoint" and c.get("status") == "PASS" else "-"
             print(f"{c.get('status', '?'):14s} {c.get('kind', '?'):10s} {c.get('date', '?')}  expires {str(c.get('expires', '?'))[:10]}  "

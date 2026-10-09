@@ -48,10 +48,11 @@ def test_page_has_both_tabs_audit_first():
     p = os.path.join(tempfile.mkdtemp(prefix="gl-ui-a-"), "index.html"); build.build(out=p)
     s = open(p, encoding="utf-8").read()
     assert s.index('id="t-audit"') < s.index('id="t-drafts"') and 'location.hash.slice(1)' in s and 'h==="audit"' in s
+    assert 'var TAB=AU?"audit":"drafts"' in s and 'h==="drafts"' in s
     for k in ('<option value="de">DE</option>', 'return "de"}', "Ready means checked by code, not by a person.",
               "Bereit heisst: vom Code geprüft, nicht von einer Person.", 'id="imp-file"', "data-copy", "gleichlaut:changed"):
         assert k in s, k
-    for r in ("T1", "T2", "T3", "T4"): assert s.count('rd' + r + ':"') == 4                 # every rule in the legend, 4 languages
+    for r in ("T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8"): assert s.count('rd' + r + ':"') == 4    # every rule in the legend, 4 languages
     assert "family cb735e3b" not in s
 
 
@@ -67,6 +68,35 @@ def test_old_text_language_problem_is_a_display_notice():
     assert it["status"] == "ready" and it["old"] == [dict(k="language", t="Il vecchio testo italiano è in francese.", f="fr")]
     assert it["banner"] == "Il vecchio testo italiano è in francese."
     assert D["counts"]["ready"] == score.score_run("fresh166")["summary"]["all"]["unflagged"]     # no verdict or metric moves
+
+
+def test_decisions_carry_over_by_signature_and_new_kinds():
+    F = json.load(open(audit_view.AUDIT, encoding="utf-8"))["findings"]
+    A = audit_view.rows(F); B = audit_view.rows([dict(f, rank=(f.get("rank") or 0) + 7, first_seen="20261101") for f in F], date="20261101")
+    assert [r["sig"] for r in A] and {r["sig"] for r in A} == {r["sig"] for r in B} and len({r["sig"] for r in A}) == len(A)
+    r = next(r for r in A if r["lim"] == "DIAPHIN.6-"); assert r["sig"] == "DIAPHIN.6-|number|it|12,6"
+    T = [dict(id="X.9", product=["Xprod"], lang="fr", kind="terminology", old="inhibiteur de l'enzyme", new="antagoniste des récepteurs",
+              corrected_in=[{"id": "OPDIVO.02---Melanom", "after": "20261001"}], context=["…d'un [inhibiteur de l'enzyme] de…"]),
+         dict(id="Y.1", product="Y", lang="it", kind="number", likely_equivalent=True, equivalence="Q1 conversion: 14 Tagen = 2 settimane",
+              de_only=[dict(value="14", unit="Tagen", context=["…von [14] Tagen…"])], tgt_only=[])]
+    t, e = audit_view.rows(T)[0], audit_view.rows(T)[1]
+    t, e = (t, e) if t["kind"] == "terminology" else (e, t)
+    assert t["term"] == dict(old="inhibiteur de l'enzyme", new="antagoniste des récepteurs", where=["OPDIVO.02, 01.10.2026"]) and t["odd"] == "fr"
+    assert e["eq"] == "Q1 conversion: 14 Tagen = 2 settimane" and t["eq"] is None
+    assert audit_view.rows([dict(F[0], suggested_action="GÄL")])[0]["sug"] == "holder"
+
+
+def test_terminology_notice_on_ready_drafts_comes_from_audit_item():
+    old = explain._audit_item
+    try:
+        explain._audit_item = lambda x: ([dict(kind="terminology", lang="fr", old="AAA", new="BBB", corrected_in=["Z.1"])]
+                                         if x["key"] == "wb000-fr" else [])
+        D = build.data(audit=None)
+    finally:
+        explain._audit_item = old
+    it = next(g["items"]["fr"] for g in D["groups"] if g["items"].get("fr", {}).get("key") == "wb000-fr")
+    assert it["status"] == "ready" and it["old"][0]["k"] == "terminology" and "«\u00a0AAA\u00a0»" in it["old"][0]["t"] and "Z.1" in it["old"][0]["t"]
+    assert it["banner"] == it["old"][0]["t"]
 
 
 if __name__ == "__main__":

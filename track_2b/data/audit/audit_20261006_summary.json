@@ -8,7 +8,8 @@
   "number": 21,
   "unit": 0,
   "language": 1,
-  "editorial": 5
+  "editorial": 5,
+  "terminology": 11
  },
  "by_kind_lang": {
   "number": {
@@ -23,6 +24,10 @@
    "de": 1,
    "fr": 3,
    "it": 1
+  },
+  "terminology": {
+   "fr": 7,
+   "it": 4
   }
  },
  "editorial_by_rule": {
@@ -30,8 +35,8 @@
   "E2": 3,
   "E4": 1
  },
- "findings_all": 27,
- "limitations_with_any_finding": 20,
+ "findings_all": 38,
+ "limitations_with_any_finding": 27,
  "by_lang": {
   "it": 7,
   "fr": 14
@@ -236,6 +241,62 @@
    "E01"
   ]
  },
+ "likely_equivalent": {
+  "note": "triage hint on number findings (Q1-Q5, typo); ids, ranks and counts unchanged",
+  "number": 9,
+  "of": 21,
+  "findings": {
+   "N04": "typo: E04 explains the difference",
+   "N06": "Q1 conversion: 14 Tagen = 2 semaines",
+   "N07": "Q3 adults: '18 Jahren' = 'adultes'",
+   "N08": "Q3 adults: '18 Jahren' = 'adulti'",
+   "N13": "typo: E05 explains the difference",
+   "N14": "Q2 interval: '2 jours' = 'zweiten Tag'",
+   "N15": "Q2 interval: '2 giorni' = 'zweiten Tag'",
+   "N16": "typo: E01 explains the difference",
+   "N17": "typo: E01 explains the difference"
+  }
+ },
+ "terminology": {
+  "pairs": 5,
+  "pairs_file": "data/audit/term_pairs_20261006.json",
+  "pairs_meta": {
+   "generated_by": "python3 -m gleichlaut.audit --date 20261006",
+   "date": "20261006",
+   "snapshots": [
+    "20260219",
+    "20260304",
+    "20260401",
+    "20260601",
+    "20260701",
+    "20260801",
+    "20260901",
+    "20261001",
+    "20261006"
+   ],
+   "items": "data/items/items_fresh.json",
+   "units": {
+    "snapshots": 459,
+    "items": 166
+   },
+   "rules": {
+    "max_tokens": 8,
+    "rewrite_similarity": 0.5,
+    "position_tolerance": 0.15,
+    "min_support": 2,
+    "min_stem_letters": 6,
+    "dice": 0.5,
+    "context": 3
+   }
+  },
+  "findings": 11,
+  "limitations": 7,
+  "by_pair": {
+   "fr: et ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine ii -> et ou d'un antagoniste des récepteurs de l'angiotensine ii (DE angiotensin-ii-antagonist)": 4,
+   "it: o di un cosiddetti antagonisti del recettore dell'angiotensina -> o di un antagonista del recettore dell'angiotensina (DE angiotensin-ii-antagonist)": 4,
+   "fr: limitation doit être communiqué à l'assureur maladie -> limitation doit être transmis à l'assureur maladie (DE limitierung)": 3
+  }
+ },
  "recall": {
   "limitations": 10,
   "of": 10,
@@ -439,55 +500,64 @@
    "number": 115,
    "unit": 0,
    "language": 0,
-   "editorial": 14
+   "editorial": 14,
+   "terminology": 76
   },
   "20260304": {
    "number": 111,
    "unit": 0,
    "language": 0,
-   "editorial": 14
+   "editorial": 14,
+   "terminology": 64
   },
   "20260401": {
    "number": 111,
    "unit": 0,
    "language": 0,
-   "editorial": 14
+   "editorial": 14,
+   "terminology": 64
   },
   "20260601": {
    "number": 21,
    "unit": 0,
    "language": 0,
-   "editorial": 5
+   "editorial": 5,
+   "terminology": 8
   },
   "20260701": {
    "number": 21,
    "unit": 0,
    "language": 0,
-   "editorial": 5
+   "editorial": 5,
+   "terminology": 8
   },
   "20260801": {
    "number": 21,
    "unit": 0,
    "language": 1,
-   "editorial": 5
+   "editorial": 5,
+   "terminology": 9
   },
   "20260901": {
    "number": 21,
    "unit": 0,
    "language": 1,
-   "editorial": 5
+   "editorial": 5,
+   "terminology": 22
   },
   "20261001": {
    "number": 21,
    "unit": 0,
    "language": 1,
-   "editorial": 5
+   "editorial": 5,
+   "terminology": 11
   },
   "20261006": {
    "number": 21,
    "unit": 0,
    "language": 1,
-   "editorial": 5
+   "editorial": 5,
+   "terminology": 11
   }
  },
  "language_any_snapshot": [
@@ -517,6 +587,11 @@
   },
   "editorial": {
    "20260219": 5
+  },
+  "terminology": {
+   "20260219": 8,
+   "20260801": 1,
+   "20260901": 2
   }
  },
  "stats_file": "data/audit/lang_stats_20261006.json.gz",
@@ -533,7 +608,7 @@
    "distinct_pairs": 1618,
    "term_pairs": 297,
    "exceptions": 722,
-   "ids_with_exception": 483,
+   "ids_with_exception": 484,
    "examples": [
     [
      "patienten",
@@ -583,7 +658,7 @@
    "distinct_pairs": 1620,
    "term_pairs": 314,
    "exceptions": 741,
-   "ids_with_exception": 474,
+   "ids_with_exception": 475,
    "examples": [
     [
      "patienten",
@@ -643,7 +718,8 @@
   "with_preexisting": 2,
   "with_language_or_number": 2,
   "with_editorial": 0,
-  "with_any": 2,
+  "with_terminology": 36,
+  "with_any": 38,
   "pairs": 2,
   "by_kind": {
    "number": [
@@ -653,10 +729,48 @@
    "language": [
     "wb079-it"
    ],
-   "editorial": []
+   "editorial": [],
+   "terminology": [
+    "wb015-fr",
+    "wb015-it",
+    "wb016-fr",
+    "wb016-it",
+    "wb017-fr",
+    "wb017-it",
+    "wb018-fr",
+    "wb018-it",
+    "wb019-fr",
+    "wb019-it",
+    "wb020-fr",
+    "wb020-it",
+    "wb021-fr",
+    "wb021-it",
+    "wb022-fr",
+    "wb022-it",
+    "wb023-fr",
+    "wb023-it",
+    "wb024-fr",
+    "wb024-it",
+    "wb025-fr",
+    "wb025-it",
+    "wb026-fr",
+    "wb026-it",
+    "wb027-fr",
+    "wb027-it",
+    "wb028-fr",
+    "wb028-it",
+    "wb029-fr",
+    "wb029-it",
+    "wb030-fr",
+    "wb030-it",
+    "wb031-fr",
+    "wb031-it",
+    "wb032-fr",
+    "wb032-it"
+   ]
   }
  },
- "worklist_new": {
-  "pool": 6
+ "worklist_terms": {
+  "pool": 11
  }
 }

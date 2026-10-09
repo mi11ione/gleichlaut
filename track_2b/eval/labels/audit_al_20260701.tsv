@@ -1,0 +1,4 @@
+id	kind	ref	lang	real	note
+AL00	number	None	it	yes	DE/FR: billable if 6260.56 performed more than 14 times; IT says more than 13 times.
+AL01	number	None	fr	yes	FR/IT: 1 as first + max 4 additional; DE parenthesis garbled, says 1 as additional, omits max 4 (total 5 consistent).
+AL02	number	None	fr	no	DE 'Doppelbestimmung' = FR 'déterminée deux fois'; same meaning.

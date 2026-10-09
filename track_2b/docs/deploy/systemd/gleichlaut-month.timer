@@ -1,4 +1,4 @@
-# BAG publishes on the 1st; run on the 2nd at 06:00, after the canary (05:00). Persistent: a missed run happens at boot.
+# BAG publishes on the 1st; run the 8B lane on the 2nd at 06:00. Persistent: a missed run happens at boot.
 [Unit]
 Description=Gleichlaut monthly run
 

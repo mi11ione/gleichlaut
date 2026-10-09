@@ -1,0 +1,504 @@
+{
+"summary": {
+"generated_by": "python3 -m gleichlaut.audit --list migel --file <xlsx>",
+"list": "migel",
+"date": "20260701",
+"model_calls": 0,
+"source": {
+"name": "Mittel- und Gegenständeliste (MiGeL, KLV Anhang 2)",
+"page": "https://www.bag.admin.ch/de/mittel-und-gegenstaendeliste-migel",
+"file": "https://www.bag.admin.ch/dam/de/sd-web/4GEgEMgJ45A6/Mittel-%20und%20Gegenst%C3%A4ndeliste%20per%201.%20Juli%202026%20(in%20Excel-Format).xlsx",
+"version": "per 1. Juli 2026",
+"sha256": "6335483a46fc558cba2591896d38bc97911b40a8f4eef46729dedf0b101b1df2",
+"bytes": 532339
+},
+"parse": {
+"sheets": {
+"de": "MiGeL D",
+"fr": "MiGeL F",
+"it": "MiGeL I"
+},
+"header_row": 0,
+"columns": {
+"de": {
+"Bezeichnung": "Bezeichnung",
+"Limitation": "Limitation"
+},
+"fr": {
+"Bezeichnung": "Dénomination",
+"Limitation": "Limitation"
+},
+"it": {
+"Bezeichnung": "Denominazione",
+"Limitation": "Limitazione"
+}
+},
+"rows": {
+"de": 1036,
+"fr": 1036,
+"it": 1036
+},
+"positions_aligned": 1036,
+"positions_unaligned": {}
+},
+"n_fields": 1304,
+"n_fields_by_lang": {
+"de": 1304,
+"fr": 1304,
+"it": 1302
+},
+"fields_by_column": {
+"Bezeichnung": 1036,
+"Limitation": 268
+},
+"findings_all": 8,
+"by_kind": {
+"number": 7,
+"unit": 0,
+"language": 0,
+"editorial": 1
+},
+"by_kind_lang": {
+"number": {
+"fr": 6,
+"it": 1
+},
+"unit": {},
+"language": {},
+"editorial": {
+"fr": 1
+}
+},
+"by_kind_field": {
+"number": {
+"Bezeichnung": 3,
+"Limitation": 4
+},
+"unit": {},
+"language": {},
+"editorial": {
+"Limitation": 1
+}
+},
+"editorial_by_rule": {
+"E3": 1
+},
+"positions_with_finding": 8,
+"likely_equivalent": {
+"number": 0,
+"of": 7
+},
+"count_only_differences": 17,
+"unbound_differences": 58,
+"suppressed": {
+"one": 17,
+"ordinal_word": 3
+},
+"language_fields_judged": {
+"de": 434,
+"fr": 590,
+"it": 535
+},
+"language_fields_too_short": {
+"de": 870,
+"fr": 714,
+"it": 767
+},
+"unit_one_sided": [
+{
+"id": "24.01.01.00.1|Limitation",
+"lang": "fr",
+"value": "6",
+"de_units": [
+"m"
+],
+"tgt_units": [
+"m",
+"y"
+]
+},
+{
+"id": "24.01.01.00.1|Limitation",
+"lang": "it",
+"value": "6",
+"de_units": [
+"m"
+],
+"tgt_units": [
+"m",
+"y"
+]
+},
+{
+"id": "35.11.01.01.2|Bezeichnung",
+"lang": "fr",
+"value": "24",
+"de_units": [
+"h"
+],
+"tgt_units": [
+"d",
+"h"
+]
+}
+],
+"worklist": {
+"n": 8,
+"pool": 8
+}
+},
+"findings": [
+{
+"id": "35.05.01.05.1|Bezeichnung",
+"product": [
+"35.05.01.05.1"
+],
+"lang": "fr",
+"kind": "number",
+"score": 18,
+"half": "dev",
+"group": "037476af15",
+"de_only": [
+{
+"value": "4",
+"n": 1,
+"unit": "cm",
+"src": "digit",
+"context": [
+"Aktiviertes Wundkissen zur Nasstherapie, steril 8x1[4] cm oval"
+]
+}
+],
+"tgt_only": [
+{
+"value": "14",
+"n": 1,
+"unit": "cm",
+"src": "digit",
+"context": [
+"…éraires activés pour thérapie en milieu humide, stériles 8x7[14] cm"
+]
+}
+],
+"description": "DE has 4 (cm), FR does not; FR has 14 (cm), DE does not",
+"rank": 1,
+"fid": "N01",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"Aktiviertes Wundkissen zur Nasstherapie, steril 8x1[4] cm oval",
+"…éraires activés pour thérapie en milieu humide, stériles 8x7[14] cm"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"position": "35.05.01.05.1",
+"field": "Bezeichnung"
+},
+{
+"id": "01.01.04.00.1|Limitation",
+"product": [
+"01.01.04.00.1"
+],
+"lang": "fr",
+"kind": "number",
+"score": 9,
+"half": "held",
+"group": "be5321e779",
+"de_only": [],
+"tgt_only": [
+{
+"value": "2",
+"n": 1,
+"unit": "fois",
+"src": "word",
+"context": [
+"… Pour les bébés prématurés un montant pouvant aller jusqu’à [deux] fois le montant maximum indiqué peut être rémunéré Applicab…"
+]
+}
+],
+"description": "FR has 2 (fois), DE does not",
+"rank": 2,
+"fid": "N02",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"… Pour les bébés prématurés un montant pouvant aller jusqu’à [deux] fois le montant maximum indiqué peut être rémunéré Applicab…"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"position": "01.01.04.00.1",
+"field": "Limitation"
+},
+{
+"id": "03.06.01.02.1|Bezeichnung",
+"product": [
+"03.06.01.02.1"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "held",
+"group": "db046b9ba3",
+"de_only": [],
+"tgt_only": [
+{
+"value": "5",
+"n": 1,
+"unit": "anni",
+"src": "digit",
+"context": [
+"…tatile, acquisto Limitazione: al massimo 1 apparecchio ogni [5] anni a terapia"
+]
+}
+],
+"description": "IT has 5 (anni), DE does not",
+"rank": 3,
+"fid": "N03",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"…tatile, acquisto Limitazione: al massimo 1 apparecchio ogni [5] anni a terapia"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"position": "03.06.01.02.1",
+"field": "Bezeichnung"
+},
+{
+"id": "21.03.01.01.1|Limitation",
+"product": [
+"21.03.01.01.1"
+],
+"lang": "fr",
+"kind": "number",
+"score": 9,
+"half": "dev",
+"group": "a972d72f4b",
+"de_only": [],
+"tgt_only": [
+{
+"value": "2",
+"n": 1,
+"unit": "fois",
+"src": "word",
+"context": [
+"… présence d’au moins une des indications suivantes, jusqu’à [deux] fois le nombre susmentionné de supports de réactifs au maxi…"
+]
+}
+],
+"description": "FR has 2 (fois), DE does not",
+"rank": 4,
+"fid": "N04",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"… présence d’au moins une des indications suivantes, jusqu’à [deux] fois le nombre susmentionné de supports de réactifs au maxi…"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"position": "21.03.01.01.1",
+"field": "Limitation"
+},
+{
+"id": "35.10.03.02.1|Bezeichnung",
+"product": [
+"35.10.03.02.1"
+],
+"lang": "fr",
+"kind": "number",
+"score": 9,
+"half": "dev",
+"group": "ab124784ed",
+"de_only": [],
+"tgt_only": [
+{
+"value": "5",
+"n": 1,
+"unit": "cm",
+"src": "digit",
+"context": [
+"…drocellulaires avec inhibiteur de protéases, stériles 7,5x7,[5] cm"
+]
+}
+],
+"description": "FR has 5 (cm), DE does not",
+"rank": 5,
+"fid": "N05",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"…drocellulaires avec inhibiteur de protéases, stériles 7,5x7,[5] cm"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"position": "35.10.03.02.1",
+"field": "Bezeichnung"
+},
+{
+"id": "17.20.01.00.1|Limitation",
+"product": [
+"17.20.01.00.1"
+],
+"lang": "fr",
+"kind": "number",
+"score": 8,
+"half": "dev",
+"group": "6b60774bed",
+"de_only": [
+{
+"value": "2",
+"n": 1,
+"unit": "Monaten",
+"src": "digit",
+"context": [
+"…ücksichtigt und Sofern im Rahmen eines Therapieversuchs von [2]-3 Monaten eine Volumenreduktion von ≥ 100ml (Volumenberechn…"
+]
+},
+{
+"value": "3",
+"n": 1,
+"unit": "Monaten",
+"src": "digit",
+"context": [
+"…ksichtigt und Sofern im Rahmen eines Therapieversuchs von 2-[3] Monaten eine Volumenreduktion von ≥ 100ml (Volumenberechnun…"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 2 (Monaten), FR does not; DE has 3 (Monaten), FR does not",
+"rank": 6,
+"fid": "N06",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"…ücksichtigt und Sofern im Rahmen eines Therapieversuchs von [2]-3 Monaten eine Volumenreduktion von ≥ 100ml (Volumenberechn…",
+"…ksichtigt und Sofern im Rahmen eines Therapieversuchs von 2-[3] Monaten eine Volumenreduktion von ≥ 100ml (Volumenberechnun…"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"position": "17.20.01.00.1",
+"field": "Limitation"
+},
+{
+"id": "17.20.01.01.1|Limitation",
+"product": [
+"17.20.01.01.1"
+],
+"lang": "fr",
+"kind": "number",
+"score": 8,
+"half": "held",
+"group": "6b60774bed",
+"de_only": [
+{
+"value": "2",
+"n": 1,
+"unit": "Monaten",
+"src": "digit",
+"context": [
+"…ücksichtigt und Sofern im Rahmen eines Therapieversuchs von [2]-3 Monaten eine Volumenreduktion von ≥ 100ml (Volumenberechn…"
+]
+},
+{
+"value": "3",
+"n": 1,
+"unit": "Monaten",
+"src": "digit",
+"context": [
+"…ksichtigt und Sofern im Rahmen eines Therapieversuchs von 2-[3] Monaten eine Volumenreduktion von ≥ 100ml (Volumenberechnun…"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 2 (Monaten), FR does not; DE has 3 (Monaten), FR does not",
+"rank": 7,
+"fid": "N07",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"…ücksichtigt und Sofern im Rahmen eines Therapieversuchs von [2]-3 Monaten eine Volumenreduktion von ≥ 100ml (Volumenberechn…",
+"…ksichtigt und Sofern im Rahmen eines Therapieversuchs von 2-[3] Monaten eine Volumenreduktion von ≥ 100ml (Volumenberechnun…"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"position": "17.20.01.01.1",
+"field": "Limitation"
+},
+{
+"id": "35.06.06a|Limitation",
+"product": [
+"35.06.06a"
+],
+"lang": "fr",
+"kind": "editorial",
+"languages": [
+"fr"
+],
+"odd_one_out": "fr",
+"rule": "E3",
+"surface": "30jours",
+"suggestion": "30 jours",
+"values": [
+"30"
+],
+"others_have_value": [
+"de",
+"it"
+],
+"half": "dev",
+"context": [
+"…6.08a). Si l’utilisation est prolongée au-delà de [30jours], prise en charge uniquement sur garantie préalabl…"
+],
+"description": "Probable typo in the French text: '30jours' (likely '30 jours', rule E3).",
+"suggested_action": null,
+"rank": 1,
+"fid": "E01",
+"likely_equivalent": false,
+"equivalence": null,
+"position": "35.06.06a",
+"field": "Limitation"
+}
+]
+}

@@ -20,6 +20,7 @@
    "editorial": 5,
    "language": 1,
    "number": 21,
+   "terminology": 11,
    "unit": 0
   },
   "by_kind_lang": {
@@ -34,6 +35,10 @@
    "number": {
     "fr": 14,
     "it": 7
+   },
+   "terminology": {
+    "fr": 7,
+    "it": 4
    },
    "unit": {}
   },
@@ -50,7 +55,7 @@
    "E4": 1
   },
   "findings": 21,
-  "findings_all": 27,
+  "findings_all": 38,
   "findings_note": "'findings' counts the number findings (round 2); all kinds: by_kind",
   "first_seen_by_kind": {
    "editorial": {
@@ -63,6 +68,11 @@
     "20260219": 19,
     "20260601": 2
    },
+   "terminology": {
+    "20260219": 8,
+    "20260801": 1,
+    "20260901": 2
+   },
    "unit": {}
   },
   "fresh": {
@@ -74,14 +84,53 @@
     "number": [
      "wb004-it"
     ],
+    "terminology": [
+     "wb015-fr",
+     "wb015-it",
+     "wb016-fr",
+     "wb016-it",
+     "wb017-fr",
+     "wb017-it",
+     "wb018-fr",
+     "wb018-it",
+     "wb019-fr",
+     "wb019-it",
+     "wb020-fr",
+     "wb020-it",
+     "wb021-fr",
+     "wb021-it",
+     "wb022-fr",
+     "wb022-it",
+     "wb023-fr",
+     "wb023-it",
+     "wb024-fr",
+     "wb024-it",
+     "wb025-fr",
+     "wb025-it",
+     "wb026-fr",
+     "wb026-it",
+     "wb027-fr",
+     "wb027-it",
+     "wb028-fr",
+     "wb028-it",
+     "wb029-fr",
+     "wb029-it",
+     "wb030-fr",
+     "wb030-it",
+     "wb031-fr",
+     "wb031-it",
+     "wb032-fr",
+     "wb032-it"
+    ],
     "unit": []
    },
    "items": 166,
    "pairs": 2,
-   "with_any": 2,
+   "with_any": 38,
    "with_editorial": 0,
    "with_language_or_number": 2,
-   "with_preexisting": 2
+   "with_preexisting": 2,
+   "with_terminology": 36
   },
   "generated_by": "python3 -m gleichlaut.audit --hist <dir> --date 20261006",
   "keytruda_bonus": {
@@ -138,7 +187,23 @@
     "seen_in": 4
    }
   ],
-  "limitations_with_any_finding": 20,
+  "likely_equivalent": {
+   "findings": {
+    "N04": "typo: E04 explains the difference",
+    "N06": "Q1 conversion: 14 Tagen = 2 semaines",
+    "N07": "Q3 adults: '18 Jahren' = 'adultes'",
+    "N08": "Q3 adults: '18 Jahren' = 'adulti'",
+    "N13": "typo: E05 explains the difference",
+    "N14": "Q2 interval: '2 jours' = 'zweiten Tag'",
+    "N15": "Q2 interval: '2 giorni' = 'zweiten Tag'",
+    "N16": "typo: E01 explains the difference",
+    "N17": "typo: E01 explains the difference"
+   },
+   "note": "triage hint on number findings (Q1-Q5, typo); ids, ranks and counts unchanged",
+   "number": 9,
+   "of": 21
+  },
+  "limitations_with_any_finding": 27,
   "limitations_with_finding": 17,
   "model_calls": 0,
   "n_limitations": 1688,
@@ -161,54 +226,63 @@
     "editorial": 14,
     "language": 0,
     "number": 115,
+    "terminology": 76,
     "unit": 0
    },
    "20260304": {
     "editorial": 14,
     "language": 0,
     "number": 111,
+    "terminology": 64,
     "unit": 0
    },
    "20260401": {
     "editorial": 14,
     "language": 0,
     "number": 111,
+    "terminology": 64,
     "unit": 0
    },
    "20260601": {
     "editorial": 5,
     "language": 0,
     "number": 21,
+    "terminology": 8,
     "unit": 0
    },
    "20260701": {
     "editorial": 5,
     "language": 0,
     "number": 21,
+    "terminology": 8,
     "unit": 0
    },
    "20260801": {
     "editorial": 5,
     "language": 1,
     "number": 21,
+    "terminology": 9,
     "unit": 0
    },
    "20260901": {
     "editorial": 5,
     "language": 1,
     "number": 21,
+    "terminology": 22,
     "unit": 0
    },
    "20261001": {
     "editorial": 5,
     "language": 1,
     "number": 21,
+    "terminology": 11,
     "unit": 0
    },
    "20261006": {
     "editorial": 5,
     "language": 1,
     "number": 21,
+    "terminology": 11,
     "unit": 0
    }
   },
@@ -443,7 +517,7 @@
      ]
     ],
     "exceptions": 722,
-    "ids_with_exception": 483,
+    "ids_with_exception": 484,
     "p": 0.9,
     "support": 10,
     "term_pairs": 297
@@ -493,7 +567,7 @@
      ]
     ],
     "exceptions": 741,
-    "ids_with_exception": 474,
+    "ids_with_exception": 475,
     "p": 0.9,
     "support": 10,
     "term_pairs": 314
@@ -509,6 +583,46 @@
     ]
    },
    "status": "off: not precise enough (docs/audit.md)"
+  },
+  "terminology": {
+   "by_pair": {
+    "fr: et ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine ii -> et ou d'un antagoniste des récepteurs de l'angiotensine ii (DE angiotensin-ii-antagonist)": 4,
+    "fr: limitation doit être communiqué à l'assureur maladie -> limitation doit être transmis à l'assureur maladie (DE limitierung)": 3,
+    "it: o di un cosiddetti antagonisti del recettore dell'angiotensina -> o di un antagonista del recettore dell'angiotensina (DE angiotensin-ii-antagonist)": 4
+   },
+   "findings": 11,
+   "limitations": 7,
+   "pairs": 5,
+   "pairs_file": "data/audit/term_pairs_20261006.json",
+   "pairs_meta": {
+    "date": "20261006",
+    "generated_by": "python3 -m gleichlaut.audit --date 20261006",
+    "items": "data/items/items_fresh.json",
+    "rules": {
+     "context": 3,
+     "dice": 0.5,
+     "max_tokens": 8,
+     "min_stem_letters": 6,
+     "min_support": 2,
+     "position_tolerance": 0.15,
+     "rewrite_similarity": 0.5
+    },
+    "snapshots": [
+     "20260219",
+     "20260304",
+     "20260401",
+     "20260601",
+     "20260701",
+     "20260801",
+     "20260901",
+     "20261001",
+     "20261006"
+    ],
+    "units": {
+     "items": 166,
+     "snapshots": 459
+    }
+   }
   },
   "unbound_differences": 148,
   "unit_one_sided": [
@@ -669,8 +783,8 @@
     "value": "10"
    }
   ],
-  "worklist_new": {
-   "pool": 6
+  "worklist_terms": {
+   "pool": 11
   }
  },
  "v2": {

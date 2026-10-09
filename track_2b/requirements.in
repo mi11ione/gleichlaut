@@ -1,0 +1,3 @@
+# Runtime of the base image and plain-Python installs: XSD validation of the XLIFF / FHIR output. Everything else is the
+# Python standard library. Hash-pinned lock: requirements.txt (python3 tools/supply_chain.py lock).
+lxml==6.0.2  # BSD-3-Clause; XLIFF 2.1 / 1.2 and FHIR validation

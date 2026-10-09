@@ -8,24 +8,34 @@ The audit separates the two cases: **"the old French/Italian already disagrees w
 It is deterministic code: no model calls, Python standard library only.
 
 ```bash
-PYTHONPATH=src python3 -m gleichlaut.audit --hist DIR --date 20261006 --out data/audit [--worklist DIR] [--worklist-new DIR] [--no-dating]
+PYTHONPATH=src python3 -m gleichlaut.audit --hist DIR --date 20261006 --out data/audit \
+    [--worklist DIR] [--worklist-new DIR] [--worklist-terms DIR] [--no-dating] [--terms FILE] [--fail-on-findings]
+PYTHONPATH=src python3 -m gleichlaut.audit --list migel|al --file PATH [--out data/audit] [--worklist DIR] [--fail-on-findings]
 ```
 
-`--hist` defaults to `$GLEICHLAUT_HIST`. The command writes three files to `data/audit/`:
+`gleichlaut audit ...` passes the same arguments through. `--hist` defaults to `$GLEICHLAUT_HIST`. The SL run writes five
+files to `--out`:
 
-- `audit_20261006.json`: every finding, plus the hits on the fresh items;
-- `audit_20261006_summary.json`: the counts;
-- `lang_stats_20261006.json.gz`: the register statistics that the language and editorial checks use.
+- `audit_<date>.json`: every finding, plus the hits on the fresh items;
+- `audit_<date>_summary.json`: the counts;
+- `audit_texts_<date>.json`: the DE/FR/IT texts of every limitation with a finding, so the register tab can show excerpts
+  without the snapshot files;
+- `lang_stats_<date>.json.gz`: the register statistics that the language and editorial checks use;
+- `term_pairs_<date>.json`: the terminology pairs mined from BAG's own corrections (`--terms FILE` reuses a file instead).
 
-Every finding has a `kind`: `number`, `unit`, `language` or `editorial`. Unless `--no-dating` is given, the run also checks
-the 9 usable 2026 snapshots (all three languages present) to date each finding. That takes about 1 minute.
+Every finding has a `kind`: `number`, `unit`, `language`, `editorial` or `terminology`, and a boolean `likely_equivalent`
+(with `equivalence`, the reason). Unless `--no-dating` is given, the run also checks the 9 usable 2026 snapshots (all
+three languages present) to date each finding. The whole run takes about 3 minutes. `--fail-on-findings` makes the exit
+code 1 when any finding is not marked `likely_equivalent` (the `gleichlaut audit` wrapper maps it to its own code).
 
 From code, `audit.audit_item(x)` takes an item with `de_old`, `tgt_old` and `lang` and returns a list of dicts. Each dict
 has `kind`, `lang`, `detail` (one sentence in English), `values` and, where it applies, `odd_one_out`, plus `text` (one
 phrase in the item's language, for the review banner). Number findings keep the round-2 keys (`side`, `value`, `unit`,
-`context`), so `emit.explain.divergence` renders them as before. Unit findings carry the same keys for the target side.
-`kinds=(...)` restricts the kinds returned (default: all four). Without a hist dir the function uses the shipped
-`lang_stats_20261006.json.gz`.
+`context`), so `emit.explain.divergence` renders them as before; they also carry `likely_equivalent` and `equivalence`.
+Unit findings carry the same keys for the target side. Terminology findings carry `old`, `new`, `de_term`,
+`corrected_in` and `n_limitations` (no `side`/`value` keys, so the banner uses their `text`). `kinds=(...)` restricts the
+kinds returned (default: all five). Without a hist dir the function uses the shipped `lang_stats_20261006.json.gz` and
+`term_pairs_20261006.json` (`terms=[]` turns the terminology check off).
 
 ## Kind `number` (round 2, unchanged)
 
@@ -124,9 +134,114 @@ Conservative typo rules, run on each of the three texts (`editorial`):
 suggestion and the context. `others_have_value` lists the other languages that state the corrected value. When both do,
 `odd_one_out` is the typo's language.
 
+## Kind `terminology` (round 4)
+
+BAG's own corrections are the lexicon: no hand list. Code: the round-4 block of `audit.py` (`term_edits`, `mine_terms`,
+`term_check`).
+
+- **Sources of corrections.** (a) The 8 transitions between the 9 usable 2026 snapshots. Limitations are aligned by
+  product and position (the ids of the Feb–Apr snapshots change from one snapshot to the next), and by id from June on.
+  (b) The recorded BAG amendments of the item set (`--items`, default `data/items/items_fresh.json`: BAG's old and new
+  DE/FR/IT texts, Jul 2025 → 19 Feb 2026).
+- **T1 edit.** A token `replace` between the old and the new target text: 1–8 tokens on each side (lower-cased, ’ = ',
+  punctuation ignored), no digit (numbers are the number check's), a word of at least 3 letters on each side, not an
+  accent-only change and not a one-word inflection. A target pair with token similarity < 0.5 is a retranslation; no
+  edits are taken from it.
+- **T2 the German does not explain it.** The German is unchanged, or it changed (similarity ≥ 0.5) only at places more
+  than 0.15 (relative position) away from the target edit.
+- **T3 support.** Kept when BAG applied the same pair in ≥ 2 limitations (distinct new German texts) or ≥ 2 transitions,
+  and the reverse edit never occurs.
+- **T4 the German term.** The German word stems (≥ 6 letters, not a function word, not a word of the target texts) in the
+  old and new German of every instance; the one with the highest Dice between "stem in the German" and "old or new
+  phrase in the target" over the current register. Kept when Dice ≥ 0.5.
+- **T5 phrase.** Old and new phrase are extended by the context tokens (up to 3 each side) that all instances share.
+- **T6 flag.** A current text whose target contains the old phrase and whose German contains the term, with fewer
+  occurrences of the new phrase than of the German term.
+
+**Result on 6 Oct 2026.** 5 pairs, 11 findings on 7 limitations (7 FR, 4 IT):
+
+| pair | German term | BAG applied it | still old on 6 Oct |
+|---|---|---|---|
+| FR `inhibiteur de l'enzyme de conversion de l'angiotensine II` → `antagoniste des récepteurs de l'angiotensine II` | Angiotensin-II-Antagonisten (Dice 1.0) | 18 limitations, 19 Feb 2026 (item set) | `T01`–`T04`: COVERAM-PLUS, PERAMLIND.me, PERAMLIND.sp, PERINDAMLIND |
+| IT `di un cosiddetti antagonisti del recettore dell'angiotensina` → `di un antagonista del recettore dell'angiotensina` | same | 18 limitations, 19 Feb 2026 (item set) | `T05`–`T08`: the same four products |
+| FR `limitation doit être communiqué à l'assureur-maladie` → `… transmis à …` | Limitierung (Dice 0.62) | 11 OPDIVO limitations, 1 Oct 2026 (snapshots) | `T09`–`T11`: JEMPERLI.01, JEMPERLI.02, OPZELURA.01 |
+| IT `alla cassa malattia` → `all'assicuratore malattie` (two contexts) | Angiologie (see caveats) | 3 and 2 limitations, 4 Mar 2026 | none |
+
+The four angiotensin products have carried the old French and Italian since at least 19 Feb 2026 (present in all 9
+snapshots). **The angiotensin pairs come from source (b), not from the 2026 snapshots:** BAG corrected those texts between
+July 2025 and 19 Feb 2026, and inside 2026 the four remaining texts never changed. From the snapshots alone the rule finds
+only the "communiqué → transmis" and "cassa malattia" pairs.
+
+`audit_item` uses the shipped `term_pairs_20261006.json`. On the 166 fresh items it gives a terminology notice to the 18
+old French texts with the angiotensin error (`wb015-fr` … `wb032-fr`) and to their 18 Italian twins. That is by
+construction: those 36 amendments are where the pairs were learned, so the notices are not evidence that the rule
+generalises. The independent evidence is the four register products that BAG has not corrected.
+
+## `likely_equivalent` (round 4, triage only)
+
+A boolean on every finding, with `equivalence` (the reason). It never changes a finding's id, rank or any count; it is
+for sorting and for `--fail-on-findings`. Only number findings are assessed (the other kinds are `false`). A number
+finding is likely equivalent when a typo finding explains it (`explained_by`), or when **every** one-sided value has one of:
+
+- **Q1 conversion** against any value of the other text: N days = N/7 weeks, N months = N/12 years, h/d, min/h, µg/mg/g/kg,
+  ml/dl/l (`innerhalb von 14 Tagen` = `dans les deux semaines`);
+- **Q2 interval**: an ordinal of N followed by the same time unit on the other side (`jeden zweiten Tag` = `tous les deux
+  jours` = `ogni due giorni`), and `un jour sur deux` / `giorni alterni`;
+- **Q3 adults**: 18 years on one side, `Erwachsene / volljährig`, `adultes / majeurs`, `adulti / maggiorenni` on the other;
+- **Q4 spelled out**: the other side writes N (13–100) as a word (`dix-huit`, `sechzehn`, `diciotto`);
+- **Q5 boundary**: N and N ± one step with the same unit, one written inclusive (`ab`, `≥`, `dès`, `almeno`, `bis`) and the
+  other strict (`über`, `>`, `plus de`, `oltre`, `unter`, `moins de`).
+
+`6%` vs `6 pour cent` and ranges written `15–30` vs `de 15 à 30` are already reconciled by R2, so they need no rule.
+
+**Check against the round-2 blind labels** (`eval/labels/audit_20261006.tsv`; used as a check, not to fit): 9 of the 11
+findings labelled not real get `likely_equivalent` (LEQVIO ×2, PREVYMIS, FORSTEO by the typo link; BEYFORTUS Q1;
+GALAFOLD ×2 Q2; CERDELGA ×2 Q3). The two EMGALITY findings (120 mg named in German only) stay open: no generic rule
+covers them. **0 of the 10 findings labelled real** get it. That is pinned by a test, which reads the labels. Disclosure:
+the officer's feedback named Galafold, Beyfortus and Cerdelga (5 of the 11), so Q1–Q3 were written with those cases in
+view. The label file had also been opened during orientation, before the rules were written. The 9/11 is therefore not
+an independent estimate; the 0/10 on the real findings is the part that matters.
+
+## Other lists: MiGeL and Analysenliste (round 4)
+
+`gleichlaut.audit_lists` reads BAG's xlsx (stdlib `zipfile` + `xml.etree`): one sheet per language, rows aligned by item
+number (MiGeL `Positions-Nr.`, or the category code for group rows; AL `Pos.-Nr.`). The text columns are MiGeL
+`Bezeichnung` and `Limitation`, and AL `Bezeichnung`, `Limitationen` and `Bemerkungen`. The number, unit, language and
+editorial checks run unchanged, with register statistics built from the list itself. There is no terminology check
+(its pairs come from the SL). Each run writes `data/audit/audit_<list>_<date>.json` (summary with source URL and sha256,
+parse report, findings) and, with `--worklist DIR`, a blind seeded sample of up to 40 findings plus a key map.
+
+The raw files were fetched once from the BAG pages (`docs/sources.md` §6) with the user agent `hackapertus-research/0.1`,
+at most 1 request per second. They are stored outside the repo in `~/Desktop/hackapertus/spikes/lists/raw/`:
+
+| list | version | sha256 | positions (all 3 languages aligned) | DE text fields | findings |
+|---|---|---|---|---|---|
+| MiGeL | per 1 Jul 2026 | `6335483a…` | 1,036 | 1,304 | **8**: number 7 (6 FR, 1 IT), editorial 1 (FR `30jours`); unit 0, language 0 |
+| AL | per 1 Jul 2026 | `0b0730ee…` | 1,280 | 1,933 | **3**: number 3 (2 FR, 1 IT); unit 0, language 0, editorial 0 |
+
+None of the 10 number findings is marked `likely_equivalent`. They are not labelled: all 11 findings are in the blind
+worklists (`annot_lists/migel`, `annot_lists/al`), so precision on these lists is unknown. The texts are short and
+structured. Most language fields are too short to judge (MiGeL DE 870 of 1,304; AL DE 1,294 of 1,933), so the language
+check says little here.
+
+## Quarterly path (BAG officer)
+
+1. Fetch the SL feed of the date into a snapshot dir: `make audit AUDIT_DATE=YYYYMMDD` does steps 1–2 in Docker
+   (fetches missing feeds, writes `out/audit`), or by hand `python -m gleichlaut.sl.ingest YYYYMMDD --out DIR`
+   into `$GLEICHLAUT_HIST`. Keep the earlier snapshots of the same year in that dir: dating and terminology mining
+   use them.
+2. `python -m gleichlaut.audit --hist DIR --date YYYYMMDD --out data/audit` (add `--fail-on-findings` in a scheduled job).
+   This writes the five files above; the register needs `audit_<date>.json` and `audit_texts_<date>.json`, the review page
+   (`audit_item`) needs `lang_stats_<date>.json.gz` and `term_pairs_<date>.json`.
+3. Build the review page with the new file: `gleichlaut ui --audit data/audit/audit_<date>.json` (the UI's `--audit`
+   option). Note that `audit_item` still reads the 20261006 statistics and pairs by default; pass `stats=`/`terms=` or
+   update `STATS`/`TERMS` when a new quarter becomes the reference.
+4. Optional: `--worklist-terms DIR` / `--worklist-new DIR` for blind labelling. For MiGeL/AL, download the current xlsx
+   from the BAG page and run `--list migel|al --file PATH`.
+
 ## Every finding
 
-All findings carry `kind`, `fid` (`N`/`U`/`L`/`E` + rank within the kind), `languages`, `odd_one_out`, `context`,
+All findings carry `kind`, `fid` (`N`/`U`/`L`/`E`/`T` + rank within the kind), `likely_equivalent`, `equivalence`, `languages`, `odd_one_out`, `context`,
 `half`, `first_seen`, `seen_in` and `suggested_action` (a placeholder, always `null`).
 
 **Dating.** The 9 usable 2026 snapshots are 19 Feb, 4 Mar, 1 Apr, 1 Jun, 1 Jul, 1 Aug, 1 Sep, 1 Oct and 6 Oct. The
@@ -175,7 +290,8 @@ is therefore expected and is not evidence about divergences of other kinds.
 
 | | |
 |---|---|
-| Findings by kind | **number 21** (14 FR, 7 IT; unchanged), **unit 0**, **language 1** (IT), **editorial 5** (1 DE, 3 FR, 1 IT); 27 findings on 20 limitations |
+| Findings by kind | **number 21** (14 FR, 7 IT; unchanged), **unit 0**, **language 1** (IT), **editorial 5** (1 DE, 3 FR, 1 IT), **terminology 11** (7 FR, 4 IT; round 4); 38 findings on 27 limitations (27 on 20 without terminology) |
+| Likely equivalent (number) | 9 of 21 (round 4, triage only) |
 | Recall, known divergent limitations (number) | **10 of 10**; 13 of 13 hand-verified values on the right side and in the right language |
 | Keytruda KN045 | **found** (`L01`): the IT field is identical to the FR text (function words fr 39 / it 1, trigram margin 2.16 nat); first seen **1 Aug 2026**, present in 4 snapshots (Aug, Sep, 1 Oct, 6 Oct) |
 | Other language findings | none on 6 Oct, and none in any of the 9 snapshots (`language_any_snapshot`). On 6 Oct no other field passes even rule A alone |
@@ -218,11 +334,15 @@ therefore cannot show it; it appears only in the fresh set's old text (snapshot 
 `eval/results/audit.json`). The 11 others include the three typos above, which the number check misread as divergences.
 They are now reported as editorial findings and linked through `explained_by`.
 
-**Precision: round 3, pending blind labels.** All 6 new findings (1 language, 5 editorial; there is no unit finding) go
-to blind annotators, shuffled with seed 20261010. We did not label them. The worklist has fields `id` B00…, `kind`,
-`lang`, the full `de`/`fr`/`it` texts, `finding` and `question`. The key map holds the CUD, `fid`, rule, half and first
-snapshot. Both are written by `--worklist-new DIR`. Report precision per kind. Six findings give a wide interval, and
-Keytruda was known before the rules existed.
+**Precision: round 3, labelled.** The 6 round-3 findings (1 language, 5 editorial; no unit finding) were labelled blind
+(`eval/labels/audit2_20261006.tsv`): **6/6 real** (Wilson 95% 0.61–1.00): language 1/1 (Keytruda), editorial 5/5. Two
+caveats: six findings give a wide interval, and Keytruda was known before the language rule existed. The rule was
+written to find exactly that case, so it does not count as an independent hit. The round-2 number findings stay at
+**10/21 real** (0.28–0.68).
+
+**Labels status (round 4).** Terminology: all 11 findings are in the blind worklist (`--worklist-terms`, ids C00…, seed
+20261011), not labelled. MiGeL/AL: 11 findings in two blind worklists, not labelled. `likely_equivalent` is checked
+against the round-2 labels (above).
 
 ### Why this differs from the S1 census (6% overall, numbers 3/15)
 
@@ -258,8 +378,21 @@ error. The signal is therefore off; the statistics are reported in the summary (
 
 ## Caveats
 
-- **What is still not checked.** A wrong drug class, a changed operator (≥ vs >), a dropped negation, and a German-only
-  clause without numbers. The term-pair signal for drug classes is off (above).
+- **What is still not checked.** A changed operator (≥ vs >), a dropped negation, and a German-only clause without
+  numbers. A wrong drug class is found only where BAG has corrected the same wording elsewhere (terminology, round 4).
+  The co-occurrence term-pair signal stays off (above).
+- **Terminology.** It can only find wording that BAG has already corrected at least twice. The angiotensin case was the
+  motivating example before the rule existed, and its pair comes from the item set (Jul 2025 → Feb 2026), not from the
+  2026 snapshots. The 36 fresh-item notices are by construction. The German-term choice (T4, highest Dice) can pick a
+  rare word that the instances happen to share: the "cassa malattia" pairs got `Angiologie` (3 texts), which is not the
+  German for that phrase. Those pairs flag nothing on 6 Oct, but they would also miss real cases. One fix after the
+  first run, an implementation bug against the stated rule: the "not a word of the target text" test now compares
+  stems too. Before the fix the same pairs got `Inclisiran` (a product name). No flag changed and no threshold was
+  touched (round-4 block sha256 `e00ba063…` after the fix).
+- **likely_equivalent** is a triage hint written with three of the officer's examples in view. It is not a verdict: a
+  conversion or an "adults" match can hide a real difference elsewhere in the same sentence.
+- **Keytruda** was known before the language rule existed (round 3), and the angiotensin products before the terminology
+  rule. Neither counts as an independent test of its rule.
 - **Unit check.** It needs a difference in both directions. A value that keeps its unit in one place and changes it in
   another (`unit_one_sided`, 13 cases on 6 Oct) is not reported, and neither is a difference that changes both value and
   unit (`28 Tage` vs `4 mois`: that is a number finding, or a conversion). The classes cover time, mass and volume only,
@@ -274,7 +407,9 @@ error. The signal is therefore off; the statistics are reported in the summary (
 - **Recall of the number check is measured on cases a numeric method found.** It is optimistic for divergences in
   general.
 - **Number words.** Only 2–12 (frozen `NUMW`). FR hyphenated numbers (`dix-huit`) are read as 10 and 8.
-- **Duplicated boilerplate.** Three etanercept findings are one copied error, and so are E02/E03. There are fewer
-  independent errors than findings.
+- **Duplicated boilerplate.** Three etanercept findings are one copied error, and so are E02/E03, T01–T04 and T05–T08.
+  There are fewer independent errors than findings.
+- **MiGeL/AL** were run once on the 1 Jul 2026 versions, with no dating and no labels. The `term_pairs()` statistics
+  (off signal) are now deterministic (ties sorted); the FR count of ids with an exception moved from 483 to 484.
 - **No authority.** A finding says the languages differ or that a passage looks mistyped. Which version is right is for
   BAG to decide; it can be the German (see `odd_one_out`).

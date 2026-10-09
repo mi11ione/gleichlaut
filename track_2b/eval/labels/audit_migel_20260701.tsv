@@ -1,0 +1,9 @@
+id	kind	ref	lang	real	note
+MG00	number	None	fr	yes	DE requires therapy trial of 2-3 months; FR mentions a therapeutic trial with no duration (IT keeps 2-3 mesi).
+MG01	number	None	fr	yes	FR size 8x714 cm vs DE/IT 8x14 cm (typo); FR also omits 'oval'.
+MG02	editorial	None	fr	yes	FR '30jours' lacks space (elsewhere '30 jours'); cosmetic typo worth fixing.
+MG03	number	None	fr	yes	DE requires therapy trial of 2-3 months; FR mentions a therapeutic trial with no duration (IT keeps 2-3 mesi).
+MG04	number	None	fr	no	7.5x 7.5 cm vs 7,5x7,5 cm: same size, decimal-separator/spacing only; check misparsed.
+MG05	number	None	it	yes	IT designation contains limitation 'max 1 device every 5 years per therapy'; DE/FR designation have none (misplaced text).
+MG06	number	None	fr	no	DE 'die doppelte ... Anzahl' = FR 'deux fois le nombre'; same quantity.
+MG07	number	None	fr	no	DE 'das Doppelte' = FR 'deux fois le montant'; same quantity.

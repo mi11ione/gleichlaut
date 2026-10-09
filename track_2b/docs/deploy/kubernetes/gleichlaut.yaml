@@ -1,17 +1,25 @@
-# Gleichlaut on Kubernetes (>= 1.27 for CronJob timeZone). kubectl apply -n gleichlaut -f gleichlaut.yaml
-# Build and push the base image first (docker build --target base -t registry.example.ch/gleichlaut:<tag> track_2b) and
-# replace the image below. Create the Secret yourself (never commit it):
-#   kubectl -n gleichlaut create secret generic gleichlaut-endpoint --from-literal=LLM_API_KEY=... \
-#     --from-file=cert.key=/path/to/cert.key          # cert.key: >= 16 random bytes, the certificate HMAC key
+# Gleichlaut on Kubernetes, the default lane: the local Apertus 8B GGUF on CPU (certified build), air-gapped except for the
+# public BAG feed. Kubernetes >= 1.27 (CronJob timeZone). kubectl apply -n gleichlaut -f gleichlaut.yaml -f networkpolicy.yaml
+#
+# Images (build and push both, replace CHANGE-ME below):
+#   docker build --target offline -t registry.example.ch/gleichlaut-offline:<tag> track_2b    # month (llama-cpp-python)
+#   docker build --target base    -t registry.example.ch/gleichlaut:<tag> track_2b            # audit, certify import
+# The GGUF lives on a read-only PVC (gleichlaut-models, ReadOnlyMany). Fill it once with the one-off Job
+# gleichlaut-fetch-gguf in certify-job.yaml (needs egress to huggingface.co once), or copy the file in yourself:
+#   apertus-v1.5-8b-text-q4_k_m.gguf, sha256 a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299
+# Certification: the image carries the shipped build certificate (eval/certificates/8b-q4_k_m-fresh166.json), which the
+# gate verifies at every run. With an HMAC key (GLEICHLAUT_CERT_KEY) run the Job gleichlaut-certify-build of
+# certify-job.yaml once: it imports a signed copy into state/. Optional Secret with the key:
+#   kubectl -n gleichlaut create secret generic gleichlaut-cert-key --from-file=cert.key=/path/to/cert.key
 # Jobs:
-#   gleichlaut-month   2nd of the month 06:00 Zurich: the canary as an init container, then the month (shadow mode)
-#   gleichlaut-audit   quarterly: the DE<->FR/IT congruence audit (no model, no endpoint, no secret)
-#   certification      once per endpoint + model and every 90 days: a one-off Job with the month pod spec and the args
-#                      [python, -m, gleichlaut, certify, --backend, openai] (exit 0 PASS / 5 FAIL / 7 PENDING_REVIEW)
-# The pod runs as uid 10001 (the image's user), non-root, no privilege escalation, all capabilities dropped, read-only
-# root filesystem: it writes only to the PVC (state/ and out/) and an emptyDir /tmp.
-# Exit codes -> alerts: docs/deploy/README.md. A failed Job keeps its pod (failedJobsHistoryLimit); the exit code is in
-# kubectl get pod -l job-name=<job> -o jsonpath='{..state.terminated.exitCode}'.
+#   gleichlaut-month   2nd of the month 06:00 Zurich: shadow mode on the public feed with the local 8B
+#   gleichlaut-audit   quarterly: the DE<->FR/IT congruence audit (no model, no endpoint, no secret); exits 8 on findings
+# The 70B "fewer edits" variant (certified endpoint, canary): gleichlaut-70b.yaml.
+# Pods run as uid 10001 (the image's user), non-root, no privilege escalation, all capabilities dropped, read-only root
+# filesystem: they write only to the data PVC (state/ and out/) and an emptyDir /tmp.
+# Monitoring: every job writes a Prometheus textfile (GLEICHLAUT_METRICS_DIR, here on the data PVC under out/metrics; point a
+# textfile collector or a sidecar at it), and the exit code -> alert table is docs/deploy/README.md. A failed Job keeps its
+# pod (failedJobsHistoryLimit); kubectl get pod -l job-name=<job> -o jsonpath='{..state.terminated.exitCode}'.
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata: { name: gleichlaut-data, labels: { app: gleichlaut } }
@@ -20,21 +28,25 @@ spec:
   resources: { requests: { storage: 10Gi } }   # certificates, records, ~16 MB of snapshots per kept feed date
 ---
 apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: { name: gleichlaut-models, labels: { app: gleichlaut } }
+spec:
+  accessModes: [ReadOnlyMany]                  # mounted read-only by every pod; written once by gleichlaut-fetch-gguf
+  resources: { requests: { storage: 8Gi } }    # the Q4_K_M GGUF is 5,059,027,136 bytes
+---
+apiVersion: v1
 kind: ConfigMap
 metadata: { name: gleichlaut-config, labels: { app: gleichlaut } }
 data:
-  LLM_BASE_URL: "https://llm.internal.example.ch/v1"     # the certified 70B endpoint (exact URL: certificates are bound to it)
-  LLM_NAME: "swiss-ai/apertus-v1.5-70b"
   GLEICHLAUT_STATE: /app/state
   GLEICHLAUT_OUT: /app/out
   GLEICHLAUT_HIST: /app/out/hist
-  GLEICHLAUT_CERT_KEY: /var/run/secrets/gleichlaut/cert.key
-  GLEICHLAUT_TIMEOUT: "120"
-  GLEICHLAUT_RETRIES: "4"
-  GLEICHLAUT_DEADLINE: "300"
-  # behind a proxy / internal CA (mount the CA bundle from a ConfigMap and point SSL_CERT_FILE at it):
+  GLEICHLAUT_MODELS: /models
+  GLEICHLAUT_METRICS_DIR: /app/out/metrics
+  GLEICHLAUT_THREADS: "4"                       # = the CPU request below; llama.cpp otherwise uses the container's CPU set
+  # GLEICHLAUT_CERT_KEY: /var/run/secrets/gleichlaut/cert.key     # with the gleichlaut-cert-key Secret mounted (see below)
+  # behind a proxy / internal CA (for the BAG feed): mount the CA bundle from a ConfigMap and point SSL_CERT_FILE at it
   # HTTPS_PROXY: "http://proxy.example.ch:8080"
-  # NO_PROXY: "llm.internal.example.ch,.svc,.cluster.local"
   # SSL_CERT_FILE: /etc/gleichlaut/ca/ca.pem
 ---
 apiVersion: batch/v1
@@ -50,9 +62,9 @@ spec:
   jobTemplate:
     spec:
       backoffLimit: 0                 # no blind retry: a re-run resumes from records.jsonl; alert on the exit code instead
-      activeDeadlineSeconds: 21600
+      activeDeadlineSeconds: 43200    # 12 h: ~57 items a month x ~153 s per item on 4 cores is ~2.5 h; 10x volume needs ~24 h (docs/operations.md §1)
       template:
-        metadata: { labels: { app: gleichlaut, job: month } }
+        metadata: { labels: { app: gleichlaut, job: month, lane: 8b } }
         spec:
           restartPolicy: Never
           automountServiceAccountToken: false
@@ -62,42 +74,34 @@ spec:
             runAsGroup: 10001
             fsGroup: 10001
             seccompProfile: { type: RuntimeDefault }
-          initContainers:
-            - name: canary            # exit 3 on drift: the month container never starts (it would refuse anyway)
-              image: registry.example.ch/gleichlaut:CHANGE-ME
-              args: [python, -m, gleichlaut, certify, --backend, openai, --canary, "40"]
+          containers:
+            - name: month
+              image: registry.example.ch/gleichlaut-offline:CHANGE-ME
+              args: [python, -m, gleichlaut, month, --backend, llamacpp, --gguf, /models/apertus-v1.5-8b-text-q4_k_m.gguf,
+                     --from, previous, --to, latest, --fetch, --emit]
               envFrom: [{ configMapRef: { name: gleichlaut-config } }]
-              env: &secretenv
-                - name: LLM_API_KEY
-                  valueFrom: { secretKeyRef: { name: gleichlaut-endpoint, key: LLM_API_KEY } }
               securityContext: &ctrsec
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
                 capabilities: { drop: [ALL] }
-              resources: &res
-                requests: { cpu: 250m, memory: 512Mi }
-                limits: { cpu: "2", memory: 2Gi }
-              volumeMounts: &mounts
+              resources:                # the 8B lane: 5.1 GB of weights mapped + KV cache; one requirement: 8 GiB, 4 CPU
+                requests: { cpu: "4", memory: 8Gi }
+                limits: { cpu: "4", memory: 10Gi }
+              volumeMounts:
                 - { name: data, mountPath: /app/state, subPath: state }
                 - { name: data, mountPath: /app/out, subPath: out }
+                - { name: models, mountPath: /models, readOnly: true }
                 - { name: tmp, mountPath: /tmp }
-                - { name: key, mountPath: /var/run/secrets/gleichlaut, readOnly: true }
-          containers:
-            - name: month
-              image: registry.example.ch/gleichlaut:CHANGE-ME
-              args: [python, -m, gleichlaut, month, --from, previous, --to, latest, --fetch]
-              envFrom: [{ configMapRef: { name: gleichlaut-config } }]
-              env: *secretenv
-              securityContext: *ctrsec
-              resources: *res
-              volumeMounts: *mounts
+                # - { name: key, mountPath: /var/run/secrets/gleichlaut, readOnly: true }
           volumes:
             - name: data
               persistentVolumeClaim: { claimName: gleichlaut-data }
+            - name: models
+              persistentVolumeClaim: { claimName: gleichlaut-models, readOnly: true }
             - name: tmp
               emptyDir: { sizeLimit: 256Mi }
-            - name: key
-              secret: { secretName: gleichlaut-endpoint, items: [{ key: cert.key, path: cert.key }], defaultMode: 0400 }
+            # - name: key
+            #   secret: { secretName: gleichlaut-cert-key, items: [{ key: cert.key, path: cert.key }], defaultMode: 0400 }
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -109,7 +113,7 @@ spec:
   failedJobsHistoryLimit: 3
   jobTemplate:
     spec:
-      backoffLimit: 1
+      backoffLimit: 0                 # exit 8 (divergences found) is a result, not a fault: never retried
       activeDeadlineSeconds: 3600
       template:
         metadata: { labels: { app: gleichlaut, job: audit } }
@@ -130,10 +134,8 @@ spec:
                 - |
                   d=$(python -m gleichlaut feeds --latest) || exit 6
                   for L in de fr it; do [ -f /app/out/hist/$d-$L.json ] || python -m gleichlaut.sl.ingest $d --langs $L || exit 6; done
-                  exec python -m gleichlaut audit --hist /app/out/hist --date $d --out /app/out/audit
-              env:
-                - { name: GLEICHLAUT_OUT, value: /app/out }
-                - { name: GLEICHLAUT_HIST, value: /app/out/hist }
+                  exec python -m gleichlaut audit --hist /app/out/hist --date $d --out /app/out/audit --fail-on-findings
+              envFrom: [{ configMapRef: { name: gleichlaut-config } }]
               securityContext:
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
@@ -154,5 +156,6 @@ spec:
 #     expr: kube_job_status_failed{namespace="gleichlaut"} > 0
 #     labels: { severity: warning }
 #     annotations: { summary: "Gleichlaut job {{ $labels.job_name }} failed: look up the exit code (docs/deploy/README.md)" }
-# The exit code decides who acts (README table). To route by code, have a small post-step or the alert receiver read
-# kubectl get pod -l job-name=<job> -o jsonpath='{..state.terminated.exitCode}' and call docs/deploy/alert.sh --code N --name <job>.
+#   - alert: GleichlautMonthStale        # from the textfile metrics (out/metrics/gleichlaut_month.prom)
+#     expr: time() - gleichlaut_last_run_timestamp_seconds{job="month"} > 35 * 86400
+# The exit code decides who acts (README table); alert.sh --code N --name <job> maps it.

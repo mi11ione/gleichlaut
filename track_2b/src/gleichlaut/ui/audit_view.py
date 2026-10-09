@@ -12,13 +12,21 @@ is derived or left empty, never invented:
              on that limitation (it agrees with the German), "de" when both target languages have the same finding
              against the German, "unclear" otherwise.
 Values are highlighted in each snippet: conflicting values (the finding's values, or '[...]' in a context) as 2, other
-numbers as 1, each with its unit when one follows."""
+numbers as 1, each with its unit when one follows.
+  sig        the finding's signature, limitation id + kind + language + values (the conflicting numbers; surface ->
+             suggestion; detected language; old -> new term): the page keys the officer's decisions by it, not by the
+             audit date, so a decision carries over to the next audit run where the same finding reappears.
+  eq         a number finding the audit marks likely_equivalent (probably a paraphrase): its reason (shown collapsed under
+             "probably equivalent wording", never dropped).
+  term       a finding of kind 'terminology' (BAG corrected term X -> Y elsewhere, this text still says X): old term, new
+             term and where BAG already corrected it (explain.term_parts)."""
 import hashlib, json, os, re
 from .. import core
 
 AUDIT = os.path.join(core.ROOT, "data", "audit", "audit_20261006.json")
 RESULTS = os.path.join(core.ROOT, "eval", "results", "audit.json")
-KINDS = ("number", "unit", "language", "editorial")
+KINDS = ("number", "unit", "language", "editorial", "terminology")
+ACTIONS = {"Berichtigung": "exofficio", "GÄL": "holder", "GAEL": "holder", "none": "none", "unclear": "unclear"}
 LANGS = ("de", "fr", "it")
 NUMW = core.gl2.NUMW
 try:
@@ -30,7 +38,29 @@ SENT = re.compile(r"[^.;!?]*(?:[.;!?](?=\s|$)|$)")
 
 def _kind(f):
     k = str(f.get("kind") or "").lower()
+    if k in ("term", "terms", "term_pair"): return "terminology"
     return k if k in KINDS else "number" if k in ("numeric", "num", "numbers", "") else k
+
+
+def _eq(f):
+    """The likely_equivalent reason of a number finding ('' when flagged without a reason), None when not flagged."""
+    e = f.get("likely_equivalent")
+    if not e: return None
+    if isinstance(f.get("equivalence"), str) and f["equivalence"].strip(): return f["equivalence"].strip()
+    if isinstance(e, str): return e
+    if isinstance(e, dict): return str(e.get("reason") or e.get("why") or e.get("detail") or "")
+    return str(f.get("equivalent_reason") or f.get("likely_equivalent_reason") or f.get("reason") or "")
+
+
+def signature(f, lim, L, kind, V, term=None):
+    """limitation id | kind | language | values: the key a decision is stored under across audit runs."""
+    if kind == "editorial" and f.get("surface"): vals = [f"{f.get('surface')}>{f.get('suggestion') or ''}"]
+    elif kind == "language": vals = [str(f.get("detected") or f.get("found") or "")]
+    elif kind == "terminology" and term and (term[0] or term[1]): vals = [f"{term[0] or ''}>{term[1] or ''}"]
+    else:
+        vals = sorted(set().union(*V.values())) if V else []
+        if not vals: vals = [re.sub(r"\s+", " ", str(f.get("description") or f.get("detail") or ""))[:120]]
+    return "|".join([str(lim or ""), kind, str(L or ""), ",".join(vals)])
 
 
 def _canon(v):
@@ -63,7 +93,7 @@ def _num_rx(lang):
 def highlight(text, lang, hot):
     """-> [[text, 0|1|2]]: '[x]' marks and values in `hot` as 2, other numbers as 1 (unit included when one follows)."""
     marks, plain, pos = [], "", 0
-    for m in re.finditer(r"\[([^\]]{1,40})\]", text):
+    for m in re.finditer(r"\[([^\]]{1,240})\]", text):
         plain += text[pos:m.start()]; marks.append((len(plain), len(plain) + len(m.group(1)), 2)); plain += m.group(1); pos = m.end()
     plain += text[pos:]
     words = NUMW.get(lang, NUMW["de"])
@@ -152,7 +182,7 @@ def rows(F, hist=None, date="20261006"):
         def ctx(xs): return next((x["context"][0] for x in xs or [] if x.get("context")), None)
         top = f.get("context")
         top = top[0] if isinstance(top, (list, tuple)) and top else top if isinstance(top, str) else None
-        if top and L in LANGS and L not in snip and kind in ("language", "editorial"): snip[L] = top; src[L] = "context"
+        if top and L in LANGS and L not in snip and kind in ("language", "editorial", "terminology"): snip[L] = top; src[L] = "context"
         if "de" not in snip and ctx(f.get("de_only")): snip["de"] = ctx(f.get("de_only")); src["de"] = "context"
         if L and L not in snip and ctx(f.get("tgt_only")): snip[L] = ctx(f.get("tgt_only")); src[L] = "context"
         for g in twin:
@@ -165,17 +195,26 @@ def rows(F, hist=None, date="20261006"):
                 if k in snip or k not in full: continue
                 snip[k] = _window(full[ref], snip[ref], ref, full[k], k); src[k] = "snapshot"
         odd = f.get("odd_one_out")
+        if odd not in LANGS + ("unclear",) and kind == "terminology" and L in LANGS: odd = L
         if odd not in LANGS + ("unclear",):
             sig = lambda g: ({_canon(x.get("value")) for x in g.get("de_only") or []}, {_canon(x.get("value")) for x in g.get("tgt_only") or []})
             odd = "unclear" if not other else L if not twin else "de" if any(sig(g) == sig(f) for g in twin) else "unclear"
         prod = f.get("product")
         prod = ", ".join(prod) if isinstance(prod, (list, tuple)) else (prod or "")
+        term = None
+        if kind == "terminology":
+            from ..emit.explain import term_parts
+            term = term_parts(f, L)
+        sig = signature(f, lim, L, kind, V, term)
         rid = hashlib.sha1("\0".join(map(str, (lim, L, kind, f.get("description") or f.get("detail") or ""))).encode()).hexdigest()[:10]
         while rid in seen: rid = hashlib.sha1(rid.encode()).hexdigest()[:10]
         seen.add(rid)
-        out.append(dict(rid=rid, rank=f.get("rank"), no=f.get("fid") or (str(f["rank"]) if f.get("rank") is not None else ""),
+        n = 2
+        while any(r["sig"] == sig for r in out): sig = sig.split("#")[0] + f"#{n}"; n += 1
+        out.append(dict(rid=rid, sig=sig, eq=_eq(f) if kind == "number" else None,
+                        term=dict(old=term[0], new=term[1], where=term[2]) if term else None, rank=f.get("rank"), no=f.get("fid") or (str(f["rank"]) if f.get("rank") is not None else ""),
                         lim=lim, product=prod, kind=kind, lang=L, langs=langs, known=bool(f.get("known")),
-                        odd=odd, sug=f.get("suggested_action") or "", desc=f.get("description") or f.get("detail") or "",
+                        odd=odd, sug=ACTIONS.get(f.get("suggested_action") or "", f.get("suggested_action") or ""), desc=f.get("description") or f.get("detail") or "",
                         twin=bool(twin), found=f.get("detected"), expl=f.get("explained_by") or [],
                         fix=[f.get("surface"), f.get("suggestion")] if f.get("surface") and f.get("suggestion") else None,
                         since=f.get("first_seen"), seen=f.get("seen_in"),

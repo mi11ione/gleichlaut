@@ -39,6 +39,7 @@ def compute():
     res["post_edit"] = score.post_edit()
     res["ready_quality"] = score.ready_quality()
     res["audit"] = score.audit_eval()
+    res["audit_more"] = score.audit_more()
     res["baseline_plus"] = score.baseline_plus()
     res["m1_q4_k_m"] = score.m1("q4_k_m")
     res["post_edit_8b_q4_k_m"] = score.post_edit("runs/8b_q4_k_m_fresh166_g3_final.jsonl")

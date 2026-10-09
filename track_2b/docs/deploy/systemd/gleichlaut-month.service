@@ -1,10 +1,14 @@
-# One month of the public feed in shadow mode: --from previous --to latest (see docs/operations.md §5b).
-# For pre-publication drafting replace the ExecStart arguments with: month --items /var/lib/gleichlaut/in/sl-team.json
+# One month of the public feed in shadow mode with the SL default lane: the local Apertus 8B GGUF on CPU (certified
+# build), in process, no model endpoint (docs/operations.md §5b). The venv needs requirements-offline.txt too
+# (docs/deploy/README.md). For pre-publication drafting replace the ExecStart arguments with:
+#   month --backend llamacpp --gguf ... --items /var/lib/gleichlaut/in/sl-team.json      (and drop --fetch: no network needed)
+# Sizing: one requirement, 8 GiB RAM (5.1 GB of weights + KV cache) and 4 CPU cores; ~153 s per item on 4 cores.
+# The 70B "fewer edits" variant through a certified endpoint: gleichlaut-month-70b.service.
 # Exit codes -> alerts: docs/deploy/README.md. A non-zero exit fails the unit and starts gleichlaut-alert@.
 [Unit]
-Description=Gleichlaut monthly run (shadow mode on the BAG ePL feed)
+Description=Gleichlaut monthly run, local 8B (shadow mode on the BAG ePL feed)
 Wants=network-online.target
-After=network-online.target gleichlaut-canary.service
+After=network-online.target
 OnFailure=gleichlaut-alert@%n.service
 
 [Service]
@@ -12,16 +16,20 @@ Type=oneshot
 User=gleichlaut
 Group=gleichlaut
 WorkingDirectory=/opt/gleichlaut/track_2b
-EnvironmentFile=/etc/gleichlaut/gleichlaut.env
+EnvironmentFile=-/etc/gleichlaut/gleichlaut.env
 Environment=PYTHONPATH=/opt/gleichlaut/track_2b/src PYTHONDONTWRITEBYTECODE=1
 Environment=GLEICHLAUT_STATE=/var/lib/gleichlaut/state GLEICHLAUT_OUT=/var/lib/gleichlaut/out GLEICHLAUT_HIST=/var/lib/gleichlaut/out/hist
+Environment=GLEICHLAUT_MODELS=/var/lib/gleichlaut/models GLEICHLAUT_THREADS=4
+# Prometheus textfile (node_exporter --collector.textfile.directory); also add the directory to ReadWritePaths= below
+# Environment=GLEICHLAUT_METRICS_DIR=/var/lib/node_exporter/textfile_collector
 # the certificate HMAC key, readable only by this unit (systemd >= 248), kept out of the state directory.
-# Without a key (GLEICHLAUT_CERT_KEY unset) delete the next two lines.
+# With a key, import a signed build certificate once (gleichlaut-certify.service); without a key, the shipped one is used
+# and these two lines are deleted.
 LoadCredential=cert.key:/etc/gleichlaut/cert.key
 Environment=GLEICHLAUT_CERT_KEY=%d/cert.key
-ExecStart=/opt/gleichlaut/venv/bin/python -m gleichlaut month --from previous --to latest --fetch
+ExecStart=/opt/gleichlaut/venv/bin/python -m gleichlaut month --backend llamacpp --gguf /var/lib/gleichlaut/models/apertus-v1.5-8b-text-q4_k_m.gguf --from previous --to latest --fetch --emit
 StateDirectory=gleichlaut
-TimeoutStartSec=6h
+TimeoutStartSec=24h
 # hardening: read-only system, writes only to /var/lib/gleichlaut
 NoNewPrivileges=yes
 ProtectSystem=strict
@@ -31,7 +39,9 @@ PrivateDevices=yes
 ProtectKernelTunables=yes
 ProtectKernelModules=yes
 ProtectControlGroups=yes
+ReadOnlyPaths=/var/lib/gleichlaut/models
 RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
 CapabilityBoundingSet=
 LockPersonality=yes
-MemoryMax=2G
+MemoryMax=10G
+CPUQuota=400%

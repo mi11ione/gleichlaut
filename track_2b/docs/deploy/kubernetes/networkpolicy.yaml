@@ -1,0 +1,77 @@
+# Egress control for the Gleichlaut pods. kubectl apply -n gleichlaut -f networkpolicy.yaml
+#
+# What the pods need to reach (docs/operations.md §9), and nothing else:
+#   every pod                DNS (kube-dns / CoreDNS)
+#   month, audit             epl.bag.admin.ch:443  (the public feed: --fetch, --to latest, gleichlaut feeds; GET/HEAD only)
+#   month-70b, canary, certify-endpoint (lane: 70b)   the certified 70B endpoint (LLM_BASE_URL) on 443
+#   fetch-gguf (one-off)     huggingface.co and its CDN (cas-bridge.xethub.hf.co / cdn-lfs.hf.co) on 443
+#   certify-build            nothing at all (no egress rule: DNS only)
+# No ingress: nothing listens.
+#
+# Standard NetworkPolicy matches IP blocks, not host names. Two variants:
+#  (A) plain NetworkPolicy with ipBlock: resolve the hosts and fill in the CIDRs (`dig +short epl.bag.admin.ch`; the
+#      endpoint: your provider's or your own address range). Behind an egress proxy, allow only the proxy instead and
+#      set HTTPS_PROXY in the ConfigMap; the proxy then enforces the host names.
+#  (B) CiliumNetworkPolicy with toFQDNs (Cilium CNI): the host names directly. Use one of (A) or (B).
+# ------------------------------------------------------------------ (A) plain NetworkPolicy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: { name: gleichlaut-default-deny, labels: { app: gleichlaut } }
+spec:
+  podSelector: { matchLabels: { app: gleichlaut } }
+  policyTypes: [Ingress, Egress]
+  egress:
+    - to: [{ namespaceSelector: {}, podSelector: { matchLabels: { k8s-app: kube-dns } } }]
+      ports: [{ protocol: UDP, port: 53 }, { protocol: TCP, port: 53 }]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: { name: gleichlaut-bag-feed, labels: { app: gleichlaut } }
+spec:
+  podSelector:
+    matchExpressions: [{ key: job, operator: In, values: [month, audit] }]
+  policyTypes: [Egress]
+  egress:
+    - to: [{ ipBlock: { cidr: 192.0.2.10/32 } }]        # CHANGE-ME: the address(es) of epl.bag.admin.ch
+      ports: [{ protocol: TCP, port: 443 }]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: { name: gleichlaut-70b-endpoint, labels: { app: gleichlaut } }
+spec:
+  podSelector: { matchLabels: { lane: 70b } }           # month-70b (and its canary), certify-endpoint
+  policyTypes: [Egress]
+  egress:
+    - to: [{ ipBlock: { cidr: 198.51.100.0/28 } }]      # CHANGE-ME: the certified endpoint's address range
+      ports: [{ protocol: TCP, port: 443 }]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: { name: gleichlaut-fetch-gguf, labels: { app: gleichlaut } }
+spec:
+  podSelector: { matchLabels: { job: fetch-gguf } }
+  policyTypes: [Egress]
+  egress:
+    - to: [{ ipBlock: { cidr: 0.0.0.0/0 } }]            # one-off; narrow to Hugging Face's ranges, or copy the GGUF in yourself
+      ports: [{ protocol: TCP, port: 443 }]
+# ------------------------------------------------------------------ (B) Cilium, by host name (replaces the ipBlock rules)
+# ---
+# apiVersion: cilium.io/v2
+# kind: CiliumNetworkPolicy
+# metadata: { name: gleichlaut-egress-fqdn }
+# spec:
+#   endpointSelector: { matchLabels: { app: gleichlaut } }
+#   egress:
+#     - toEndpoints: [{ matchLabels: { "k8s:io.kubernetes.pod.namespace": kube-system, k8s-app: kube-dns } }]
+#       toPorts: [{ ports: [{ port: "53", protocol: ANY }], rules: { dns: [{ matchPattern: "*" }] } }]
+#     - toFQDNs: [{ matchName: epl.bag.admin.ch }]
+#       toPorts: [{ ports: [{ port: "443", protocol: TCP }] }]
+# ---
+# apiVersion: cilium.io/v2
+# kind: CiliumNetworkPolicy
+# metadata: { name: gleichlaut-70b-endpoint-fqdn }
+# spec:
+#   endpointSelector: { matchLabels: { app: gleichlaut, lane: 70b } }
+#   egress:
+#     - toFQDNs: [{ matchName: llm.internal.example.ch }]     # CHANGE-ME: the host of LLM_BASE_URL
+#       toPorts: [{ ports: [{ port: "443", protocol: TCP }] }]

@@ -1,9 +1,19 @@
 # Operations runbook
 
-For the person who runs Gleichlaut each month: install, configure, certify the model endpoint, run the month, hand the
-XLIFF to the translators, and know what each exit code and file means. **If you can do only one thing tomorrow, run the
-audit (§0): it needs no model, no endpoint and no IT approval.** The research and evaluation background is in the
-[README](../README.md) and the [technical report](../technical_report.md).
+For the person who runs Gleichlaut each month: install, configure, certify the model, run the month, hand the XLIFF to
+the translators, and know what each exit code and file means. **If you can do only one thing tomorrow, run the audit
+(§0): it needs no model and no endpoint, reads only the public feed, and sends nothing anywhere; it runs wherever your
+IT already allows Python or Docker.** The research and evaluation background is in the [README](../README.md) and the
+[technical report](../technical_report.md).
+
+**Lanes in one line each** (the same in the README, [dependencies.md](dependencies.md),
+[target-architecture.md](target-architecture.md) and `gleichlaut --help`):
+
+| Lane | Model | Status of its drafts |
+|---|---|---|
+| SL conditions, **default** | the local Apertus 8B GGUF on CPU, in process, air-gapped: a **certified build** (PREREG R1 passed on the held-out 166; build certificate `eval/certificates/8b-q4_k_m-fresh166.json`) | ready / flagged by the frozen checks |
+| SL conditions, optional "fewer edits" | Apertus 70B on an endpoint you control, **certified** (`make certify-endpoint`) and watched by a monthly canary | ready / flagged by the frozen checks |
+| Federal statutes (Fedlex) | the same local 8B | every draft reviewed (neither size passes the rule on statutes) |
 
 All commands run from `track_2b/`. `make` targets run in Docker. The same commands without Docker are
 `PYTHONPATH=src python3 -m gleichlaut <command>`.
@@ -27,8 +37,10 @@ through unchanged (`AUDIT_ARGS=...` with `make`).
 
 ## 1. Install
 
-**Docker (recommended).** Docker 24+ on any x86-64 or arm64 Linux/macOS host, 2 CPU cores, 4 GB RAM, about 1 GB disk
-plus about 16 MB for each feed date you keep.
+**Hardware: one requirement, for the default 8B lane: 4 CPU cores and 8 GiB RAM** (the 5.1 GB GGUF is memory-mapped,
+plus the KV cache and Python), about 8 GB disk (the GGUF plus the two images) and about 16 MB for each feed date you
+keep. No GPU. Docker 24+ on any x86-64 or arm64 Linux/macOS host. (The audit, `make run` and the 70B lane fit in far less,
+but size the box for the 8B lane, which is the default.)
 
 ```bash
 git clone <repo> && cd gleichlaut/track_2b
@@ -40,12 +52,31 @@ make test
 `... live slice PASSED`. A failing endpoint prints `LIVE SLICE FAILED: <reason>` and
 `reproduction PASSED; live slice FAILED`. The reproduction still counts in that case: fix the endpoint before you draft.
 
-**Plain Python.** Python 3.9 or newer and `pip install -r requirements.txt` (lxml, used only for XLIFF/FHIR validation).
-Then use `make local-run` / `make local-test`, or `PYTHONPATH=src python3 -m gleichlaut ...`.
+**Plain Python.** Python 3.9 or newer and `pip install --require-hashes -r requirements.txt` (lxml, used only for
+XLIFF/FHIR validation; every file is hash-pinned, §10). For the 8B lane also `pip install --require-hashes -r
+requirements-offline.txt` (builds llama-cpp-python 0.3.35 from source: a C compiler and cmake are needed). Then use
+`make local-run` / `make local-test`, `PYTHONPATH=src python3 -m gleichlaut ...`, or `pip install -e .` for the
+`gleichlaut` command (a developer who only wants the checks: [api.md](api.md)).
 
-**Air-gapped 8B lane (optional).** `make run-offline` builds the `offline` image with llama-cpp-python and downloads the
-pinned Apertus 8B GGUF once into `./models` (sha256-checked). On the SL lane the 8B is not certified, so every item it
-drafts goes to review.
+**The 8B lane (the default).** `make fetch-gguf` downloads the pinned Apertus 8B GGUF once into `./models`
+(5,059,027,136 bytes, sha256-checked); on an air-gapped host copy the file there instead. `make month` builds the
+`offline` image (llama-cpp-python) and drafts with it. The image carries the build certificate of exactly this GGUF and
+llama-cpp-python version, so its SL drafts get the guards' normal ready / flagged status (§3). `make run-offline` adds
+the 8B live slice to the reproduction.
+
+**Throughput of the 8B lane (measured, M1: GitHub Actions runner, 4 cores, Q4_K_M).** 153.4 s per item on average, all
+model calls of the item included: the first draft, a lock retry, a guard re-ask (≈1.7 calls per item, the 70B suite's
+285 requests for 166 items; the 8B re-asks more often, 105 of 166 items, so somewhat more). The 166-item suite took
+7.1 h. Items the code lane applies by itself (numbers or months only, 12 of 166) need no model call.
+
+| Volume | FR/IT items a month | One 4-core box, items one at a time |
+|---|---|---|
+| today (1×: 28.7 German changes a month, `eval/results/economics.json`) | 57 | about 2.4 h |
+| 10× | 574 | about 24.5 h: still one box, or two boxes on two halves of the item file in about 12 h |
+
+The run is unattended, once a month. Only 4 cores were measured; more threads (`GLEICHLAUT_THREADS`) are expected to help
+but are not measured, so for 10× plan on parallel processes over separate item files (records are per item, so the
+halves merge by concatenation).
 
 ## 2. Configuration (`.env` / environment)
 
@@ -54,7 +85,9 @@ and proxy variables into the container. The key is never written to any file Gle
 
 | Variable | Meaning | Default |
 |---|---|---|
-| `LLM_BASE_URL` | OpenAI-compatible endpoint serving Apertus 70B, e.g. `https://llm.internal.example/v1` | unset: no live calls |
+| `GLEICHLAUT_MODELS` | where the GGUF lives (`make` mounts `./models` as `/models`) | `./models` |
+| `GLEICHLAUT_MODEL_URL`, `GLEICHLAUT_MODEL_SHA256` | the GGUF `fetch-gguf` downloads, and the sha256 it must have | the pinned Q4_K_M build |
+| `LLM_BASE_URL` | the optional 70B lane: OpenAI-compatible endpoint serving Apertus 70B, e.g. `https://llm.internal.example/v1` | unset: no live calls |
 | `LLM_API_KEY` | bearer key for that endpoint | empty |
 | `LLM_NAME` | model id to request | `swiss-ai/apertus-v1.5-70b` |
 | `GLEICHLAUT_STATE` | certificates, certification runs, canary reports | `./state` (gitignored; mounted by `make`) |
@@ -70,6 +103,8 @@ and proxy variables into the container. The key is never written to any file Gle
 | `HTTPS_PROXY`, `HTTP_PROXY`, `NO_PROXY` | outgoing proxy for the endpoint, the BAG feed and the GGUF download (`make` passes them into the containers) | unset |
 | `SSL_CERT_FILE` (or `REQUESTS_CA_BUNDLE`) | PEM file of an internal / TLS-inspecting proxy CA, trusted in addition to the system store. `make` mounts the host file read-only into the container | unset |
 | `GLEICHLAUT_THREADS` | llama.cpp threads for the local 8B (default: the CPUs of the container) | CPU count |
+| `GLEICHLAUT_METRICS_DIR` | write a Prometheus textfile `gleichlaut_<command>.prom` there after `month`, `draft`, `audit`, `certify` (or `--metrics-file PATH`; §6) | unset |
+| `GLEICHLAUT_RESOURCES` | custom G5–G7 check resources (`gleichlaut resources build`, [api.md](api.md)). **Uncertified:** every certificate is void and every draft goes to review | unset: the frozen resources |
 | `SKIP_MODEL=1` | skip the live slice in `make run` | |
 | `GLEICHLAUT_GATEWAY_DIR` | development gateway to Public AI. Evaluation only, never in production | unset |
 | `GLEICHLAUT_DEBUG=1` | show Python tracebacks instead of one-line errors | |
@@ -77,15 +112,45 @@ and proxy variables into the container. The key is never written to any file Gle
 The older names `GLEICHLAUT_HTTP_TIMEOUT` / `_HTTP_RETRIES` / `_HTTP_BACKOFF` still work. TLS verification is never
 switched off: behind a TLS-inspecting proxy, give its CA in `SSL_CERT_FILE`.
 
-## 3. Certify the endpoint (once per endpoint and model, and again after every change)
+## 3. Certify the model (the 8B build once; a 70B endpoint once per endpoint and model, and after every change)
 
-The SL lane drafts only through an endpoint that has a **PASS endpoint certificate** for exactly that endpoint
+### 3a. The 8B build (the default lane)
+
+A **build certificate** binds the pre-registered result to one GGUF file (its sha256), one llama-cpp-python version and
+the frozen code. The gate re-checks it before every SL run with `--backend llamacpp`: same GGUF sha256 (the loaded file
+is hashed, about 10 s), same llama-cpp-python version, same freeze hash, stored records and labels unchanged (sha256),
+and the stored records re-scored with the frozen checks and the labels to the same PASS. With a valid certificate the
+8B's drafts get the guards' ready / flagged status; without one (another GGUF, another llama-cpp-python, a FAIL) every
+item goes to review, as before R1.
+
+The image already carries the certificate of the pinned build (`eval/certificates/8b-q4_k_m-fresh166.json`: the M1 run
+of PREREG R1, imported). Make your own copy in `./state` (required when `GLEICHLAUT_CERT_KEY` is set, because the shipped
+one is unsigned):
+
+```bash
+make certify          # seconds, no model, no network: imports the recorded M1 run, re-scores it, signs it if a key is set
+# = gleichlaut certify --import-run data/runs/8b_q4_k_m_fresh166_g3_final.jsonl \
+#     --gguf-sha256 a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299 --labels eval/labels/m1_q4_k_m_fresh166.tsv
+make certify-build    # the same suite run on THIS machine's CPU: ~7 h on 4 cores (gleichlaut certify --backend llamacpp --gguf PATH)
+```
+
+`--import-run` takes any recorded suite run (one JSON line per suite item, e.g. the shards of `.github/workflows/m1.yml`
+merged by `python -m gleichlaut.m1 gather`) with the GGUF sha256 it was drafted with and its labels (`key<TAB>class`, or
+a table with a `final` column such as the M1 annotation file). PASS only if the pre-registered rule holds and no ready
+non-exact draft is unlabelled; otherwise FAIL or PENDING_REVIEW (`--resolve`, below). A local run inherits the M1 labels
+for outputs identical to the M1 run's, and lists every other ready non-exact output in `needs_review`. A build certificate
+does not expire and needs no canary: what it certifies (a file hash, a library version, frozen code) cannot change under
+it. Re-certify when the GGUF, llama-cpp-python or the frozen code changes.
+
+### 3b. A 70B endpoint (the optional "fewer edits" lane)
+
+The 70B lane (`--backend openai`) drafts only through an endpoint that has a **PASS endpoint certificate** for exactly that endpoint
 (scheme, host, port and path of `LLM_BASE_URL`) and exactly that `LLM_NAME`, made with the current frozen code and
-suite. A model that merely calls itself `apertus-v1.5-70b` is not enough. Neither are the certificates shipped in
+suite. A model that merely calls itself `apertus-v1.5-70b` is not enough. Neither are the 70B certificates shipped in
 `eval/certificates/`: those are evaluation evidence (`kind: replay` or `kind: evaluation`) and never authorise drafting.
 
 ```bash
-make certify                     # 166 items, about 285 requests, under an hour (2 workers); ~CHF 0.40
+make certify-endpoint            # 166 items, about 285 requests, under an hour (2 workers); ~CHF 0.40
 PYTHONPATH=src python3 -m gleichlaut certify --list      # what is in ./state/certificates, each one re-verified
 ```
 
@@ -133,14 +198,17 @@ integrity fields and are refused: certify again.
 **When to re-certify:** a new endpoint URL, a new `LLM_NAME`, a model or serving-stack upgrade announced by the
 provider, a canary failure, or a Gleichlaut upgrade that changes `eval/prereg/freeze.json`.
 
-## 4. Canary (monthly, before drafting; it gates drafting)
+`--air-gapped`, `--prompt-domain` and `GLEICHLAUT_RESOURCES` bypass both gates on purpose: any model may then draft, and
+every item goes to review whatever the guards say (`review_reason` names why).
+
+## 4. Canary of the 70B endpoint (monthly, before drafting; it gates the 70B lane)
 
 ```bash
 make canary                      # CANARY_N=40 by default: about 70 requests, a few minutes
 ```
 
-**The canary gates the SL lane.** `draft` and `month` (backend `openai`, corpus `sl`, not `--air-gapped`) refuse with
-exit 3 when:
+**The canary gates the 70B lane.** `draft` and `month` (backend `openai`, corpus `sl`, not `--air-gapped`) refuse with
+exit 3 when (the local 8B needs no canary: §3a):
 
 - the latest canary for the certificate in use **failed**. Only a later passing canary or a new certification lifts
   this, and no flag overrides it.
@@ -168,7 +236,7 @@ rotate builds. Consider re-certifying when it appears.
 Each run writes its own report: `state/canary/canary-<endpoint>--<model>-<UTC time>.json`, with `-2`, `-3` added if
 that name already exists. Nothing is overwritten. A report holds the agreement, exact now and then, flag rates, byte
 identity, fingerprints now and then, the certificate it was compared against, and the sha256 of its call log. On a
-failure, stop: re-certify, or draft with the local 8B (`--backend llamacpp`), the air-gapped default lane.
+failure, stop: re-certify, or draft with the local 8B (`make month`, `--backend llamacpp`), the default lane.
 
 ## 5. The monthly procedure
 
@@ -182,7 +250,8 @@ Optional: `product`, `cud_old`, `cud_new`, `mpd`, `snap_old`, `snap_new`, `note`
 per target language. `tgt_new` is left out (nothing is published yet).
 
 ```bash
-make month ITEMS=/path/to/sl-team-2026-11.json        # mounted read-only into the container
+make month ITEMS=/path/to/sl-team-2026-11.json        # the local 8B, --network none: the draft German never leaves the box
+make month-70b ITEMS=/path/to/sl-team-2026-11.json    # the 70B through your certified endpoint
 # or: PYTHONPATH=src python3 -m gleichlaut month --items sl-team-2026-11.json --out out/month/2026-11
 ```
 
@@ -211,8 +280,9 @@ published become `tgt_new`. They are never shown to the model and are used only 
 
 ```bash
 make feeds                                    # which feed dates BAG has published (and which are already local)
-make month                                    # FROM=previous TO=latest: the month since the last run, fetched if missing
+make month                                    # the local 8B; FROM=previous TO=latest: the month since the last run
 make month FROM=20260901 TO=20261001          # a given pair of published dates
+make month-70b FROM=20260901 TO=20261001      # the same through the certified 70B endpoint
 # or: PYTHONPATH=src python3 -m gleichlaut month --from 20260901 --to 20261001 --fetch [--snapshots DIR]
 ```
 
@@ -239,8 +309,10 @@ real publication date (feed timestamp, else HTTP Last-Modified as a Zurich date)
    drafted. So does a spacing-only change. The 2500-character limit (the evaluated range of the model lane) applies only
    to items that need the model. A change the code lane applies by itself (numbers or months only, e.g. a Dupixent
    "16 → 24 weeks") is drafted whatever its length, with `route_note` saying so, and no model is called for it.
-3. **Gate.** On the SL lane through `openai`, the run continues only with a PASS endpoint certificate that verifies (§3;
-   else exit 4) and a passing, recent canary (§4; else exit 3).
+3. **Gate.** The local 8B (`llamacpp`, the default when a certified GGUF is in `GLEICHLAUT_MODELS`): with a build
+   certificate that verifies for the loaded GGUF and llama-cpp-python (§3a) the drafts get their guard status; without
+   one every item goes to review. The 70B (`openai`): the run continues only with a PASS endpoint certificate that
+   verifies (§3b; else exit 4) and a passing, recent canary (§4; else exit 3). `summary.json` records the gate under `gate`.
 4. **Drafting.** Items are drafted one at a time through the backend. After each item, one JSON line is appended to
    `records.jsonl` and flushed. After a crash or Ctrl-C, run the same command again: finished keys are skipped and a
    torn last line is cut off. `--restart` sets the old records aside.
@@ -249,14 +321,20 @@ real publication date (feed timestamp, else HTTP Last-Modified as a Zurich date)
    calls, tokens, the CHF estimate, models served and fingerprints.
 
 Record `status`: `ready` (every guard passed: the translator accepts or edits it), `flagged` (a guard named a problem,
-or a review policy applies: `review_reason` says which, e.g. air-gapped, stub, statute lane), `human` (not drafted).
-`guard_status` keeps the guards' own verdict.
+or a review policy applies: `review_reason` says which, e.g. air-gapped, stub, statute lane, uncertified GGUF, custom
+prompt domain or resources), `human` (not drafted). `guard_status` keeps the guards' own verdict. In shadow mode
+`summary.json` → `shadow` grades the drafts against the French/Italian BAG published: `exact_rate`, `ready_rate`,
+`flag_rate`, `ready_exact_rate` (percent of the compared drafts), and every ready draft that differs.
 
 Check before a run, with no request sent: `--dry-run` prints, per item, the routing, the slot map (which number each
 ⟨code⟩ stands for) and the exact first prompt. It also says whether the certification gate would pass.
 
-Backends: `openai` (production), `llamacpp` (local 8B, review-only on SL), `cache` (recorded responses), and `stub`
-(returns the old text unchanged; for wiring tests only; every stub record is marked for review).
+Backends: `llamacpp` (the local 8B; the default when a GGUF with a valid build certificate is in `GLEICHLAUT_MODELS` or
+given with `--gguf`), `openai` (the 70B through a certified endpoint; the default when there is no certified GGUF and
+`LLM_BASE_URL` is set), `cache` (recorded responses), and `stub` (returns the old text unchanged; for wiring tests only;
+every stub record is marked for review). With neither a certified GGUF nor `LLM_BASE_URL`, `month`/`draft` exit 2 and
+say so. `--backend llamacpp` where llama-cpp-python is not installed (the base image, plain Python) exits 2 with one line:
+use the offline image (`make month-offline`, which is `make month`).
 
 ### 5c. From records to the translators
 
@@ -284,22 +362,33 @@ gleichlaut ui   --records out/month/<run>/records.jsonl --items out/month/<run>/
 |---|---|---|
 | 0 | success | |
 | 1 | reproduction or validation failed (`run`, `replay`, `emit`) | do not use this build; see the step that failed |
-| 2 | usage error, bad item file (message lists the schema problems), missing configuration (`LLM_BASE_URL` unset, gateway dir unset), missing snapshots | fix the input or the configuration |
+| 2 | usage error, bad item file (message lists the schema problems), missing configuration (no certified GGUF and `LLM_BASE_URL` unset, gateway dir unset, llama-cpp-python not installed for `--backend llamacpp`, GGUF sha256 mismatch), missing snapshots | fix the input or the configuration; the 8B lane runs in the offline image (`make month`) |
 | 3 | canary outside tolerance; or `draft`/`month` refused because the latest canary failed or is older than 31 days | `make canary`; on a failure re-certify, or `--air-gapped`; a stale canary can be overridden with `--allow-stale-canary` (logged) |
-| 4 | refused: no certificate for this endpoint and model that verifies (missing, FAIL, expired, other frozen code, files or HMAC do not match, records do not re-score to PASS) | `make certify`; the message names the reason |
+| 4 | refused: no certificate for this 70B endpoint and model that verifies (missing, FAIL, expired, other frozen code, files or HMAC do not match, records do not re-score to PASS) | `make certify-endpoint`; the message names the reason |
 | 5 | certificate FAIL | do not use the endpoint for the SL lane |
 | 6 | endpoint or feed failed (unreachable, timeout or `GLEICHLAUT_DEADLINE` reached after retries, HTTP error, non-Apertus model served, served model not seen at certification, feed not published yet). For `live`: the live slice failed | records so far are kept; fix and re-run to resume |
 | 7 | certificate PENDING_REVIEW | label `needs_review`, then `certify --resolve` |
+| 8 | `audit --fail-on-findings`: the audit found divergences (not marked likely equivalent, or of the given kinds) | read `out/audit/audit_<date>_summary.json`; a result for a reviewer, not a fault |
 | 130 | interrupted | re-run to resume |
 
 Errors are one line on stderr, with no traceback (`GLEICHLAUT_DEBUG=1` shows it). `make run` exits 0 when the
 reproduction passes, even if the live slice failed. Look for `LIVE SLICE FAILED`.
 
-**Scheduling and alerting.** [docs/deploy/](deploy/) has a systemd service and timer set (canary, month, audit) and a
-Kubernetes CronJob. The CronJob mounts a PVC for `state/` and `out/`, runs as a non-root user on a read-only root
-filesystem, and runs the canary as an init container before the month. It also lists which exit code should page whom:
-2 and 4 are configuration (operator), 3 is model drift (operator, stop drafting), 6 is an outage (retry next run, page if
-it repeats), and 1 is a broken build (developer).
+**Scheduling and alerting.** [docs/deploy/](deploy/) has systemd units (month with the 8B, audit, and the 70B variant
+with its canary) and Kubernetes manifests (the 8B CronJob with 8 GiB / 4 CPU and the GGUF on a read-only PVC, the 70B
+variant, certification Jobs, a NetworkPolicy). It also lists which exit code should page whom: 2 and 4 are
+configuration (operator), 3 is model drift of the 70B endpoint (operator, stop drafting on it), 6 is an outage (retry
+next run, page if it repeats), 8 is audit findings (reviewer), and 1 is a broken build (developer).
+
+**Monitoring.** `gleichlaut audit --fail-on-findings` exits 8 when a finding is not marked likely equivalent (the audit's
+own triage; `gleichlaut.audit` itself exits 1, which the command reports as 8 so that 1 keeps meaning a broken build), and
+`--fail-on-findings=number,unit,language,editorial,terminology` (any subset) exits 8 when any finding of those kinds
+exists. A scheduler or monitor then sees divergences without parsing JSON.
+`--metrics-file PATH` (or `GLEICHLAUT_METRICS_DIR=DIR`) on `month`, `draft`, `audit` and `certify` writes a Prometheus
+textfile for node_exporter's textfile collector, atomically, also when the run fails: `gleichlaut_last_run_exit_code`,
+`gleichlaut_last_run_success`, `gleichlaut_last_run_duration_seconds`, `gleichlaut_last_run_timestamp_seconds`,
+`gleichlaut_items{status=...}`, `gleichlaut_model_calls`, `gleichlaut_tokens`, `gleichlaut_shadow_items` /
+`gleichlaut_shadow_rate_percent` (shadow mode) and `gleichlaut_audit_findings{kind=...}`, each with a `job` label.
 
 ## 6b. Test environments: a fake endpoint
 
@@ -356,7 +445,9 @@ so treat `out/month/` of a pre-publication run accordingly. No personal data is 
 
 ## 9. What leaves the network
 
-- **To the model endpoint (`LLM_BASE_URL`), and only there:** per request, the German old and new text of one
+- **In the default lane (the local 8B): nothing.** The model runs in the Gleichlaut process; `make month ITEMS=...`
+  runs the container with `--network none`.
+- **To the 70B endpoint (`LLM_BASE_URL`, the optional lane), and only there:** per request, the German old and new text of one
   limitation and its current French or Italian text, with every number replaced by a slot code, plus the bearer key.
   In pre-publication mode the German is **not yet public**, so use an endpoint you control (own hardware or a
   contracted Swiss-resident provider). Public AI was used for evaluation only. It may route outside Switzerland, so it
@@ -364,9 +455,9 @@ so treat `out/month/` of a pre-publication run accordingly. No personal data is 
 - **To BAG (`epl.bag.admin.ch`), only with `--fetch`, `--to latest`, `gleichlaut feeds` / `gleichlaut.sl.ingest`, `make audit`:**
   plain GET/HEAD requests for the public feeds and the public resources API, at most one per second.
 - **Nothing else.** There is no telemetry and no update check. The review page makes no requests. With no
-  `LLM_BASE_URL`, `make run` runs with `--network none`. The air-gapped lanes (8B GGUF on CPU) contact nothing after
-  the one-time model download.
-- At build time only: the Docker base image (pinned by digest) and PyPI wheels (`docs/dependencies.md`).
+  `LLM_BASE_URL`, `make run` runs with `--network none`. The 8B lanes (GGUF on CPU) contact nothing after the one-time
+  model download (`make fetch-gguf`).
+- At build time only: the Docker base image (pinned by digest) and PyPI files (hash-pinned; `docs/dependencies.md`).
 - Every outgoing request goes through `HTTPS_PROXY`/`HTTP_PROXY` unless `NO_PROXY` matches, and is verified against the
   system CA store plus `SSL_CERT_FILE`.
 
@@ -378,20 +469,41 @@ so treat `out/month/` of a pre-publication run accordingly. No personal data is 
 3. Base image: the Dockerfile pins `python:3.12-slim` by digest. To move to a newer patch, look up the index digest
    (`curl -sI -H "Authorization: Bearer $(curl -s 'https://auth.docker.io/token?service=registry.docker.io&scope=repository:library/python:pull' | python3 -c 'import json,sys;print(json.load(sys.stdin)["token"])')" -H 'Accept: application/vnd.oci.image.index.v1+json' https://registry-1.docker.io/v2/library/python/manifests/3.12-slim | grep -i docker-content-digest`),
    replace it, and run `make test` and `make run` again.
-4. If the frozen code, the endpoint, or its model changed, run `make certify` again, then `make canary`.
+4. If the frozen code changed, run `make certify` again (the 8B build), and for the 70B lane `make certify-endpoint`,
+   then `make canary`. A new GGUF or llama-cpp-python version needs a new build certificate (`make certify-build`, or
+   an imported run of the m1 workflow).
 5. Keep `state/` across upgrades. It is outside the source tree and mounted into the container.
+
+**Supply chain.** Python packages are installed with `pip --require-hashes` from `requirements.txt` /
+`requirements-offline.txt`, generated by `python3 tools/supply_chain.py lock` (`make lock`) from the human-edited pins in
+`requirements*.in` with every sha256 PyPI lists for each pinned version; a file with any other hash is refused. To
+upgrade a package, change its pin in the `.in` file, `make lock`, then `make test` and `make run`. `docs/sbom.json`
+(CycloneDX 1.5) lists the base image digest, every pinned package with its allowed hashes, and the GGUF sha256;
+`make sbom` regenerates it and CI fails when it is stale (`tools/supply_chain.py sbom --check`). Known gap: the build
+backend of the llama-cpp-python sdist (scikit-build-core, fetched by pip's build isolation) is not hash-checked.
+**Next step: image signing.** Sign the two images after the build with cosign (keyless in CI: `cosign sign
+registry.example.ch/gleichlaut@<digest>`, with the GitHub OIDC identity) and attach the SBOM as an attestation (`cosign
+attest --type cyclonedx --predicate docs/sbom.json`); verify with `cosign verify` (or a Kubernetes admission policy such
+as Sigstore policy-controller / Kyverno) before a pod may run. Not done yet: the images are built locally by `make`.
 
 ## 11. Quick reference
 
 ```bash
 make audit                                     # the no-model congruence audit of the whole register (monthly / quarterly)
-make certify                                   # once per endpoint + model, and every 90 days; exit 0 / 5 / 7
-make canary                                    # monthly, before drafting; exit 3 on drift; drafting refuses without it
+make fetch-gguf                                # once: the pinned 8B GGUF into ./models (sha256-checked)
+make certify                                   # once: the 8B build certificate into ./state (signed with a key)
 make feeds                                     # published BAG feed dates
-make month ITEMS=sl-team.json                  # pre-publication drafting
+make month ITEMS=sl-team.json                  # pre-publication drafting with the local 8B, --network none
 gleichlaut items --from-fhir OLD-de.ndjson DRAFT.json --out sl-team.json    # items from ePL exports
-make month                                     # shadow mode: --from previous --to latest
+make month                                     # shadow mode with the local 8B: --from previous --to latest
 make month FROM=20260901 TO=20261001           # shadow mode on a given pair of published feeds
+make certify-endpoint                          # 70B lane: once per endpoint + model, and every 90 days; exit 0 / 5 / 7
+make canary                                    # 70B lane: monthly, before drafting; exit 3 on drift
+make month-70b                                 # 70B lane: shadow mode through the certified endpoint
 PYTHONPATH=src python3 -m gleichlaut month --items sl-team.json --dry-run     # prompts, slot maps, routing; no request
 PYTHONPATH=src python3 -m gleichlaut draft --items x.json --out out/x --backend stub   # wiring test, no model
+PYTHONPATH=src python3 -m gleichlaut audit --hist out/hist --date 20261006 --fail-on-findings --metrics-file m.prom   # monitoring
 ```
+
+Developers who want to use the checks in their own tool (a Python API, rebuilt check resources, a prompt for another
+kind of text): [api.md](api.md).

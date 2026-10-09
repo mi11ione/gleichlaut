@@ -1,0 +1,9 @@
+# Offline image only: in-process llama.cpp for the Apertus 8B GGUF on CPU (llama-cpp-python is built from source, CPU only).
+# llama-cpp-python's runtime dependencies are pinned too, so --require-hashes covers the whole install.
+# Hash-pinned lock: requirements-offline.txt (python3 tools/supply_chain.py lock).
+llama-cpp-python==0.3.35  # MIT; sdist, built with GGML_NATIVE=OFF; the version of the M1 run and the build certificate
+numpy==2.2.6  # BSD-3-Clause; logit mask
+typing-extensions==4.16.0  # dependency of llama-cpp-python
+diskcache==5.6.3  # dependency of llama-cpp-python
+jinja2==3.1.6  # dependency of llama-cpp-python (chat template)
+markupsafe==3.0.3  # dependency of jinja2

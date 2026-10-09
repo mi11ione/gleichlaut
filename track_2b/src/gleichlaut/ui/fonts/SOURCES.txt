@@ -1,17 +1,21 @@
 Fonts embedded (base64 @font-face) in the review page built by gleichlaut.ui.build, so the page needs no network.
-Fetched once on 9 Oct 2026 from Google Fonts (CSS requested with a Chrome User-Agent to get woff2; files fetched with
-User-Agent hackapertus-research/0.1), "latin" subset only (U+0000-00FF and a few punctuation code points).
+Fetched once on 10 Oct 2026 from Google Fonts (CSS requested with a Chrome User-Agent to get woff2; files fetched with
+User-Agent hackapertus-research/0.1), "latin" subset only (U+0000-00FF, U+2000-206F and a few other code points).
 
-SourceSans3-latin-wght.woff2   Source Sans 3, variable weight axis (serves 400 and 600)
-  https://fonts.gstatic.com/s/sourcesans3/v20/nwpStKy2OAdR1K-IwhWudF-R3w8aZejf5Hc.woff2
-  sha256 587435ca9d90732b8c1ce4958222c6ad3ade2b875500188e1d318efbcb61f4c5
-  Licence: SIL Open Font License 1.1, OFL-SourceSans3.txt (Copyright 2010-2020 Adobe, Reserved Font Name 'Source')
-IBMPlexMono-400-latin.woff2   IBM Plex Mono Regular
-  https://fonts.gstatic.com/s/ibmplexmono/v20/-F63fjptAgt5VM-kVkqdyU8n1i8q131nj-o.woff2
-  sha256 c36f509c0a8f9f85f29cb44bc8701d8a9e0b14c499e77a884f789ead7093a7ac
-IBMPlexMono-500-latin.woff2   IBM Plex Mono Medium
-  https://fonts.gstatic.com/s/ibmplexmono/v20/-F6qfjptAgt5VM-kVkqdyU8n3twJwlBFgsAXHNk.woff2
-  sha256 a76f53ca6612e7b3828eec2311098675b7f9849ae4169a8bcef6302aec02a6c0
-  Licence: SIL Open Font License 1.1, OFL-IBMPlexMono.txt (Copyright 2017 IBM Corp., Reserved Font Name 'Plex')
-Licence texts: https://raw.githubusercontent.com/google/fonts/main/ofl/{sourcesans3,ibmplexmono}/OFL.txt
-The fonts are embedded unmodified (no renaming), as the OFL permits when bundled with software.
+PublicSans-latin-wght.woff2   Public Sans, variable weight axis (serves 400 and 600): body and limitation texts
+  https://fonts.gstatic.com/s/publicsans/v21/ijwRs572Xtc6ZYQws9YVwnNGfJ7QwOk1.woff2
+  sha256 c1b6da516e0062e9c2f341b3a51dd2d621d946da72f06c6cfe05fd9d2dd8622d
+  Licence: SIL Open Font License 1.1, OFL-PublicSans.txt (Copyright 2015 The Public Sans Project Authors)
+FragmentMono-400-latin.woff2  Fragment Mono Regular: metadata, labels, tables, buttons
+  https://fonts.gstatic.com/s/fragmentmono/v6/4iCr6K5wfMRRjxp0DA6-2CLnB4NHhqcL71Q.woff2
+  sha256 4f4dc27f4a770c0d02fde800daa836c8adc0d1e423b28da74baaf0d1cc3ab96c
+  Licence: SIL Open Font License 1.1, OFL-FragmentMono.txt (Copyright 2022 The Fragment-Mono Project Authors)
+Archivo-latin-wdth75-wght500-600.woff2   Archivo, condensed (wdth 75), weight 500-600: headings and big figures
+  Derived from https://fonts.gstatic.com/s/archivo/v25/k3kQo8UDI-1M0wlSfdnoLmvDIaI.woff2
+  (sha256 4c98b9d490d1698ec95f2ff17a6c7d0e72691864c0c5d7bc2a2c161b45afe5ad, axes wght 100-900, wdth 62-125) with
+  fontTools 4.60.2: instancer.instantiateVariableFont(font, {"wdth": 75, "wght": (500, 600)}), saved as woff2
+  (90 KB -> 23 KB). sha256 ed9e9d48bede4678ef09bc974e2b6e3b75f2212f963f6ce668ec69cec6a1826d
+  Licence: SIL Open Font License 1.1, OFL-Archivo.txt (Copyright 2020 The Archivo Project Authors). The licence
+  declares no Reserved Font Name, so the modified (instanced) version keeps the name.
+Licence texts: https://raw.githubusercontent.com/google/fonts/main/ofl/{publicsans,fragmentmono,archivo}/OFL.txt
+Public Sans and Fragment Mono are embedded unmodified.

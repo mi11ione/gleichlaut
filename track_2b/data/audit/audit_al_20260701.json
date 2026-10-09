@@ -1,0 +1,247 @@
+{
+"summary": {
+"generated_by": "python3 -m gleichlaut.audit --list al --file <xlsx>",
+"list": "al",
+"date": "20260701",
+"model_calls": 0,
+"source": {
+"name": "Analysenliste (AL, KLV Anhang 3)",
+"page": "https://www.bag.admin.ch/de/analysenliste-al",
+"file": "https://www.bag.admin.ch/dam/de/sd-web/a-xPwK6T1P0m/Analysenliste%20per%201.%20Juli%202026_Excel-Format.xlsx",
+"version": "per 1. Juli 2026",
+"sha256": "0b0730ee89f6758236dd11e7bf92598cb4d5055b1034cbca9511e080f9591454",
+"bytes": 839800
+},
+"parse": {
+"sheets": {
+"de": "Deutsch",
+"fr": "Français",
+"it": "Italiano"
+},
+"header_row": 1,
+"columns": {
+"de": {
+"Bezeichnung": "Bezeichnung",
+"Limitation": "Limitationen",
+"Bemerkungen": "Bemerkungen"
+},
+"fr": {
+"Bezeichnung": "Dénomination",
+"Limitation": "Limitation",
+"Bemerkungen": "Remarques"
+},
+"it": {
+"Bezeichnung": "Denominazione",
+"Limitation": "Limitazioni",
+"Bemerkungen": "Osservazioni"
+}
+},
+"rows": {
+"de": 1280,
+"fr": 1280,
+"it": 1280
+},
+"positions_aligned": 1280,
+"positions_unaligned": {}
+},
+"n_fields": 1933,
+"n_fields_by_lang": {
+"de": 1933,
+"fr": 1933,
+"it": 1935
+},
+"fields_by_column": {
+"Bezeichnung": 1280,
+"Limitation": 418,
+"Bemerkungen": 235
+},
+"findings_all": 3,
+"by_kind": {
+"number": 3,
+"unit": 0,
+"language": 0,
+"editorial": 0
+},
+"by_kind_lang": {
+"number": {
+"fr": 2,
+"it": 1
+},
+"unit": {},
+"language": {},
+"editorial": {}
+},
+"by_kind_field": {
+"number": {
+"Bemerkungen": 1,
+"Limitation": 2
+},
+"unit": {},
+"language": {},
+"editorial": {}
+},
+"editorial_by_rule": {},
+"positions_with_finding": 3,
+"likely_equivalent": {
+"number": 0,
+"of": 3
+},
+"count_only_differences": 199,
+"unbound_differences": 387,
+"suppressed": {
+"one": 100,
+"ordinal_word": 2
+},
+"language_fields_judged": {
+"de": 639,
+"fr": 709,
+"it": 705
+},
+"language_fields_too_short": {
+"de": 1294,
+"fr": 1224,
+"it": 1228
+},
+"unit_one_sided": [],
+"worklist": {
+"n": 3,
+"pool": 3
+}
+},
+"findings": [
+{
+"id": "1717|Bemerkungen",
+"product": [
+"1717"
+],
+"lang": "fr",
+"kind": "number",
+"score": 9,
+"half": "dev",
+"group": "f720bd8f48",
+"de_only": [],
+"tgt_only": [
+{
+"value": "2",
+"n": 1,
+"unit": "fois",
+"src": "word",
+"context": [
+"La thyréoglobuline est déterminée [deux] fois sur l'échantillon primaire lors du test de récupératio…"
+]
+}
+],
+"description": "FR has 2 (fois), DE does not",
+"rank": 1,
+"fid": "N01",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"La thyréoglobuline est déterminée [deux] fois sur l'échantillon primaire lors du test de récupératio…"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"position": "1717",
+"field": "Bemerkungen"
+},
+{
+"id": "3363|Limitation",
+"product": [
+"3363"
+],
+"lang": "fr",
+"kind": "number",
+"score": 9,
+"half": "dev",
+"group": "af73c35b30",
+"de_only": [],
+"tgt_only": [
+{
+"value": "4",
+"n": 1,
+"unit": "fois",
+"src": "digit",
+"context": [
+"… de résistance ou/et facteur de pathogénicité et au maximum [4] fois comme microorganisme supplémentaire, gène de résistanc…"
+]
+}
+],
+"description": "FR has 4 (fois), DE does not",
+"rank": 2,
+"fid": "N02",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "de",
+"third": "it",
+"suggested_action": null,
+"context": [
+"… de résistance ou/et facteur de pathogénicité et au maximum [4] fois comme microorganisme supplémentaire, gène de résistanc…"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"position": "3363",
+"field": "Limitation"
+},
+{
+"id": "6260.61|Limitation",
+"product": [
+"6260.61"
+],
+"lang": "it",
+"kind": "number",
+"score": 8,
+"half": "dev",
+"group": "2861d3379a",
+"de_only": [
+{
+"value": "14",
+"n": 1,
+"unit": "Mal",
+"src": "digit",
+"context": [
+"…f nur verrechnet werden, wenn die Position 6260.56 mehr als [14] Mal durchgeführt werden muss. 3. Verordnung nur durch Ärzte…"
+]
+}
+],
+"tgt_only": [
+{
+"value": "13",
+"n": 1,
+"unit": "volte",
+"src": "digit",
+"context": [
+"…tturata se la posizione 6260.56 deve essere eseguita più di [13] volte 3. Prescrizione delle analisi soltanto da parte di me…"
+]
+}
+],
+"description": "DE has 14 (Mal), IT does not; IT has 13 (volte), DE does not",
+"rank": 3,
+"fid": "N03",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"…f nur verrechnet werden, wenn die Position 6260.56 mehr als [14] Mal durchgeführt werden muss. 3. Verordnung nur durch Ärzte…",
+"…tturata se la posizione 6260.56 deve essere eseguita più di [13] volte 3. Prescrizione delle analisi soltanto da parte di me…"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"position": "6260.61",
+"field": "Limitation"
+}
+]
+}

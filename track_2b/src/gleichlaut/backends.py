@@ -7,7 +7,9 @@ openai    any OpenAI-compatible endpoint: LLM_BASE_URL, LLM_API_KEY, LLM_NAME (t
           Plain user message only (no system message, no prefill), 429 back-off, and the response `model` field is
           checked against the requested model on every call.
 gateway   development only (Public AI through the team's budget gateway, gw.chat); never used by `make run`.
-llamacpp  in-process llama-cpp-python on CPU with a GGUF build of Apertus 8B and the digit / number-word logit mask.
+llamacpp  in-process llama-cpp-python on CPU with a GGUF build of Apertus 8B and the digit / number-word logit mask (the SL
+          default lane when the GGUF has a build certificate, certify.build_lookup). Without llama-cpp-python installed
+          it raises ConfigError with the fix (the offline image), never an ImportError traceback.
 stub      wiring tests only: returns the old target text of the prompt unchanged (no model, no network). Its drafts
           are never a translation; every stub record is marked for review.
 Every live call can append a JSON line to a call log: ts, endpoint (scheme://host/path, never the key), model (requested),
@@ -272,14 +274,56 @@ class Gateway:
         return strip_think(text), dict(meta, key=key)
 
 
+LLAMA_MISSING = ("llama-cpp-python is not installed here, and the local Apertus 8B lane needs it: use the offline image: "
+                 "make month-offline (= make month), or "
+                 "`pip install --require-hashes -r requirements-offline.txt`; or draft through a certified 70B endpoint "
+                 "(--backend openai, make month-70b)")
+
+
+def llama_version():
+    """the installed llama-cpp-python version, or None when it is not installed (base image, plain Python)."""
+    try:
+        import importlib.metadata as md
+        return md.version("llama-cpp-python")
+    except Exception:
+        try:
+            import llama_cpp
+            return getattr(llama_cpp, "__version__", None)
+        except Exception:
+            return None
+
+
+def require_llama():
+    """raise ConfigError (one line, exit 2) when llama-cpp-python cannot be imported."""
+    try:
+        import llama_cpp, numpy          # noqa: F401
+    except ImportError:
+        raise ConfigError(LLAMA_MISSING)
+
+
+def file_sha256(path):
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for b in iter(lambda: f.read(1 << 22), b""): h.update(b)
+    return h.hexdigest()
+
+
 class LlamaCpp:
     """Apertus 8B GGUF on CPU (llama-cpp-python), greedy, with the 8B digit ban of the research runs: every token that
-    decodes to a digit, and every word-initial FR/IT number word 2-12 (gl2.BANWORDS), gets logit -inf."""
+    decodes to a digit, and every word-initial FR/IT number word 2-12 (gl2.BANWORDS), gets logit -inf.
+    gguf_sha256 / runtime: what a build certificate (certify.build_lookup) is matched against."""
 
-    def __init__(self, gguf_path, lang_of_prompt, n_ctx=8192, n_threads=None, log=None):
+    def __init__(self, gguf_path, lang_of_prompt, n_ctx=8192, n_threads=None, log=None, gguf_sha256=None):
+        if not gguf_path or not os.path.isfile(gguf_path):
+            raise ConfigError(f"GGUF file not found: {gguf_path!r} (gleichlaut fetch-gguf downloads the pinned build into "
+                              f"GLEICHLAUT_MODELS)")
+        require_llama()
         from llama_cpp import Llama, LogitsProcessorList   # noqa: E402  (runtime dependency of the offline image only)
         import numpy as np
         from .core import gl2
+        self.gguf_path, self.runtime = gguf_path, llama_version()
+        self._sha = gguf_sha256
+        self.endpoint = "local llama.cpp (in process)"
         self.n_threads = int(n_threads or os.environ.get("GLEICHLAUT_THREADS") or cpu_count())
         self.llm = Llama(model_path=gguf_path, n_ctx=n_ctx, n_threads=self.n_threads, n_threads_batch=self.n_threads,
                          logits_all=False, verbose=False)
@@ -307,8 +351,39 @@ class LlamaCpp:
         text = r["choices"][0]["message"]["content"]
         meta = dict(secs=round(time.time() - t0, 2), model_served=self.model, completion_tokens=r.get("usage", {}).get("completion_tokens"),
                     prompt_tokens=r.get("usage", {}).get("prompt_tokens"), cached=False)
-        _log(self.log, dict(meta, tag=tag))
+        _log(self.log, dict(meta, tag=tag, ts=_now(), endpoint=self.endpoint, model=self.model))
         return strip_think(text), meta
+
+    @property
+    def gguf_sha256(self):
+        if self._sha is None: self._sha = file_sha256(self.gguf_path)
+        return self._sha
+
+
+class DomainAsk:
+    """--prompt-domain: wraps a backend and replaces the first sentence of every SL drafting prompt (the frozen PA template
+    names the Spezialitaetenliste) by a sentence about another kind of text. The frozen files are never touched; the
+    prompt string is rewritten on its way to the model. Uncertified by construction: callers mark every draft for review."""
+    FIRST = "A Swiss reimbursement limitation (Spezialitätenliste, BAG) was amended in German."
+
+    def __init__(self, ask, domain):
+        d = (domain or "").strip()
+        if not d: raise ConfigError("--prompt-domain needs a non-empty text")
+        self.ask = ask
+        self.sentence = d if d.endswith((".", "!", "?")) else f"A {d} was amended in German."
+        self.rewritten = 0
+
+    def __getattr__(self, k):            # model, endpoint, expect_served, hits ... of the wrapped backend
+        return getattr(self.ask, k)
+
+    def __setattr__(self, k, v):
+        if k in ("ask", "sentence", "rewritten"): object.__setattr__(self, k, v)
+        else: setattr(self.ask, k, v)
+
+    def __call__(self, prompt, tag, cap, max_tokens):
+        if prompt.startswith(self.FIRST):
+            prompt = self.sentence + prompt[len(self.FIRST):]; object.__setattr__(self, "rewritten", self.rewritten + 1)
+        return self.ask(prompt, tag, cap, max_tokens)
 
 
 def cpu_count():

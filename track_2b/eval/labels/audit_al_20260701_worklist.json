@@ -1,0 +1,41 @@
+[
+ {
+  "id": "AL00",
+  "list": "al",
+  "position": "6260.61",
+  "field": "Limitation",
+  "kind": "number",
+  "lang": "it",
+  "de": "1. Nicht zum Nachweis von bekannten familiären Mutationen. 2. Darf nur verrechnet werden, wenn die Position 6260.56 mehr als 14 Mal durchgeführt werden muss. 3. Verordnung nur durch Ärzte und Ärztinnen mit eidgenössischem Weiterbildungstitel in Medizinischer Genetik nach dem Bundesgesetz vom 23. Juni 2006 über die universitären Medizinalberufe (Medizinalberufegesetz, MedBG, SR 811.11).",
+  "fr": "1. Ne peut être facturé pour la détermination de mutations familiales connues. 2. Uniquement facturable si la position 6260.56 doit être réalisée plus de 14 fois. 3. Prescription des analyses seulement par des médecins titulaires du titre postgrade fédéral en génétique médicale selon la loi fédérale du 23 juin 2006 sur les professions médicales universitaires (loi sur les professions médicales, LPMéd; RS 811.11).",
+  "it": "1. Non per la determinazione di mutazioni familiari conosciute 2. Può essere solo fatturata se la posizione 6260.56 deve essere eseguita più di 13 volte 3. Prescrizione delle analisi soltanto da parte di medici con un titolo di perfezionamento federale in genetica medica secondo la legge federale del 23 giugno 2006 sulle professioni mediche universitarie (legge sulle professioni mediche, LPMed; RS 811.11)",
+  "finding": "DE has 14 (Mal), IT does not; IT has 13 (volte), DE does not",
+  "question": "Do the German and the 'lang' text state a different condition for at least one of the values named in 'finding'? Answer real / minor / not (same condition: formatting, rephrasing, unit conversion, parser artefact)."
+ },
+ {
+  "id": "AL01",
+  "list": "al",
+  "position": "3363",
+  "field": "Limitation",
+  "kind": "number",
+  "lang": "fr",
+  "de": "1. Bei Nachweis von 1 Keim pro Reaktionsansatz oder als 1. Keim bei einem Reaktionsansatz zum Nachweis mehrerer Keime. 2. Pro Reaktionsansatz dürfen maximal 5 Keime, Resistenzgene und/oder Pathogenitätsfaktoren verrechnet werden (1 Keim, Resistenzgen und/oder Pathogenitätsfaktoren als zusätzliche Keime, Resistenzgene oder Pathogenitätsfaktoren).",
+  "fr": "1. Détermination d'un seul microorganisme par mélange réactionnel ou comme premier microorganisme dans un mélange réactionnel pour la détermination de plusieurs microorganismes. 2. Il est possible de facturer au maximum 5 microorganismes et/ou gènes de résistance et/ou facteurs de pathogénicité par mélange réactionnel (1 fois comme premier microorganisme, gène de résistance ou/et facteur de pathogénicité et au maximum 4 fois comme microorganisme supplémentaire, gène de résistance ou/et facteur de pathogénicité supplémentaire).",
+  "it": "1. Per la determinazione di un microrganismo per miscela di reazione o come primo microrganismo in uno miscela di reazione per la determinazione di numerosi microrganismi. 2. E possibile fatturare al massimo 5 microrganismi, geni di resistenza e/o fattori di patogenità per miscela di reazione (un microrganismo, gene di resistenza e/o fattore di patogenità come primo microrganismo, gene di resistenza o fattore di patogenità e al massimo 4 microrganismi, geni di resistenza e/o fattori di patogenità quali microrganismi, geni di resistenza o fattori di patogenità supplementari).",
+  "finding": "FR has 4 (fois), DE does not",
+  "question": "Do the German and the 'lang' text state a different condition for at least one of the values named in 'finding'? Answer real / minor / not (same condition: formatting, rephrasing, unit conversion, parser artefact)."
+ },
+ {
+  "id": "AL02",
+  "list": "al",
+  "position": "1717",
+  "field": "Bemerkungen",
+  "kind": "number",
+  "lang": "fr",
+  "de": "Doppelbestimmung zur Bestimmung der Wiederfindung",
+  "fr": "La thyréoglobuline est déterminée deux fois sur l'échantillon primaire lors du test de récupération.",
+  "it": "Doppia determinazione per la determinazione del recupero",
+  "finding": "FR has 2 (fois), DE does not",
+  "question": "Do the German and the 'lang' text state a different condition for at least one of the values named in 'finding'? Answer real / minor / not (same condition: formatting, rephrasing, unit conversion, parser artefact)."
+ }
+]

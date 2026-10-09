@@ -432,3 +432,16 @@ def m1(build="q4_k_m"):
     s["cpu_secs_per_item"] = round(sum(secs) / len(secs), 1); s["model_digit_items"] = sum((R[k].get("digits_raw") or 0) > 0 or (R[k].get("reask_digits") or 0) > 0 for k in R)
     s["build"] = build
     return s
+
+
+def audit_more():
+    """Audit round 3: terminology findings learned from BAG's own corrections (6 Oct 2026 SL), and the same audit on two
+    other trilingual BAG lists it was never designed on (MiGeL, Analysenliste, 1 Jul 2026), each against a blind annotation."""
+    def lab(name):
+        rows = [l.split("\t") for l in open(os.path.join(LABELS, name), encoding="utf-8").read().splitlines()[1:]]
+        return dict(findings=len(rows), real=sum(r[4] == "yes" for r in rows),
+                    by_kind={k: [sum(r[1] == k for r in rows), sum(r[1] == k and r[4] == "yes" for r in rows)] for k in sorted({r[1] for r in rows})})
+    t, m, a = lab("audit3_terminology_20261006.tsv"), lab("audit_migel_20260701.tsv"), lab("audit_al_20260701.tsv")
+    lists_f, lists_r = m["findings"] + a["findings"], m["real"] + a["real"]
+    return dict(terminology=t, migel=m, al=a, lists_findings=lists_f, lists_real=lists_r,
+                lists_precision_pct=round(100 * lists_r / lists_f, 1))

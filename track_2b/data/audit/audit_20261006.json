@@ -9,7 +9,8 @@
 "number": 21,
 "unit": 0,
 "language": 1,
-"editorial": 5
+"editorial": 5,
+"terminology": 11
 },
 "by_kind_lang": {
 "number": {
@@ -24,6 +25,10 @@
 "de": 1,
 "fr": 3,
 "it": 1
+},
+"terminology": {
+"fr": 7,
+"it": 4
 }
 },
 "editorial_by_rule": {
@@ -31,8 +36,8 @@
 "E2": 3,
 "E4": 1
 },
-"findings_all": 27,
-"limitations_with_any_finding": 20,
+"findings_all": 38,
+"limitations_with_any_finding": 27,
 "by_lang": {
 "it": 7,
 "fr": 14
@@ -237,6 +242,62 @@
 "E01"
 ]
 },
+"likely_equivalent": {
+"note": "triage hint on number findings (Q1-Q5, typo); ids, ranks and counts unchanged",
+"number": 9,
+"of": 21,
+"findings": {
+"N04": "typo: E04 explains the difference",
+"N06": "Q1 conversion: 14 Tagen = 2 semaines",
+"N07": "Q3 adults: '18 Jahren' = 'adultes'",
+"N08": "Q3 adults: '18 Jahren' = 'adulti'",
+"N13": "typo: E05 explains the difference",
+"N14": "Q2 interval: '2 jours' = 'zweiten Tag'",
+"N15": "Q2 interval: '2 giorni' = 'zweiten Tag'",
+"N16": "typo: E01 explains the difference",
+"N17": "typo: E01 explains the difference"
+}
+},
+"terminology": {
+"pairs": 5,
+"pairs_file": "data/audit/term_pairs_20261006.json",
+"pairs_meta": {
+"generated_by": "python3 -m gleichlaut.audit --date 20261006",
+"date": "20261006",
+"snapshots": [
+"20260219",
+"20260304",
+"20260401",
+"20260601",
+"20260701",
+"20260801",
+"20260901",
+"20261001",
+"20261006"
+],
+"items": "data/items/items_fresh.json",
+"units": {
+"snapshots": 459,
+"items": 166
+},
+"rules": {
+"max_tokens": 8,
+"rewrite_similarity": 0.5,
+"position_tolerance": 0.15,
+"min_support": 2,
+"min_stem_letters": 6,
+"dice": 0.5,
+"context": 3
+}
+},
+"findings": 11,
+"limitations": 7,
+"by_pair": {
+"fr: et ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine ii -> et ou d'un antagoniste des récepteurs de l'angiotensine ii (DE angiotensin-ii-antagonist)": 4,
+"it: o di un cosiddetti antagonisti del recettore dell'angiotensina -> o di un antagonista del recettore dell'angiotensina (DE angiotensin-ii-antagonist)": 4,
+"fr: limitation doit être communiqué à l'assureur maladie -> limitation doit être transmis à l'assureur maladie (DE limitierung)": 3
+}
+},
 "recall": {
 "limitations": 10,
 "of": 10,
@@ -440,55 +501,64 @@
 "number": 115,
 "unit": 0,
 "language": 0,
-"editorial": 14
+"editorial": 14,
+"terminology": 76
 },
 "20260304": {
 "number": 111,
 "unit": 0,
 "language": 0,
-"editorial": 14
+"editorial": 14,
+"terminology": 64
 },
 "20260401": {
 "number": 111,
 "unit": 0,
 "language": 0,
-"editorial": 14
+"editorial": 14,
+"terminology": 64
 },
 "20260601": {
 "number": 21,
 "unit": 0,
 "language": 0,
-"editorial": 5
+"editorial": 5,
+"terminology": 8
 },
 "20260701": {
 "number": 21,
 "unit": 0,
 "language": 0,
-"editorial": 5
+"editorial": 5,
+"terminology": 8
 },
 "20260801": {
 "number": 21,
 "unit": 0,
 "language": 1,
-"editorial": 5
+"editorial": 5,
+"terminology": 9
 },
 "20260901": {
 "number": 21,
 "unit": 0,
 "language": 1,
-"editorial": 5
+"editorial": 5,
+"terminology": 22
 },
 "20261001": {
 "number": 21,
 "unit": 0,
 "language": 1,
-"editorial": 5
+"editorial": 5,
+"terminology": 11
 },
 "20261006": {
 "number": 21,
 "unit": 0,
 "language": 1,
-"editorial": 5
+"editorial": 5,
+"terminology": 11
 }
 },
 "language_any_snapshot": [
@@ -518,6 +588,11 @@
 },
 "editorial": {
 "20260219": 5
+},
+"terminology": {
+"20260219": 8,
+"20260801": 1,
+"20260901": 2
 }
 },
 "stats_file": "data/audit/lang_stats_20261006.json.gz",
@@ -534,7 +609,7 @@
 "distinct_pairs": 1618,
 "term_pairs": 297,
 "exceptions": 722,
-"ids_with_exception": 483,
+"ids_with_exception": 484,
 "examples": [
 [
 "patienten",
@@ -584,7 +659,7 @@
 "distinct_pairs": 1620,
 "term_pairs": 314,
 "exceptions": 741,
-"ids_with_exception": 474,
+"ids_with_exception": 475,
 "examples": [
 [
 "patienten",
@@ -644,7 +719,8 @@
 "with_preexisting": 2,
 "with_language_or_number": 2,
 "with_editorial": 0,
-"with_any": 2,
+"with_terminology": 36,
+"with_any": 38,
 "pairs": 2,
 "by_kind": {
 "number": [
@@ -654,7 +730,45 @@
 "language": [
 "wb079-it"
 ],
-"editorial": []
+"editorial": [],
+"terminology": [
+"wb015-fr",
+"wb015-it",
+"wb016-fr",
+"wb016-it",
+"wb017-fr",
+"wb017-it",
+"wb018-fr",
+"wb018-it",
+"wb019-fr",
+"wb019-it",
+"wb020-fr",
+"wb020-it",
+"wb021-fr",
+"wb021-it",
+"wb022-fr",
+"wb022-it",
+"wb023-fr",
+"wb023-it",
+"wb024-fr",
+"wb024-it",
+"wb025-fr",
+"wb025-it",
+"wb026-fr",
+"wb026-it",
+"wb027-fr",
+"wb027-it",
+"wb028-fr",
+"wb028-it",
+"wb029-fr",
+"wb029-it",
+"wb030-fr",
+"wb030-it",
+"wb031-fr",
+"wb031-it",
+"wb032-fr",
+"wb032-it"
+]
 }
 }
 },
@@ -707,6 +821,8 @@
 "…ezzo di fabbrica, più il supplemento attinente al prezzo di [12]% più la IVA. A causa della situazione particolare della dis…"
 ],
 "explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -758,6 +874,8 @@
 "…e de 300 mg toutes les 4 semaines pour un poids corporel de [30] kg à moins de 60 kg, ou de 200 mg toutes les 2 semaines pou…"
 ],
 "explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
 "first_seen": "20260601",
 "seen_in": 6
 },
@@ -809,6 +927,8 @@
 "…e de 300 mg toutes les 4 semaines pour un poids corporel de [30] kg à moins de 60 kg, ou de 200 mg toutes les 2 semaines pou…"
 ],
 "explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
 "first_seen": "20260601",
 "seen_in": 6
 },
@@ -862,6 +982,8 @@
 "explained_by": [
 "E04"
 ],
+"likely_equivalent": true,
+"equivalence": "typo: E04 explains the difference",
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -902,6 +1024,8 @@
 "… juvénile polyarticulaire active chez les patients pesant ≥ [62.5] kg et de l'arthrite psoriasique en cas de réponse inadéquat…"
 ],
 "explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -942,6 +1066,8 @@
 "…en; ausgenommen sind folgende Fälle: – Geburt innerhalb von [14] Tagen nach Verabreichung der Impfung, – Frühgeburt vor 37 W…"
 ],
 "explained_by": [],
+"likely_equivalent": true,
+"equivalence": "Q1 conversion: 14 Tagen = 2 semaines",
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -982,6 +1108,8 @@
 "Zur Monotherapie bei erwachsenen Patienten ab [18] Jahren mit gesicherter Diagnose eines Morbus Gaucher Typ I,…"
 ],
 "explained_by": [],
+"likely_equivalent": true,
+"equivalence": "Q3 adults: '18 Jahren' = 'adultes'",
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1022,6 +1150,8 @@
 "Zur Monotherapie bei erwachsenen Patienten ab [18] Jahren mit gesicherter Diagnose eines Morbus Gaucher Typ I,…"
 ],
 "explained_by": [],
+"likely_equivalent": true,
+"equivalence": "Q3 adults: '18 Jahren' = 'adulti'",
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1062,6 +1192,8 @@
 "…ter von 6 Jahren und mit einem Körpergewicht von mindestens [16] kg vergütet."
 ],
 "explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1102,6 +1234,8 @@
 "…hnittswert für die 3 Monate vor Therapiebeginn mit EMGALITY [120] mg reduziert wurde und diese Reduktion anhand eines Migräne…"
 ],
 "explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1142,6 +1276,8 @@
 "…hnittswert für die 3 Monate vor Therapiebeginn mit EMGALITY [120] mg reduziert wurde und diese Reduktion anhand eines Migräne…"
 ],
 "explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1182,6 +1318,8 @@
 "… juvénile polyarticulaire active chez les patients pesant ≥ [62.5] kg et de l'arthrite psoriasique en cas de réponse inadéquat…"
 ],
 "explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1226,6 +1364,8 @@
 "explained_by": [
 "E05"
 ],
+"likely_equivalent": true,
+"equivalence": "typo: E05 explains the difference",
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1267,6 +1407,8 @@
 "…iqué, à la posologie de 123 mg (1 gélule) une fois tous les [deux] jours à heure fixe, dans le traitement à long terme des adu…"
 ],
 "explained_by": [],
+"likely_equivalent": true,
+"equivalence": "Q2 interval: '2 jours' = 'zweiten Tag'",
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1308,6 +1450,8 @@
 "…. GALAFOLD al dosaggio di 123 mg (1 capsula) una volta ogni [due] giorni, alla stessa ora, è indicato per il trattamento a lu…"
 ],
 "explained_by": [],
+"likely_equivalent": true,
+"equivalence": "Q2 interval: '2 giorni' = 'zweiten Tag'",
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1350,6 +1494,8 @@
 "explained_by": [
 "E01"
 ],
+"likely_equivalent": true,
+"equivalence": "typo: E01 explains the difference",
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1392,6 +1538,8 @@
 "explained_by": [
 "E01"
 ],
+"likely_equivalent": true,
+"equivalence": "typo: E01 explains the difference",
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1432,6 +1580,8 @@
 "…iner Erhaltungsdosis von 30 mg als subkutane Injektion alle [acht] Wochen, zur Behandlung erwachsener und jugendlicher Patient…"
 ],
 "explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1472,6 +1622,8 @@
 "… juvénile polyarticulaire active chez les patients pesant ≥ [62.5] kg et de l'arthrite psoriasique en cas de réponse inadéquat…"
 ],
 "explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1525,6 +1677,8 @@
 "…le zwei Wochen und bei Patienten mit einem Körpergewicht ab [15] kg bis unter 30 kg in einer Anfangsdosis von 600 mg (eine I…"
 ],
 "explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1578,6 +1732,8 @@
 "…le zwei Wochen und bei Patienten mit einem Körpergewicht ab [15] kg bis unter 30 kg in einer Anfangsdosis von 600 mg (eine I…"
 ],
 "explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1614,6 +1770,8 @@
 "suggested_action": null,
 "rank": 1,
 "fid": "L01",
+"likely_equivalent": false,
+"equivalence": null,
 "first_seen": "20260801",
 "seen_in": 4
 },
@@ -1648,6 +1806,8 @@
 "suggested_action": null,
 "rank": 1,
 "fid": "E01",
+"likely_equivalent": false,
+"equivalence": null,
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1680,6 +1840,8 @@
 "suggested_action": null,
 "rank": 2,
 "fid": "E02",
+"likely_equivalent": false,
+"equivalence": null,
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1712,6 +1874,8 @@
 "suggested_action": null,
 "rank": 3,
 "fid": "E03",
+"likely_equivalent": false,
+"equivalence": null,
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1744,6 +1908,8 @@
 "suggested_action": null,
 "rank": 4,
 "fid": "E04",
+"likely_equivalent": false,
+"equivalence": null,
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1778,8 +1944,1468 @@
 "suggested_action": null,
 "rank": 5,
 "fid": "E05",
+"likely_equivalent": false,
+"equivalence": null,
 "first_seen": "20260219",
 "seen_in": 9
+},
+{
+"id": "COVERAM-PLUS",
+"product": [
+"Coveram"
+],
+"lang": "fr",
+"kind": "terminology",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"third_also": true,
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"old_phrase": "et ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine ii",
+"new_phrase": "et ou d'un antagoniste des récepteurs de l'angiotensine ii",
+"de_stem": "angiotensin-ii-antagonist",
+"n_limitations": 18,
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"half": "held",
+"context": [
+"…é de COVERAM PLUS et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'…"
+],
+"description": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"suggested_action": null,
+"rank": 1,
+"fid": "T01",
+"likely_equivalent": false,
+"equivalence": null,
+"first_seen": "20260219",
+"seen_in": 9
+},
+{
+"id": "PERAMLIND.me",
+"product": [
+"Perindopril-Amlodipin-Indapamid-Mepha"
+],
+"lang": "fr",
+"kind": "terminology",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"third_also": true,
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"old_phrase": "et ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine ii",
+"new_phrase": "et ou d'un antagoniste des récepteurs de l'angiotensine ii",
+"de_stem": "angiotensin-ii-antagonist",
+"n_limitations": 18,
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"half": "held",
+"context": [
+"…N-INDAPAMID-MEPHA et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'…"
+],
+"description": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"suggested_action": null,
+"rank": 2,
+"fid": "T02",
+"likely_equivalent": false,
+"equivalence": null,
+"first_seen": "20260219",
+"seen_in": 9
+},
+{
+"id": "PERAMLIND.sp",
+"product": [
+"Perindopril"
+],
+"lang": "fr",
+"kind": "terminology",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"third_also": true,
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"old_phrase": "et ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine ii",
+"new_phrase": "et ou d'un antagoniste des récepteurs de l'angiotensine ii",
+"de_stem": "angiotensin-ii-antagonist",
+"n_limitations": 18,
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"half": "held",
+"context": [
+"…DAPAMID SPIRIG HC et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'…"
+],
+"description": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"suggested_action": null,
+"rank": 3,
+"fid": "T03",
+"likely_equivalent": false,
+"equivalence": null,
+"first_seen": "20260219",
+"seen_in": 9
+},
+{
+"id": "PERINDAMLIND",
+"product": [
+"Perindopril"
+],
+"lang": "fr",
+"kind": "terminology",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"third_also": true,
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"old_phrase": "et ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine ii",
+"new_phrase": "et ou d'un antagoniste des récepteurs de l'angiotensine ii",
+"de_stem": "angiotensin-ii-antagonist",
+"n_limitations": 18,
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"half": "dev",
+"context": [
+"…INDAPAMID ZENTIVA et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'…"
+],
+"description": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"suggested_action": null,
+"rank": 4,
+"fid": "T04",
+"likely_equivalent": false,
+"equivalence": null,
+"first_seen": "20260219",
+"seen_in": 9
+},
+{
+"id": "COVERAM-PLUS",
+"product": [
+"Coveram"
+],
+"lang": "it",
+"kind": "terminology",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"third_also": true,
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"old_phrase": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new_phrase": "o di un antagonista del recettore dell'angiotensina",
+"de_stem": "angiotensin-ii-antagonist",
+"n_limitations": 18,
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"half": "held",
+"context": [
+"…ata di COVERAM PLUS e di un calcio antagonista I.T. 02.06 e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'assicurazi…"
+],
+"description": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"suggested_action": null,
+"rank": 5,
+"fid": "T05",
+"likely_equivalent": false,
+"equivalence": null,
+"first_seen": "20260219",
+"seen_in": 9
+},
+{
+"id": "PERAMLIND.me",
+"product": [
+"Perindopril-Amlodipin-Indapamid-Mepha"
+],
+"lang": "it",
+"kind": "terminology",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"third_also": true,
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"old_phrase": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new_phrase": "o di un antagonista del recettore dell'angiotensina",
+"de_stem": "angiotensin-ii-antagonist",
+"n_limitations": 18,
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"half": "held",
+"context": [
+"…PIN-INDAPAMID-MEPHA e di un calcio antagonista I.T. 02.06 e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'assicurazi…"
+],
+"description": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"suggested_action": null,
+"rank": 6,
+"fid": "T06",
+"likely_equivalent": false,
+"equivalence": null,
+"first_seen": "20260219",
+"seen_in": 9
+},
+{
+"id": "PERAMLIND.sp",
+"product": [
+"Perindopril"
+],
+"lang": "it",
+"kind": "terminology",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"third_also": true,
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"old_phrase": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new_phrase": "o di un antagonista del recettore dell'angiotensina",
+"de_stem": "angiotensin-ii-antagonist",
+"n_limitations": 18,
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"half": "held",
+"context": [
+"…INDAPAMID SPIRIG HC e di un calcio antagonista I.T. 02.06 e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'assicurazi…"
+],
+"description": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"suggested_action": null,
+"rank": 7,
+"fid": "T07",
+"likely_equivalent": false,
+"equivalence": null,
+"first_seen": "20260219",
+"seen_in": 9
+},
+{
+"id": "PERINDAMLIND",
+"product": [
+"Perindopril"
+],
+"lang": "it",
+"kind": "terminology",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"third_also": true,
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"old_phrase": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new_phrase": "o di un antagonista del recettore dell'angiotensina",
+"de_stem": "angiotensin-ii-antagonist",
+"n_limitations": 18,
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"half": "dev",
+"context": [
+"…N INDAPAMID ZENTIVA e di un calcio antagonista I.T. 02.06 e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'assicurazi…"
+],
+"description": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"suggested_action": null,
+"rank": 8,
+"fid": "T08",
+"likely_equivalent": false,
+"equivalence": null,
+"first_seen": "20260219",
+"seen_in": 9
+},
+{
+"id": "JEMPERLI.01---Endometriumkarzinom-Mono",
+"product": [
+"Jemperli"
+],
+"lang": "fr",
+"kind": "terminology",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"third_also": false,
+"old": "limitation doit être communiqué à l’assureur-maladie",
+"new": "limitation doit être transmis à l'assureur-maladie",
+"de_term": "Limitierung",
+"old_phrase": "limitation doit être communiqué à l'assureur maladie",
+"new_phrase": "limitation doit être transmis à l'assureur maladie",
+"de_stem": "limitierung",
+"n_limitations": 11,
+"corrected_in": [
+{
+"id": "OPDIVO.02---Melanom-Monotherapie",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.03---Melanom-Kombitherapie",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.07---Melanom-adjuvant",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.09---OC-oder-GEJC-adjuvant",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.10---RCC-Nierenzellkarzinom",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.12---MIUC-adjuvant",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.13--",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.16---GC-GEJC-OC",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+}
+],
+"half": "held",
+"context": [
+"…t de l'administration. Le code d’indication relatif à cette [limitation doit être communiqué à l’assureur-maladie]."
+],
+"description": "The French text says 'limitation doit être communiqué à l’assureur-maladie' where BAG replaced it with 'limitation doit être transmis à l'assureur-maladie' for the German 'Limitierung' in 11 other limitations (latest 01.10.2026).",
+"suggested_action": null,
+"rank": 9,
+"fid": "T09",
+"likely_equivalent": false,
+"equivalence": null,
+"first_seen": "20260901",
+"seen_in": 3
+},
+{
+"id": "JEMPERLI.02---Endometriumkarzinom-Kombi",
+"product": [
+"Jemperli"
+],
+"lang": "fr",
+"kind": "terminology",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"third_also": false,
+"old": "limitation doit être communiqué à l’assureur-maladie",
+"new": "limitation doit être transmis à l'assureur-maladie",
+"de_term": "Limitierung",
+"old_phrase": "limitation doit être communiqué à l'assureur maladie",
+"new_phrase": "limitation doit être transmis à l'assureur maladie",
+"de_stem": "limitierung",
+"n_limitations": 11,
+"corrected_in": [
+{
+"id": "OPDIVO.02---Melanom-Monotherapie",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.03---Melanom-Kombitherapie",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.07---Melanom-adjuvant",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.09---OC-oder-GEJC-adjuvant",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.10---RCC-Nierenzellkarzinom",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.12---MIUC-adjuvant",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.13--",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.16---GC-GEJC-OC",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+}
+],
+"half": "held",
+"context": [
+"…t de l’administration. Le code d’indication relatif à cette [limitation doit être communiqué à l’assureur-maladie]."
+],
+"description": "The French text says 'limitation doit être communiqué à l’assureur-maladie' where BAG replaced it with 'limitation doit être transmis à l'assureur-maladie' for the German 'Limitierung' in 11 other limitations (latest 01.10.2026).",
+"suggested_action": null,
+"rank": 10,
+"fid": "T10",
+"likely_equivalent": false,
+"equivalence": null,
+"first_seen": "20260901",
+"seen_in": 3
+},
+{
+"id": "OPZELURA.01---Vitiligo-Erwachsene-und-Jugendliche-ab-12-Jahren",
+"product": [
+"Opzelura"
+],
+"lang": "fr",
+"kind": "terminology",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"third_also": false,
+"old": "limitation doit être communiqué à l’assureur-maladie",
+"new": "limitation doit être transmis à l'assureur-maladie",
+"de_term": "Limitierung",
+"old_phrase": "limitation doit être communiqué à l'assureur maladie",
+"new_phrase": "limitation doit être transmis à l'assureur maladie",
+"de_stem": "limitierung",
+"n_limitations": 11,
+"corrected_in": [
+{
+"id": "OPDIVO.02---Melanom-Monotherapie",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.03---Melanom-Kombitherapie",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.07---Melanom-adjuvant",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.09---OC-oder-GEJC-adjuvant",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.10---RCC-Nierenzellkarzinom",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.12---MIUC-adjuvant",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.13--",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.16---GC-GEJC-OC",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+},
+{
+"id": "OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib",
+"before": "20260901",
+"after": "20261001",
+"source": "snapshots"
+}
+],
+"half": "dev",
+"context": [
+"…e est remboursé. Le code d’indication correspondant à cette [limitation doit être communiqué à l’assureur-maladie]."
+],
+"description": "The French text says 'limitation doit être communiqué à l’assureur-maladie' where BAG replaced it with 'limitation doit être transmis à l'assureur-maladie' for the German 'Limitierung' in 11 other limitations (latest 01.10.2026).",
+"suggested_action": null,
+"rank": 11,
+"fid": "T11",
+"likely_equivalent": false,
+"equivalence": null,
+"first_seen": "20260801",
+"seen_in": 4
 }
 ],
 "fresh_items": [
@@ -1798,6 +3424,8 @@
 "8"
 ],
 "detail": "The old German has 8 (Wochen); the old Italian does not.",
+"likely_equivalent": false,
+"equivalence": null,
 "value": "8",
 "n": 1,
 "unit": "Wochen",
@@ -1805,6 +3433,4794 @@
 "context": [
 "…iner Erhaltungsdosis von 30 mg als subkutane Injektion alle [acht] Wochen, zur Behandlung erwachsener und jugendlicher Patient…"
 ]
+}
+]
+},
+{
+"key": "wb015-fr",
+"lang": "fr",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "fr",
+"odd_one_out": "fr",
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"n_limitations": 18,
+"context": [
+"… SANDOZ et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
+],
+"detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+}
+]
+},
+{
+"key": "wb015-it",
+"lang": "it",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "it",
+"odd_one_out": "it",
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"n_limitations": 18,
+"context": [
+"…CT SANDOZ e di un calcio antagonista I.T. 02.06 e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'…"
+],
+"detail": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "il vecchio testo dice «o di un cosiddetti antagonisti del recettore dell'angiotensina»; l'UFSP ha sostituito questo termine con «o di un antagonista del recettore dell'angiotensina» (tedesco «Angiotensin-II-Antagonisten») in 18 altre limitazioni"
+}
+]
+},
+{
+"key": "wb016-fr",
+"lang": "fr",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "fr",
+"odd_one_out": "fr",
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"n_limitations": 18,
+"context": [
+"… SANDOZ et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
+],
+"detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+}
+]
+},
+{
+"key": "wb016-it",
+"lang": "it",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "it",
+"odd_one_out": "it",
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"n_limitations": 18,
+"context": [
+"…AN SANDOZ e di un calcio antagonista I.T. 02.06 e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'…"
+],
+"detail": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "il vecchio testo dice «o di un cosiddetti antagonisti del recettore dell'angiotensina»; l'UFSP ha sostituito questo termine con «o di un antagonista del recettore dell'angiotensina» (tedesco «Angiotensin-II-Antagonisten») in 18 altre limitazioni"
+}
+]
+},
+{
+"key": "wb017-fr",
+"lang": "fr",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "fr",
+"odd_one_out": "fr",
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"n_limitations": 18,
+"context": [
+"…VIATRIS et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
+],
+"detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+}
+]
+},
+{
+"key": "wb017-it",
+"lang": "it",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "it",
+"odd_one_out": "it",
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"n_limitations": 18,
+"context": [
+"…N VIATRIS e di un calcio antagonista I.T. 02.06 e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'…"
+],
+"detail": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "il vecchio testo dice «o di un cosiddetti antagonisti del recettore dell'angiotensina»; l'UFSP ha sostituito questo termine con «o di un antagonista del recettore dell'angiotensina» (tedesco «Angiotensin-II-Antagonisten») in 18 altre limitazioni"
+}
+]
+},
+{
+"key": "wb018-fr",
+"lang": "fr",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "fr",
+"odd_one_out": "fr",
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"n_limitations": 18,
+"context": [
+"…ZENTIVA et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
+],
+"detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+}
+]
+},
+{
+"key": "wb018-it",
+"lang": "it",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "it",
+"odd_one_out": "it",
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"n_limitations": 18,
+"context": [
+"…N ZENTIVA e di un calcio antagonista I.T. 02.06 e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'…"
+],
+"detail": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "il vecchio testo dice «o di un cosiddetti antagonisti del recettore dell'angiotensina»; l'UFSP ha sostituito questo termine con «o di un antagonista del recettore dell'angiotensina» (tedesco «Angiotensin-II-Antagonisten») in 18 altre limitazioni"
+}
+]
+},
+{
+"key": "wb019-fr",
+"lang": "fr",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "fr",
+"odd_one_out": "fr",
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"n_limitations": 18,
+"context": [
+"…T-MEPHA et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
+],
+"detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+}
+]
+},
+{
+"key": "wb019-it",
+"lang": "it",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "it",
+"odd_one_out": "it",
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"n_limitations": 18,
+"context": [
+"…HCT-MEPHA e di un calcio antagonista I.T. 02.06 e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'…"
+],
+"detail": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "il vecchio testo dice «o di un cosiddetti antagonisti del recettore dell'angiotensina»; l'UFSP ha sostituito questo termine con «o di un antagonista del recettore dell'angiotensina» (tedesco «Angiotensin-II-Antagonisten») in 18 altre limitazioni"
+}
+]
+},
+{
+"key": "wb020-fr",
+"lang": "fr",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "fr",
+"odd_one_out": "fr",
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"n_limitations": 18,
+"context": [
+"…ha Teva et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
+],
+"detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+}
+]
+},
+{
+"key": "wb020-it",
+"lang": "it",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "it",
+"odd_one_out": "it",
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"n_limitations": 18,
+"context": [
+"…epha Teva e di un calcio antagonista I.T. 02.06 e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'…"
+],
+"detail": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "il vecchio testo dice «o di un cosiddetti antagonisti del recettore dell'angiotensina»; l'UFSP ha sostituito questo termine con «o di un antagonista del recettore dell'angiotensina» (tedesco «Angiotensin-II-Antagonisten») in 18 altre limitazioni"
+}
+]
+},
+{
+"key": "wb021-fr",
+"lang": "fr",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "fr",
+"odd_one_out": "fr",
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"n_limitations": 18,
+"context": [
+"…IRIG HC et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
+],
+"detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+}
+]
+},
+{
+"key": "wb021-it",
+"lang": "it",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "it",
+"odd_one_out": "it",
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"n_limitations": 18,
+"context": [
+"…SPIRIG HC e di un calcio antagonista I.T. 02.06 e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'…"
+],
+"detail": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "il vecchio testo dice «o di un cosiddetti antagonisti del recettore dell'angiotensina»; l'UFSP ha sostituito questo termine con «o di un antagonista del recettore dell'angiotensina» (tedesco «Angiotensin-II-Antagonisten») in 18 altre limitazioni"
+}
+]
+},
+{
+"key": "wb022-fr",
+"lang": "fr",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "fr",
+"odd_one_out": "fr",
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"n_limitations": 18,
+"context": [
+"…RGE HCT et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
+],
+"detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+}
+]
+},
+{
+"key": "wb022-it",
+"lang": "it",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "it",
+"odd_one_out": "it",
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"n_limitations": 18,
+"context": [
+"…FORGE HCT e di un calcio antagonista I.T. 02.06 e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'…"
+],
+"detail": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "il vecchio testo dice «o di un cosiddetti antagonisti del recettore dell'angiotensina»; l'UFSP ha sostituito questo termine con «o di un antagonista del recettore dell'angiotensina» (tedesco «Angiotensin-II-Antagonisten») in 18 altre limitazioni"
+}
+]
+},
+{
+"key": "wb023-fr",
+"lang": "fr",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "fr",
+"odd_one_out": "fr",
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"n_limitations": 18,
+"context": [
+"…EXFORGE et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
+],
+"detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+}
+]
+},
+{
+"key": "wb023-it",
+"lang": "it",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "it",
+"odd_one_out": "it",
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"n_limitations": 18,
+"context": [
+"…i EXFORGE e di un calcio antagonista I.T. 02.06 e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'…"
+],
+"detail": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "il vecchio testo dice «o di un cosiddetti antagonisti del recettore dell'angiotensina»; l'UFSP ha sostituito questo termine con «o di un antagonista del recettore dell'angiotensina» (tedesco «Angiotensin-II-Antagonisten») in 18 altre limitazioni"
+}
+]
+},
+{
+"key": "wb024-fr",
+"lang": "fr",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "fr",
+"odd_one_out": "fr",
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"n_limitations": 18,
+"context": [
+"…RIG HC et d'un antagoniste du calcium I.T. 02.06. [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
+],
+"detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+}
+]
+},
+{
+"key": "wb024-it",
+"lang": "it",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "it",
+"odd_one_out": "it",
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"n_limitations": 18,
+"context": [
+"…PIRIG HC e di un calcio antagonista I.T. 02.06. e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'…"
+],
+"detail": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "il vecchio testo dice «o di un cosiddetti antagonisti del recettore dell'angiotensina»; l'UFSP ha sostituito questo termine con «o di un antagonista del recettore dell'angiotensina» (tedesco «Angiotensin-II-Antagonisten») in 18 altre limitazioni"
+}
+]
+},
+{
+"key": "wb025-fr",
+"lang": "fr",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "fr",
+"odd_one_out": "fr",
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"n_limitations": 18,
+"context": [
+"…SANDOZ et d'un antagoniste du calcium I.T. 02.06. [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
+],
+"detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+}
+]
+},
+{
+"key": "wb025-it",
+"lang": "it",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "it",
+"odd_one_out": "it",
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"n_limitations": 18,
+"context": [
+"…N SANDOZ e di un calcio antagonista I.T. 02.06. e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'…"
+],
+"detail": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "il vecchio testo dice «o di un cosiddetti antagonisti del recettore dell'angiotensina»; l'UFSP ha sostituito questo termine con «o di un antagonista del recettore dell'angiotensina» (tedesco «Angiotensin-II-Antagonisten») in 18 altre limitazioni"
+}
+]
+},
+{
+"key": "wb026-fr",
+"lang": "fr",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "fr",
+"odd_one_out": "fr",
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"n_limitations": 18,
+"context": [
+"…ENTIVA et d'un antagoniste du calcium I.T. 02.06. [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
+],
+"detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+}
+]
+},
+{
+"key": "wb026-it",
+"lang": "it",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "it",
+"odd_one_out": "it",
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"n_limitations": 18,
+"context": [
+"… ZENTIVA e di un calcio antagonista I.T. 02.06. e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'…"
+],
+"detail": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "il vecchio testo dice «o di un cosiddetti antagonisti del recettore dell'angiotensina»; l'UFSP ha sostituito questo termine con «o di un antagonista del recettore dell'angiotensina» (tedesco «Angiotensin-II-Antagonisten») in 18 altre limitazioni"
+}
+]
+},
+{
+"key": "wb027-fr",
+"lang": "fr",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "fr",
+"odd_one_out": "fr",
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"n_limitations": 18,
+"context": [
+"… MEPHA et d'un antagoniste du calcium I.T. 02.06. [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
+],
+"detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+}
+]
+},
+{
+"key": "wb027-it",
+"lang": "it",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "it",
+"odd_one_out": "it",
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"n_limitations": 18,
+"context": [
+"…IN MEPHA e di un calcio antagonista I.T. 02.06. e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'…"
+],
+"detail": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "il vecchio testo dice «o di un cosiddetti antagonisti del recettore dell'angiotensina»; l'UFSP ha sostituito questo termine con «o di un antagonista del recettore dell'angiotensina» (tedesco «Angiotensin-II-Antagonisten») in 18 altre limitazioni"
+}
+]
+},
+{
+"key": "wb028-fr",
+"lang": "fr",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "fr",
+"odd_one_out": "fr",
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"n_limitations": 18,
+"context": [
+"…entiva et d'un antagoniste du calcium I.T. 02.06. [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
+],
+"detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+}
+]
+},
+{
+"key": "wb028-it",
+"lang": "it",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "it",
+"odd_one_out": "it",
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"n_limitations": 18,
+"context": [
+"… Zentiva e di un calcio antagonista I.T. 02.06. e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'…"
+],
+"detail": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "il vecchio testo dice «o di un cosiddetti antagonisti del recettore dell'angiotensina»; l'UFSP ha sostituito questo termine con «o di un antagonista del recettore dell'angiotensina» (tedesco «Angiotensin-II-Antagonisten») in 18 altre limitazioni"
+}
+]
+},
+{
+"key": "wb029-fr",
+"lang": "fr",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "fr",
+"odd_one_out": "fr",
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"n_limitations": 18,
+"context": [
+"…AR/HCT et d'un antagoniste du calcium I.T. 02.06. [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
+],
+"detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+}
+]
+},
+{
+"key": "wb029-it",
+"lang": "it",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "it",
+"odd_one_out": "it",
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"n_limitations": 18,
+"context": [
+"…IKAR/HCT e di un calcio antagonista I.T. 02.06. e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'…"
+],
+"detail": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "il vecchio testo dice «o di un cosiddetti antagonisti del recettore dell'angiotensina»; l'UFSP ha sostituito questo termine con «o di un antagonista del recettore dell'angiotensina» (tedesco «Angiotensin-II-Antagonisten») in 18 altre limitazioni"
+}
+]
+},
+{
+"key": "wb030-fr",
+"lang": "fr",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "fr",
+"odd_one_out": "fr",
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"n_limitations": 18,
+"context": [
+"…IRIG HC et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
+],
+"detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+}
+]
+},
+{
+"key": "wb030-it",
+"lang": "it",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "it",
+"odd_one_out": "it",
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"n_limitations": 18,
+"context": [
+"…SPIRIG HC e di un calcio antagonista I.T. 02.06 e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall'…"
+],
+"detail": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "il vecchio testo dice «o di un cosiddetti antagonisti del recettore dell'angiotensina»; l'UFSP ha sostituito questo termine con «o di un antagonista del recettore dell'angiotensina» (tedesco «Angiotensin-II-Antagonisten») in 18 altre limitazioni"
+}
+]
+},
+{
+"key": "wb031-fr",
+"lang": "fr",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "fr",
+"odd_one_out": "fr",
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"n_limitations": 18,
+"context": [
+"…dipine et d'un antagoniste du calcium I.T. 02.06. [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA n’est pas rembours…"
+],
+"detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+}
+]
+},
+{
+"key": "wb031-it",
+"lang": "it",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "it",
+"odd_one_out": "it",
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"n_limitations": 18,
+"context": [
+"…mlodipin e di un calcio antagonista I.T. 02.06. e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata dall’…"
+],
+"detail": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "il vecchio testo dice «o di un cosiddetti antagonisti del recettore dell'angiotensina»; l'UFSP ha sostituito questo termine con «o di un antagonista del recettore dell'angiotensina» (tedesco «Angiotensin-II-Antagonisten») in 18 altre limitazioni"
+}
+]
+},
+{
+"key": "wb032-fr",
+"lang": "fr",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "fr",
+"odd_one_out": "fr",
+"old": "et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II",
+"new": "et/ou d’un antagoniste des récepteurs de l'angiotensine II",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-fr"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-fr"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-fr"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-fr"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-fr"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-fr"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-fr"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-fr"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-fr"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-fr"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-fr"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-fr"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-fr"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-fr"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-fr"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-fr"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-fr"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-fr"
+}
+],
+"n_limitations": 18,
+"context": [
+"…iazide et d'un antagoniste du calcium I.T. 02.06. [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA n’est pas rembours…"
+],
+"detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+}
+]
+},
+{
+"key": "wb032-it",
+"lang": "it",
+"kinds": [
+"terminology"
+],
+"findings": [
+{
+"kind": "terminology",
+"lang": "it",
+"odd_one_out": "it",
+"old": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+"new": "o di un antagonista del recettore dell'angiotensina",
+"de_term": "Angiotensin-II-Antagonisten",
+"corrected_in": [
+{
+"id": "RA:0c4db3a4-5da4-4451-b892-ddef44b14a87#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb021-it"
+},
+{
+"id": "RA:2b237e87-8c4b-46e5-8a9a-b9607e342cd6#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb025-it"
+},
+{
+"id": "RA:2db33ada-5565-4bd6-8dad-ac12af5b3d41#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb018-it"
+},
+{
+"id": "RA:2e351eb7-e564-4fa7-b786-d59f47e9322f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb032-it"
+},
+{
+"id": "RA:4cf02d31-49da-48e6-a21d-16184a50f3f1#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb020-it"
+},
+{
+"id": "RA:79526919-169b-457a-b54d-970793ba3cc4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb015-it"
+},
+{
+"id": "RA:7d6c4b03-feee-4d5e-80eb-65c437c4ca62#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb030-it"
+},
+{
+"id": "RA:7e4a670e-8ca0-413c-9b4f-4c3d933bb0c2#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb019-it"
+},
+{
+"id": "RA:81e36945-5549-408a-831e-4472ee099c2a#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb022-it"
+},
+{
+"id": "RA:83a4bf07-9321-488d-92f7-7f30d4b63aa8#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb027-it"
+},
+{
+"id": "RA:86da393f-4127-4331-a005-8374b881ed60#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb017-it"
+},
+{
+"id": "RA:912431b4-26ee-4cd3-aa5e-28a842e480ee#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb028-it"
+},
+{
+"id": "RA:9cbbe8f8-647c-4ea9-b692-22762b761e8f#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb026-it"
+},
+{
+"id": "RA:c5ca23aa-0264-4eb3-a7c1-0ca43643e8cf#1",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb023-it"
+},
+{
+"id": "RA:d18d0aaf-ffde-484c-ba09-504705e00c1d#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb016-it"
+},
+{
+"id": "RA:e5c0fed2-ce8d-4e74-b847-813f32564fa4#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb031-it"
+},
+{
+"id": "RA:e8ecddba-4617-40e9-be83-d5082a06bf6e#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb029-it"
+},
+{
+"id": "RA:fce7142a-ced9-4de5-8fe3-8546ed206d39#0",
+"before": "20250701",
+"after": "20260219",
+"source": "items:wb024-it"
+}
+],
+"n_limitations": 18,
+"context": [
+"…otiazide e di un calcio antagonista I.T. 02.06. e/[o di un cosiddetti antagonisti del recettore dell'angiotensina] II e/o un inibitore ACE non sarà rimborsata."
+],
+"detail": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+"text": "il vecchio testo dice «o di un cosiddetti antagonisti del recettore dell'angiotensina»; l'UFSP ha sostituito questo termine con «o di un antagonista del recettore dell'angiotensina» (tedesco «Angiotensin-II-Antagonisten») in 18 altre limitazioni"
 }
 ]
 },

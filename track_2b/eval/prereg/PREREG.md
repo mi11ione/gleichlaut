@@ -7,7 +7,8 @@ Each rule below is fixed **before** the run it governs. Failed runs are reported
   `freeze.json` and `tools/freeze.py` check that the vendored files still carry the frozen hashes.
 - **R1–R5** were committed here before their runs. `run_times.json` lists the first and last model call of each run from
   the development gateway's append-only ledger next to the commit times of this file (R2: committed 18:01 UTC, first call
-  18:27 UTC; R5: committed 18:20 UTC, first call 18:27 UTC, 9 Oct 2026). R1 has not been run.
+  18:27 UTC; R5: committed 18:20 UTC, first call 18:27 UTC, 9 Oct 2026). R1 ran on GitHub Actions CPU runners after
+  its commit (results log below).
 
 ## R0. Pass rule for a drafting lane (frozen 9 Oct 2026, before the fresh 2025 run)
 

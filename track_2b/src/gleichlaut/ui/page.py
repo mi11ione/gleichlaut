@@ -74,7 +74,7 @@ td{padding:5px 8px;border-bottom:1px solid var(--hair);vertical-align:top}
 #reg tr:hover td{background:color-mix(in srgb,var(--ink) 5%,transparent)}
 #reg tr[aria-selected=true] td{background:var(--sel);color:var(--sel-ink)}
 #reg tr[aria-selected=true] .mk.r{color:var(--sel-ink);text-decoration:underline}
-.mk{letter-spacing:-.02em}.mk.r{color:var(--red);font-weight:500}.mk.o{color:var(--ink2)}
+.mk{letter-spacing:-.02em}.mk.r{color:var(--red);font-weight:500}.mk.o{color:var(--ink2)}.mk.f{color:var(--ink);font-weight:500}
 .count{color:var(--ink2);padding:6px 0}
 .export{display:flex;flex-wrap:wrap;gap:8px;padding:10px 0 12px;border-top:1px solid var(--rule)}
 .export .msg{color:var(--ink2);flex-basis:100%}
@@ -124,7 +124,7 @@ del{margin-right:.2em}
 .ledger td{font-size:13px}
 .ledger td.res{white-space:nowrap}
 .ledger td.chk{width:34%}
-.ledger .FAIL{color:var(--red);font-weight:500}.ledger .na{color:var(--ink2)}
+.ledger .FAIL{color:var(--red);font-weight:500}.ledger .FAILf{color:var(--ink);font-weight:500}.ledger .na{color:var(--ink2)}
 .ledger .fd{font:400 15px/1.4 var(--sans)}
 .ledger .fd p{margin:0}.ledger .fd p+p{margin-top:3px}
 .ledger .cn{display:block;font:500 12px/1.4 var(--mono);color:var(--red);margin-top:2px}
@@ -152,14 +152,25 @@ del{margin-right:.2em}
 .lead{font:400 16px/1.45 var(--sans);margin:0 0 10px;max-width:90ch}
 .afl{display:flex;flex-direction:column;gap:6px;padding-bottom:10px;border-bottom:1px solid var(--rule)}
 #aud{table-layout:fixed;min-width:1080px}
-#aud col.a-no{width:58px}#aud col.a-lim{width:13%}#aud col.a-kind{width:92px}#aud col.a-dec{width:118px}#aud col.a-act{width:15%}
+#aud col.a-no{width:58px}#aud col.a-lim{width:13%}#aud col.a-kind{width:150px}#aud col.a-dec{width:118px}#aud col.a-act{width:17%}
+#aud td.kd{overflow-wrap:anywhere;word-break:normal}#aud td.kd .oddl{display:block;margin-top:2px}
 #aud thead th{position:sticky;top:0;background:var(--paper);z-index:1}
 #aud td{font-size:13px}
 #aud tr.grp td{font:500 11px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink);padding:16px 8px 6px;border-bottom:1px solid var(--rule)}
 #aud tr.grp .mk{margin-right:8px}
 #aud .lim b{font:400 15px/1.3 var(--sans);display:block}
 #aud .lim .code{color:var(--ink2);overflow-wrap:anywhere}
-#aud .sub2{display:block;color:var(--ink2);font-size:12px;margin-top:3px}
+#aud .sub2{display:block;color:var(--ink2);font-size:12px;margin-top:3px;overflow-wrap:anywhere}
+#aud .term{display:block;font:400 14px/1.35 var(--sans);margin-top:4px;overflow-wrap:anywhere}
+#aud .term s{color:var(--red);text-decoration-thickness:1px}#aud .term u{text-decoration-thickness:2px;text-underline-offset:3px}
+#aud tr.eqh td{padding:14px 8px 6px;border-bottom:1px solid var(--rule)}
+#aud tr.eqh button{background:none;border:0;padding:0;cursor:pointer;font:500 11px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink)}
+#aud tr.eqh button .mk{margin-right:8px}
+#aud tr.eq td{color:color-mix(in srgb,var(--ink) 85%,var(--paper))}
+.afl .fl input{background:var(--paper);border:0;border-bottom:1px solid var(--hair);padding:3px 0;min-width:0;flex:1 1 320px;max-width:440px}
+.fambar{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;padding-top:4px}
+.fambar .q{flex-basis:100%;font:400 14px/1.4 var(--sans)}.fambar .msg{color:var(--ink2);flex-basis:100%}
+.famline{color:var(--ink2);margin:2px 0 0;overflow-wrap:anywhere}.famline .tb{color:var(--ink)}
 .snip{font:400 14px/1.45 var(--sans);overflow-wrap:anywhere}
 .snip .v2{border:1px solid var(--red);padding:0 2px;font-weight:600;white-space:nowrap}
 .snip .v1{border-bottom:1px solid var(--ink2)}
@@ -178,7 +189,7 @@ footer p{margin:2px 0;overflow-wrap:anywhere}
 [hidden]{display:none!important}
 @media (max-width:900px){
  #aud{min-width:0;table-layout:auto}#aud colgroup,#aud thead{display:none}
- #aud tbody,#aud tr,#aud td{display:block;width:auto}
+ #aud,#aud tbody,#aud tr,#aud td{display:block;width:auto;max-width:100%}
  #aud tr{border-bottom:1px solid var(--rule);padding:8px 0 10px}#aud tr.grp{padding:0;border:0}
  #aud td{border:0;padding:3px 0}#aud td.odd{padding-left:10px}#aud td.odd>.oddl{display:none}
  .kv dl{grid-template-columns:minmax(96px,44%) minmax(0,1fr)}
@@ -217,7 +228,8 @@ BODY = r"""<div class="sheet">
 </header>
 <section class="audit" id="p-audit" role="tabpanel" aria-labelledby="t-audit" hidden>
  <p class="lead" id="a-lead"></p>
- <div class="afl"><div class="fl" id="a-show"></div><div class="fl" id="a-lang"></div><div class="fl" id="a-kind"></div></div>
+ <div class="afl"><div class="fl" id="a-show"></div><div class="fl" id="a-lang"></div><div class="fl" id="a-kind"></div>
+  <div class="fl"><label class="k" for="rev" id="l-rev"></label><input type="text" id="rev" autocomplete="name"></div></div>
  <div class="tbl"><table id="aud"><colgroup><col class="a-no"><col class="a-lim"><col class="a-kind"><col><col><col><col class="a-dec"><col class="a-act"></colgroup>
   <thead><tr><th id="ah-no"></th><th id="ah-lim"></th><th id="ah-kind"></th><th>DE</th><th>FR</th><th>IT</th><th id="ah-right"></th><th id="ah-act"></th></tr></thead><tbody></tbody></table></div>
  <div class="count" id="a-shown"></div>
@@ -230,11 +242,12 @@ BODY = r"""<div class="sheet">
    <div class="fl" id="f-status"></div>
    <div class="fl" id="f-lang"></div>
    <div class="fl"><select id="f-fam" aria-label="Family"></select><input type="search" id="f-q" aria-label="Search product or limitation code"></div>
+   <div class="fambar" id="fam-bulk" hidden></div>
   </div>
   <div class="tbl reg-wrap" id="reg-wrap"><table id="reg"><colgroup><col class="c-mark"><col class="c-no"><col class="c-prod"><col></colgroup>
    <thead><tr><th id="h-mark"></th><th id="h-no"></th><th id="h-prod"></th><th id="h-chg"></th></tr></thead><tbody></tbody></table></div>
   <div class="count" id="shown"></div>
-  <div class="export"><button class="box" id="x-xlf" type="button"></button><button class="box" id="x-json" type="button"></button><button class="box" id="x-copy" type="button"></button><button class="box" id="x-imp" type="button"></button>
+  <div class="export"><button class="box" id="x-xlf" type="button"></button><button class="box" id="x-xlf12" type="button"></button><button class="box" id="x-json" type="button"></button><button class="box" id="x-copy" type="button"></button><button class="box" id="x-imp" type="button"></button>
    <span class="msg" id="x-msg" aria-live="polite"></span><span class="where" id="x-where"></span><textarea id="copybox" hidden readonly aria-label="Decisions JSON"></textarea></div>
  </section>
  <section class="case" id="case" tabindex="-1" aria-label="Case"></section>
@@ -249,7 +262,7 @@ BODY = r"""<div class="sheet">
 (function(){
 "use strict";
 var D=JSON.parse(document.getElementById("data").textContent),M=D.meta,A=D.all,G=D.groups,AU=D.audit;
-var LK="gleichlaut:"+M.run+":"+M.run_sha256.slice(0,12),AK="gleichlaut:audit:"+(AU?AU.meta.date:"none");
+var LK="gleichlaut:"+M.run+":"+M.run_sha256.slice(0,12),AK="gleichlaut:audit-decisions",AKOLD="gleichlaut:audit:"+(AU?AU.meta.date:"none");
 function lsGet(k,d){try{var v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}}
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 var S=lsGet(LK+":state",null)||{dec:{},edits:{}};S.dec=S.dec||{};S.edits=S.edits||{};
@@ -257,6 +270,13 @@ var SA=lsGet(AK,null)||{};
 var P=lsGet("gleichlaut:prefs",{})||{};
 function save(){lsSet(LK+":state",S)}
 function saveA(){lsSet(AK,SA)}
+// audit decisions are keyed by the finding's signature (limitation | kind | language | values), not by the audit date, so
+// they carry over to the next audit run; decisions stored by an earlier page version (per date, by row id) are moved over.
+var ACTMAP={"Berichtigung":"exofficio","GÄL":"holder","GAEL":"holder"};
+(function(){if(!AU)return;var old=lsGet(AKOLD,null),bySig={},ch=false;AU.rows.forEach(function(r){bySig[r.rid]=r.sig});
+ if(old)Object.keys(old).forEach(function(k){var sg=bySig[k];if(sg&&!SA[sg]){var d=old[k];d.date=d.date||AU.meta.date;SA[sg]=d;ch=true}});
+ Object.keys(SA).forEach(function(k){var d=SA[k];if(d&&ACTMAP[d.action]){d.action=ACTMAP[d.action];ch=true}});if(ch)saveA()})();
+function who(){return String(P.reviewer||"").trim()}
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
 function $(id){return document.getElementById(id)}
 function fmt(s,o){return String(s).replace(/\{(\w+)\}/g,function(_,k){return o[k]!=null?o[k]:""})}
@@ -418,6 +438,77 @@ it:{ui:"Interfaccia",sub:"Registro di revisione",drafts:"bozze",model:"Modello",
  aHeld:"Metà riservata",aCalls:"Chiamate al modello",aCsv:"Esporta CSV",aNone:"Nessun rilievo corrisponde a questi filtri.",aNoFile:"Nessun file di verifica in questa versione.",
  aLegend:"Segni: [k] divergenza nota, confermata nei testi · [d] decisa · riquadro rosso = valore in contraddizione · sottolineato = altro numero · barra rossa = la lingua che differisce dalle altre due (non per forza quella sbagliata). Decisioni: quale lingua indica la condizione giusta, e la misura (Berichtigung, GÄL, nessuna).",
  aExpl:"spiegato da {x}",aFix:"refuso probabile: «{a}» → «{b}»",aSince:"nell'ES dal {d} ({n} stati)",aFoundL:"testo in {F}",oddLbl:"diverge",real:"reali",of:"su"}};
+// round-3 strings (three-level status, rules T5-T8, family action, old-text start, XLIFF 1.2, audit actions and reviewer)
+var TX2={
+de:{lfine:"markiert – alle Befunde wahrscheinlich in Ordnung",lcheck:"markiert – zu prüfen",fCheck:"Zu prüfen",fFine:"Wahrscheinlich in Ordnung",
+ triSplit:"Sortierung der Markierten (nur Anzeige)",triSplitV:"{c} zu prüfen · {f} mit allen Befunden wahrscheinlich in Ordnung",
+ rT5:"T5 Zahlen ausserhalb",rT6:"T6 Orthografie",rT7:"T7 Verneinung",rT8:"T8 gleiche Werte",
+ rdT5:"T5 Zahlen ausserhalb der Änderung: ausserhalb des geänderten Abschnitts ändert der Entwurf nur Zahlen, und zwar genau die Werte, die die deutsche Änderung ersetzt (Ocrevus 944.61 → 731.07).",
+ rdT6:"T6 Orthografie: die nicht übernommene deutsche Änderung ist nur orthografisch (Umlaut/ß, Bindestrich wie Zeitpunkt → Zeit-punkt, Gross-/Kleinschreibung, Satzzeichen) oder eine Flexionsendung (bedürfen → bedarf, erste → erst).",
+ rdT7:"T7 Verneinung: so gezählt, wie ein Leser zählt («nicht-» als Wortvorsilbe wie nicht-kleinzellig zählt nicht, französisch «ne … pas» einmal, «personne» als Nomen nicht), ändert der Entwurf die Zahl der Verneinungen genau wie das Deutsche.",
+ rdT8:"T8 gleiche Werte: beide Seiten fügen dieselben Werte hinzu und entfernen dieselben, nur wie oft ein Wert vorkommt, unterscheidet sich (Kyprolis: 20481 im Deutschen zweimal, im Entwurf einmal).",
+ legend:"Zeichen: [x] bereit · [~] markiert, alle Befunde wahrscheinlich in Ordnung · [!] markiert, zu prüfen · [≠] der bisherige Text hat bereits ein Problem (weicht vom Deutschen ab, ist in einer anderen Sprache oder nutzt einen vom BAG anderswo korrigierten Begriff) · [h] an Übersetzung übergeben · [a] übernommen · [e] bearbeitet übernommen · [r] zurückgewiesen · Tasten j/k oder ↑/↓ bewegen, Enter öffnet, f/i Sprache, 1/2/3 entscheiden, Ctrl/Cmd+Enter speichern und weiter",
+ famAll:"Alle bereiten Entwürfe dieser Familie übernehmen ({n})",famAsk:"{n} offene bereite Entwürfe ({fr} FR, {it} IT) der Familie «{f}» unverändert übernehmen? Bereits entschiedene, bearbeitete und solche mit Hinweis zum bisherigen Text bleiben offen.",
+ famYes:"Übernehmen bestätigen",famNo:"Abbrechen",famDone:"{n} bereite Entwürfe übernommen.",famNone:"Keine offenen bereiten Entwürfe in dieser Familie.",famOf:"Familie",famFilter:"nur diese Familie zeigen",famChanges:"{n} Änderungen",
+ startOld:"Vom bisherigen Text ausgehen",startOldT:"Ersetzt den bearbeitbaren Entwurf durch den bisherigen Text mit den vom Code angewendeten Zahländerungen ({n}). «Entwurf wiederherstellen» macht es rückgängig.",startOldDone:"Bisheriger Text mit {n} Zahländerung(en) des Codes – jetzt bearbeiten.",
+ xlf12:"XLIFF 1.2 exportieren",
+ acts:{exofficio:"Von Amtes wegen in der nächsten Publikation berichtigen",holder:"Mit der Zulassungsinhaberin in der dreijährlichen Überprüfung aufnehmen",langsvc:"An den Sprachdienst",none:"Keine Massnahme (gleichwertige Formulierung)",unclear:"Unklar"},
+ rev:"Prüfende Person",revPh:"Name (wird mit jedem Entscheid gespeichert)",decOn:"entschieden am {d} von {n}",decOnAnon:"entschieden am {d}",earlier:"in einer früheren Prüfung (Stand {s})",
+ eqHead:"Wahrscheinlich gleichwertige Formulierung ({n})",eqWhy:"Grund",eqShow:"anzeigen",eqHide:"einklappen",
+ kinds:{number:"Zahl",unit:"Einheit",language:"Sprache",editorial:"Redaktionell",terminology:"Terminologie"},termOld:"bisher",termNew:"vom BAG korrigiert zu",termWhere:"bereits korrigiert in: {x}",
+ aLegend:"Zeichen: [k] bekannte Abweichung, im Text belegt · [d] entschieden · rot umrahmt = widersprüchlicher Wert · unterstrichen = weitere Zahl · roter Balken = die Sprache, die von den beiden anderen abweicht (nicht unbedingt die falsche). Entscheide: welche Sprache die richtige Bedingung nennt, und die Massnahme (von Amtes wegen berichtigen, in der dreijährlichen Überprüfung mit der Zulassungsinhaberin aufnehmen, Sprachdienst, keine, unklar). Ein Gesuch um Änderung der Limitation (GÄL) stellt die Zulassungsinhaberin, nicht das BAG. Entscheide gelten pro Befund (Limitation, Art, Sprache, Werte) und bleiben in der nächsten Prüfung erhalten."},
+en:{lfine:"flagged – all findings probably fine",lcheck:"flagged – to check",fCheck:"To check",fFine:"Probably fine",
+ triSplit:"Triage of the flagged (display only)",triSplitV:"{c} to check · {f} with every finding probably fine",
+ rT5:"T5 numbers outside",rT6:"T6 orthography",rT7:"T7 negation",rT8:"T8 same values",
+ rdT5:"T5 numbers outside the change: outside the changed passage the draft changes numbers only, exactly the values the German change replaces (Ocrevus 944.61 → 731.07).",
+ rdT6:"T6 orthography: the German change not carried over is orthographic only (umlaut/ß, hyphenation such as Zeitpunkt → Zeit-punkt, case, punctuation) or an inflectional ending (bedürfen → bedarf, erste → erst).",
+ rdT7:"T7 negation: counted the way a reader counts ('nicht-' as a word prefix as in nicht-kleinzellig does not count, French 'ne … pas' counts once, 'personne' as a noun does not count), the draft changes the number of negations exactly as the German does.",
+ rdT8:"T8 same values: both sides add and remove the same values; only how often a value occurs differs (Kyprolis: 20481 twice in the German, once in the draft).",
+ legend:"Marks: [x] ready · [~] flagged, all findings probably fine · [!] flagged, to check · [≠] the previous text already has a problem (diverges from the German, is in another language or uses a term BAG corrected elsewhere) · [h] routed to a translator · [a] accepted · [e] accepted edited · [r] sent back · keys j/k or ↑/↓ move, Enter opens, f/i language, 1/2/3 decide, Ctrl/Cmd+Enter save and next",
+ famAll:"Accept all ready drafts of this edit family ({n})",famAsk:"Accept {n} open ready drafts ({fr} FR, {it} IT) of the family “{f}” as they are? Drafts already decided, edited, or with an old-text notice stay open.",
+ famYes:"Confirm accept",famNo:"Cancel",famDone:"{n} ready drafts accepted.",famNone:"No open ready drafts in this family.",famOf:"Family",famFilter:"show this family only",famChanges:"{n} changes",
+ startOld:"Start from the old text",startOldT:"Replaces the editable draft with the old text plus the number changes code applied ({n}). “Reset to draft” undoes it.",startOldDone:"Old text with {n} number change(s) applied by code – edit it now.",
+ xlf12:"Export XLIFF 1.2",
+ acts:{exofficio:"Correct ex officio in the next publication",holder:"Raise with the holder in the triennial review",langsvc:"Send to the language service",none:"No action (equivalent wording)",unclear:"Unclear"},
+ rev:"Reviewer",revPh:"Name (stored with each decision)",decOn:"decided on {d} by {n}",decOnAnon:"decided on {d}",earlier:"in an earlier audit (snapshot {s})",
+ eqHead:"Probably equivalent wording ({n})",eqWhy:"Reason",eqShow:"show",eqHide:"collapse",
+ kinds:{number:"number",unit:"unit",language:"language",editorial:"editorial",terminology:"terminology"},termOld:"old",termNew:"corrected by BAG to",termWhere:"already corrected in: {x}",
+ aLegend:"Marks: [k] known divergence, confirmed in the texts · [d] decided · red box = conflicting value · underlined = other number · red bar = the language that differs from the other two (not necessarily the wrong one). Decisions: which language states the right condition, and the action (correct ex officio, raise with the holder in the triennial review, language service, none, unclear). An application to change a limitation (GÄL) is filed by the holder, not by BAG. Decisions belong to a finding (limitation, kind, language, values) and carry over to the next audit."},
+fr:{lfine:"signalé – tous les constats probablement sans problème",lcheck:"signalé – à vérifier",fCheck:"À vérifier",fFine:"Probablement sans problème",
+ triSplit:"Tri des signalés (affichage seulement)",triSplitV:"{c} à vérifier · {f} dont tous les constats sont probablement sans problème",
+ rT5:"T5 nombres hors du passage",rT6:"T6 orthographe",rT7:"T7 négation",rT8:"T8 mêmes valeurs",
+ rdT5:"T5 nombres hors du passage modifié : hors du passage modifié, le brouillon ne change que des nombres, exactement les valeurs que le changement allemand remplace (Ocrevus 944.61 → 731.07).",
+ rdT6:"T6 orthographe : le changement allemand non repris n'est qu'orthographique (umlaut/ß, trait d'union comme Zeitpunkt → Zeit-punkt, majuscules, ponctuation) ou une terminaison flexionnelle (bedürfen → bedarf, erste → erst).",
+ rdT7:"T7 négation : comptée comme un lecteur la compte (« nicht- » préfixe comme dans nicht-kleinzellig ne compte pas, « ne … pas » compte une fois, « personne » nom ne compte pas), le brouillon change le nombre de négations exactement comme l'allemand.",
+ rdT8:"T8 mêmes valeurs : les deux côtés ajoutent et retirent les mêmes valeurs, seul le nombre d'occurrences diffère (Kyprolis : 20481 deux fois en allemand, une fois dans le brouillon).",
+ legend:"Marques : [x] prêt · [~] signalé, tous les constats probablement sans problème · [!] signalé, à vérifier · [≠] l'ancien texte a déjà un problème (diverge de l'allemand, est dans une autre langue ou emploie un terme que l'OFSP a corrigé ailleurs) · [h] confié à un traducteur · [a] accepté · [e] accepté modifié · [r] renvoyé · touches j/k ou ↑/↓ naviguer, Entrée ouvrir, f/i langue, 1/2/3 décider, Ctrl/Cmd+Entrée enregistrer et suivant",
+ famAll:"Accepter tous les brouillons prêts de cette famille ({n})",famAsk:"Accepter tels quels {n} brouillons prêts encore ouverts ({fr} FR, {it} IT) de la famille « {f} » ? Ceux déjà décidés, modifiés ou avec un avis sur l'ancien texte restent ouverts.",
+ famYes:"Confirmer l'acceptation",famNo:"Annuler",famDone:"{n} brouillons prêts acceptés.",famNone:"Aucun brouillon prêt ouvert dans cette famille.",famOf:"Famille",famFilter:"afficher seulement cette famille",famChanges:"{n} changements",
+ startOld:"Partir de l'ancien texte",startOldT:"Remplace le brouillon modifiable par l'ancien texte avec les changements de nombres appliqués par le code ({n}). « Rétablir le brouillon » annule.",startOldDone:"Ancien texte avec {n} changement(s) de nombres du code – à modifier maintenant.",
+ xlf12:"Exporter XLIFF 1.2",
+ acts:{exofficio:"Corriger d'office dans la prochaine publication",holder:"Aborder avec le titulaire lors du réexamen triennal",langsvc:"Transmettre au service linguistique",none:"Aucune mesure (formulation équivalente)",unclear:"Pas clair"},
+ rev:"Réviseur ou réviseuse",revPh:"Nom (enregistré avec chaque décision)",decOn:"décidé le {d} par {n}",decOnAnon:"décidé le {d}",earlier:"lors d'un audit antérieur (état {s})",
+ eqHead:"Formulation probablement équivalente ({n})",eqWhy:"Motif",eqShow:"afficher",eqHide:"replier",
+ kinds:{number:"nombre",unit:"unité",language:"langue",editorial:"rédactionnel",terminology:"terminologie"},termOld:"ancien",termNew:"corrigé par l'OFSP en",termWhere:"déjà corrigé dans : {x}",
+ aLegend:"Marques : [k] divergence connue, attestée dans les textes · [d] décidé · cadre rouge = valeur contradictoire · souligné = autre nombre · barre rouge = la langue qui diffère des deux autres (pas forcément la fausse). Décisions : quelle langue dit la bonne condition, et la mesure (corriger d'office, aborder avec le titulaire lors du réexamen triennal, service linguistique, aucune, pas clair). La demande de modification de la limitation (GÄL) est déposée par le titulaire, pas par l'OFSP. Les décisions valent par constat (limitation, type, langue, valeurs) et sont reprises au prochain audit."},
+it:{lfine:"segnalata – tutti i rilievi probabilmente in ordine",lcheck:"segnalata – da verificare",fCheck:"Da verificare",fFine:"Probabilmente in ordine",
+ triSplit:"Smistamento delle segnalate (solo visualizzazione)",triSplitV:"{c} da verificare · {f} con tutti i rilievi probabilmente in ordine",
+ rT5:"T5 numeri fuori dal passo",rT6:"T6 ortografia",rT7:"T7 negazione",rT8:"T8 stessi valori",
+ rdT5:"T5 numeri fuori dal passo modificato: fuori dal passo modificato la bozza cambia solo numeri, esattamente i valori che la modifica tedesca sostituisce (Ocrevus 944.61 → 731.07).",
+ rdT6:"T6 ortografia: la modifica tedesca non ripresa è solo ortografica (umlaut/ß, trattino come Zeitpunkt → Zeit-punkt, maiuscole, punteggiatura) o una desinenza flessiva (bedürfen → bedarf, erste → erst).",
+ rdT7:"T7 negazione: contata come la conta un lettore («nicht-» prefisso come in nicht-kleinzellig non conta, il francese «ne … pas» conta una volta, «personne» sostantivo non conta), la bozza cambia il numero di negazioni esattamente come il tedesco.",
+ rdT8:"T8 stessi valori: entrambe le parti aggiungono e tolgono gli stessi valori, cambia solo quante volte un valore compare (Kyprolis: 20481 due volte nel tedesco, una volta nella bozza).",
+ legend:"Segni: [x] pronta · [~] segnalata, tutti i rilievi probabilmente in ordine · [!] segnalata, da verificare · [≠] il vecchio testo ha già un problema (diverge dal tedesco, è in un'altra lingua o usa un termine che l'UFSP ha corretto altrove) · [h] affidata a un traduttore · [a] accettata · [e] accettata modificata · [r] rinviata · tasti j/k o ↑/↓ spostarsi, Invio aprire, f/i lingua, 1/2/3 decidere, Ctrl/Cmd+Invio salva e avanti",
+ famAll:"Accetta tutte le bozze pronte di questa famiglia ({n})",famAsk:"Accettare così come sono {n} bozze pronte ancora aperte ({fr} FR, {it} IT) della famiglia «{f}»? Quelle già decise, modificate o con un avviso sul vecchio testo restano aperte.",
+ famYes:"Conferma accettazione",famNo:"Annulla",famDone:"{n} bozze pronte accettate.",famNone:"Nessuna bozza pronta aperta in questa famiglia.",famOf:"Famiglia",famFilter:"mostra solo questa famiglia",famChanges:"{n} modifiche",
+ startOld:"Parti dal vecchio testo",startOldT:"Sostituisce la bozza modificabile con il vecchio testo e le modifiche dei numeri applicate dal codice ({n}). «Ripristina la bozza» annulla.",startOldDone:"Vecchio testo con {n} modifica/he dei numeri del codice – ora da modificare.",
+ xlf12:"Esporta XLIFF 1.2",
+ acts:{exofficio:"Correggere d'ufficio nella prossima pubblicazione",holder:"Sollevare con il titolare nel riesame triennale",langsvc:"Inviare al servizio linguistico",none:"Nessuna misura (formulazione equivalente)",unclear:"Non chiaro"},
+ rev:"Revisore o revisora",revPh:"Nome (salvato con ogni decisione)",decOn:"deciso il {d} da {n}",decOnAnon:"deciso il {d}",earlier:"in una verifica precedente (stato {s})",
+ eqHead:"Formulazione probabilmente equivalente ({n})",eqWhy:"Motivo",eqShow:"mostra",eqHide:"richiudi",
+ kinds:{number:"numero",unit:"unità",language:"lingua",editorial:"redazionale",terminology:"terminologia"},termOld:"vecchio",termNew:"corretto dall'UFSP in",termWhere:"già corretto in: {x}",
+ aLegend:"Segni: [k] divergenza nota, confermata nei testi · [d] decisa · riquadro rosso = valore in contraddizione · sottolineato = altro numero · barra rossa = la lingua che differisce dalle altre due (non per forza quella sbagliata). Decisioni: quale lingua indica la condizione giusta, e la misura (correggere d'ufficio, sollevare con il titolare nel riesame triennale, servizio linguistico, nessuna, non chiaro). La domanda di modifica della limitazione (GÄL) è presentata dal titolare, non dall'UFSP. Le decisioni valgono per rilievo (limitazione, tipo, lingua, valori) e restano alla verifica successiva."}};
+Object.keys(TX2).forEach(function(L){Object.keys(TX2[L]).forEach(function(k){TX[L][k]=TX2[L][k]})});
 function pickUI(){if(TX[P.ui])return P.ui;var L=[];try{L=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||""]}catch(e){}
  for(var i=0;i<L.length;i++){var c=String(L[i]||"").slice(0,2).toLowerCase();if(TX[c])return c}return "de"}
 var UL=pickUI();function t(k){return (TX[UL][k]!=null?TX[UL][k]:TX.en[k])}
@@ -436,15 +527,18 @@ function plain(S,old){return S.filter(function(s){return old?s[0]!=="i":s[0]!=="
 G.forEach(function(g,i){g.no=("00"+(i+1)).slice(-3);g.deNew=plain(g.de,false);g.deOld=plain(g.de,true);["fr","it"].forEach(function(L){var it=g.items[L];if(it){it.draft=it.status==="human"?"":plain(it.segs,false);it.g=g}})});
 var ITEMS=[];G.forEach(function(g){["fr","it"].forEach(function(L){if(g.items[L])ITEMS.push(g.items[L])})});
 var FAML={};D.families.forEach(function(f){FAML[f[0]]=f[2]});
+// "start from the old text": the old target with the rules lane's number changes, stored as edits [start, end, text] of the old target
+ITEMS.forEach(function(it){if(!it.rt)return;var o=plain(it.segs,true),ops=it.rt[0].slice().sort(function(a,b){return b[0]-a[0]});
+ ops.forEach(function(op){o=o.slice(0,op[0])+op[2]+o.slice(op[1])});it.rt=[o,it.rt[1]]});
 function dec(it){return S.dec[it.key]}
 function oldIssue(it){return !!(it.banner||it.corr||(it.old&&it.old.length))}
 function mark(it){if(!it)return ['<span class="mk o">[ ]</span>',""];var d=dec(it);
  if(d)return ['<span class="mk">['+(d.decision==="accept"?"a":d.decision==="accept-edited"?"e":"r")+']</span>',d.decision];
  if(oldIssue(it))return ['<span class="mk r">[≠]</span>',"divergent"];
  if(it.status==="human")return ['<span class="mk">[h]</span>',"human"];
- return it.status==="ready"?['<span class="mk">[x]</span>',"ready"]:['<span class="mk r">[!]</span>',"flagged"]}
+ return it.status==="ready"?['<span class="mk">[x]</span>',"ready"]:it.lvl==="fine"?['<span class="mk f">[~]</span>',"fine"]:['<span class="mk r">[!]</span>',"flagged"]}
 // ------------------------------------------------------------------ header and chrome
-var TAB="drafts";
+var TAB=AU?"audit":"drafts";        // the Register audit tab is the landing view; #drafts or a draft's hash opens Drafts
 function kv(id,rows){$(id).innerHTML=rows.map(function(r){return "<dt"+(r[3]?' title="'+esc(r[3])+'"':"")+">"+esc(r[0])+"</dt><dd"+(r[2]?' class="'+r[2]+'"':"")+">"+esc(r[1])+"</dd>"}).join("")}
 function ddate(s){return /^\d{8}$/.test(s||"")?s.slice(6,8)+"."+s.slice(4,6)+"."+s.slice(0,4):(s||"?")}
 function chrome(){
@@ -466,17 +560,18 @@ function chrome(){
   if(A.pass!=null)r.push([t("rule"),A.pass?"PASS":"FAIL",A.pass?"pass":"fail"])}
  else{r.push([t("ready"),String(C.ready),"",t("codeOnly")]);r.push([t("flagged"),String(C.flagged)]);if(C.human)r.push([t("human"),String(C.human)]);
   if(C.exact!=null)r.push([t("exact").split(" vs")[0],String(C.exact)])}
+ if(C.flagged)r.push([t("triSplit"),fmt(t("triSplitV"),{c:C.lvl_check,f:C.lvl_fine})]);
  if(C.flagged)r.push([t("triage"),triTxt(C.to_check,C.probably_fine)]);
  if(C.divergent)r.push([t("divergent"),String(C.divergent)]);
  kv("kv-r",r);
- seg("f-status",t("status"),[["open",t("open")],["ready",t("ready")],["flagged",t("flagged")],["divergent",t("divF")],["decided",t("decidedF")],["all",t("all")]],F.status,function(v){F.status=v;renderReg()});
- seg("f-lang",t("language"),[["all","FR+IT"],["fr","FR"],["it","IT"]],F.lang,function(v){F.lang=v;if(v!=="all")focusL=v;renderReg();renderCase()});
+ seg("f-status",t("status"),[["open",t("open")],["ready",t("ready")],["check",t("fCheck")],["fine",t("fFine")],["flagged",t("flagged")],["divergent",t("divF")],["decided",t("decidedF")],["all",t("all")]],F.status,function(v){F.status=v;renderReg()});
+ seg("f-lang",t("language"),[["all","FR+IT"],["fr","FR"],["it","IT"]],F.lang,function(v){F.lang=v;if(v!=="all")focusL=v;famBar();renderReg();renderCase()});
  var fs=$("f-fam");fs.innerHTML="";fs.appendChild(new Option(t("allFam")+" ("+D.families.length+")",""));
- D.families.forEach(function(f){var o=new Option(f[2]+" · "+f[1],f[0]);o.title=t("family")+" "+f[0];fs.appendChild(o)});fs.value=F.fam;$("f-q").placeholder=t("search");
+ D.families.forEach(function(f){var o=new Option(f[2]+" · "+f[1],f[0]);o.title=t("family")+" "+f[0];fs.appendChild(o)});fs.value=F.fam;$("f-q").placeholder=t("search");famBar();
  $("h-mark").textContent=t("mark");$("h-no").textContent=t("no");$("h-prod").textContent=t("product");$("h-chg").textContent=t("change");
- $("x-xlf").textContent=t("xlf");$("x-json").textContent=t("json");$("x-copy").textContent=t("copy");$("x-imp").textContent=t("imp");$("x-where").textContent=t("where");
+ $("x-xlf").textContent=t("xlf");$("x-xlf12").textContent=t("xlf12");$("x-json").textContent=t("json");$("x-copy").textContent=t("copy");$("x-imp").textContent=t("imp");$("x-where").textContent=t("where");
  $("legend").textContent=t("legend");
- $("legend2").textContent=t("triHead")+" "+["T1","T2","T3","T4"].map(function(r){return t("rd"+r)}).join(" · ");progress()}
+ $("legend2").textContent=t("triHead")+" "+["T1","T2","T3","T4","T5","T6","T7","T8"].map(function(r){return t("rd"+r)}).join(" · ");progress()}
 function seg(id,label,opts,cur,fn){var s=$(id);s.innerHTML='<span class="k">'+esc(label)+"</span>";
  opts.forEach(function(o){var b=document.createElement("button");b.type="button";b.className="tb";b.textContent=o[1];b.setAttribute("aria-pressed",o[0]===cur);
   b.onclick=function(){s.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});fn(o[0])};s.appendChild(b)})}
@@ -489,9 +584,13 @@ function setTab(tb){if(tb==="audit"&&!AU)tb="drafts";TAB=tb;chrome();
 $("t-audit").onclick=function(){setTab("audit")};$("t-drafts").onclick=function(){setTab("drafts")};
 document.querySelector(".tabs").addEventListener("keydown",function(e){if(e.key==="ArrowRight"||e.key==="ArrowLeft"){e.preventDefault();setTab(TAB==="audit"?"drafts":"audit");$(TAB==="audit"?"t-audit":"t-drafts").focus()}});
 // ------------------------------------------------------------------ register audit
-var AF={show:"all",lang:"all",kind:"all"};
-function aDec(r){return SA[r.rid]||{}}
-function aDecided(r){var d=SA[r.rid];return !!(d&&(d.right||d.action))}
+var AF={show:"all",lang:"all",kind:"all"},EQOPEN=false,ACTS=["exofficio","holder","langsvc","none","unclear"];
+function aDec(r){return SA[r.sig]||{}}
+function aDecided(r){var d=SA[r.sig];return !!(d&&(d.right||d.action))}
+function aMark(r){return ((r.known?'<span class="mk r">[k]</span>':"")+(aDecided(r)?'<span class="mk">[d]</span>':"")||'<span class="mk o">[ ]</span>')+"<br>"+esc(r.no||"")}
+function aStatus(d){if(!d||!d.at)return t("openSt");var day=ddate(d.at.slice(0,10).replace(/-/g,""));
+ var s=d.by?fmt(t("decOn"),{d:day,n:d.by}):fmt(t("decOnAnon"),{d:day});
+ if(d.date&&AU&&d.date!==AU.meta.date)s+=" "+fmt(t("earlier"),{s:ddate(d.date)});return s}
 function chromeAudit(){var m=AU.meta;
  kv("kv-l",[[t("aSnap"),ddate(m.date)],[t("aChecked"),m.n_limitations!=null?String(m.n_limitations):"—"],
   [t("aFindings"),(m.total||m.findings)+(m.by_kind?" ("+Object.keys(m.by_kind).map(function(k){return m.by_kind[k]+" "+(t("kinds")[k]||k)}).join(", ")+")":"")],[t("aCalls"),String(m.model_calls||0)]]);
@@ -502,60 +601,70 @@ function chromeAudit(){var m=AU.meta;
  $("a-lead").textContent=fmt(t("aLead"),{d:ddate(m.date)});
  seg("a-show",t("aShow"),[["known",t("aKnownF")+" ("+m.known_rows+")"],["all",t("aAllF")+" ("+AU.rows.length+")"],["open",t("aOpenF")],["decided",t("aDecF")]],AF.show,function(v){AF.show=v;renderAudit()});
  seg("a-lang",t("language"),[["all","FR+IT"],["fr","FR"],["it","IT"]],AF.lang,function(v){AF.lang=v;renderAudit()});
- var ks=[["all",t("all")]];["number","unit","language","editorial"].forEach(function(k){var n=AU.rows.filter(function(r){return r.kind===k}).length;if(n)ks.push([k,t("kinds")[k]+" ("+n+")"])});
+ var ks=[["all",t("all")]];["number","unit","language","editorial","terminology"].forEach(function(k){var n=AU.rows.filter(function(r){return r.kind===k}).length;if(n)ks.push([k,t("kinds")[k]+" ("+n+")"])});
  AU.rows.forEach(function(r){if(!ks.some(function(k){return k[0]===r.kind}))ks.push([r.kind,r.kind])});
  seg("a-kind",t("aKindF"),ks,AF.kind,function(v){AF.kind=v;renderAudit()});
+ $("l-rev").textContent=t("rev");$("rev").placeholder=t("revPh");$("rev").value=P.reviewer||"";
  $("ah-no").textContent=t("no");$("ah-lim").textContent=t("aLim");$("ah-kind").textContent=t("aKind")+" · "+t("aOdd");$("ah-right").textContent=t("aRight");$("ah-act").textContent=t("aAction");
  $("a-json").textContent=t("json");$("a-csv").textContent=t("aCsv");$("a-imp").textContent=t("imp");$("a-where").textContent=t("where");
  $("legend").textContent=t("aLegend");$("legend2").textContent="";progress()}
+$("rev").addEventListener("input",function(){P.reviewer=this.value;lsSet("gleichlaut:prefs",P)});
 function aOk(r){if(AF.lang!=="all"&&r.lang!==AF.lang)return false;if(AF.kind!=="all"&&r.kind!==AF.kind)return false;
  switch(AF.show){case "known":return r.known;case "open":return !aDecided(r);case "decided":return aDecided(r);default:return true}}
 function snipHTML(r,L){var s=r.snip[L];if(!s||!s.length)return '<span class="na">'+esc(r.lang===L||L==="de"?t("aNoSnip"):"—")+"</span>";
  var h=s.map(function(x){return x[1]===2?'<span class="v2">'+esc(x[0])+"</span>":x[1]===1?'<span class="v1">'+esc(x[0])+"</span>":esc(x[0])}).join("");
  return '<div class="snip'+(r.src[L]==="snapshot"?" src-s":"")+'" lang="'+L+'"'+(r.src[L]==="snapshot"?' title="'+esc(t("aSnapSrc"))+'"':"")+">"+h+"</div>"}
+function termHTML(r){var m=r.term;if(!m)return "";var h="";
+ if(m.old||m["new"])h+='<span class="term" lang="'+esc(r.lang||"")+'">'+esc(t("termOld"))+" <s>"+esc(m.old||"?")+"</s> · "+esc(t("termNew"))+" <u>"+esc(m["new"]||"?")+"</u></span>";
+ if(m.where&&m.where.length)h+='<span class="sub2" title="'+esc(m.where.join("; "))+'">'+esc(fmt(t("termWhere"),{x:m.where.slice(0,2).join("; ")+(m.where.length>2?" +"+(m.where.length-2):"")}))+"</span>";
+ return h}
 function aRow(r){var d=aDec(r),cell=function(L){var odd=r.odd===L;return '<td data-l="'+L.toUpperCase()+(odd?" · "+esc(t("oddLbl")):"")+'"'+(odd?' class="odd"':"")+">"+(odd?'<span class="oddl">'+esc(t("oddLbl"))+"</span>":"")+snipHTML(r,L)+"</td>"};
- var mk=(r.known?'<span class="mk r">[k]</span>':"")+(aDecided(r)?'<span class="mk">[d]</span>':"")||'<span class="mk o">[ ]</span>';
  var odd=r.odd==="unclear"?t("aUnclear"):String(r.odd||"—").toUpperCase();
- var h='<tr data-rid="'+esc(r.rid)+'"><td data-l="'+esc(t("no"))+'">'+mk+"<br>"+esc(r.no||"")+"</td>"+
+ var h='<tr data-sig="'+esc(r.sig)+'"'+(r.eq!=null&&!r.known?' class="eq"':"")+'><td data-l="'+esc(t("no"))+'">'+aMark(r)+"</td>"+
   '<td class="lim" data-l="'+esc(t("aLim"))+'"><b>'+esc(r.product||r.lim)+'</b><span class="code" title="'+esc(r.desc)+'">'+esc(r.lim)+"</span>"+
    (r.since?'<span class="sub2">'+esc(fmt(t("aSince"),{d:ddate(r.since),n:r.seen||"?"}))+"</span>":"")+"</td>"+
-  '<td data-l="'+esc(t("aKind"))+'">'+esc((t("kinds")[r.kind]||r.kind))+" · "+esc((r.lang||"").toUpperCase())+'<br><span class="oddl" style="display:inline">'+esc(t("aOdd"))+": "+esc(odd)+"</span>"+
+  '<td class="kd" data-l="'+esc(t("aKind"))+'">'+esc((t("kinds")[r.kind]||r.kind))+" · "+esc((r.lang||"").toUpperCase())+'<span class="oddl">'+esc(t("aOdd"))+": "+esc(odd)+"</span>"+
    (r.found?'<span class="sub2">'+esc(fmt(t("aFoundL"),{F:t("lname")[r.found]||r.found}))+"</span>":"")+
-   (r.fix?'<span class="sub2">'+esc(fmt(t("aFix"),{a:r.fix[0],b:r.fix[1]}))+"</span>":"")+
+   (r.fix?'<span class="sub2">'+esc(fmt(t("aFix"),{a:r.fix[0],b:r.fix[1]}))+"</span>":"")+termHTML(r)+
+   (r.eq!=null?'<span class="sub2">'+esc(t("eqWhy"))+": "+esc(r.eq||"—")+"</span>":"")+
    (r.expl&&r.expl.length?'<span class="sub2">'+esc(fmt(t("aExpl"),{x:r.expl.join(", ")}))+"</span>":"")+"</td>"+
   cell("de")+cell("fr")+cell("it");
  h+='<td data-l="'+esc(t("aRight"))+'"><select data-a="right" aria-label="'+esc(t("aRight"))+'">'+[["",""],["DE","DE"],["FR","FR"],["IT","IT"],["unclear",t("aUnclear")]].map(function(o){
    return '<option value="'+o[0]+'"'+(d.right===o[0]?" selected":"")+">"+esc(o[1]||"—")+"</option>"}).join("")+"</select></td>";
  var acts=t("acts");
- h+='<td data-l="'+esc(t("aAction"))+'"><select data-a="action" aria-label="'+esc(t("aAction"))+'"><option value="">—</option>'+["Berichtigung","GÄL","none","unclear"].map(function(v){
+ h+='<td data-l="'+esc(t("aAction"))+'"><select data-a="action" aria-label="'+esc(t("aAction"))+'"><option value="">—</option>'+ACTS.map(function(v){
    return '<option value="'+esc(v)+'"'+(d.action===v?" selected":"")+">"+esc(acts[v])+"</option>"}).join("")+"</select>"+
   (r.sug?'<div class="sug">'+esc(t("aSug"))+": "+esc(acts[r.sug]||r.sug)+"</div>":"")+
   '<textarea data-a="note" aria-label="'+esc(t("aNote"))+'" placeholder="'+esc(t("aNote"))+'">'+esc(d.note||"")+"</textarea>"+
-  '<div class="stt">'+esc(d.at?t("savedAt")+" · "+d.at.slice(0,16).replace("T"," "):t("openSt"))+"</div></td></tr>";
+  '<div class="stt">'+esc(aStatus(SA[r.sig]))+"</div></td></tr>";
  return h}
 function renderAudit(){if(!AU){$("p-audit").innerHTML='<p class="empty">'+esc(t("aNoFile"))+"</p>";return}
- var tb=document.querySelector("#aud tbody"),rows=AU.rows.filter(aOk),kn=rows.filter(function(r){return r.known}),ot=rows.filter(function(r){return !r.known}),h="",m=AU.meta;
+ var tb=document.querySelector("#aud tbody"),rows=AU.rows.filter(aOk),kn=rows.filter(function(r){return r.known}),
+  ot=rows.filter(function(r){return !r.known&&r.eq==null}),eq=rows.filter(function(r){return !r.known&&r.eq!=null}),h="",m=AU.meta;
  if(kn.length)h+='<tr class="grp"><td colspan="8"><span class="mk r">[k]</span>'+esc(fmt(t("aKnownHead"),{k:m.known_found!=null?m.known_found:m.known_ids.length,n:m.known_of!=null?m.known_of:m.known_ids.length}))+"</td></tr>"+kn.map(aRow).join("");
  if(ot.length)h+='<tr class="grp"><td colspan="8">'+esc(t("aOtherHead"))+"</td></tr>"+ot.map(aRow).join("");
+ if(eq.length)h+='<tr class="eqh"><td colspan="8"><button type="button" id="eq-tg" aria-expanded="'+EQOPEN+'"><span class="mk">['+(EQOPEN?"−":"+")+"]</span>"+esc(fmt(t("eqHead"),{n:eq.length}))+" · "+esc(EQOPEN?t("eqHide"):t("eqShow"))+"</button></td></tr>"+(EQOPEN?eq.map(aRow).join(""):"");
  tb.innerHTML=h||'<tr><td colspan="8" class="empty">'+esc(t("aNone"))+"</td></tr>";
+ var tg=$("eq-tg");if(tg)tg.onclick=function(){EQOPEN=!EQOPEN;renderAudit();var b=$("eq-tg");if(b)b.focus()};
  $("a-shown").textContent=rows.length+" "+t("aShown");progress()}
 document.querySelector("#aud tbody").addEventListener("change",function(e){var f=e.target.closest("[data-a]");if(!f)return;aSet(f)});
 document.querySelector("#aud tbody").addEventListener("input",function(e){var f=e.target.closest("textarea[data-a]");if(f)aSet(f)});
-function aSet(f){var tr=f.closest("tr[data-rid]"),rid=tr.dataset.rid,d=SA[rid]||{};d[f.dataset.a]=f.value;
- if(!d.right&&!d.action&&!d.note){delete SA[rid]}else{d.at=new Date().toISOString();SA[rid]=d}saveA();
- tr.querySelector(".stt").textContent=SA[rid]?t("savedAt")+" · "+SA[rid].at.slice(0,16).replace("T"," "):t("openSt");
- var mk=tr.cells[0],r=AU.rows.filter(function(x){return x.rid===rid})[0];mk.innerHTML=((r.known?'<span class="mk r">[k]</span>':"")+(aDecided(r)?'<span class="mk">[d]</span>':"")||'<span class="mk o">[ ]</span>')+"<br>"+esc(r.no||"");progress()}
-function auditExport(){if(!AU)return {};var o={};AU.rows.forEach(function(r){var d=SA[r.rid];if(d)o[r.rid]={limitation:r.lim,product:r.product,lang:r.lang,kind:r.kind,odd_one_out:r.odd,known:r.known,right:d.right||"",action:d.action||"",note:d.note||"",at:d.at}});return o}
+function aSet(f){var tr=f.closest("tr[data-sig]"),sg=tr.dataset.sig,d=SA[sg]||{};d[f.dataset.a]=f.value;
+ if(!d.right&&!d.action&&!d.note){delete SA[sg]}else{d.at=new Date().toISOString();d.by=who();d.date=AU.meta.date;SA[sg]=d}saveA();
+ tr.querySelector(".stt").textContent=aStatus(SA[sg]);
+ var r=AU.rows.filter(function(x){return x.sig===sg})[0];tr.cells[0].innerHTML=aMark(r);progress()}
+function auditExport(){if(!AU)return {};var o={};AU.rows.forEach(function(r){var d=SA[r.sig];if(d)o[r.sig]={limitation:r.lim,product:r.product,lang:r.lang,kind:r.kind,odd_one_out:r.odd,known:r.known,
+ right:d.right||"",action:d.action||"",note:d.note||"",at:d.at,by:d.by||"",audit_date:d.date||AU.meta.date}});return o}
 function csvCell(s){s=String(s==null?"":s);return /[",\n;]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
 function snipText(r,L){return (r.snip[L]||[]).map(function(x){return x[0]}).join("")}
-$("a-csv").onclick=function(){var head=["rank","limitation","product","kind","lang","odd_one_out","known","de","fr","it","right","action","note","decided_at"];
- var lines=[head.join(",")].concat(AU.rows.map(function(r){var d=SA[r.rid]||{};return [r.rank,r.lim,r.product,r.kind,r.lang,r.odd,r.known?"yes":"no",snipText(r,"de"),snipText(r,"fr"),snipText(r,"it"),d.right||"",d.action||"",d.note||"",d.at||""].map(csvCell).join(",")}));
+$("a-csv").onclick=function(){var head=["rank","limitation","product","kind","lang","odd_one_out","known","probably_equivalent","de","fr","it","right","action","note","decided_at","decided_by","decided_in_audit"],acts=TX.en.acts;
+ var lines=[head.join(",")].concat(AU.rows.map(function(r){var d=SA[r.sig]||{};return [r.rank,r.lim,r.product,r.kind,r.lang,r.odd,r.known?"yes":"no",r.eq!=null?(r.eq||"yes"):"",snipText(r,"de"),snipText(r,"fr"),snipText(r,"it"),d.right||"",d.action?acts[d.action]||d.action:"",d.note||"",d.at||"",d.by||"",d.date||""].map(csvCell).join(",")}));
  download("gleichlaut-audit-"+AU.meta.date+"-decisions.csv","﻿"+lines.join("\r\n")+"\r\n","text/csv");$("a-msg").textContent=t("dl")+": CSV"};
 $("a-json").onclick=function(){download("gleichlaut-decisions-"+M.run+".json",JSON.stringify(payload(),null,1),"application/json");$("a-msg").textContent=t("dl")+": JSON"};
 // ------------------------------------------------------------------ register (drafts)
 var F={status:"open",lang:"all",fam:"",q:""},sel=null,focusL="fr",VIS=[];
 function langs(g){return ["fr","it"].filter(function(L){return g.items[L]&&(F.lang==="all"||F.lang===L)})}
-function okItem(it){var d=dec(it);switch(F.status){case "open":return !d;case "ready":return it.status==="ready";case "flagged":return it.status==="flagged";
+function okItem(it){var d=dec(it);switch(F.status){case "open":return !d;case "ready":return it.status==="ready";case "flagged":return it.status==="flagged";case "check":return it.lvl==="check";case "fine":return it.lvl==="fine";
  case "divergent":return oldIssue(it);case "decided":return !!d;default:return true}}
 function renderReg(){var tb=document.querySelector("#reg tbody"),h="";VIS=[];
  G.forEach(function(g){var Ls=langs(g);if(!Ls.length)return;if(F.fam&&g.family!==F.fam)return;
@@ -571,7 +680,22 @@ function markSel(scroll){document.querySelectorAll("#reg tbody tr").forEach(func
  if(on&&scroll){var w=$("reg-wrap"),top=r.offsetTop-w.offsetTop,hh=28;if(top-hh<w.scrollTop)w.scrollTop=top-hh;else if(top+r.offsetHeight>w.scrollTop+w.clientHeight)w.scrollTop=top+r.offsetHeight-w.clientHeight}})}
 document.querySelector("#reg tbody").addEventListener("click",function(e){var r=e.target.closest("tr[data-pair]");if(!r)return;
  sel=G.filter(function(g){return g.pair===r.dataset.pair})[0];markSel();renderCase();if(window.innerWidth<=900)$("case").scrollIntoView()});
-$("f-fam").onchange=function(){F.fam=this.value;renderReg()};
+$("f-fam").onchange=function(){F.fam=this.value;famAsk=false;famMsg="";famBar();renderReg()};
+// family bulk action: accept every open ready draft of the selected edit family, after an in-page confirmation
+var famAsk=false,famMsg="",FAMN={};G.forEach(function(g){FAMN[g.family]=(FAMN[g.family]||0)+1});
+function famSize(f){return FAMN[f]||0}
+function famTargets(){if(!F.fam)return [];return ITEMS.filter(function(it){return it.g.family===F.fam&&it.status==="ready"&&!dec(it)&&S.edits[it.key]==null&&!oldIssue(it)&&(F.lang==="all"||it.lang===F.lang)})}
+function famBar(){var b=$("fam-bulk");if(!F.fam){b.hidden=true;b.innerHTML="";famAsk=false;famMsg="";return}b.hidden=false;var T=famTargets(),h="";
+ if(famAsk&&T.length){var fr=T.filter(function(it){return it.lang==="fr"}).length;
+  h='<span class="q" role="alert">'+esc(fmt(t("famAsk"),{n:T.length,fr:fr,it:T.length-fr,f:FAML[F.fam]||F.fam}))+'</span><button class="box primary" type="button" id="fam-yes">'+esc(t("famYes"))+'</button><button class="box" type="button" id="fam-no">'+esc(t("famNo"))+"</button>"}
+ else h='<button class="box" type="button" id="fam-go"'+(T.length?"":" disabled")+">"+esc(fmt(t("famAll"),{n:T.length}))+"</button>";
+ if(famMsg)h+='<span class="msg" aria-live="polite">'+esc(famMsg)+"</span>";else if(!T.length)h+='<span class="msg">'+esc(t("famNone"))+"</span>";
+ b.innerHTML=h;var go=$("fam-go"),y=$("fam-yes"),n=$("fam-no");
+ if(go)go.onclick=function(){famAsk=true;famMsg="";famBar();var yy=$("fam-yes");if(yy)yy.focus()};
+ if(n)n.onclick=function(){famAsk=false;famBar();var g2=$("fam-go");if(g2)g2.focus()};
+ if(y)y.onclick=function(){var at=new Date().toISOString(),T2=famTargets();
+  T2.forEach(function(it){S.dec[it.key]={decision:"accept",lang:it.lang,status:it.status,edited:false,text:it.draft,reason:"",note:"",bulk:"family "+F.fam,at:at,by:who()}});
+  save();famAsk=false;famMsg=fmt(t("famDone"),{n:T2.length});famBar();renderReg();if(sel)renderCase();progress()}}
 $("f-q").oninput=function(){F.q=this.value.trim().toLowerCase();renderReg()};
 function move(d){if(!VIS.length)return;var i=VIS.indexOf(sel);i=Math.max(0,Math.min(VIS.length-1,(i<0?0:i+d)));sel=VIS[i];markSel(true);renderCase()}
 function refreshRow(g){var r=document.querySelector('#reg tr[data-pair="'+g.pair+'"]');if(r)r.cells[0].innerHTML=(F.lang==="all"?["fr","it"]:[F.lang]).map(function(L){return mark(g.items[L])[0]}).join("")}
@@ -589,7 +713,8 @@ function readEd(el){var c=el.cloneNode(true);c.querySelectorAll("del,sup,.gap").
 // ------------------------------------------------------------------ case
 var ctxMode=true;
 function LN(L){return t(L)}
-function stLabel(it){return it.status==="ready"?(oldIssue(it)?t("readyAttn"):t("lready")):it.status==="flagged"?t("lflagged"):t("lhuman")}
+function stLabel(it){return it.status==="ready"?(oldIssue(it)?t("readyAttn"):t("lready")):it.status==="flagged"?(it.lvl==="fine"?t("lfine"):t("lcheck")):t("lhuman")}
+function stRed(it){return (it.status==="flagged"&&it.lvl!=="fine")||oldIssue(it)}
 function langMsg(it,o){var a=t("adj")[it.lang]||LN(it.lang),f=t("lname")[o.f]||o.f;return fmt(t("oldLang"),{A:a,F:f})}
 function notice(it){var p=[],lang=false;
  (it.old||[]).forEach(function(o){if(o.k==="language"){lang=true;var um=o.f?langMsg(it,o):o.t;p.push('<p><span class="mk">[≠]</span>'+esc(um)+"</p>"+(o.f&&o.t!==um?'<p lang="'+it.lang+'">'+esc(o.t)+"</p>":""))}});
@@ -600,12 +725,14 @@ function curText(it){var e=S.edits[it.key];return e!=null?e:it.draft}
 function caseHTML(g,live){var Ls=langs(g),one=Ls.length<2?" one":"",h="";
  var keys=["fr","it"].filter(function(L){return g.items[L]}).map(function(L){return g.items[L].key}).join(", ");
  h+="<h2>"+esc(g.product)+'</h2><p class="ref">'+esc(t("limitation"))+" "+esc(g.code)+" · SL "+esc(g.snap_old)+" → "+esc(g.snap_new)+" · "+esc(t("no"))+" "+g.no+"</p>"+
+  '<p class="famline">'+esc(t("famOf"))+": "+esc(FAML[g.family]||g.family)+" · "+esc(fmt(t("famChanges"),{n:famSize(g.family)}))+
+   (live&&F.fam!==g.family&&famSize(g.family)>1?' · <button class="tb" type="button" data-fam="'+esc(g.family)+'">'+esc(t("famFilter"))+"</button>":"")+"</p>"+
   '<details class="ids"><summary>'+esc(t("ids"))+"</summary> "+esc(t("family"))+" "+esc(g.family)+(FAML[g.family]?" ("+esc(FAML[g.family])+")":"")+" · "+esc(t("pair"))+" "+esc(g.pair)+" · "+esc(t("itemsL"))+" "+esc(keys)+"</details>";
  h+='<section class="sec"><div class="sl"><span class="no">1</span><span class="t">'+esc(t("s1"))+"</span>"+(live?'<button class="tb sp" type="button" id="ctx">'+esc(ctxMode?t("ctxA"):t("ctxF"))+"</button>":"")+
   '</div><div class="txt de" lang="de">'+segs(g.de,live&&ctxMode,false)+"</div></section>";
  h+='<section class="sec"><div class="sl"><span class="no">2</span><span class="t">'+esc(t("s2"))+'</span></div><div class="drafts'+one+'">';
  Ls.forEach(function(L){var it=g.items[L],ed=S.edits[it.key];
-  h+='<div class="dr" data-lang="'+L+'"><div class="dl"><span class="ln" title="'+esc(it.key)+'">'+esc(LN(L))+'</span>·<span class="st'+(it.status==="flagged"||oldIssue(it)?" r":"")+'">'+esc(stLabel(it))+"</span>"+
+  h+='<div class="dr" data-lang="'+L+'"><div class="dl"><span class="ln" title="'+esc(it.key)+'">'+esc(LN(L))+'</span>·<span class="st'+(stRed(it)?" r":"")+'">'+esc(stLabel(it))+"</span>"+
    (it.status==="flagged"?'<span class="tri">'+triHTML(it.tri[0],it.tri[1])+"</span>":"")+(it.rule_only?'<span class="key">rules</span>':"")+
    (it.status==="ready"?'<span class="cap">'+esc(t("codeOnly"))+"</span>":"")+"</div>"+notice(it);
   if(it.status==="human")h+='<p class="human">'+esc(it.reason&&!/rewritten|60/.test(it.reason)?t("humanShort"):t("humanTxt"))+(it.ratio!=null?" ("+it.ratio+"%)":"")+".</p>"+(it.reason?'<p class="ref">'+esc(it.reason)+"</p>":"")+"<p class=\"human\" style=\"color:var(--ink2)\">"+esc(t("humanPrev"))+"</p>";
@@ -619,6 +746,7 @@ function caseHTML(g,live){var Ls=langs(g),one=Ls.length<2?" one":"",h="";
   if(!it.ledger.length){h+='<tbody><tr><td class="na">'+esc(t("noChecks"))+"</td></tr></tbody></table></div>";return}
   h+="<thead><tr><th>"+esc(t("check"))+"</th><th>"+esc(t("result"))+"</th><th>"+esc(t("finding"))+"</th></tr></thead><tbody>";
   it.ledger.forEach(function(r){var st=r[2],res=st==="pass"?t("pass"):st==="fail"?t("fail"):t("na"),cls=st==="fail"?"FAIL":st==="pass"?"":"na";
+   if(st==="fail"&&r[3].length&&r[3].every(function(f){return f.r})){res=t("fail")+" [~]";cls="FAILf"}
    var fd=r[3].map(function(f){var p="<p>"+esc(f.t)+(f.c&&it.corr_note?'<span class="cn">[≠] '+esc(it.corr_note)+"</span>":"")+"</p>";
     return f.r?'<details class="pf" title="'+esc(t("rd"+f.r))+'"><summary>'+esc(t("pf"))+" · "+esc(t("r"+f.r))+"</summary>"+p+"</details>":p}).join("");
    if(!fd&&st!=="fail")fd='<span class="na">—</span>';
@@ -638,7 +766,9 @@ function caseHTML(g,live){var Ls=langs(g),one=Ls.length<2?" one":"",h="";
  return h}
 function edmeta(key){var it=byKey[key],e=S.edits[key]!=null;
  return (e?"<span>"+esc(t("edited"))+'</span><button class="tb" type="button" data-reset="'+esc(key)+'">'+esc(t("reset"))+"</button>":"<span>"+esc(t("editHint"))+"</span>")+
-  ((it.status!=="human"||e)?'<button class="tb" type="button" data-copy="'+esc(key)+'">'+esc(t("copyTxt"))+'</button><span class="cpmsg" aria-live="polite"></span>':"")}
+  ((it.status!=="human"||e)?'<button class="tb" type="button" data-copy="'+esc(key)+'">'+esc(t("copyTxt"))+'</button><span class="cpmsg" aria-live="polite"></span>':"")+
+  (it.rt&&it.rt[0]!==it.draft&&S.edits[key]!==it.rt[0]?'<button class="tb" type="button" data-start="'+esc(key)+'" title="'+esc(fmt(t("startOldT"),{n:it.rt[1]}))+'">'+esc(t("startOld"))+"</button>":"")+
+  (it.rt&&S.edits[key]===it.rt[0]?"<span>"+esc(fmt(t("startOldDone"),{n:it.rt[1]}))+"</span>":"")}
 function renderCase(){var c=$("case");if(!sel){c.innerHTML='<p class="empty">'+esc(t("none"))+"</p>";return}
  try{if(TAB==="drafts"&&location.hash.slice(1)!==sel.pair)history.replaceState(null,"","#"+sel.pair)}catch(e){}
  var Ls=langs(sel);if(Ls.indexOf(focusL)<0)focusL=Ls[0];c.innerHTML=caseHTML(sel,true);wire(c)}
@@ -654,6 +784,9 @@ function wire(c){
   el.addEventListener("input",function(){var v=readEd(el);if(v===it.draft||(it.status==="human"&&v===plain(it.segs,false)))delete S.edits[key];else S.edits[key]=v;save();
    var m=c.querySelector('[data-meta="'+key+'"]');if(m)m.innerHTML=edmeta(key)})});
  c.addEventListener("click",function(e){var r=e.target.closest("[data-reset]");if(r){delete S.edits[r.dataset.reset];var d=S.dec[r.dataset.reset];if(d&&d.decision==="accept-edited"){delete S.dec[r.dataset.reset]};save();renderCase();refreshRow(sel);progress();return}
+  var so=e.target.closest("[data-start]");if(so){var k0=so.dataset.start;S.edits[k0]=byKey[k0].rt[0];save();renderCase();
+   var ed0=c.querySelector('.ed[data-key="'+k0+'"]');if(ed0)ed0.focus();return}
+  var fl=e.target.closest("[data-fam]");if(fl){F.fam=fl.dataset.fam;$("f-fam").value=F.fam;famBar();renderReg();return}
   var cp=e.target.closest("[data-copy]");if(cp){var it=byKey[cp.dataset.copy],m=cp.parentNode.querySelector(".cpmsg"),tx=curText(it);
    copyText(tx,function(){m.textContent=t("copiedTxt")},function(){var el=c.querySelector('.ed[data-key="'+it.key+'"]');if(el){var rg=document.createRange();rg.selectNodeContents(el);var sl=window.getSelection();sl.removeAllRanges();sl.addRange(rg)}m.textContent=t("copySel")});return}
   var bt=e.target.closest(".dec button[data-d]");if(bt){var dv=bt.closest(".dec");setFocus(dv.dataset.lang);decide(dv.dataset.lang,bt.dataset.d)}});
@@ -667,7 +800,7 @@ function decide(L,v){var it=sel&&sel.items[L];if(!it)return;var dv=document.quer
  if(v==="accept-edited"&&S.edits[k]==null){var st=dv.querySelector(".stt");st.textContent=t("noEdit");var ed=document.querySelector('.ed[data-key="'+k+'"]');if(ed)ed.focus();return}
  var cur=S.dec[k];if(cur&&cur.decision===v){delete S.dec[k]}
  else{var reason=dv.querySelector('[data-f="reason"]').value,note=dv.querySelector('[data-f="note"]').value;
-  S.dec[k]={decision:v,lang:L,status:it.status,edited:S.edits[k]!=null,text:v==="accept-edited"?S.edits[k]:(it.status==="human"?null:it.draft),reason:reason,note:note,at:new Date().toISOString()}}
+  S.dec[k]={decision:v,lang:L,status:it.status,edited:S.edits[k]!=null,text:v==="accept-edited"?S.edits[k]:(it.status==="human"?null:it.draft),reason:reason,note:note,at:new Date().toISOString(),by:who()}}
  delete pend[k];save();
  dv.querySelectorAll("button[data-d]").forEach(function(b){b.setAttribute("aria-pressed",!!S.dec[k]&&S.dec[k].decision===b.dataset.d)});
  dv.querySelector(".stt").textContent=S.dec[k]?t("savedAt")+" · "+S.dec[k].at.slice(0,16).replace("T"," "):t("openSt");refreshRow(sel);progress()}
@@ -702,7 +835,6 @@ function xliff(L){var trg=L==="fr"?"fr-CH":"it-CH",u=[],X=D.xn[L],nd=0,colon=L==
   var notes=it.xn.map(function(n){return note(n[0],n[1],n[2],n[3],n[4])}).join("");
   notes+=note("de-old","context:previous-source","source",5,fmt(X.prev_de,{t:g.deOld}).replace(" : ",colon));
   notes+=note("tgt-old","context:previous-target","target",5,fmt(X.prev_tgt,{t:plain(it.segs,true)}).replace(" : ",colon));
-  notes+=note("product","context:product",null,5,fmt(X.product,{product:g.product,code:it.cud,old:g.snap_old,"new":g.snap_new}).replace(/ ; /g," ; "));
   if(d){var why=[d.reason,d.note].filter(Boolean).join("; ");notes+=note("review","gleichlaut:review","target",1,fmt(X.review,{d:X.dec[d.decision]||d.decision}).replace(" : ",colon)+" ("+d.at+")"+(why?colon+why:""))}
   var src=g.deNew,beads=text==null?it.bd.map(function(b){return [b[0],b[1],0,0]}):edited?[[0,src.length,0,text.length]]:it.bd,nums=edited?[]:it.nm,c=0,n=0,sx="";
   beads.forEach(function(b,k){sx+='<segment id="s'+(k+1)+'" state="'+st[0]+'" subState="'+st[1]+'"><source>'+inl(src,b[0],b[1],g.ch,function(){c++;return '<mrk id="c'+c+'" type="gleichlaut:changed">'})+"</source>"+
@@ -712,10 +844,38 @@ function xliff(L){var trg=L==="fr"?"fr-CH":"it-CH",u=[],X=D.xn[L],nd=0,colon=L==
   "<notes>"+note("about","gleichlaut:about",null,1,X.about).replace(' priority="1"',"")+note("states","gleichlaut:states",null,1,X.states).replace(' priority="1"',"")+
   note("provenance","gleichlaut:provenance",null,1,X.prov).replace(' priority="1"',"")+note("review","gleichlaut:review",null,1,fmt(X.reviewed,{n:nd})+" · "+new Date().toISOString()).replace(' priority="1"',"")+
   "</notes>"+u.join("")+"</file></xliff>\n"}
+function note12(ap,pr,text){return '<note from="gleichlaut" annotates="'+(ap||"general")+'" priority="'+pr+'">'+x(text)+"</note>"}
+// XLIFF 1.2 (strict) with the reviewer's decisions: the segments of the 2.1 export as <seg-source>/<target> <mrk mtype="seg">,
+// accepted -> state signed-off approved=yes (edited text replaces the draft), sent back -> needs-translation (as emit/xliff12.py
+// otherwise: ready translated, flagged needs-review-translation, no draft -> no target).
+function xliff12(L){var trg=L==="fr"?"fr-CH":"it-CH",u=[],X=D.xn[L],nd=0,colon=L==="fr"?" : ":": ",ST={ready:"translated",flagged:"needs-review-translation"};
+ var prot=function(){return '<mrk mtype="protected" comment="'+x(X.code_number)+'">'};
+ ITEMS.forEach(function(it){if(it.lang!==L)return;var g=it.g,d=dec(it)||null,text=it.status==="human"?null:it.draft,edited=false,state=ST[it.status],appr="no";
+  if(d&&(d.decision==="accept"||d.decision==="accept-edited")&&(it.status!=="human"||d.text)){state="signed-off";appr="yes";if(d.decision==="accept-edited"&&d.text){text=d.text;edited=true}}
+  else if(d&&d.decision==="send-back")state="needs-translation";
+  if(d)nd++;
+  var src=g.deNew,beads=text==null?it.bd.map(function(b){return [b[0],b[1],0,0]}):edited?[[0,src.length,0,text.length]]:it.bd,code=edited?[]:it.nm.filter(function(n){return n[2]!=="model"});
+  var outer=g.ch.map(function(c){return [c[0],c[1],"c"]}).concat(g.sn.filter(function(n){return !g.ch.some(function(c){return c[0]<=n[0]&&n[1]<=c[1]})}).map(function(n){return [n[0],n[1],"n"]})).sort(function(p,q){return p[0]-q[0]});
+  function sm(a,b){var out="",pos=a;outer.forEach(function(sp){var p=Math.max(sp[0],a),q=Math.min(sp[1],b);if(p>=q||p<pos)return;out+=x(src.slice(pos,p));
+    out+=sp[2]==="n"?prot()+x(src.slice(p,q))+"</mrk>":'<mrk mtype="x-changed" comment="'+x(X.changed)+'">'+inl(src,p,q,g.sn,prot)+"</mrk>";pos=q});return out+x(src.slice(pos,b))}
+  var h='<trans-unit id="'+x(it.key)+'" resname="'+x(it.cud)+'" approved="'+appr+'" xml:space="preserve"><source xml:lang="de-CH">'+sm(0,src.length)+"</source>"+
+   '<seg-source xml:lang="de-CH">'+beads.map(function(b,k){return '<mrk mtype="seg" mid="'+(k+1)+'">'+sm(b[0],b[1])+"</mrk>"}).join("")+"</seg-source>";
+  if(text!=null)h+='<target state="'+state+'" xml:lang="'+trg+'">'+beads.map(function(b,k){return '<mrk mtype="seg" mid="'+(k+1)+'">'+inl(text,b[2],b[3],code,prot)+"</mrk>"}).join("")+"</target>";
+  it.xn.forEach(function(n){h+=note12(n[2],n[3],n[4])});
+  h+=note12("source",5,fmt(X.prev_de,{t:g.deOld}).replace(" : ",colon))+note12("target",5,fmt(X.prev_tgt,{t:plain(it.segs,true)}).replace(" : ",colon));
+  if(d){var why=[d.reason,d.note].filter(Boolean).join("; ");h+=note12("target",1,fmt(X.review,{d:X.dec[d.decision]||d.decision}).replace(" : ",colon)+" ("+d.at+(d.by?", "+d.by:"")+")"+(why?colon+why:""))}
+  h+='<alt-trans alttranstype="previous-version" origin="SL previous version" tool-id="gleichlaut"><source xml:lang="de-CH">'+x(g.deOld)+'</source><target xml:lang="'+trg+'">'+x(plain(it.segs,true))+"</target></alt-trans></trans-unit>";
+  u.push(h)});
+ return '<?xml version="1.0" encoding="UTF-8"?>\n<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2"><file original="gleichlaut:'+x(M.run)+'" source-language="de-CH" target-language="'+trg+'" datatype="plaintext" tool-id="gleichlaut">'+
+  '<header><tool tool-id="gleichlaut" tool-name="Gleichlaut" tool-company="Gleichlaut"/><note from="gleichlaut">'+x(X.about12)+'</note><note from="gleichlaut">'+x(X.states12)+'</note><note from="gleichlaut">'+x(X.prov)+"</note>"+
+  '<note from="gleichlaut">'+x(fmt(X.reviewed,{n:nd})+" · "+new Date().toISOString())+"</note></header><"+"body>"+u.join("")+"</"+"body></file></xliff>\n"}
 function msg(s){$("x-msg").textContent=s}
 $("x-xlf").onclick=function(){var Ls=F.lang==="all"?["fr","it"]:[F.lang];Ls=Ls.filter(function(L){return ITEMS.some(function(it){return it.lang===L})});
  Ls.forEach(function(L,i){setTimeout(function(){download("gleichlaut-"+M.run+"-de-CH_"+(L==="fr"?"fr-CH":"it-CH")+"-reviewed.xlf",xliff(L),"application/xliff+xml")},i*400)});
  msg(t("dl")+": "+Ls.map(function(L){return "XLIFF 2.1 "+L.toUpperCase()}).join(", "))};
+$("x-xlf12").onclick=function(){var Ls=F.lang==="all"?["fr","it"]:[F.lang];Ls=Ls.filter(function(L){return ITEMS.some(function(it){return it.lang===L})});
+ Ls.forEach(function(L,i){setTimeout(function(){download("gleichlaut-"+M.run+"-de-CH_"+(L==="fr"?"fr-CH":"it-CH")+"-reviewed.xliff12.xlf",xliff12(L),"application/xliff+xml")},i*400)});
+ msg(t("dl")+": "+Ls.map(function(L){return "XLIFF 1.2 "+L.toUpperCase()}).join(", "))};
 $("x-json").onclick=function(){download("gleichlaut-decisions-"+M.run+".json",JSON.stringify(payload(),null,1),"application/json");msg(t("dl")+": JSON")};
 $("x-copy").onclick=function(){var s=JSON.stringify(payload(),null,1),box=$("copybox");
  function fallback(){box.hidden=false;box.value=s;box.focus();box.select();msg(t("selcopy"))}
@@ -724,7 +884,9 @@ function importDecisions(o){var nd=0,na=0,note="";
  if(!o||typeof o!=="object"||!(o.decisions||o.audit))return t("impBad");
  if(o.decisions){if(o.run_sha256&&o.run_sha256!==M.run_sha256)note=" "+t("impRun");
   else{Object.keys(o.decisions).forEach(function(k){if(byKey[k]){S.dec[k]=o.decisions[k];nd++}});Object.keys(o.edits||{}).forEach(function(k){if(byKey[k])S.edits[k]=o.edits[k]});save()}}
- if(o.audit&&AU&&(!o.audit_date||o.audit_date===AU.meta.date)){var ok={};AU.rows.forEach(function(r){ok[r.rid]=1});Object.keys(o.audit).forEach(function(k){if(ok[k]){SA[k]=o.audit[k];na++}});saveA()}
+ if(o.audit&&AU){var bySig={},byRid={};AU.rows.forEach(function(r){bySig[r.sig]=1;byRid[r.rid]=r.sig});        // by signature; old files by row id
+  Object.keys(o.audit).forEach(function(k){var sg=bySig[k]?k:(!o.audit_date||o.audit_date===AU.meta.date)?byRid[k]:null;if(!sg)return;var d=o.audit[k];
+   if(d&&ACTMAP[d.action])d.action=ACTMAP[d.action];if(d&&!d.date)d.date=o.audit_date||AU.meta.date;SA[sg]=d;na++});saveA()}
  return fmt(t("imported"),{d:nd,a:na})+note}
 function pickImport(target){var f=$("imp-file");f.value="";f.onchange=function(){var file=f.files&&f.files[0];if(!file)return;var rd=new FileReader();
  rd.onload=function(){var m;try{m=importDecisions(JSON.parse(rd.result))}catch(e){m=t("impBad")}$(target).textContent=m;chrome();if(TAB==="audit")renderAudit();else{renderReg();renderCase()}};rd.readAsText(file)};f.click()}
@@ -733,10 +895,12 @@ $("x-imp").onclick=function(){pickImport("x-msg")};$("a-imp").onclick=function()
 window.addEventListener("beforeprint",function(){if(TAB==="drafts")$("print").innerHTML=VIS.map(function(g){return '<article class="pcase">'+caseHTML(g,false)+"</article>"}).join("")});
 window.addEventListener("afterprint",function(){$("print").innerHTML=""});
 function fromHash(){var h=decodeURIComponent(location.hash.slice(1));if(h==="audit"&&AU){TAB="audit";return true}
+ if(h==="drafts"){TAB="drafts";return true}
  var g=G.filter(function(g){return g.pair===h||g.no===h})[0];
- if(g){TAB="drafts";if(!(langs(g).some(function(L){return okItem(g.items[L])})))F.status="all";sel=g;return true}return false}
+ if(g){TAB="drafts";if(F.fam&&F.fam!==g.family){F.fam="";famAsk=false;famMsg=""}if(F.q){F.q="";$("f-q").value=""}if(!langs(g).length)F.lang="all";
+  if(!(langs(g).some(function(L){return okItem(g.items[L])})))F.status="all";sel=g;return true}return false}
 fromHash();chrome();if(TAB==="audit")renderAudit();else{renderReg();if(sel){markSel(true);renderCase()}}
-window.GleichlautReview={xliff:xliff,payload:payload,importDecisions:importDecisions,setTab:setTab};
+window.GleichlautReview={xliff:xliff,xliff12:xliff12,payload:payload,importDecisions:importDecisions,setTab:setTab};
 window.addEventListener("hashchange",function(){if(fromHash()){setTab(TAB)}});
 })();
 </script>

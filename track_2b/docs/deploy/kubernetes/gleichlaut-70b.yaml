@@ -1,0 +1,91 @@
+# The optional "fewer edits" lane: Apertus 70B on an OpenAI-compatible endpoint you control (own GPUs or a Swiss-resident
+# provider), admitted only by an endpoint certificate (`gleichlaut certify --backend openai`, Job gleichlaut-certify-endpoint
+# in certify-job.yaml) and a passing canary at most 31 days old. Apply together with gleichlaut.yaml (it uses its data PVC)
+# and with the 70B rule of networkpolicy.yaml (egress to the endpoint). Base image (no llama.cpp):
+#   docker build --target base -t registry.example.ch/gleichlaut:<tag> track_2b
+# Create the Secret yourself (never commit it):
+#   kubectl -n gleichlaut create secret generic gleichlaut-endpoint --from-literal=LLM_API_KEY=... \
+#     --from-file=cert.key=/path/to/cert.key          # cert.key: >= 16 random bytes, the certificate HMAC key
+# If you run both lanes, suspend one CronJob (spec.suspend: true) or give them different months: both mine the same
+# feed pair; this one keeps its runs under out/lane-70b/month/ (GLEICHLAUT_OUT), apart from the 8B lane's out/month/.
+# Its pod needs no GPU and little memory: the model runs at the endpoint (about 100 requests a month).
+apiVersion: v1
+kind: ConfigMap
+metadata: { name: gleichlaut-70b-config, labels: { app: gleichlaut } }
+data:
+  LLM_BASE_URL: "https://llm.internal.example.ch/v1"     # the certified 70B endpoint (exact URL: certificates are bound to it)
+  LLM_NAME: "swiss-ai/apertus-v1.5-70b"
+  GLEICHLAUT_STATE: /app/state
+  GLEICHLAUT_OUT: /app/out/lane-70b            # its own month runs (and --from previous), apart from the 8B lane's
+  GLEICHLAUT_HIST: /app/out/hist
+  GLEICHLAUT_CERT_KEY: /var/run/secrets/gleichlaut/cert.key
+  GLEICHLAUT_TIMEOUT: "120"
+  GLEICHLAUT_RETRIES: "4"
+  GLEICHLAUT_DEADLINE: "300"
+  GLEICHLAUT_METRICS_DIR: /app/out/metrics/70b     # gleichlaut_month.prom of this lane, apart from the 8B lane's
+  # behind a proxy / internal CA (mount the CA bundle from a ConfigMap and point SSL_CERT_FILE at it):
+  # HTTPS_PROXY: "http://proxy.example.ch:8080"
+  # NO_PROXY: "llm.internal.example.ch,.svc,.cluster.local"
+  # SSL_CERT_FILE: /etc/gleichlaut/ca/ca.pem
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata: { name: gleichlaut-month-70b, labels: { app: gleichlaut } }
+spec:
+  schedule: "0 6 2 * *"
+  timeZone: Europe/Zurich
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 86400
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 6
+  jobTemplate:
+    spec:
+      backoffLimit: 0                 # no blind retry: a re-run resumes from records.jsonl; alert on the exit code instead
+      activeDeadlineSeconds: 21600
+      template:
+        metadata: { labels: { app: gleichlaut, job: month, lane: 70b } }
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          securityContext: &podsec
+            runAsNonRoot: true
+            runAsUser: 10001
+            runAsGroup: 10001
+            fsGroup: 10001
+            seccompProfile: { type: RuntimeDefault }
+          initContainers:
+            - name: canary            # exit 3 on drift: the month container never starts (it would refuse anyway)
+              image: registry.example.ch/gleichlaut:CHANGE-ME
+              args: [python, -m, gleichlaut, certify, --backend, openai, --canary, "40"]
+              envFrom: [{ configMapRef: { name: gleichlaut-70b-config } }]
+              env: &secretenv
+                - name: LLM_API_KEY
+                  valueFrom: { secretKeyRef: { name: gleichlaut-endpoint, key: LLM_API_KEY } }
+              securityContext: &ctrsec
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities: { drop: [ALL] }
+              resources: &res
+                requests: { cpu: 250m, memory: 512Mi }
+                limits: { cpu: "2", memory: 2Gi }
+              volumeMounts: &mounts
+                - { name: data, mountPath: /app/state, subPath: state }
+                - { name: data, mountPath: /app/out, subPath: out }
+                - { name: tmp, mountPath: /tmp }
+                - { name: key, mountPath: /var/run/secrets/gleichlaut, readOnly: true }
+          containers:
+            - name: month
+              image: registry.example.ch/gleichlaut:CHANGE-ME
+              args: [python, -m, gleichlaut, month, --backend, openai, --from, previous, --to, latest, --fetch, --emit]
+              envFrom: [{ configMapRef: { name: gleichlaut-70b-config } }]
+              env: *secretenv
+              securityContext: *ctrsec
+              resources: *res
+              volumeMounts: *mounts
+          volumes:
+            - name: data
+              persistentVolumeClaim: { claimName: gleichlaut-data }
+            - name: tmp
+              emptyDir: { sizeLimit: 256Mi }
+            - name: key
+              secret: { secretName: gleichlaut-endpoint, items: [{ key: cert.key, path: cert.key }], defaultMode: 0400 }

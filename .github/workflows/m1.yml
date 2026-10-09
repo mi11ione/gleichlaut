@@ -35,7 +35,7 @@ jobs:
           mkdir -p models; U=URL_${{ inputs.build }}; S=SHA_${{ inputs.build }}; F=models/${{ inputs.build }}.gguf
           [ -f $F ] || curl -sSL -A gleichlaut/0.1 -o $F "${!U}"
           echo "${!S}  $F" | sha256sum -c -
-      - run: CMAKE_ARGS="-DGGML_NATIVE=OFF" pip install -r requirements.txt -r requirements-offline.txt
+      - run: CMAKE_ARGS="-DGGML_NATIVE=OFF" pip install --require-hashes -r requirements.txt -r requirements-offline.txt
       - name: run shard
         run: PYTHONPATH=src python -m gleichlaut.m1 run --gguf models/${{ inputs.build }}.gguf --build ${{ inputs.build }} --shard ${{ matrix.k }} --of ${{ inputs.shards }} --out out/m1
       - uses: actions/upload-artifact@v7
@@ -58,3 +58,6 @@ jobs:
           path: |
             track_2b/data/runs/8b_${{ inputs.build }}_fresh166_g3_final.jsonl
             track_2b/eval/labels/worklist_8b_${{ inputs.build }}_fresh166.json
+# After labelling (eval/labels/m1_<build>_fresh166.tsv), the run becomes a build certificate of that GGUF:
+#   gleichlaut certify --import-run data/runs/8b_<build>_fresh166_g3_final.jsonl --gguf-sha256 <SHA_<build>> \
+#     --labels eval/labels/m1_<build>_fresh166.tsv --name 8b-<build>-fresh166 --out eval/certificates

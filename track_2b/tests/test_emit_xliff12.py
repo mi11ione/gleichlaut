@@ -56,6 +56,25 @@ def test_units_carry_state_draft_protected_numbers_and_notes():
     assert seen == 10
 
 
+def test_segmented_like_xliff_21_without_lone_number_segments():
+    C = _setup(); X2 = "{urn:oasis:names:tc:xliff:document:2.0}"
+    seg21 = {}
+    for p in xliff.write(C["V"], C["meta"], C["d"]):
+        for u in ET.parse(p).getroot().iter(X2 + "unit"): seg21[u.get("id")] = len(u.findall(X2 + "segment"))
+    for p in C["paths"]:
+        for tu in ET.parse(p).getroot().iter(X + "trans-unit"):
+            ss = [m for m in tu.find(X + "seg-source") if m.get("mtype") == "seg"]
+            tg = [m for m in tu.find(X + "target") if m.get("mtype") == "seg"]
+            assert len(ss) == len(tg) == seg21[tu.get("id")] and [m.get("mid") for m in ss] == [m.get("mid") for m in tg]
+            assert "".join(tu.find(X + "seg-source").itertext()) == "".join(tu.find(X + "source").itertext())
+            for m in ss + tg:
+                t = "".join(m.itertext()).strip()
+                assert len(t) >= 20 and re.search(r"[^\W\d_]{2}", t), (tu.get("id"), t)
+    from gleichlaut.emit import segment
+    src = "Folgender Code ist an den Krankenversicherer zu übermitteln: 21658.01"
+    assert segment.beads(src) == [(0, len(src), 0, 0)]
+
+
 def test_never_contains_official_target_text():
     I = {x["key"]: x for x in score.load_items(score.RUNS["fresh166"]["items"])}
     texts = ["".join(ET.parse(p).getroot().itertext()) for p in _setup()["paths"]]

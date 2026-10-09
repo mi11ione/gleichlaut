@@ -59,19 +59,25 @@ REVIEW = [("air-gapped", {"fr": "Mode hors ligne (air-gapped)\u00a0: chaque brou
           ("stub", {"fr": "Backend de test\u00a0: le brouillon est l'ancien texte, pas une traduction.",
                     "it": "Backend di prova: la bozza è il vecchio testo, non una traduzione.",
                     "en": "Test backend: the draft is the old text, not a translation."})]
+STUB_CODE = {"fr": "Backend de test\u00a0: changement appliqué par le code (aucun modèle nécessaire).",
+             "it": "Backend di prova: modifica applicata dal codice (nessun modello necessario).",
+             "en": "Test backend: change applied by code (no model needed)."}
 REVIEW_OTHER = {"fr": "Marqué pour révision par le pipeline\u00a0: {r}", "it": "Segnalato per revisione dalla pipeline: {r}",
                 "en": "Marked for review by the pipeline: {r}"}
 
 
-def review_text(reason, lang):
-    """A record's own reason for review (air-gapped, statute lane, ...) as one sentence in the reviewer's language."""
+def review_text(reason, lang, rule_only=False):
+    """A record's own reason for review (air-gapped, statute lane, ...) as one sentence in the reviewer's language.
+    A stub record whose change code applied alone (rule_only: no model call was needed) says so instead of 'the draft
+    is the old text'."""
+    if rule_only and (reason or "").startswith("stub"): return STUB_CODE[rl(lang)]
     for k, T_ in REVIEW:
         if (reason or "").startswith(k): return T_[rl(lang)]
     return REVIEW_OTHER[rl(lang)].format(r=reason or "status flagged")
 
 
-def record_finding(reason, lang):
-    return dict(gid="record", name=GID["record"], gname=NAMES["record"][rl(lang)], text=review_text(reason, lang),
+def record_finding(reason, lang, rule_only=False):
+    return dict(gid="record", name=GID["record"], gname=NAMES["record"][rl(lang)], text=review_text(reason, lang, rule_only),
                 detail=f"record status flagged: {reason or '(no reason recorded)'}", corrects=False)
 
 
@@ -154,6 +160,10 @@ T = {
     "div_pair": {"fr": "allemand {d}, français {t}", "it": "tedesco {d}, italiano {t}", "en": "German {d}, target {t}"},
     "lang_is": {"fr": "L'ancien texte français est en {x}.", "it": "Il vecchio testo italiano è in {x}.",
                 "en": "The previous target text is in {x}."},
+    "term": {"fr": "L'ancien texte dit {a}\u00a0; l'OFSP a déjà corrigé ce terme en {b} ailleurs{w}.",
+             "it": "Il vecchio testo dice {a}; l'UFSP ha già corretto questo termine in {b} altrove{w}.",
+             "en": "The old text says {a}; BAG already corrected this term to {b} elsewhere{w}."},
+    "term_w": {"fr": " ({x})", "it": " ({x})", "en": " ({x})"},
     "lang_not": {"fr": "L'ancien texte français ne semble pas être en français : {x}",
                  "it": "Il vecchio testo italiano non sembra essere in italiano: {x}",
                  "en": "The previous target text does not seem to be in the target language: {x}"},
@@ -163,7 +173,7 @@ LANGNAME = {"fr": {"de": "allemand", "fr": "français", "it": "italien", "en": "
             "en": {"de": "German", "fr": "French", "it": "Italian", "en": "English", "rm": "Romansh"}}
 _LANGWORDS = {"de": r"german|deutsch|allemand|tedesco", "fr": r"french|franz|français|francese", "it": r"italian|italien|italiano",
               "en": r"english|englisch|anglais|inglese", "rm": r"romansh|rätoroman|romanche|romancio"}
-KINDS = ("number", "unit", "language", "editorial")
+KINDS = ("number", "unit", "language", "editorial", "terminology")
 MODAL = {"MUST": {"fr": "obligation : doit", "it": "obbligo: deve", "en": "obligation: must"},
          "MAY": {"fr": "possibilité : peut", "it": "possibilità: può", "en": "permission: may"},
          "SHALL": {"fr": "recommandation : devrait", "it": "raccomandazione: dovrebbe", "en": "recommendation: should"}}
@@ -178,7 +188,7 @@ def q(lang, s): a, b = QUOTE[rl(lang)]; return f"{a}{s}{b}"
 
 
 def clip(s, n=110):
-    s = re.sub(r"\s+", " ", s).strip()
+    s = re.sub(r"[ \t\r\n]+", " ", s).strip()          # not \s: French non-breaking spaces stay
     if len(s) <= n: return s
     h = s[:n].rsplit(" ", 1)[0]
     return h + " …"
@@ -265,10 +275,15 @@ def _delta(lang, d, fem=False):
     return tr(lang, "add_n", n=d) if d > 0 else tr(lang, "rem_n", n=-d) if d < 0 else tr(lang, "none_f" if fem else "none_n")
 
 
+def _times(c):
+    """'20481 (×2), 56': each value once, with how often when more than once (so equal-looking lists show their counts)."""
+    return ", ".join(k + (f" (×{c[k]})" if c[k] > 1 else "") for k in sorted(c))
+
+
 def _numch(lang, add, rem):
     p = []
-    if add: p.append(tr(lang, "n_add", x=", ".join(sorted(add))))
-    if rem: p.append(tr(lang, "n_rem", x=", ".join(sorted(rem))))
+    if add: p.append(tr(lang, "n_add", x=_times(add)))
+    if rem: p.append(tr(lang, "n_rem", x=_times(rem)))
     return ", ".join(p) if p else tr(lang, "n_none")
 
 
@@ -350,6 +365,71 @@ _TGK = ("tgt", "tgt_value", "tgt_old", "target", "tgt_num", "tgt_text", "tgt_sur
 _TXK = ("text", "msg", "message", "note", "summary", "detail", "what")
 
 
+_OLDK = ("old_term", "term_old", "old", "from", "surface", "stale", "x")
+_NEWK = ("new_term", "term_new", "new", "to", "suggestion", "corrected", "y")
+_WHEREK = ("corrected_in", "where", "fixed_in", "corrected", "examples", "ids", "limitations", "seen_corrected", "evidence")
+
+
+_PRODUCTS = {}
+def _item_product(key):
+    """The product (brand) of a recorded item key (wb021-fr -> 'Exforge HCT'), from the shipped item sets; None if unknown."""
+    if not key: return None
+    if not _PRODUCTS:
+        try:
+            from .. import score
+            from ..ui.build import brand
+            for run in ("fresh166", "oos242"):
+                for x in score.load_items(score.RUNS[run]["items"]):
+                    if x.get("product"): _PRODUCTS.setdefault(x["key"], brand(x["product"]))
+        except Exception: _PRODUCTS["-"] = None
+    return _PRODUCTS.get(key)
+
+
+def term_parts(d, lang=None):
+    """-> (old term, new term, [where BAG already corrected it]) of an audit finding of kind 'terminology', from whichever
+    keys the audit uses (old_term / new_term / corrected_in, values {old, new}, a 'X -> Y' string, ...); None / [] when
+    absent."""
+    def pick(keys):
+        for k in keys:
+            v = d.get(k)
+            if isinstance(v, dict) and lang in v: v = v[lang]
+            if isinstance(v, (list, tuple)) and v and all(isinstance(x, str) for x in v) and k not in _WHEREK: v = v[0]
+            if isinstance(v, str) and v.strip(): return v.strip()
+        return None
+    o, n = pick(_OLDK), pick(_NEWK)
+    V = d.get("values")
+    if isinstance(V, dict):
+        o = o or (V.get("old") if isinstance(V.get("old"), str) else None); n = n or (V.get("new") if isinstance(V.get("new"), str) else None)
+    elif isinstance(V, (list, tuple)) and len(V) == 2 and all(isinstance(x, str) for x in V) and not (o or n):
+        o, n = V
+    if not (o and n):
+        m = re.search(r"[«“\"']([^»”\"']+)[»”\"']\s*(?:->|→|to|en|in)\s*[«“\"']([^»”\"']+)[»”\"']", str(d.get("detail") or d.get("description") or ""))
+        if m: o, n = o or m.group(1), n or m.group(2)
+    where = []
+    for k in _WHEREK:
+        v = d.get(k)
+        if k in ("corrected", "examples") and isinstance(v, str): continue
+        if isinstance(v, str) and v.strip(): where = [v.strip()]; break
+        if isinstance(v, (list, tuple)) and v:
+            for x in v:
+                if isinstance(x, str): where.append(x)
+                elif isinstance(x, dict):
+                    p = x.get("product") or x.get("name"); i = x.get("id") or x.get("limitation") or x.get("code")
+                    p = ", ".join(p) if isinstance(p, (list, tuple)) else p
+                    src = str(x.get("source") or "")
+                    if isinstance(i, str) and i.startswith("RA:"):            # old-format key: name the item it came from
+                        k = src.split(":", 1)[1] if src.startswith("items:") else None
+                        p = p or _item_product(k)
+                        i = None if p else (k or i[:11] + "…")
+                    if isinstance(i, str): i = i.split("---")[0]
+                    when = x.get("after") or x.get("date")
+                    lab = f"{p} ({i})" if p and i else str(p or i or "")
+                    if lab and isinstance(when, str) and re.fullmatch(r"\d{8}", when): lab += f", {when[6:8]}.{when[4:6]}.{when[:4]}"
+                    if lab: where.append(lab)
+            if where: break
+    return o, n, where
+
+
 def found_language(d, lang):
     """The language an old text was found to be in, from an audit finding of kind 'language' (None when not stated):
     a found / detected / actual / is_lang key, values[lang], or a language name in the detail sentence."""
@@ -374,6 +454,7 @@ def _kind(d):
     if k in KINDS: return k
     if k in ("numeric", "num", "numbers"): return "number"
     if k in ("lang", "wrong_language", "wrong-language"): return "language"
+    if k in ("term", "terms", "terminology", "term_pair"): return "terminology"
     return "number" if ("side" in d or "value" in d or "values" in d) else "editorial"
 
 
@@ -397,6 +478,16 @@ def divergence(x):
             dl = d.get("lang") if d.get("lang") is not None else d.get("langs")
             if isinstance(dl, str) and dl in ("fr", "it") and dl != L: continue
             if isinstance(dl, (list, tuple)) and set(dl) & {"fr", "it"} and L not in dl: continue
+        if isinstance(d, dict) and kind == "terminology":
+            old_t, new_t, where = term_parts(d, L)
+            given = d.get("text") if isinstance(d.get("text"), str) and d.get("text").strip() else None
+            if given: txt = given
+            elif old_t and new_t:
+                w = tr(L, "term_w", x=", ".join(where[:3]) + (f" {tr(L, 'more', n=len(where) - 3)}" if len(where) > 3 else "")) if where else ""
+                txt = tr(L, "term", a=q(L, old_t), b=q(L, new_t), w=w)
+            else: txt = next((str(d[k]) for k in _TXK if d.get(k)), raw)
+            res.append(dict(text=clip(txt, 260), raw=raw, kind=kind, found=None, old=old_t, new=new_t, where=where))
+            continue
         if isinstance(d, dict) and kind == "language":
             found = found_language(d, L)
             det = next((str(d[k]) for k in _TXK if d.get(k)), "")
@@ -431,13 +522,14 @@ def banner(x, divs, out=None):
     if not divs: return None
     L = x["lang"]; c = corrections(x, out) if out else None
     lang = [d["text"] for d in divs if d.get("kind") == "language"]
-    rest = [d for d in divs if d.get("kind") != "language"]
-    if not rest: return " ".join(lang)
+    term = [d["text"] for d in divs if d.get("kind") == "terminology"]
+    rest = [d for d in divs if d.get("kind") not in ("language", "terminology")]
+    if not rest: return " ".join(lang + term)
     if c and c["where"] and c["de"]:
         num = tr(L, "div", x=tr(L, "div_vs", t=q(L, c["where"][0][0]), d=q(L, c["de"][0])))
     else:
         num = tr(L, "div", x="; ".join(d["text"] for d in rest[:3]))
-    return " ".join(lang + [num])
+    return " ".join(lang + [num] + term)
 
 
 # ------------------------------------------------------------------------------------------- findings

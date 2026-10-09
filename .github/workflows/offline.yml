@@ -31,6 +31,12 @@ jobs:
           mkdir -p models out
           time make run-offline 2>&1 | tee run-offline.log
           grep -q "reproduction PASSED; live slice PASSED" run-offline.log
+      - name: the gate accepts the shipped build certificate for this GGUF in the offline image
+        run: |
+          docker run --rm --network none -v $PWD/models:/models:ro gleichlaut-offline python -c "
+          from gleichlaut import backends, certify
+          sha = backends.file_sha256('/models/apertus-v1.5-8b-text-q4_k_m.gguf'); c, why = certify.build_lookup(sha, backends.llama_version())
+          print(why); assert c, why"
       - name: GGUF sha256
         if: always()
         run: test -f "$GGUF" && echo "$GLEICHLAUT_MODEL_SHA256  $GGUF" | sha256sum -c -

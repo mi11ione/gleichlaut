@@ -7,6 +7,7 @@ align(src, tgt): a monotone alignment of source and target sentences in beads of
   chosen by dynamic programming on (a) length ratio against the text's overall ratio, (b) the numbers written in digits on
   each side, (c) a fixed penalty for every bead that is not 1:1 (Gale-Church style, no model). Each bead becomes one
   segment; concatenating the segments gives back both texts exactly.
+beads(src, tgt, keep): align + keep_whole + merge_short, the one segmentation every XLIFF writer and the page use.
 changed(old, new): the inserted / replaced runs of the new German (the same phrase-level diff the review page shows)."""
 import math, re
 from .. import core
@@ -64,6 +65,37 @@ def keep_whole(beads, spans, side):
             a, b = out[k], out[k + 1]; out[k:k + 2] = [(a[0], b[1], a[2], b[3])]
         else: k += 1
     return out
+
+
+SHORT = 20            # a segment side shorter than this (stripped), or without a word of 2+ letters, is merged
+
+
+def _short(t):
+    t = t.strip()
+    return len(t) < SHORT or not re.search(r"[^\W\d_]{2,}", t)
+
+
+def merge_short(beads, src, tgt=None):
+    """Merge every bead whose source (or target, when there is one) is very short into the previous bead (the first
+    one into the next): a lone code number like '21658.01' after 'zu übermitteln:' never becomes its own segment."""
+    out = list(beads)
+    k = 0
+    while len(out) > 1 and k < len(out):
+        a0, a1, b0, b1 = out[k]
+        if _short(src[a0:a1]) or (tgt is not None and _short(tgt[b0:b1])):
+            if k == 0: n = out[1]; out[0:2] = [(a0, n[1], b0, n[3])]
+            else: p = out[k - 1]; out[k - 1:k + 1] = [(p[0], a1, p[2], b1)]; k -= 1
+            continue
+        k += 1
+    return out
+
+
+def beads(src, tgt=None, keep=()):
+    """The segments of one unit, used alike by XLIFF 2.1, XLIFF 1.2 and the review page's export: aligned sentence
+    beads (align), merged so that no span of `keep` (target numbers) crosses a boundary (keep_whole) and no segment is
+    very short (merge_short). tgt None: source sentences only (target spans (0, 0))."""
+    if tgt is None: return [(a, b, 0, 0) for a, b, _, _ in merge_short([(a, b, 0, 0) for a, b in sentences(src)], src)]
+    return merge_short(keep_whole(align(src, tgt), list(keep), 1), src, tgt)
 
 
 def changed(old, new):

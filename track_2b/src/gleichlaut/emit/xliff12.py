@@ -10,7 +10,10 @@ unverified, 1.2 is the safe exchange format). One file per target language, one 
   <note>s (annotates target / source), all in the target language, carry the verdict, the German change, each guard
   finding as one sentence (the ones a fixed rule marks as probably fine last, with the rule), the divergence notice, the
   old German and the old target; <alt-trans alttranstype="previous-version"> holds the old German -> old target pair so the
-  CAT tool shows the previous version beside the draft. The whole text is one trans-unit (CAT tools segment 1.2 themselves).
+  CAT tool shows the previous version beside the draft.
+  Segmentation: the same segments as XLIFF 2.1 (segment.beads: aligned sentences, very short segments such as a lone
+  code number merged into the previous one), written the 1.2 way: <seg-source> and <target> each hold one
+  <mrk mtype="seg" mid="k"> per segment, with matching mids; <source> keeps the whole new German text.
 Validated against the OASIS XLIFF 1.2 strict XSD (data/schemas/xliff-1.2/) by validate.validate_xliff12."""
 import os
 import xml.etree.ElementTree as ET
@@ -25,19 +28,6 @@ STATE = {"ready": "translated", "flagged": "needs-review-translation"}
 def _q(t): return f"{{{NS}}}{t}"
 
 
-def _marked(parent, text, spans, comment):
-    """parent.text/children = text with each (start, end) span wrapped in <mrk mtype="protected">."""
-    pos, last = 0, None
-    for a, b in spans:
-        chunk = text[pos:a]
-        if last is None: parent.text = chunk
-        else: last.tail = chunk
-        last = ET.SubElement(parent, _q("mrk"), {"mtype": "protected", "comment": comment})
-        last.text = text[a:b]; pos = b
-    if last is None: parent.text = text
-    else: last.tail = text[pos:]
-
-
 def _source_spans(s):
     return [(m.start(), m.end()) for m in core.gl2.NUMRX.finditer(s)]
 
@@ -47,29 +37,52 @@ def _note(tu, text, annotates="general", priority=None):
     n.text = text
 
 
-def _source(tu, v, lang):
-    """source = new German: x-changed spans with the protected numbers nested inside (and protected numbers outside)."""
-    src = v["de_new"]; el = ET.SubElement(tu, _q("source"), {f"{{{XMLNS}}}lang": "de-CH"})
-    ch, nums = segment.changed(v["de_old"], src), _source_spans(src)
-    outer = sorted([(a, b, "c") for a, b in ch] + [(a, b, "n") for a, b in nums if not any(c0 <= a and b <= c1 for c0, c1 in ch)])
+def _src_marks(el, src, a, b, ch, nums, lang):
+    """el gets src[a:b]: x-changed spans with the protected numbers nested inside (and protected numbers outside)."""
+    outer = sorted([(x, y, "c") for x, y in ch] + [(x, y, "n") for x, y in nums if not any(c0 <= x and y <= c1 for c0, c1 in ch)])
     num_c, chg_c = xliff.nt(lang, "code_number"), xliff.nt(lang, "changed")
 
     def mk(span):
         return "mrk", ({"mtype": "x-changed", "comment": chg_c} if span[2] == "c" else {"mtype": "protected", "comment": num_c})
-    xliff.inline(el, src, 0, len(src), outer, mk, _q)
+    xliff.inline(el, src, a, b, outer, mk, _q)
     for m in [m for m in el if m.get("mtype") == "x-changed"]:          # numbers inside a changed span
         t = m.text or ""; m.text = ""
         xliff.inline(m, t, 0, len(t), _source_spans(t), lambda sp: ("mrk", {"mtype": "protected", "comment": num_c}), _q)
+
+
+def _source(tu, v, lang, beads):
+    """source = the whole new German; seg-source = the same text, one <mrk mtype="seg"> per segment."""
+    src = v["de_new"]; ch, nums = segment.changed(v["de_old"], src), _source_spans(src)
+    _src_marks(ET.SubElement(tu, _q("source"), {f"{{{XMLNS}}}lang": "de-CH"}), src, 0, len(src), ch, nums, lang)
+    ss = ET.SubElement(tu, _q("seg-source"), {f"{{{XMLNS}}}lang": "de-CH"}); last = None
+    for k, (a0, a1, _, _) in enumerate(beads, 1):
+        last = ET.SubElement(ss, _q("mrk"), {"mtype": "seg", "mid": str(k)})
+        _src_marks(last, src, a0, a1, ch, nums, lang)
+
+
+def _target(t, v, beads, lang):
+    """target = the draft, one <mrk mtype="seg"> per segment (mids as in seg-source), code numbers protected inside."""
+    out = v["draft"]; code = [(a, b) for a, b, _, who, _ in v["numbers"] if who == "code"]; num_c = xliff.nt(lang, "code_number")
+    for k, (_, _, b0, b1) in enumerate(beads, 1):
+        m = ET.SubElement(t, _q("mrk"), {"mtype": "seg", "mid": str(k)})
+        xliff.inline(m, out, b0, b1, code, lambda sp: ("mrk", {"mtype": "protected", "comment": num_c}), _q)
+
+
+def beads_of(v):
+    """The unit's segments, as in XLIFF 2.1 (segment.beads)."""
+    if v["status"] == "human": return segment.beads(v["de_new"])
+    return segment.beads(v["de_new"], v["draft"], [(a, b) for a, b, *_ in v["numbers"]])
 
 
 def trans_unit(body, v):
     lang = fhir.LANGS[v["lang"]]; L = v["lang"]
     tu = ET.SubElement(body, _q("trans-unit"), {"id": v["key"], "resname": v["cud_id"], "approved": "no",
                                                  f"{{{XMLNS}}}space": "preserve"})
-    _source(tu, v, L)
+    B = beads_of(v)
+    _source(tu, v, L, B)
     if v["status"] != "human":
         t = ET.SubElement(tu, _q("target"), {"state": STATE[v["status"]], f"{{{XMLNS}}}lang": lang})
-        _marked(t, v["draft"], [(a, b) for a, b, _, who, _ in v["numbers"] if who == "code"], xliff.nt(L, "code_number"))
+        _target(t, v, B, L)
     _note(tu, xliff.nt(L, v["status"]), "target", "1")
     if v.get("banner"): _note(tu, v["banner"], "target", "1")
     _note(tu, xliff.nt(L, "change", t=xliff.change_summary(v)), "source", "2")
@@ -79,7 +92,7 @@ def trans_unit(body, v):
     if model: _note(tu, xliff.nt(L, "model_nums", x=", ".join(model)), "target", "1")
     _note(tu, xliff.nt(L, "prev_de", t=v["de_old"]), "source", "5")
     _note(tu, xliff.nt(L, "prev_tgt", t=v["tgt_old"]), "target", "5")
-    _note(tu, xliff.nt(L, "product", product=v["product"], code=v["cud_id"], old=xliff.date(v["snap_old"]), new=xliff.date(v["snap_new"])), "general", "5")
+    _note(tu, xliff.product_note(v, L), "general", "5")
     alt = ET.SubElement(tu, _q("alt-trans"), {"alttranstype": "previous-version", "origin": "SL previous version", "tool-id": "gleichlaut"})
     ET.SubElement(alt, _q("source"), {f"{{{XMLNS}}}lang": "de-CH"}).text = v["de_old"]
     ET.SubElement(alt, _q("target"), {f"{{{XMLNS}}}lang": lang}).text = v["tgt_old"]

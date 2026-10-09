@@ -7,17 +7,32 @@
 #   make audit          DE<->FR/IT congruence audit of the whole register on the latest feed (AUDIT_DATE=YYYYMMDD for another
 #                       date). No model, no endpoint: fetches the public feed if missing -> ./out/audit
 #   make feeds          list the published BAG feed dates (public resources API + polite HEAD probes)
-#   make certify        certify the endpoint in LLM_BASE_URL on the frozen 166-item suite (SL lane gate) -> ./state
+# The SL default lane is the local Apertus 8B GGUF on CPU (offline image, air-gapped; PREREG R1). The 70B on a certified
+# endpoint is the optional "fewer edits" lane (targets ending in -70b / -endpoint, and the canary).
+#   make fetch-gguf     download the pinned 8B GGUF once into ./models (sha256-checked)
+#   make certify        build certificate for the pinned 8B GGUF from the recorded M1 run (seconds, no model, no network)
+#                       -> ./state, HMAC-signed when GLEICHLAUT_CERT_KEY is set
+#   make certify-build  the same certificate by running the frozen 166 suite on THIS machine's CPU (offline image; ~7 h on
+#                       4 cores at the measured 153.4 s per item)
+#   make certify-endpoint  certify the 70B endpoint in LLM_BASE_URL on the frozen 166-item suite -> ./state
 #   make canary         re-run CANARY_N suite items on that endpoint and compare with its certified run (exit 3 on drift)
-#   make month                              one month of the public feed in shadow mode: FROM=previous TO=latest by default
+#   make month                              one month of the public feed in shadow mode with the local 8B (offline image,
+#                                           models/ and state/ mounted): FROM=previous TO=latest by default
 #   make month FROM=20260901 TO=20261001    a given pair of published feed dates (`make feeds` lists them)
-#   make month ITEMS=/path/items.json       pre-publication mode on the SL team's own German changes
+#   make month ITEMS=/path/items.json       pre-publication mode on the SL team's own German changes, --network none
+#                                           (the confidential German never leaves the container; run make fetch-gguf first)
+#   make month-offline  the same as make month (the name the error message of a missing llama-cpp-python points to)
+#   make month-70b      one month through the certified 70B endpoint in LLM_BASE_URL (base image; FROM/TO/ITEMS as above)
+#   MONTH_ARGS="--emit ..."  extra arguments for gleichlaut month (e.g. --emit writes XLIFF/FHIR + the review register)
 #   make fake-endpoint  an OpenAI-compatible fake on 127.0.0.1:8099 for test environments (FAKE_MODE=recorded|echo|...)
 #   make local-run      the same as `make run` without Docker (Python >= 3.9; lxml optional)
+#   make install-dev    pip install -e . (the `gleichlaut` console script; library: docs/api.md)
+#   make lock / sbom    re-lock the hash-pinned requirements (network: PyPI JSON API) / regenerate docs/sbom.json
 # Behind a proxy / internal CA: HTTPS_PROXY, HTTP_PROXY, NO_PROXY are passed into the containers; SSL_CERT_FILE and
 # REQUESTS_CA_BUNDLE (host paths) are mounted read-only and passed. GLEICHLAUT_CERT_KEY (host path of the certificate HMAC
 # key) is mounted read-only. Operator runbook: docs/operations.md. Certificates live in ./state (gitignored), mounted.
-.PHONY: run run-offline test certify canary month audit feeds fake-endpoint local-run local-test local-audit backtest ui clean
+.PHONY: run run-offline test certify certify-build certify-endpoint canary month month-offline month-70b fetch-gguf audit feeds \
+        fake-endpoint local-run local-test local-audit backtest ui clean install-dev lock sbom
 IMAGE   ?= gleichlaut
 NAME    ?= gleichlaut-run-$(shell date +%s)
 PROXY    = -e HTTPS_PROXY -e HTTP_PROXY -e NO_PROXY -e https_proxy -e http_proxy -e no_proxy
@@ -27,11 +42,17 @@ CERTKEY  = $(if $(GLEICHLAUT_CERT_KEY),-v $(abspath $(GLEICHLAUT_CERT_KEY)):/run
 TUNING   = -e GLEICHLAUT_TIMEOUT -e GLEICHLAUT_RETRIES -e GLEICHLAUT_BACKOFF -e GLEICHLAUT_DEADLINE -e GLEICHLAUT_CERT_DAYS \
            -e GLEICHLAUT_CANARY_MAX_AGE_DAYS -e GLEICHLAUT_THREADS -e GLEICHLAUT_DEBUG
 ENVS     = -e LLM_NAME -e LLM_BASE_URL -e LLM_API_KEY -e SKIP_MODEL $(TUNING) $(PROXY) $(CA) $(CERTKEY)
+# the 8B lane gets no LLM_* variables: it never talks to an endpoint
+ENVS8B   = $(TUNING) $(PROXY) $(CA) $(CERTKEY) -e GLEICHLAUT_MODEL_URL -e GLEICHLAUT_MODEL_SHA256 -e GLEICHLAUT_MODELS=/models
 NET      = $(if $(LLM_BASE_URL),,--network none)
 AS_ME    = --user $$(id -u):$$(id -g)
 STATE    = -v $(CURDIR)/state:/app/state -e GLEICHLAUT_STATE=/app/state
 CANARY_N ?= 40
-BACKEND  ?= openai
+GGUF_SHA ?= a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299
+GGUF     ?= /models/apertus-v1.5-8b-text-q4_k_m.gguf
+MONTH_ARGS ?=
+MONTH_SEL = $(if $(ITEMS),--items /app/in/items.json --out /app/out/month/$(basename $(notdir $(ITEMS))),--from $(FROM) --to $(TO) --fetch)
+ITEMS_MOUNT = $(if $(ITEMS),-v $(abspath $(ITEMS)):/app/in/items.json:ro)
 FROM     ?= previous
 TO       ?= latest
 AUDIT_DATE ?= latest
@@ -54,7 +75,22 @@ test:
 	docker build --target base -t $(IMAGE) .
 	docker run --rm --network none $(IMAGE) python tests/run.py
 
+# The build certificate of the pinned 8B GGUF, from the recorded M1 run (PREREG R1): re-scored here with the frozen checks
+# and the M1 labels; PASS only if the pre-registered rule holds. No model, no network. Signed if GLEICHLAUT_CERT_KEY is set.
 certify:
+	docker build --target base -t $(IMAGE) .
+	mkdir -p state
+	docker run --rm --network none $(TUNING) $(CERTKEY) $(AS_ME) $(STATE) $(IMAGE) python -m gleichlaut certify \
+	  --import-run data/runs/8b_q4_k_m_fresh166_g3_final.jsonl --gguf-sha256 $(GGUF_SHA) --labels eval/labels/m1_q4_k_m_fresh166.tsv
+
+# The same certificate from a run of the frozen 166 suite on this machine's CPU (offline image; slow: ~7 h on 4 cores).
+certify-build:
+	docker build --target offline -t $(IMAGE)-offline .
+	mkdir -p state models
+	docker run --rm $(ENVS8B) $(AS_ME) $(STATE) -v $(CURDIR)/models:/models $(IMAGE)-offline sh -c \
+	  'python -m gleichlaut fetch-gguf && exec python -m gleichlaut certify --backend llamacpp --gguf $(GGUF)'
+
+certify-endpoint:
 	docker build --target base -t $(IMAGE) .
 	mkdir -p state
 	docker run --rm $(ENVS) $(AS_ME) $(STATE) $(IMAGE) python -m gleichlaut certify --backend openai
@@ -64,12 +100,30 @@ canary:
 	mkdir -p state
 	docker run --rm $(ENVS) $(AS_ME) $(STATE) $(IMAGE) python -m gleichlaut certify --backend openai --canary $(CANARY_N)
 
+fetch-gguf:
+	docker build --target base -t $(IMAGE) .
+	mkdir -p models
+	docker run --rm $(PROXY) $(CA) -e GLEICHLAUT_MODEL_URL -e GLEICHLAUT_MODEL_SHA256 -e GLEICHLAUT_MODELS=/models $(AS_ME) \
+	  -v $(CURDIR)/models:/models $(IMAGE) python -m gleichlaut fetch-gguf
+
+# The SL default lane: the local 8B GGUF (certified build) in the offline image. models/ holds the GGUF (fetched once,
+# sha256-checked), state/ the certificates (`make certify` once; needed only with GLEICHLAUT_CERT_KEY, because the image
+# carries the shipped certificate). ITEMS mode runs with --network none.
 month:
+	docker build --target offline -t $(IMAGE)-offline .
+	mkdir -p state out/month out/hist models
+	docker run --rm $(if $(ITEMS),--network none) $(ENVS8B) $(AS_ME) $(STATE) -v $(CURDIR)/models:/models \
+	  -v $(CURDIR)/out:/app/out $(ITEMS_MOUNT) $(IMAGE)-offline sh -c \
+	  '$(if $(ITEMS),,python -m gleichlaut fetch-gguf && )exec python -m gleichlaut month --backend llamacpp --gguf $(GGUF) $(MONTH_SEL) $(MONTH_ARGS)'
+
+month-offline: month
+
+# The optional "fewer edits" lane: the 70B through the certified endpoint in LLM_BASE_URL (make certify-endpoint first).
+month-70b:
 	docker build --target base -t $(IMAGE) .
 	mkdir -p state out/month out/hist
-	docker run --rm $(ENVS) $(AS_ME) $(STATE) -v $(CURDIR)/out:/app/out $(if $(ITEMS),-v $(abspath $(ITEMS)):/app/in/items.json:ro) \
-	  $(IMAGE) python -m gleichlaut month --backend $(BACKEND) $(if $(ALLOW_STALE_CANARY),--allow-stale-canary) \
-	  $(if $(ITEMS),--items /app/in/items.json --out /app/out/month/$(basename $(notdir $(ITEMS))),--from $(FROM) --to $(TO) --fetch)
+	docker run --rm $(ENVS) $(AS_ME) $(STATE) -v $(CURDIR)/out:/app/out $(ITEMS_MOUNT) \
+	  $(IMAGE) python -m gleichlaut month --backend openai $(if $(ALLOW_STALE_CANARY),--allow-stale-canary) $(MONTH_SEL) $(MONTH_ARGS)
 
 # The audit needs no model and no endpoint: only the public feed of one date (fetched once, ~3 x 90 MB streamed into
 # ~3 x 5.5 MB snapshots under out/hist). AUDIT_ARGS is passed through to `gleichlaut audit`.
@@ -103,6 +157,16 @@ backtest:
 
 ui:
 	PYTHONPATH=src python3 -m gleichlaut ui --out out/ui/index.html
+
+install-dev:
+	python3 -m pip install -e .
+
+lock:
+	python3 tools/supply_chain.py lock
+	python3 tools/supply_chain.py sbom
+
+sbom:
+	python3 tools/supply_chain.py sbom
 
 clean:
 	rm -rf out

@@ -127,11 +127,11 @@ def _view(x, f, P, stack, check_recorded=True, any_raw=False):
     if not fc["flag"]: fs = [d for d in fs if d["gid"] == "corr"]
     L = lights(x, out, fc, f, stack)
     if rec_flag:
-        rf = explain.record_finding(f.get("review_reason"), x["lang"])
+        rf = explain.record_finding(f.get("review_reason"), x["lang"], f["rule_only"])
         fs.insert(1 if fs and fs[0]["gid"] == "corr" else 0, rf)
         L = [("record", "Record", "fail", f"record status flagged: {f.get('review_reason') or '(no reason recorded)'}")] + L
     complaint = P.complaints(x, out) if fc["flag"] else ""
-    if rec_flag: complaint = "\n".join(c for c in (f"- {explain.review_text(f.get('review_reason'), 'en')}", complaint) if c)
+    if rec_flag: complaint = "\n".join(c for c in (f"- {explain.review_text(f.get('review_reason'), 'en', f['rule_only'])}", complaint) if c)
     return dict(base, draft=out, status="flagged" if flagged else "ready", lights=L, complaint=complaint, findings=fs,
                 rule_only=f["rule_only"], reasked=bool(f.get("reasked")), replaced=bool(f.get("replaced")),
                 slots=f.get("slots") or {}, numbers=numbers(out, _source_raw_any(f) if any_raw else _source_raw(f), x["lang"], f.get("slots")))
@@ -177,12 +177,41 @@ def load_records(records, items):
     stem = os.path.splitext(os.path.basename(records))[0]
     if stem == "records": stem = os.path.basename(os.path.dirname(os.path.abspath(records))) or stem      # out/<run>/records.jsonl
     stem = re.sub(r"[^A-Za-z0-9_.-]+", "-", stem).strip("-") or "records"
-    model = next((r.get("model") for r in F.values() if r.get("model")), None) or os.environ.get("LLM_NAME") or None
+    model = records_model(F.values(), records) or os.environ.get("LLM_NAME") or None
     meta = dict(run=stem, what=f"records {os.path.basename(records)} over items {os.path.basename(items)}", stack="g3",
                 model=model or "not recorded", model_known=bool(model),
                 pipeline=pipeline_id("g3"), items_sha256=core.sha256(items), run_sha256=core.sha256(records), custom=True,
                 has_tgt_new=all(x.get("tgt_new") for x in I), items_path=items, records_path=records)
     return meta, views
+
+
+def records_model(recs, records_path=None):
+    """The model id of a records file: a record's model / model_id field; else the call log next to the records
+    (calls.jsonl or live_calls.jsonl: the requested model, else the served one, most frequent first); else the model
+    named in a record's backend label ('openai <endpoint> <model>', 'llamacpp <model>'); None when nothing names it."""
+    from collections import Counter
+    for r in recs:
+        for k in ("model", "model_id", "llm"):
+            if isinstance(r.get(k), str) and r[k].strip(): return r[k].strip()
+    if records_path:
+        d = os.path.dirname(os.path.abspath(records_path)); c = Counter()
+        for fn in ("calls.jsonl", "live_calls.jsonl"):
+            p = os.path.join(d, fn)
+            if not os.path.exists(p): continue
+            for line in open(p, encoding="utf-8"):
+                try: rec = json.loads(line)
+                except ValueError: continue
+                m = rec.get("model") or rec.get("model_served") if isinstance(rec, dict) else None
+                if isinstance(m, str) and m.strip(): c[m.strip()] += 1
+        if c: return c.most_common(1)[0][0]
+    for r in recs:
+        b = r.get("backend")
+        if isinstance(b, str):
+            p = b.split()
+            if len(p) >= 3 and p[0] == "openai": return p[-1]
+            if len(p) >= 2 and p[0] == "llamacpp": return p[1]
+            if p and p[0] == "stub": return "stub (no model)"
+    return None
 
 
 def model_label(meta):

@@ -1,0 +1,28 @@
+# One-off (systemctl start gleichlaut-certify): the build certificate of the pinned Apertus 8B GGUF from the recorded M1 run
+# (PREREG R1), re-scored with the frozen checks and the M1 labels, HMAC-signed with the key, into the state directory.
+# Seconds, no model, no network. Needed only with GLEICHLAUT_CERT_KEY: without a key the gate accepts the certificate shipped
+# in eval/certificates/. To certify on this machine's CPU instead (~7 h on 4 cores), replace the arguments with
+#   certify --backend llamacpp --gguf /var/lib/gleichlaut/models/apertus-v1.5-8b-text-q4_k_m.gguf
+[Unit]
+Description=Gleichlaut build certificate of the local 8B GGUF
+OnFailure=gleichlaut-alert@%n.service
+
+[Service]
+Type=oneshot
+User=gleichlaut
+Group=gleichlaut
+WorkingDirectory=/opt/gleichlaut/track_2b
+Environment=PYTHONPATH=/opt/gleichlaut/track_2b/src PYTHONDONTWRITEBYTECODE=1
+Environment=GLEICHLAUT_STATE=/var/lib/gleichlaut/state
+LoadCredential=cert.key:/etc/gleichlaut/cert.key
+Environment=GLEICHLAUT_CERT_KEY=%d/cert.key
+ExecStart=/opt/gleichlaut/venv/bin/python -m gleichlaut certify --import-run data/runs/8b_q4_k_m_fresh166_g3_final.jsonl --gguf-sha256 a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299 --labels eval/labels/m1_q4_k_m_fresh166.tsv
+StateDirectory=gleichlaut
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+PrivateNetwork=yes
+CapabilityBoundingSet=
+MemoryMax=1G

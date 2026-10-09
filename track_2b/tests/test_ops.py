@@ -13,14 +13,16 @@ ENV = ("LLM_BASE_URL", "LLM_API_KEY", "LLM_NAME", "GLEICHLAUT_STATE", "GLEICHLAU
        "GLEICHLAUT_HTTP_TIMEOUT", "GLEICHLAUT_TIMEOUT", "GLEICHLAUT_RETRIES", "GLEICHLAUT_BACKOFF", "GLEICHLAUT_DEADLINE",
        "GLEICHLAUT_GATEWAY_DIR", "SKIP_MODEL", "GLEICHLAUT_GGUF", "GLEICHLAUT_HIST", "GLEICHLAUT_DEBUG", "GLEICHLAUT_CERT_KEY",
        "GLEICHLAUT_CERT_DAYS", "GLEICHLAUT_CANARY_MAX_AGE_DAYS", "HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY", "http_proxy",
-       "https_proxy", "no_proxy", "ALL_PROXY", "all_proxy", "SSL_CERT_FILE", "REQUESTS_CA_BUNDLE")
+       "https_proxy", "no_proxy", "ALL_PROXY", "all_proxy", "SSL_CERT_FILE", "REQUESTS_CA_BUNDLE", "GLEICHLAUT_MODELS",
+       "GLEICHLAUT_RESOURCES", "GLEICHLAUT_METRICS_DIR")
 
 
 @contextlib.contextmanager
 def env(**kw):
     old = {k: os.environ.get(k) for k in ENV}
     for k in ENV: os.environ.pop(k, None)
-    os.environ.update(GLEICHLAUT_HTTP_RETRIES="1", GLEICHLAUT_HTTP_BACKOFF="0")
+    os.environ.update(GLEICHLAUT_HTTP_RETRIES="1", GLEICHLAUT_HTTP_BACKOFF="0",
+                      GLEICHLAUT_MODELS=os.path.join(tempfile.gettempdir(), "gl-ops-no-models"))   # never hash a developer's 5 GB GGUF
     os.environ.update({k: v for k, v in kw.items() if v is not None})
     try: yield
     finally:

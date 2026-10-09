@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with: { python-version: "3.12" }
-      - run: pip install -r requirements.txt
+      - run: pip install --require-hashes -r requirements.txt
       - run: PYTHONPATH=src python -m gleichlaut ui --out ../site/index.html
       - uses: actions/upload-pages-artifact@v5
         with: { path: site }

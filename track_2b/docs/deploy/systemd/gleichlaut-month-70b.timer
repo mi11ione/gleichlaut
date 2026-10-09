@@ -1,0 +1,11 @@
+# The 70B lane: the 2nd at 06:00, after its canary (05:00). Enable this or gleichlaut-month.timer (or both: separate outputs).
+[Unit]
+Description=Gleichlaut monthly run, 70B endpoint
+
+[Timer]
+OnCalendar=*-*-02 06:00:00 Europe/Zurich
+Persistent=true
+RandomizedDelaySec=10m
+
+[Install]
+WantedBy=timers.target

@@ -111,6 +111,29 @@ def test_record_status_flagged_is_never_shown_ready():
     assert D["counts"]["ready"] == 0
 
 
+def test_model_from_the_call_log_no_unknown_dates_and_stub_code_label():
+    """Records that do not name the model: the call log next to them does (no 'modèle non indiqué'); items without
+    snapshot dates get no 'LS ? → ?'; a stub record whose change code applied alone says so, not 'the draft is the old
+    text'."""
+    d = tempfile.mkdtemp(prefix="gl-rec-model-"); rp, ip = _pair(d)
+    recs = [json.loads(l) for l in open(rp, encoding="utf-8")]; recs[0].pop("model", None)
+    recs[0].update(status="flagged", rule_only=True, review_reason="stub backend (wiring test): the draft is the old text, not a translation")
+    with open(rp, "w", encoding="utf-8") as fh:
+        for r in recs: fh.write(json.dumps(r, ensure_ascii=False) + "\n")
+    with open(os.path.join(d, "calls.jsonl"), "w", encoding="utf-8") as fh:
+        fh.write(json.dumps({"model": "swiss-ai/Apertus-70B-Instruct-2509", "model_served": "swiss-ai/Apertus-70B-Instruct-2509"}) + "\n")
+    meta, V = load(records=rp, items=ip)
+    assert meta["model"] == "swiss-ai/Apertus-70B-Instruct-2509" and meta["model_known"]
+    assert V[0]["findings"][0]["text"] == "Backend de test\u00a0: changement appliqué par le code (aucun modèle nécessaire)."
+    out = os.path.join(d, "emit")
+    with contextlib.redirect_stdout(io.StringIO()):
+        assert emit_main(["--records", rp, "--items", ip, "--n", "0", "--out", out]) == 0
+    for fn in os.listdir(os.path.join(out, "xliff")):
+        t = open(os.path.join(out, "xliff", fn), encoding="utf-8").read()
+        assert "non indiqué" not in t and "non indicato" not in t and "Apertus-70B-Instruct-2509" in t, fn
+        assert "? → ?" not in t and "LS ?" not in t and "ES ?" not in t, fn
+
+
 def test_unknown_record_status_is_refused():
     d = tempfile.mkdtemp(prefix="gl-rec-st-"); rp, ip = _pair(d)
     recs = [json.loads(l) for l in open(rp, encoding="utf-8")]; recs[0]["status"] = "approved"

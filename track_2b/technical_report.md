@@ -33,8 +33,8 @@ updated by code): **+11.4 points, 95% CI [4.8, 18.7]**; against rules+, our stro
 [31.0, 54.1]. **39.8%** of drafts come out ready, with **0** meaning errors, stale changes or German left among them,
 and a rerun with a new seed passes the same rule (+12.0 points, 41.6% ready). **The shipped Apertus 8B, on a CPU,
 passes the same pre-registered rule** (+10.8 points [4.8, 17.5], 36.1% ready, 0 meaning errors among ready drafts), so
-the default deployment is fully air-gapped; the 70B halves the editing left (42.4% vs 20.9% fewer edits) and its ready
-drafts almost never need a fix (3 of 66 vs 33 of 60). The audit reduces 1,688 limitations to
+the default deployment is fully air-gapped; the 70B saves twice as many edits (42.4% vs 20.9% fewer than the no-model start) and its
+ready drafts rarely need a fix to the amendment (3 of 66 vs 33 of 60). The audit reduces 1,688 limitations to
 **27** findings that contain **all 10** known divergent limitations and **6** new confirmed problems (a field in the
 wrong language, five typos next to numbers). A draft costs **CHF 0.0024** at a Swiss provider's
 published price for Apertus 70B. `make run` re-executes the recorded runs offline and re-derives every number.
@@ -157,7 +157,10 @@ and all 13 of their known values are among them; a blind annotation finds 10 of 
 [28.3, 67.6]); the other 11 are paraphrases such as "ab 18 Jahren" vs "adultes", or typos. Language and editorial
 checks (added in round 2, rules written before any label): 6 findings, all 6 confirmed: Keytruda's Italian field holds
 the French text since 1 Aug 2026, and five typos next to numbers ("de15 kg", "1 .4 mmol/l", "se mesi"). In total 16 of
-27 findings are real (59.3%).
+27 findings are real (59.3%). Terminology learned from BAG's own corrections (round 3): 11 findings, 8 confirmed
+(four French texts naming an ACE inhibitor for angiotensin-II receptor antagonists, four ungrammatical Italian ones).
+On MiGeL and the Analysenliste (1 Jul 2026), lists the rules were never designed on: 11 findings, 7 confirmed (63.6%),
+among them an Analysenliste position billable after 13 repetitions in Italian and 14 in German and French.
 
 **Labels.** Every ready non-exact draft and the flagged sample were read in full by a blind annotator; a second blind
 annotator re-labelled them (agreement 62 of 69, κ 0.532) and found no meaning error, stale change or German left among

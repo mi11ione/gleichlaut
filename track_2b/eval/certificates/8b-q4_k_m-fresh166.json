@@ -1,0 +1,97 @@
+{
+ "name": "8b-q4_k_m-fresh166",
+ "kind": "build",
+ "kind_note": "a local GGUF build run in process by llama.cpp: authorises the SL lane for exactly this GGUF sha256 and llama-cpp-python version (certify.build_lookup)",
+ "date": "2026-10-09T21:55:28+00:00",
+ "endpoint": "local llama.cpp (in process)",
+ "model_requested": "Apertus v1.5 8B GGUF",
+ "models_served": [
+  "gguf:apertus-v1.5-8b-text-q4_k_m.gguf"
+ ],
+ "gguf": {
+  "sha256": "a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299",
+  "file": "apertus-v1.5-8b-text-q4_k_m.gguf"
+ },
+ "runtime": {
+  "llama_cpp_python": "0.3.35",
+  "source": "requirements-offline.txt pin (the version the M1 workflow installed)"
+ },
+ "source": "imported run data/runs/8b_q4_k_m_fresh166_g3_final.jsonl",
+ "suite": {
+  "items": "items/items_fresh.json",
+  "n": 166,
+  "sha256": "157ca97a6ccf207e3f570e66a79b4da543cab69f3bb88b01da5bc741a5df9b02"
+ },
+ "freeze_sha256": "2ae405fe07e3b3b14bd8b23f9e21c5ee90da9d8c89f67512671a05cb8b5b8abd",
+ "pass_rule": {
+  "unflagged_real_max_pct": 1.0,
+  "unflagged_stale_untranslated_max_pct": 2.0,
+  "exact_gain_min_pts": 5.0,
+  "flag_rate_max_pct": 70.0
+ },
+ "status": "PASS",
+ "metrics": {
+  "exact": {
+   "rules": 6.0,
+   "model": 16.9,
+   "delta": 10.8,
+   "ci95": [
+    4.8,
+    17.5
+   ]
+  },
+  "ef1": {
+   "rules": 7.9,
+   "model": 47.3,
+   "delta": 39.4,
+   "ci95": [
+    32.5,
+    45.9
+   ]
+  },
+  "chrf": {
+   "rules": 86.0,
+   "model": 90.0,
+   "delta": 4.0,
+   "ci95": [
+    3.0,
+    5.1
+   ]
+  },
+  "flag_rate": 63.9,
+  "ready_rate": 36.1,
+  "unflagged": 60,
+  "unflagged_REAL": 0,
+  "unflagged_stale": 1,
+  "unflagged_german": 2,
+  "pass_rule": {
+   "unflagged_real": [
+    0.0,
+    true
+   ],
+   "unflagged_stale_untranslated": [
+    1.81,
+    true
+   ],
+   "exact_gain": [
+    10.8,
+    true
+   ],
+   "flag_rate": [
+    63.9,
+    true
+   ]
+  }
+ },
+ "needs_review": [],
+ "items_with_model_digits": 0,
+ "wall_secs": 25464.5,
+ "files_base": "root",
+ "run_records": "data/runs/8b_q4_k_m_fresh166_g3_final.jsonl",
+ "run_records_sha256": "8223f29d9225a238cb4f9a01eabd344e6d2ce236eed9fe3cc56884d2d7423853",
+ "labels_file": "eval/labels/m1_q4_k_m_fresh166.tsv",
+ "labels_sha256": "54955f154cc3f6c03316d2b983ed70196751b92ce42be1ed312c4c45b6faacc4",
+ "labels_n": 55,
+ "expires": null,
+ "expires_note": "a build certificate does not expire: the GGUF, the library version and the frozen code are hashed"
+}

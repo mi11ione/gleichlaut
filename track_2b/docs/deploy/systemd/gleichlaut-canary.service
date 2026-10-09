@@ -1,9 +1,11 @@
-# Monthly canary of the certified 70B endpoint (docs/operations.md §4): 40 suite items, exit 3 on drift.
+# Monthly canary of the certified 70B endpoint (docs/operations.md §4): 40 suite items, exit 3 on drift. Only for the 70B
+# lane (gleichlaut-month-70b): a build certificate of the local 8B needs no canary.
 # Exit codes -> alerts: docs/deploy/README.md. A non-zero exit fails the unit and starts gleichlaut-alert@.
 [Unit]
-Description=Gleichlaut canary of the certified endpoint
+Description=Gleichlaut canary of the certified 70B endpoint
 Wants=network-online.target
 After=network-online.target
+Before=gleichlaut-month-70b.service
 OnFailure=gleichlaut-alert@%n.service
 
 [Service]

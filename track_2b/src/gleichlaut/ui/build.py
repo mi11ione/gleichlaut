@@ -2,15 +2,21 @@
                                  [--audit data/audit/audit_20261006.json] [--hist DIR]
 
 One self-contained HTML review page (inline CSS/JS/data and embedded fonts; no request at view time; works from
-file://) with two tabs. "Register audit" (opens first with #audit): one row per finding of the pre-existing DE/FR/IT
-audit (ui/audit_view.py), the conflicting statements side by side, and the officer's two decisions (which language is
-right; Berichtigung / GÄL / none) with a note. "Drafts": a register of German changes on the left and the case under
+file://) with two tabs. "Register audit" (the landing view; #drafts or a draft's hash opens Drafts): one row per finding
+of the pre-existing DE/FR/IT audit (ui/audit_view.py), the conflicting statements side by side, and the officer's two
+decisions (which language is right; correct ex officio / raise with the holder in the triennial review / language
+service / no action / unclear) with a note and the reviewer's name, keyed by the finding's signature so they carry over
+to the next audit run; likely-equivalent number findings collapsed under their own heading, terminology findings with
+the old and new term and where BAG already corrected it. "Drafts": a register of German changes on the left and the case under
 review on the right (German change, FR/IT drafts editable in place, checks ledger with flag triage, decision). Diffs, number provenance and the plain-language guard findings are computed
 here in Python from the same per-item views the emitters use (gleichlaut.emit.load); the header figures come from
 score.score_run(run)["summary"]["all"] (counts only for --records) and, for the audit, eval/results/audit.json.
-Flag triage (emit/triage.py) only orders and collapses findings; pre-existing problems of the old text are a display
-notice ("ready (old text needs attention)"); neither changes a verdict or a metric. Reviewer decisions stay in the
-browser (localStorage) and leave it only through Export XLIFF 2.1 / Export JSON / Export CSV / Copy decisions;
+Flag triage (emit/triage.py, rules T1-T8) only orders and collapses findings and splits the flagged drafts into "to
+check" and "all findings probably fine" for display; pre-existing problems of the old text are a display notice ("ready
+(old text needs attention)"); neither changes a verdict or a metric. A flagged draft can be restarted from the old text
+plus the rules lane's number changes (core.gl2.rules); a family's open ready drafts can be accepted at once after an
+in-page confirmation. Reviewer decisions stay in the
+browser (localStorage) and leave it only through Export XLIFF 2.1 / XLIFF 1.2 / Export JSON / Export CSV / Copy decisions;
 Import decisions loads an exported JSON back.
 --fragment writes the page without <!doctype>/<html>/<head>/<body> (title + style + content + script) for publishing as
 a claude.ai artifact; the default output is a complete standalone HTML document."""
@@ -182,8 +188,14 @@ def _ledger(v, rules):
 
 
 def _old_text(v):
-    """Pre-existing problems of the old target text (display notice): [dict(k=kind, t=sentence, f=found language)]."""
-    return [dict(k=d.get("kind", "number"), t=d["text"], f=d.get("found")) for d in v.get("divergence") or []]
+    """Pre-existing problems of the old target text (display notice): [dict(k=kind, t=sentence, f=found language)]
+    (+ o / n / w: old term, new term, where BAG already corrected it, for kind 'terminology')."""
+    out = []
+    for d in v.get("divergence") or []:
+        o = dict(k=d.get("kind", "number"), t=d["text"], f=d.get("found"))
+        if o["k"] == "terminology": o.update(o=d.get("old"), n=d.get("new"), w=d.get("where") or [])
+        out.append(o)
+    return out
 
 
 def _xliff_notes(v, rules):
@@ -192,6 +204,7 @@ def _xliff_notes(v, rules):
     L = v["lang"]; N = [["verdict", "gleichlaut:verdict", "target", 1, xliff.nt(L, v["status"])]]
     if v.get("banner"): N.append(["divergence", "gleichlaut:divergence", "target", 1, v["banner"]])
     N.append(["change", "gleichlaut:change", "source", 2, xliff.nt(L, "change", t=xliff.change_summary(v))])
+    N.append(["product", "context:product", None, 5, xliff.product_note(v, L)])
     for i, (f, r) in enumerate(xliff.ordered_findings(v), 1):
         N.append([f"finding-{i}", "gleichlaut:finding", "target", 3 if r else 1, xliff.finding_text(f, L, r)])
     model = [t for _, _, t, who, _ in v["numbers"] if who == "model"]
@@ -199,12 +212,30 @@ def _xliff_notes(v, rules):
     return N
 
 
+FORMS = {"filmtabl", "tabl", "lactab", "kaps", "inj", "inf", "lös", "trockensub", "schmelztabl", "ret", "konz", "susp",
+         "gran", "plv", "supp", "creme", "salbe", "gel", "tropfen", "sirup", "amp", "brausetabl", "markierungsbesteck",
+         "inhal", "emuls", "pen", "fertspr", "fertpen", "durchstf", "lyophilisat", "dragées", "drag", "solution"}
+
+
+def brand(product):
+    """'Darzalex SC Inj Lös 1800 mg/15ml' -> 'Darzalex SC': the product name up to its dosage form or strength."""
+    out = []
+    for w in product.split():
+        if out and (w.lower().strip(".,") in FORMS or re.search(r"\d", w)): break
+        out.append(w)
+    return " ".join(out) or product
+
+
 def _family_labels(views):
-    """family id -> short label from its product names ('Darzalex, Darzalex SC' -> 'Darzalex')."""
+    """family id -> the product names of the family, most frequent first ('Darzalex, Darzalex SC'; '+n' beyond four)."""
     names = {}
     for v in views:
-        names.setdefault(v["family"], Counter())[re.split(r"\s+", v["product"].strip())[0]] += 1
-    return {f: " / ".join(n for n, _ in c.most_common(2)) for f, c in names.items()}
+        names.setdefault(v["family"], Counter())[brand(v["product"])] += 1
+    out = {}
+    for f, c in names.items():
+        ns = [n for n, _ in sorted(c.items(), key=lambda kv: (-kv[1], kv[0]))]
+        out[f] = ", ".join(ns[:4]) + (f" +{len(ns) - 4}" if len(ns) > 4 else "")
+    return out
 
 
 def data(run="fresh166", records=None, items=None, audit=audit_view.AUDIT, hist=None):
@@ -218,11 +249,12 @@ def data(run="fresh166", records=None, items=None, audit=audit_view.AUDIT, hist=
     for v in views:
         g = groups.setdefault(v["pair"], dict(pair=v["pair"], product=v["product"], code=v["cud_id"], snap_old=_date(v["snap_old"]),
                                               snap_new=_date(v["snap_new"]), family=v["family"], de=diff(v["de_old"], v["de_new"]),
-                                              ch=segment.changed(v["de_old"], v["de_new"]), items={}))
+                                              ch=segment.changed(v["de_old"], v["de_new"]), sn=segment.number_spans(v["de_new"]),
+                                              brand=brand(v["product"]), items={}))
         g["sum"] = summary(g["de"])
         corr = next((f for f in v["findings"] if f["gid"] == "corr"), None)
         rules = triage.triage(v)
-        it = dict(key=v["key"], lang=v["lang"], status=v["status"], rule_only=v["rule_only"], cud=v["cud_id"],
+        it = dict(key=v["key"], lang=v["lang"], status=v["status"], lvl=triage.level(v), rule_only=v["rule_only"], cud=v["cud_id"],
                   banner=v.get("banner"), corr=corr["text"] if corr else None, corr_note=explain.corr_note(v["lang"]) if corr else None,
                   old=_old_text(v), xn=_xliff_notes(v, rules),
                   findings=[[f["gname"], f["text"], f["corrects"], r] for f, r in zip(v["findings"], rules) if f["gid"] != "corr"])
@@ -231,12 +263,16 @@ def data(run="fresh166", records=None, items=None, audit=audit_view.AUDIT, hist=
         if v["status"] == "human":
             r = v.get("change_ratio")
             it.update(segs=[["e", v["tgt_old"]]], ledger=[], ratio=(round(100 * float(r)) if r not in (None, "") else None),
-                      reason=v.get("reason") or "", bd=[[a, b, 0, 0] for a, b in sentences(v["de_new"])], nm=[])
+                      reason=v.get("reason") or "", bd=[list(b) for b in segment.beads(v["de_new"])], nm=[])
         else:
             nm = [[a, b, who, slot] for a, b, _, who, slot in v["numbers"]]
             it.update(segs=diff(v["tgt_old"], v["draft"], v["numbers"]), ledger=_ledger(v, rules),
                       model_numbers=sum(n[3] == "model" for n in v["numbers"]), nm=nm,
-                      bd=[list(x) for x in segment.keep_whole(segment.align(v["de_new"], v["draft"]), [(a, b) for a, b, *_ in nm], 1)])
+                      bd=[list(x) for x in segment.beads(v["de_new"], v["draft"], [(a, b) for a, b, *_ in nm])])
+            if v["status"] == "flagged":                 # "start from the old text": old target + the rules lane's number changes
+                rt, done = core.gl2.rules(v["de_old"], v["de_new"], v["tgt_old"], v["lang"])
+                ops = difflib.SequenceMatcher(None, v["tgt_old"], rt, autojunk=False).get_opcodes()
+                it["rt"] = [[[i1, i2, rt[j1:j2]] for op, i1, i2, j1, j2 in ops if op != "equal"], sum(1 for d in done if d[2])]
             if I: it["exact"] = core.lock.norm(v["draft"]) == core.lock.norm(I[v["key"]].get("tgt_new", ""))
         g["items"][v["lang"]] = it
     fam = Counter(v["family"] for v in views); flab = _family_labels(views)
@@ -249,6 +285,8 @@ def data(run="fresh166", records=None, items=None, audit=audit_view.AUDIT, hist=
     G = list(groups.values())
     counts["to_check"] = sum(it["tri"][0] for g in G for it in g["items"].values())
     counts["probably_fine"] = sum(it["tri"][1] for g in G for it in g["items"].values())
+    counts["lvl_fine"] = sum(it["lvl"] == "fine" for g in G for it in g["items"].values())
+    counts["lvl_check"] = sum(it["lvl"] == "check" for g in G for it in g["items"].values())
     if I: counts["exact"] = sum(1 for g in G for it in g["items"].values() if it.get("exact"))
     m = {k: meta[k] for k in ("run", "what", "stack", "model", "pipeline", "items_sha256", "run_sha256", "custom", "has_tgt_new")}
     m["model"] = model_label(meta)
@@ -256,6 +294,8 @@ def data(run="fresh166", records=None, items=None, audit=audit_view.AUDIT, hist=
     xn = {L: dict(prev_de=xliff.NOTE[L]["prev_de"], prev_tgt=xliff.NOTE[L]["prev_tgt"], product=xliff.NOTE[L]["product"],
                   about=xliff.nt(L, "about"), states=xliff.nt(L, "states"), prov=xliff.provenance_note(meta, L),
                   review=xliff.NOTE[L]["review"], reviewed=xliff.NOTE[L]["reviewed"],
+                  about12=xliff.nt(L, "about12"), states12=xliff.nt(L, "states12"), code_number=xliff.nt(L, "code_number"),
+                  changed=xliff.nt(L, "changed"),
                   dec={k: xliff.NOTE[L][k] for k in ("accept", "accept-edited", "send-back")}) for L in ("fr", "it")}
     return dict(meta=m, all=summ["all"] if summ else None, groups=G, xn=xn,
                 families=[[f, n, flab.get(f, f)] for f, n in sorted(fam.items(), key=lambda kv: (-kv[1], kv[0]))], counts=counts,
@@ -305,7 +345,7 @@ def main(argv=None):
     au = D.get("audit")
     print(f"ui: {c['items']} drafts in {c['changes']} German changes ({c['ready']} ready, {c['flagged']} flagged"
           + (f", {c['human']} routed to a translator" if c["human"] else "") + f"; flag findings {c['to_check']} to check, "
-          f"{c['probably_fine']} probably fine)" + (f"; audit {len(au['rows'])} findings" + (" (snippets from the SL snapshot)" if au["meta"]["hist"] else "") if au else "")
+          f"{c['probably_fine']} probably fine; flagged drafts {c['lvl_check']} to check, {c['lvl_fine']} with every finding probably fine)" + (f"; audit {len(au['rows'])} findings" + (" (snippets from the SL snapshot)" if au["meta"]["hist"] else "") if au else "")
           + f" -> {p} ({os.path.getsize(p) // 1024} KB)")
 
 
