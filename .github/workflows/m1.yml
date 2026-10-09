@@ -1,0 +1,60 @@
+# M1/M2 (eval/prereg/PREREG.md R1): the shipped SL pipeline with an Apertus 8B GGUF on the fresh 166, on CPU runners.
+# Manual trigger only. Shards run in parallel; each shard resumes from its artifact if re-run.
+name: m1-8b-gguf
+on:
+  workflow_dispatch:
+    inputs:
+      build: { description: "q4_k_m or q8_0", required: true, default: "q4_k_m" }
+      shards: { description: "number of shards", required: true, default: "8" }
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs: { idx: "${{ steps.m.outputs.idx }}" }
+    steps:
+      - id: m
+        run: echo "idx=$(python3 -c "import json;print(json.dumps(list(range(${{ inputs.shards }}))))")" >> $GITHUB_OUTPUT
+  shard:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy: { fail-fast: false, matrix: { k: "${{ fromJson(needs.plan.outputs.idx) }}" } }
+    defaults: { run: { working-directory: track_2b } }
+    env:
+      URL_q4_k_m: https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf
+      SHA_q4_k_m: a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299
+      URL_q8_0: https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf
+      SHA_q8_0: dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - uses: actions/cache@v4
+        with: { path: track_2b/models, key: "gguf-${{ inputs.build }}" }
+      - name: fetch and verify GGUF
+        run: |
+          mkdir -p models; U=URL_${{ inputs.build }}; S=SHA_${{ inputs.build }}; F=models/${{ inputs.build }}.gguf
+          [ -f $F ] || curl -sSL -A gleichlaut/0.1 -o $F "${!U}"
+          echo "${!S}  $F" | sha256sum -c -
+      - run: CMAKE_ARGS="-DGGML_NATIVE=OFF" pip install -r requirements.txt -r requirements-offline.txt
+      - name: run shard
+        run: PYTHONPATH=src python -m gleichlaut.m1 run --gguf models/${{ inputs.build }}.gguf --build ${{ inputs.build }} --shard ${{ matrix.k }} --of ${{ inputs.shards }} --out out/m1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: "m1-${{ inputs.build }}-${{ matrix.k }}", path: track_2b/out/m1 }
+  gather:
+    needs: shard
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: track_2b } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - uses: actions/download-artifact@v4
+        with: { pattern: "m1-${{ inputs.build }}-*", path: track_2b/out/m1parts }
+      - run: PYTHONPATH=src python -m gleichlaut.m1 gather --build ${{ inputs.build }} --in out/m1parts/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: "m1-${{ inputs.build }}-merged"
+          path: |
+            track_2b/data/runs/8b_${{ inputs.build }}_fresh166_g3_final.jsonl
+            track_2b/eval/labels/worklist_8b_${{ inputs.build }}_fresh166.json

@@ -79,8 +79,9 @@ class OpenAI:
                 if e.code not in (429, 502, 503, 504) or k == 7: raise
                 time.sleep(min(120, 10 * (k + 1)))
         served = d.get("model", "")
-        if served and served.split("/")[-1].lower() != self.model.split("/")[-1].lower():
-            raise RuntimeError(f"endpoint served {served!r} for {self.model!r}: refusing the output")
+        if served and served.split("/")[-1].lower() != self.model.split("/")[-1].lower() and "apertus" not in served.lower():
+            # the measured hazard: a provider silently answering an Apertus request from another model
+            raise RuntimeError(f"endpoint served {served!r} for {self.model!r}: not an Apertus model, refusing the output")
         text = d["choices"][0]["message"]["content"]
         u = d.get("usage", {})
         meta = dict(prompt_tokens=u.get("prompt_tokens"), completion_tokens=u.get("completion_tokens"),
@@ -161,5 +162,6 @@ class LlamaCpp:
 
 
 def lang_of_prompt(prompt):
-    m = re.search(r"Apply exactly the same amendment to the (French|Italian) version", prompt)
+    """target language of an SL or Fedlex drafting prompt (both name it in English before any target text)."""
+    m = re.search(r"\b(French|Italian)\b", prompt)
     return {"French": "fr", "Italian": "it"}[m.group(1)] if m else "fr"

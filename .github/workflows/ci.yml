@@ -1,0 +1,30 @@
+# Every push: tests, the offline replay, the claims check, the data budget, and the judges' exact command
+# (`make run` from track_2b/ on a clean checkout, in Docker, on CPU).
+name: ci
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: track_2b } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r requirements.txt
+      - name: data/ budget (<= 100 MB)
+        run: test $(du -sk data | cut -f1) -le 102400 && du -sh data
+      - name: tests
+        run: PYTHONPATH=src python tests/run.py
+      - name: claims (every number in README / report / notes -> results file)
+        run: python tools/claims.py --scan README.md technical_report.md docs/notes-field.md
+      - name: no secrets in the tree
+        run: "! git grep -I -n -E '(sk-[A-Za-z0-9]{20,}|hf_[A-Za-z0-9]{30,}|BEGIN [A-Z ]*PRIVATE KEY|publicai\\.key)' -- . ':!.github'"
+  make-run:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: track_2b } }
+    steps:
+      - uses: actions/checkout@v4
+      - name: make run (clean checkout, Docker, CPU, no model endpoint -> --network none)
+        run: time make run
+      - uses: actions/upload-artifact@v4
+        with: { name: make-run-out, path: track_2b/out, retention-days: 14 }

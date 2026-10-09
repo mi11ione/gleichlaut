@@ -1,0 +1,2 @@
+# runtime (base image): XSD validation of the XLIFF output. Everything else is the Python standard library.
+lxml==6.0.2

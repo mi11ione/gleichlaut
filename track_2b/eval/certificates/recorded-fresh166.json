@@ -1,0 +1,81 @@
+{
+ "name": "recorded-fresh166",
+ "date": "2026-10-09T18:06:41+00:00",
+ "endpoint": "recorded responses (data/cache)",
+ "model_requested": "swiss-ai/apertus-v1.5-70b",
+ "models_served": [
+  "swiss-ai/apertus-v1.5-70b (as recorded)"
+ ],
+ "seeds": [
+  "None"
+ ],
+ "suite": {
+  "items": "items/items_fresh.json",
+  "n": 166,
+  "sha256": "157ca97a6ccf207e3f570e66a79b4da543cab69f3bb88b01da5bc741a5df9b02"
+ },
+ "freeze_sha256": "2ae405fe07e3b3b14bd8b23f9e21c5ee90da9d8c89f67512671a05cb8b5b8abd",
+ "pass_rule": {
+  "unflagged_real_max_pct": 1.0,
+  "unflagged_stale_untranslated_max_pct": 2.0,
+  "exact_gain_min_pts": 5.0,
+  "flag_rate_max_pct": 70.0
+ },
+ "status": "PASS",
+ "metrics": {
+  "exact": {
+   "rules": 6.0,
+   "model": 17.5,
+   "delta": 11.4,
+   "ci95": [
+    4.8,
+    18.7
+   ]
+  },
+  "ef1": {
+   "rules": 7.9,
+   "model": 62.0,
+   "delta": 54.1,
+   "ci95": [
+    46.8,
+    61.2
+   ]
+  },
+  "chrf": {
+   "rules": 86.0,
+   "model": 92.8,
+   "delta": 6.8,
+   "ci95": [
+    5.4,
+    8.2
+   ]
+  },
+  "flag_rate": 60.2,
+  "ready_rate": 39.8,
+  "unflagged": 66,
+  "unflagged_REAL": 0,
+  "unflagged_stale": 0,
+  "unflagged_german": 0,
+  "pass_rule": {
+   "unflagged_real": [
+    0.0,
+    true
+   ],
+   "unflagged_stale_untranslated": [
+    0.0,
+    true
+   ],
+   "exact_gain": [
+    11.4,
+    true
+   ],
+   "flag_rate": [
+    60.2,
+    true
+   ]
+  }
+ },
+ "needs_review": [],
+ "items_with_model_digits": 0,
+ "wall_secs": 2.3
+}

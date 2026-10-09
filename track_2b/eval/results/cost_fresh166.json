@@ -1,0 +1,10 @@
+{
+ "completion_tokens": 67278,
+ "items": 166,
+ "model_secs": 2847.4,
+ "model_secs_per_item": 17.15,
+ "prompt_tokens": 321631,
+ "unique_calls": 285,
+ "usd": 0.4602,
+ "usd_per_item": 0.00277
+}

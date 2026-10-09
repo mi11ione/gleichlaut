@@ -1,0 +1,1580 @@
+{
+ "source": "spikes/gleichschritt/results.md (8 Oct 2026); model Apertus v1.5 8B text, MLX 4-bit DWQ (m1rkocasu/Apertus-v1.5-8B-text-MLX-4bit-DWQ), greedy, M2 Air. Not the GGUF that `make run` ships.",
+ "command": "PYTHONPATH=src python3 -m gleichlaut.fed.score",
+ "inputs": {
+  "data/items/fedlex_items.json": "2055820d111f87187c13d9fdff21d141efdfc117db1437eb4f1d088faabc73ad",
+  "data/items/fedlex_rm_contamination.json": "8b0330f1a0b127bf4d7d60158062ff996c4097fd8bfd40ca286e519ad2a75154",
+  "data/runs/8b_dwq_fedlex_A.jsonl": "a211e116357a6296f55f884628744ab95f0dbf1581b26d76037c20cbacb33a77",
+  "data/runs/8b_dwq_fedlex_B.jsonl": "9aa645bd104f3208493adbc6053a01277e74d114c1355327e49bd3095a531239"
+ },
+ "research_scorer": {
+  "file": "src/gleichlaut/fed/research/score.py",
+  "sha256": "606ee09929df1a99d5776afc8b3d324681b63e4393c1be63a14e64896fd6a8ea"
+ },
+ "scores_json_sha256": "43b170708d4c3a6b94d85642cd639261c7825ddd5a9630ecd3d71b5ba1c33f23",
+ "scores_json_identical_to_research": true,
+ "headline": {
+  "FR/IT exact, shipped lane (A+code)": 50.0,
+  "FR/IT exact (A)": 50.0,
+  "FR/IT exact without SEFRI (A)": 28.0,
+  "FR exact (A)": 50.0,
+  "IT exact (A)": 50.0,
+  "code lane alone FR/IT exact": 35.0,
+  "free translation (B) FR/IT exact": 0.0,
+  "free translation (B) FR lexicon flips": 20.0,
+  "free translation (B) IT lexicon flips": 23.3,
+  "FR/IT flagged (A)": 12.5,
+  "FR/IT unflagged lexicon flips (A)": 0.8,
+  "real unflagged flips, by hand (A, FR/IT/RM)": "0/150 (hand adjudication of the 10 flip hits; not recomputable)",
+  "s/paragraph A, A+code (FR/IT)": [
+   6.7,
+   4.2
+  ],
+  "RM exact (A), exploratory": 26.7
+ },
+ "summary": {
+  "fr|A": {
+   "n": 60,
+   "exact": 0.5,
+   "exact_strict": 0.5,
+   "edit_f1": 69.49571620204566,
+   "chrf": 89.08414562203279,
+   "zero_outside": 0.9,
+   "outside_chars_mean": 4.683333333333334,
+   "flagged": 0.16666666666666666,
+   "flips": 0.06666666666666667,
+   "unflagged_flips": 0.0,
+   "exact_unflagged": 0.56,
+   "n_unflagged": 50,
+   "secs": 6.767110256354014
+  },
+  "fr|A+code": {
+   "n": 60,
+   "exact": 0.5,
+   "exact_strict": 0.5,
+   "edit_f1": 69.49571620204566,
+   "chrf": 89.08414562203279,
+   "zero_outside": 0.9,
+   "outside_chars_mean": 4.683333333333334,
+   "flagged": 0.15,
+   "flips": 0.06666666666666667,
+   "unflagged_flips": 0.016666666666666666,
+   "exact_unflagged": 0.5490196078431373,
+   "n_unflagged": 51,
+   "secs": 4.192855906486511
+  },
+  "fr|A-asrun": {
+   "n": 60,
+   "exact": 0.5,
+   "exact_strict": 0.43333333333333335,
+   "edit_f1": 69.49571620204566,
+   "chrf": 89.08414562203279,
+   "zero_outside": 0.9,
+   "outside_chars_mean": 4.683333333333334,
+   "flagged": 0.23333333333333334,
+   "flips": 0.06666666666666667,
+   "unflagged_flips": 0.0,
+   "exact_unflagged": 0.5217391304347826,
+   "n_unflagged": 46,
+   "secs": 7.2151103734970095
+  },
+  "fr|B": {
+   "n": 60,
+   "exact": 0.0,
+   "exact_strict": 0.0,
+   "edit_f1": 32.871435156720764,
+   "chrf": 62.97864261547297,
+   "zero_outside": 0.11666666666666667,
+   "outside_chars_mean": 65.23333333333333,
+   "flagged": 0.0,
+   "flips": 0.2,
+   "unflagged_flips": 0.2,
+   "exact_unflagged": 0.0,
+   "n_unflagged": 60,
+   "secs": 4.519296391805013
+  },
+  "fr+it|A": {
+   "n": 120,
+   "exact": 0.5,
+   "exact_strict": 0.5,
+   "edit_f1": 72.68287823443953,
+   "chrf": 89.4295361167838,
+   "zero_outside": 0.9166666666666666,
+   "outside_chars_mean": 3.225,
+   "flagged": 0.125,
+   "flips": 0.05,
+   "unflagged_flips": 0.008333333333333333,
+   "exact_unflagged": 0.5428571428571428,
+   "n_unflagged": 105,
+   "secs": 6.743420221408209
+  },
+  "fr+it|A+code": {
+   "n": 120,
+   "exact": 0.5,
+   "exact_strict": 0.5,
+   "edit_f1": 72.68287823443953,
+   "chrf": 89.4295361167838,
+   "zero_outside": 0.9166666666666666,
+   "outside_chars_mean": 3.225,
+   "flagged": 0.10833333333333334,
+   "flips": 0.05,
+   "unflagged_flips": 0.016666666666666666,
+   "exact_unflagged": 0.5420560747663551,
+   "n_unflagged": 107,
+   "secs": 4.170716693003972
+  },
+  "fr+it|A-asrun": {
+   "n": 120,
+   "exact": 0.5,
+   "exact_strict": 0.2833333333333333,
+   "edit_f1": 72.68287823443953,
+   "chrf": 89.4295361167838,
+   "zero_outside": 0.9166666666666666,
+   "outside_chars_mean": 3.225,
+   "flagged": 0.20833333333333334,
+   "flips": 0.05,
+   "unflagged_flips": 0.008333333333333333,
+   "exact_unflagged": 0.5368421052631579,
+   "n_unflagged": 95,
+   "secs": 7.546433681249619
+  },
+  "fr+it|B": {
+   "n": 120,
+   "exact": 0.0,
+   "exact_strict": 0.0,
+   "edit_f1": 31.81339438568599,
+   "chrf": 60.193967699380224,
+   "zero_outside": 0.10833333333333334,
+   "outside_chars_mean": 73.7,
+   "flagged": 0.0,
+   "flips": 0.21666666666666667,
+   "unflagged_flips": 0.21666666666666667,
+   "exact_unflagged": 0.0,
+   "n_unflagged": 120,
+   "secs": 4.605577882130941
+  },
+  "fr+it-noSEFRI|A": {
+   "n": 82,
+   "exact": 0.2804878048780488,
+   "exact_strict": 0.2804878048780488,
+   "edit_f1": 60.15922560053478,
+   "chrf": 84.56086686035539,
+   "zero_outside": 0.8780487804878049,
+   "outside_chars_mean": 4.719512195121951,
+   "flagged": 0.18292682926829268,
+   "flips": 0.07317073170731707,
+   "unflagged_flips": 0.012195121951219513,
+   "exact_unflagged": 0.29850746268656714,
+   "n_unflagged": 67,
+   "secs": 6.995973842899974
+  },
+  "fr+it-noSEFRI|A+code": {
+   "n": 82,
+   "exact": 0.2804878048780488,
+   "exact_strict": 0.2804878048780488,
+   "edit_f1": 60.15922560053478,
+   "chrf": 84.56086686035539,
+   "zero_outside": 0.8780487804878049,
+   "outside_chars_mean": 4.719512195121951,
+   "flagged": 0.15853658536585366,
+   "flips": 0.07317073170731707,
+   "unflagged_flips": 0.024390243902439025,
+   "exact_unflagged": 0.30434782608695654,
+   "n_unflagged": 69,
+   "secs": 5.653642520671937
+  },
+  "fr+it-noSEFRI|A-asrun": {
+   "n": 82,
+   "exact": 0.2804878048780488,
+   "exact_strict": 0.1951219512195122,
+   "edit_f1": 60.15922560053478,
+   "chrf": 84.56086686035539,
+   "zero_outside": 0.8780487804878049,
+   "outside_chars_mean": 4.719512195121951,
+   "flagged": 0.2926829268292683,
+   "flips": 0.07317073170731707,
+   "unflagged_flips": 0.012195121951219513,
+   "exact_unflagged": 0.25862068965517243,
+   "n_unflagged": 58,
+   "secs": 8.082568517545374
+  },
+  "fr+it-noSEFRI|B": {
+   "n": 82,
+   "exact": 0.0,
+   "exact_strict": 0.0,
+   "edit_f1": 34.91010263980135,
+   "chrf": 58.50284768353029,
+   "zero_outside": 0.15853658536585366,
+   "outside_chars_mean": 83.95121951219512,
+   "flagged": 0.0,
+   "flips": 0.3170731707317073,
+   "unflagged_flips": 0.3170731707317073,
+   "exact_unflagged": 0.0,
+   "n_unflagged": 82,
+   "secs": 4.484189655722641
+  },
+  "it|A": {
+   "n": 60,
+   "exact": 0.5,
+   "exact_strict": 0.5,
+   "edit_f1": 75.87004026683333,
+   "chrf": 89.77492661153475,
+   "zero_outside": 0.9333333333333333,
+   "outside_chars_mean": 1.7666666666666666,
+   "flagged": 0.08333333333333333,
+   "flips": 0.03333333333333333,
+   "unflagged_flips": 0.016666666666666666,
+   "exact_unflagged": 0.5272727272727272,
+   "n_unflagged": 55,
+   "secs": 6.719730186462402
+  },
+  "it|A+code": {
+   "n": 60,
+   "exact": 0.5,
+   "exact_strict": 0.5,
+   "edit_f1": 75.87004026683333,
+   "chrf": 89.77492661153475,
+   "zero_outside": 0.9333333333333333,
+   "outside_chars_mean": 1.7666666666666666,
+   "flagged": 0.06666666666666667,
+   "flips": 0.03333333333333333,
+   "unflagged_flips": 0.016666666666666666,
+   "exact_unflagged": 0.5357142857142857,
+   "n_unflagged": 56,
+   "secs": 4.148577479521434
+  },
+  "it|A-asrun": {
+   "n": 60,
+   "exact": 0.5,
+   "exact_strict": 0.13333333333333333,
+   "edit_f1": 75.87004026683333,
+   "chrf": 89.77492661153475,
+   "zero_outside": 0.9333333333333333,
+   "outside_chars_mean": 1.7666666666666666,
+   "flagged": 0.18333333333333332,
+   "flips": 0.03333333333333333,
+   "unflagged_flips": 0.016666666666666666,
+   "exact_unflagged": 0.5510204081632653,
+   "n_unflagged": 49,
+   "secs": 7.877756989002227
+  },
+  "it|B": {
+   "n": 60,
+   "exact": 0.0,
+   "exact_strict": 0.0,
+   "edit_f1": 30.755353614651224,
+   "chrf": 57.40929278328751,
+   "zero_outside": 0.1,
+   "outside_chars_mean": 82.16666666666667,
+   "flagged": 0.0,
+   "flips": 0.23333333333333334,
+   "unflagged_flips": 0.23333333333333334,
+   "exact_unflagged": 0.0,
+   "n_unflagged": 60,
+   "secs": 4.691859372456869
+  },
+  "rm|A": {
+   "n": 30,
+   "exact": 0.26666666666666666,
+   "exact_strict": 0.26666666666666666,
+   "edit_f1": 65.87368358108723,
+   "chrf": 91.24462286833116,
+   "zero_outside": 0.8666666666666667,
+   "outside_chars_mean": 2.5,
+   "flagged": 0.16666666666666666,
+   "flips": 0.13333333333333333,
+   "unflagged_flips": 0.03333333333333333,
+   "exact_unflagged": 0.32,
+   "n_unflagged": 25,
+   "secs": 8.469938135147094
+  },
+  "rm|A+code": {
+   "n": 30,
+   "exact": 0.26666666666666666,
+   "exact_strict": 0.26666666666666666,
+   "edit_f1": 65.87368358108723,
+   "chrf": 91.24462286833116,
+   "zero_outside": 0.8666666666666667,
+   "outside_chars_mean": 2.5,
+   "flagged": 0.16666666666666666,
+   "flips": 0.13333333333333333,
+   "unflagged_flips": 0.03333333333333333,
+   "exact_unflagged": 0.32,
+   "n_unflagged": 25,
+   "secs": 6.925238577524821
+  },
+  "rm|A-asrun": {
+   "n": 30,
+   "exact": 0.26666666666666666,
+   "exact_strict": 0.26666666666666666,
+   "edit_f1": 65.87368358108723,
+   "chrf": 91.24462286833116,
+   "zero_outside": 0.8666666666666667,
+   "outside_chars_mean": 2.5,
+   "flagged": 0.16666666666666666,
+   "flips": 0.13333333333333333,
+   "unflagged_flips": 0.03333333333333333,
+   "exact_unflagged": 0.32,
+   "n_unflagged": 25,
+   "secs": 8.469938135147094
+  },
+  "rm|B": {
+   "n": 30,
+   "exact": 0.0,
+   "exact_strict": 0.0,
+   "edit_f1": 38.63767971843781,
+   "chrf": 69.75576957712748,
+   "zero_outside": 0.03333333333333333,
+   "outside_chars_mean": 64.8,
+   "flagged": 0.0,
+   "flips": 0.23333333333333334,
+   "unflagged_flips": 0.23333333333333334,
+   "exact_unflagged": 0.0,
+   "n_unflagged": 30,
+   "secs": 5.451862502098083
+  },
+  "rm-clean|A": {
+   "n": 11,
+   "exact": 0.36363636363636365,
+   "exact_strict": 0.36363636363636365,
+   "edit_f1": 57.072057473127,
+   "chrf": 90.29442700090972,
+   "zero_outside": 0.9090909090909091,
+   "outside_chars_mean": 0.5454545454545454,
+   "flagged": 0.18181818181818182,
+   "flips": 0.09090909090909091,
+   "unflagged_flips": 0.0,
+   "exact_unflagged": 0.4444444444444444,
+   "n_unflagged": 9,
+   "secs": 9.17810845375061
+  },
+  "rm-clean|A+code": {
+   "n": 11,
+   "exact": 0.36363636363636365,
+   "exact_strict": 0.36363636363636365,
+   "edit_f1": 57.072057473127,
+   "chrf": 90.29442700090972,
+   "zero_outside": 0.9090909090909091,
+   "outside_chars_mean": 0.5454545454545454,
+   "flagged": 0.18181818181818182,
+   "flips": 0.09090909090909091,
+   "unflagged_flips": 0.0,
+   "exact_unflagged": 0.4444444444444444,
+   "n_unflagged": 9,
+   "secs": 5.897351004860618
+  },
+  "rm-clean|A-asrun": {
+   "n": 11,
+   "exact": 0.36363636363636365,
+   "exact_strict": 0.36363636363636365,
+   "edit_f1": 57.072057473127,
+   "chrf": 90.29442700090972,
+   "zero_outside": 0.9090909090909091,
+   "outside_chars_mean": 0.5454545454545454,
+   "flagged": 0.18181818181818182,
+   "flips": 0.09090909090909091,
+   "unflagged_flips": 0.0,
+   "exact_unflagged": 0.4444444444444444,
+   "n_unflagged": 9,
+   "secs": 9.17810845375061
+  },
+  "rm-clean|B": {
+   "n": 11,
+   "exact": 0.0,
+   "exact_strict": 0.0,
+   "edit_f1": 18.87189650100892,
+   "chrf": 64.37837084881423,
+   "zero_outside": 0.09090909090909091,
+   "outside_chars_mean": 86.63636363636364,
+   "flagged": 0.0,
+   "flips": 0.36363636363636365,
+   "unflagged_flips": 0.36363636363636365,
+   "exact_unflagged": 0.0,
+   "n_unflagged": 11,
+   "secs": 6.5479958707636055
+  },
+  "rm-contam|A": {
+   "n": 11,
+   "exact": 0.0,
+   "exact_strict": 0.0,
+   "edit_f1": 55.86309284585147,
+   "chrf": 92.1799133351258,
+   "zero_outside": 0.8181818181818182,
+   "outside_chars_mean": 0.7272727272727273,
+   "flagged": 0.18181818181818182,
+   "flips": 0.2727272727272727,
+   "unflagged_flips": 0.09090909090909091,
+   "exact_unflagged": 0.0,
+   "n_unflagged": 9,
+   "secs": 10.836216753179377
+  },
+  "rm-contam|A+code": {
+   "n": 11,
+   "exact": 0.0,
+   "exact_strict": 0.0,
+   "edit_f1": 55.86309284585147,
+   "chrf": 92.1799133351258,
+   "zero_outside": 0.8181818181818182,
+   "outside_chars_mean": 0.7272727272727273,
+   "flagged": 0.18181818181818182,
+   "flips": 0.2727272727272727,
+   "unflagged_flips": 0.09090909090909091,
+   "exact_unflagged": 0.0,
+   "n_unflagged": 9,
+   "secs": 10.836216753179377
+  },
+  "rm-contam|A-asrun": {
+   "n": 11,
+   "exact": 0.0,
+   "exact_strict": 0.0,
+   "edit_f1": 55.86309284585147,
+   "chrf": 92.1799133351258,
+   "zero_outside": 0.8181818181818182,
+   "outside_chars_mean": 0.7272727272727273,
+   "flagged": 0.18181818181818182,
+   "flips": 0.2727272727272727,
+   "unflagged_flips": 0.09090909090909091,
+   "exact_unflagged": 0.0,
+   "n_unflagged": 9,
+   "secs": 10.836216753179377
+  },
+  "rm-contam|B": {
+   "n": 11,
+   "exact": 0.0,
+   "exact_strict": 0.0,
+   "edit_f1": 34.35712899372047,
+   "chrf": 72.65638575467774,
+   "zero_outside": 0.0,
+   "outside_chars_mean": 80.36363636363636,
+   "flagged": 0.0,
+   "flips": 0.2727272727272727,
+   "unflagged_flips": 0.2727272727272727,
+   "exact_unflagged": 0.0,
+   "n_unflagged": 11,
+   "secs": 6.3238442594354805
+  },
+  "rm-short|A": {
+   "n": 8,
+   "exact": 0.5,
+   "exact_strict": 0.5,
+   "edit_f1": 91.74048174048175,
+   "chrf": 91.26511779419303,
+   "zero_outside": 0.875,
+   "outside_chars_mean": 7.625,
+   "flagged": 0.125,
+   "flips": 0.0,
+   "unflagged_flips": 0.0,
+   "exact_unflagged": 0.5714285714285714,
+   "n_unflagged": 7,
+   "secs": 4.242570847272873
+  },
+  "rm-short|A+code": {
+   "n": 8,
+   "exact": 0.5,
+   "exact_strict": 0.5,
+   "edit_f1": 91.74048174048175,
+   "chrf": 91.26511779419303,
+   "zero_outside": 0.875,
+   "outside_chars_mean": 7.625,
+   "flagged": 0.125,
+   "flips": 0.0,
+   "unflagged_flips": 0.0,
+   "exact_unflagged": 0.5714285714285714,
+   "n_unflagged": 7,
+   "secs": 2.960988998413086
+  },
+  "rm-short|A-asrun": {
+   "n": 8,
+   "exact": 0.5,
+   "exact_strict": 0.5,
+   "edit_f1": 91.74048174048175,
+   "chrf": 91.26511779419303,
+   "zero_outside": 0.875,
+   "outside_chars_mean": 7.625,
+   "flagged": 0.125,
+   "flips": 0.0,
+   "unflagged_flips": 0.0,
+   "exact_unflagged": 0.5714285714285714,
+   "n_unflagged": 7,
+   "secs": 4.242570847272873
+  },
+  "rm-short|B": {
+   "n": 8,
+   "exact": 0.0,
+   "exact_strict": 0.0,
+   "edit_f1": 71.70138888888889,
+   "chrf": 73.16134558442648,
+   "zero_outside": 0.0,
+   "outside_chars_mean": 13.375,
+   "flagged": 0.0,
+   "flips": 0.0,
+   "unflagged_flips": 0.0,
+   "exact_unflagged": 0.0,
+   "n_unflagged": 8,
+   "secs": 2.7457042038440704
+  }
+ },
+ "code_lane": {
+  "fr": {
+   "n": 60,
+   "applicable": 24,
+   "produced": 24,
+   "exact": 21
+  },
+  "it": {
+   "n": 60,
+   "applicable": 24,
+   "produced": 24,
+   "exact": 21
+  },
+  "rm": {
+   "n": 30,
+   "applicable": 8,
+   "produced": 8,
+   "exact": 7
+  }
+ },
+ "gold_fit": {
+  "fr": [
+   45,
+   60
+  ],
+  "it": [
+   48,
+   60
+  ],
+  "rm": [
+   15,
+   30
+  ]
+ },
+ "derived": {
+  "FR/IT exact (A)": "60/120",
+  "FR/IT exact without SEFRI (A)": "23/82",
+  "SEFRI cluster items / exact": "37/38",
+  "RM exact (A)": "8/30",
+  "FR/IT code lane applicable": 48,
+  "FR/IT code lane exact = A exact on those": "42/48 = 42/48",
+  "FR/IT code-lane exact items where A is also exact": "42/42",
+  "FR/IT model-lane exact (A)": "18/72",
+  "FR/IT model-lane exact that are SEFRI": 6,
+  "RM model-written exact": "1/22",
+  "RM federal exact (A)": "7/10",
+  "RM federal exact by code lane": 6,
+  "RM Graubuenden exact (A)": "1/20",
+  "RM Graubuenden model-written exact": "0/19",
+  "RM code-lane exact items where A is also exact": "7/7",
+  "code lane FR": "21/60",
+  "code lane IT": "21/60",
+  "code lane RM": "7/30",
+  "code lane applicable FR/IT/RM": "24/24/8",
+  "gold inside lock windows FR/IT/RM": "45/60 48/60 15/30",
+  "FR/IT unflagged exact (A)": "57/105",
+  "RM unflagged exact (A)": "8/25",
+  "FR/IT flagged exact (A)": "3/15",
+  "A flip hits (FR/IT + RM), adjudicated by hand": 10,
+  "A unflagged flip hits FR/IT / RM": "1/120 1/30",
+  "retries / fixed / retry identical to first output (corrected lock)": "14 / 0 / 11",
+  "edit-F1 A-B FR/IT, of the rounded table values": "+40.9",
+  "edit-F1 A-B RM, of the rounded table values": "+27.3",
+  "A-asrun FR/IT flagged": "21%",
+  "A-asrun IT strict exact": "13%",
+  "A+code FR/IT exact, s/paragraph": "50.0% 4.2",
+  "B exact FR/IT": "0.0%"
+ },
+ "notes": {
+  "as-run retries": "The Air run itself retried 25 items (0 fixed, 22 identical to the first output; raw/gleich_air.log: 25 FLAG lines). results.md's '14 retries' (Setup and §2) is the count under the corrected, apostrophe-normalised lock that the reported numbers use; the Setup sentence '150 arm-A items (plus 14 retries)' should read 25 for the as-run timing.",
+  "edit-F1 RM gap": "exact difference +27.24 (+27.2 at one decimal); results.md's +27.3 subtracts the rounded 65.9 and 38.6. FR/IT: +40.87."
+ },
+ "checks": [
+  {
+   "claim": "fr|A n",
+   "expected": "60",
+   "got": "60",
+   "ok": true
+  },
+  {
+   "claim": "fr|A exact",
+   "expected": "50.0",
+   "got": "50.0",
+   "ok": true
+  },
+  {
+   "claim": "fr|A exact_strict",
+   "expected": "50.0",
+   "got": "50.0",
+   "ok": true
+  },
+  {
+   "claim": "fr|A edit_f1",
+   "expected": "69.5",
+   "got": "69.5",
+   "ok": true
+  },
+  {
+   "claim": "fr|A chrf",
+   "expected": "89.1",
+   "got": "89.1",
+   "ok": true
+  },
+  {
+   "claim": "fr|A zero_outside",
+   "expected": "90",
+   "got": "90",
+   "ok": true
+  },
+  {
+   "claim": "fr|A outside_chars_mean",
+   "expected": "4.7",
+   "got": "4.7",
+   "ok": true
+  },
+  {
+   "claim": "fr|A flagged",
+   "expected": "17",
+   "got": "17",
+   "ok": true
+  },
+  {
+   "claim": "fr|A flips",
+   "expected": "6.7",
+   "got": "6.7",
+   "ok": true
+  },
+  {
+   "claim": "fr|A unflagged_flips",
+   "expected": "0.0",
+   "got": "0.0",
+   "ok": true
+  },
+  {
+   "claim": "fr|A secs",
+   "expected": "6.8",
+   "got": "6.8",
+   "ok": true
+  },
+  {
+   "claim": "fr|B n",
+   "expected": "60",
+   "got": "60",
+   "ok": true
+  },
+  {
+   "claim": "fr|B exact",
+   "expected": "0.0",
+   "got": "0.0",
+   "ok": true
+  },
+  {
+   "claim": "fr|B exact_strict",
+   "expected": "0.0",
+   "got": "0.0",
+   "ok": true
+  },
+  {
+   "claim": "fr|B edit_f1",
+   "expected": "32.9",
+   "got": "32.9",
+   "ok": true
+  },
+  {
+   "claim": "fr|B chrf",
+   "expected": "63.0",
+   "got": "63.0",
+   "ok": true
+  },
+  {
+   "claim": "fr|B zero_outside",
+   "expected": "12",
+   "got": "12",
+   "ok": true
+  },
+  {
+   "claim": "fr|B outside_chars_mean",
+   "expected": "65.2",
+   "got": "65.2",
+   "ok": true
+  },
+  {
+   "claim": "fr|B flagged",
+   "expected": "0",
+   "got": "0",
+   "ok": true
+  },
+  {
+   "claim": "fr|B flips",
+   "expected": "20.0",
+   "got": "20.0",
+   "ok": true
+  },
+  {
+   "claim": "fr|B unflagged_flips",
+   "expected": "20.0",
+   "got": "20.0",
+   "ok": true
+  },
+  {
+   "claim": "fr|B secs",
+   "expected": "4.5",
+   "got": "4.5",
+   "ok": true
+  },
+  {
+   "claim": "it|A n",
+   "expected": "60",
+   "got": "60",
+   "ok": true
+  },
+  {
+   "claim": "it|A exact",
+   "expected": "50.0",
+   "got": "50.0",
+   "ok": true
+  },
+  {
+   "claim": "it|A exact_strict",
+   "expected": "50.0",
+   "got": "50.0",
+   "ok": true
+  },
+  {
+   "claim": "it|A edit_f1",
+   "expected": "75.9",
+   "got": "75.9",
+   "ok": true
+  },
+  {
+   "claim": "it|A chrf",
+   "expected": "89.8",
+   "got": "89.8",
+   "ok": true
+  },
+  {
+   "claim": "it|A zero_outside",
+   "expected": "93",
+   "got": "93",
+   "ok": true
+  },
+  {
+   "claim": "it|A outside_chars_mean",
+   "expected": "1.8",
+   "got": "1.8",
+   "ok": true
+  },
+  {
+   "claim": "it|A flagged",
+   "expected": "8",
+   "got": "8",
+   "ok": true
+  },
+  {
+   "claim": "it|A flips",
+   "expected": "3.3",
+   "got": "3.3",
+   "ok": true
+  },
+  {
+   "claim": "it|A unflagged_flips",
+   "expected": "1.7",
+   "got": "1.7",
+   "ok": true
+  },
+  {
+   "claim": "it|A secs",
+   "expected": "6.7",
+   "got": "6.7",
+   "ok": true
+  },
+  {
+   "claim": "it|B n",
+   "expected": "60",
+   "got": "60",
+   "ok": true
+  },
+  {
+   "claim": "it|B exact",
+   "expected": "0.0",
+   "got": "0.0",
+   "ok": true
+  },
+  {
+   "claim": "it|B exact_strict",
+   "expected": "0.0",
+   "got": "0.0",
+   "ok": true
+  },
+  {
+   "claim": "it|B edit_f1",
+   "expected": "30.8",
+   "got": "30.8",
+   "ok": true
+  },
+  {
+   "claim": "it|B chrf",
+   "expected": "57.4",
+   "got": "57.4",
+   "ok": true
+  },
+  {
+   "claim": "it|B zero_outside",
+   "expected": "10",
+   "got": "10",
+   "ok": true
+  },
+  {
+   "claim": "it|B outside_chars_mean",
+   "expected": "82.2",
+   "got": "82.2",
+   "ok": true
+  },
+  {
+   "claim": "it|B flagged",
+   "expected": "0",
+   "got": "0",
+   "ok": true
+  },
+  {
+   "claim": "it|B flips",
+   "expected": "23.3",
+   "got": "23.3",
+   "ok": true
+  },
+  {
+   "claim": "it|B unflagged_flips",
+   "expected": "23.3",
+   "got": "23.3",
+   "ok": true
+  },
+  {
+   "claim": "it|B secs",
+   "expected": "4.7",
+   "got": "4.7",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|A n",
+   "expected": "120",
+   "got": "120",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|A exact",
+   "expected": "50.0",
+   "got": "50.0",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|A exact_strict",
+   "expected": "50.0",
+   "got": "50.0",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|A edit_f1",
+   "expected": "72.7",
+   "got": "72.7",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|A chrf",
+   "expected": "89.4",
+   "got": "89.4",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|A zero_outside",
+   "expected": "92",
+   "got": "92",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|A outside_chars_mean",
+   "expected": "3.2",
+   "got": "3.2",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|A flagged",
+   "expected": "12",
+   "got": "12",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|A flips",
+   "expected": "5.0",
+   "got": "5.0",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|A unflagged_flips",
+   "expected": "0.8",
+   "got": "0.8",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|A secs",
+   "expected": "6.7",
+   "got": "6.7",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|B n",
+   "expected": "120",
+   "got": "120",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|B exact",
+   "expected": "0.0",
+   "got": "0.0",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|B exact_strict",
+   "expected": "0.0",
+   "got": "0.0",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|B edit_f1",
+   "expected": "31.8",
+   "got": "31.8",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|B chrf",
+   "expected": "60.2",
+   "got": "60.2",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|B zero_outside",
+   "expected": "11",
+   "got": "11",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|B outside_chars_mean",
+   "expected": "73.7",
+   "got": "73.7",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|B flagged",
+   "expected": "0",
+   "got": "0",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|B flips",
+   "expected": "21.7",
+   "got": "21.7",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|B unflagged_flips",
+   "expected": "21.7",
+   "got": "21.7",
+   "ok": true
+  },
+  {
+   "claim": "fr+it|B secs",
+   "expected": "4.6",
+   "got": "4.6",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|A n",
+   "expected": "82",
+   "got": "82",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|A exact",
+   "expected": "28.0",
+   "got": "28.0",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|A exact_strict",
+   "expected": "28.0",
+   "got": "28.0",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|A edit_f1",
+   "expected": "60.2",
+   "got": "60.2",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|A chrf",
+   "expected": "84.6",
+   "got": "84.6",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|A zero_outside",
+   "expected": "88",
+   "got": "88",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|A outside_chars_mean",
+   "expected": "4.7",
+   "got": "4.7",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|A flagged",
+   "expected": "18",
+   "got": "18",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|A flips",
+   "expected": "7.3",
+   "got": "7.3",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|A unflagged_flips",
+   "expected": "1.2",
+   "got": "1.2",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|A secs",
+   "expected": "7.0",
+   "got": "7.0",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|B n",
+   "expected": "82",
+   "got": "82",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|B exact",
+   "expected": "0.0",
+   "got": "0.0",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|B exact_strict",
+   "expected": "0.0",
+   "got": "0.0",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|B edit_f1",
+   "expected": "34.9",
+   "got": "34.9",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|B chrf",
+   "expected": "58.5",
+   "got": "58.5",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|B zero_outside",
+   "expected": "16",
+   "got": "16",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|B outside_chars_mean",
+   "expected": "84.0",
+   "got": "84.0",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|B flagged",
+   "expected": "0",
+   "got": "0",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|B flips",
+   "expected": "31.7",
+   "got": "31.7",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|B unflagged_flips",
+   "expected": "31.7",
+   "got": "31.7",
+   "ok": true
+  },
+  {
+   "claim": "fr+it-noSEFRI|B secs",
+   "expected": "4.5",
+   "got": "4.5",
+   "ok": true
+  },
+  {
+   "claim": "rm|A n",
+   "expected": "30",
+   "got": "30",
+   "ok": true
+  },
+  {
+   "claim": "rm|A exact",
+   "expected": "26.7",
+   "got": "26.7",
+   "ok": true
+  },
+  {
+   "claim": "rm|A exact_strict",
+   "expected": "26.7",
+   "got": "26.7",
+   "ok": true
+  },
+  {
+   "claim": "rm|A edit_f1",
+   "expected": "65.9",
+   "got": "65.9",
+   "ok": true
+  },
+  {
+   "claim": "rm|A chrf",
+   "expected": "91.2",
+   "got": "91.2",
+   "ok": true
+  },
+  {
+   "claim": "rm|A zero_outside",
+   "expected": "87",
+   "got": "87",
+   "ok": true
+  },
+  {
+   "claim": "rm|A outside_chars_mean",
+   "expected": "2.5",
+   "got": "2.5",
+   "ok": true
+  },
+  {
+   "claim": "rm|A flagged",
+   "expected": "17",
+   "got": "17",
+   "ok": true
+  },
+  {
+   "claim": "rm|A flips",
+   "expected": "13.3",
+   "got": "13.3",
+   "ok": true
+  },
+  {
+   "claim": "rm|A unflagged_flips",
+   "expected": "3.3",
+   "got": "3.3",
+   "ok": true
+  },
+  {
+   "claim": "rm|A secs",
+   "expected": "8.5",
+   "got": "8.5",
+   "ok": true
+  },
+  {
+   "claim": "rm|B n",
+   "expected": "30",
+   "got": "30",
+   "ok": true
+  },
+  {
+   "claim": "rm|B exact",
+   "expected": "0.0",
+   "got": "0.0",
+   "ok": true
+  },
+  {
+   "claim": "rm|B exact_strict",
+   "expected": "0.0",
+   "got": "0.0",
+   "ok": true
+  },
+  {
+   "claim": "rm|B edit_f1",
+   "expected": "38.6",
+   "got": "38.6",
+   "ok": true
+  },
+  {
+   "claim": "rm|B chrf",
+   "expected": "69.8",
+   "got": "69.8",
+   "ok": true
+  },
+  {
+   "claim": "rm|B zero_outside",
+   "expected": "3",
+   "got": "3",
+   "ok": true
+  },
+  {
+   "claim": "rm|B outside_chars_mean",
+   "expected": "64.8",
+   "got": "64.8",
+   "ok": true
+  },
+  {
+   "claim": "rm|B flagged",
+   "expected": "0",
+   "got": "0",
+   "ok": true
+  },
+  {
+   "claim": "rm|B flips",
+   "expected": "23.3",
+   "got": "23.3",
+   "ok": true
+  },
+  {
+   "claim": "rm|B unflagged_flips",
+   "expected": "23.3",
+   "got": "23.3",
+   "ok": true
+  },
+  {
+   "claim": "rm|B secs",
+   "expected": "5.5",
+   "got": "5.5",
+   "ok": true
+  },
+  {
+   "claim": "rm-clean|A n",
+   "expected": "11",
+   "got": "11",
+   "ok": true
+  },
+  {
+   "claim": "rm-clean|A exact",
+   "expected": "36.4",
+   "got": "36.4",
+   "ok": true
+  },
+  {
+   "claim": "rm-clean|A edit_f1",
+   "expected": "57.1",
+   "got": "57.1",
+   "ok": true
+  },
+  {
+   "claim": "rm-clean|A chrf",
+   "expected": "90.3",
+   "got": "90.3",
+   "ok": true
+  },
+  {
+   "claim": "rm-clean|A zero_outside",
+   "expected": "91",
+   "got": "91",
+   "ok": true
+  },
+  {
+   "claim": "rm-clean|A outside_chars_mean",
+   "expected": "0.5",
+   "got": "0.5",
+   "ok": true
+  },
+  {
+   "claim": "rm-clean|A flagged",
+   "expected": "18",
+   "got": "18",
+   "ok": true
+  },
+  {
+   "claim": "rm-clean|A flips",
+   "expected": "9.1",
+   "got": "9.1",
+   "ok": true
+  },
+  {
+   "claim": "rm-clean|A unflagged_flips",
+   "expected": "0.0",
+   "got": "0.0",
+   "ok": true
+  },
+  {
+   "claim": "rm-clean|A secs",
+   "expected": "9.2",
+   "got": "9.2",
+   "ok": true
+  },
+  {
+   "claim": "rm-contam|A n",
+   "expected": "11",
+   "got": "11",
+   "ok": true
+  },
+  {
+   "claim": "rm-contam|A exact",
+   "expected": "0.0",
+   "got": "0.0",
+   "ok": true
+  },
+  {
+   "claim": "rm-contam|A edit_f1",
+   "expected": "55.9",
+   "got": "55.9",
+   "ok": true
+  },
+  {
+   "claim": "rm-contam|A chrf",
+   "expected": "92.2",
+   "got": "92.2",
+   "ok": true
+  },
+  {
+   "claim": "rm-contam|A zero_outside",
+   "expected": "82",
+   "got": "82",
+   "ok": true
+  },
+  {
+   "claim": "rm-contam|A outside_chars_mean",
+   "expected": "0.7",
+   "got": "0.7",
+   "ok": true
+  },
+  {
+   "claim": "rm-contam|A flagged",
+   "expected": "18",
+   "got": "18",
+   "ok": true
+  },
+  {
+   "claim": "rm-contam|A flips",
+   "expected": "27.3",
+   "got": "27.3",
+   "ok": true
+  },
+  {
+   "claim": "rm-contam|A unflagged_flips",
+   "expected": "9.1",
+   "got": "9.1",
+   "ok": true
+  },
+  {
+   "claim": "rm-contam|A secs",
+   "expected": "10.8",
+   "got": "10.8",
+   "ok": true
+  },
+  {
+   "claim": "FR/IT exact (A)",
+   "expected": "60/120",
+   "got": "60/120",
+   "ok": true
+  },
+  {
+   "claim": "FR/IT exact without SEFRI (A)",
+   "expected": "23/82",
+   "got": "23/82",
+   "ok": true
+  },
+  {
+   "claim": "SEFRI cluster items / exact",
+   "expected": "37/38",
+   "got": "37/38",
+   "ok": true
+  },
+  {
+   "claim": "RM exact (A)",
+   "expected": "8/30",
+   "got": "8/30",
+   "ok": true
+  },
+  {
+   "claim": "FR/IT code lane applicable",
+   "expected": 48,
+   "got": 48,
+   "ok": true
+  },
+  {
+   "claim": "FR/IT code lane exact = A exact on those",
+   "expected": "42/48 = 42/48",
+   "got": "42/48 = 42/48",
+   "ok": true
+  },
+  {
+   "claim": "FR/IT code-lane exact items where A is also exact",
+   "expected": "42/42",
+   "got": "42/42",
+   "ok": true
+  },
+  {
+   "claim": "FR/IT model-lane exact (A)",
+   "expected": "18/72",
+   "got": "18/72",
+   "ok": true
+  },
+  {
+   "claim": "FR/IT model-lane exact that are SEFRI",
+   "expected": 6,
+   "got": 6,
+   "ok": true
+  },
+  {
+   "claim": "RM model-written exact",
+   "expected": "1/22",
+   "got": "1/22",
+   "ok": true
+  },
+  {
+   "claim": "RM federal exact (A)",
+   "expected": "7/10",
+   "got": "7/10",
+   "ok": true
+  },
+  {
+   "claim": "RM federal exact by code lane",
+   "expected": 6,
+   "got": 6,
+   "ok": true
+  },
+  {
+   "claim": "RM Graubuenden exact (A)",
+   "expected": "1/20",
+   "got": "1/20",
+   "ok": true
+  },
+  {
+   "claim": "RM Graubuenden model-written exact",
+   "expected": "0/19",
+   "got": "0/19",
+   "ok": true
+  },
+  {
+   "claim": "RM code-lane exact items where A is also exact",
+   "expected": "7/7",
+   "got": "7/7",
+   "ok": true
+  },
+  {
+   "claim": "code lane FR",
+   "expected": "21/60",
+   "got": "21/60",
+   "ok": true
+  },
+  {
+   "claim": "code lane IT",
+   "expected": "21/60",
+   "got": "21/60",
+   "ok": true
+  },
+  {
+   "claim": "code lane RM",
+   "expected": "7/30",
+   "got": "7/30",
+   "ok": true
+  },
+  {
+   "claim": "code lane applicable FR/IT/RM",
+   "expected": "24/24/8",
+   "got": "24/24/8",
+   "ok": true
+  },
+  {
+   "claim": "gold inside lock windows FR/IT/RM",
+   "expected": "45/60 48/60 15/30",
+   "got": "45/60 48/60 15/30",
+   "ok": true
+  },
+  {
+   "claim": "FR/IT unflagged exact (A)",
+   "expected": "57/105",
+   "got": "57/105",
+   "ok": true
+  },
+  {
+   "claim": "RM unflagged exact (A)",
+   "expected": "8/25",
+   "got": "8/25",
+   "ok": true
+  },
+  {
+   "claim": "FR/IT flagged exact (A)",
+   "expected": "3/15",
+   "got": "3/15",
+   "ok": true
+  },
+  {
+   "claim": "A flip hits (FR/IT + RM), adjudicated by hand",
+   "expected": 10,
+   "got": 10,
+   "ok": true
+  },
+  {
+   "claim": "A unflagged flip hits FR/IT / RM",
+   "expected": "1/120 1/30",
+   "got": "1/120 1/30",
+   "ok": true
+  },
+  {
+   "claim": "retries / fixed / retry identical to first output (corrected lock)",
+   "expected": "14 / 0 / 11",
+   "got": "14 / 0 / 11",
+   "ok": true
+  },
+  {
+   "claim": "edit-F1 A-B FR/IT, of the rounded table values",
+   "expected": "+40.9",
+   "got": "+40.9",
+   "ok": true
+  },
+  {
+   "claim": "edit-F1 A-B RM, of the rounded table values",
+   "expected": "+27.3",
+   "got": "+27.3",
+   "ok": true
+  },
+  {
+   "claim": "A-asrun FR/IT flagged",
+   "expected": "21%",
+   "got": "21%",
+   "ok": true
+  },
+  {
+   "claim": "A-asrun IT strict exact",
+   "expected": "13%",
+   "got": "13%",
+   "ok": true
+  },
+  {
+   "claim": "A+code FR/IT exact, s/paragraph",
+   "expected": "50.0% 4.2",
+   "got": "50.0% 4.2",
+   "ok": true
+  },
+  {
+   "claim": "B exact FR/IT",
+   "expected": "0.0%",
+   "got": "0.0%",
+   "ok": true
+  }
+ ],
+ "n_checks": 162,
+ "all_checks_ok": true,
+ "replay": {
+  "n": {
+   "asrun": 150,
+   "asrun_retried": 25,
+   "shipped": 150,
+   "shipped_code_lane": 56,
+   "shipped_retried": 12,
+   "shipped_unused_recorded_retry": 10,
+   "shipped_retry_prompt_differs_from_recorded": 6,
+   "armB": 155
+  },
+  "mismatches": [],
+  "ok": true
+ },
+ "research_table": "group          arm       n  exact strict editF1  chrF out0%  outCh flag% flip% unflFlip% exact|unfl  s/par\nfr             A        60    50%    50%   69.5  89.1   90%    4.7   17%    7%        0%        56%    6.8\nfr             A+code   60    50%    50%   69.5  89.1   90%    4.7   15%    7%        2%        55%    4.2\nfr             A-asrun  60    50%    43%   69.5  89.1   90%    4.7   23%    7%        0%        52%    7.2\nfr             B        60     0%     0%   32.9  63.0   12%   65.2    0%   20%       20%         0%    4.5\nfr+it          A       120    50%    50%   72.7  89.4   92%    3.2   12%    5%        1%        54%    6.7\nfr+it          A+code  120    50%    50%   72.7  89.4   92%    3.2   11%    5%        2%        54%    4.2\nfr+it          A-asrun 120    50%    28%   72.7  89.4   92%    3.2   21%    5%        1%        54%    7.5\nfr+it          B       120     0%     0%   31.8  60.2   11%   73.7    0%   22%       22%         0%    4.6\nfr+it-noSEFRI  A        82    28%    28%   60.2  84.6   88%    4.7   18%    7%        1%        30%    7.0\nfr+it-noSEFRI  A+code   82    28%    28%   60.2  84.6   88%    4.7   16%    7%        2%        30%    5.7\nfr+it-noSEFRI  A-asrun  82    28%    20%   60.2  84.6   88%    4.7   29%    7%        1%        26%    8.1\nfr+it-noSEFRI  B        82     0%     0%   34.9  58.5   16%   84.0    0%   32%       32%         0%    4.5\nit             A        60    50%    50%   75.9  89.8   93%    1.8    8%    3%        2%        53%    6.7\nit             A+code   60    50%    50%   75.9  89.8   93%    1.8    7%    3%        2%        54%    4.1\nit             A-asrun  60    50%    13%   75.9  89.8   93%    1.8   18%    3%        2%        55%    7.9\nit             B        60     0%     0%   30.8  57.4   10%   82.2    0%   23%       23%         0%    4.7\nrm             A        30    27%    27%   65.9  91.2   87%    2.5   17%   13%        3%        32%    8.5\nrm             A+code   30    27%    27%   65.9  91.2   87%    2.5   17%   13%        3%        32%    6.9\nrm             A-asrun  30    27%    27%   65.9  91.2   87%    2.5   17%   13%        3%        32%    8.5\nrm             B        30     0%     0%   38.6  69.8    3%   64.8    0%   23%       23%         0%    5.5\nrm-clean       A        11    36%    36%   57.1  90.3   91%    0.5   18%    9%        0%        44%    9.2\nrm-clean       A+code   11    36%    36%   57.1  90.3   91%    0.5   18%    9%        0%        44%    5.9\nrm-clean       A-asrun  11    36%    36%   57.1  90.3   91%    0.5   18%    9%        0%        44%    9.2\nrm-clean       B        11     0%     0%   18.9  64.4    9%   86.6    0%   36%       36%         0%    6.5\nrm-contam      A        11     0%     0%   55.9  92.2   82%    0.7   18%   27%        9%         0%   10.8\nrm-contam      A+code   11     0%     0%   55.9  92.2   82%    0.7   18%   27%        9%         0%   10.8\nrm-contam      A-asrun  11     0%     0%   55.9  92.2   82%    0.7   18%   27%        9%         0%   10.8\nrm-contam      B        11     0%     0%   34.4  72.7    0%   80.4    0%   27%       27%         0%    6.3\nrm-short       A         8    50%    50%   91.7  91.3   88%    7.6   12%    0%        0%        57%    4.2\nrm-short       A+code    8    50%    50%   91.7  91.3   88%    7.6   12%    0%        0%        57%    3.0\nrm-short       A-asrun   8    50%    50%   91.7  91.3   88%    7.6   12%    0%        0%        57%    4.2\nrm-short       B         8     0%     0%   71.7  73.2    0%   13.4    0%    0%        0%         0%    2.7\ncode lane: {'fr': {'n': 60, 'applicable': 24, 'produced': 24, 'exact': 21}, 'it': {'n': 60, 'applicable': 24, 'produced': 24, 'exact': 21}, 'rm': {'n': 30, 'applicable': 8, 'produced': 8, 'exact': 7}}\ngold edit inside lock windows: {'fr': '45/60', 'it': '48/60', 'rm': '15/30'}\n"
+}

@@ -1,0 +1,3 @@
+# offline image only: in-process llama.cpp for the Apertus 8B GGUF on CPU (built from source, CPU only)
+llama-cpp-python==0.3.35
+numpy==2.2.6

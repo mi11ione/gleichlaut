@@ -1,0 +1,35 @@
+{
+ "70B window-only (locked span edit)": {
+  "chrf": 84.2,
+  "ef1": 28.2,
+  "exact": 5.8,
+  "flagged": 87.5,
+  "lexicon_flips": 93,
+  "n": 120,
+  "unflagged_lexicon_flips": 3
+ },
+ "8B free translation of the new DE": {
+  "chrf": 71.2,
+  "ef1": 28.2,
+  "exact": 0.0,
+  "flagged": 0.0,
+  "lexicon_flips": 78,
+  "n": 120,
+  "unflagged_lexicon_flips": 78
+ },
+ "8B window-only (locked span edit)": {
+  "chrf": 84.5,
+  "ef1": 22.4,
+  "exact": 5.8,
+  "flagged": 81.7,
+  "lexicon_flips": 86,
+  "n": 120,
+  "unflagged_lexicon_flips": 3
+ },
+ "rules only (copy old FR/IT + number substitutions)": {
+  "chrf": 88.8,
+  "ef1": 7.1,
+  "exact": 5.8,
+  "n": 120
+ }
+}
