@@ -1,4 +1,5 @@
 # M1/M2 (eval/prereg/PREREG.md R1): the shipped SL pipeline with an Apertus 8B GGUF on the fresh 166, on CPU runners.
+# suite=fed (PREREG R6): the shipped Fedlex lane with the GGUF on the 120 Fedlex FR/IT items (R5 measured the MLX build).
 # Manual trigger only. Shards run in parallel; each shard resumes from its artifact if re-run.
 name: m1-8b-gguf
 on:
@@ -6,6 +7,7 @@ on:
     inputs:
       build: { description: "q4_k_m or q8_0", required: true, default: "q4_k_m" }
       shards: { description: "number of shards", required: true, default: "8" }
+      suite: { description: "sl (fresh 166) or fed (Fedlex 120)", required: true, default: "sl" }
 jobs:
   plan:
     runs-on: ubuntu-latest
@@ -37,10 +39,10 @@ jobs:
           echo "${!S}  $F" | sha256sum -c -
       - run: CMAKE_ARGS="-DGGML_NATIVE=OFF" pip install --require-hashes -r requirements.txt -r requirements-offline.txt
       - name: run shard
-        run: PYTHONPATH=src python -m gleichlaut.m1 run --gguf models/${{ inputs.build }}.gguf --build ${{ inputs.build }} --shard ${{ matrix.k }} --of ${{ inputs.shards }} --out out/m1
+        run: PYTHONPATH=src python -m gleichlaut.m1 run --gguf models/${{ inputs.build }}.gguf --build ${{ inputs.build }} --shard ${{ matrix.k }} --of ${{ inputs.shards }} --out out/m1 --suite ${{ inputs.suite }}
       - uses: actions/upload-artifact@v7
         if: always()
-        with: { name: "m1-${{ inputs.build }}-${{ matrix.k }}", path: track_2b/out/m1 }
+        with: { name: "m1-${{ inputs.suite }}-${{ inputs.build }}-${{ matrix.k }}", path: track_2b/out/m1 }
   gather:
     needs: shard
     runs-on: ubuntu-latest
@@ -50,14 +52,16 @@ jobs:
       - uses: actions/setup-python@v7
         with: { python-version: "3.12" }
       - uses: actions/download-artifact@v7
-        with: { pattern: "m1-${{ inputs.build }}-*", path: track_2b/out/m1parts }
-      - run: PYTHONPATH=src python -m gleichlaut.m1 gather --build ${{ inputs.build }} --in out/m1parts/*
+        with: { pattern: "m1-${{ inputs.suite }}-${{ inputs.build }}-*", path: track_2b/out/m1parts }
+      - run: PYTHONPATH=src python -m gleichlaut.m1 gather --build ${{ inputs.build }} --suite ${{ inputs.suite }} --in out/m1parts/*
       - uses: actions/upload-artifact@v7
         with:
-          name: "m1-${{ inputs.build }}-merged"
+          name: "m1-${{ inputs.suite }}-${{ inputs.build }}-merged"
           path: |
             track_2b/data/runs/8b_${{ inputs.build }}_fresh166_g3_final.jsonl
             track_2b/eval/labels/worklist_8b_${{ inputs.build }}_fresh166.json
+            track_2b/data/runs/8b_${{ inputs.build }}_fedlex_shipped.jsonl
+            track_2b/eval/labels/worklist_8b_${{ inputs.build }}_fedlex.json
 # After labelling (eval/labels/m1_<build>_fresh166.tsv), the run becomes a build certificate of that GGUF:
 #   gleichlaut certify --import-run data/runs/8b_<build>_fresh166_g3_final.jsonl --gguf-sha256 <SHA_<build>> \
 #     --labels eval/labels/m1_<build>_fresh166.tsv --name 8b-<build>-fresh166 --out eval/certificates

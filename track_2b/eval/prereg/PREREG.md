@@ -5,7 +5,7 @@ Each rule below is fixed **before** the run it governs. Failed runs are reported
 - **R0 and the guard freeze** predate this repository: they were written in the research log before the fresh 2025 run
   (verbatim excerpt with the log's sha256: `docs/research/freeze-record.md`). This repository was created after that run;
   `freeze.json` and `tools/freeze.py` check that the vendored files still carry the frozen hashes.
-- **R1–R5** were committed here before their runs. `run_times.json` lists the first and last model call of each run from
+- **R1–R6** were committed here before their runs. `run_times.json` lists the first and last model call of each run from
   the development gateway's append-only ledger next to the commit times of this file (R2: committed 18:01 UTC, first call
   18:27 UTC; R5: committed 18:20 UTC, first call 18:27 UTC, 9 Oct 2026). R1 ran on GitHub Actions CPU runners after
   its commit (results log below).
@@ -76,6 +76,20 @@ unflagged non-exact drafts finds 0 real meaning errors but 4 with German left (E
   otherwise the Fedlex lane stays 8B and every Fedlex draft goes to review ("ready" = pre-checked, not publishable).
   Either way, both rows are reported side by side.
 
+## R6. Fedlex with the shipped 8B GGUF builds (frozen 10 Oct 2026, before any GGUF Fedlex run)
+
+R5 compared the 70B with the 8B MLX DWQ build. The 8B that ships is a GGUF (Q4_K_M by default, Q8_0 as an option), so
+the statute claim must be measured on it.
+
+- Run: the same 120 FR/IT Fedlex items, the shipped Fedlex lane unchanged (`fed.lane.fed_draft`: code lane, else arm A;
+  lock + slot guard + G1–G4; no digit mask, as in R5), GGUF Q4_K_M and Q8_0, greedy, on GitHub Actions CPU runners
+  (`m1` workflow, `suite=fed`). Not on a team machine.
+- Labels: every ready non-exact draft, by the R1 protocol (two blind Claude annotators, a third breaks disagreements).
+- Reported (no new threshold): exact, flagged, ready classes, next to the R5 rows (8B MLX, 70B).
+- Decision: as R5. Every statute draft goes to review unless a GGUF build meets R0 on these items (in-sample caveat). If a
+  GGUF build is more than 10 points below the 8B MLX build on exact, the README and report say that statutes were
+  measured on the MLX build and report the GGUF as weaker; they do not claim the GGUF for statutes.
+
 ## R4. Post-freeze changes
 
 No change to `frozen/` after this commit. Any guard change needs a new held-out run before a claim; anything measured on
@@ -92,4 +106,10 @@ data the change was designed on is labelled "dev" in every table.
 - **R1 (M1), 9 Oct 2026:** Apertus 8B GGUF Q4_K_M on CPU (GitHub Actions, 8 shards), same pipeline, fresh 166: exact
   16.9% (+10.8 [4.8, 17.5]), flagged 63.9%, ready drafts 0 meaning / 1 stale / 2 German (1.81%) by two blind
   annotators and a third tie-breaker: **PASS**. Decision as pre-registered: the SL default becomes the local 8B
-  (`eval/results/m1_q4_k_m.json`). M2 (Q8_0) is running.
+  (`eval/results/m1_q4_k_m.json`).
+- **R1 (M2), 10 Oct 2026:** Apertus 8B GGUF Q8_0 on CPU (GitHub Actions, 8 shards), same pipeline, fresh 166: exact
+  17.5% (+11.4 [4.8, 18.7]), flagged 62.7%, ready drafts 0 meaning / 0 stale / 0 German (two blind annotators, needs-fix
+  κ 0.789, a third broke 7 disagreements): **PASS** (`eval/results/m1_q8_0.json`, build certificate
+  `eval/certificates/8b-q8_0-fresh166.json`). Q4_K_M stays the default build (8 GiB box); Q8_0 is the certified option
+  for a 16 GiB box (`BUILD=q8_0`). Paired against the 70B (`eval/results/size_compare.json`): exact 17.5% each, edits
+  saved 33.1% vs 42.4% (difference 9.3 points, 95% CI [−1.3, 20.2]).

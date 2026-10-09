@@ -2,6 +2,8 @@
 
   python -m gleichlaut.m1 run --gguf PATH --build q4_k_m --shard K --of N --out DIR     resumable; one JSON line per item
   python -m gleichlaut.m1 gather --build q4_k_m --in DIR [DIR ...]                     merge, score, write the label worklist
+  --suite fed (both commands): PREREG R6, the shipped Fedlex lane (fed.lane.fed_draft) with the GGUF on the 120 Fedlex
+  FR/IT items instead (the R5 items; R5 measured the 8B MLX build)
 
 Same frozen code as the 70B lane (run_2b, lock check, retry, guards3, one re-ask); the backend is llama.cpp on CPU with
 the 8B digit / number-word logit mask. Runs on a GitHub Actions runner, never on a team machine (corrections §1)."""
@@ -9,7 +11,13 @@ import argparse, json, os, random, sys, time
 from . import core, score, backends
 
 
+def fed_items():
+    from .fed import lane
+    return [x for x in lane.load(lane.ITEMS) if x["src"] == "fed" and x["lang"] in lane.SCOPE]
+
+
 def run(a):
+    if a.suite == "fed": return run_fed(a)
     I = [x for i, x in enumerate(score.load_items("items/items_fresh.json")) if i % a.of == a.shard]
     os.makedirs(a.out, exist_ok=True)
     path = os.path.join(a.out, f"m1_{a.build}_shard{a.shard}of{a.of}.jsonl")
@@ -24,7 +32,44 @@ def run(a):
     print("SHARD_DONE", a.shard, flush=True)
 
 
+def run_fed(a):
+    from .fed import lane
+    I = [x for i, x in enumerate(fed_items()) if i % a.of == a.shard]
+    os.makedirs(a.out, exist_ok=True)
+    path = os.path.join(a.out, f"m1fed_{a.build}_shard{a.shard}of{a.of}.jsonl")
+    done = {json.loads(l)["key"] for l in open(path, encoding="utf-8")} if os.path.exists(path) else set()
+    ask = backends.LlamaCpp(a.gguf, backends.lang_of_prompt, n_ctx=a.ctx, log=os.path.join(a.out, f"calls_fed_{a.build}_{a.shard}.jsonl"))
+    for x in I:
+        if x["key"] in done: continue
+        t0 = time.time(); r = lane.fed_draft(x, ask); r["wall_secs"] = round(time.time() - t0, 1); r["build"] = a.build
+        with open(path, "a", encoding="utf-8") as f: f.write(json.dumps(r, ensure_ascii=False) + "\n")
+        print(x["key"], r["status"], r["wall_secs"], "s", flush=True)
+    print("SHARD_DONE", a.shard, flush=True)
+
+
+def gather_fed(a):
+    R = {}
+    for d in a.inp:
+        for f in sorted(os.listdir(d)):
+            if f.startswith(f"m1fed_{a.build}_") and f.endswith(".jsonl"):
+                for l in open(os.path.join(d, f), encoding="utf-8"): r = json.loads(l); R[r["key"]] = r
+    I = fed_items(); missing = [x["key"] for x in I if x["key"] not in R]
+    if missing: raise SystemExit(f"{len(missing)} items missing, e.g. {missing[:5]}")
+    rel = f"runs/8b_{a.build}_fedlex_shipped.jsonl"
+    with open(os.path.join(score.DATA, rel), "w", encoding="utf-8") as f:
+        for x in I: f.write(json.dumps(R[x["key"]], ensure_ascii=False) + "\n")
+    todo = sorted(x["key"] for x in I if R[x["key"]]["status"] == "ready" and not R[x["key"]].get("exact"))
+    wp = os.path.join(core.ROOT, "eval", "labels", f"worklist_8b_{a.build}_fedlex.json")
+    json.dump(dict(build=a.build, unflagged_needing_labels=todo), open(wp, "w"), indent=1)
+    secs = [r.get("wall_secs", 0) for r in R.values()]
+    print(json.dumps(dict(build=a.build, items=len(I), exact=sum(bool(r.get("exact")) for r in R.values()),
+                          flagged=sum(bool(r["flagged"]) for r in R.values()), ready_nonexact=len(todo),
+                          wall_secs_per_item=round(sum(secs) / len(secs), 1)), indent=1))
+    print("wrote", rel, "and", wp)
+
+
 def gather(a):
+    if a.suite == "fed": return gather_fed(a)
     R = {}
     for d in a.inp:
         for f in sorted(os.listdir(d)):
@@ -52,8 +97,9 @@ def main(argv=None):
     ap = argparse.ArgumentParser(prog="gleichlaut.m1"); sp = ap.add_subparsers(dest="cmd", required=True)
     r = sp.add_parser("run"); r.add_argument("--gguf", required=True); r.add_argument("--build", required=True)
     r.add_argument("--shard", type=int, default=0); r.add_argument("--of", type=int, default=1); r.add_argument("--out", default="out/m1")
-    r.add_argument("--ctx", type=int, default=8192)
+    r.add_argument("--ctx", type=int, default=8192); r.add_argument("--suite", choices=("sl", "fed"), default="sl")
     g = sp.add_parser("gather"); g.add_argument("--build", required=True); g.add_argument("--in", dest="inp", nargs="+", required=True)
+    g.add_argument("--suite", choices=("sl", "fed"), default="sl")
     a = ap.parse_args(argv)
     return run(a) if a.cmd == "run" else gather(a)
 
