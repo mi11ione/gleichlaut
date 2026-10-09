@@ -55,6 +55,10 @@ def scan(files, rows):
         txt = re.sub(r"`[^`]*`", "", txt)                            # inline code (paths, hashes, ids)
         txt = re.sub(r"\]\([^)]*\)|https?://\S+", "", txt)            # link targets
         txt = re.sub(r"<!--\s*noclaim\s*-->.*?<!--\s*/noclaim\s*-->", "", txt, flags=re.S)
+        txt = re.sub(r"(?m)^#+\s*[\d.]+", "", txt)                                        # section numbers
+        txt = re.sub(r"(Apache-|CC-BY-|XLIFF |FHIR R|IG |PublG Art\. |Art\. |T |su-d-)[\d.]+", "", txt)   # versions, articles, table ids
+        txt = re.sub(r"95% (CI|upper|confidence|Wilson)", "", txt)                           # the confidence level itself
+        txt = re.sub(r"≤ ?5000 characters|≤ ?100 MB|< ?100 MB", "", txt)                       # form / template limits
         for m in NUM.finditer(txt):
             s = m.group(0).replace("−", "-")
             if ALLOW.match(s.lstrip("+-")) or s in vals or s.lstrip("+") in vals: continue

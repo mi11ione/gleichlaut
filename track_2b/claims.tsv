@@ -1,0 +1,133 @@
+id	value	source	path	fmt	command	where
+fresh_n	166	eval/results/fresh166.json	summary.all.n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fresh_exact	17.5	eval/results/fresh166.json	summary.all.exact.model	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fresh_rules	6.0	eval/results/fresh166.json	summary.all.exact.rules	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fresh_delta	+11.4	eval/results/fresh166.json	summary.all.exact.delta	{:+.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fresh_delta_plain	11.4	eval/results/fresh166.json	summary.all.exact.delta	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fresh_ci_lo	4.8	eval/results/fresh166.json	summary.all.exact.ci95.0	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fresh_ci_hi	18.7	eval/results/fresh166.json	summary.all.exact.ci95.1	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fresh_flag	60.2	eval/results/fresh166.json	summary.all.flag_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fresh_ready	39.8	eval/results/fresh166.json	summary.all.ready_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fresh_ready_n	66	eval/results/fresh166.json	summary.all.unflagged	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fresh_wilson_hi	2.3	eval/results/fresh166.json	summary.all.wilson95_unflagged_real.1	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fresh_reasked	98	eval/results/fresh166.json	summary.all.reasked	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fresh_replaced	3	eval/results/fresh166.json	summary.all.replaced	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fresh_families	55	eval/results/fresh166.json	summary.all.families	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fresh_pairs	83	eval/results/fresh166.json	summary.all.pairs	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+unseen_n	154	eval/results/fresh166.json	summary.unseen families.n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+unseen_exact	15.6	eval/results/fresh166.json	summary.unseen families.exact.model	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+unseen_delta	+12.3	eval/results/fresh166.json	summary.unseen families.exact.delta	{:+.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+unseen_ci_lo	5.8	eval/results/fresh166.json	summary.unseen families.exact.ci95.0	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+unseen_ci_hi	20.1	eval/results/fresh166.json	summary.unseen families.exact.ci95.1	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+unseen_flag	60.4	eval/results/fresh166.json	summary.unseen families.flag_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+unseen_ready	39.6	eval/results/fresh166.json	summary.unseen families.ready_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+exfam_n	132	eval/results/fresh166.json	summary.excluding family 981f07a8.n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+exfam_exact	22.0	eval/results/fresh166.json	summary.excluding family 981f07a8.exact.model	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+exfam_delta	+14.4	eval/results/fresh166.json	summary.excluding family 981f07a8.exact.delta	{:+.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+exfam_ci_lo	6.8	eval/results/fresh166.json	summary.excluding family 981f07a8.exact.ci95.0	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+exfam_ci_hi	22.7	eval/results/fresh166.json	summary.excluding family 981f07a8.exact.ci95.1	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+exfam_flag	75.8	eval/results/fresh166.json	summary.excluding family 981f07a8.flag_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+exfam_ready	24.2	eval/results/fresh166.json	summary.excluding family 981f07a8.ready_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+flagged_sample_good	13	eval/results/fresh166.json	summary.flagged_sample.good	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+flagged_sample_n	20	eval/results/fresh166.json	summary.flagged_sample.n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+flagged_sample_lo	43.3	eval/results/fresh166.json	summary.flagged_sample.wilson95.0	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+flagged_sample_hi	81.9	eval/results/fresh166.json	summary.flagged_sample.wilson95.1	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+oos_n	242	eval/results/oos242.json	summary.all.n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+oos_exact	29.3	eval/results/oos242.json	summary.all.exact.model	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+oos_delta	+14.9	eval/results/oos242.json	summary.all.exact.delta	{:+.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+oos_ci_lo	9.9	eval/results/oos242.json	summary.all.exact.ci95.0	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+oos_ci_hi	20.7	eval/results/oos242.json	summary.all.exact.ci95.1	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+oos_flag	61.6	eval/results/oos242.json	summary.all.flag_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+oos_ready	38.4	eval/results/oos242.json	summary.all.ready_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+oos_german_pct	4.1	eval/results/oos242.json	summary.all.unflagged_german_per100	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+oos_german_n	10	eval/results/oos242.json	summary.all.unflagged_german	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+d8_n	120	eval/results/dev120_8b.json	summary.all.n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+d8_exact	15.0	eval/results/dev120_8b.json	summary.all.exact.model	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+d8_delta	+9.2	eval/results/dev120_8b.json	summary.all.exact.delta	{:+.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+d8_ci_lo	3.3	eval/results/dev120_8b.json	summary.all.exact.ci95.0	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+d8_ci_hi	15.8	eval/results/dev120_8b.json	summary.all.exact.ci95.1	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+d8_flag	85.0	eval/results/dev120_8b.json	summary.all.flag_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+d8_ready	15.0	eval/results/dev120_8b.json	summary.all.ready_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+d70_exact	17.5	eval/results/dev120.json	summary.all.exact.model	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+d70_delta	+11.7	eval/results/dev120.json	summary.all.exact.delta	{:+.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+d70_rules	5.8	eval/results/dev120.json	summary.all.exact.rules	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+free_exact	0.0	eval/results/naive.json	8B free translation of the new DE.exact	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+free_flips	78	eval/results/naive.json	8B free translation of the new DE.lexicon_flips	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+w8_flag	81.7	eval/results/naive.json	8B window-only (locked span edit).flagged	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+cost_calls	285	eval/results/cost_fresh166.json	unique_calls	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+cost_secs	17.15	eval/results/cost_fresh166.json	model_secs_per_item	{:.2f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+ag_agree	62	eval/results/agreement_fresh166.json	agree	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+ag_n	69	eval/results/agreement_fresh166.json	n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+ag_kappa	0.532	eval/results/agreement_fresh166.json	kappa	{:.3f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+ag_unfl_n	49	eval/results/agreement_fresh166.json	unflagged_n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+eco_per_month	28.7	eval/results/economics.json	de_changes_per_month	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+eco_changes	216	eval/results/economics.json	de_changes	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+eco_months	7.5	eval/results/economics.json	span_months	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+eco_chf_item	0.0024	eval/results/economics.json	chf_per_item_infomaniak	{:.4f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+eco_x1_items	57	eval/results/economics.json	x1.items_per_month	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+eco_x10_items	574	eval/results/economics.json	x10.items_per_month	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+eco_x1_usd	0.16	eval/results/economics.json	x1.usd_per_month_publicai	{:.2f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+eco_x10_usd	1.59	eval/results/economics.json	x10.usd_per_month_publicai	{:.2f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+eco_x1_chf	0.14	eval/results/economics.json	x1.chf_per_month_infomaniak	{:.2f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+eco_x10_chf	1.36	eval/results/economics.json	x10.chf_per_month_infomaniak	{:.2f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+eco_x1_h	0.3	eval/results/economics.json	x1.model_hours_per_month_sequential	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+eco_x10_h	2.7	eval/results/economics.json	x10.model_hours_per_month_sequential	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed_rules	35.0	eval/results/fedlex_compare.json	rules_exact_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed8_exact	50.0	eval/results/fedlex_compare.json	8b_mlx_dwq.exact_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed8_exact_n	60	eval/results/fedlex_compare.json	8b_mlx_dwq.exact	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed8_flag	31.7	eval/results/fedlex_compare.json	8b_mlx_dwq.flag_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed8_ready_pct	82	eval/results/fedlex_compare.json	8b_mlx_dwq.ready	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed8_su	8	eval/results/fedlex_compare.json	8b_mlx_dwq.unflagged_stale_untranslated	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed8_su_pct	6.7	eval/results/fedlex_compare.json	8b_mlx_dwq.unflagged_stale_untranslated_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed8_flagged_n	38	eval/results/fedlex_compare.json	8b_mlx_dwq.flagged	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed70_exact	48.3	eval/results/fedlex_compare.json	70b.exact_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed70_exact_n	58	eval/results/fedlex_compare.json	70b.exact	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed70_flag	23.3	eval/results/fedlex_compare.json	70b.flag_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed70_flagged_n	28	eval/results/fedlex_compare.json	70b.flagged	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed70_ready	92	eval/results/fedlex_compare.json	70b.ready	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed70_real	2	eval/results/fedlex_compare.json	70b.unflagged_real	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed70_real_pct	1.7	eval/results/fedlex_compare.json	70b.unflagged_real_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed70_su	6	eval/results/fedlex_compare.json	70b.unflagged_stale_untranslated	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed70_su_pct	5.0	eval/results/fedlex_compare.json	70b.unflagged_stale_untranslated_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed_n	120	eval/results/fedlex_compare.json	n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed8_ready_pct	68.3	eval/results/fedlex_compare.json	8b_mlx_dwq.ready_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed70_ready_pct	76.7	eval/results/fedlex_compare.json	70b.ready_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+cap_flag	70	eval/certificates/recorded-fresh166.json	pass_rule.flag_rate_max_pct	{:.0f}	PYTHONPATH=src python3 -m gleichlaut.certify --backend cache --name recorded-fresh166	README/report/notes
+div_nemluvio	8	data/backtest/targeted5.json	cases.0.tests.0.2	{}	PYTHONPATH=src python3 -m gleichlaut.backtest --hist <2026 snapshots> --wb2025 <2025 XML>	README/report/notes
+div_diaphin_it	12	data/backtest/targeted5.json	cases.1.tests.0.2	{}	PYTHONPATH=src python3 -m gleichlaut.backtest --hist <2026 snapshots> --wb2025 <2025 XML>	README/report/notes
+div_diaphin_de	6	data/backtest/targeted5.json	cases.1.tests.1.2	{}	PYTHONPATH=src python3 -m gleichlaut.backtest --hist <2026 snapshots> --wb2025 <2025 XML>	README/report/notes
+div_etanercept	62.5	data/backtest/targeted5.json	cases.2.tests.0.2	{}	PYTHONPATH=src python3 -m gleichlaut.backtest --hist <2026 snapshots> --wb2025 <2025 XML>	README/report/notes
+div_cresemba	16	data/backtest/targeted5.json	cases.5.tests.0.2	{}	PYTHONPATH=src python3 -m gleichlaut.backtest --hist <2026 snapshots> --wb2025 <2025 XML>	README/report/notes
+div_dupixent_lo	15	data/backtest/targeted5.json	cases.6.tests.0.2	{}	PYTHONPATH=src python3 -m gleichlaut.backtest --hist <2026 snapshots> --wb2025 <2025 XML>	README/report/notes
+div_dupixent_hi	30	data/backtest/targeted5.json	cases.8.tests.0.2	{}	PYTHONPATH=src python3 -m gleichlaut.backtest --hist <2026 snapshots> --wb2025 <2025 XML>	README/report/notes
+fed_ready_pct_8	82	eval/results/fedlex.json	shipped lane = A+code + lock + slot + G1–G4 (DEV: guard choice made after seeing these outputs).all.ready	{}	PYTHONPATH=src python3 -m gleichlaut.fed.score	README/report/notes
+lag_fr_same	212	data/backtest/lag.json	summary.draft.fr.status.same_step	{}	PYTHONPATH=src python3 -m gleichlaut.backtest --hist <2026 snapshots> --wb2025 <2025 XML>	README/report/notes
+lag_it_same	208	data/backtest/lag.json	summary.draft.it.status.same_step	{}	PYTHONPATH=src python3 -m gleichlaut.backtest --hist <2026 snapshots> --wb2025 <2025 XML>	README/report/notes
+lag_both_same	208	data/backtest/lag.json	summary.draft.fr_and_it.same_step	{}	PYTHONPATH=src python3 -m gleichlaut.backtest --hist <2026 snapshots> --wb2025 <2025 XML>	README/report/notes
+lag_units	216	data/backtest/lag.json	summary.draft.units	{}	PYTHONPATH=src python3 -m gleichlaut.backtest --hist <2026 snapshots> --wb2025 <2025 XML>	README/report/notes
+lag_over60	27	data/backtest/lag.json	vision_figures_check.over60_distinct_text_pairs	{}	PYTHONPATH=src python3 -m gleichlaut.backtest --hist <2026 snapshots> --wb2025 <2025 XML>	README/report/notes
+window_disobeyed_8b_pct	73	eval/results/research_facts.json	window_disobeyed_8b_pct.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
+window_disobeyed_70b_pct	81	eval/results/research_facts.json	window_disobeyed_70b_pct.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
+window_8b_unflagged_real	6	eval/results/research_facts.json	window_8b_unflagged_real.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
+judge_known_divergences	9	eval/results/research_facts.json	judge_known_divergences.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
+judge_70b_nein	2	eval/results/research_facts.json	judge_70b_nein.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
+typing_operator_accuracy_8b_pct	36	eval/results/research_facts.json	typing_operator_accuracy_8b_pct.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
+typing_wrong_in_all_three	53	eval/results/research_facts.json	typing_wrong_in_all_three.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
+retry_8b_fixed	0	eval/results/research_facts.json	retry_8b_fixed.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
+publicai_8b_name_identical_cells	760	eval/results/research_facts.json	publicai_8b_name_identical_cells.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
+gguf_q4_agree_bf16	622	eval/results/research_facts.json	gguf_q4_agree_bf16.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
+mlx4_agree_bf16	548	eval/results/research_facts.json	mlx4_agree_bf16.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
+judge_70b_nein_of	270	eval/results/research_facts.json	judge_70b_nein.of	{}	hand-entered from the cited source (see note in file)	README/report/notes
+typing_wrong_in_all_three_of	77	eval/results/research_facts.json	typing_wrong_in_all_three.of	{}	hand-entered from the cited source (see note in file)	README/report/notes
+retry_8b_fixed_of	26	eval/results/research_facts.json	retry_8b_fixed.of	{}	hand-entered from the cited source (see note in file)	README/report/notes
+publicai_8b_name_identical_cells_of	792	eval/results/research_facts.json	publicai_8b_name_identical_cells.of	{}	hand-entered from the cited source (see note in file)	README/report/notes
+gguf_q4_agree_bf16_of	648	eval/results/research_facts.json	gguf_q4_agree_bf16.of	{}	hand-entered from the cited source (see note in file)	README/report/notes
+okp_insured_2025_millions	9.08	eval/results/external_facts.json	okp_insured_2025_millions.value	{:.2f}	hand-entered from the cited source (see note in file)	README/report/notes
+main_language_fr_pct	22.6	eval/results/external_facts.json	main_language_fr_pct.value	{:.1f}	hand-entered from the cited source (see note in file)	README/report/notes
+main_language_it_pct	7.8	eval/results/external_facts.json	main_language_it_pct.value	{:.1f}	hand-entered from the cited source (see note in file)	README/report/notes
+infomaniak_70b_chf_per_m_in	0.70	eval/results/external_facts.json	infomaniak_70b_chf_per_m_in.value	{:.2f}	hand-entered from the cited source (see note in file)	README/report/notes
+infomaniak_70b_chf_per_m_out	2.50	eval/results/external_facts.json	infomaniak_70b_chf_per_m_out.value	{:.2f}	hand-entered from the cited source (see note in file)	README/report/notes
+efd_language_service_chf_per_page_min	252	eval/results/external_facts.json	efd_language_service_chf_per_page_min.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
+efd_language_service_chf_per_page_max	267	eval/results/external_facts.json	efd_language_service_chf_per_page_max.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
+apertus_70b_bf16_gb	144.6	eval/results/external_facts.json	apertus_70b_bf16_gb.value	{:.1f}	hand-entered from the cited source (see note in file)	README/report/notes
+apertus_70b_gguf_q4_gb	43.72	eval/results/external_facts.json	apertus_70b_gguf_q4_gb.value	{:.2f}	hand-entered from the cited source (see note in file)	README/report/notes

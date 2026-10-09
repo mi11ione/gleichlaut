@@ -243,7 +243,7 @@ def fedlex_compare():
         lines = open(os.path.join(LABELS, labels_file), encoding="utf-8").read().splitlines()[1:]
         c = Counter(l.split("\t")[2] for l in lines); real, su = c.get("REAL", 0), c.get("stale", 0) + c.get("german", 0)
         return dict(n=n, exact=exact, exact_pct=round(100 * exact / n, 1), flagged=flagged, flag_rate=round(100 * flagged / n, 1),
-                    ready=n - flagged, ready_nonexact_labelled=len(lines), classes=dict(sorted(c.items())),
+                    ready=n - flagged, ready_pct=round(100 * (n - flagged) / n, 1), ready_nonexact_labelled=len(lines), classes=dict(sorted(c.items())),
                     unflagged_real=real, unflagged_real_pct=round(100 * real / n, 2),
                     unflagged_stale_untranslated=su, unflagged_stale_untranslated_pct=round(100 * su / n, 2),
                     passes=(100 * real / n <= PASS_RULE["unflagged_real_max_pct"] and 100 * su / n <= PASS_RULE["unflagged_stale_untranslated_max_pct"]
