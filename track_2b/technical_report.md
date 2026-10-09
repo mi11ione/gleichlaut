@@ -33,7 +33,9 @@ families never seen during design), with the guards and all their resources hash
 Apertus 70B drafts equal the official text **17.5%** of the time vs **6.0%** for the no-model baseline (**+11.4 points,
 95% CI [4.8, 18.7]**); **39.8%** of items come out ready, and **0 of 166** ready drafts carry a meaning error, a stale
 change or untranslated German (95% upper bound 2.3% of items, 5.5% of ready drafts); a blind second Claude annotator agrees (0 severe defects among the 49
-ready non-exact drafts). The pre-registered pass rule is met. «TBD:M3 one sentence on the seed-1 rerun». Cost:
+ready non-exact drafts). The pre-registered pass rule is met, and it is met again in a pre-registered rerun with a different
+seed (R2): 69.9% of final outputs identical, flag agreement κ 0.963, exact +12.0, 58.4% flagged, and 2 of 166 ready
+drafts with a Germanised compound ("SGLT-2-inhibiteur"), within the 2% limit. Cost:
 **CHF 0.0024** per item at a Swiss provider's published price. `make run` re-executes this run offline from the recorded
 responses and re-derives every number from them.
 
@@ -140,7 +142,7 @@ German changes. Every ready non-exact draft was read in full; a seeded 20 flagge
 | **Apertus 70B + guards3 + re-ask** | **fresh, held out** | **166** | **17.5%** | **+11.4 [4.8, 18.7]** | **60.2%** | **39.8%** | **0 / 0 / 0** | **PASS** |
 | same, unseen families | fresh | 154 | 15.6% | +12.3 [5.8, 20.1] | 60.4% | 39.6% | 0 / 0 / 0 | PASS |
 | same, without the largest boilerplate family | fresh | 132 | 22.0% | +14.4 [6.8, 22.7] | 75.8% | 24.2% | 0 / 0 / 0 | FAIL (flags) |
-| «TBD:M3 row» | | | | | | | | |
+| same pipeline, rerun with seed 1 (R2) | fresh | 166 | 18.1% | +12.0 [5.4, 19.3] | 58.4% | 41.6% | 0 / 0 / 2 | PASS |
 | Apertus 70B + guards v2 + re-ask | out-of-sample | 242 | 29.3% | +14.9 [9.9, 20.7] | 61.6% | 38.4% | 1 / 0 / 10 | **FAIL** |
 | Apertus 8B (MLX DWQ) + guards3, no re-ask | dev | 120 | 15.0% | +9.2 [3.3, 15.8] | 85.0% | 15.0% | 1 / 0 / 0 | FAIL (flags) |
 | Fedlex: 8B + lock + slots + G1–G4 | Fedlex (dev) | 120 | 50.0% | rules 35.0% | 31.7% | 68.3% | 0 / 4 / 4 | FAIL |
@@ -179,13 +181,15 @@ on CPU does. The binding cost is review: 60% of drafts are flagged. Translator m
 - **8B SL numbers are MLX DWQ on dev items**; the shipped GGUF is unmeasured here. The 70B has not been self-hosted.
 - **Labels** are by Claude agents (first and blind second annotator); the team lead's adjudication of 7 disagreements is
   pending (`eval/labels/ADJUDICATION.md`). Translator time saved is unmeasured.
-- **API non-determinism:** identical requests at temperature 0 did not always return the same text (docs/provenance.md).
+- **API non-determinism:** identical requests at temperature 0 do not always return the same text; a seeded rerun
+  changed 30.1% of final outputs (docs/provenance.md). Certification of any endpoint therefore re-runs the whole suite.
 
 ## 7. Reproducibility
 
 `make run` (Docker, CPU, `--network none` unless `LLM_BASE_URL` is set) verifies the sha256 of the frozen code, guard
 resources and items; re-executes the recorded 70B runs end-to-end from recorded responses (every request rebuilt
-byte-for-byte and found by its payload hash: 285 of 285 for the headline run, 242 of 242 for dev); re-guards and
+byte-for-byte and found by its payload hash: 285 of 285 for the headline run, 283 of 283 for the seeded rerun, 242 of
+242 for dev); re-guards and
 re-scores every recorded run against `eval/results/`; drafts 5 Fedlex paragraphs live if `LLM_BASE_URL` is set; emits and
 validates XLIFF and FHIR; builds the review page. `claims.tsv` maps every number in this report to a results file; CI
 fails on drift. Pre-registrations: `eval/prereg/PREREG.md` (R0–R5), committed before each run.

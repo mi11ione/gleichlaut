@@ -1,0 +1,85 @@
+{
+ "after_labels": {
+  "new_classes": {
+   "cosmetic": 1,
+   "equivalent": 2,
+   "german": 2
+  },
+  "new_ready_labelled": 5,
+  "passes": true,
+  "unflagged_real": 0,
+  "unflagged_stale_untranslated": 2,
+  "unflagged_stale_untranslated_pct": 1.2
+ },
+ "calls": 283,
+ "changed_pct": 30.1,
+ "flag_agreement": 163,
+ "flag_kappa": 0.963,
+ "flag_rate_original": 60.2,
+ "flag_rate_rerun": 58.4,
+ "identical_outputs": 116,
+ "identical_pct": 69.9,
+ "n": 166,
+ "needs_review": 5,
+ "rerun": {
+  "chrf": {
+   "ci95": [
+    5.4,
+    8.0
+   ],
+   "delta": 6.7,
+   "model": 92.7,
+   "rules": 86.0
+  },
+  "ef1": {
+   "ci95": [
+    46.8,
+    61.0
+   ],
+   "delta": 54.1,
+   "model": 62.0,
+   "rules": 7.9
+  },
+  "exact": {
+   "ci95": [
+    5.4,
+    19.3
+   ],
+   "delta": 12.0,
+   "model": 18.1,
+   "rules": 6.0
+  },
+  "flag_rate": 58.4,
+  "pass_rule": {
+   "exact_gain": [
+    12.0,
+    true
+   ],
+   "flag_rate": [
+    58.4,
+    true
+   ],
+   "unflagged_real": [
+    0.0,
+    true
+   ],
+   "unflagged_stale_untranslated": [
+    0.0,
+    true
+   ]
+  },
+  "ready_rate": 41.6,
+  "unflagged": 69,
+  "unflagged_REAL": 0,
+  "unflagged_german": 0,
+  "unflagged_stale": 0
+ },
+ "served": [
+  "swiss-ai/apertus-v1.5-70b"
+ ],
+ "serving_backends": {
+  "fp1": 81,
+  "vllm": 202
+ },
+ "status": "PENDING_REVIEW"
+}

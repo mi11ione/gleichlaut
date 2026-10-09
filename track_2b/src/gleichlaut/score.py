@@ -22,6 +22,8 @@ RUNS = {
     "dev120": dict(items="items/items_dev.json", final="runs/70b_dev120_v2_final.jsonl", stack="v2",
                    labels=["dev120_70b_unflagged.tsv", "dev120_70b_reask.tsv"], flagged20=None,
                    what="70B whole-paragraph + guards v2 + one re-ask, 120 dev items (guards designed on these: in-sample)"),
+    "m3_seed1": dict(items="items/items_fresh.json", final="runs/certify_m3-seed1.jsonl", stack="g3", labels=None, flagged20=None,
+                     seed=1, what="M3 (PREREG R2): the same frozen 70B pipeline on the fresh 166 again, seed=1"),
     "dev120_8b": dict(items="items/items_dev.json", final="runs/8b_dwq_dev120_s2b.jsonl", stack="g3", recorded_flag=False,
                       labels="dev120_8b_s2b_unflagged.tsv", flagged20=None,
                       what="8B (MLX 4-bit DWQ, local) whole-paragraph + guards3, NO re-ask, 120 dev items"),
@@ -256,3 +258,32 @@ def fedlex_compare():
     assert len(R70) == n
     return {"n": n, "rules_exact": rules, "rules_exact_pct": round(100 * rules / n, 1), "8b_mlx_dwq": a, "70b": b,
             "decision": "Fedlex stays 8B; every draft goes to review" if not b["passes"] else "70B passes R0"}
+
+
+def m3():
+    """PREREG R2: run-to-run stability of the 70B lane. The same frozen pipeline on the fresh 166 with seed=1 (a distinct
+    request, so the provider's response cache cannot answer) vs the original run."""
+    p = os.path.join(DATA, "runs", "certify_m3-seed1.jsonl")
+    if not os.path.exists(p): return None
+    I = {x["key"]: x for x in load_items("items/items_fresh.json")}
+    A = load_jsonl(RUNS["fresh166"]["final"]); B = load_jsonl("runs/certify_m3-seed1.jsonl")
+    keys = [k for k in I if k in B]; n = len(keys)
+    same = sum(A[k]["out"] == B[k]["out"] for k in keys)
+    fa = [A[k]["guard_flag"] for k in keys]; fb = [B[k]["guard_flag"] for k in keys]
+    agree = sum(x == y for x, y in zip(fa, fb)); pA, pB = sum(fa) / n, sum(fb) / n
+    pe = pA * pB + (1 - pA) * (1 - pB); kappa = ((agree / n) - pe) / (1 - pe) if pe < 1 else 1.0
+    cert = json.load(open(os.path.join(core.ROOT, "eval", "certificates", "m3-seed1.json"), encoding="utf-8"))
+    calls = [json.loads(l) for l in open(os.path.join(core.ROOT, "eval", "certificates", "m3-seed1.calls.jsonl"), encoding="utf-8")]
+    new = {c[0]: c[2] for c in (l.split("\t") for l in open(os.path.join(LABELS, "m3_new_ready.tsv"), encoding="utf-8").read().splitlines()[1:])}
+    m = cert["metrics"]; nc = Counter(new.values())
+    real = m["unflagged_REAL"] + nc.get("REAL", 0); su = m["unflagged_stale"] + m["unflagged_german"] + nc.get("stale", 0) + nc.get("german", 0)
+    after = dict(new_ready_labelled=len(new), new_classes=dict(sorted(nc.items())), unflagged_real=real, unflagged_stale_untranslated=su,
+                 unflagged_stale_untranslated_pct=round(100 * su / n, 1),
+                 passes=(100 * real / n <= PASS_RULE["unflagged_real_max_pct"] and 100 * su / n <= PASS_RULE["unflagged_stale_untranslated_max_pct"]
+                         and m["pass_rule"]["exact_gain"][1] and m["pass_rule"]["flag_rate"][1]))
+    return dict(n=n, identical_outputs=same, identical_pct=round(100 * same / n, 1), changed_pct=round(100 * (n - same) / n, 1), flag_agreement=agree, flag_kappa=round(kappa, 3),
+                after_labels=after,
+                flag_rate_original=round(100 * pA, 1), flag_rate_rerun=round(100 * pB, 1),
+                rerun=cert["metrics"], status=cert["status"], needs_review=len(cert["needs_review"]),
+                calls=len(calls), served=sorted({c["model_served"] for c in calls}),
+                serving_backends=dict(Counter((c.get("backend") or "?").split("-")[0] for c in calls)))

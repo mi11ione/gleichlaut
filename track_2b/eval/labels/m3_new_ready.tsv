@@ -1,0 +1,6 @@
+key	needs_fix	class	note
+wb063-fr	no	equivalent	De ligne 1 extended to "dès", relapse option dropped as in German; wording differs only.
+wb084-it	yes	cosmetic	Correct addition; "SGLT - 2" has spurious spaces around hyphen.
+wb085-fr	yes	german	"SGLT-2-inhibiteur" Germanised compound; French needs "inhibiteur du SGLT-2".
+wb085-it	yes	german	"un SGLT - 2 - inibitore" calques German compound order; should be "inibitore del SGLT-2"; stray spaces.
+wb087-fr	no	equivalent	Code sentence added correctly; elliptical but acceptable wording vs official.

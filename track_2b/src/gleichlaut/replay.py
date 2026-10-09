@@ -13,14 +13,14 @@ FIELDS = ("out", "guard_flag", "rule_only", "reasked", "replaced", "retried", "l
 # Runs that re-execute exactly. oos242 is re-scored and re-guarded but not re-executed: 4 of its 242 items were sent
 # the same masked prompt as another item concurrently and the API answered differently; the response cache kept one
 # answer per prompt (docs/provenance.md).
-REEXEC = ("fresh166", "dev120")
+REEXEC = ("fresh166", "dev120", "m3_seed1")
 SCORED = ("fresh166", "oos242", "dev120", "dev120_8b")
 
 
 def reexecute(run_id, workers=4):
     from concurrent.futures import ThreadPoolExecutor
     R = score.RUNS[run_id]; I = score.load_items(R["items"]); F = score.load_jsonl(R["final"])
-    ask = backends.Cache(CACHE)
+    ask = backends.Cache(CACHE, extra={"seed": R["seed"]} if "seed" in R else None)
     P = core.Pipeline(ask, R["stack"])
     with ThreadPoolExecutor(workers) as ex: out = list(ex.map(P.run, I))
     diff = [(x["key"], f) for x, r in zip(I, out) for f in FIELDS if r.get(f) != F[x["key"]].get(f)]
@@ -35,6 +35,7 @@ def compute():
     res["fedlex_shipped"] = score.fedlex_shipped()
     res["economics"] = score.economics()
     res["fedlex_compare"] = score.fedlex_compare()
+    res["m3"] = score.m3()
     return res
 
 

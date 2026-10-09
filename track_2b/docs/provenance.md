@@ -26,6 +26,7 @@ error; it never falls through to a live call.
 |---|---|---|---|
 | fresh 2025 set, guards3 (the headline) | 166 | 285 / 285 | 166 / 166 |
 | dev set, guards v2 | 120 | 242 / 242 | 120 / 120 |
+| fresh set again, seed 1 (stability rerun, R2) | 166 | 283 / 283 | 166 / 166 |
 | out-of-sample 2026 set, guards v2 (failed run) | 242 | 431 / 431 (323 distinct) | 238 / 242, see §3 |
 
 A cache hit is a proof that the prompt was rebuilt byte-for-byte from the items by the frozen code.

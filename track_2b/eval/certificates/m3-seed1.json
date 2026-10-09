@@ -1,0 +1,87 @@
+{
+ "name": "m3-seed1",
+ "date": "2026-10-09T19:35:54+00:00",
+ "endpoint": "Public AI via development gateway (evaluation only; may route outside Switzerland)",
+ "model_requested": "swiss-ai/apertus-v1.5-70b",
+ "models_served": [
+  "swiss-ai/apertus-v1.5-70b"
+ ],
+ "seeds": [
+  "1"
+ ],
+ "suite": {
+  "items": "items/items_fresh.json",
+  "n": 166,
+  "sha256": "157ca97a6ccf207e3f570e66a79b4da543cab69f3bb88b01da5bc741a5df9b02"
+ },
+ "freeze_sha256": "2ae405fe07e3b3b14bd8b23f9e21c5ee90da9d8c89f67512671a05cb8b5b8abd",
+ "pass_rule": {
+  "unflagged_real_max_pct": 1.0,
+  "unflagged_stale_untranslated_max_pct": 2.0,
+  "exact_gain_min_pts": 5.0,
+  "flag_rate_max_pct": 70.0
+ },
+ "status": "PENDING_REVIEW",
+ "metrics": {
+  "exact": {
+   "rules": 6.0,
+   "model": 18.1,
+   "delta": 12.0,
+   "ci95": [
+    5.4,
+    19.3
+   ]
+  },
+  "ef1": {
+   "rules": 7.9,
+   "model": 62.0,
+   "delta": 54.1,
+   "ci95": [
+    46.8,
+    61.0
+   ]
+  },
+  "chrf": {
+   "rules": 86.0,
+   "model": 92.7,
+   "delta": 6.7,
+   "ci95": [
+    5.4,
+    8.0
+   ]
+  },
+  "flag_rate": 58.4,
+  "ready_rate": 41.6,
+  "unflagged": 69,
+  "unflagged_REAL": 0,
+  "unflagged_stale": 0,
+  "unflagged_german": 0,
+  "pass_rule": {
+   "unflagged_real": [
+    0.0,
+    true
+   ],
+   "unflagged_stale_untranslated": [
+    0.0,
+    true
+   ],
+   "exact_gain": [
+    12.0,
+    true
+   ],
+   "flag_rate": [
+    58.4,
+    true
+   ]
+  }
+ },
+ "needs_review": [
+  "wb063-fr",
+  "wb084-it",
+  "wb085-fr",
+  "wb085-it",
+  "wb087-fr"
+ ],
+ "items_with_model_digits": 0,
+ "wall_secs": 4102.8
+}

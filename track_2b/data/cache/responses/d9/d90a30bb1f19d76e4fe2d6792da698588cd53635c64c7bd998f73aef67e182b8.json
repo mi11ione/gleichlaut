@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 33, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 344, "secs": 7.7, "seed": 1, "usd": 0.00037844}, "text": "Anémie rénale lors d'une insuffisance rénale: ⟨B⟩ Le code d’indication suivant doit être transmis: ⟨B⟩"}

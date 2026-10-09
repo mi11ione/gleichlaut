@@ -52,6 +52,7 @@ earlier runs that led there, reported because they failed.
 |---|---|---|---|---|
 | Rules only (copy + number substitution) | 6.0% | | | |
 | **Apertus 70B + guards3 + one re-ask** | **17.5%** (+11.4, 95% CI [4.8, 18.7]) | **39.8%** | **0 / 0 / 0** of 166 (95% upper bound 2.3% of items; 5.5% of ready drafts) | **PASS** |
+| Same pipeline, pre-registered rerun with seed 1 | 18.1% (+12.0, 95% CI [5.4, 19.3]) | 41.6% | 0 / 0 / 2 of 166 | **PASS** |
 | Apertus 70B + earlier guards, out-of-sample 2026 set (242), before guards3 existed | 29.3% | 38.4% | 1 / 0 / 10 | **FAIL** |
 | Apertus 8B (MLX 4-bit DWQ) + guards3, development set (120, not held out) | 15.0% | 15.0% | 1 / 0 / 0 | FAIL (85.0% flagged) |
 
