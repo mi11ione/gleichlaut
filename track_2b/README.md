@@ -1,15 +1,16 @@
 # Gleichlaut
 
-**When Switzerland amends a binding text in German, Gleichlaut drafts the matching French and Italian change with
-Apertus. Code places every number. Frozen guards decide what is ready. Nothing is published unguarded.**
+**When a Swiss federal text is amended in German, Gleichlaut drafts the matching French and Italian change with
+Apertus. Numbers reach the model only as slot codes. Frozen guards decide what is ready. Nothing is published unguarded.**
 
 Track 2B · declared maturity: **feasibility study** · models: Apertus v1.5 8B + 70B · [technical report](technical_report.md) · [demo video](VIDEO_URL)
 
 ## The problem, measured
 
-The German, French and Italian versions of the BAG Spezialitätenliste, the list of medicines that mandatory health
-insurance reimburses, are equally binding. In the 5 Oct 2026 feed we found by hand 5 independent divergences in today's
-reimbursement conditions. **All of them are numbers:**
+BAG publishes the reimbursement conditions ("limitations") of the Spezialitätenliste, the list of medicines that
+mandatory health insurance pays for (9.08 million insured), in German, French and Italian under one identifier, and its
+own review checklist asks whether the translations are congruent. In the 6 Oct 2026 feed we found by hand 5 independent
+divergences in current conditions. **All of them are numbers:**
 
 | Product (limitation) | German / French | Italian |
 |---|---|---|
@@ -19,16 +20,19 @@ reimbursement conditions. **All of them are numbers:**
 | Cresemba (`CRESE.Kps.IM`) | French drops "≥ 16 kg" | |
 | Dupixent ×4 | French misses or shifts the 15–30 kg tier | |
 
-Every month BAG changes dozens of German limitation texts, and each change has to be made again in French and Italian,
-without touching anything else.
+German limitation texts change about 28.7 times a month. BAG's translators keep pace (our backtest found French and
+Italian updated in the same monthly step for 208 of 216 changes), so the job is not speed: it is making each change
+again in French and Italian, exactly, without touching anything else, and without slipping a number.
 
 ## What Gleichlaut does
 
 1. **Mines** each German change from BAG's public monthly FHIR feed (or a Fedlex consolidated version).
 2. **Locks** the old French/Italian text outside edit windows projected from the German diff, and turns every number into
-   a slot code (⟨A⟩, ⟨B⟩, …) so the model never writes one.
-3. **Drafts** the amended paragraph with Apertus: the 8B for federal statutes (where it is measured to suffice), the 70B
-   for SL limitations (where the 8B is not).
+   a slot code (⟨A⟩, ⟨B⟩, …) that code writes back. The 70B wrote 0 digits in 285 calls; in 3 of 166 drafts it wrote a
+   number word itself, and all 3 were flagged. The 8B cannot emit either (logit mask).
+3. **Drafts** the amended paragraph with Apertus: the 70B for SL limitations (the 8B flags 85.0% there, above our cap);
+   the 8B for federal statutes, where the 70B measured no better on the same 120 paragraphs (exact 48.3% vs 50.0%; 2 vs
+   0 real errors among drafts marked ready). Neither size passes our rule on statutes, so every statute draft is reviewed.
 4. **Guards** every draft with a frozen deterministic stack: lock, numbers/negation/modality, German left in, change not
    applied, content dropped, duplication, copied-from-German, terminology, vocabulary. One re-ask with the complaints; kept
    only if every guard passes.
@@ -48,7 +52,7 @@ Fresh held-out set: 166 FR/IT items from 2025 SL changes, 154 of them in edit fa
 | Apertus 70B + earlier guards, out-of-sample 2026 set (242) | 29.3% | 38.4% | 1 / 0 / 10 | **FAIL** |
 | Apertus 8B (MLX DWQ) + guards3, dev set (120) | 15.0% | 15.0% | 1 / 0 / 0 | FAIL (85.0% flagged) |
 
-Cost of the 70B lane: **$0.0028 per item**. About two thirds of flagged drafts need no change (13 of a sampled 20): the
+Cost of the 70B lane: **CHF 0.0024 per item** at a Swiss provider's published price (CHF 0.14 a month at today's volume). About two thirds of flagged drafts need no change (13 of a sampled 20): the
 guards are deliberately conservative. Where Apertus fell short, with counts: [docs/failure-modes.md](docs/failure-modes.md).
 
 ## Run it
@@ -73,7 +77,7 @@ make test           # unit and reproduction tests
 
 | Lane | Runs on | External services at runtime |
 |---|---|---|
-| Fedlex statutes | Apertus 8B GGUF on CPU, in process | none |
+| Fedlex statutes (every draft reviewed) | Apertus 8B GGUF on CPU, in process | none |
 | SL limitations (default) | Apertus 70B on an endpoint the user controls (own hardware or a Swiss-resident provider), gated by `make certify` | that endpoint only |
 | SL air-gapped fallback | Apertus 8B GGUF on CPU; every item goes to review | none |
 
@@ -88,6 +92,10 @@ On-premise or air-gapped; build-time and runtime dependencies are separated in
 - The 8B SL numbers are from an MLX 4-bit build on dev items; the GGUF build that ships has not yet been run on the
   fresh set (the CPU workflow is in `.github/workflows/m1.yml`).
 - Our first out-of-sample run failed the same rule. We kept the rule, fixed the guards, and tested on new data.
+- The guards check that an amendment mirrors the German change; a divergence already present in the old French/Italian is
+  carried forward. All 5 divergences we found predate our data window, so we cannot show Gleichlaut would have prevented them.
+- No translation lag was found (backtest); translator minutes saved have not been measured.
+- On federal statutes the 8B leaves German or a stale part in 8 of 120 drafts it marks ready (6.7%, above our 2% limit).
 - Every number in this README is in [claims.tsv](claims.tsv) with the file and command that produce it.
 
 ## Repository

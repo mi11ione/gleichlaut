@@ -15,6 +15,8 @@ that is the one job where both sizes were measured to beat a no-model baseline. 
 | **SL drafting with the 8B** (whole paragraph + guards3, dev 120, MLX 4-bit DWQ) | Quality gain is real (+9.2 exact), but 85% of drafts are flagged (cap 70%) and 1 unflagged draft reverses a meaning ("riduzione" for "Erhöhung") | SL default is the 70B on a certified endpoint; the 8B is the air-gapped fallback in which every item goes to review. GGUF 8B on the fresh set (M1) decides whether this changes |
 | **SL drafting with the 70B, guards v2** (out-of-sample 242) | Failed the pre-registered rule: 4.1% of items left German or Germanised terms in the draft unflagged ("immunothrombozytopénie", "Semaglutid", "Folgendo", DME/RVO) | guards3 adds a copied-from-German detector, a mined abbreviation map and an out-of-vocabulary check, then was tested on a fresh set |
 
+| **Statute drafting** (Fedlex, 120 FR/IT, shipped lane with lock + slots + G1–G4; DEV) | 8B: 0 real errors but 8 German/stale among drafts marked ready (6.7%). 70B on the same items (PREREG R5): 2 real errors and 6 German/stale, exact 48.3% vs 50.0% | 8B on CPU for statutes (the 70B buys nothing); every statute draft goes to review. Vocational titles ("EFZ" → CFC/AFC) are the common miss: the terminology guard G6 has only SL-mined pairs |
+
 ## Known blind spots of the guards (not fixed; disclosed)
 
 - **Direction flips** inside an edited span (increase ↔ reduction) are checked by no guard. Seen once, in an 8B output.

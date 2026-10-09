@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 11, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 206, "secs": 15.3, "seed": null, "usd": 0.00020103999999999999}, "text": "c. note d'expérience: 30 %."}

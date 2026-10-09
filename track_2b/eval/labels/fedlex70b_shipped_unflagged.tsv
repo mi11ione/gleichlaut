@@ -1,0 +1,35 @@
+key	needs_fix	class	note
+cc/1955/871_893_899/2025-07-01#art_86_a/para_2|it	no	equivalent	Changes applied; lavorativi vs feriali harmless
+cc/1985/1778_1778_1778/2025-01-01#art_7/para_1/listintro|it	yes	minor	Ungrammatical "in misura seguente"; dedurre lacks object (dedurli)
+cc/1988/1776_1776_1776/2025-01-01#art_5/para_1|fr	no	equivalent	Telegram/telex/fax removed correctly; minor wording difference
+cc/1997/2417_2417_2417/2026-02-01#art_14/para_3/lbl_c|fr	no	equivalent	Date updated; official also edited des/de and Gangfisch
+cc/1997/2417_2417_2417/2026-02-01#art_14/para_3/lbl_c|it	no	equivalent	Date updated; official added (Gangfisch) extra
+cc/1997/2417_2417_2417/2026-02-01#art_15/para_3|it	no	equivalent	3 m vs tre metri, harmless
+cc/2000/554/2025-08-01#art_16/para_4|it	yes	german	"Transplantationsgesetz" left in German; also del 8 should be dell'8
+cc/2003/735/2025-01-01#art_7/para_3|fr	yes	cosmetic	"actions" inconsistent with "campagne" used earlier in same paragraph
+cc/2003/735/2025-01-01#art_7/para_3|it	yes	minor	Wrong abbreviation UFAC instead of UFAG
+cc/2003/735/2025-01-01#art_9/para|it	yes	german	German abbreviation BLW left ("L'BLW"); should be UFAG
+cc/2009/681/2025-05-01#art_12_a/para_1|fr	no	preexisting	Date updated; "autorisations d'admission" vs licences predates change
+cc/2009/681/2025-05-01#art_3/para_1|fr	yes	REAL	Restricted to goods transport; German removed passenger/goods restriction entirely
+cc/2009/681/2025-05-01#art_3/para_1|it	no	equivalent	Restriction removed correctly; professioni vs attività harmless
+cc/2009/681/2025-05-01#art_4/para_1/lbl_b|fr	no	equivalent	Drops "et" per German; official kept it
+cc/2009/681/2025-05-01#art_4/para_1/lbl_c|fr	no	equivalent	Adds "et" per German; official placed conjunction elsewhere
+cc/2010/267/2025-04-01#art_269/para_2/lbl_g|it	yes	cosmetic	Double "nonché" awkward; meaning correct
+cc/2011/251/2026-06-01#art_2/para_1/lbl_c|fr	yes	minor	Non-official profession title "employée de restaurant"; should be spécialiste en restauration CFC
+cc/2011/251/2026-06-01#art_2/para_1/lbl_c|it	yes	german	EFZ left untranslated; title reuses old EBA-level profession name
+cc/2011/251/2026-06-01#art_2/para_1/lbl_e|it	yes	REAL	CFP wrong qualification level (should be AFC); "cucina" instead of cuoco
+cc/2011/251/2026-06-01#art_2/para_1/lbl_h|fr	yes	german	EFZ left; invented title instead of gestionnaire en restauration de système CFC
+cc/2011/251/2026-06-01#art_4/para_1/lbl_a|fr	yes	cosmetic	Capitalised "Confiserie" mid-compound
+cc/2011/251/2026-06-01#art_4/para_1/lbl_a|it	yes	cosmetic	Capitalised "Confetteria" mid-compound
+cc/2013/104/2026-01-01#art_7/para/lbl_c|fr	no	equivalent	Amount updated correctly; official only dropped comma
+cc/2016/614/2026-01-01#art_17/para_1/list_u3/lbl_c|fr	no	equivalent	Date updated; des vs les mirrors German article drop
+cc/2016/615/2026-01-01#art_11/para_2|it	yes	cosmetic	"al 80" should be "all'80"
+cc/2016/615/2026-01-01#art_19/para_4/lbl_c|it	yes	german	"nota esperienziale" is a calque of Erfahrungsnote, not established term
+cc/2018/732/2026-06-01#art_4/para_4|fr	no	equivalent	Correct substitution; wording differs from official
+cc/2018/732/2026-06-01#art_4/para_4|it	no	equivalent	Correct; official adds "prestare"
+cc/2018/732/2026-06-01#art_8/para_1|fr	yes	stale	"Pendant le service militaire" kept though German removed "im Militärdienst"
+cc/2018/732/2026-06-01#art_9/para_2|fr	yes	minor	Vague "document relatif" instead of naming the attestation
+cc/2018/732/2026-06-01#art_9/para_2|it	no	equivalent	Correct document substitution; slight wording difference
+cc/2019/609/2026-01-01#art_7/para_3|it	no	equivalent	Matches official except official's duplicated "stato"
+cc/2021/694/2025-02-01#annex_4/lvl_u1/lvl_7/lbl_7_1|fr	no	equivalent	Lapins domestiques removed correctly; official also restructured sentence
+cc/2023/695/2026-01-01#art_18/para_1/list_u3/lbl_c|fr	no	equivalent	Date updated; des vs les harmless

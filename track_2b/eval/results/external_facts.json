@@ -1,0 +1,47 @@
+{
+ "note": "External facts with their sources; full quotes and URLs in docs/sources.md.",
+ "okp_insured_2025_millions": {
+  "value": 9.08,
+  "raw": 9076526,
+  "source": "BAG Statistik der obligatorischen Krankenversicherung, T 7.01"
+ },
+ "main_language_fr_pct": {
+  "value": 22.6,
+  "raw": 22.57,
+  "source": "BFS su-d-01.08.01.01 (2024)"
+ },
+ "main_language_it_pct": {
+  "value": 7.8,
+  "raw": 7.79,
+  "source": "BFS su-d-01.08.01.01 (2024)"
+ },
+ "infomaniak_70b_chf_per_m_in": {
+  "value": 0.7,
+  "source": "https://www.infomaniak.com/en/hosting/ai-tools/prices"
+ },
+ "infomaniak_70b_chf_per_m_out": {
+  "value": 2.5,
+  "source": "https://www.infomaniak.com/en/hosting/ai-tools/prices"
+ },
+ "efd_language_service_chf_per_page_min": {
+  "value": 252,
+  "source": "docs/sources.md §7"
+ },
+ "efd_language_service_chf_per_page_max": {
+  "value": 267,
+  "source": "docs/sources.md §7"
+ },
+ "apertus_70b_bf16_gb": {
+  "value": 144.6,
+  "source": "Hugging Face file listing swiss-ai/Apertus-v1.5-70B"
+ },
+ "apertus_70b_gguf_q4_gb": {
+  "value": 43.72,
+  "source": "katya228/Apertus-v1.5-70B-text-GGUF"
+ },
+ "apertus_8b_gguf_q4_gb": {
+  "value": 5.06,
+  "raw_bytes": 5059027136,
+  "source": "Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF"
+ }
+}

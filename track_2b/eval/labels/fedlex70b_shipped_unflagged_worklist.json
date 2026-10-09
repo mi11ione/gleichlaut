@@ -1,0 +1,308 @@
+[
+ {
+  "id": "H00",
+  "lang": "fr",
+  "de_old": "c. Hotellerieangestellte EBA/Hotellerieangestellter EBA;",
+  "de_new": "c. Restaurantfachfrau EFZ / Restaurantfachmann EFZ;",
+  "tgt_old": "c. employée en hôtellerie AFP/employé en hôtellerie AFP;",
+  "draft": "c. employée de restaurant CFC / employé de restaurant CFC;",
+  "official_new": "c. spécialiste en restauration CFC;"
+ },
+ {
+  "id": "H01",
+  "lang": "fr",
+  "de_old": "3 Das Bundesamt für Landwirtschaft (Bundesamt) entscheidet nach Anhören der interessierten Kreise über die Beitragshöhe, die Dauer der Aktion, die Mindesteingabemenge für aufgeschlagene oder verbilligte Konsumeier und das Zuteilungsverfahren. Es schreibt die Aktion im Schweizerischen Handelsamtsblatt aus.",
+  "de_new": "3 Das Bundesamt für Landwirtschaft (BLW) entscheidet nach Anhören der interessierten Kreise über die Beitragshöhe, die Dauer der Aktion, die Mindesteingabemenge für aufgeschlagene oder verbilligte Konsumeier und das Zuteilungsverfahren. Es schreibt die Aktionen auf seiner Website aus.",
+  "tgt_old": "3 Après consultation des milieux concernés, l’Office fédéral de l’agriculture (office) décide du montant de la contribution, de la durée de la campagne, de la quantité minimale pour les œufs cassés ou les ventes à prix réduits et de la procédure d’attribution. Il publie la campagne dans la Feuille officielle suisse du commerce.",
+  "draft": "3 Après consultation des milieux concernés, l’Office fédéral de l’agriculture (OFAG) décide du montant de la contribution, de la durée de la campagne, de la quantité minimale pour les œufs cassés ou les ventes à prix réduits et de la procédure d’attribution. Il publie les actions sur son site web.",
+  "official_new": "3 Après consultation des milieux concernés, l’Office fédéral de l’agriculture (OFAG) décide du montant de la contribution, de la durée de la campagne, de la quantité minimale pour les œufs cassés ou les ventes à prix réduits et de la procédure d’attribution. Il publie les campagnes sur son site Internet."
+ },
+ {
+  "id": "H02",
+  "lang": "fr",
+  "de_old": "7.1 Folgt auf die Kopfdurchströmung keine Herzdurchströmung, so muss der Entblutungsschnitt bei Rindern, Schweinen, Hausgeflügel, Hauskaninchen und Laufvögeln innerhalb von 10 Sekunden nach der Kopfdurchströmung erfolgen, bei Schafen und Ziegen innerhalb von 5 Sekunden.",
+  "de_new": "7.1 Folgt auf die Kopfdurchströmung keine Herzdurchströmung, so muss der Entblutungsschnitt bei Rindern, Schweinen, Hausgeflügel und Laufvögeln innerhalb von 10 Sekunden nach der Kopfdurchströmung erfolgen, bei Schafen und Ziegen innerhalb von 5 Sekunden.",
+  "tgt_old": "7.1 Si le passage du courant par la tête n’est pas suivi d’un passage du courant par le cœur, l’incision de saignée doit être effectuée chez les bovins, les porcs, la volaille domestique, les lapins domestiques et les oiseaux coureurs dans les 10 secondes suivant le passage du courant par la tête, dans les 5 secondes chez les chèvres et les moutons.",
+  "draft": "7.1 Si le passage du courant par la tête n’est pas suivi d’un passage du courant par le cœur, l’incision de saignée doit être effectuée chez les bovins, les porcs, la volaille domestique et les oiseaux coureurs dans les 10 secondes suivant le passage du courant par la tête, dans les 5 secondes chez les chèvres et les moutons.",
+  "official_new": "7.1 Si le passage du courant par la tête n’est pas suivi d’un passage du courant par le cœur, l’incision de saignée doit être effectuée: chez les bovins, les porcs, la volaille domestique et les oiseaux coureurs, dans les 10 secondes suivant le passage du courant par la tête; chez les chèvres et les moutons, dans les 5 secondes."
+ },
+ {
+  "id": "H03",
+  "lang": "it",
+  "de_old": "c. Hotellerieangestellte EBA/Hotellerieangestellter EBA;",
+  "de_new": "c. Restaurantfachfrau EFZ / Restaurantfachmann EFZ;",
+  "tgt_old": "c. addetta d’albergo CFP/addetto d’albergo CFP;",
+  "draft": "c. addetta di ristorazione EFZ/addetto di ristorazione EFZ;",
+  "official_new": "c. impiegata di ristorazione AFC / impiegato di ristorazione AFC;"
+ },
+ {
+  "id": "H04",
+  "lang": "it",
+  "de_old": "e. Restaurationsangestellte EBA/Restaurationsangestellter EBA;",
+  "de_new": "e. Köchin EFZ / Koch EFZ;",
+  "tgt_old": "e. addetta di ristorazione CFP/addetto di ristorazione CFP;",
+  "draft": "e. cuoca CFP/cucina CFP;",
+  "official_new": "e. cuoca AFC / cuoco AFC;"
+ },
+ {
+  "id": "H05",
+  "lang": "fr",
+  "de_old": "1 Die persönliche Ausrüstung der Angehörigen der Armee gemäss Dienstbüchlein wird im Militärdienst überprüft.",
+  "de_new": "1 Die persönliche Ausrüstung der Angehörigen der Armee wird gemäss Ausweis über die Erfüllung der Militärdienstpflicht überprüft.",
+  "tgt_old": "1 Pendant le service militaire, l’équipement personnel des militaires est contrôlé en fonction du livret de service.",
+  "draft": "1 Pendant le service militaire, l’équipement personnel des militaires est contrôlé en fonction de l’attestation de l’accomplissement du service militaire.",
+  "official_new": "1 L’équipement personnel des militaires est contrôlé sur la base de l’attestation de l’accomplissement des obligations militaires."
+ },
+ {
+  "id": "H06",
+  "lang": "fr",
+  "de_old": "h. Küchenangestellte EBA/Küchenangestellter EBA;",
+  "de_new": "h. Systemgastronomiefachfrau EFZ / Systemgastronomiefachmann EFZ;",
+  "tgt_old": "h. employée de cuisine AFP/employé de cuisine AFP;",
+  "draft": "h. femme de restauration EFZ / homme de restauration EFZ;",
+  "official_new": "h. gestionnaire en restauration de système CFC;"
+ },
+ {
+  "id": "H07",
+  "lang": "it",
+  "de_old": "Das Bundesamt vollzieht diese Verordnung, soweit damit nicht andere Behörden betraut sind.",
+  "de_new": "Das BLW vollzieht diese Verordnung, soweit damit nicht andere Behörden betraut sind.",
+  "tgt_old": "L’Ufficio federale esegue la presente ordinanza, in quanto essa non preveda altrimenti.",
+  "draft": "L’BLW esegue la presente ordinanza, in quanto essa non preveda altrimenti.",
+  "official_new": "L’UFAG esegue la presente ordinanza, per quanto essa non preveda altrimenti."
+ },
+ {
+  "id": "H08",
+  "lang": "it",
+  "de_old": "Arbeitnehmer und Selbständigerwerbende können bei den direkten Steuern von Bund, Kantonen und Gemeinden ihre Beiträge an anerkannte Vorsorgeformen in folgendem Umfang von ihrem Einkommen abziehen:",
+  "de_new": "Arbeitnehmer und Selbständigerwerbende können in folgendem Umfang Beiträge an anerkannte Vorsorgeformen leisten und bei den direkten Steuern von Bund, Kantonen und Gemeinden von ihrem Einkommen abziehen:",
+  "tgt_old": "I salariati e gli indipendenti possono dedurre dal loro reddito, per quanto riguarda le imposte dirette della Confederazione, dei Cantoni e dei Comuni, i contributi versati a forme riconosciute di previdenza nella misura seguente:",
+  "draft": "I salariati e gli indipendenti possono in misura seguente versare contributi a forme riconosciute di previdenza e dedurre dal loro reddito, per quanto riguarda le imposte dirette della Confederazione, dei Cantoni e dei Comuni:",
+  "official_new": "I salariati e gli indipendenti possono versare contributi a forme riconosciute di previdenza e dedurli dal loro reddito, per quanto riguarda le imposte dirette della Confederazione, dei Cantoni e dei Comuni, nella misura seguente:"
+ },
+ {
+  "id": "H09",
+  "lang": "it",
+  "de_old": "c. Allgemeinbildung: 20 %;",
+  "de_new": "c. Erfahrungsnote: 30 %.",
+  "tgt_old": "c. cultura generale: 20 per cento;",
+  "draft": "c. nota esperienziale: 30 per cento.",
+  "official_new": "c. nota relativa all’insegnamento delle conoscenze professionali: 30 per cento."
+ },
+ {
+  "id": "H10",
+  "lang": "fr",
+  "de_old": "c. 1920 Franken für Kunstschaffende (Art. 3 Abs. 3).",
+  "de_new": "c. 2450 Franken für Kunstschaffende (Art. 3 Abs. 3).",
+  "tgt_old": "c. 1920 francs, pour les artistes (art. 3, al. 3).",
+  "draft": "c. 2450 francs, pour les artistes (art. 3, al. 3).",
+  "official_new": "c. 2450 francs pour les artistes (art. 3, al. 3)."
+ },
+ {
+  "id": "H11",
+  "lang": "it",
+  "de_old": "g. Umweltschutzgesetz vom 7. Oktober 1983: Artikel 60 Absatz 1 Buchstaben g–i sowie m und o;",
+  "de_new": "g. Umweltschutzgesetz vom 7. Oktober 1983: Artikel 60 Absatz 1 Buchstaben g–i, m und o sowie Absatz 1 bis;",
+  "tgt_old": "g. legge del 7 ottobre 1983 sulla protezione dell’ambiente: articolo 60 capoverso 1 lettere g–i, nonché m ed o;",
+  "draft": "g. legge del 7 ottobre 1983 sulla protezione dell’ambiente: articolo 60 capoverso 1 lettere g–i, nonché m ed o nonché capoverso 1 bis;",
+  "official_new": "g. legge del 7 ottobre 1983 sulla protezione dell’ambiente: articolo 60 capoversi 1 lettere g – i, m e o, nonché 1 bis;"
+ },
+ {
+  "id": "H12",
+  "lang": "it",
+  "de_old": "a. Detailhandelsfachfrau EFZ/Detailhandelsfachmann EFZ in der Ausbildungs- und Prüfungsbranche Bäckerei/Konditorei/Confiserie;",
+  "de_new": "a. Detailhandelsfachfrau EFZ / Detailhandelsfachmann EFZ in der Ausbildungs- und Prüfungsbranche Bäckerei-Confiserie;",
+  "tgt_old": "a. impiegata del commercio al dettaglio AFC/impiegato del commercio al dettaglio AFC nel ramo di formazione e d’esame panetteria, pasticceria e confetteria;",
+  "draft": "a. impiegata del commercio al dettaglio AFC/impiegato del commercio al dettaglio AFC nel ramo di formazione e d’esame panetteria-Confetteria;",
+  "official_new": "a. impiegata del commercio al dettaglio AFC / impiegato del commercio al dettaglio AFC nel ramo di formazione e d’esame panetteria-confetteria;"
+ },
+ {
+  "id": "H13",
+  "lang": "fr",
+  "de_old": "1 Wer die Tätigkeit als Strassentransportunternehmen im Personen- oder im Güterverkehr ausüben will, benötigt eine Zulassungsbewilligung.",
+  "de_new": "1 Wer die Tätigkeit als Strassentransportunternehmen ausüben will, benötigt eine Zulassungsbewilligung.",
+  "tgt_old": "1 L’activité d’une entreprise de transport de voyageurs et de marchandises par route est subordonnée à l’octroi d’une licence.",
+  "draft": "1 L’activité d’une entreprise de transport de marchandises par route est subordonnée à l’octroi d’une licence.",
+  "official_new": "1 L’activité d’une entreprise de transport par route est subordonnée à l’octroi d’une licence."
+ },
+ {
+  "id": "H14",
+  "lang": "it",
+  "de_old": "2 Mit jeder zusätzlichen Beschäftigung einer Fachkraft zu 100 Prozent oder von zwei Fachkräften zu je mindestens 60 Prozent darf eine weitere lernende Person im Betrieb ausgebildet werden.",
+  "de_new": "2 Mit jeder zusätzlichen Beschäftigung einer Fachkraft zu 80 Prozent oder von zwei Fachkräften zu je mindestens 60 Prozent darf eine weitere lernende Person im Betrieb ausgebildet werden.",
+  "tgt_old": "2 Per ogni altro specialista occupato al 100 per cento o per ogni due specialisti in più occupati ciascuno almeno al 60 per cento può svolgere il tirocinio una persona in formazione in più.",
+  "draft": "2 Per ogni altro specialista occupato al 80 per cento o per ogni due specialisti in più occupati ciascuno almeno al 60 per cento può svolgere il tirocinio una persona in formazione in più.",
+  "official_new": "2 Per ogni altro specialista impiegato all’80 per cento o per ogni due specialisti in più impiegati ciascuno almeno al 60 per cento può svolgere il tirocinio una persona in formazione in più."
+ },
+ {
+  "id": "H15",
+  "lang": "it",
+  "de_old": "2 Die Inspektion ist im Dienstbüchlein einzutragen.",
+  "de_new": "2 Die Inspektion ist im Ausweis über die Erfüllung der Militärdienstpflicht anzuzeigen.",
+  "tgt_old": "2 L’ispezione è iscritta nel libretto di servizio.",
+  "draft": "2 L’ispezione è indicata nell’attestato sull’adempimento dell’obbligo di servizio militare.",
+  "official_new": "2 L’ispezione è indicata nell’attestato di adempimento dell’obbligo di prestare servizio militare."
+ },
+ {
+  "id": "H16",
+  "lang": "it",
+  "de_old": "c. vom 1. Oktober bis 20. April dürfen sie an Sonn- und Feiertagen nicht gehoben werden, ausgenommen ist der Laichfischfang auf Gangfische;",
+  "de_new": "c. vom 1. Oktober bis 30. April dürfen sie an Sonn- und Feiertagen nicht gehoben werden, ausgenommen ist der Laichfischfang auf Gangfische;",
+  "tgt_old": "c. dal 1° ottobre al 20 aprile non possono essere levate di domenica e nei giorni festivi; è esclusa la cattura di riproduttori dei coregoni;",
+  "draft": "c. dal 1° ottobre al 30 aprile non possono essere levate di domenica e nei giorni festivi; è esclusa la cattura di riproduttori dei coregoni;",
+  "official_new": "c. dal 1° ottobre al 30 aprile non possono essere levate di domenica e nei giorni festivi; è esclusa la cattura di riproduttori dei coregoni (Gangfisch);"
+ },
+ {
+  "id": "H17",
+  "lang": "it",
+  "de_old": "3 Das Bundesamt für Landwirtschaft (Bundesamt) entscheidet nach Anhören der interessierten Kreise über die Beitragshöhe, die Dauer der Aktion, die Mindesteingabemenge für aufgeschlagene oder verbilligte Konsumeier und das Zuteilungsverfahren. Es schreibt die Aktion im Schweizerischen Handelsamtsblatt aus.",
+  "de_new": "3 Das Bundesamt für Landwirtschaft (BLW) entscheidet nach Anhören der interessierten Kreise über die Beitragshöhe, die Dauer der Aktion, die Mindesteingabemenge für aufgeschlagene oder verbilligte Konsumeier und das Zuteilungsverfahren. Es schreibt die Aktionen auf seiner Website aus.",
+  "tgt_old": "3 Sentite le cerchie interessate, l’Ufficio federale dell’agricoltura (Ufficio federale) decide sull’importo del contributo, la durata dell’azione, il quantitativo minimo di uova destinate al consumo spezzate o ridotte di prezzo e sulla procedura di assegnazione. Pubblica l’azione sul Foglio ufficiale svizzero di commercio.",
+  "draft": "3 Sentite le cerchie interessate, l’Ufficio federale dell’agricoltura (UFAC) decide sull’importo del contributo, la durata dell’azione, il quantitativo minimo di uova destinate al consumo spezzate o ridotte di prezzo e sulla procedura di assegnazione. Pubblica le azioni sul suo sito web.",
+  "official_new": "3 Sentite le cerchie interessate, l’Ufficio federale dell’agricoltura (UFAG) decide sull’importo del contributo, la durata dell’azione, il quantitativo minimo di uova di consumo spezzate o ridotte di prezzo e sulla procedura di assegnazione. Pubblica le azioni sul suo sito Internet."
+ },
+ {
+  "id": "H18",
+  "lang": "it",
+  "de_old": "4 Die Abgabe der Ausrüstungsgegenstände ist im Dienstbüchlein einzutragen.",
+  "de_new": "4 Die Abgabe der Ausrüstungsgegenstände ist im Ausweis über die Erfüllung der Militärdienstpflicht anzuzeigen.",
+  "tgt_old": "4 La consegna degli oggetti d’equipaggiamento è iscritta nel libretto di servizio.",
+  "draft": "4 La consegna degli oggetti d’equipaggiamento è indicata nell’attestato di adempimento dell’obbligo di servizio militare.",
+  "official_new": "4 La consegna degli oggetti d’equipaggiamento è indicata nell’attestato di adempimento dell’obbligo di prestare servizio militare."
+ },
+ {
+  "id": "H19",
+  "lang": "fr",
+  "de_old": "2 Die Inspektion ist im Dienstbüchlein einzutragen.",
+  "de_new": "2 Die Inspektion ist im Ausweis über die Erfüllung der Militärdienstpflicht anzuzeigen.",
+  "tgt_old": "2 L’inspection doit être inscrite dans le livret de service.",
+  "draft": "2 L’inspection doit être indiquée dans le document relatif à l’accomplissement du service militaire.",
+  "official_new": "2 L’inspection doit être indiquée sur l’attestation de l’accomplissement des obligations militaires."
+ },
+ {
+  "id": "H20",
+  "lang": "fr",
+  "de_old": "a. Detailhandelsfachfrau EFZ/Detailhandelsfachmann EFZ in der Ausbildungs- und Prüfungsbranche Bäckerei/Konditorei/Confiserie;",
+  "de_new": "a. Detailhandelsfachfrau EFZ / Detailhandelsfachmann EFZ in der Ausbildungs- und Prüfungsbranche Bäckerei-Confiserie;",
+  "tgt_old": "a. gestionnaire du commerce de détail CFC dans la branche de formation et d’examen boulangerie/pâtisserie/confiserie;",
+  "draft": "a. gestionnaire du commerce de détail CFC dans la branche de formation et d’examen boulangerie-Confiserie;",
+  "official_new": "a. gestionnaire du commerce de détail CFC dans la branche de formation et d’examen boulangerie-confiserie;"
+ },
+ {
+  "id": "H21",
+  "lang": "fr",
+  "de_old": "c. fachlich geeignet sein (Art. 7).",
+  "de_new": "c. fachlich geeignet sein (Art. 7); und",
+  "tgt_old": "c. avoir la capacité professionnelle requise (art. 7).",
+  "draft": "c. avoir la capacité professionnelle requise (art. 7); et",
+  "official_new": "c. avoir la capacité professionnelle requise (art. 7);"
+ },
+ {
+  "id": "H22",
+  "lang": "it",
+  "de_old": "3 Sie dürfen nur dort verwendet werden, wo die Wassertiefe nicht grösser ist als die Höhe des Netzes.",
+  "de_new": "3 Sie dürfen nur dort verwendet werden, wo die Wassertiefe nicht grösser ist als 3 m.",
+  "tgt_old": "3 I grandi bertovelli con ali possono essere impiegati soltanto dove la profondità non è superiore all’altezza della rete.",
+  "draft": "3 I grandi bertovelli con ali possono essere impiegati soltanto dove la profondità non è superiore a 3 m.",
+  "official_new": "3 I grandi bertovelli con ali possono essere impiegati soltanto dove la profondità non è superiore a tre metri."
+ },
+ {
+  "id": "H23",
+  "lang": "fr",
+  "de_old": "1 Bei Inkrafttreten der Änderung vom 26. September 2014 bestehende Zulassungsbewilligungen bleiben nach bisherigem Recht gültig, sofern sie nicht nach neuem Recht entzogen oder widerrufen werden.",
+  "de_new": "1 Bei Inkrafttreten der Änderung vom 14. Juni 2024 bestehende Zulassungsbewilligungen bleiben nach bisherigem Recht gültig, sofern sie nicht nach neuem Recht entzogen oder widerrufen werden.",
+  "tgt_old": "1 Les autorisations d’admission valables lors de l’entrée en vigueur de la modification du 26 septembre 2014 le restent selon l’ancien droit dans la mesure où elles ne font pas l’objet d’un retrait ou d’une révocation selon le nouveau droit.",
+  "draft": "1 Les autorisations d’admission valables lors de l’entrée en vigueur de la modification du 14 juin 2024 le restent selon l’ancien droit dans la mesure où elles ne font pas l’objet d’un retrait ou d’une révocation selon le nouveau droit.",
+  "official_new": "1 Les licences valables au moment de l’entrée en vigueur de la modification du 14 juin 2024 demeurent valables en vertu de l’ancien droit, à moins qu’elles ne soient retirées ou révoquées en vertu du nouveau droit."
+ },
+ {
+  "id": "H24",
+  "lang": "fr",
+  "de_old": "c. Allgemeinbildung. Der Qualifikationsbereich richtet sich nach der Verordnung des SBFI vom 27. April 2006 über die Mindestvorschriften für die Allgemeinbildung in der beruflichen Grundbildung.",
+  "de_new": "c. Allgemeinbildung. Der Qualifikationsbereich richtet sich nach der Verordnung des SBFI vom 9. April 2025 über Mindestvorschriften für die Allgemeinbildung in der beruflichen Grundbildung.",
+  "tgt_old": "c. culture générale. Ce domaine de qualification est régi par l’ordonnance du SEFRI du 27 avril 2006 concernant les conditions minimales relatives à la culture générale dans la formation professionnelle initiale.",
+  "draft": "c. culture générale. Ce domaine de qualification est régi par l’ordonnance du SEFRI du 9 avril 2025 concernant des conditions minimales relatives à la culture générale dans la formation professionnelle initiale.",
+  "official_new": "c. culture générale. Ce domaine de qualification est régi par l’ordonnance du SEFRI du 9 avril 2025 concernant les conditions minimales relatives à la culture générale dans la formation professionnelle initiale."
+ },
+ {
+  "id": "H25",
+  "lang": "fr",
+  "de_old": "1 Für einen bestehenden oder für einen zukünftigen Rechtsstreit über vermögensrechtliche Ansprüche aus einem bestimmten Rechtsverhältnis können die Parteien einen Gerichtsstand vereinbaren. Die Vereinbarung kann schriftlich, durch Telegramm, Telex, Telefax oder in einer anderen Form der Übermittlung, die den Nachweis der Vereinbarung durch Text ermöglicht, erfolgen. Geht aus der Vereinbarung nichts anderes hervor, so ist das vereinbarte Gericht ausschliesslich zuständig.",
+  "de_new": "1 Für einen bestehenden oder für einen zukünftigen Rechtsstreit über vermögensrechtliche Ansprüche aus einem bestimmten Rechtsverhältnis können die Parteien einen Gerichtsstand vereinbaren. Die Vereinbarung kann schriftlich oder in einer anderen Form, die den Nachweis durch Text ermöglicht, erfolgen. Geht aus der Vereinbarung nichts anderes hervor, so ist das vereinbarte Gericht ausschliesslich zuständig.",
+  "tgt_old": "1 En matière patrimoniale, les parties peuvent convenir du tribunal appelé à trancher un différend né ou à naître à l’occasion d’un rapport de droit déterminé. La convention peut être passée par écrit, télégramme, télex, télécopieur ou tout autre moyen de communication qui permet d’en établir la preuve par un texte. Sauf stipulation contraire, l’élection de for est exclusive.",
+  "draft": "1 En matière patrimoniale, les parties peuvent convenir du tribunal appelé à trancher un différend né ou à naître à l’occasion d’un rapport de droit déterminé. La convention peut être passée par écrit ou tout autre moyen qui permet d’en établir la preuve par un texte. Sauf stipulation contraire, l’élection de for est exclusive.",
+  "official_new": "1 En matière patrimoniale, les parties peuvent convenir du tribunal appelé à trancher un différend né ou à naître à l’occasion d’un rapport de droit déterminé. La convention peut être passée par écrit ou par tout autre moyen permettant d’en établir la preuve par un texte. Sauf stipulation contraire, l’élection de for est exclusive."
+ },
+ {
+  "id": "H26",
+  "lang": "fr",
+  "de_old": "b. finanziell leistungsfähig sein (Art. 6); und",
+  "de_new": "b. finanziell leistungsfähig sein (Art. 6);",
+  "tgt_old": "b. avoir la capacité financière requise (art. 6); et",
+  "draft": "b. avoir la capacité financière requise (art. 6);",
+  "official_new": "b. avoir la capacité financière requise (art. 6), et"
+ },
+ {
+  "id": "H27",
+  "lang": "fr",
+  "de_old": "c. vom 1. Oktober bis 20. April dürfen sie an Sonn- und Feiertagen nicht gehoben werden, ausgenommen ist der Laichfischfang auf Gangfische;",
+  "de_new": "c. vom 1. Oktober bis 30. April dürfen sie an Sonn- und Feiertagen nicht gehoben werden, ausgenommen ist der Laichfischfang auf Gangfische;",
+  "tgt_old": "c. du 1 er octobre au 20 avril, ils ne doivent pas être relevés le dimanche et les jours fériés, excepté pour la pêche de géniteurs des corégones (Gangfische);",
+  "draft": "c. du 1 er octobre au 30 avril, ils ne doivent pas être relevés le dimanche et les jours fériés, excepté pour la pêche de géniteurs des corégones (Gangfische);",
+  "official_new": "c. du 1 er octobre au 30 avril, ils ne doivent pas être relevés le dimanche et les jours fériés, excepté pour la pêche de géniteurs de corégones (Gangfisch);"
+ },
+ {
+  "id": "H28",
+  "lang": "fr",
+  "de_old": "c. Allgemeinbildung: Der Qualifikationsbereich richtet sich nach der Verordnung des SBFI vom 27. April 2006 über die Mindestvorschriften für die Allgemeinbildung in der beruflichen Grundbildung.",
+  "de_new": "c. Allgemeinbildung: Der Qualifikationsbereich richtet sich nach der Verordnung des SBFI vom 9. April 2025 über Mindestvorschriften für die Allgemeinbildung in der beruflichen Grundbildung.",
+  "tgt_old": "c. culture générale; ce domaine de qualification est régi par l’ordonnance du SEFRI du 27 avril 2006 concernant les conditions minimales relatives à la culture générale dans la formation professionnelle initiale.",
+  "draft": "c. culture générale; ce domaine de qualification est régi par l’ordonnance du SEFRI du 9 avril 2025 concernant des conditions minimales relatives à la culture générale dans la formation professionnelle initiale.",
+  "official_new": "c. culture générale; ce domaine de qualification est régi par l’ordonnance du SEFRI du 9 avril 2025 concernant les conditions minimales relatives à la culture générale dans la formation professionnelle initiale."
+ },
+ {
+  "id": "H29",
+  "lang": "it",
+  "de_old": "4 Bei Widerruf der Einwilligung und bei Ablauf der Konservierungsfrist sind die imprägnierten Eizellen und die Embryonen in vitro sofort zu vernichten. Vorbehalten bleiben die Bestimmungen des Stammzellenforschungsgesetzes vom 19. Dezember 2003.",
+  "de_new": "4 Bei Widerruf der Einwilligung und bei Ablauf der Konservierungsfrist sind die imprägnierten Eizellen und die Embryonen in vitro sofort zu vernichten. Vorbehalten bleiben die Bestimmungen des Stammzellenforschungsgesetzes vom 19. Dezember 2003 und des Transplantationsgesetzes vom 8. Oktober 2004.",
+  "tgt_old": "4 In caso di revoca del consenso o di scadenza del termine di conservazione gli oociti impregnati e gli embrioni in vitro vanno distrutti immediatamente. Sono fatte salve le disposizioni della legge del 19 dicembre 2003 sulle cellule staminali.",
+  "draft": "4 In caso di revoca del consenso o di scadenza del termine di conservazione gli oociti impregnati e gli embrioni in vitro vanno distrutti immediatamente. Sono fatte salve le disposizioni della legge del 19 dicembre 2003 sulle cellule staminali e del Transplantationsgesetz del 8 ottobre 2004.",
+  "official_new": "4 In caso di revoca del consenso o di scadenza del termine di conservazione gli oociti impregnati e gli embrioni in vitro vanno distrutti immediatamente. Sono fatte salve le disposizioni della legge del 19 dicembre 2003 sulle cellule staminali e della legge dell’8 ottobre 2004 sui trapianti."
+ },
+ {
+  "id": "H30",
+  "lang": "it",
+  "de_old": "2 In diesem Fall ist das BAZG ermächtigt, die Waren während drei Werktagen zurückzubehalten, damit die antragsberechtigte Person einen Antrag nach Artikel 86 b Absatz 1 stellen kann.",
+  "de_new": "2 In diesem Fall ist es ermächtigt, die Ware während drei Arbeitstagen zurückzubehalten, damit die antragsberechtigte Person einen Antrag nach Artikel 86 b stellen kann.",
+  "tgt_old": "2 In tali casi, l’UDSC è autorizzato a trattenere le merci per tre giorni feriali, affinché la persona legittimata possa presentare una domanda secondo l’articolo 86 b capoverso 1.",
+  "draft": "2 In tali casi, è autorizzato a trattenere la merce per tre giorni lavorativi, affinché la persona legittimata possa presentare una domanda secondo l’articolo 86 b.",
+  "official_new": "2 In tali casi, è autorizzato a trattenere la merce per tre giorni feriali, affinché la persona legittimata possa presentare una domanda secondo l’articolo 86 b."
+ },
+ {
+  "id": "H31",
+  "lang": "fr",
+  "de_old": "4 Die Abgabe der Ausrüstungsgegenstände ist im Dienstbüchlein einzutragen.",
+  "de_new": "4 Die Abgabe der Ausrüstungsgegenstände ist im Ausweis über die Erfüllung der Militärdienstpflicht anzuzeigen.",
+  "tgt_old": "4 La remise des effets d’équipement doit être inscrite dans le livret de service.",
+  "draft": "4 La remise des effets d’équipement doit être indiquée dans l’attestation de l’accomplissement du service militaire.",
+  "official_new": "4 La remise des effets d’équipement doit être indiquée sur l’attestation de l’accomplissement des obligations militaires."
+ },
+ {
+  "id": "H32",
+  "lang": "it",
+  "de_old": "3 Für den allgemeinbildenden Unterricht gilt die Verordnung des SBFI vom 27. April 2006 über Mindestvorschriften für die Allgemeinbildung in der beruflichen Grundbildung.",
+  "de_new": "3 Für den allgemeinbildenden Unterricht gilt die Verordnung des SBFI vom 9. April 2025 über Mindestvorschriften für die Allgemeinbildung in der beruflichen Grundbildung.",
+  "tgt_old": "3 Per gli insegnamenti di cultura generale fa stato l’ordinanza della SEFRI del 27 aprile 2006 sulle prescrizioni minime in materia di cultura generale nella formazione professionale di base.",
+  "draft": "3 Per gli insegnamenti di cultura generale fa stato l’ordinanza della SEFRI del 9 aprile 2025 sulle prescrizioni minime in materia di cultura generale nella formazione professionale di base.",
+  "official_new": "3 Per gli insegnamenti di cultura generale fa stato stato l’ordinanza della SEFRI del 9 aprile 2025 sulle prescrizioni minime in materia di cultura generale nella formazione professionale di base."
+ },
+ {
+  "id": "H33",
+  "lang": "it",
+  "de_old": "1 Wer die Tätigkeit als Strassentransportunternehmen im Personen- oder im Güterverkehr ausüben will, benötigt eine Zulassungsbewilligung.",
+  "de_new": "1 Wer die Tätigkeit als Strassentransportunternehmen ausüben will, benötigt eine Zulassungsbewilligung.",
+  "tgt_old": "1 L’esercizio delle professioni di trasportatore di viaggiatori su strada e di trasportatore di merci su strada sottostà ad autorizzazione.",
+  "draft": "1 L’esercizio delle professioni di trasportatore su strada sottostà ad autorizzazione.",
+  "official_new": "1 L’esercizio dell’attività di trasportatore su strada sottostà ad autorizzazione."
+ }
+]

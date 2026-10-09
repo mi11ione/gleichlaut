@@ -1,0 +1,52 @@
+{
+ "70b": {
+  "classes": {
+   "REAL": 2,
+   "cosmetic": 5,
+   "equivalent": 16,
+   "german": 5,
+   "minor": 4,
+   "preexisting": 1,
+   "stale": 1
+  },
+  "exact": 58,
+  "exact_pct": 48.3,
+  "flag_rate": 23.3,
+  "flagged": 28,
+  "n": 120,
+  "passes": false,
+  "ready": 92,
+  "ready_nonexact_labelled": 34,
+  "unflagged_real": 2,
+  "unflagged_real_pct": 1.67,
+  "unflagged_stale_untranslated": 6,
+  "unflagged_stale_untranslated_pct": 5.0
+ },
+ "8b_mlx_dwq": {
+  "classes": {
+   "cosmetic": 1,
+   "equivalent": 10,
+   "exact": 1,
+   "german": 4,
+   "minor": 4,
+   "preexisting": 1,
+   "stale": 4
+  },
+  "exact": 60,
+  "exact_pct": 50.0,
+  "flag_rate": 31.7,
+  "flagged": 38,
+  "n": 120,
+  "passes": false,
+  "ready": 82,
+  "ready_nonexact_labelled": 25,
+  "unflagged_real": 0,
+  "unflagged_real_pct": 0.0,
+  "unflagged_stale_untranslated": 8,
+  "unflagged_stale_untranslated_pct": 6.67
+ },
+ "decision": "Fedlex stays 8B; every draft goes to review",
+ "n": 120,
+ "rules_exact": 42,
+ "rules_exact_pct": 35.0
+}

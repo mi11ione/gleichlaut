@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 33, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 264, "secs": 8.2, "seed": null, "usd": 0.00031284}, "text": "1 Pendant le service militaire, l’équipement personnel des militaires est contrôlé en fonction de l’attestation de l’accomplissement du service militaire."}

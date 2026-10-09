@@ -226,3 +226,31 @@ def economics():
                             chf_per_month_infomaniak=round(k * items * chf_item, 2),
                             model_hours_per_month_sequential=round(k * items * c["model_secs_per_item"] / 3600, 1))
     return out
+
+
+def fedlex_compare():
+    """PREREG R5: the shipped Fedlex lane with the 8B (recorded MLX DWQ run) and with the 70B (gateway run), same 120 FR/IT
+    items, against the pass rule, using a blind annotation of every unflagged non-exact draft of each run."""
+    from .fed import lane
+    items = {x["key"]: x for x in lane.load(lane.ITEMS) if x["src"] == "fed" and x["lang"] in lane.SCOPE}
+    rules = sum(core.lock.code_lane(x["de_old"], x["de_new"], x["tgt_old"], x["lang"])[1] is not None and
+                core.lock.norm(core.lock.code_lane(x["de_old"], x["de_new"], x["tgt_old"], x["lang"])[1]) == core.lock.norm(x["tgt_new"])
+                for x in items.values())
+    F = json.load(open(os.path.join(core.ROOT, "eval", "results", "fedlex.json"), encoding="utf-8"))
+    s8 = F[next(k for k in F if k.startswith("shipped"))]
+    R70 = [json.loads(l) for l in open(os.path.join(DATA, "runs", "70b_fedlex_shipped.jsonl"), encoding="utf-8")]
+    def side(labels_file, n, exact, flagged):
+        lines = open(os.path.join(LABELS, labels_file), encoding="utf-8").read().splitlines()[1:]
+        c = Counter(l.split("\t")[2] for l in lines); real, su = c.get("REAL", 0), c.get("stale", 0) + c.get("german", 0)
+        return dict(n=n, exact=exact, exact_pct=round(100 * exact / n, 1), flagged=flagged, flag_rate=round(100 * flagged / n, 1),
+                    ready=n - flagged, ready_nonexact_labelled=len(lines), classes=dict(sorted(c.items())),
+                    unflagged_real=real, unflagged_real_pct=round(100 * real / n, 2),
+                    unflagged_stale_untranslated=su, unflagged_stale_untranslated_pct=round(100 * su / n, 2),
+                    passes=(100 * real / n <= PASS_RULE["unflagged_real_max_pct"] and 100 * su / n <= PASS_RULE["unflagged_stale_untranslated_max_pct"]
+                            and 100 * flagged / n <= PASS_RULE["flag_rate_max_pct"] and 100 * (exact - rules) / n >= PASS_RULE["exact_gain_min_pts"]))
+    n = len(items)
+    a = side("fedlex_shipped_unflagged.tsv", n, s8["all"]["exact"], s8["all"]["flagged"])
+    b = side("fedlex70b_shipped_unflagged.tsv", n, sum(bool(r.get("exact")) for r in R70), sum(r["flagged"] for r in R70))
+    assert len(R70) == n
+    return {"n": n, "rules_exact": rules, "rules_exact_pct": round(100 * rules / n, 1), "8b_mlx_dwq": a, "70b": b,
+            "decision": "Fedlex stays 8B; every draft goes to review" if not b["passes"] else "70B passes R0"}

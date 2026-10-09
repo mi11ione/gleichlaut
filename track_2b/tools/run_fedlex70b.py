@@ -11,7 +11,7 @@ from gleichlaut.fed import lane
 OUT = os.path.join(core.ROOT, "data", "runs", "70b_fedlex_shipped.jsonl")
 LOG = os.path.join(core.ROOT, "eval", "certificates", "fedlex70b.calls.jsonl")
 n = int(sys.argv[sys.argv.index("--n") + 1]) if "--n" in sys.argv else None
-items = [x for x in lane.load(lane.ITEMS) if x["lang"] in lane.SCOPE][:n]
+items = [x for x in lane.load(lane.ITEMS) if x["src"] == "fed" and x["lang"] in lane.SCOPE][:n]
 done = {json.loads(l)["key"] for l in open(OUT, encoding="utf-8")} if os.path.exists(OUT) else set()
 ask = backends.Gateway(os.path.expanduser("~/Desktop/hackapertus/gateway"), "gleichlaut-fed70b", 0.6, log=LOG,
                        record_to=os.path.join(core.ROOT, "data", "cache", "responses"))

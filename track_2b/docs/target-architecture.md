@@ -8,7 +8,7 @@ default lane can alternatively use **(c) a sovereign Swiss cloud** endpoint for 
 
 | Lane | Model and where it runs | Hardware | External services at runtime | Data that leaves the user's environment |
 |---|---|---|---|---|
-| Fedlex statutes | Apertus v1.5 8B, GGUF Q4_K_M, llama.cpp on CPU, in process | any x86-64/ARM server, ≥ 8 GB RAM, ~5.1 GB disk | none | none |
+| Fedlex statutes (every draft reviewed) | Apertus v1.5 8B, GGUF Q4_K_M, llama.cpp on CPU, in process | any x86-64/ARM server, ≥ 8 GB RAM, ~5.1 GB disk | none | none |
 | SL limitations, air-gapped | the same 8B; **every draft goes to review** (the 8B does not pass the SL pass rule) | same | none | none |
 | SL limitations, default | Apertus v1.5 70B on an endpoint the user controls, **after `make certify` passes on it** | own GPUs (bf16 144.6 GB, FP8 76.2 GB; vLLM, tensor-parallel 4 in the official example) or a Swiss-resident provider | that endpoint only | per request: one public limitation text in German (old and new) and in French or Italian, numbers replaced by slot codes |
 

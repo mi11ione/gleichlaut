@@ -34,6 +34,7 @@ def compute():
     res["agreement_fresh166"] = score.agreement()
     res["fedlex_shipped"] = score.fedlex_shipped()
     res["economics"] = score.economics()
+    res["fedlex_compare"] = score.fedlex_compare()
     return res
 
 

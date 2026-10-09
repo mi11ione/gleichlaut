@@ -153,3 +153,18 @@ items from the cache and requires them to be identical; it reproduces 120/120 ov
   read 25 for the timing. The RM edit-F1 gap is +27.24 exactly; "+27.3" subtracts the rounded values. Both are in
   `eval/results/fedlex.json["notes"]`, and neither moves a headline.
 - **Small samples.** 26 acts for FR/IT, items clustered by act, and n = 150 for the flip adjudication.
+
+
+## 8B vs 70B on the same items (PREREG R5)
+
+The 70B ran the same shipped lane on the same 120 FR/IT paragraphs through the development gateway (82 model calls, all
+served by `swiss-ai/apertus-v1.5-70b`; $0.03). Every unflagged non-exact draft of each run was labelled by a blind Claude
+annotator (`eval/labels/fedlex_shipped_unflagged.tsv`, `eval/labels/fedlex70b_shipped_unflagged.tsv`).
+
+| | exact | flagged | ready | ready drafts with a real error | with German left / stale |
+|---|---|---|---|---|---|
+| 8B (MLX DWQ, recorded) | 60 | 38 | 82 | 0 | 4 / 4 |
+| 70B | 58 | 28 | 92 | 2 | 5 / 1 |
+
+Neither meets the pass rule; under the pre-registered decision the Fedlex lane stays on the 8B and every draft goes to
+review. Numbers: `eval/results/fedlex_compare.json` (`score.fedlex_compare`).
