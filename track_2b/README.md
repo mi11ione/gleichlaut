@@ -1,125 +1,133 @@
 # Gleichlaut
 
-**When BAG amends a drug-reimbursement condition in German, Gleichlaut drafts the matching French and Italian change
-with Apertus. Numbers reach the model only as slot codes. Frozen guards decide what is ready for a translator to accept
-and what needs review. Nothing is published unguarded.**
+**Keeps the French and Italian of Switzerland's drug-reimbursement conditions in step with the German.** When BAG
+amends a condition in German, Gleichlaut drafts the matching French and Italian change with Apertus, and it audits the
+whole register for places where the languages already disagree. Numbers never pass through the model.
 
-Track 2B · declared maturity: **feasibility study** · models: Apertus v1.5 8B + 70B · [technical report](technical_report.md) · [demo video](VIDEO_URL)
+Track 2B · team 444 · maturity: feasibility study · Apertus v1.5 8B + 70B ·
+**[open the review register](https://mi11ione.github.io/gleichlaut/)** · [technical report](technical_report.md) ·
+[demo video](VIDEO_URL)
 
-## The problem, measured
+## The job
 
-BAG publishes the reimbursement conditions ("limitations") of the Spezialitätenliste, the list of medicines that
-mandatory health insurance pays for (9.08 million insured), in German, French and Italian under one identifier, and its
-own review checklist asks whether the translations are congruent. In the 6 Oct 2026 feed we found 5 independent
-divergences in current conditions and verified each by reading the German, French and Italian texts side by side. **All of them are numbers:**
+BAG maintains the conditions under which basic insurance pays for a medicine, the 1,688 "limitations" of the
+Spezialitätenliste, in German, French and Italian under one identifier: three text fields per limitation in its ePL
+editor, published monthly. In 7.5 months of 2026, 216 German texts changed (28.7 a month), and BAG updated French and
+Italian in the same month for 208 of them. Keeping pace is routine, skilled work. Where it slips, it slips in numbers.
+In today's register:
 
-| Product (limitation) | German / French | Italian |
+| Limitation | German | Diverging language |
 |---|---|---|
-| Nemluvio (`NEMLUVIO.01`) | every 8 weeks | "ogni 4 settimane" (every 4 weeks) |
-| Diaphin (`DIAPHIN.6-`) | surcharge 6% | 12% |
-| Etanercept biosimilars ×3 | a French-only "≥ 62.5 kg" condition, copied across products | |
-| Cresemba (`CRESE.Kps.IM`) | French drops "≥ 16 kg" | |
-| Dupixent ×4 | French misses or shifts the 15–30 kg tier | |
+| Nemluvio `NEMLUVIO.01` | maintenance every **8** weeks | Italian: every **4** weeks |
+| Diaphin `DIAPHIN.6-` | surcharge **6**% | Italian: **12**% |
+| Etanercept ×3 `NEPEXTO` `BENEPALI4` `ERELZI2` | no weight limit for juvenile arthritis | French adds **≥ 62.5** kg |
+| Cresemba `CRESE.Kps.IM` | body weight **≥ 16** kg | French drops the limit |
+| Dupixent ×4 `DUPIXENT.02` `.02P` `.05a` `.05P` | dose tier from **15** kg | French starts at **30** kg or omits the tier |
 
-German limitation texts change about 28.7 times a month. BAG's translators keep pace (our backtest found French and
-Italian updated in the same monthly step for 208 of 216 changes), so the job is not speed: it is making each change
-again in French and Italian, exactly, without touching anything else, and without slipping a number.
+## Two tools, one rule: the model never writes a number
 
-## What Gleichlaut does
+**Draft.** When the German changes, Gleichlaut locks the old French/Italian outside the edit, replaces every number
+with a slot code (⟨A⟩, ⟨B⟩ …) that code writes back, and lets Apertus 70B rewrite only the wording. A frozen stack of
+deterministic checks (edits stay inside the change, numbers/negation/modal verbs mirror the German, no German left,
+the change is applied, nothing dropped, terminology) marks each draft **ready** or **flagged**, and says why in the
+reviewer's own language. One re-ask with the complaints; the new draft is kept only if every check passes.
 
-1. **Mines** each German change from BAG's public monthly FHIR feed (or a Fedlex consolidated version).
-2. **Locks** the old French/Italian text outside edit windows projected from the German diff, and turns every number into
-   a slot code (⟨A⟩, ⟨B⟩, …) that code writes back. The 70B wrote 0 digits in 285 calls; in 3 of 166 drafts it wrote a
-   number word itself, and all 3 were flagged. The 8B cannot emit either (logit mask).
-3. **Drafts** the amended paragraph with Apertus: the 70B for SL limitations (the 8B flags 85.0% there, above our cap);
-   the 8B for federal statutes, where the 70B measured no better on the same 120 paragraphs (exact 48.3% vs 50.0%; 2 vs
-   0 real errors among drafts marked ready). Neither size passes our rule on statutes, so every statute draft is reviewed.
-4. **Guards** every draft with a frozen deterministic stack: lock, numbers/negation/modality, German left in, change not
-   applied, content dropped, duplication, copied-from-German, terminology, vocabulary. One re-ask with the complaints; kept
-   only if every guard passes.
-5. **Emits** a ready / flagged queue as **XLIFF 2.1** (translators' own tools) and as **FHIR** in the shape of BAG's own
-   feed, plus a review page.
+**Audit.** Reads every current limitation in all three languages and lists the conditions whose numbers disagree. On
+the 6 Oct 2026 feed it reduces 1,688 limitations to **21 lines**, which contain **all 10** known divergent limitations.
 
-No model judges anything. Apertus rewrites wording, code does the rest.
+The two meet in the review register. Nemluvio's old Italian already says "every 4 weeks"; Apertus' draft writes "every
+8 weeks", matching the German. BAG's own update kept the 4. The register shows the draft as a correction to check, not
+as an error.
 
-## Results
+## Results (pre-registered, held out)
 
-The headline row is the pre-registered test: a fresh held-out set of 166 FR/IT items from 2025 SL changes (154 of them
-in edit families never seen during design), with the guards hashed before any output existed. The other rows are the
-earlier runs that led there, reported because they failed.
+Test set: 166 French/Italian amendments from 2025 SL changes, 154 in edit patterns never seen during design. The checks
+and all their resources were hashed before any output existed.
 
-| | Exact = official text | Ready (unflagged) | Unflagged errors (real / stale / untranslated) | Pass rule |
-|---|---|---|---|---|
-| Rules only (copy + number substitution) | 6.0% | | | |
-| **Apertus 70B + guards3 + one re-ask** | **17.5%** (+11.4, 95% CI [4.8, 18.7]) | **39.8%** | **0 / 0 / 0** of 166 (95% upper bound 2.3% of items; 5.5% of ready drafts) | **PASS** |
-| Same pipeline, pre-registered rerun with seed 1 | 18.1% (+12.0, 95% CI [5.4, 19.3]) | 41.6% | 0 / 0 / 2 of 166 | **PASS** |
-| Apertus 70B + earlier guards, out-of-sample 2026 set (242), before guards3 existed | 29.3% | 38.4% | 1 / 0 / 10 | **FAIL** |
-| Apertus 8B (MLX 4-bit DWQ) + guards3, development set (120, not held out) | 15.0% | 15.0% | 1 / 0 / 0 | FAIL (85.0% flagged) |
+| | Apertus 70B + checks | Starting point a translator has today |
+|---|---|---|
+| Draft identical to the text BAG published | **17.5%** (+11.4 points, 95% CI [4.8, 18.7]) | 6.0% (old text + numbers updated) |
+| Token edits still needed to reach BAG's text | **42.4% fewer** (95% CI [31.0, 54.1]); 59.1% fewer on ready drafts | baseline |
+| Drafts ready for acceptance | **39.8%** of items | |
+| Errors introduced in ready drafts (meaning / stale / German left) | **0 / 0 / 0** | |
+| Same test, rerun with a new seed | +12.0 points, 41.6% ready, 0 meaning errors | |
 
-Cost of the 70B lane: **CHF 0.0024 per item** at a Swiss provider's published price (CHF 0.14 a month at today's volume). About two thirds of flagged drafts need no change (13 of a sampled 20): the
-guards are deliberately conservative. Where Apertus fell short, with counts: [docs/failure-modes.md](docs/failure-modes.md).
+Costs **CHF 0.0024 per draft** at a Swiss provider's published price for Apertus 70B: CHF 0.14 a month at today's
+volume, CHF 1.36 at ten times. Every number here is in [claims.tsv](claims.tsv) with the file and command that
+produce it.
 
-**Terms.** *SL*: the Spezialitätenliste. *Limitation*: one reimbursement condition text. *Ready*: the draft passed every
-guard and goes to a translator for acceptance; *flagged*: a guard named a problem. *Exact*: identical to the text BAG
-later published. *Stale*: the German change was not (fully) applied. *guards3*: the frozen guard stack (G1–G7). *Edit
-family*: changes with the same edit pattern (e.g. one boilerplate rewrite applied to many products).
+**Model size is measured, not assumed.** On SL conditions the 8B flags 85.0% of its drafts, so this lane runs the 70B.
+On 120 federal-statute amendments (Fedlex) the 70B is no better than the 8B (exact 48.3% vs 50.0%), so statutes run the
+8B on a CPU. Where Apertus fell short, with counts, and why those jobs are done by code: [docs/failure-modes.md](docs/failure-modes.md).
+
+## Where it plugs in at BAG
+
+| BAG today ([docs/sl-process.md](docs/sl-process.md)) | Gleichlaut |
+|---|---|
+| ePL editor: "Limitierungstext DE / FR / IT" fields per limitation | **Draft** proposes the FR and IT fields when the DE field changes |
+| Triennial review question: "…und die Übersetzungen sind kongruent?" | **Audit** answers it for the whole register in seconds |
+| Federal translation tool STAR Transit | XLIFF 1.2 and 2.1, numbers protected, checks as notes |
+| Monthly FHIR R5 publication (CH EPL profile) | drafts emitted as ClinicalUseDefinition in the feed's own shape |
+
+**Shadow mode needs nobody's permission.** `gleichlaut month --from 20261001 --to 20261101 --fetch` mines the month's
+German changes from the public feed, drafts them, and grades itself against what BAG publishes. First user group: BAG's
+Sektion Arzneimittelaufnahmen and the ePL team. Operator runbook: [docs/operations.md](docs/operations.md).
 
 ## Run it
 
 ```bash
-make run            # Docker, CPU, a few minutes, no network needed (runs with --network none unless LLM_BASE_URL is set)
+make run            # Docker, CPU, about 30 s on a GitHub runner, no network (--network none unless LLM_BASE_URL is set)
 ```
 
-`make run` verifies the sha256 of the frozen code, guard resources and test items; **re-executes the recorded 70B runs
-end-to-end from the recorded responses** (every one of the 285 model requests of the headline run is rebuilt
-byte-for-byte and found by its payload hash); re-guards and re-scores every recorded run and checks the results;
-drafts 5 Fedlex paragraphs live if `LLM_BASE_URL` / `LLM_API_KEY` / `LLM_NAME` point to an Apertus endpoint; emits and
-validates XLIFF 2.1 and FHIR; and builds the review page (`out/ui/index.html`).
+It verifies the sha256 of the frozen code, checks and test items; **re-executes the recorded Apertus runs end-to-end
+from the recorded responses** (all 285 model requests of the headline run rebuilt byte-for-byte and found by hash);
+re-scores every run against `eval/results/`; drafts 5 statute paragraphs live if `LLM_BASE_URL`, `LLM_API_KEY` and
+`LLM_NAME` point to an Apertus endpoint; writes and validates XLIFF 1.2/2.1 and FHIR; builds the review register
+(`out/ui/index.html`).
 
 ```bash
-make run-offline    # adds the local CPU Apertus 8B (GGUF Q4_K_M, ~5 GB, sha256-pinned) for the air-gapped lane
-make certify        # certify the endpoint in LLM_BASE_URL on the frozen 166-item suite before it may serve the SL lane
-make test           # unit and reproduction tests
+make run-offline    # adds the local CPU Apertus 8B (GGUF, sha256-pinned) for the air-gapped lane
+make certify        # certify your Apertus endpoint on the frozen 166-item suite before it may draft SL conditions
+make month          # one monthly cycle on the public feed (shadow mode)
+make test           # the test suite
 ```
 
-## Deployment
+## Sovereign by construction
 
-| Lane | Runs on | External services at runtime |
+| Lane | Runs on | Leaves your network |
 |---|---|---|
-| Fedlex statutes (every draft reviewed) | Apertus 8B GGUF on CPU, in process | none |
-| SL limitations (default) | Apertus 70B on an endpoint the user controls (own hardware or a Swiss-resident provider), gated by `make certify` | that endpoint only |
-| SL air-gapped fallback | Apertus 8B GGUF on CPU; every item goes to review | none |
+| Audit, checks, register, XLIFF/FHIR | any server, Python standard library + lxml | nothing |
+| Federal statutes | Apertus 8B GGUF on CPU, in process | nothing |
+| SL conditions | Apertus 70B on an endpoint you control (own GPUs, or a Swiss provider such as Infomaniak, Swisscom, PHOENIQS), admitted only by an endpoint-bound certificate | one public limitation text per request, numbers as slot codes |
 
-On-premise or air-gapped; build-time and runtime dependencies are separated in
-[docs/dependencies.md](docs/dependencies.md). Public AI was used for evaluation only (it may route outside Switzerland).
+No provider-specific code: any OpenAI-compatible Apertus endpoint works once it passes `make certify`. Build-time and
+runtime dependencies: [docs/dependencies.md](docs/dependencies.md); target architecture:
+[docs/target-architecture.md](docs/target-architecture.md).
 
-## Honesty section
+## How you can check us
 
-- 0 of 166 is a point estimate; the 95% upper bound is 2.3%.
-- No guard checks direction flips (increase ↔ reduction); a single dropped word inside an edited window can pass.
-- Half of the ready drafts come from one boilerplate family; without it the flag rate is 75.8%, above our own cap.
-- The 8B SL numbers are from an MLX 4-bit build on dev items; the GGUF build that ships has not yet been run on the
-  fresh set (the CPU workflow is in `.github/workflows/m1.yml`).
-- Our first out-of-sample run failed the same rule. We kept the rule, fixed the guards, and tested on new data.
-- The guards check that an amendment mirrors the German change; a divergence already present in the old French/Italian is
-  carried forward. All 5 divergences we found predate our data window, so we cannot show Gleichlaut would have prevented them.
-- No translation lag was found (backtest); translator minutes saved have not been measured.
-- On federal statutes the 8B leaves German or a stale part in 8 of 120 drafts it marks ready (6.7%, above our 2% limit).
-- Every number in this README is in [claims.tsv](claims.tsv) with the file and command that produce it.
+- **The code that produced the numbers is the code that ships:** the research code is vendored byte-identical and
+  hash-checked (`eval/prereg/freeze.json`); `make run` re-runs it from the recorded model responses.
+- **Every rule was written before its test:** `eval/prereg/PREREG.md`, with run timestamps from the gateway ledger.
+  The first out-of-sample run failed the rule; it is reported, and the fix was tested on new data.
+- **Labelling anyone can re-run:** every ready draft was read in full by a blind annotator, re-labelled by a second,
+  disagreements broken by a third (agreement κ 0.532; worklists and labels in `eval/labels/`).
+- **Every number is traceable:** `claims.tsv` maps every number in this README, the report and the form notes to a
+  results file; CI fails on drift.
+
+Known limits, measured: no check targets direction flips (increase ↔ decrease); "ready" means the amendment is right,
+not the whole text (18 ready French drafts keep an old drug-class mistranslation that BAG fixed in the same update);
+the 95% bound on errors in ready drafts is 9.6% counted per German change. Full list: report §6.
 
 ## Repository
 
 | Path | Contents |
 |---|---|
-| `src/gleichlaut/frozen/` | the research code that produced the numbers, byte-identical (sha256 in `eval/prereg/freeze.json`) |
-| `src/gleichlaut/` | pipeline runner, backends, certification, replay, mining, emit, UI |
-| `data/` | test items, recorded runs and responses, guard resources, schemas, backtest summaries (< 100 MB) |
-| `eval/` | pre-registration, hand-check labels, results, certificates |
-| `docs/` | architecture, target architecture, dependencies, provenance, failure modes, sources |
+| `src/gleichlaut/frozen/` | the research code that produced the numbers, byte-identical |
+| `src/gleichlaut/` | drafting pipeline, checks, audit, certification, monthly cycle, replay, XLIFF/FHIR, review register |
+| `data/` | test items, recorded runs and responses, check resources, schemas, audit and backtest results |
+| `eval/` | pre-registration, labels, results, certificates |
+| `docs/` | process map, operations, architecture, dependencies, provenance, failure modes, sources |
 
-## Declarations
-
-Coding assistant: the code was written with Claude Code agents (Anthropic) under the team lead's direction. Labels of
-model outputs were made by Claude Code agents, re-labelled by a blind second agent, with a blind third agent breaking
-disagreements; no human labels. Apertus is the only model at runtime. Code Apache-2.0; report CC-BY-4.0; SL and Fedlex texts are official federal
-publications.
+Code written with Claude Code agents under the team's direction; labels by blind Claude annotators; Apertus is the only
+model at runtime. Code Apache-2.0, report CC-BY-4.0; SL and Fedlex texts are official federal publications.

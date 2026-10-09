@@ -1,0 +1,24 @@
+# Publishes the review register (built from the recorded held-out run, no model calls) to GitHub Pages on every push.
+name: pages
+on: { push: { branches: [main] }, workflow_dispatch: {} }
+permissions: { contents: read, pages: write, id-token: write }
+concurrency: { group: pages, cancel-in-progress: true }
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    defaults: { run: { working-directory: track_2b } }
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: { python-version: "3.12" }
+      - run: pip install -r requirements.txt
+      - run: PYTHONPATH=src python -m gleichlaut ui --out ../site/index.html
+      - uses: actions/upload-pages-artifact@v5
+        with: { path: site }
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    environment: { name: github-pages, url: "${{ steps.d.outputs.page_url }}" }
+    steps:
+      - id: d
+        uses: actions/deploy-pages@v5
