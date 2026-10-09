@@ -1,0 +1,26 @@
+key	needs_fix	class	note
+cc/1988/1776_1776_1776/2025-01-01#art_5/para_1|fr	yes	stale	Telegram etc removed but moyen de communication kept; German dropped Übermittlung.
+cc/1997/2417_2417_2417/2026-02-01#art_14/para_3/lbl_c|fr	no	preexisting	Date updated; Gangfische/des wording already in tgt_old.
+cc/1997/2417_2417_2417/2026-02-01#art_14/para_3/lbl_c|it	no	equivalent	Date updated; official added Gangfisch extra.
+cc/1997/2417_2417_2417/2026-02-01#art_15/para_3|it	no	equivalent	3 m vs tre metri harmless.
+cc/2000/554/2025-08-01#art_16/para_4|fr	yes	minor	Law title should be loi sur la transplantation, not relative aux greffes.
+cc/2003/735/2025-01-01#art_7/para_3|fr	no	equivalent	OFAG and website applied; site web vs site Internet harmless.
+cc/2009/681/2025-05-01#art_12_a/para_1|fr	no	equivalent	Date updated; official extra rewording (licences).
+cc/2009/681/2025-05-01#art_4/para_1/lbl_b|fr	no	equivalent	Dropped et as German did; official punctuation differs.
+cc/2009/681/2025-05-01#art_4/para_1/lbl_c|fr	no	equivalent	Added et as German did; official omits it.
+cc/2010/267/2025-04-01#art_269/para_2/lbl_g|it	yes	german	German Absatz 1 bis left in Italian text.
+cc/2011/251/2026-06-01#art_2/para_1/lbl_c|fr	yes	german	EFZ left; title should be spécialiste en restauration CFC.
+cc/2011/251/2026-06-01#art_2/para_1/lbl_c|it	yes	german	EFZ left untranslated (should be AFC); title wording also off.
+cc/2011/251/2026-06-01#art_2/para_1/lbl_e|it	yes	german	EFZ left untranslated instead of AFC.
+cc/2011/251/2026-06-01#art_2/para_1/lbl_h|fr	yes	stale	New occupation not applied; old title kept (and garbled to feminine twice).
+cc/2011/251/2026-06-01#art_4/para_1/lbl_a|it	no	exact	Matches official except slash spacing.
+cc/2013/104/2026-01-01#art_7/para/lbl_c|fr	no	equivalent	Amount updated; comma removal is extra official revision.
+cc/2016/615/2026-01-01#art_11/para_2|it	yes	cosmetic	al 80 should be all'80; impiegato is extra official revision.
+cc/2016/615/2026-01-01#art_19/para_4/lbl_c|fr	yes	minor	Erfahrungsnote rendered as expérience instead of note d'expérience.
+cc/2016/615/2026-01-01#art_19/para_4/lbl_c|it	yes	minor	Erfahrungsnote rendered as esperienze; grade notion missing.
+cc/2018/732/2026-06-01#art_4/para_4|it	no	equivalent	Document change applied correctly; wording differs harmlessly from official.
+cc/2018/732/2026-06-01#art_8/para_1|fr	yes	stale	Pendant le service militaire kept though German dropped im Militärdienst.
+cc/2018/732/2026-06-01#art_8/para_1|it	yes	stale	Old libretto di servizio reference retained alongside new attestato.
+cc/2018/732/2026-06-01#art_9/para_2|it	yes	minor	Verb still iscritta (not indicata); certificato instead of official attestato.
+cc/2019/609/2026-01-01#art_7/para_3|it	no	equivalent	Date updated correctly; official contains typo stato stato.
+cc/2021/694/2025-02-01#annex_4/lvl_u1/lvl_7/lbl_7_1|fr	no	equivalent	Rabbits removed correctly; official restructured sentence.

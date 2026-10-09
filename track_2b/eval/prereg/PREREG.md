@@ -54,6 +54,20 @@ History under this rule (all reported): dev 120 (guards v2, in-sample) pass; out
   numbers-not-in-DE check), and, where a DE change inside the window exists, what Gleichlaut's draft would have been.
 - If no lag is found, the report says so and relies on the 5 verified divergences.
 
+## R5. Fedlex: 8B vs 70B on the same 120 FR/IT paragraphs (frozen 9 Oct 2026 night, before any 70B Fedlex call)
+
+Background (measured before this rule): the shipped Fedlex lane (8B MLX DWQ, code lane first, lock + slot guard +
+frozen G1–G4; the guard choice was made after seeing these outputs, so DEV) flags 38/120; a blind annotation of its 25
+unflagged non-exact drafts finds 0 real meaning errors but 4 with German left (EFZ for CFC/AFC) and 3 stale, i.e.
+7/120 = 5.8% unflagged stale + untranslated, above R0's 2% limit.
+
+- Run: the same 120 FR/IT items, the same vendored research loop (`fed.lane.fed_draft`), with Apertus 70B through the
+  development gateway (plain user messages, temperature 0, served model checked on every call), no digit mask (API).
+- Labels: every unflagged non-exact 70B draft, by a blind annotator with the protocol used for the 8B drafts.
+- Decision: the Fedlex default becomes the 70B only if it meets R0 on these items (with the in-sample caveat stated);
+  otherwise the Fedlex lane stays 8B and every Fedlex draft goes to review ("ready" = pre-checked, not publishable).
+  Either way, both rows are reported side by side.
+
 ## R4. Post-freeze changes
 
 No change to `frozen/` after this commit. Any guard change needs a new held-out run before a claim; anything measured on

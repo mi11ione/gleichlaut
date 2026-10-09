@@ -192,3 +192,19 @@ def agreement():
                 unflagged_second_needs_fix=sum(B[k]["fix"] == "yes" for k in U),
                 disagreements=[dict(key=k, set="unflagged" if k in U else "flagged20", first=U.get(k) or F.get(k),
                                     second=B[k]["fix"] + " " + B[k]["cls"], note=B[k]["note"]) for k in keys if A[k] != B[k]["fix"]])
+
+
+def fedlex_shipped():
+    """Fedlex lane as shipped (A + code lane + lock + slot guard + G1-G4; DEV: the guard choice was made after seeing these
+    outputs) against the pass rule, using the blind annotation of every unflagged non-exact draft."""
+    F = json.load(open(os.path.join(core.ROOT, "eval", "results", "fedlex.json"), encoding="utf-8"))
+    row = next(v for k, v in F.items() if k.startswith("shipped") or (isinstance(v, dict) and "unflagged_nonexact_keys" in v)) \
+        if not any(k.startswith("shipped") for k in F) else F[next(k for k in F if k.startswith("shipped"))]
+    lines = open(os.path.join(LABELS, "fedlex_shipped_unflagged.tsv"), encoding="utf-8").read().splitlines()[1:]
+    lab = {c[0]: c[2] for c in (l.split("\t") for l in lines)}
+    n = 120; c = Counter(lab.values())
+    real, su = c.get("REAL", 0), c.get("stale", 0) + c.get("german", 0)
+    return dict(n=n, labelled=len(lab), classes=dict(sorted(c.items())), unflagged_real=real, unflagged_stale_untranslated=su,
+                unflagged_stale_untranslated_pct=round(100 * su / n, 2), wilson95=[round(v, 1) for v in wilson(su, n)],
+                needs_fix=sum(1 for l in lines if l.split("\t")[1] == "yes"),
+                passes_stale_untranslated_limit=100 * su / n <= PASS_RULE["unflagged_stale_untranslated_max_pct"])
