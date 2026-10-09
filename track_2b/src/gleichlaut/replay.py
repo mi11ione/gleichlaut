@@ -31,6 +31,7 @@ def compute():
     res = {rid: score.score_run(rid) for rid in SCORED}
     res["naive"] = score.score_naive()
     res["cost_fresh166"] = score.cost("fresh166")
+    res["agreement_fresh166"] = score.agreement()
     return res
 
 

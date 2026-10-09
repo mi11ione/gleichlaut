@@ -25,6 +25,8 @@
   "free translation (B) IT lexicon flips": 23.3,
   "FR/IT flagged (A)": 12.5,
   "FR/IT unflagged lexicon flips (A)": 0.8,
+  "FR/IT flagged, shipped lane (A+code)": 10.8,
+  "FR/IT unflagged lexicon flips, shipped lane (A+code)": 1.7,
   "real unflagged flips, by hand (A, FR/IT/RM)": "0/150 (hand adjudication of the 10 flip hits; not recomputable)",
   "s/paragraph A, A+code (FR/IT)": [
    6.7,
@@ -1576,5 +1578,113 @@
   "mismatches": [],
   "ok": true
  },
- "research_table": "group          arm       n  exact strict editF1  chrF out0%  outCh flag% flip% unflFlip% exact|unfl  s/par\nfr             A        60    50%    50%   69.5  89.1   90%    4.7   17%    7%        0%        56%    6.8\nfr             A+code   60    50%    50%   69.5  89.1   90%    4.7   15%    7%        2%        55%    4.2\nfr             A-asrun  60    50%    43%   69.5  89.1   90%    4.7   23%    7%        0%        52%    7.2\nfr             B        60     0%     0%   32.9  63.0   12%   65.2    0%   20%       20%         0%    4.5\nfr+it          A       120    50%    50%   72.7  89.4   92%    3.2   12%    5%        1%        54%    6.7\nfr+it          A+code  120    50%    50%   72.7  89.4   92%    3.2   11%    5%        2%        54%    4.2\nfr+it          A-asrun 120    50%    28%   72.7  89.4   92%    3.2   21%    5%        1%        54%    7.5\nfr+it          B       120     0%     0%   31.8  60.2   11%   73.7    0%   22%       22%         0%    4.6\nfr+it-noSEFRI  A        82    28%    28%   60.2  84.6   88%    4.7   18%    7%        1%        30%    7.0\nfr+it-noSEFRI  A+code   82    28%    28%   60.2  84.6   88%    4.7   16%    7%        2%        30%    5.7\nfr+it-noSEFRI  A-asrun  82    28%    20%   60.2  84.6   88%    4.7   29%    7%        1%        26%    8.1\nfr+it-noSEFRI  B        82     0%     0%   34.9  58.5   16%   84.0    0%   32%       32%         0%    4.5\nit             A        60    50%    50%   75.9  89.8   93%    1.8    8%    3%        2%        53%    6.7\nit             A+code   60    50%    50%   75.9  89.8   93%    1.8    7%    3%        2%        54%    4.1\nit             A-asrun  60    50%    13%   75.9  89.8   93%    1.8   18%    3%        2%        55%    7.9\nit             B        60     0%     0%   30.8  57.4   10%   82.2    0%   23%       23%         0%    4.7\nrm             A        30    27%    27%   65.9  91.2   87%    2.5   17%   13%        3%        32%    8.5\nrm             A+code   30    27%    27%   65.9  91.2   87%    2.5   17%   13%        3%        32%    6.9\nrm             A-asrun  30    27%    27%   65.9  91.2   87%    2.5   17%   13%        3%        32%    8.5\nrm             B        30     0%     0%   38.6  69.8    3%   64.8    0%   23%       23%         0%    5.5\nrm-clean       A        11    36%    36%   57.1  90.3   91%    0.5   18%    9%        0%        44%    9.2\nrm-clean       A+code   11    36%    36%   57.1  90.3   91%    0.5   18%    9%        0%        44%    5.9\nrm-clean       A-asrun  11    36%    36%   57.1  90.3   91%    0.5   18%    9%        0%        44%    9.2\nrm-clean       B        11     0%     0%   18.9  64.4    9%   86.6    0%   36%       36%         0%    6.5\nrm-contam      A        11     0%     0%   55.9  92.2   82%    0.7   18%   27%        9%         0%   10.8\nrm-contam      A+code   11     0%     0%   55.9  92.2   82%    0.7   18%   27%        9%         0%   10.8\nrm-contam      A-asrun  11     0%     0%   55.9  92.2   82%    0.7   18%   27%        9%         0%   10.8\nrm-contam      B        11     0%     0%   34.4  72.7    0%   80.4    0%   27%       27%         0%    6.3\nrm-short       A         8    50%    50%   91.7  91.3   88%    7.6   12%    0%        0%        57%    4.2\nrm-short       A+code    8    50%    50%   91.7  91.3   88%    7.6   12%    0%        0%        57%    3.0\nrm-short       A-asrun   8    50%    50%   91.7  91.3   88%    7.6   12%    0%        0%        57%    4.2\nrm-short       B         8     0%     0%   71.7  73.2    0%   13.4    0%    0%        0%         0%    2.7\ncode lane: {'fr': {'n': 60, 'applicable': 24, 'produced': 24, 'exact': 21}, 'it': {'n': 60, 'applicable': 24, 'produced': 24, 'exact': 21}, 'rm': {'n': 30, 'applicable': 8, 'produced': 8, 'exact': 7}}\ngold edit inside lock windows: {'fr': '45/60', 'it': '48/60', 'rm': '15/30'}\n"
+ "research_table": "group          arm       n  exact strict editF1  chrF out0%  outCh flag% flip% unflFlip% exact|unfl  s/par\nfr             A        60    50%    50%   69.5  89.1   90%    4.7   17%    7%        0%        56%    6.8\nfr             A+code   60    50%    50%   69.5  89.1   90%    4.7   15%    7%        2%        55%    4.2\nfr             A-asrun  60    50%    43%   69.5  89.1   90%    4.7   23%    7%        0%        52%    7.2\nfr             B        60     0%     0%   32.9  63.0   12%   65.2    0%   20%       20%         0%    4.5\nfr+it          A       120    50%    50%   72.7  89.4   92%    3.2   12%    5%        1%        54%    6.7\nfr+it          A+code  120    50%    50%   72.7  89.4   92%    3.2   11%    5%        2%        54%    4.2\nfr+it          A-asrun 120    50%    28%   72.7  89.4   92%    3.2   21%    5%        1%        54%    7.5\nfr+it          B       120     0%     0%   31.8  60.2   11%   73.7    0%   22%       22%         0%    4.6\nfr+it-noSEFRI  A        82    28%    28%   60.2  84.6   88%    4.7   18%    7%        1%        30%    7.0\nfr+it-noSEFRI  A+code   82    28%    28%   60.2  84.6   88%    4.7   16%    7%        2%        30%    5.7\nfr+it-noSEFRI  A-asrun  82    28%    20%   60.2  84.6   88%    4.7   29%    7%        1%        26%    8.1\nfr+it-noSEFRI  B        82     0%     0%   34.9  58.5   16%   84.0    0%   32%       32%         0%    4.5\nit             A        60    50%    50%   75.9  89.8   93%    1.8    8%    3%        2%        53%    6.7\nit             A+code   60    50%    50%   75.9  89.8   93%    1.8    7%    3%        2%        54%    4.1\nit             A-asrun  60    50%    13%   75.9  89.8   93%    1.8   18%    3%        2%        55%    7.9\nit             B        60     0%     0%   30.8  57.4   10%   82.2    0%   23%       23%         0%    4.7\nrm             A        30    27%    27%   65.9  91.2   87%    2.5   17%   13%        3%        32%    8.5\nrm             A+code   30    27%    27%   65.9  91.2   87%    2.5   17%   13%        3%        32%    6.9\nrm             A-asrun  30    27%    27%   65.9  91.2   87%    2.5   17%   13%        3%        32%    8.5\nrm             B        30     0%     0%   38.6  69.8    3%   64.8    0%   23%       23%         0%    5.5\nrm-clean       A        11    36%    36%   57.1  90.3   91%    0.5   18%    9%        0%        44%    9.2\nrm-clean       A+code   11    36%    36%   57.1  90.3   91%    0.5   18%    9%        0%        44%    5.9\nrm-clean       A-asrun  11    36%    36%   57.1  90.3   91%    0.5   18%    9%        0%        44%    9.2\nrm-clean       B        11     0%     0%   18.9  64.4    9%   86.6    0%   36%       36%         0%    6.5\nrm-contam      A        11     0%     0%   55.9  92.2   82%    0.7   18%   27%        9%         0%   10.8\nrm-contam      A+code   11     0%     0%   55.9  92.2   82%    0.7   18%   27%        9%         0%   10.8\nrm-contam      A-asrun  11     0%     0%   55.9  92.2   82%    0.7   18%   27%        9%         0%   10.8\nrm-contam      B        11     0%     0%   34.4  72.7    0%   80.4    0%   27%       27%         0%    6.3\nrm-short       A         8    50%    50%   91.7  91.3   88%    7.6   12%    0%        0%        57%    4.2\nrm-short       A+code    8    50%    50%   91.7  91.3   88%    7.6   12%    0%        0%        57%    3.0\nrm-short       A-asrun   8    50%    50%   91.7  91.3   88%    7.6   12%    0%        0%        57%    4.2\nrm-short       B         8     0%     0%   71.7  73.2    0%   13.4    0%    0%        0%         0%    2.7\ncode lane: {'fr': {'n': 60, 'applicable': 24, 'produced': 24, 'exact': 21}, 'it': {'n': 60, 'applicable': 24, 'produced': 24, 'exact': 21}, 'rm': {'n': 30, 'applicable': 8, 'produced': 8, 'exact': 7}}\ngold edit inside lock windows: {'fr': '45/60', 'it': '48/60', 'rm': '15/30'}\n",
+ "shipped lane = A+code + lock + slot + G1–G4 (DEV: guard choice made after seeing these outputs)": {
+  "label": "shipped lane = A+code + lock + slot + G1–G4 (DEV: guard choice made after seeing these outputs)",
+  "all": {
+   "n": 120,
+   "exact": 60,
+   "flagged": 38,
+   "ready": 82,
+   "exact_flagged": 3,
+   "ready_exact": 57,
+   "flagged_research": 13,
+   "newly_flagged_by_g1_g4": 25,
+   "newly_flagged_exact": 1,
+   "g14_hits": {
+    "g1": 2,
+    "g2": 27,
+    "g3": 10,
+    "g4": 2
+   }
+  },
+  "fr": {
+   "n": 60,
+   "exact": 30,
+   "flagged": 19,
+   "ready": 41,
+   "exact_flagged": 2,
+   "ready_exact": 28,
+   "flagged_research": 9,
+   "newly_flagged_by_g1_g4": 10,
+   "newly_flagged_exact": 0,
+   "g14_hits": {
+    "g1": 1,
+    "g2": 14,
+    "g3": 2,
+    "g4": 1
+   }
+  },
+  "it": {
+   "n": 60,
+   "exact": 30,
+   "flagged": 19,
+   "ready": 41,
+   "exact_flagged": 1,
+   "ready_exact": 29,
+   "flagged_research": 4,
+   "newly_flagged_by_g1_g4": 15,
+   "newly_flagged_exact": 1,
+   "g14_hits": {
+    "g1": 1,
+    "g2": 13,
+    "g3": 8,
+    "g4": 1
+   }
+  },
+  "unflagged_non_exact_keys": [
+   "cc/1988/1776_1776_1776/2025-01-01#art_5/para_1|fr",
+   "cc/1997/2417_2417_2417/2026-02-01#art_14/para_3/lbl_c|fr",
+   "cc/1997/2417_2417_2417/2026-02-01#art_14/para_3/lbl_c|it",
+   "cc/1997/2417_2417_2417/2026-02-01#art_15/para_3|it",
+   "cc/2000/554/2025-08-01#art_16/para_4|fr",
+   "cc/2003/735/2025-01-01#art_7/para_3|fr",
+   "cc/2009/681/2025-05-01#art_12_a/para_1|fr",
+   "cc/2009/681/2025-05-01#art_4/para_1/lbl_b|fr",
+   "cc/2009/681/2025-05-01#art_4/para_1/lbl_c|fr",
+   "cc/2010/267/2025-04-01#art_269/para_2/lbl_g|it",
+   "cc/2011/251/2026-06-01#art_2/para_1/lbl_c|fr",
+   "cc/2011/251/2026-06-01#art_2/para_1/lbl_c|it",
+   "cc/2011/251/2026-06-01#art_2/para_1/lbl_e|it",
+   "cc/2011/251/2026-06-01#art_2/para_1/lbl_h|fr",
+   "cc/2011/251/2026-06-01#art_4/para_1/lbl_a|it",
+   "cc/2013/104/2026-01-01#art_7/para/lbl_c|fr",
+   "cc/2016/615/2026-01-01#art_11/para_2|it",
+   "cc/2016/615/2026-01-01#art_19/para_4/lbl_c|fr",
+   "cc/2016/615/2026-01-01#art_19/para_4/lbl_c|it",
+   "cc/2018/732/2026-06-01#art_4/para_4|it",
+   "cc/2018/732/2026-06-01#art_8/para_1|fr",
+   "cc/2018/732/2026-06-01#art_8/para_1|it",
+   "cc/2018/732/2026-06-01#art_9/para_2|it",
+   "cc/2019/609/2026-01-01#art_7/para_3|it",
+   "cc/2021/694/2025-02-01#annex_4/lvl_u1/lvl_7/lbl_7_1|fr"
+  ],
+  "newly_flagged_keys": [
+   "cc/1955/871_893_899/2025-07-01#art_86_a/para_1|fr",
+   "cc/1955/871_893_899/2025-07-01#art_86_a/para_1|it",
+   "cc/1959/679_705_685/2025-04-01#art_106_a/para_1/lbl_a|it",
+   "cc/1985/1778_1778_1778/2025-01-01#art_7/para_1/listintro|it",
+   "cc/1988/1776_1776_1776/2025-01-01#art_88/para_1|fr",
+   "cc/1988/1776_1776_1776/2025-01-01#art_88/para_1|it",
+   "cc/1988/1776_1776_1776/2025-01-01#art_96/para_1/lbl_a|it",
+   "cc/2000/554/2025-08-01#art_16/para_4|it",
+   "cc/2003/735/2025-01-01#art_4/para_1|it",
+   "cc/2003/735/2025-01-01#art_6/para_2|it",
+   "cc/2003/735/2025-01-01#art_7/para_3|it",
+   "cc/2003/735/2025-01-01#art_9/para|fr",
+   "cc/2003/735/2025-01-01#art_9/para|it",
+   "cc/2009/681/2025-05-01#art_3/para_1|it",
+   "cc/2011/251/2026-06-01#art_2/para_1/lbl_e|fr",
+   "cc/2011/251/2026-06-01#art_2/para_1/lbl_h|it",
+   "cc/2013/793/2026-01-01#art_7/para_1|fr",
+   "cc/2018/732/2026-06-01#art_29/para_1/lbl_b|fr",
+   "cc/2018/732/2026-06-01#art_29/para_1/lbl_b|it",
+   "cc/2018/732/2026-06-01#art_4/para_4|fr",
+   "cc/2018/732/2026-06-01#art_9/para_2|fr",
+   "cc/2021/694/2025-02-01#annex_4/lvl_u1/lvl_3/list_u1/lbl_3_1|fr",
+   "cc/2021/694/2025-02-01#annex_4/lvl_u1/lvl_3/list_u1/lbl_3_1|it",
+   "cc/2021/694/2025-02-01#annex_4/lvl_u1/lvl_6/lbl_6_1/listintro|fr",
+   "cc/2021/694/2025-02-01#annex_4/lvl_u1/lvl_6/lbl_6_1/listintro|it"
+  ]
+ }
 }

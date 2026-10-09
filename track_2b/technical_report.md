@@ -40,20 +40,7 @@ span"; neither can judge equivalence; the 8B flags 85% of SL drafts; and our fir
 
 ## 2. Architecture
 
-![pipeline](docs/pipeline.svg)
-
-```
- BAG ePL FHIR feed (DE/FR/IT, monthly) ─► sl.ingest ─► snapshots ─► sl.mine: DE change per product, ≤ 60% of tokens
- Fedlex AKN XML (consolidated versions) ─► fed.ingest ─► aligned units ─► fed.mine        (> 60% → human)
-                                     ▼
- plan:   lock windows from the DE diff · rules lane (numbers, months, product names) · numbers → slot codes ⟨A⟩
- route:  Fedlex → Apertus 8B │ SL → Apertus 70B on a certified endpoint │ air-gapped SL → 8B, every item reviewed
- draft:  whole-paragraph locked rewrite (prompt PA, Appendix A) · code writes the numbers back
- guards: lock · slots (numbers/negation/modality) · G1 German · G2 change applied · G3 content dropped · G4 duplication
-         G5 copied from DE · G6 terminology map · G7 out-of-vocabulary                (frozen, sha256 in eval/prereg)
- re-ask: at most one, with the guards' complaints; kept only if every guard passes
- emit:   XLIFF 2.1 (ready = translated, flagged = initial + reasons) · FHIR ClinicalUseDefinition · review page
-```
+![Pipeline](docs/pipeline.svg)
 
 | Module (`src/gleichlaut/`) | Role |
 |---|---|
@@ -150,6 +137,10 @@ flagged ≤ 70%.
 | Apertus 8B (MLX DWQ) + guards3, no re-ask | dev | 120 | 15.0% | +9.2 [3.3, 15.8] | 85.0% | 15.0% | 1 / 0 / 0 | FAIL (flag rate) |
 | Apertus 8B window-only | dev | 120 | 5.8% | +0.0 | 81.7% | n/a | 6 real errors unflagged | killed |
 | Apertus 8B free translation | dev | 120 | 0.0% | −5.8 | none | n/a | 78 lexicon flips unflagged | killed |
+
+![Exact-match gain per arm](docs/fig_arms.svg)
+
+![Outcome of each draft](docs/fig_outcomes.svg)
 
 Review effort: of a seeded 20 flagged drafts on the fresh set, 13 needed no change (65% wasted review, Wilson
 [43.3, 81.9]); 7 needed a fix, including all 3 real meaning changes in the sample, which the guards had caught.

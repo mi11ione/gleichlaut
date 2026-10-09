@@ -1,0 +1,161 @@
+{
+ "rule": "From data/items/fedlex_items.json take the federal FR/IT items (src == \"fed\") that the model must draft:\nlock.code_lane() produces no output and the item is not in the SEFRI mass-amendment cluster (score.py:is_cluster).\nSort them by (len(de_old) + len(de_new) + len(tgt_old), key) and pick greedily, shortest first: pick i must be in\nlanguage (\"fr\", \"it\")[i % 2] and from an act not picked yet. Stop at 5 (3 FR + 2 IT, 5 distinct acts).",
+ "source": "data/items/fedlex_items.json",
+ "recorded": "data/runs/8b_dwq_fedlex_A.jsonl",
+ "items": [
+  {
+   "key": "cc/2016/615/2026-01-01#art_19/para_4/lbl_c|fr",
+   "src": "fed",
+   "lang": "fr",
+   "act": "cc/2016/615",
+   "eid": "art_19/para_4/lbl_c",
+   "d_old": "2024-04-01",
+   "d_new": "2026-01-01",
+   "de_old": "c. Allgemeinbildung: 20 %;",
+   "de_new": "c. Erfahrungsnote: 30 %.",
+   "tgt_old": "c. culture générale: 20 %;",
+   "tgt_new": "c. note d’expérience: 30 %.",
+   "recorded_8b_dwq": {
+    "out": "c. expérience: 30 %.",
+    "exact": false,
+    "status": "ready",
+    "status_research": "ready",
+    "guard": [],
+    "g14": {
+     "g1": [],
+     "g2": [],
+     "g3": [],
+     "g4": [],
+     "flag": false
+    },
+    "retried": false,
+    "secs": 3.08
+   }
+  },
+  {
+   "key": "cc/2009/681/2025-05-01#art_4/para_1/lbl_c|it",
+   "src": "fed",
+   "lang": "it",
+   "act": "cc/2009/681",
+   "eid": "art_4/para_1/lbl_c",
+   "d_old": "2016-01-01",
+   "d_new": "2025-05-01",
+   "de_old": "c. fachlich geeignet sein (Art. 7).",
+   "de_new": "c. fachlich geeignet sein (Art. 7); und",
+   "tgt_old": "c. capacità professionale (art. 7).",
+   "tgt_new": "c. capacità professionale (art. 7); e",
+   "recorded_8b_dwq": {
+    "out": "c. capacità professionale (art. 7); e",
+    "exact": true,
+    "status": "ready",
+    "status_research": "ready",
+    "guard": [],
+    "g14": {
+     "g1": [],
+     "g2": [],
+     "g3": [],
+     "g4": [],
+     "flag": false
+    },
+    "retried": false,
+    "secs": 2.98
+   }
+  },
+  {
+   "key": "cc/2011/251/2026-06-01#art_2/para_1/lbl_e|fr",
+   "src": "fed",
+   "lang": "fr",
+   "act": "cc/2011/251",
+   "eid": "art_2/para_1/lbl_e",
+   "d_old": "2022-08-01",
+   "d_new": "2026-06-01",
+   "de_old": "e. Restaurationsangestellte EBA/Restaurationsangestellter EBA;",
+   "de_new": "e. Köchin EFZ / Koch EFZ;",
+   "tgt_old": "e. employée en restauration AFP/employé en restauration AFP;",
+   "tgt_new": "e. cuisinière CFC / cuisinier CFC;",
+   "recorded_8b_dwq": {
+    "out": "e. employée en restauration EFZ/employé en restauration EFZ;",
+    "exact": false,
+    "status": "flagged",
+    "status_research": "ready",
+    "guard": [],
+    "g14": {
+     "g1": [],
+     "g2": [
+      [
+       "add",
+       "«Restaurationsangestellte EBA» -> «Köchin EFZ»"
+      ],
+      [
+       "add",
+       "«Restaurationsangestellter EBA» -> «Koch EFZ»"
+      ]
+     ],
+     "g3": [],
+     "g4": [],
+     "flag": true
+    },
+    "retried": false,
+    "secs": 3.89
+   }
+  },
+  {
+   "key": "cc/2018/732/2026-06-01#art_9/para_2|it",
+   "src": "fed",
+   "lang": "it",
+   "act": "cc/2018/732",
+   "eid": "art_9/para_2",
+   "d_old": "2023-01-01",
+   "d_new": "2026-06-01",
+   "de_old": "2 Die Inspektion ist im Dienstbüchlein einzutragen.",
+   "de_new": "2 Die Inspektion ist im Ausweis über die Erfüllung der Militärdienstpflicht anzuzeigen.",
+   "tgt_old": "2 L’ispezione è iscritta nel libretto di servizio.",
+   "tgt_new": "2 L’ispezione è indicata nell’attestato di adempimento dell’obbligo di prestare servizio militare.",
+   "recorded_8b_dwq": {
+    "out": "2 L’ispezione è iscritta nel certificato sull’adempimento dell’obbligo di servizio militare.",
+    "exact": false,
+    "status": "ready",
+    "status_research": "ready",
+    "guard": [],
+    "g14": {
+     "g1": [],
+     "g2": [],
+     "g3": [],
+     "g4": [],
+     "flag": false
+    },
+    "retried": false,
+    "secs": 4.45
+   }
+  },
+  {
+   "key": "cc/2000/15/2026-07-01#art_9/para/lbl_p|fr",
+   "src": "fed",
+   "lang": "fr",
+   "act": "cc/2000/15",
+   "eid": "art_9/para/lbl_p",
+   "d_old": "2024-01-01",
+   "d_new": "2026-07-01",
+   "de_old": "p. notwendige Nutzungsregelungen bei sachplanrelevanten Vorhaben.",
+   "de_new": "p. notwendige Nutzungsregelungen bei sachplanrelevanten Vorhaben;",
+   "tgt_old": "p. les règlements d’exploitation nécessaires dans le cadre de projets relevant du plan sectoriel.",
+   "tgt_new": "p. les règlements d’exploitation nécessaires dans le cadre de projets relevant du plan sectoriel;",
+   "recorded_8b_dwq": {
+    "out": "p. les règlements d’exploitation nécessaires dans le cadre de projets relevant du plan sectoriel;",
+    "exact": true,
+    "status": "ready",
+    "status_research": "ready",
+    "guard": [],
+    "g14": {
+     "g1": [],
+     "g2": [],
+     "g3": [],
+     "g4": [],
+     "flag": false
+    },
+    "retried": false,
+    "secs": 8.29
+   }
+  }
+ ]
+}

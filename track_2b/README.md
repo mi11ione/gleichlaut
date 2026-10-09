@@ -1,103 +1,108 @@
-# Track 2 B: Own Project
+# Gleichlaut
 
-Bring your own idea and build a working Apertus prototype that tackles a problem you care about — any domain, any use case. The project must be new, started within the hackathon period.
+**When Switzerland amends a binding text in German, Gleichlaut drafts the matching French and Italian change with
+Apertus. Code places every number. Frozen guards decide what is ready. Nothing is published unguarded.**
 
-Submissions must use the Apertus model family.
-For Track 2 this means that submitted solutions must be built with Apertus. Other open-weights models can be used to support development, e.g. as automatic judges during evaluation. Their role must be clearly described in the submission report.
+Track 2B · declared maturity: **feasibility study** · models: Apertus v1.5 8B + 70B · [technical report](technical_report.md) · [demo video](VIDEO_URL)
 
-💬 In case you have questions, join the conversation on [Discord](https://discord.gg/hack-apertus) or send an email to “hello@hackapertus.ch”
+## The problem, measured
 
----
+The German, French and Italian versions of the BAG Spezialitätenliste, the list of medicines that mandatory health
+insurance reimburses, are equally binding. In the 5 Oct 2026 feed we found by hand 5 independent divergences in today's
+reimbursement conditions. **All of them are numbers:**
 
-## 🔧 Resources & Tools
+| Product (limitation) | German / French | Italian |
+|---|---|---|
+| Nemluvio (`NEMLUVIO.01`) | every 8 weeks | "ogni 4 settimane" (every 4 weeks) |
+| Diaphin (`DIAPHIN.6-`) | surcharge 6% | 12% |
+| Etanercept biosimilars ×3 | a French-only "≥ 62.5 kg" condition, copied across products | |
+| Cresemba (`CRESE.Kps.IM`) | French drops "≥ 16 kg" | |
+| Dupixent ×4 | French misses or shifts the 15–30 kg tier | |
 
-Check our resources & tools page for detailed information:
-https://hackapertus.notion.site/resources-tools
+Every month BAG changes dozens of German limitation texts, and each change has to be made again in French and Italian,
+without touching anything else.
 
-| Models           | URL                                      |
-|------------------|------------------------------------------|
-| Apertus v1.5 8B  | [huggingface.co/swiss-ai/Apertus-v1.5-8B](https://huggingface.co/swiss-ai/Apertus-v1.5-8B)  |
-| Apertus v1.5 70B | [huggingface.co/swiss-ai/Apertus-v1.5-70B](https://huggingface.co/swiss-ai/Apertus-v1.5-70B) |
+## What Gleichlaut does
 
+1. **Mines** each German change from BAG's public monthly FHIR feed (or a Fedlex consolidated version).
+2. **Locks** the old French/Italian text outside edit windows projected from the German diff, and turns every number into
+   a slot code (⟨A⟩, ⟨B⟩, …) so the model never writes one.
+3. **Drafts** the amended paragraph with Apertus: the 8B for federal statutes (where it is measured to suffice), the 70B
+   for SL limitations (where the 8B is not).
+4. **Guards** every draft with a frozen deterministic stack: lock, numbers/negation/modality, German left in, change not
+   applied, content dropped, duplication, copied-from-German, terminology, vocabulary. One re-ask with the complaints; kept
+   only if every guard passes.
+5. **Emits** a ready / flagged queue as **XLIFF 2.1** (translators' own tools) and as **FHIR** in the shape of BAG's own
+   feed, plus a review page.
 
-## Target architecture (mandatory)
+No model judges anything. Apertus rewrites wording, code does the rest.
 
-Whatever you build in Track 2B must be deployable in one of these three architectures:
+## Results (pre-registered; guards hashed before any test output existed)
 
-- **a) On-premise** — on the organisation's own infrastructure, under its own administration.
-- **b) Air-gapped** — with no external network connection at runtime.
-- **c) Sovereign Swiss cloud** — on a cloud platform operated in Switzerland, under Swiss jurisdiction, with Swiss data residency.
+Fresh held-out set: 166 FR/IT items from 2025 SL changes, 154 of them in edit families never seen during design.
 
----
+| | Exact = official text | Ready (unflagged) | Unflagged errors (real / stale / untranslated) | Pass rule |
+|---|---|---|---|---|
+| Rules only (copy + number substitution) | 6.0% | | | |
+| **Apertus 70B + guards3 + one re-ask** | **17.5%** (+11.4, 95% CI [4.8, 18.7]) | **39.8%** | **0 / 0 / 0** of 166 (95% upper bound 2.3%) | **PASS** |
+| Apertus 70B + earlier guards, out-of-sample 2026 set (242) | 29.3% | 38.4% | 1 / 0 / 10 | **FAIL** |
+| Apertus 8B (MLX DWQ) + guards3, dev set (120) | 15.0% | 15.0% | 1 / 0 / 0 | FAIL (85.0% flagged) |
 
-## Data
+Cost of the 70B lane: **$0.0028 per item**. About two thirds of flagged drafts need no change (13 of a sampled 20): the
+guards are deliberately conservative. Where Apertus fell short, with counts: [docs/failure-modes.md](docs/failure-modes.md).
 
-The `data/` directory must not exceed 100 MB.
+## Run it
 
----
+```bash
+make run            # Docker, CPU, a few minutes, no network needed (runs with --network none unless LLM_BASE_URL is set)
+```
 
-## 📦 Submission Requirements & Deliverables
+`make run` verifies the sha256 of the frozen code, guard resources and test items; **re-executes the recorded 70B runs
+end-to-end from the recorded responses** (every one of the 285 model requests of the headline run is rebuilt
+byte-for-byte and found by its payload hash); re-guards and re-scores every recorded run and checks the results;
+drafts 5 Fedlex paragraphs live if `LLM_BASE_URL` / `LLM_API_KEY` / `LLM_NAME` point to an Apertus endpoint; emits and
+validates XLIFF 2.1 and FHIR; and builds the review page (`out/ui/index.html`).
 
-❗️ Submissions are not handled on Devpost but via this URL only:
-http://hackapertus.ch/online-hack/submissions
+```bash
+make run-offline    # adds the local CPU Apertus 8B (GGUF Q4_K_M, ~5 GB, sha256-pinned) for the air-gapped lane
+make certify        # certify the endpoint in LLM_BASE_URL on the frozen 166-item suite before it may serve the SL lane
+make test           # unit and reproduction tests
+```
 
-The submission must: 
-1. follow the template repo and include all prerequisite files and definitions
-2. follow the specified input/output formats
-3. run in a Docker container, launched with `make run` from the root of the project
-4. run end-to-end when judges try to run it
+## Deployment
 
-### Git repo (URL)
-- Create your repo from this template (**Use this template**) and work in the `track_2b/` challenge directory. Delete the other track challenge directories.
-- Keep `track_2b/` as it is: don't rename it or move its files.
-- Set the repo to PUBLIC (Settings --> Collaborators --> Manage Visibility)
-- Submit the URL of YOUR Git repo.
+| Lane | Runs on | External services at runtime |
+|---|---|---|
+| Fedlex statutes | Apertus 8B GGUF on CPU, in process | none |
+| SL limitations (default) | Apertus 70B on an endpoint the user controls (own hardware or a Swiss-resident provider), gated by `make certify` | that endpoint only |
+| SL air-gapped fallback | Apertus 8B GGUF on CPU; every item goes to review | none |
 
-### Technical Report (pdf)
-- Update [technical_report.md](technical_report.md) in this repository with all the details for your submission.
-- Upload a pdf of your technical report to this directory, named as `TeamName_Report.pdf`.
-- Format: pdf, max. 6 pages
-- Submit the pdf of the technical report.
+On-premise or air-gapped; build-time and runtime dependencies are separated in
+[docs/dependencies.md](docs/dependencies.md). Public AI was used for evaluation only (it may route outside Switzerland).
 
-### Demo video (URL)
-- Max. 2 min demo video of your prototype
+## Honesty section
 
-### Dataset (URL) - optional, depending on your project
-Submitted datasets must comply with our guidelines for responsibly sourced datasets.
+- 0 of 166 is a point estimate; the 95% upper bound is 2.3%.
+- No guard checks direction flips (increase ↔ reduction); a single dropped word inside an edited window can pass.
+- Half of the ready drafts come from one boilerplate family; without it the flag rate is 75.8%, above our own cap.
+- The 8B SL numbers are from an MLX 4-bit build on dev items; the GGUF build that ships has not yet been run on the
+  fresh set (the CPU workflow is in `.github/workflows/m1.yml`).
+- Our first out-of-sample run failed the same rule. We kept the rule, fixed the guards, and tested on new data.
+- Every number in this README is in [claims.tsv](claims.tsv) with the file and command that produce it.
 
-- Create a user account on Hugging Face
-- Clone our dataset template on Hugging Face: https://huggingface.co/datasets/HackApertus/online_hack_template
-- Complete the dataset card with all required information
-- Upload your dataset. It should consist of the following components:
-    - evaluation dataset (i.e. individual test cases)
-    - model response dataset (i.e. the model response to each test case)
-    - metadata file (i.e. additional information about each test case; where relevant, this file must contain instance-level licensing information) 
-- Make sure your dataset access control is set to PUBLIC
-- Provide the URL of _your_ data set
+## Repository
 
+| Path | Contents |
+|---|---|
+| `src/gleichlaut/frozen/` | the research code that produced the numbers, byte-identical (sha256 in `eval/prereg/freeze.json`) |
+| `src/gleichlaut/` | pipeline runner, backends, certification, replay, mining, emit, UI |
+| `data/` | test items, recorded runs and responses, guard resources, schemas, backtest summaries (< 100 MB) |
+| `eval/` | pre-registration, hand-check labels, results, certificates |
+| `docs/` | architecture, target architecture, dependencies, provenance, failure modes, sources |
 
----
+## Declarations
 
-## ⚖️ Judging Criteria
-
-1. Purposeful use of AI
-2. Technical rigour
-3. Value, cost & scalability
-4. Sovereign deployability
-5. Implementation feasibility
-
-Judges use a Scale 0–5 per dimension.
-
----
-
-## Support
-
-**Licensing requirements**
-Please check our Terms & Conditions (6. What you build is open source):
-https://hackapertus.ch/terms-and-conditions
-
-## FAQ
-💡 https://hackapertus.ch/faq
-
-## Contact
-💬 In case you have questions, join the conversation on Discord or send an email to “hello@hackapertus.ch”
+Coding assistant: the code was written with Claude Code agents (Anthropic) under the team lead's direction. Hand checks
+of model outputs were made by Claude Code agents and re-labelled blind by a second agent; disagreements go to the team
+lead. Apertus is the only model at runtime. Code Apache-2.0; report CC-BY-4.0; SL and Fedlex texts are official federal
+publications.

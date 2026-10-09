@@ -171,3 +171,24 @@ def cost(run_id, cache_root=None):
     n = len(I)
     return dict(items=n, unique_calls=len(calls), usd=round(usd, 4), usd_per_item=round(usd / n, 5), prompt_tokens=pt,
                 completion_tokens=ct, model_secs=round(secs, 1), model_secs_per_item=round(secs / n, 2))
+
+
+def agreement():
+    """Blind second annotation of the fresh-166 hand-check sample (49 unflagged non-exact + 20 flagged): binary
+    'needs a fix' agreement and Cohen's kappa against the research labels, and what the second annotator says about the
+    drafts the guards passed."""
+    U = load_labels("fresh166_unflagged.tsv"); F = load_labels("fresh166_flagged20.tsv")
+    lines = open(os.path.join(LABELS, "fresh166_second_annotator.tsv"), encoding="utf-8").read().splitlines()[1:]
+    B = {c[0]: dict(fix=c[1], cls=c[2], note=c[3] if len(c) > 3 else "") for c in (l.split("\t") for l in lines)}
+    A = {k: ("no" if v in ("equivalent", "preexisting", "exact") else "yes") for k, v in U.items()}
+    A.update({k: ("no" if v == "good" else "yes") for k, v in F.items()})
+    keys = sorted(A); n = len(keys); agree = sum(A[k] == B[k]["fix"] for k in keys)
+    pa, pA, pB = agree / n, sum(A[k] == "yes" for k in keys) / n, sum(B[k]["fix"] == "yes" for k in keys) / n
+    pe = pA * pB + (1 - pA) * (1 - pB)
+    severe = ("REAL", "stale", "german")
+    return dict(n=n, agree=agree, kappa=round((pa - pe) / (1 - pe), 3),
+                unflagged_n=len(U), unflagged_second_severe=sum(B[k]["cls"] in severe for k in U),
+                unflagged_second_classes=dict(sorted(Counter(B[k]["cls"] for k in U).items())),
+                unflagged_second_needs_fix=sum(B[k]["fix"] == "yes" for k in U),
+                disagreements=[dict(key=k, set="unflagged" if k in U else "flagged20", first=U.get(k) or F.get(k),
+                                    second=B[k]["fix"] + " " + B[k]["cls"], note=B[k]["note"]) for k in keys if A[k] != B[k]["fix"]])

@@ -1,0 +1,70 @@
+key	needs_fix	class	note
+wb004-fr	yes	minor	All deletions/additions applied; code sentence calqued 'Suivant code à transmettre', spaced parentheses in heading
+wb007-fr	no	equivalent	KG sentence removed, VENCLYXTO capitalised; official also changed 'indiqué' to 'remboursé'
+wb007-it	no	equivalent	KG sentence removed, VENCLYXTO; official only rephrased 'fino a comparsa'
+wb010-fr	yes	REAL	Old KG and dose sentences kept; second-line/post-platinum condition dropped; heading garbled into sentence
+wb011-fr	yes	stale	Three new German sentences (KG, until progression, code in KG) not added
+wb013-it	yes	german	Heading with 'Inj Lös/Fertigpen Stk.' and two full German sentences left untranslated; heading misplaced
+wb015-fr	no	preexisting	OKP term applied; angiotensin II antagonist mistranslation preexisting
+wb015-it	no	preexisting	OKP term applied; 'cosiddetti antagonisti' defect preexisting
+wb016-fr	no	preexisting	OKP term applied; angiotensin II antagonist mistranslation preexisting
+wb016-it	no	preexisting	OKP term applied; 'cosiddetti antagonisti' defect preexisting
+wb017-fr	no	preexisting	OKP term applied; angiotensin II antagonist mistranslation preexisting
+wb017-it	no	preexisting	OKP term applied; 'cosiddetti antagonisti' defect preexisting
+wb018-fr	no	preexisting	OKP term applied; angiotensin II antagonist mistranslation preexisting
+wb018-it	no	preexisting	OKP term applied; 'cosiddetti antagonisti' defect preexisting
+wb019-fr	no	preexisting	OKP term applied; angiotensin II antagonist mistranslation preexisting
+wb019-it	no	preexisting	OKP term applied; 'cosiddetti antagonisti' defect preexisting
+wb020-fr	no	preexisting	OKP term applied; ARA mistranslation and apostrophe spacing preexisting
+wb020-it	no	preexisting	OKP term applied; 'cosiddetti antagonisti' defect preexisting
+wb021-fr	no	preexisting	OKP term applied; angiotensin II antagonist mistranslation preexisting
+wb021-it	no	preexisting	OKP term applied; 'cosiddetti antagonisti' defect preexisting
+wb022-fr	no	preexisting	OKP term applied; ARA mistranslated as ACE inhibitor of angiotensin II preexisting
+wb022-it	no	preexisting	OKP term applied; 'cosiddetti antagonisti' defect preexisting
+wb023-fr	no	preexisting	OKP term applied; angiotensin II antagonist mistranslation preexisting
+wb023-it	no	preexisting	OKP term applied; 'cosiddetti antagonisti' defect preexisting
+wb024-fr	no	preexisting	OKP term applied; 'inhibiteur de l'enzyme de conversion de l'angiotensine II' error preexisting
+wb024-it	no	preexisting	OKP term applied; 'cosiddetti antagonisti' defect preexisting
+wb025-fr	no	preexisting	OKP term applied; angiotensin II antagonist mistranslation preexisting
+wb025-it	no	preexisting	OKP term applied; 'cosiddetti antagonisti' defect preexisting
+wb026-fr	no	preexisting	OKP term applied; missing d' and ARA mistranslation preexisting
+wb026-it	no	preexisting	OKP term applied; 'cosiddetti antagonisti' defect preexisting
+wb027-fr	no	preexisting	OKP term applied; angiotensin II antagonist mistranslation preexisting
+wb027-it	no	preexisting	OKP term applied; 'cosiddetti antagonisti' defect preexisting
+wb028-fr	no	preexisting	OKP term applied; angiotensin II antagonist mistranslation preexisting
+wb028-it	no	preexisting	OKP term applied; 'cosiddetti antagonisti' defect preexisting
+wb029-fr	no	preexisting	OKP term applied; angiotensin II antagonist mistranslation preexisting
+wb029-it	no	preexisting	OKP term applied; 'cosiddetti antagonisti' defect preexisting
+wb030-fr	no	preexisting	OKP term applied; "d' VALSARTAN" and ARA mistranslation preexisting
+wb030-it	no	preexisting	OKP term applied; 'cosiddetti antagonisti' grammar defect preexisting
+wb031-fr	no	preexisting	OKP term applied; angiotensin II antagonist mistranslation preexisting
+wb031-it	no	preexisting	OKP term applied; 'cosiddetti antagonisti' defect preexisting
+wb032-fr	no	preexisting	OKP phrase added; angiotensin II antagonist mistranslation preexisting
+wb032-it	yes	minor	OKP rendered 'assicurazione malattia obbligatoria' instead of standard 'assicurazione obbligatoria delle cure medico-sanitarie'
+wb036-fr	no	equivalent	All new sentences added with correct meaning; wording differs from official
+wb036-it	no	equivalent	New KG, code, uniform price and final sentences added correctly; wording differs
+wb038-it	no	exact	Identical to official
+wb042-it	no	equivalent	oftalmochirurghi applied; official 'chirurghi oftalmologi', harmless wording
+wb045-fr	no	equivalent	ophtalmochirurgiens applied; draft also correctly fixed et->ou, bracket and mNVC typo
+wb047-fr	no	equivalent	ophtalmochirurgiens applied; draft also fixed et->ou per German; mNCVC typo preexisting
+wb047-it	no	equivalent	oftalmochirurghi applied; official uses 'chirurghi oftalmologi', harmless wording
+wb050-it	no	exact	Identical to official
+wb056-it	no	preexisting	Diet sentence added correctly; missing Kostengutsprache already absent in tgt_old, fixed only by official
+wb057-fr	yes	stale	Old KDd heading and dosing-schedule sentence kept; 'all indications' header and KG-code requirement missing
+wb060-it	yes	REAL	Changed 'trattamento' to 'rimunerazione' also in refund sentence where German still says Therapiedauer
+wb061-fr	no	cosmetic	Amounts updated correctly; '100mg' spacing change not applied
+wb061-it	no	cosmetic	Amounts updated; '100mg' spacing not applied; KADCLYA typo preexisting
+wb063-fr	no	equivalent	'à partir de' first line and removal of relapse alternative applied correctly
+wb072-fr	no	exact	Identical to official
+wb073-fr	no	exact	Identical to official
+wb074-fr	no	cosmetic	Refund sentences removed correctly; trailing period after code kept although German dropped it
+wb074-it	no	cosmetic	Refund sentences removed; trailing period after code kept although German dropped it
+wb076-fr	yes	german	New list applied correctly but 'un GLP-1-analogue' is Germanised hyphenated compound
+wb079-it	no	preexisting	Price updated correctly; Italian slot text is French in tgt_old already
+wb081-it	no	equivalent	Amount updated; official additionally changed 'cassa malati' to 'assicuratore malattia'
+wb084-fr	no	equivalent	SGLT-2 line added; 'inhibiteur SGLT-2' vs official 'du SGLT-2'
+wb084-it	no	equivalent	SGLT-2 line added; 'inibitore SGLT-2' vs official 'del SGLT-2'
+wb085-fr	yes	cosmetic	SGLT-2 line added and bullets changed; 'SGLT - 2' spacing artefact
+wb085-it	yes	cosmetic	SGLT-2 line added; 'SGLT - 2' spacing artefact
+wb086-it	no	cosmetic	Novartis refund sentence removed; trailing period after code kept
+wb089-it	no	cosmetic	Novartis refund sentence removed; trailing period after code kept

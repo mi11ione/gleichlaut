@@ -1,0 +1,368 @@
+[
+ {
+  "key": "cc/1983/797_797_797/2025-01-01#art_46/para_1|rm",
+  "src": "fed",
+  "n_new": 51,
+  "c_new": 0.7254901960784313,
+  "c_old": 0.9803921568627451,
+  "n_novel": 13,
+  "c_novel": 0.0,
+  "c_de_new": 0.5757575757575758,
+  "files": [
+   "Synthetic/swiss_laws_interleaved.jsonl.gz"
+  ]
+ },
+ {
+  "key": "cc/1983/797_797_797/2025-01-01#art_8/para_1|rm",
+  "src": "fed",
+  "n_new": 12,
+  "c_new": 0.0,
+  "c_old": 0.9166666666666666,
+  "n_novel": 12,
+  "c_novel": 0.0,
+  "c_de_new": 0.0,
+  "files": []
+ },
+ {
+  "key": "cc/1983/797_797_797/2025-01-01#art_7/para_1|rm",
+  "src": "fed",
+  "n_new": 47,
+  "c_new": 0.7021276595744681,
+  "c_old": 0.9787234042553191,
+  "n_novel": 13,
+  "c_novel": 0.0,
+  "c_de_new": 0.6060606060606061,
+  "files": [
+   "Synthetic/swiss_laws_interleaved.jsonl.gz"
+  ]
+ },
+ {
+  "key": "cc/1983/797_797_797/2025-01-01#art_8/para_2|rm",
+  "src": "fed",
+  "n_new": 7,
+  "c_new": 0.0,
+  "c_old": 0.8571428571428571,
+  "n_novel": 7,
+  "c_novel": 0.0,
+  "c_de_new": 0.0,
+  "files": []
+ },
+ {
+  "key": "cc/2008/232/2025-01-01#art_23/para_2/lbl_b|rm",
+  "src": "fed",
+  "n_new": 0,
+  "c_new": null,
+  "c_old": null,
+  "n_novel": 0,
+  "c_novel": null,
+  "c_de_new": null,
+  "files": []
+ },
+ {
+  "key": "cc/2008/232/2025-01-01#art_20/para_3|rm",
+  "src": "fed",
+  "n_new": 8,
+  "c_new": 0.0,
+  "c_old": 0.875,
+  "n_novel": 8,
+  "c_novel": 0.0,
+  "c_de_new": 0.25,
+  "files": []
+ },
+ {
+  "key": "cc/2008/232/2025-01-01#art_23/para_2/lbl_a|rm",
+  "src": "fed",
+  "n_new": 0,
+  "c_new": null,
+  "c_old": null,
+  "n_novel": 0,
+  "c_novel": null,
+  "c_de_new": null,
+  "files": []
+ },
+ {
+  "key": "cc/2007/804/2026-01-01#art_11/para_3/lbl_h|rm",
+  "src": "fed",
+  "n_new": 0,
+  "c_new": null,
+  "c_old": null,
+  "n_novel": 0,
+  "c_novel": null,
+  "c_de_new": null,
+  "files": []
+ },
+ {
+  "key": "cc/2007/758/2026-02-01#art_98_b/para_1/lbl_e|rm",
+  "src": "fed",
+  "n_new": 2,
+  "c_new": 0.0,
+  "c_old": null,
+  "n_novel": 2,
+  "c_novel": 0.0,
+  "c_de_new": 0.0,
+  "files": []
+ },
+ {
+  "key": "cc/2007/758/2026-02-01#art_98_b/para_1/lbl_d|rm",
+  "src": "fed",
+  "n_new": 0,
+  "c_new": null,
+  "c_old": 1.0,
+  "n_novel": 0,
+  "c_novel": null,
+  "c_de_new": null,
+  "files": []
+ },
+ {
+  "key": "GR427.210/3804#art6|abs1|rm",
+  "src": "gr",
+  "n_new": 12,
+  "c_new": 1.0,
+  "c_old": 0.35294117647058826,
+  "n_novel": 6,
+  "c_novel": 1.0,
+  "c_de_new": 0.0,
+  "files": [
+   "polylingual/Aligned/swiss_laws_in_ROH.jsonl.gz"
+  ]
+ },
+ {
+  "key": "GR427.210/3804#art5|abs3|rm",
+  "src": "gr",
+  "n_new": 69,
+  "c_new": 1.0,
+  "c_old": 0.6060606060606061,
+  "n_novel": 29,
+  "c_novel": 1.0,
+  "c_de_new": 0.0,
+  "files": [
+   "polylingual/Aligned/swiss_laws_in_ROH.jsonl.gz"
+  ]
+ },
+ {
+  "key": "GR427.210/3804#art25|abs1|rm",
+  "src": "gr",
+  "n_new": 51,
+  "c_new": 1.0,
+  "c_old": 0.5918367346938775,
+  "n_novel": 28,
+  "c_novel": 1.0,
+  "c_de_new": 0.0,
+  "files": [
+   "polylingual/Aligned/swiss_laws_in_ROH.jsonl.gz"
+  ]
+ },
+ {
+  "key": "GR427.210/3804#art2|abs2|e)|rm",
+  "src": "gr",
+  "n_new": 8,
+  "c_new": 1.0,
+  "c_old": 0.0,
+  "n_novel": 8,
+  "c_novel": 1.0,
+  "c_de_new": null,
+  "files": [
+   "polylingual/Aligned/swiss_laws_in_ROH.jsonl.gz"
+  ]
+ },
+ {
+  "key": "GR430.300/3821#art8|abs2|rm",
+  "src": "gr",
+  "n_new": 35,
+  "c_new": 1.0,
+  "c_old": 0.9024390243902439,
+  "n_novel": 15,
+  "c_novel": 1.0,
+  "c_de_new": 0.0,
+  "files": [
+   "polylingual/Aligned/swiss_laws_in_ROH.jsonl.gz"
+  ]
+ },
+ {
+  "key": "GR430.300/3821#art8|abs3|rm",
+  "src": "gr",
+  "n_new": 34,
+  "c_new": 0.6176470588235294,
+  "c_old": 0.75,
+  "n_novel": 13,
+  "c_novel": 0.0,
+  "c_de_new": 0.0,
+  "files": [
+   "polylingual/Aligned/swiss_laws_in_ROH.jsonl.gz"
+  ]
+ },
+ {
+  "key": "GR542.120/3891#art18|abs3|rm",
+  "src": "gr",
+  "n_new": 47,
+  "c_new": 0.1702127659574468,
+  "c_old": 1.0,
+  "n_novel": 39,
+  "c_novel": 0.0,
+  "c_de_new": 0.0,
+  "files": [
+   "polylingual/Aligned/swiss_laws_in_ROH.jsonl.gz"
+  ]
+ },
+ {
+  "key": "GR542.120/3891#art20|abs1|rm",
+  "src": "gr",
+  "n_new": 29,
+  "c_new": 0.5862068965517241,
+  "c_old": 1.0,
+  "n_novel": 12,
+  "c_novel": 0.0,
+  "c_de_new": 0.0,
+  "files": [
+   "polylingual/Aligned/swiss_laws_in_ROH.jsonl.gz"
+  ]
+ },
+ {
+  "key": "GR542.120/3891#art18|abs1|rm",
+  "src": "gr",
+  "n_new": 22,
+  "c_new": 0.5,
+  "c_old": 0.9166666666666666,
+  "n_novel": 10,
+  "c_novel": 0.0,
+  "c_de_new": 0.0,
+  "files": [
+   "polylingual/Aligned/swiss_laws_in_ROH.jsonl.gz"
+  ]
+ },
+ {
+  "key": "GR506.060/3534#art12|abs2|rm",
+  "src": "gr",
+  "n_new": 11,
+  "c_new": 1.0,
+  "c_old": 0.0,
+  "n_novel": 11,
+  "c_novel": 1.0,
+  "c_de_new": 0.0,
+  "files": [
+   "polylingual/Aligned/swiss_laws_in_ROH.jsonl.gz"
+  ]
+ },
+ {
+  "key": "GR506.060/3534#art28|abs2|rm",
+  "src": "gr",
+  "n_new": 31,
+  "c_new": 1.0,
+  "c_old": 0.4482758620689655,
+  "n_novel": 18,
+  "c_novel": 1.0,
+  "c_de_new": 0.0,
+  "files": [
+   "polylingual/Aligned/swiss_laws_in_ROH.jsonl.gz"
+  ]
+ },
+ {
+  "key": "GR506.060/3534#art18|abs2|rm",
+  "src": "gr",
+  "n_new": 31,
+  "c_new": 1.0,
+  "c_old": 0.4482758620689655,
+  "n_novel": 18,
+  "c_novel": 1.0,
+  "c_de_new": 0.0,
+  "files": [
+   "polylingual/Aligned/swiss_laws_in_ROH.jsonl.gz"
+  ]
+ },
+ {
+  "key": "GR506.060/3534#art12|abs2|a)|rm",
+  "src": "gr",
+  "n_new": 8,
+  "c_new": 1.0,
+  "c_old": 0.8888888888888888,
+  "n_novel": 0,
+  "c_novel": null,
+  "c_de_new": 0.0,
+  "files": [
+   "polylingual/Aligned/swiss_laws_in_ROH.jsonl.gz"
+  ]
+ },
+ {
+  "key": "GR507.410/3831#art2|abs1|a)|rm",
+  "src": "gr",
+  "n_new": 0,
+  "c_new": null,
+  "c_old": null,
+  "n_novel": 0,
+  "c_novel": null,
+  "c_de_new": null,
+  "files": []
+ },
+ {
+  "key": "GR507.410/3831#art3|abs2|c)|rm",
+  "src": "gr",
+  "n_new": 0,
+  "c_new": null,
+  "c_old": null,
+  "n_novel": 0,
+  "c_novel": null,
+  "c_de_new": null,
+  "files": []
+ },
+ {
+  "key": "GR507.410/3831#art3|abs1|a)|rm",
+  "src": "gr",
+  "n_new": 0,
+  "c_new": null,
+  "c_old": null,
+  "n_novel": 0,
+  "c_novel": null,
+  "c_de_new": null,
+  "files": []
+ },
+ {
+  "key": "GR507.410/3831#art3|abs1|b)|rm",
+  "src": "gr",
+  "n_new": 0,
+  "c_new": null,
+  "c_old": null,
+  "n_novel": 0,
+  "c_novel": null,
+  "c_de_new": null,
+  "files": []
+ },
+ {
+  "key": "GR150.200/3565#art21l|abs1|rm",
+  "src": "gr",
+  "n_new": 28,
+  "c_new": 0.2857142857142857,
+  "c_old": 1.0,
+  "n_novel": 20,
+  "c_novel": 0.0,
+  "c_de_new": 0.0,
+  "files": [
+   "polylingual/Aligned/swiss_laws_in_ROH.jsonl.gz"
+  ]
+ },
+ {
+  "key": "GR740.330/3546#art16|abs1|rm",
+  "src": "gr",
+  "n_new": 20,
+  "c_new": 1.0,
+  "c_old": 0.0,
+  "n_novel": 20,
+  "c_novel": 1.0,
+  "c_de_new": 0.0,
+  "files": [
+   "polylingual/Aligned/swiss_laws_in_ROH.jsonl.gz"
+  ]
+ },
+ {
+  "key": "GR740.330/3546#art2|abs1|rm",
+  "src": "gr",
+  "n_new": 19,
+  "c_new": 1.0,
+  "c_old": 0.34782608695652173,
+  "n_novel": 11,
+  "c_novel": 1.0,
+  "c_de_new": 0.0,
+  "files": [
+   "polylingual/Aligned/swiss_laws_in_ROH.jsonl.gz"
+  ]
+ }
+]

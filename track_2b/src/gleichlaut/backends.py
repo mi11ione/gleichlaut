@@ -50,7 +50,7 @@ class Cache:
 def write_cache(root, key, text, meta):
     p = os.path.join(root, key[:2], key + ".json")
     os.makedirs(os.path.dirname(p), exist_ok=True)
-    keep = {k: meta[k] for k in ("prompt_tokens", "completion_tokens", "usd", "secs", "model_served", "seed") if k in meta}
+    keep = {k: meta[k] for k in ("prompt_tokens", "completion_tokens", "usd", "secs", "model_served", "seed", "backend") if k in meta}
     with open(p, "w", encoding="utf-8") as f: json.dump(dict(text=text, meta=keep), f, ensure_ascii=False, sort_keys=True)
 
 
@@ -78,14 +78,14 @@ class OpenAI:
             except urllib.error.HTTPError as e:
                 if e.code not in (429, 502, 503, 504) or k == 7: raise
                 time.sleep(min(120, 10 * (k + 1)))
-        served = d.get("model", "")
+        served, fp = d.get("model", ""), d.get("system_fingerprint")
         if served and served.split("/")[-1].lower() != self.model.split("/")[-1].lower() and "apertus" not in served.lower():
             # the measured hazard: a provider silently answering an Apertus request from another model
             raise RuntimeError(f"endpoint served {served!r} for {self.model!r}: not an Apertus model, refusing the output")
         text = d["choices"][0]["message"]["content"]
         u = d.get("usage", {})
         meta = dict(prompt_tokens=u.get("prompt_tokens"), completion_tokens=u.get("completion_tokens"),
-                    secs=round(time.time() - t0, 2), model_served=served, seed=self.seed, cached=False)
+                    secs=round(time.time() - t0, 2), model_served=served, seed=self.seed, cached=False, backend=fp)
         key = payload_key(self.model, prompt, max_tokens, 0.0, **extra)
         if self.record_to: write_cache(self.record_to, key, text, meta)
         _log(self.log, dict(meta, key=key, tag=tag, model=self.model))
@@ -112,13 +112,14 @@ class Gateway:
             except urllib.error.HTTPError as e:
                 if e.code != 429 or k == 7: raise
                 time.sleep(20 * (k + 1))
-        served = (meta.get("resp") or {}).get("model", "")
+        resp = meta.get("resp") or {}
+        served, fp = resp.get("model", ""), resp.get("system_fingerprint")
         if not meta.get("cached") and served.split("/")[-1].lower() != self.model.split("/")[-1].lower():
             raise RuntimeError(f"gateway served {served!r} for {self.model!r}: refusing the output")
         text = choice["message"]["content"]
         key = payload_key(self.model, prompt, max_tokens, 0.0, **extra)
         meta = dict(prompt_tokens=meta.get("prompt_tokens"), completion_tokens=meta.get("completion_tokens"), usd=meta.get("usd"),
-                    secs=meta.get("secs"), model_served=served, seed=self.seed, cached=meta.get("cached", False))
+                    secs=meta.get("secs"), model_served=served, seed=self.seed, cached=meta.get("cached", False), backend=fp)
         if self.record_to: write_cache(self.record_to, key, text, meta)
         _log(self.log, dict(meta, key=key, tag=self.tag, model=self.model))
         return strip_think(text), dict(meta, key=key)
