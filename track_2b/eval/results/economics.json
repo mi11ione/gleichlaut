@@ -1,0 +1,21 @@
+{
+ "chf_per_item_infomaniak": 0.0024,
+ "de_changes": 216,
+ "de_changes_per_month": 28.7,
+ "fr_it_items_per_month": 57.4,
+ "model_secs_per_item": 17.15,
+ "span_months": 7.52,
+ "usd_per_item_publicai": 0.00277,
+ "x1": {
+  "chf_per_month_infomaniak": 0.14,
+  "items_per_month": 57,
+  "model_hours_per_month_sequential": 0.3,
+  "usd_per_month_publicai": 0.16
+ },
+ "x10": {
+  "chf_per_month_infomaniak": 1.36,
+  "items_per_month": 574,
+  "model_hours_per_month_sequential": 2.7,
+  "usd_per_month_publicai": 1.59
+ }
+}

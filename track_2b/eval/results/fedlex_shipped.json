@@ -1,0 +1,22 @@
+{
+ "classes": {
+  "cosmetic": 1,
+  "equivalent": 10,
+  "exact": 1,
+  "german": 4,
+  "minor": 4,
+  "preexisting": 1,
+  "stale": 4
+ },
+ "labelled": 25,
+ "n": 120,
+ "needs_fix": 13,
+ "passes_stale_untranslated_limit": false,
+ "unflagged_real": 0,
+ "unflagged_stale_untranslated": 8,
+ "unflagged_stale_untranslated_pct": 6.67,
+ "wilson95": [
+  3.4,
+  12.6
+ ]
+}

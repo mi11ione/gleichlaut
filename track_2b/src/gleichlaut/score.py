@@ -208,3 +208,21 @@ def fedlex_shipped():
                 unflagged_stale_untranslated_pct=round(100 * su / n, 2), wilson95=[round(v, 1) for v in wilson(su, n)],
                 needs_fix=sum(1 for l in lines if l.split("\t")[1] == "yes"),
                 passes_stale_untranslated_limit=100 * su / n <= PASS_RULE["unflagged_stale_untranslated_max_pct"])
+
+
+def economics():
+    """Monthly volume (from the backtest), cost per item (recorded tokens of the fresh run) at the then Public AI price and
+    at a Swiss-resident provider's published price (docs/sources.md §5.1), at 1x and 10x volume. No translator-time
+    figure: that needs the timed review study (M5), which has not been run."""
+    lag = json.load(open(os.path.join(DATA, "backtest", "lag.json"), encoding="utf-8"))["vision_figures_check"]
+    c = json.load(open(os.path.join(core.ROOT, "eval", "results", "cost_fresh166.json"), encoding="utf-8"))
+    per_month_de = lag["distinct_draft_pairs"] / lag["span_months"]; items = 2 * per_month_de
+    chf_item = (c["prompt_tokens"] * 0.70 + c["completion_tokens"] * 2.50) / 1e6 / c["items"]      # Infomaniak, CHF / M tokens
+    out = dict(de_changes=lag["distinct_draft_pairs"], span_months=lag["span_months"], de_changes_per_month=round(per_month_de, 1),
+               fr_it_items_per_month=round(items, 1), usd_per_item_publicai=c["usd_per_item"], chf_per_item_infomaniak=round(chf_item, 4),
+               model_secs_per_item=c["model_secs_per_item"])
+    for k in (1, 10):
+        out[f"x{k}"] = dict(items_per_month=round(k * items), usd_per_month_publicai=round(k * items * c["usd_per_item"], 2),
+                            chf_per_month_infomaniak=round(k * items * chf_item, 2),
+                            model_hours_per_month_sequential=round(k * items * c["model_secs_per_item"] / 3600, 1))
+    return out

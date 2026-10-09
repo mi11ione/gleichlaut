@@ -1,0 +1,65 @@
+{
+ "agree": 62,
+ "disagreements": [
+  {
+   "first": "good",
+   "key": "wb004-fr",
+   "note": "All deletions/additions applied; code sentence calqued 'Suivant code à transmettre', spaced parentheses in heading",
+   "second": "yes minor",
+   "set": "flagged20"
+  },
+  {
+   "first": "equivalent",
+   "key": "wb032-it",
+   "note": "OKP rendered 'assicurazione malattia obbligatoria' instead of standard 'assicurazione obbligatoria delle cure medico-sanitarie'",
+   "second": "yes minor",
+   "set": "unflagged"
+  },
+  {
+   "first": "bad",
+   "key": "wb045-fr",
+   "note": "ophtalmochirurgiens applied; draft also correctly fixed et->ou, bracket and mNVC typo",
+   "second": "no equivalent",
+   "set": "flagged20"
+  },
+  {
+   "first": "bad",
+   "key": "wb047-fr",
+   "note": "ophtalmochirurgiens applied; draft also fixed et->ou per German; mNCVC typo preexisting",
+   "second": "no equivalent",
+   "set": "flagged20"
+  },
+  {
+   "first": "good",
+   "key": "wb076-fr",
+   "note": "New list applied correctly but 'un GLP-1-analogue' is Germanised hyphenated compound",
+   "second": "yes german",
+   "set": "flagged20"
+  },
+  {
+   "first": "equivalent",
+   "key": "wb085-fr",
+   "note": "SGLT-2 line added and bullets changed; 'SGLT - 2' spacing artefact",
+   "second": "yes cosmetic",
+   "set": "unflagged"
+  },
+  {
+   "first": "equivalent",
+   "key": "wb085-it",
+   "note": "SGLT-2 line added; 'SGLT - 2' spacing artefact",
+   "second": "yes cosmetic",
+   "set": "unflagged"
+  }
+ ],
+ "kappa": 0.532,
+ "n": 69,
+ "unflagged_n": 49,
+ "unflagged_second_classes": {
+  "cosmetic": 6,
+  "equivalent": 6,
+  "minor": 1,
+  "preexisting": 36
+ },
+ "unflagged_second_needs_fix": 3,
+ "unflagged_second_severe": 0
+}

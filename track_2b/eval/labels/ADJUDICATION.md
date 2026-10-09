@@ -19,6 +19,11 @@ German.** It marked 3 of them as needing a small fix (below). The 7 disagreement
 | wb045-fr | flagged | bad (REAL) | no fix | the draft changes "et" → "ou" outside the German edit. The old French has "(OMD) **et** d'une perte de vision…" where the German has "(DME) **oder** eines Visusverlustes…": the draft aligns French with German. The lock flagged it as an edit outside the change. Decide: an error against the official text, or a correct fix of a pre-existing divergence that belongs in review |
 | wb047-fr | flagged | bad (REAL) | no fix | same pattern as wb045-fr |
 
+Context for wb045/wb047: in the current feed (6 Oct 2026) four ranibizumab limitations (BYOOVIZ3, LUCENTIS3, RANIVISIO2,
+XIMLUCI.02) read "(DME) oder eines Visusverlustes…" in German and "(OMD) et d'une perte de vision…" in French. The
+sentence enumerates reimbursed indications, where "and" and "or" plausibly mean the same; we do **not** count this as a
+divergence. The draft's "et" → "ou" is an unrequested edit outside the German change, which the lock correctly flagged.
+
 Effect on reported numbers, whichever way these go: none on the pass rule (no severe class among unflagged drafts in
 either annotation). wb032-it / wb085 would move 3 unflagged drafts from "equivalent" to "minor/cosmetic"; the flagged-sample
 waste estimate (13 of 20 need no change) would be 13 ± 2.
