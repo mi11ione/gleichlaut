@@ -10,6 +10,7 @@ fresh_flag	60.2	eval/results/fresh166.json	summary.all.flag_rate	{:.1f}	PYTHONPA
 fresh_ready	39.8	eval/results/fresh166.json	summary.all.ready_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 fresh_ready_n	66	eval/results/fresh166.json	summary.all.unflagged	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 fresh_wilson_hi	2.3	eval/results/fresh166.json	summary.all.wilson95_unflagged_real.1	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fresh_wilson_ready_hi	5.5	eval/results/fresh166.json	summary.all.wilson95_severe_among_ready.1	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 fresh_reasked	98	eval/results/fresh166.json	summary.all.reasked	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 fresh_replaced	3	eval/results/fresh166.json	summary.all.replaced	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 fresh_families	55	eval/results/fresh166.json	summary.all.families	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes

@@ -1,7 +1,13 @@
 # Pre-registration
 
-Each rule below is fixed **before** the run it governs. The git commit that adds or changes a rule is its timestamp;
-`freeze.json` carries the sha256 of the code and items it applies to. Failed runs are reported, never dropped.
+Each rule below is fixed **before** the run it governs. Failed runs are reported, never dropped.
+
+- **R0 and the guard freeze** predate this repository: they were written in the research log before the fresh 2025 run
+  (verbatim excerpt with the log's sha256: `docs/research/freeze-record.md`). This repository was created after that run;
+  `freeze.json` and `tools/freeze.py` check that the vendored files still carry the frozen hashes.
+- **R1–R5** were committed here before their runs. `run_times.json` lists the first and last model call of each run from
+  the development gateway's append-only ledger next to the commit times of this file (R2: committed 18:01 UTC, first call
+  18:27 UTC; R5: committed 18:20 UTC, first call 18:27 UTC, 9 Oct 2026). R1 has not been run.
 
 ## R0. Pass rule for a drafting lane (frozen 9 Oct 2026, before the fresh 2025 run)
 

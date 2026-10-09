@@ -2399,6 +2399,10 @@
    "unflagged_stale": 0,
    "unflagged_stale_per100": 0.0,
    "unflagged_unlabelled": 0,
+   "wilson95_severe_among_ready": [
+    0.0,
+    5.5
+   ],
    "wilson95_unflagged_real": [
     0.0,
     2.3
@@ -2479,6 +2483,10 @@
    "unflagged_stale": 0,
    "unflagged_stale_per100": 0.0,
    "unflagged_unlabelled": 0,
+   "wilson95_severe_among_ready": [
+    0.0,
+    10.7
+   ],
    "wilson95_unflagged_real": [
     0.0,
     2.8
@@ -2568,6 +2576,10 @@
    "unflagged_stale": 0,
    "unflagged_stale_per100": 0.0,
    "unflagged_unlabelled": 0,
+   "wilson95_severe_among_ready": [
+    0.0,
+    10.7
+   ],
    "wilson95_unflagged_real": [
     0.0,
     4.4
@@ -2648,6 +2660,10 @@
    "unflagged_stale": 0,
    "unflagged_stale_per100": 0.0,
    "unflagged_unlabelled": 0,
+   "wilson95_severe_among_ready": [
+    0.0,
+    10.2
+   ],
    "wilson95_unflagged_real": [
     0.0,
     4.4
@@ -2728,6 +2744,10 @@
    "unflagged_stale": 0,
    "unflagged_stale_per100": 0.0,
    "unflagged_unlabelled": 0,
+   "wilson95_severe_among_ready": [
+    0.0,
+    43.4
+   ],
    "wilson95_unflagged_real": [
     0.0,
     24.3
@@ -2807,6 +2827,10 @@
    "unflagged_stale": 0,
    "unflagged_stale_per100": 0.0,
    "unflagged_unlabelled": 0,
+   "wilson95_severe_among_ready": [
+    0.0,
+    5.9
+   ],
    "wilson95_unflagged_real": [
     0.0,
     2.4

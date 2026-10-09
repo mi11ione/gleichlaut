@@ -14,8 +14,8 @@ as slot codes; frozen deterministic guards decide what is ready; nothing is publ
 **The problem, evidenced.** BAG publishes the conditions under which mandatory health insurance (9.08 million insured
 persons, 2025) reimburses a medicine, the Spezialitätenliste (SL) "limitations", in German, French and Italian under one
 identifier; 22.6% of residents name French and 7.8% Italian as a main language. BAG's own SL review checklist asks
-whether "die Übersetzungen sind kongruent". In the 6 Oct 2026 feed we found by hand **5 independent divergences in
-current reimbursement conditions, and every one is a number**: Nemluvio every 8 weeks in German and French but "ogni 4
+whether "die Übersetzungen sind kongruent". In the 6 Oct 2026 feed we found **5 independent divergences in current
+reimbursement conditions, and every one is a number** (verified each by reading the German, French and Italian texts side by side): Nemluvio every 8 weeks in German and French but "ogni 4
 settimane" in Italian; a 6% vs 12% surcharge for Diaphin; a French-only "≥ 62.5 kg" condition in three etanercept
 biosimilars; a 16 kg limit missing in French for Cresemba; a shifted 15–30 kg tier for Dupixent in French. German
 limitation texts change about 28.7 times a month (216 in 7.5 months), and each change must be made again in French and
@@ -32,10 +32,10 @@ XLIFF 2.1 and as FHIR in the shape of BAG's feed. No model judges anything.
 families never seen during design), with the guards and all their resources hashed **before any output existed**:
 Apertus 70B drafts equal the official text **17.5%** of the time vs **6.0%** for the no-model baseline (**+11.4 points,
 95% CI [4.8, 18.7]**); **39.8%** of items come out ready, and **0 of 166** ready drafts carry a meaning error, a stale
-change or untranslated German (95% upper bound 2.3%); a blind second annotator agrees (0 severe defects among the 49
+change or untranslated German (95% upper bound 2.3% of items, 5.5% of ready drafts); a blind second Claude annotator agrees (0 severe defects among the 49
 ready non-exact drafts). The pre-registered pass rule is met. «TBD:M3 one sentence on the seed-1 rerun». Cost:
 **CHF 0.0024** per item at a Swiss provider's published price. `make run` re-executes this run offline from the recorded
-responses and reproduces every number.
+responses and re-derives every number from them.
 
 **Where Apertus fell short, and what did not hold** (§3.3, §6): free translation flips obligations; neither size obeys
 "edit only this span"; neither can judge equivalence; the 8B flags 85.0% of SL drafts; our first out-of-sample 70B run
@@ -83,12 +83,12 @@ data is processed. `docs/target-architecture.md`, `docs/dependencies.md`.
 |---|---|---|
 | SL drafting (default lane) | Apertus v1.5 70B | Public AI through a budget gateway; temperature 0; plain user messages |
 | SL 8B arm; Fedlex drafting | Apertus v1.5 8B, MLX 4-bit DWQ | a laptop (Apple M2); greedy; digit and number-word logit mask (SL) |
-| What ships for the 8B | Apertus v1.5 8B GGUF Q4_K_M (public build) | CPU via llama.cpp; in an earlier 648-decision battery it agreed with bf16 on 622, our MLX 4-bit on 548 |
+| What ships for the 8B | Apertus v1.5 8B GGUF Q4_K_M (public build) | CPU via llama.cpp. In an earlier 648-decision battery against bf16, this GGUF agreed on 622 and the MLX 4-bit build we measured with agreed on only 548: our 8B numbers come from the weaker build |
 
 The shipped GGUF has not yet run on these tasks; a sharded CPU workflow is ready (`.github/workflows/m1.yml`, R1).
 Public AI's `apertus-v1.5-8b` name currently serves the 70B (identical greedy outputs in 760 of 792 cells, 70B-level
-MMLU), so no 8B number here comes from that API. With a system message, its 70B name silently answers from another model;
-every request we sent is a single user message, and every new call logs and checks the served model.
+MMLU), so no 8B number here comes from that API. Every request we sent is a single user message, and every new call logs
+and checks the served model.
 
 ### 3.2 How the model is used, and which size
 
@@ -163,8 +163,7 @@ were already divergent at the earliest capture (Jun/Jul 2025), so we cannot show
 | 1× | 57 | $0.16 | CHF 0.14 | 0.3 h |
 | 10× | 574 | $1.59 | CHF 1.36 | 2.7 h |
 
-Compute is negligible next to translation (the federal finance department's language service reports CHF 252–267 per
-translated page). Self-hosting a 70B (bf16 144.6 GB) for this volume would not pay; a per-token Swiss endpoint or the 8B
+Compute is negligible. Self-hosting a 70B (bf16 144.6 GB) for this volume would not pay; a per-token Swiss endpoint or the 8B
 on CPU does. The binding cost is review: 60% of drafts are flagged. Translator minutes saved have **not** been measured.
 
 ## 6. Limitations

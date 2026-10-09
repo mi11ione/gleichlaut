@@ -30,8 +30,7 @@ without a PASS certificate. A 5-item canary (`certify --canary 5`) detects drift
 ## What we used during development, and why it is not a target
 
 Public AI (`api.publicai.co`) served the 70B for our evaluation. Its own documentation says requests are routed
-"regardless of which country's compute is serving the query", and we measured that its 70B name silently answers from a
-different model when a request carries a system message. It is therefore **evaluation-only**. Every runtime backend
+"regardless of which country's compute is serving the query". It is therefore **evaluation-only**. Every runtime backend
 checks the `model` field of each response and refuses a non-Apertus answer.
 
 ## Licences and terms

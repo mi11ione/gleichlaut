@@ -1,0 +1,25 @@
+{
+ "note": "First and last model call per run, from the development gateway's append-only ledger (UTC), and the commits that touched PREREG.md. R2 (M3, tag gleichlaut-m3) and R5 (Fedlex 70B, tag gleichlaut-fed70b) must start after the commit that added them. gl-70b-v2 is the fresh research run (before this repository existed).",
+ "runs": {
+  "gl-70b-v2": {
+   "calls": 285,
+   "first": "2026-10-09T11:09:43+00:00",
+   "last": "2026-10-09T11:33:41+00:00"
+  },
+  "gleichlaut-m3": {
+   "calls": 121,
+   "first": "2026-10-09T18:27:22+00:00",
+   "last": "2026-10-09T18:47:48+00:00"
+  },
+  "gleichlaut-fed70b": {
+   "calls": 82,
+   "first": "2026-10-09T18:27:58+00:00",
+   "last": "2026-10-09T18:37:27+00:00"
+  }
+ },
+ "prereg_commits": [
+  "447dd2ccc49995d2883a61b79bc14d5c79759bd6 2026-10-09T20:20:31+02:00 PREREG R5: correct background count to the label file (4 stale, 8/120)",
+  "4303fa9fd13bc7ef89e0253a0cf058d584524b13 2026-10-09T20:20:22+02:00 Pre-register R5 (Fedlex 8B vs 70B); blind labels of the shipped Fedlex lane; sourced facts",
+  "1ea158aac94fb004e977e94bf7b3a1e47a3e1328 2026-10-09T20:01:27+02:00 Gleichlaut 2B: frozen research code (hash-verified), recorded runs, labels, pre-registration"
+ ]
+}

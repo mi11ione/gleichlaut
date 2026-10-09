@@ -80,7 +80,7 @@ class OpenAI:
                 time.sleep(min(120, 10 * (k + 1)))
         served, fp = d.get("model", ""), d.get("system_fingerprint")
         if served and served.split("/")[-1].lower() != self.model.split("/")[-1].lower() and "apertus" not in served.lower():
-            # the measured hazard: a provider silently answering an Apertus request from another model
+            # never accept an answer that a provider served from a non-Apertus model
             raise RuntimeError(f"endpoint served {served!r} for {self.model!r}: not an Apertus model, refusing the output")
         text = d["choices"][0]["message"]["content"]
         u = d.get("usage", {})

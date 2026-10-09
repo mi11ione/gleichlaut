@@ -104,6 +104,8 @@ def summarise(A, B, labelled=True):
             m = sum(r["cls"] == c for r in U); d[f"unflagged_{c}"] = m; d[f"unflagged_{c}_per100"] = round(100 * m / n, 2)
         bad = d["unflagged_REAL"]; su = d["unflagged_stale"] + d["unflagged_german"]
         d["wilson95_unflagged_real"] = [round(v, 1) for v in wilson(bad, n)]
+        sev = bad + su
+        d["wilson95_severe_among_ready"] = [round(v, 1) for v in wilson(sev, len(U))]   # per ready draft, what a translator receives
         d["wilson95_unflagged_stale_untranslated"] = [round(v, 1) for v in wilson(su, n)]
         d["pass_rule"] = {
             "unflagged_real": [round(100 * bad / n, 2), 100 * bad / n <= PASS_RULE["unflagged_real_max_pct"]],

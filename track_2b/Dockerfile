@@ -9,6 +9,7 @@ COPY requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt && useradd --create-home --uid 10001 app
 WORKDIR /app
 COPY --chown=app:app . /app
+RUN mkdir -p /app/out && chown app:app /app /app/out
 USER app
 CMD ["python", "-m", "gleichlaut", "run"]
 

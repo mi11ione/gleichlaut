@@ -16,7 +16,7 @@ C = [  # id, source, path, fmt, command
  ("fresh_delta", F, A + "exact.delta", "{:+.1f}", RE), ("fresh_delta_plain", F, A + "exact.delta", "{:.1f}", RE),
  ("fresh_ci_lo", F, A + "exact.ci95.0", "{:.1f}", RE), ("fresh_ci_hi", F, A + "exact.ci95.1", "{:.1f}", RE),
  ("fresh_flag", F, A + "flag_rate", "{:.1f}", RE), ("fresh_ready", F, A + "ready_rate", "{:.1f}", RE),
- ("fresh_ready_n", F, A + "unflagged", "{}", RE), ("fresh_wilson_hi", F, A + "wilson95_unflagged_real.1", "{:.1f}", RE),
+ ("fresh_ready_n", F, A + "unflagged", "{}", RE), ("fresh_wilson_hi", F, A + "wilson95_unflagged_real.1", "{:.1f}", RE), ("fresh_wilson_ready_hi", F, A + "wilson95_severe_among_ready.1", "{:.1f}", RE),
  ("fresh_reasked", F, A + "reasked", "{}", RE), ("fresh_replaced", F, A + "replaced", "{}", RE),
  ("fresh_families", F, A + "families", "{}", RE), ("fresh_pairs", F, A + "pairs", "{}", RE),
  ("unseen_n", F, "summary.unseen families.n", "{}", RE), ("unseen_exact", F, "summary.unseen families.exact.model", "{:.1f}", RE),

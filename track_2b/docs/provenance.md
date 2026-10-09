@@ -59,8 +59,7 @@ second labels by the team lead are part of the remaining work (see `technical_re
 
 ## 6. What the model field shows and does not show
 
-The recorded runs predate the discovery that the provider can silently answer from another model when a request
-contains a system message or a prefilled assistant turn. Every recorded request is a single plain user message, the
-condition under which that fallback was never observed; the recorded responses do not carry the `model` field. All new
-calls (the stability rerun, certification, the live slice) log and check the served model on every response and refuse
-a non-Apertus answer.
+The recorded responses of the earlier runs do not carry the provider's `model` field; every recorded request is a single
+plain user message. All new calls (the stability rerun, the Fedlex 70B run, certification, the live slice) log the served
+model and the serving backend on every response, and the runtime backends refuse an answer that was not served by an
+Apertus model.

@@ -1,7 +1,8 @@
 # Gleichlaut
 
-**When a Swiss federal text is amended in German, Gleichlaut drafts the matching French and Italian change with
-Apertus. Numbers reach the model only as slot codes. Frozen guards decide what is ready. Nothing is published unguarded.**
+**When BAG amends a drug-reimbursement condition in German, Gleichlaut drafts the matching French and Italian change
+with Apertus. Numbers reach the model only as slot codes. Frozen guards decide what is ready for a translator to accept
+and what needs review. Nothing is published unguarded.**
 
 Track 2B · declared maturity: **feasibility study** · models: Apertus v1.5 8B + 70B · [technical report](technical_report.md) · [demo video](VIDEO_URL)
 
@@ -9,8 +10,8 @@ Track 2B · declared maturity: **feasibility study** · models: Apertus v1.5 8B 
 
 BAG publishes the reimbursement conditions ("limitations") of the Spezialitätenliste, the list of medicines that
 mandatory health insurance pays for (9.08 million insured), in German, French and Italian under one identifier, and its
-own review checklist asks whether the translations are congruent. In the 6 Oct 2026 feed we found by hand 5 independent
-divergences in current conditions. **All of them are numbers:**
+own review checklist asks whether the translations are congruent. In the 6 Oct 2026 feed we found 5 independent
+divergences in current conditions and verified each by reading the German, French and Italian texts side by side. **All of them are numbers:**
 
 | Product (limitation) | German / French | Italian |
 |---|---|---|
@@ -41,19 +42,26 @@ again in French and Italian, exactly, without touching anything else, and withou
 
 No model judges anything. Apertus rewrites wording, code does the rest.
 
-## Results (pre-registered; guards hashed before any test output existed)
+## Results
 
-Fresh held-out set: 166 FR/IT items from 2025 SL changes, 154 of them in edit families never seen during design.
+The headline row is the pre-registered test: a fresh held-out set of 166 FR/IT items from 2025 SL changes (154 of them
+in edit families never seen during design), with the guards hashed before any output existed. The other rows are the
+earlier runs that led there, reported because they failed.
 
 | | Exact = official text | Ready (unflagged) | Unflagged errors (real / stale / untranslated) | Pass rule |
 |---|---|---|---|---|
 | Rules only (copy + number substitution) | 6.0% | | | |
-| **Apertus 70B + guards3 + one re-ask** | **17.5%** (+11.4, 95% CI [4.8, 18.7]) | **39.8%** | **0 / 0 / 0** of 166 (95% upper bound 2.3%) | **PASS** |
-| Apertus 70B + earlier guards, out-of-sample 2026 set (242) | 29.3% | 38.4% | 1 / 0 / 10 | **FAIL** |
-| Apertus 8B (MLX DWQ) + guards3, dev set (120) | 15.0% | 15.0% | 1 / 0 / 0 | FAIL (85.0% flagged) |
+| **Apertus 70B + guards3 + one re-ask** | **17.5%** (+11.4, 95% CI [4.8, 18.7]) | **39.8%** | **0 / 0 / 0** of 166 (95% upper bound 2.3% of items; 5.5% of ready drafts) | **PASS** |
+| Apertus 70B + earlier guards, out-of-sample 2026 set (242), before guards3 existed | 29.3% | 38.4% | 1 / 0 / 10 | **FAIL** |
+| Apertus 8B (MLX 4-bit DWQ) + guards3, development set (120, not held out) | 15.0% | 15.0% | 1 / 0 / 0 | FAIL (85.0% flagged) |
 
 Cost of the 70B lane: **CHF 0.0024 per item** at a Swiss provider's published price (CHF 0.14 a month at today's volume). About two thirds of flagged drafts need no change (13 of a sampled 20): the
 guards are deliberately conservative. Where Apertus fell short, with counts: [docs/failure-modes.md](docs/failure-modes.md).
+
+**Terms.** *SL*: the Spezialitätenliste. *Limitation*: one reimbursement condition text. *Ready*: the draft passed every
+guard and goes to a translator for acceptance; *flagged*: a guard named a problem. *Exact*: identical to the text BAG
+later published. *Stale*: the German change was not (fully) applied. *guards3*: the frozen guard stack (G1–G7). *Edit
+family*: changes with the same edit pattern (e.g. one boilerplate rewrite applied to many products).
 
 ## Run it
 

@@ -3,69 +3,69 @@
  "window_disobeyed_8b_pct": {
   "value": 73,
   "detail": "165 of 226 windows",
-  "source": "spikes/gleichlaut/results.md (S2); spikes/rescue70b/results.md A"
+  "source": "docs/research/gleichlaut-results.md (S2); docs/research/rescue70b-gleichlaut.md A"
  },
  "window_disobeyed_70b_pct": {
   "value": 81,
   "detail": "183 of 226 windows (43 obeyed)",
-  "source": "spikes/rescue70b/results.md A"
+  "source": "docs/research/rescue70b-gleichlaut.md A"
  },
  "window_8b_unflagged_real": {
   "value": 6,
-  "source": "spikes/gleichlaut/results.md (S2 hand check)"
+  "source": "docs/research/gleichlaut-results.md (S2 hand check)"
  },
  "judge_known_divergences": {
   "value": 9,
-  "source": "spikes/rescue70b/results.md D; loop/learnings.md S-FEDLEX"
+  "source": "docs/research/where-apertus-fell-short.md"
  },
  "judge_8b_hits": {
   "value": 0,
-  "source": "loop/learnings.md S-FEDLEX-7b"
+  "source": "docs/research/where-apertus-fell-short.md"
  },
  "judge_70b_hits": {
   "value": 0,
-  "source": "spikes/rescue70b/results.md D"
+  "source": "docs/research/where-apertus-fell-short.md"
  },
  "judge_70b_nein": {
   "value": 2,
   "of": 270,
-  "source": "spikes/rescue70b/results.md D"
+  "source": "docs/research/where-apertus-fell-short.md"
  },
  "typing_operator_accuracy_8b_pct": {
   "value": 36,
-  "source": "loop/learnings.md Dreiklang S1/S2"
+  "source": "docs/research/where-apertus-fell-short.md"
  },
  "typing_wrong_in_all_three": {
   "value": 53,
   "of": 77,
-  "source": "loop/learnings.md Dreiklang S1/S2"
+  "source": "docs/research/where-apertus-fell-short.md"
  },
  "retry_8b_fixed": {
   "value": 0,
   "of": 26,
-  "source": "spikes/gleichlaut/results.md S2b"
+  "source": "docs/research/gleichlaut-results.md S2b"
  },
  "pa_8b_direction_flip": {
   "value": "riduzione for Erhöhung (35-it)",
-  "source": "spikes/gleichlaut/results.md S2b"
+  "source": "docs/research/gleichlaut-results.md S2b"
  },
  "publicai_8b_name_identical_cells": {
   "value": 760,
   "of": 792,
-  "source": "spikes/live/results.md"
+  "source": "docs/research/model-identity-and-quantisation.md"
  },
  "gguf_q4_agree_bf16": {
   "value": 622,
   "of": 648,
-  "source": "spikes/gguf/results.md"
+  "source": "docs/research/model-identity-and-quantisation.md"
  },
  "mlx4_agree_bf16": {
   "value": 548,
   "of": 648,
-  "source": "spikes/gguf/results.md"
+  "source": "docs/research/model-identity-and-quantisation.md"
  },
  "free_translation_example": {
   "value": "deve -> dovrebbe",
-  "source": "spikes/gleichlaut/results.md S2"
+  "source": "docs/research/gleichlaut-results.md S2"
  }
 }
