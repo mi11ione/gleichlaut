@@ -30,3 +30,4 @@ build/
 /models/
 /out/
 *.log
+/state/

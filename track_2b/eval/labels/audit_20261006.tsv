@@ -1,0 +1,22 @@
+id	cud	lang	rank	known	half	real	note
+A00	CERDELGA	fr	7	False	held	no	DE "ab 18 Jahren" vs FR "patients adultes": same adult population, rephrasing.
+A01	GALAFOLD3	it	15	False	held	no	DE "an jedem zweiten Tag" = IT "ogni due giorni"; same interval.
+A02	BENEPALI4	fr	5	True	dev	yes	FR restricts juvenile arthritis to patients weighing >= 62.5 kg; DE has no weight restriction.
+A03	EMGALITY.01	it	11	False	dev	no	DE mentions "EMGALITY 120 mg" in the 3-month control; IT omits dose but continuation condition is unchanged.
+A04	DUPIXENT.05a	fr	3	True	held	yes	DE 300 mg q4w for 15 - <60 kg; FR for 30 - <60 kg.
+A05	DUPIXENT.02P	fr	21	True	dev	yes	DE has bands 30-<60 kg and 15-<30 kg (300 mg q4w); FR only >60 / <60 kg, no 15-30 kg regimen.
+A06	NEMLUVIO.01	it	18	True	held	yes	DE maintenance 30 mg every eight weeks; IT maintenance 30 mg every four weeks.
+A07	DUPIXENT.02	fr	20	True	held	yes	DE has bands 30-<60 kg and 15-<30 kg (300 mg q4w); FR only >60 / <60 kg, no 15-30 kg regimen.
+A08	CRESE.Kps.IM	fr	9	True	held	yes	DE requires age >= 6 years and body weight >= 16 kg; FR only age >= 6 years, no weight minimum.
+A09	CERDELGA	it	8	False	held	no	DE "ab 18 Jahren" vs IT "pazienti adulti": same adult population.
+A10	PREVYMIS.01	fr	4	False	dev	no	FR "de15 kg" is missing space; both state 15 kg to <30 kg. Parser artefact.
+A11	DUPIXENT.05P	fr	2	True	dev	yes	DE 300 mg q4w for 15 - <60 kg; FR for 30 - <60 kg.
+A12	ERELZI2	fr	12	True	dev	yes	FR restricts juvenile arthritis to patients weighing >= 62.5 kg; DE has no weight restriction.
+A13	NEPEXTO	fr	19	True	held	yes	FR restricts juvenile arthritis to patients weighing >= 62.5 kg; DE has no weight restriction.
+A14	LEQVIO.01	it	17	False	dev	no	DE typo "1 .4 mmol/l" = IT "1,4 mmol/l"; same threshold.
+A15	LEQVIO.01	fr	16	False	dev	no	DE typo "1 .4 mmol/l" = FR "1.4 mmol/l"; same threshold.
+A16	BEYFORTUS.01	fr	6	False	held	no	DE "innerhalb von 14 Tagen" = FR "dans les deux semaines"; same period.
+A17	GALAFOLD3	fr	14	False	held	no	DE "an jedem zweiten Tag" = FR "tous les deux jours"; same interval.
+A18	EMGALITY.01	fr	10	False	dev	no	DE mentions "EMGALITY 120 mg" in the 3-month control; FR omits dose but continuation condition is unchanged.
+A19	FORSTEO-2	it	13	False	dev	no	IT "almeno se mesi" is a typo for "sei mesi"; same 6-month minimum as DE.
+A20	DIAPHIN.6-	it	1	True	held	yes	DE price surcharge 6% plus VAT; IT surcharge 12% plus VAT.

@@ -1,0 +1,950 @@
+{
+"summary": {
+"generated_by": "python3 -m gleichlaut.audit --hist <dir> --date 20261006",
+"date": "20261006",
+"model_calls": 0,
+"findings": 21,
+"by_lang": {
+"it": 7,
+"fr": 14
+},
+"by_half": {
+"held": 11,
+"dev": 10
+},
+"limitations_with_finding": 17,
+"distinct_text_pairs": 21,
+"swaps": 4,
+"count_only_differences": 230,
+"unbound_differences": 148,
+"suppressed": {
+"one": 51,
+"ordinal_word": 15,
+"unit_conversion": 2,
+"glued": 5,
+"period_word": 2,
+"thousands": 1
+},
+"n_limitations": 1688,
+"recall": {
+"limitations": 10,
+"of": 10,
+"tests": 13,
+"of_tests": 13,
+"cases": {
+"NEMLUVIO.01": {
+"tests": [
+{
+"lang": "it",
+"test": "lacks",
+"value": "8",
+"hit": true,
+"rank": 18
+}
+],
+"hit": true,
+"all": true
+},
+"DIAPHIN.6-": {
+"tests": [
+{
+"lang": "it",
+"test": "adds",
+"value": "12",
+"hit": true,
+"rank": 1
+},
+{
+"lang": "it",
+"test": "lacks",
+"value": "6",
+"hit": true,
+"rank": 1
+}
+],
+"hit": true,
+"all": true
+},
+"NEPEXTO": {
+"tests": [
+{
+"lang": "fr",
+"test": "adds",
+"value": "62.5",
+"hit": true,
+"rank": 19
+}
+],
+"hit": true,
+"all": true
+},
+"BENEPALI4": {
+"tests": [
+{
+"lang": "fr",
+"test": "adds",
+"value": "62.5",
+"hit": true,
+"rank": 5
+}
+],
+"hit": true,
+"all": true
+},
+"ERELZI2": {
+"tests": [
+{
+"lang": "fr",
+"test": "adds",
+"value": "62.5",
+"hit": true,
+"rank": 12
+}
+],
+"hit": true,
+"all": true
+},
+"CRESE.Kps.IM": {
+"tests": [
+{
+"lang": "fr",
+"test": "lacks",
+"value": "16",
+"hit": true,
+"rank": 9
+}
+],
+"hit": true,
+"all": true
+},
+"DUPIXENT.02P": {
+"tests": [
+{
+"lang": "fr",
+"test": "lacks",
+"value": "15",
+"hit": true,
+"rank": 21
+}
+],
+"hit": true,
+"all": true
+},
+"DUPIXENT.02": {
+"tests": [
+{
+"lang": "fr",
+"test": "lacks",
+"value": "15",
+"hit": true,
+"rank": 20
+}
+],
+"hit": true,
+"all": true
+},
+"DUPIXENT.05a": {
+"tests": [
+{
+"lang": "fr",
+"test": "adds",
+"value": "30",
+"hit": true,
+"rank": 3
+},
+{
+"lang": "fr",
+"test": "lacks",
+"value": "15",
+"hit": true,
+"rank": 3
+}
+],
+"hit": true,
+"all": true
+},
+"DUPIXENT.05P": {
+"tests": [
+{
+"lang": "fr",
+"test": "adds",
+"value": "30",
+"hit": true,
+"rank": 2
+},
+{
+"lang": "fr",
+"test": "lacks",
+"value": "15",
+"hit": true,
+"rank": 2
+}
+],
+"hit": true,
+"all": true
+}
+}
+},
+"keytruda_bonus": {
+"found": false,
+"note": "not numeric (the IT slot carries French text); out of scope for this check"
+},
+"s1_census_reference": {
+"precision": "3/50 = 6% (all categories)",
+"num": "3/15 = 20% strict",
+"source": "spikes/gleichlaut/results.md (research, not shipped)"
+},
+"term_pairs": {
+"status": "off: not precise enough (docs/audit.md)",
+"fr": {
+"p": 0.9,
+"support": 10,
+"distinct_pairs": 1618,
+"term_pairs": 297,
+"exceptions": 722,
+"ids_with_exception": 483,
+"examples": [
+[
+"patienten",
+"patients"
+],
+[
+"kostengutsprache",
+"médecin conseil"
+],
+[
+"übermitteln",
+"transmis"
+],
+[
+"vorgängiger",
+"médecin conseil"
+],
+[
+"vertrauensarztes",
+"médecin conseil"
+],
+[
+"konsultation",
+"consultation"
+],
+[
+"folgender",
+"suivant transmis"
+],
+[
+"mindestens",
+"moins"
+],
+[
+"versicherte",
+"moment"
+],
+[
+"aufforderung",
+"moment"
+]
+]
+},
+"it": {
+"p": 0.9,
+"support": 10,
+"distinct_pairs": 1620,
+"term_pairs": 314,
+"exceptions": 741,
+"ids_with_exception": 473,
+"examples": [
+[
+"patienten",
+"pazienti"
+],
+[
+"übermitteln",
+"codice"
+],
+[
+"vertrauensarztes",
+"consultazione"
+],
+[
+"konsultation",
+"consultazione"
+],
+[
+"folgender",
+"seguente"
+],
+[
+"mindestens",
+"almeno"
+],
+[
+"versicherte",
+"momento"
+],
+[
+"aufforderung",
+"momento"
+],
+[
+"zeitpunkt",
+"momento"
+],
+[
+"versichert",
+"momento"
+]
+]
+},
+"probe": {
+"de_ids": 23,
+"fr_with_receptor_antagonist": 19,
+"wrong_class": [
+"COVERAM-PLUS",
+"PERAMLIND.me",
+"PERAMLIND.sp",
+"PERINDAMLIND"
+]
+}
+},
+"fresh": {
+"items": 166,
+"with_preexisting": 1,
+"pairs": 1
+}
+},
+"findings": [
+{
+"id": "DIAPHIN.6-",
+"product": [
+"Diaphin"
+],
+"lang": "it",
+"kind": "numeric",
+"score": 18,
+"half": "held",
+"group": "30102dcd36",
+"de_only": [
+{
+"value": "6",
+"n": 1,
+"unit": "%",
+"src": "digit",
+"context": [
+"…brikabgabepreises zuzüglich dem preisbezogenen Zuschlag von [6]% zuzüglich MWST. Aufgrund spezieller Vertriebsverhältnisse …"
+]
+}
+],
+"tgt_only": [
+{
+"value": "12",
+"n": 1,
+"unit": "%",
+"src": "digit",
+"context": [
+"…ezzo di fabbrica, più il supplemento attinente al prezzo di [12]% più la IVA. A causa della situazione particolare della dis…"
+]
+}
+],
+"description": "DE has 6 (%), IT does not; IT has 12 (%), DE does not",
+"known": true,
+"rank": 1
+},
+{
+"id": "DUPIXENT.05P",
+"product": [
+"Dupixent"
+],
+"lang": "fr",
+"kind": "numeric",
+"score": 18,
+"half": "dev",
+"group": "448f2fdcc9",
+"de_only": [
+{
+"value": "15",
+"n": 1,
+"unit": "kg",
+"src": "digit",
+"context": [
+"…ierung von 300 mg alle 4 Wochen bei einem Körpergewicht von [15] - < 60 kg, bzw. von 200 mg alle 2 Wochen bei einem Körperge…"
+]
+}
+],
+"tgt_only": [
+{
+"value": "30",
+"n": 1,
+"unit": "kg",
+"src": "digit",
+"context": [
+"…e de 300 mg toutes les 4 semaines pour un poids corporel de [30] kg à moins de 60 kg, ou de 200 mg toutes les 2 semaines pou…"
+]
+}
+],
+"description": "DE has 15 (kg), FR does not; FR has 30 (kg), DE does not",
+"known": true,
+"rank": 2
+},
+{
+"id": "DUPIXENT.05a",
+"product": [
+"Dupixent"
+],
+"lang": "fr",
+"kind": "numeric",
+"score": 18,
+"half": "held",
+"group": "a0a7d9bf9c",
+"de_only": [
+{
+"value": "15",
+"n": 1,
+"unit": "kg",
+"src": "digit",
+"context": [
+"…ierung von 300 mg alle 4 Wochen bei einem Körpergewicht von [15] - < 60 kg, bzw. von 200 mg alle 2 Wochen bei einem Körperge…"
+]
+}
+],
+"tgt_only": [
+{
+"value": "30",
+"n": 1,
+"unit": "kg",
+"src": "digit",
+"context": [
+"…e de 300 mg toutes les 4 semaines pour un poids corporel de [30] kg à moins de 60 kg, ou de 200 mg toutes les 2 semaines pou…"
+]
+}
+],
+"description": "DE has 15 (kg), FR does not; FR has 30 (kg), DE does not",
+"known": true,
+"rank": 3
+},
+{
+"id": "PREVYMIS.01",
+"product": [
+"Prevymis"
+],
+"lang": "fr",
+"kind": "numeric",
+"score": 18,
+"half": "dev",
+"group": "ad45704bc5",
+"de_only": [
+{
+"value": "15",
+"n": 1,
+"unit": "kg",
+"src": "digit",
+"context": [
+"… 30 kg und für pädiatrische Patienten mit einem Gewicht von [15] kg bis unter 30 kg für eine Verabreichung ohne Ciclosporin,…"
+]
+}
+],
+"tgt_only": [
+{
+"value": "5",
+"n": 1,
+"unit": "kg",
+"src": "digit",
+"context": [
+"…s 30 kg, ainsi que chez les patients pédiatriques pesant de1[5] kg à moins de 30 kg pour une administration sans ciclospori…"
+]
+}
+],
+"description": "DE has 15 (kg), FR does not; FR has 5 (kg), DE does not",
+"known": false,
+"rank": 4
+},
+{
+"id": "BENEPALI4",
+"product": [
+"Benepali"
+],
+"lang": "fr",
+"kind": "numeric",
+"score": 9,
+"half": "dev",
+"group": "235b75ce47",
+"de_only": [],
+"tgt_only": [
+{
+"value": "62.5",
+"n": 1,
+"unit": "kg",
+"src": "digit",
+"context": [
+"… juvénile polyarticulaire active chez les patients pesant ≥ [62.5] kg et de l'arthrite psoriasique en cas de réponse inadéquat…"
+]
+}
+],
+"description": "FR has 62.5 (kg), DE does not",
+"known": true,
+"rank": 5
+},
+{
+"id": "BEYFORTUS.01",
+"product": [
+"Beyfortus"
+],
+"lang": "fr",
+"kind": "numeric",
+"score": 9,
+"half": "held",
+"group": "53cb5cfe09",
+"de_only": [
+{
+"value": "14",
+"n": 1,
+"unit": "Tagen",
+"src": "digit",
+"context": [
+"…en; ausgenommen sind folgende Fälle: – Geburt innerhalb von [14] Tagen nach Verabreichung der Impfung, – Frühgeburt vor 37 W…"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 14 (Tagen), FR does not",
+"known": false,
+"rank": 6
+},
+{
+"id": "CERDELGA",
+"product": [
+"Cerdelga"
+],
+"lang": "fr",
+"kind": "numeric",
+"score": 9,
+"half": "held",
+"group": "bbd2548249",
+"de_only": [
+{
+"value": "18",
+"n": 1,
+"unit": "Jahren",
+"src": "digit",
+"context": [
+"Zur Monotherapie bei erwachsenen Patienten ab [18] Jahren mit gesicherter Diagnose eines Morbus Gaucher Typ I,…"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 18 (Jahren), FR does not",
+"known": false,
+"rank": 7
+},
+{
+"id": "CERDELGA",
+"product": [
+"Cerdelga"
+],
+"lang": "it",
+"kind": "numeric",
+"score": 9,
+"half": "held",
+"group": "945d5e992a",
+"de_only": [
+{
+"value": "18",
+"n": 1,
+"unit": "Jahren",
+"src": "digit",
+"context": [
+"Zur Monotherapie bei erwachsenen Patienten ab [18] Jahren mit gesicherter Diagnose eines Morbus Gaucher Typ I,…"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 18 (Jahren), IT does not",
+"known": false,
+"rank": 8
+},
+{
+"id": "CRESE.Kps.IM",
+"product": [
+"Cresemba"
+],
+"lang": "fr",
+"kind": "numeric",
+"score": 9,
+"half": "held",
+"group": "dd8fb8247c",
+"de_only": [
+{
+"value": "16",
+"n": 1,
+"unit": "kg",
+"src": "digit",
+"context": [
+"…ter von 6 Jahren und mit einem Körpergewicht von mindestens [16] kg vergütet."
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 16 (kg), FR does not",
+"known": true,
+"rank": 9
+},
+{
+"id": "EMGALITY.01",
+"product": [
+"Emgality"
+],
+"lang": "fr",
+"kind": "numeric",
+"score": 9,
+"half": "dev",
+"group": "28b8075b41",
+"de_only": [
+{
+"value": "120",
+"n": 1,
+"unit": "mg",
+"src": "digit",
+"context": [
+"…hnittswert für die 3 Monate vor Therapiebeginn mit EMGALITY [120] mg reduziert wurde und diese Reduktion anhand eines Migräne…"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 120 (mg), FR does not",
+"known": false,
+"rank": 10
+},
+{
+"id": "EMGALITY.01",
+"product": [
+"Emgality"
+],
+"lang": "it",
+"kind": "numeric",
+"score": 9,
+"half": "dev",
+"group": "33a1fb627a",
+"de_only": [
+{
+"value": "120",
+"n": 1,
+"unit": "mg",
+"src": "digit",
+"context": [
+"…hnittswert für die 3 Monate vor Therapiebeginn mit EMGALITY [120] mg reduziert wurde und diese Reduktion anhand eines Migräne…"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 120 (mg), IT does not",
+"known": false,
+"rank": 11
+},
+{
+"id": "ERELZI2",
+"product": [
+"Erelzi"
+],
+"lang": "fr",
+"kind": "numeric",
+"score": 9,
+"half": "dev",
+"group": "a34a7e32f4",
+"de_only": [],
+"tgt_only": [
+{
+"value": "62.5",
+"n": 1,
+"unit": "kg",
+"src": "digit",
+"context": [
+"… juvénile polyarticulaire active chez les patients pesant ≥ [62.5] kg et de l'arthrite psoriasique en cas de réponse inadéquat…"
+]
+}
+],
+"description": "FR has 62.5 (kg), DE does not",
+"known": true,
+"rank": 12
+},
+{
+"id": "FORSTEO-2",
+"product": [
+"Forsteo",
+"Movymia",
+"Sondelbay"
+],
+"lang": "it",
+"kind": "numeric",
+"score": 9,
+"half": "dev",
+"group": "8a5cf4a426",
+"de_only": [
+{
+"value": "6",
+"n": 1,
+"unit": "monatigen",
+"src": "digit",
+"context": [
+"…ebedingten Wirbelkörperfrakturen, die nach einer mindestens [6]-monatigen Therapie mit Calcitonin, SERM (selektiver Oestrog…"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 6 (monatigen), IT does not",
+"known": false,
+"rank": 13
+},
+{
+"id": "GALAFOLD3",
+"product": [
+"Galafold"
+],
+"lang": "fr",
+"kind": "numeric",
+"score": 9,
+"half": "held",
+"group": "7322bf51a7",
+"de_only": [],
+"tgt_only": [
+{
+"value": "2",
+"n": 2,
+"unit": "jours",
+"src": "word",
+"context": [
+"…iqué, à la posologie de 123 mg (1 gélule) une fois tous les [deux] jours à heure fixe, dans le traitement à long terme des adu…",
+"…atient. La coopération se fait d’un commun accord entre les [deux] partenaires. GALAFOLD ne doit pas être administré en associ…"
+]
+}
+],
+"description": "FR has 2 (jours), DE does not",
+"known": false,
+"rank": 14
+},
+{
+"id": "GALAFOLD3",
+"product": [
+"Galafold"
+],
+"lang": "it",
+"kind": "numeric",
+"score": 9,
+"half": "held",
+"group": "11f7c77992",
+"de_only": [],
+"tgt_only": [
+{
+"value": "2",
+"n": 2,
+"unit": "giorni",
+"src": "word",
+"context": [
+"…. GALAFOLD al dosaggio di 123 mg (1 capsula) una volta ogni [due] giorni, alla stessa ora, è indicato per il trattamento a lu…",
+"…ente. La collaborazione si svolge su base consensuale tra i [due] partner. GALAFOLD non deve essere somministrato in concomit…"
+]
+}
+],
+"description": "IT has 2 (giorni), DE does not",
+"known": false,
+"rank": 15
+},
+{
+"id": "LEQVIO.01",
+"product": [
+"Leqvio"
+],
+"lang": "fr",
+"kind": "numeric",
+"score": 9,
+"half": "dev",
+"group": "bbc0d1d17b",
+"de_only": [
+{
+"value": "4",
+"n": 1,
+"unit": "mmol",
+"src": "digit",
+"context": [
+"…it einem PCSK9-Inhibitor oder ein LDL-C Wert von kleiner 1 .[4] mmol/l erreicht werden. Die Vergütung in Kombination mit de…"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 4 (mmol), FR does not",
+"known": false,
+"rank": 16
+},
+{
+"id": "LEQVIO.01",
+"product": [
+"Leqvio"
+],
+"lang": "it",
+"kind": "numeric",
+"score": 9,
+"half": "dev",
+"group": "72a50cffb6",
+"de_only": [
+{
+"value": "4",
+"n": 1,
+"unit": "mmol",
+"src": "digit",
+"context": [
+"…it einem PCSK9-Inhibitor oder ein LDL-C Wert von kleiner 1 .[4] mmol/l erreicht werden. Die Vergütung in Kombination mit de…"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 4 (mmol), IT does not",
+"known": false,
+"rank": 17
+},
+{
+"id": "NEMLUVIO.01",
+"product": [
+"Nemluvio"
+],
+"lang": "it",
+"kind": "numeric",
+"score": 9,
+"half": "held",
+"group": "64c2037cf8",
+"de_only": [
+{
+"value": "8",
+"n": 1,
+"unit": "Wochen",
+"src": "word",
+"context": [
+"…iner Erhaltungsdosis von 30 mg als subkutane Injektion alle [acht] Wochen, zur Behandlung erwachsener und jugendlicher Patient…"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 8 (Wochen), IT does not",
+"known": true,
+"rank": 18
+},
+{
+"id": "NEPEXTO",
+"product": [
+"Nepexto"
+],
+"lang": "fr",
+"kind": "numeric",
+"score": 9,
+"half": "held",
+"group": "4c80bbe0c3",
+"de_only": [],
+"tgt_only": [
+{
+"value": "62.5",
+"n": 1,
+"unit": "kg",
+"src": "digit",
+"context": [
+"… juvénile polyarticulaire active chez les patients pesant ≥ [62.5] kg et de l'arthrite psoriasique en cas de réponse inadéquat…"
+]
+}
+],
+"description": "FR has 62.5 (kg), DE does not",
+"known": true,
+"rank": 19
+},
+{
+"id": "DUPIXENT.02",
+"product": [
+"Dupixent"
+],
+"lang": "fr",
+"kind": "numeric",
+"score": 8,
+"half": "held",
+"group": "623c3f358a",
+"de_only": [
+{
+"value": "30",
+"n": 2,
+"unit": "kg",
+"src": "digit",
+"context": [
+"… alle zwei Wochen, bei Patienten mit einem Körpergewicht ab [30] kg bis unter 60 kg in einer Anfangsdosis von 400 mg als sub…",
+"…nd bei Patienten mit einem Körpergewicht ab 15 kg bis unter [30] kg in einer Anfangsdosis von 600 mg (eine Injektion von 300…"
+]
+},
+{
+"value": "15",
+"n": 3,
+"unit": "kg",
+"src": "digit",
+"context": [
+"…le zwei Wochen und bei Patienten mit einem Körpergewicht ab [15] kg bis unter 30 kg in einer Anfangsdosis von 600 mg (eine I…",
+"…ne Injektion von 300 mg an Tag 1, gefolgt von 300 mg an Tag [15]), gefolgt von einer Dosis von 300 mg als subkutane Injektio…",
+"… Injektion alle vier Wochen (beginnend vier Wochen nach Tag [15]) mit schwerer atopischer Dermatitis (IGA 4 auf IGA Skala vo…"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 30 (kg), FR does not; DE has 15 (kg), FR does not",
+"known": true,
+"rank": 20
+},
+{
+"id": "DUPIXENT.02P",
+"product": [
+"Dupixent"
+],
+"lang": "fr",
+"kind": "numeric",
+"score": 8,
+"half": "dev",
+"group": "98dbaca150",
+"de_only": [
+{
+"value": "30",
+"n": 2,
+"unit": "kg",
+"src": "digit",
+"context": [
+"… alle zwei Wochen, bei Patienten mit einem Körpergewicht ab [30] kg bis unter 60 kg in einer Anfangsdosis von 400 mg als sub…",
+"…nd bei Patienten mit einem Körpergewicht ab 15 kg bis unter [30] kg in einer Anfangsdosis von 600 mg (eine Injektion von 300…"
+]
+},
+{
+"value": "15",
+"n": 3,
+"unit": "kg",
+"src": "digit",
+"context": [
+"…le zwei Wochen und bei Patienten mit einem Körpergewicht ab [15] kg bis unter 30 kg in einer Anfangsdosis von 600 mg (eine I…",
+"…ne Injektion von 300 mg an Tag 1, gefolgt von 300 mg an Tag [15]), gefolgt von einer Dosis von 300 mg als subkutane Injektio…",
+"… Injektion alle vier Wochen (beginnend vier Wochen nach Tag [15]) mit schwerer atopischer Dermatitis (IGA 4 auf IGA Skala vo…"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 30 (kg), FR does not; DE has 15 (kg), FR does not",
+"known": true,
+"rank": 21
+}
+],
+"fresh_items": [
+{
+"key": "wb004-it",
+"lang": "it",
+"findings": [
+{
+"side": "de",
+"value": "8",
+"n": 1,
+"unit": "Wochen",
+"src": "word",
+"context": [
+"…iner Erhaltungsdosis von 30 mg als subkutane Injektion alle [acht] Wochen, zur Behandlung erwachsener und jugendlicher Patient…"
+]
+}
+]
+}
+]
+}

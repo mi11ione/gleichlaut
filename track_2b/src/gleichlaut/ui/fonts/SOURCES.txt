@@ -1,0 +1,17 @@
+Fonts embedded (base64 @font-face) in the review page built by gleichlaut.ui.build, so the page needs no network.
+Fetched once on 9 Oct 2026 from Google Fonts (CSS requested with a Chrome User-Agent to get woff2; files fetched with
+User-Agent hackapertus-research/0.1), "latin" subset only (U+0000-00FF and a few punctuation code points).
+
+SourceSans3-latin-wght.woff2   Source Sans 3, variable weight axis (serves 400 and 600)
+  https://fonts.gstatic.com/s/sourcesans3/v20/nwpStKy2OAdR1K-IwhWudF-R3w8aZejf5Hc.woff2
+  sha256 587435ca9d90732b8c1ce4958222c6ad3ade2b875500188e1d318efbcb61f4c5
+  Licence: SIL Open Font License 1.1, OFL-SourceSans3.txt (Copyright 2010-2020 Adobe, Reserved Font Name 'Source')
+IBMPlexMono-400-latin.woff2   IBM Plex Mono Regular
+  https://fonts.gstatic.com/s/ibmplexmono/v20/-F63fjptAgt5VM-kVkqdyU8n1i8q131nj-o.woff2
+  sha256 c36f509c0a8f9f85f29cb44bc8701d8a9e0b14c499e77a884f789ead7093a7ac
+IBMPlexMono-500-latin.woff2   IBM Plex Mono Medium
+  https://fonts.gstatic.com/s/ibmplexmono/v20/-F6qfjptAgt5VM-kVkqdyU8n3twJwlBFgsAXHNk.woff2
+  sha256 a76f53ca6612e7b3828eec2311098675b7f9849ae4169a8bcef6302aec02a6c0
+  Licence: SIL Open Font License 1.1, OFL-IBMPlexMono.txt (Copyright 2017 IBM Corp., Reserved Font Name 'Plex')
+Licence texts: https://raw.githubusercontent.com/google/fonts/main/ofl/{sourcesans3,ibmplexmono}/OFL.txt
+The fonts are embedded unmodified (no renaming), as the OFL permits when bundled with software.

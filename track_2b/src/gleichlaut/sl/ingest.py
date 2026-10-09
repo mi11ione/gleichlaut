@@ -9,9 +9,14 @@ drop-in); nrm() (html-unescape x2, nbsp/narrow spaces, whitespace) is applied on
 Publisher bug: the Feb-Apr 2026 (old format) and 4 May 2026 files drop every '<...>' span; May is excluded downstream and
 old-format pairs containing '<' are dropped (sl.mine). The feed is streamed: nothing raw is stored unless --keep-raw is given.
 
-usage: python3 -m gleichlaut.sl.ingest 20261006 [20261001 ...] [--out DIR] [--langs de,fr,it] [--keep-raw DIR]
+The 'latest' feed is stored under its real publication date ({YYYYMMDD}-{lang}.json): the feed's own Bundle timestamp /
+meta.lastUpdated if it carries one, else the HTTP Last-Modified of the file (as a Europe/Zurich date). latest-{lang}.json is
+kept as an alias (symlink, or a copy where symlinks are unavailable) and latest.json records which date it points to and how
+that date was established.
+
+usage: python3 -m gleichlaut.sl.ingest 20261006 [20261001 ...|latest] [--out DIR] [--langs de,fr,it] [--keep-raw DIR]
        python3 -m gleichlaut.sl.ingest --file feed-de.ndjson --date 20261005 --lang de [--out DIR]"""
-import argparse, html, io, json, os, re, sys, time, urllib.request, urllib.error
+import argparse, datetime, email.utils, html, io, json, os, re, shutil, sys, time, urllib.request, urllib.error
 from . import hist_dir
 
 UA = "hackapertus-research/0.1"
@@ -34,8 +39,9 @@ def nrm(s):
     return re.sub(r"\s+", " ", s).strip()
 
 
-def extract(lines):
-    """ported from spikes/gleichlaut/s2/extract.py (stdin loop -> function). Reads both formats, so it works on every snapshot."""
+def extract(lines, meta=None):
+    """ported from spikes/gleichlaut/s2/extract.py (stdin loop -> function). Reads both formats, so it works on every snapshot.
+    meta: optional dict; receives 'feed_timestamp' (the latest Bundle timestamp / meta.lastUpdated, if the feed has any)."""
     lim, prod, conflict = {}, {}, {}
     def put(k, t):
         if k in lim and lim[k] != t: conflict.setdefault(k, [lim[k]]).append(t)
@@ -43,6 +49,9 @@ def extract(lines):
     for line in lines:
         if not line.strip(): continue
         b = json.loads(line); mpd, name, keys = None, None, []
+        if meta is not None:
+            ts = b.get("timestamp") or (b.get("meta") or {}).get("lastUpdated")
+            if ts and ts > meta.get("feed_timestamp", ""): meta["feed_timestamp"] = ts
         for e in b.get("entry", []):
             r = e["resource"]; rt = r["resourceType"]
             if rt == "MedicinalProductDefinition":
@@ -88,18 +97,65 @@ class _Tee:
         for line in self.src: self.dst.write(line); yield line
 
 
+def _zurich_date(dt):
+    try:
+        from zoneinfo import ZoneInfo
+        return dt.astimezone(ZoneInfo("Europe/Zurich")).strftime("%Y%m%d")
+    except Exception:                                    # no tz database (slim images): UTC date
+        return dt.astimezone(datetime.timezone.utc).strftime("%Y%m%d")
+
+
+def publication_date(feed_timestamp=None, last_modified=None):
+    """-> (YYYYMMDD or None, source). The feed's own timestamp wins; else the HTTP Last-Modified header."""
+    if feed_timestamp:
+        try:
+            dt = datetime.datetime.fromisoformat(feed_timestamp.replace("Z", "+00:00"))
+            return (_zurich_date(dt) if dt.tzinfo else dt.strftime("%Y%m%d")), "feed timestamp"
+        except ValueError: pass
+    if last_modified:
+        try: return _zurich_date(email.utils.parsedate_to_datetime(last_modified)), "HTTP Last-Modified"
+        except (TypeError, ValueError): pass
+    return None, "unknown"
+
+
+def alias_latest(out, date, lang):
+    """latest-{lang}.json -> {date}-{lang}.json (relative symlink; a copy where symlinks are not available)."""
+    dst, tmp = os.path.join(out, f"latest-{lang}.json"), os.path.join(out, f".latest-{lang}.json.tmp")
+    if os.path.lexists(tmp): os.remove(tmp)
+    try: os.symlink(f"{date}-{lang}.json", tmp)
+    except (OSError, NotImplementedError): shutil.copyfile(os.path.join(out, f"{date}-{lang}.json"), tmp)
+    os.replace(tmp, dst)
+
+
 def fetch(date, lang, out, keep_raw=None):
-    """stream one feed straight into extract(); the raw NDJSON is kept only if keep_raw (a directory outside data/) is given."""
-    u = url(date, lang); print("GET", u, file=sys.stderr)
+    """stream one feed straight into extract(); the raw NDJSON is kept only if keep_raw (a directory outside data/) is given.
+    date 'latest': stored under its publication date (publication_date) with a latest-{lang}.json alias -> (snap, date)."""
+    u = url(date, lang); print("GET", u, file=sys.stderr); meta = {}
     with _open(u) as r:
+        last_modified = r.headers.get("Last-Modified")
         lines = io.TextIOWrapper(r, encoding="utf-8")
         if keep_raw:
             os.makedirs(keep_raw, exist_ok=True)
-            with open(os.path.join(keep_raw, os.path.basename(u)), "w", encoding="utf-8") as raw: snap = extract(_Tee(lines, raw))
+            with open(os.path.join(keep_raw, os.path.basename(u)), "w", encoding="utf-8") as raw: snap = extract(_Tee(lines, raw), meta)
         else:
-            snap = extract(lines)
-    os.makedirs(out, exist_ok=True); save(snap, os.path.join(out, f"{date}-{lang}.json"))
-    return snap
+            snap = extract(lines, meta)
+    os.makedirs(out, exist_ok=True)
+    if date != "latest":
+        save(snap, os.path.join(out, f"{date}-{lang}.json")); return snap, date
+    pub, how = publication_date(meta.get("feed_timestamp"), last_modified)
+    if pub is None:
+        print(f"warning: no publication date for the latest {lang} feed (no feed timestamp, no Last-Modified); stored as "
+              f"latest-{lang}.json only", file=sys.stderr)
+        save(snap, os.path.join(out, f"latest-{lang}.json")); return snap, None
+    save(snap, os.path.join(out, f"{pub}-{lang}.json")); alias_latest(out, pub, lang)
+    p = os.path.join(out, "latest.json")
+    try: rec = json.load(open(p, encoding="utf-8"))
+    except (OSError, ValueError): rec = {}
+    rec[lang] = dict(date=pub, source=how, last_modified=last_modified, feed_timestamp=meta.get("feed_timestamp"), url=u,
+                     fetched=datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"))
+    with open(p, "w", encoding="utf-8") as f: json.dump(rec, f, ensure_ascii=False, indent=1)
+    print(f"latest {lang} feed published {pub} ({how}) -> {pub}-{lang}.json, alias latest-{lang}.json", file=sys.stderr)
+    return snap, pub
 
 
 # ------------------------------------------------------------------ 2025 XML captures (Preparations.xml, DE/FR/IT side by side)

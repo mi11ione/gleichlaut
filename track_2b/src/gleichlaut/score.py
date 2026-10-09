@@ -291,3 +291,69 @@ def m3():
                 rerun=cert["metrics"], status=cert["status"], needs_review=len(cert["needs_review"]),
                 calls=len(calls), served=sorted({c["model_served"] for c in calls}),
                 serving_backends=dict(Counter((c.get("backend") or "?").split("-")[0] for c in calls)))
+
+
+def post_edit():
+    """Post-editing effort proxy (no human time needed): token edits (insertions + deletions, score2.edits) a translator
+    must make to reach the text BAG published, starting from (a) the Gleichlaut draft or (b) the rules-only start (old
+    French/Italian with code-substituted numbers, i.e. what translation memory plus find/replace gives today), on the
+    fresh 166. Reported for all items, ready and flagged drafts."""
+    I = {x["key"]: x for x in load_items("items/items_fresh.json")}; F = load_jsonl(RUNS["fresh166"]["final"])
+    norm = core.lock.norm; out = {}
+    rows = []
+    for k, x in I.items():
+        gold = norm(x["tgt_new"]); r1 = norm(core.gl2.rules(x["de_old"], x["de_new"], x["tgt_old"], x["lang"])[0])
+        d = norm(F[k]["out"])
+        e_rules = sum(S["edits"](r1, gold).values()); e_draft = sum(S["edits"](d, gold).values())
+        e_need = sum(S["edits"](norm(x["tgt_old"]), gold).values())
+        rows.append(dict(key=k, pair=x["pair"], flagged=F[k]["guard_flag"], rules=e_rules, draft=e_draft, needed=e_need))
+    for g, sel in (("all", lambda r: True), ("ready", lambda r: not r["flagged"]), ("flagged", lambda r: r["flagged"])):
+        R = [r for r in rows if sel(r)]; n = len(R)
+        sr, sd = sum(r["rules"] for r in R), sum(r["draft"] for r in R)
+        out[g] = dict(n=n, token_edits_from_rules=sr, token_edits_from_draft=sd,
+                      edits_saved_pct=round(100 * (sr - sd) / sr, 1) if sr else 0.0,
+                      items_draft_fewer=sum(r["draft"] < r["rules"] for r in R), items_draft_more=sum(r["draft"] > r["rules"] for r in R),
+                      items_draft_zero=sum(r["draft"] == 0 for r in R))
+        import random
+        by = {}
+        for r in R: by.setdefault(r["pair"], []).append(r)
+        ks = sorted(by); rng = random.Random(7); bs = []
+        for _ in range(4000):
+            smp = [r for k in (rng.choice(ks) for _ in ks) for r in by[k]]
+            a, b = sum(r["rules"] for r in smp), sum(r["draft"] for r in smp)
+            if a: bs.append(100 * (a - b) / a)
+        bs.sort(); out[g]["edits_saved_ci95"] = [round(bs[int(0.025 * len(bs))], 1), round(bs[int(0.975 * len(bs))], 1)]
+    return out
+
+
+def ready_quality():
+    """What 'ready' means on the fresh set, with honest bounds: errors the draft introduced vs errors it carried forward
+    from the old text (old French naming angiotensin-II receptor antagonists 'inhibiteur de l'enzyme de conversion de
+    l'angiotensine II', which BAG fixed in the same update), and 95% bounds per item, per German change and per family."""
+    import re
+    I = {x["key"]: x for x in load_items("items/items_fresh.json")}; F = load_jsonl(RUNS["fresh166"]["final"])
+    U = [k for k in I if not F[k]["guard_flag"]]
+    ace = re.compile(r"enzyme de conversion de l.angiotensine II|enzima di conversione dell.angiotensina II")
+    carried = [k for k in U if ace.search(F[k]["out"]) and not ace.search(I[k]["tgt_new"])]
+    pairs = {I[k]["pair"] for k in U}; fams = {I[k]["cluster"] for k in U}
+    D = load_items("items/items_dev.json") + load_items("items/items_oos.json"); n = core.lock.norm
+    olds = {n(x["tgt_old"]) for x in D}
+    lab = load_labels(RUNS["fresh166"]["labels"])
+    severe = sum(lab.get(k) in ("REAL", "stale", "german") for k in U)
+    return dict(ready=len(U), introduced_severe=severe, carried_forward_mistranslation=len(carried),
+                ready_de_changes=len(pairs), ready_families=len(fams),
+                bound95_per_item=round(wilson(0, len(U))[1], 1), bound95_per_change=round(wilson(0, len(pairs))[1], 1),
+                bound95_per_family=round(wilson(0, len(fams))[1], 1),
+                fresh_gold_seen_as_dev_input=sum(n(x["tgt_new"]) in olds for x in I.values()))
+
+
+def audit_eval():
+    """The divergence audit on the 6 Oct 2026 feed (data/audit), against a blind annotation of every finding."""
+    S = json.load(open(os.path.join(DATA, "audit", "audit_20261006_summary.json"), encoding="utf-8"))
+    rows = [l.split("\t") for l in open(os.path.join(LABELS, "audit_20261006.tsv"), encoding="utf-8").read().splitlines()[1:]]
+    real = [r for r in rows if r[6] == "yes"]; held = [r for r in rows if r[5] == "held"]
+    return dict(findings=len(rows), real=len(real), precision_pct=round(100 * len(real) / len(rows), 1),
+                precision_wilson95=[round(v, 1) for v in wilson(len(real), len(rows))],
+                real_new=sum(r[4] != "True" for r in real), known_found=sum(r[4] == "True" for r in rows),
+                held_findings=len(held), held_real=sum(r[6] == "yes" for r in held),
+                limitations_found=len({r[1] for r in rows}), summary=S)

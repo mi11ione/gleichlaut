@@ -5,3 +5,4 @@ models/
 *.pyc
 .env
 .env.*
+state/

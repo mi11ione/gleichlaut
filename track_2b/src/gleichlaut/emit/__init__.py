@@ -41,6 +41,15 @@ def _source_raw(f):
     raise AssertionError(f"{f['key']}: cannot tell which model answer produced the output")
 
 
+def _source_raw_any(f):
+    """For records written outside the recorded runs: the exact source answer when it can be told, else every model
+    answer of the record together (conservative: a number in any of them counts as written by the model)."""
+    try: return _source_raw(f)
+    except (AssertionError, KeyError):
+        raw = "\n".join(str(f[k]) for k in ("raw1", "raw2", "reask_raw", "raw") if f.get(k))
+        return raw or None
+
+
 def numbers(out, raw, lang, slots):
     """-> [(start, end, text, who, slot)] for every number in the draft (digits per gl2.NUMRX, number words 2-12).
     who = "code" unless the model text itself contained that number (then "model"): slot codes are the only way a
@@ -84,26 +93,88 @@ def lights(x, out, fc, f, stack):
     return res + [("reask", "Re-ask", ra[0], ra[1])]
 
 
-def load(run="fresh166"):
-    """-> (run meta, [view]) for every item of a recorded run, in item order."""
+HUMAN_RATIO = 0.6     # items whose German is rewritten beyond this go to a translator without a draft (records status "human")
+
+
+def _view(x, f, P, stack, check_recorded=True, any_raw=False):
+    """One per-item view: the draft, its verdict, lights, findings in plain language.
+    Verdict: ready ONLY if every frozen guard passes AND the record's own status (when present) is "ready". A record
+    with status "flagged" (air-gapped mode, statute lane, uncertified local model, ...) stays flagged and its
+    review_reason is shown as a finding; status "human" (or no draft) = routed to a translator."""
+    from . import explain
+    base = dict(key=x["key"], pair=x["pair"], lang=x["lang"], product=x.get("product") or "(product not recorded)",
+                cud_id=cud_id(x), snap_old=x.get("snap_old", "?"), snap_new=x.get("snap_new", "?"), family=x.get("cluster", "-"),
+                de_old=x["de_old"], de_new=x["de_new"], tgt_old=x["tgt_old"], change_ratio=x.get("change_ratio", x.get("de_ratio")),
+                divergence=explain.divergence(x), record_status=(f or {}).get("status"))
+    base["banner"] = explain.banner(x, base["divergence"], None if f is None else f.get("out"))
+    if f is None or f.get("status") == "human" or f.get("out") is None:
+        return dict(base, draft="", status="human", lights=[], complaint="", findings=[], rule_only=False, reasked=False,
+                    replaced=False, slots={}, numbers=[], reason=(f or {}).get("reason") or "")
+    f = dict(f); f.setdefault("rule_only", False); out = f["out"]; fc = P.check(x, out)
+    rs = f.get("status")
+    if rs not in (None, "ready", "flagged"): raise AssertionError(f"{x['key']}: unknown record status {rs!r}")
+    if check_recorded and "guard_flag" in f and fc["flag"] != f["guard_flag"] and not f.get("review_reason"):
+        raise AssertionError(f"{x['key']}: re-guarded flag {fc['flag']} != recorded {f['guard_flag']}")
+    rec_flag = rs == "flagged" and (bool(f.get("review_reason")) or not fc["flag"])
+    flagged = fc["flag"] or rs == "flagged"
+    fs = explain.findings(x, out, fc, core.guards.run(x, out))
+    if not fc["flag"]: fs = [d for d in fs if d["gid"] == "corr"]
+    L = lights(x, out, fc, f, stack)
+    if rec_flag:
+        rf = explain.record_finding(f.get("review_reason"), x["lang"])
+        fs.insert(1 if fs and fs[0]["gid"] == "corr" else 0, rf)
+        L = [("record", "Record", "fail", f"record status flagged: {f.get('review_reason') or '(no reason recorded)'}")] + L
+    complaint = P.complaints(x, out) if fc["flag"] else ""
+    if rec_flag: complaint = "\n".join(c for c in (f"- {explain.review_text(f.get('review_reason'), 'en')}", complaint) if c)
+    return dict(base, draft=out, status="flagged" if flagged else "ready", lights=L, complaint=complaint, findings=fs,
+                rule_only=f["rule_only"], reasked=bool(f.get("reasked")), replaced=bool(f.get("replaced")),
+                slots=f.get("slots") or {}, numbers=numbers(out, _source_raw_any(f) if any_raw else _source_raw(f), x["lang"], f.get("slots")))
+
+
+def load(run="fresh166", records=None, items=None):
+    """-> (run meta, [view]) for every item of a recorded run (or of a records + items pair), in item order."""
+    if records or items: return load_records(records, items)
     if run not in MODEL: raise SystemExit(f"emit: no recorded model id for run {run!r} (known: {', '.join(MODEL)})")
     core.verify_freeze(strict=True)
     R = score.RUNS[run]; I = score.load_items(R["items"]); F = score.load_jsonl(R["final"]); P = core.check_only(R["stack"])
-    views = []
-    for x in I:
-        f = F[x["key"]]; out = f["out"]; fc = P.check(x, out)
-        if R.get("recorded_flag", True) and fc["flag"] != f["guard_flag"]:
-            raise AssertionError(f"{x['key']}: re-guarded flag {fc['flag']} != recorded {f['guard_flag']}")
-        views.append(dict(
-            key=x["key"], pair=x["pair"], lang=x["lang"], product=x.get("product") or "(product not recorded)",
-            cud_id=cud_id(x), snap_old=x.get("snap_old", "?"), snap_new=x.get("snap_new", "?"), family=x["cluster"],
-            de_old=x["de_old"], de_new=x["de_new"], tgt_old=x["tgt_old"], draft=out,
-            status="flagged" if fc["flag"] else "ready", lights=lights(x, out, fc, f, R["stack"]),
-            complaint=P.complaints(x, out) if fc["flag"] else "", rule_only=f["rule_only"], reasked=bool(f.get("reasked")),
-            replaced=bool(f.get("replaced")), slots=f.get("slots") or {},
-            numbers=numbers(out, _source_raw(f), x["lang"], f.get("slots"))))
+    views = [_view(x, F[x["key"]], P, R["stack"], R.get("recorded_flag", True)) for x in I]
     meta = dict(run=run, what=R["what"], stack=R["stack"], model=MODEL[run], pipeline=pipeline_id(R["stack"]),
-                items_sha256=core.sha256(os.path.join(score.DATA, R["items"])), run_sha256=core.sha256(os.path.join(score.DATA, R["final"])))
+                items_sha256=core.sha256(os.path.join(score.DATA, R["items"])), run_sha256=core.sha256(os.path.join(score.DATA, R["final"])),
+                custom=False, has_tgt_new=True)
+    return meta, views
+
+
+def _read_items(path):
+    """A JSON list, a JSON object (with an items list, one record, or records by key) or JSONL."""
+    txt = open(path, encoding="utf-8").read().strip()
+    try: d = json.loads(txt)
+    except json.JSONDecodeError: return [json.loads(l) for l in txt.splitlines() if l.strip()]
+    if isinstance(d, list): return d
+    if isinstance(d.get("items"), list): return d["items"]
+    return [d] if "key" in d else list(d.values())
+
+
+def load_records(records, items):
+    """Records written by `gleichlaut month` / `draft` (record format of data/runs/70b_fresh166_g3_final.jsonl) over an
+    items file (key, lang, de_old, de_new, tgt_old, optional tgt_new, product, change_ratio). Every draft is re-guarded
+    with the frozen guards3 stack; a recorded guard_flag, when present, must equal the recomputed one. Records with
+    status "human" (or without out) are items routed to a translator without a draft."""
+    if not (records and items): raise SystemExit("emit: --records and --items go together")
+    core.verify_freeze(strict=True)
+    I = _read_items(items); F = {r["key"]: r for r in _read_items(records)}; P = core.check_only("g3")
+    for x in I:
+        x.setdefault("pair", re.sub(r"-(fr|it|rm)$", "", x["key"]))
+        x.setdefault("cluster", x.get("family") or "-")
+    missing = [x["key"] for x in I if x["key"] not in F]
+    if missing: raise SystemExit(f"emit: no record for {len(missing)} item(s), e.g. {missing[:3]}")
+    views = [_view(x, F[x["key"]], P, "g3", True, any_raw=True) for x in I]
+    stem = os.path.splitext(os.path.basename(records))[0]
+    if stem == "records": stem = os.path.basename(os.path.dirname(os.path.abspath(records))) or stem      # out/<run>/records.jsonl
+    stem = re.sub(r"[^A-Za-z0-9_.-]+", "-", stem).strip("-") or "records"
+    model = next((r.get("model") for r in F.values() if r.get("model")), None) or os.environ.get("LLM_NAME") or "model not recorded"
+    meta = dict(run=stem, what=f"records {os.path.basename(records)} over items {os.path.basename(items)}", stack="g3", model=model,
+                pipeline=pipeline_id("g3"), items_sha256=core.sha256(items), run_sha256=core.sha256(records), custom=True,
+                has_tgt_new=all(x.get("tgt_new") for x in I), items_path=items, records_path=records)
     return meta, views
 
 
@@ -111,9 +182,10 @@ def select(views, n):
     """n items, deterministic: alternate ready and flagged in key order (both verdicts and both languages show up)."""
     if not n or n >= len(views): return list(views)
     r = [v for v in views if v["status"] == "ready"]; fl = [v for v in views if v["status"] == "flagged"]
+    h = [v for v in views if v["status"] == "human"]
     out = []
-    while len(out) < n and (r or fl):
-        for q in (r, fl):
+    while len(out) < n and (r or fl or h):
+        for q in (r, fl, h):
             if q and len(out) < n: out.append(q.pop(0))
     return sorted(out, key=lambda v: v["key"])
 

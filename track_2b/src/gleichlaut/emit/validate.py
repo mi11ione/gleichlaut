@@ -3,6 +3,8 @@
 XLIFF: the OASIS XLIFF 2.1 core XSD via lxml (the only non-stdlib dependency), plus the core-spec constraints the XSD
   cannot express and that apply here (the official Schematron is XSLT 2 and does not run under lxml): trgLang set when
   targets exist, subState only with an explicit state, unique unit / note / target-marker ids.
+XLIFF 1.2: the OASIS XLIFF 1.2 strict XSD (its xml.xsd import resolved to the vendored W3C copy, no network), plus
+  unique trans-unit ids per file.
 FHIR: (a) parity with the real ePL feed: every path the draft CUD shares with the feed has the feed's JSON type, every
   path present in all feed CUDs is present, extra paths are only the declared additions (fhir.py), fullUrl, id rule and
   narrative rule as in the feed (data/schemas/epl-feed/cud_shape.json, written by --survey).
@@ -19,6 +21,9 @@ from collections import Counter
 from . import SCHEMAS, fhir, sha256_bytes
 
 XSD = os.path.join(SCHEMAS, "xliff-2.1", "xliff_core_2.0.xsd")
+XSD12 = os.path.join(SCHEMAS, "xliff-1.2", "xliff-core-1.2-strict.xsd")
+XMLXSD = os.path.join(SCHEMAS, "xliff-2.1", "informativeCopiesOf3rdPartySchemas", "w3c", "xml.xsd")
+XL12 = "{urn:oasis:names:tc:xliff:document:1.2}"
 SHAPE = os.path.join(SCHEMAS, "epl-feed", "cud_shape.json")
 XL = "{urn:oasis:names:tc:xliff:document:2.0}"
 
@@ -55,6 +60,35 @@ def validate_xliff(path):
             errs += [f"unit {u.get('id')}: duplicate target inline id {i}" for i, k in c.items() if k > 1]
             for s in u.iter(f"{XL}segment"):
                 if s.get("subState") and not s.get("state"): errs.append(f"unit {u.get('id')}: subState without explicit state")
+    return errs
+
+
+_xsd12 = None
+def xliff12_schema():
+    """The OASIS XLIFF 1.2 strict XSD. It imports http://www.w3.org/2001/xml.xsd; that URL is resolved to the vendored
+    copy and the parser may not touch the network."""
+    global _xsd12
+    if _xsd12 is None:
+        try: from lxml import etree
+        except ImportError: raise SystemExit("validate: lxml is required for XLIFF XSD validation (pip install lxml)")
+        class Local(etree.Resolver):
+            def resolve(self, url, pubid, ctx):
+                if url and url.rstrip("/").endswith("xml.xsd"): return self.resolve_filename(XMLXSD, ctx)
+        parser = etree.XMLParser(no_network=True); parser.resolvers.add(Local())
+        _xsd12 = etree.XMLSchema(etree.parse(XSD12, parser))
+    return _xsd12
+
+
+def validate_xliff12(path):
+    """-> list of errors (empty = valid against the XLIFF 1.2 strict XSD, plus: a target only with a valid state)."""
+    from lxml import etree
+    S = xliff12_schema(); doc = etree.parse(path)
+    errs = [f"XSD line {e.line}: {e.message}" for e in S.error_log] if not S.validate(doc) else []
+    r = ET.parse(path).getroot()
+    if r.get("version") != "1.2": errs.append("not an XLIFF 1.2 document")
+    for f in r.iter(f"{XL12}file"):
+        ids = Counter(u.get("id") for u in f.iter(f"{XL12}trans-unit"))
+        errs += [f"duplicate trans-unit id {i}" for i, c in ids.items() if c > 1]
     return errs
 
 
@@ -300,17 +334,19 @@ def survey(ndjson_paths):
 
 
 # ------------------------------------------------------------------------------------------------------------ driver
-def validate_files(fhir_paths, xliff_paths):
+def validate_files(fhir_paths, xliff_paths, xliff12_paths=()):
     """-> report dict; report["ok"] is False on any error. Lists the schema files (with sha256) each check used."""
     V = FhirValidator(); shape = json.load(open(SHAPE, encoding="utf-8")); rep = {"fhir": {}, "xliff": {}}
+    if xliff12_paths: rep["xliff12"] = {os.path.basename(p): dict(errors=validate_xliff12(p)) for p in xliff12_paths}
     for p in fhir_paths:
         b = json.load(open(p, encoding="utf-8"))
         rep["fhir"][os.path.basename(p)] = dict(entries=len(b.get("entry", [])), profile_errors=V.validate_bundle(b), parity_errors=parity(b, shape))
     for p in xliff_paths: rep["xliff"][os.path.basename(p)] = dict(errors=validate_xliff(p))
     rel = lambda f: os.path.relpath(f, SCHEMAS)
     rep["schemas"] = dict(xliff=[{"file": rel(XSD), "sha256": _sha(XSD)}],
+                          xliff12=[{"file": rel(f), "sha256": _sha(f)} for f in (XSD12, XMLXSD)],
                           fhir_profiles=[{"file": rel(f), "sha256": _sha(f)} for f in V.files], fhir_parity={"file": rel(SHAPE), "sha256": _sha(SHAPE)})
-    rep["ok"] = not any(v.get("profile_errors") or v.get("parity_errors") or v.get("errors") for d in (rep["fhir"], rep["xliff"]) for v in d.values())
+    rep["ok"] = not any(v.get("profile_errors") or v.get("parity_errors") or v.get("errors") for d in (rep["fhir"], rep["xliff"], rep.get("xliff12", {})) for v in d.values())
     return rep
 
 
@@ -325,5 +361,6 @@ if __name__ == "__main__":
         from . import dump_json
         s = survey(a.survey); dump_json(s, a.shape_out)
         print(f"surveyed {s['cud_entries']} CUD entries ({s['unique_ids']} ids) -> {a.shape_out}"); sys.exit(0)
-    rep = validate_files([f for f in a.files if f.endswith(".json")], [f for f in a.files if f.endswith(".xlf")])
+    rep = validate_files([f for f in a.files if f.endswith(".json")], [f for f in a.files if f.endswith(".xlf") and not f.endswith(".xliff12.xlf")],
+                         [f for f in a.files if f.endswith(".xliff12.xlf")])
     print(json.dumps(rep, indent=1, ensure_ascii=False)); sys.exit(0 if rep["ok"] else 1)

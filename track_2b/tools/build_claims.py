@@ -83,7 +83,7 @@ C = [  # id, source, path, fmt, command
  ("fed_n", "eval/results/fedlex_compare.json", "n", "{}", RE),
  ("fed8_ready_pct", "eval/results/fedlex_compare.json", "8b_mlx_dwq.ready_pct", "{:.1f}", RE),
  ("fed70_ready_pct", "eval/results/fedlex_compare.json", "70b.ready_pct", "{:.1f}", RE),
- ("cap_flag", "eval/certificates/recorded-fresh166.json", "pass_rule.flag_rate_max_pct", "{:.0f}", "PYTHONPATH=src python3 -m gleichlaut.certify --backend cache --name recorded-fresh166"),
+ ("cap_flag", "eval/certificates/recorded-fresh166.json", "pass_rule.flag_rate_max_pct", "{:.0f}", "committed replay certificate (kind=replay); regenerate: PYTHONPATH=src python3 -m gleichlaut.certify --backend cache --name recorded-fresh166 (writes to state/)"),
  ("m3_identical", "eval/results/m3.json", "identical_pct", "{:.1f}", RE), ("m3_kappa", "eval/results/m3.json", "flag_kappa", "{:.3f}", RE),
  ("m3_changed", "eval/results/m3.json", "changed_pct", "{:.1f}", RE),
  ("m3_exact", "eval/results/m3.json", "rerun.exact.model", "{:.1f}", RE), ("m3_delta", "eval/results/m3.json", "rerun.exact.delta", "{:+.1f}", RE),

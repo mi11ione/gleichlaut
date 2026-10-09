@@ -25,10 +25,10 @@ jobs:
       URL_q8_0: https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf
       SHA_q8_0: dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with: { python-version: "3.12" }
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with: { path: track_2b/models, key: "gguf-${{ inputs.build }}" }
       - name: fetch and verify GGUF
         run: |
@@ -38,7 +38,7 @@ jobs:
       - run: CMAKE_ARGS="-DGGML_NATIVE=OFF" pip install -r requirements.txt -r requirements-offline.txt
       - name: run shard
         run: PYTHONPATH=src python -m gleichlaut.m1 run --gguf models/${{ inputs.build }}.gguf --build ${{ inputs.build }} --shard ${{ matrix.k }} --of ${{ inputs.shards }} --out out/m1
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with: { name: "m1-${{ inputs.build }}-${{ matrix.k }}", path: track_2b/out/m1 }
   gather:
@@ -46,13 +46,13 @@ jobs:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: track_2b } }
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with: { python-version: "3.12" }
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with: { pattern: "m1-${{ inputs.build }}-*", path: track_2b/out/m1parts }
       - run: PYTHONPATH=src python -m gleichlaut.m1 gather --build ${{ inputs.build }} --in out/m1parts/*
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: "m1-${{ inputs.build }}-merged"
           path: |

@@ -10,7 +10,14 @@ build(): ported from spikes/gleichlaut/s2/build_items.py. FR/IT old/new = the of
 Only change from the research code: products are iterated in sorted order (the research iterated a set, so the order of pairs,
 and with it which member of a multi-pair family was picked, depended on PYTHONHASHSEED). Counts do not depend on it.
 
-usage: python3 -m gleichlaut.sl.mine [--hist DIR] [--out DIR]   -> changes_de.json, pool_stats.json, items.json, items_all.json"""
+month_items(): one month in operation (gleichlaut month): every DE change between two snapshots, as items for the drafting
+         lane (key, lang, de_old, de_new, tgt_old, change_ratio, product, cud ids; tgt_new only where BAG already published a
+         changed FR/IT text, for shadow-mode evaluation) plus the changes that cannot become an item (no old FR/IT text, ...).
+
+The snapshot dates are parameters (--snaps / --from --to); SNAPS is the research series and the default of the reproduction.
+
+usage: python3 -m gleichlaut.sl.mine [--hist DIR] [--out DIR] [--snaps D1,D2,... | --from D1 --to D2]
+       -> changes_de.json, pool_stats.json, items.json, items_all.json"""
 import argparse, difflib, hashlib, json, os, random, re, sys
 from collections import Counter, defaultdict
 from . import hist_dir, OUT
@@ -61,6 +68,15 @@ def match(ta, tb):
         if g in ug or n in un: continue
         ug.add(g); un.add(n); out.append((r, g, n))
     return out
+
+
+def check_snaps(snaps):
+    """dates must be YYYYMMDD, strictly increasing, and not a known-bad snapshot."""
+    for d in snaps:
+        if not re.fullmatch(r"\d{8}", d): raise ValueError(f"snapshot date {d!r} is not YYYYMMDD")
+        if d in EXCLUDED: raise ValueError(f"snapshot {d} is excluded: {EXCLUDED[d]}")
+    if any(a >= b for a, b in zip(snaps, snaps[1:])): raise ValueError(f"snapshot dates must increase: {snaps}")
+    return list(snaps)
 
 
 def steps(hist, snaps=SNAPS):
@@ -183,6 +199,65 @@ def build(pairs, hist, n=N, seed=SEED, maxch=MAXCH):
     return dict(stats=dict(st), items=items, items_all=allit, cands=cands)
 
 
+# ------------------------------------------------------------------ one month in operation
+def _target(hist, o, lang):
+    """-> ('ok', tgt_old, tgt_new or None) | (reason,) for one DE change occurrence and one target language. Unlike targets(),
+    a target that BAG has not (yet) changed is not an exclusion: it is what the drafting lane is for."""
+    if o["key_old"] in hist(o["snap_old"], "de")["conflict"] or o["key_new"] in hist(o["snap_new"], "de")["conflict"]: return ("conflict",)
+    if not hist.has(o["snap_old"], lang): return ("no_snapshot",)
+    ko = tkey(hist, o["snap_old"], lang, o["mpd"], o["key_old"])
+    to = hist(o["snap_old"], lang)["lim"].get(ko) if ko else None
+    if to is None: return ("missing_old_target",)
+    to = nrm(to); tn = None
+    if hist.has(o["snap_new"], lang):
+        kn = tkey(hist, o["snap_new"], lang, o["mpd"], o["key_new"])
+        tn = hist(o["snap_new"], lang)["lim"].get(kn) if kn else None
+        tn = nrm(tn) if tn is not None else None
+    if o["snap_old"] <= OLD_FORMAT_LAST and ("<" in to or "<" in (tn or "")): return ("lt_bug",)
+    return ("ok", to, tn)
+
+
+def item_key(cud, de_old, de_new, lang):
+    """stable, unique item key: CUD id (filesystem/XML-safe, <= 40 chars) + 6 hex of the DE pair + language."""
+    h = hashlib.md5((de_old + "\x00" + de_new).encode("utf-8")).hexdigest()[:6]
+    c = re.sub(r"-{2,}", "-", re.sub(r"[^A-Za-z0-9.-]", "-", cud))[:40].strip("-")
+    return f"{c}-{h}-{lang}"
+
+
+REASONS = {"conflict": "the CUD id carries different texts in one snapshot", "no_snapshot": "no FR/IT snapshot for the old date",
+           "missing_old_target": "no old FR/IT text under the same id", "lt_bug": "old-format snapshot with a '<' (publisher bug)"}
+
+
+def month_items(hist, d_from, d_to, langs=("fr", "it")):
+    """-> dict(items, unmatched, stats). items: one per distinct DE change x target language, each with tgt_old; > 60% and
+    over-long changes are kept (the drafting step routes them to a human). unmatched: changes that cannot become an item."""
+    check_snaps([d_from, d_to])
+    C = mine(hist, [d_from, d_to], log=False)
+    items, unmatched = [], []
+    for p, rewrite in [(p, False) for p in C["pairs"]] + [(h, True) for h in C["human"]]:
+        for lang in langs:
+            best = None
+            for o in p["occ"]:
+                t = _target(hist, o, lang)
+                if t[0] == "ok": best = (o, t); break
+                best = best or (o, t)
+            o, t = best
+            base = dict(key=item_key(o["key_new"], p["de_old"], p["de_new"], lang), lang=lang, de_old=p["de_old"], de_new=p["de_new"],
+                        change_ratio=p["ratio"], product=o["name"], mpd=o["mpd"], cud_old=o["key_old"], cud_new=o["key_new"],
+                        snap_old=o["snap_old"], snap_new=o["snap_new"], family=family(p["de_old"], p["de_new"]), occurrences=len(p["occ"]))
+            if t[0] != "ok":
+                unmatched.append(dict(base, reason=REASONS.get(t[0], t[0]))); continue
+            base["tgt_old"] = t[1]
+            if t[2] is not None and t[2] != t[1]: base["tgt_new"] = t[2]                      # published: shadow-mode gold
+            else: base["tgt_published"] = "unchanged" if t[2] is not None else "absent"
+            items.append(base)
+    items.sort(key=lambda x: x["key"])
+    st = dict(snap_old=d_from, snap_new=d_to, de_changes=len(C["pairs"]), de_rewrites_over60=len(C["human"]), items=len(items),
+              items_with_published_target=sum("tgt_new" in x for x in items), unmatched=len(unmatched),
+              unmatched_reasons=dict(Counter(u["reason"] for u in unmatched)), step=C["stats"])
+    return dict(items=items, unmatched=unmatched, stats=st)
+
+
 def _dump(obj, path, indent=1):
     with open(path, "w", encoding="utf-8") as f: json.dump(obj, f, ensure_ascii=False, indent=indent)
 
@@ -191,10 +266,22 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description="mine DE limitation changes and build FR/IT items from ePL snapshots")
     ap.add_argument("--hist", help="snapshot dir (default: $GLEICHLAUT_HIST or track_2b/out/hist)")
     ap.add_argument("--out", default=os.path.join(OUT, "sl"))
+    ap.add_argument("--snaps", help="comma-separated YYYYMMDD snapshot dates (default: the research series " + ",".join(SNAPS) + ")")
+    ap.add_argument("--from", dest="d_from", help="with --to: mine one step and write month items (month_items.json) instead")
+    ap.add_argument("--to", dest="d_to")
     a = ap.parse_args(argv); H = Hist(hist_dir(a.hist)); os.makedirs(a.out, exist_ok=True)
-    C = mine(H)
+    if bool(a.d_from) != bool(a.d_to): ap.error("--from and --to go together")
+    try:
+        if a.d_from:
+            M = month_items(H, a.d_from, a.d_to)
+            _dump(M["items"], os.path.join(a.out, "month_items.json")); _dump(M["unmatched"], os.path.join(a.out, "month_unmatched.json"))
+            print(json.dumps(M["stats"], indent=1)); return
+        snaps = check_snaps(a.snaps.split(",")) if a.snaps else SNAPS
+    except (ValueError, FileNotFoundError) as e:
+        ap.exit(2, f"error: {e}\n")
+    C = mine(H, snaps)
     _dump(C, os.path.join(a.out, "changes_de.json"))
-    B = build(C["pairs"], H)
+    B = build(C["pairs"], H)            # the seeded research selection (n=60 DE pairs); meaningful on the research series
     _dump(B["items"], os.path.join(a.out, "items.json")); _dump(B["items_all"], os.path.join(a.out, "items_all.json"), None)
     _dump(B["stats"], os.path.join(a.out, "pool_stats.json"))
     print(json.dumps(B["stats"], indent=1))

@@ -1,0 +1,332 @@
+{
+ "findings": 21,
+ "held_findings": 11,
+ "held_real": 6,
+ "known_found": 10,
+ "limitations_found": 17,
+ "precision_pct": 47.6,
+ "precision_wilson95": [
+  28.3,
+  67.6
+ ],
+ "real": 10,
+ "real_new": 0,
+ "summary": {
+  "by_half": {
+   "dev": 10,
+   "held": 11
+  },
+  "by_lang": {
+   "fr": 14,
+   "it": 7
+  },
+  "count_only_differences": 230,
+  "date": "20261006",
+  "distinct_text_pairs": 21,
+  "findings": 21,
+  "fresh": {
+   "items": 166,
+   "pairs": 1,
+   "with_preexisting": 1
+  },
+  "generated_by": "python3 -m gleichlaut.audit --hist <dir> --date 20261006",
+  "keytruda_bonus": {
+   "found": false,
+   "note": "not numeric (the IT slot carries French text); out of scope for this check"
+  },
+  "limitations_with_finding": 17,
+  "model_calls": 0,
+  "n_limitations": 1688,
+  "recall": {
+   "cases": {
+    "BENEPALI4": {
+     "all": true,
+     "hit": true,
+     "tests": [
+      {
+       "hit": true,
+       "lang": "fr",
+       "rank": 5,
+       "test": "adds",
+       "value": "62.5"
+      }
+     ]
+    },
+    "CRESE.Kps.IM": {
+     "all": true,
+     "hit": true,
+     "tests": [
+      {
+       "hit": true,
+       "lang": "fr",
+       "rank": 9,
+       "test": "lacks",
+       "value": "16"
+      }
+     ]
+    },
+    "DIAPHIN.6-": {
+     "all": true,
+     "hit": true,
+     "tests": [
+      {
+       "hit": true,
+       "lang": "it",
+       "rank": 1,
+       "test": "adds",
+       "value": "12"
+      },
+      {
+       "hit": true,
+       "lang": "it",
+       "rank": 1,
+       "test": "lacks",
+       "value": "6"
+      }
+     ]
+    },
+    "DUPIXENT.02": {
+     "all": true,
+     "hit": true,
+     "tests": [
+      {
+       "hit": true,
+       "lang": "fr",
+       "rank": 20,
+       "test": "lacks",
+       "value": "15"
+      }
+     ]
+    },
+    "DUPIXENT.02P": {
+     "all": true,
+     "hit": true,
+     "tests": [
+      {
+       "hit": true,
+       "lang": "fr",
+       "rank": 21,
+       "test": "lacks",
+       "value": "15"
+      }
+     ]
+    },
+    "DUPIXENT.05P": {
+     "all": true,
+     "hit": true,
+     "tests": [
+      {
+       "hit": true,
+       "lang": "fr",
+       "rank": 2,
+       "test": "adds",
+       "value": "30"
+      },
+      {
+       "hit": true,
+       "lang": "fr",
+       "rank": 2,
+       "test": "lacks",
+       "value": "15"
+      }
+     ]
+    },
+    "DUPIXENT.05a": {
+     "all": true,
+     "hit": true,
+     "tests": [
+      {
+       "hit": true,
+       "lang": "fr",
+       "rank": 3,
+       "test": "adds",
+       "value": "30"
+      },
+      {
+       "hit": true,
+       "lang": "fr",
+       "rank": 3,
+       "test": "lacks",
+       "value": "15"
+      }
+     ]
+    },
+    "ERELZI2": {
+     "all": true,
+     "hit": true,
+     "tests": [
+      {
+       "hit": true,
+       "lang": "fr",
+       "rank": 12,
+       "test": "adds",
+       "value": "62.5"
+      }
+     ]
+    },
+    "NEMLUVIO.01": {
+     "all": true,
+     "hit": true,
+     "tests": [
+      {
+       "hit": true,
+       "lang": "it",
+       "rank": 18,
+       "test": "lacks",
+       "value": "8"
+      }
+     ]
+    },
+    "NEPEXTO": {
+     "all": true,
+     "hit": true,
+     "tests": [
+      {
+       "hit": true,
+       "lang": "fr",
+       "rank": 19,
+       "test": "adds",
+       "value": "62.5"
+      }
+     ]
+    }
+   },
+   "limitations": 10,
+   "of": 10,
+   "of_tests": 13,
+   "tests": 13
+  },
+  "s1_census_reference": {
+   "num": "3/15 = 20% strict",
+   "precision": "3/50 = 6% (all categories)",
+   "source": "spikes/gleichlaut/results.md (research, not shipped)"
+  },
+  "suppressed": {
+   "glued": 5,
+   "one": 51,
+   "ordinal_word": 15,
+   "period_word": 2,
+   "thousands": 1,
+   "unit_conversion": 2
+  },
+  "swaps": 4,
+  "term_pairs": {
+   "fr": {
+    "distinct_pairs": 1618,
+    "examples": [
+     [
+      "patienten",
+      "patients"
+     ],
+     [
+      "kostengutsprache",
+      "médecin conseil"
+     ],
+     [
+      "übermitteln",
+      "transmis"
+     ],
+     [
+      "vorgängiger",
+      "médecin conseil"
+     ],
+     [
+      "vertrauensarztes",
+      "médecin conseil"
+     ],
+     [
+      "konsultation",
+      "consultation"
+     ],
+     [
+      "folgender",
+      "suivant transmis"
+     ],
+     [
+      "mindestens",
+      "moins"
+     ],
+     [
+      "versicherte",
+      "moment"
+     ],
+     [
+      "aufforderung",
+      "moment"
+     ]
+    ],
+    "exceptions": 722,
+    "ids_with_exception": 483,
+    "p": 0.9,
+    "support": 10,
+    "term_pairs": 297
+   },
+   "it": {
+    "distinct_pairs": 1620,
+    "examples": [
+     [
+      "patienten",
+      "pazienti"
+     ],
+     [
+      "übermitteln",
+      "codice"
+     ],
+     [
+      "vertrauensarztes",
+      "consultazione"
+     ],
+     [
+      "konsultation",
+      "consultazione"
+     ],
+     [
+      "folgender",
+      "seguente"
+     ],
+     [
+      "mindestens",
+      "almeno"
+     ],
+     [
+      "versicherte",
+      "momento"
+     ],
+     [
+      "aufforderung",
+      "momento"
+     ],
+     [
+      "zeitpunkt",
+      "momento"
+     ],
+     [
+      "versichert",
+      "momento"
+     ]
+    ],
+    "exceptions": 741,
+    "ids_with_exception": 473,
+    "p": 0.9,
+    "support": 10,
+    "term_pairs": 314
+   },
+   "probe": {
+    "de_ids": 23,
+    "fr_with_receptor_antagonist": 19,
+    "wrong_class": [
+     "COVERAM-PLUS",
+     "PERAMLIND.me",
+     "PERAMLIND.sp",
+     "PERINDAMLIND"
+    ]
+   },
+   "status": "off: not precise enough (docs/audit.md)"
+  },
+  "unbound_differences": 148,
+  "worklist": {
+   "n": 21,
+   "pool": 21
+  }
+ }
+}

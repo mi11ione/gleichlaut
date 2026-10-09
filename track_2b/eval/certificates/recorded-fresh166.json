@@ -1,5 +1,7 @@
 {
  "name": "recorded-fresh166",
+ "kind": "replay",
+ "kind_note": "replay of the recorded responses: evidence of the evaluation, never authorises an endpoint",
  "date": "2026-10-09T18:06:41+00:00",
  "endpoint": "recorded responses (data/cache)",
  "model_requested": "swiss-ai/apertus-v1.5-70b",

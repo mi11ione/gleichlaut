@@ -1,0 +1,11 @@
+{
+ "bound95_per_change": 9.6,
+ "bound95_per_family": 17.6,
+ "bound95_per_item": 5.5,
+ "carried_forward_mistranslation": 18,
+ "fresh_gold_seen_as_dev_input": 22,
+ "introduced_severe": 0,
+ "ready": 66,
+ "ready_de_changes": 36,
+ "ready_families": 18
+}

@@ -1,0 +1,33 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://github.com/hackapertus/gleichlaut/track_2b/docs/item-schema.json",
+ "title": "Gleichlaut drafting items",
+ "description": "Input of `gleichlaut draft --items FILE` and `gleichlaut month --items FILE`: a JSON array of items (or JSON Lines, one item per line). One item = one German amendment of one limitation text x one target language. Fields not listed here are allowed and carried through unchanged. Validated with the stdlib validator in gleichlaut/cli.py (keywords used here only: type, required, properties, enum, minLength, maxLength, minimum, maximum, pattern, minItems, items).",
+ "type": "array",
+ "minItems": 1,
+ "items": {
+  "type": "object",
+  "required": ["key", "lang", "de_old", "de_new", "tgt_old"],
+  "properties": {
+   "key": {"type": "string", "minLength": 1, "maxLength": 200, "pattern": "^\\S+$",
+           "description": "Unique within the file, stable across re-runs (records are resumed by key), no whitespace. `gleichlaut month` uses <CUD id>-<6 hex of the DE pair>-<lang>; Fedlex items use <act path>#<paragraph>|<lang>."},
+   "lang": {"type": "string", "enum": ["fr", "it"], "description": "Target language."},
+   "de_old": {"type": "string", "minLength": 1, "description": "German limitation text before the amendment (as published)."},
+   "de_new": {"type": "string", "minLength": 1, "description": "German limitation text after the amendment."},
+   "tgt_old": {"type": "string", "minLength": 1, "description": "Current French / Italian text of the same limitation (the text that is amended)."},
+   "tgt_new": {"type": "string", "description": "OPTIONAL, shadow mode only: the French / Italian text BAG already published for de_new. Never shown to the model; used only to score the draft (shadow_exact). Leave it out in pre-publication use."},
+   "change_ratio": {"type": "number", "minimum": 0, "maximum": 1, "description": "OPTIONAL: share of German tokens changed (sl.mine.change_ratio). Computed when missing. > 0.6 routes the item to a human."},
+   "de_ratio": {"type": "number", "minimum": 0, "maximum": 1, "description": "OPTIONAL, legacy name of change_ratio (research item files)."},
+   "product": {"type": "string", "description": "OPTIONAL: product name (for the reviewer)."},
+   "mpd": {"type": "string", "description": "OPTIONAL: MedicinalProductDefinition id in the ePL feed."},
+   "cud_old": {"type": "string", "description": "OPTIONAL: ClinicalUseDefinition id of the old limitation (ePL feed id)."},
+   "cud_new": {"type": "string", "description": "OPTIONAL: ClinicalUseDefinition id of the new limitation; used by the FHIR emitter."},
+   "snap_old": {"type": "string", "pattern": "^[0-9]{8}$", "description": "OPTIONAL: feed date (YYYYMMDD) of de_old / tgt_old."},
+   "snap_new": {"type": "string", "pattern": "^[0-9]{8}$", "description": "OPTIONAL: feed date (YYYYMMDD) of de_new."},
+   "family": {"type": "string", "description": "OPTIONAL: digit-masked edit-signature hash (same boilerplate edit = same family)."},
+   "occurrences": {"type": "integer", "minimum": 1, "description": "OPTIONAL: number of products carrying this German change."},
+   "tgt_published": {"type": "string", "enum": ["unchanged", "absent"], "description": "OPTIONAL (month from feed): why tgt_new is missing: BAG published the target unchanged, or there is no target in the new feed."},
+   "note": {"type": "string", "description": "OPTIONAL: free text for the reviewer (e.g. the SL team's ticket number)."}
+  }
+ }
+}

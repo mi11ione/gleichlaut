@@ -1,5 +1,7 @@
 {
  "name": "m3-seed1",
+ "kind": "evaluation",
+ "kind_note": "Public AI via the development gateway (evaluation only): evidence, never authorises an endpoint",
  "date": "2026-10-09T19:35:54+00:00",
  "endpoint": "Public AI via development gateway (evaluation only; may route outside Switzerland)",
  "model_requested": "swiss-ai/apertus-v1.5-70b",

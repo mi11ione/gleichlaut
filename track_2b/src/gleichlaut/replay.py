@@ -36,6 +36,9 @@ def compute():
     res["economics"] = score.economics()
     res["fedlex_compare"] = score.fedlex_compare()
     res["m3"] = score.m3()
+    res["post_edit"] = score.post_edit()
+    res["ready_quality"] = score.ready_quality()
+    res["audit"] = score.audit_eval()
     return res
 
 
@@ -70,7 +73,8 @@ def headline(res):
          f"  ready (unflagged) {f['unflagged']}/{f['n']} = {f['ready_rate']:.1f}%   flagged {f['flag_rate']:.1f}%   "
          f"unflagged real errors {f['unflagged_REAL']}  stale {f['unflagged_stale']}  untranslated {f['unflagged_german']}  "
          f"(95% upper bound {f['wilson95_unflagged_real'][1]:.1f}%)",
-         f"  pass rule (pre-registered): {'PASS' if f['pass'] else 'FAIL'}   cost ${c['usd_per_item']:.4f}/item",
+         f"  pass rule (pre-registered): {'PASS' if f['pass'] else 'FAIL'}   cost CHF {res['economics']['chf_per_item_infomaniak']:.4f}/item "
+         f"(Swiss provider price; USD {c['usd_per_item']:.4f} at the evaluation provider)",
          "", "WHERE IT FELL SHORT (same pass rule)",
          f"  out-of-sample 2026 run, guards v2: {'PASS' if o['pass'] else 'FAIL'} (unflagged untranslated {o['unflagged_german_per100']:.2f}% > 2%)",
          f"  Apertus 8B (MLX DWQ, dev 120, guards3, no re-ask): {'PASS' if d['pass'] else 'FAIL'} (flagged {d['flag_rate']:.1f}% > 70%; "
