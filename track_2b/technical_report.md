@@ -5,7 +5,7 @@ as slot codes; frozen deterministic guards decide what is ready; nothing is publ
 
 - **Track:** Track 2B: Gleichlaut
 - **Event:** Online
-- **Team:** `TEAM_NAME`: Roman `SURNAME`
+- **Team:** 444
 - **Demo:** `VIDEO_URL`
 - **Declared maturity:** feasibility study
 
