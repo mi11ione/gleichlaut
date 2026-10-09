@@ -79,3 +79,16 @@ unflagged non-exact drafts finds 0 real meaning errors but 4 with German left (E
 
 No change to `frozen/` after this commit. Any guard change needs a new held-out run before a claim; anything measured on
 data the change was designed on is labelled "dev" in every table.
+
+## Results log (appended after each run; rules above unchanged)
+
+- **R2 (M3), 9 Oct 2026:** rerun with seed 1 passes R0 (+12.0, 58.4% flagged, 0 / 0 / 2 of 166); 69.9% identical outputs,
+  flag κ 0.963 (`eval/results/m3.json`).
+- **R5, 9 Oct 2026:** Fedlex 70B not better than 8B (exact 48.3% vs 50.0%); neither passes R0; statutes stay on the 8B and
+  every statute draft goes to review (`eval/results/fedlex_compare.json`).
+- **R3 (M6), 9 Oct 2026:** no lag found (French and Italian updated in the same step for 208 of 216 German changes);
+  all 10 divergent limitations predate the window (`data/backtest/`).
+- **R1 (M1), 9 Oct 2026:** Apertus 8B GGUF Q4_K_M on CPU (GitHub Actions, 8 shards), same pipeline, fresh 166: exact
+  16.9% (+10.8 [4.8, 17.5]), flagged 63.9%, ready drafts 0 meaning / 1 stale / 2 German (1.81%) by two blind
+  annotators and a third tie-breaker: **PASS**. Decision as pre-registered: the SL default becomes the local 8B
+  (`eval/results/m1_q4_k_m.json`). M2 (Q8_0) is running.

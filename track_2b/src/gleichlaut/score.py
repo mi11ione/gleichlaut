@@ -293,12 +293,12 @@ def m3():
                 serving_backends=dict(Counter((c.get("backend") or "?").split("-")[0] for c in calls)))
 
 
-def post_edit():
+def post_edit(final=None):
     """Post-editing effort proxy (no human time needed): token edits (insertions + deletions, score2.edits) a translator
     must make to reach the text BAG published, starting from (a) the Gleichlaut draft or (b) the rules-only start (old
     French/Italian with code-substituted numbers, i.e. what translation memory plus find/replace gives today), on the
     fresh 166. Reported for all items, ready and flagged drafts."""
-    I = {x["key"]: x for x in load_items("items/items_fresh.json")}; F = load_jsonl(RUNS["fresh166"]["final"])
+    I = {x["key"]: x for x in load_items("items/items_fresh.json")}; F = load_jsonl(final or RUNS["fresh166"]["final"])
     norm = core.lock.norm; out = {}
     rows = []
     for k, x in I.items():
@@ -400,3 +400,35 @@ def baseline_plus():
                                     model_exact=round(100 * sum(r["exact"] for r in Bf) / len(Bf), 1),
                                     delta=round(100 * (sum(r["exact"] for r in Bf) - sum(r["exact"] for r in Af)) / len(Bf), 1),
                                     ci95=[round(cif[0], 1), round(cif[1], 1)]))
+
+
+def m1(build="q4_k_m"):
+    """PREREG R1: the shipped SL pipeline with the Apertus 8B GGUF (CPU, GitHub Actions) on the fresh 166, against the same
+    pass rule. Labels: drafts identical to an already-labelled output inherit its label (certify.reference_labels); every
+    other ready non-exact draft and a seeded 20 flagged drafts were labelled by two blind Claude annotators, a third broke
+    disagreements (eval/labels/m1_<build>_fresh166.tsv, column final)."""
+    from .certify import reference_labels
+    rel = f"runs/8b_{build}_fresh166_g3_final.jsonl"
+    if not os.path.exists(os.path.join(DATA, rel)): return None
+    I = load_items("items/items_fresh.json"); R = load_jsonl(rel); ref = reference_labels(); chk = core.check_only("g3")
+    lines = open(os.path.join(LABELS, f"m1_{build}_fresh166.tsv"), encoding="utf-8").read().splitlines()
+    hdr = lines[0].split("\t"); new = {c[0]: dict(zip(hdr, c)) for c in (l.split("\t") for l in lines[1:])}
+    W = json.load(open(os.path.join(LABELS, f"worklist_8b_{build}_fresh166.json"), encoding="utf-8"))
+    rows1, rows2 = [], []
+    for x in I:
+        k = x["key"]; r = R[k]
+        a = S["score_one"](x, core.gl2.rules(x["de_old"], x["de_new"], x["tgt_old"], x["lang"])[0], "1"); b = S["score_one"](x, r["out"], "1")
+        flag = chk.check(x, r["out"])["flag"]; assert flag == r["guard_flag"], k
+        cls = "exact" if b["exact"] else (new[k]["final"] if k in new else ref.get(k, {}).get(core.lock.norm(r["out"]), "?"))
+        b.update(flagged=flag, cls=cls, family=x["cluster"], reasked=r.get("reasked", False), replaced=bool(r.get("replaced")))
+        a.update(family=x["cluster"]); rows1.append(a); rows2.append(b)
+    s = summarise(rows1, rows2, labelled=True)
+    fl = [new[k] for k in W["flagged_sample"]]
+    s["flagged_sample"] = dict(n=len(fl), no_fix=sum(f["final_fix"] == "no" for f in fl))
+    U = [r for r in rows2 if not r["flagged"]]
+    s["ready_needs_fix"] = sum(new[r["key"]]["final_fix"] == "yes" for r in U if r["key"] in new)
+    s["ready_minor_terminology"] = sum(r["cls"] == "minor" for r in U)
+    secs = [R[k].get("wall_secs", 0) for k in R]
+    s["cpu_secs_per_item"] = round(sum(secs) / len(secs), 1); s["model_digit_items"] = sum((R[k].get("digits_raw") or 0) > 0 or (R[k].get("reask_digits") or 0) > 0 for k in R)
+    s["build"] = build
+    return s

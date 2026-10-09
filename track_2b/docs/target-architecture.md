@@ -1,7 +1,8 @@
 # Target architecture
 
-Gleichlaut targets **(a) on-premise** for every lane and **(b) air-gapped** for the lanes that run the 8B. The SL
-default lane can alternatively use **(c) a sovereign Swiss cloud** endpoint for the 70B. Sources for every provider fact:
+Gleichlaut targets **(a) on-premise** and **(b) air-gapped** for every lane by default: the 8B on a CPU passes the
+pre-registered rule for SL conditions (R1). Offices that want fewer edits add the 70B on their own GPUs (on-premise) or
+on **(c) a sovereign Swiss cloud** endpoint. Sources for every provider fact:
 `docs/sources.md` §5.
 
 ## Deployment rows
@@ -9,8 +10,8 @@ default lane can alternatively use **(c) a sovereign Swiss cloud** endpoint for 
 | Lane | Model and where it runs | Hardware | External services at runtime | Data that leaves the user's environment |
 |---|---|---|---|---|
 | Fedlex statutes (every draft reviewed) | Apertus v1.5 8B, GGUF Q4_K_M, llama.cpp on CPU, in process | any x86-64/ARM server, ≥ 8 GB RAM, ~5.1 GB disk | none | none |
-| SL limitations, air-gapped | the same 8B; **every draft goes to review** (the 8B does not pass the SL pass rule) | same | none | none |
-| SL limitations, default | Apertus v1.5 70B on an endpoint the user controls, **after `make certify` passes on it** | own GPUs (bf16 144.6 GB, FP8 76.2 GB; vLLM, tensor-parallel 4 in the official example) or a Swiss-resident provider | that endpoint only | per request: one public limitation text in German (old and new) and in French or Italian, numbers replaced by slot codes |
+| SL limitations, default | the same 8B (passes the pre-registered rule on the held-out 166: 0 meaning errors among ready drafts; 153.4 s per draft on 4 cores) | same | none | none |
+| SL limitations, fewer edits | Apertus v1.5 70B on an endpoint the user controls, **after `make certify` passes on it** (ready drafts needing a fix: 3 of 66 vs 33 of 60 for the 8B) | own GPUs (bf16 144.6 GB, FP8 76.2 GB; vLLM, tensor-parallel 4 in the official example) or a Swiss-resident provider | that endpoint only | per request: one limitation text in German (old and new) and in French or Italian, numbers replaced by slot codes; before publication this is BAG's confidential draft, so the endpoint must be one BAG controls |
 
 Everything else (mining, lock, guards, re-ask control, certification, XLIFF/FHIR output, the review page) is
 Python standard library plus `lxml`, runs on the same box, and has no network dependency.
@@ -62,7 +63,7 @@ feed was not found, see `docs/sources.md` §2.3).
 ## Not yet demonstrated
 
 - The 70B has not been self-hosted by us; the public 70B GGUF is an unofficial text-only test quant (43.72 GB).
-- The 8B GGUF build that ships has not yet been run on the SL fresh set (workflow `m1.yml`, CPU runners).
+- The 8B GGUF Q8_0 build (M2) is running on the same CPU workflow; the Q4_K_M build is the measured default.
 - `make run-offline` (llama.cpp in Docker) is wired as the manual workflow `.github/workflows/offline.yml` (ubuntu-24.04,
   CPU). It builds the `offline` image, fetches the pinned GGUF (cached), and must end with `reproduction PASSED; live
   slice PASSED`. It has not been run from this checkout yet.

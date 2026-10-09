@@ -168,7 +168,7 @@ rotate builds. Consider re-certifying when it appears.
 Each run writes its own report: `state/canary/canary-<endpoint>--<model>-<UTC time>.json`, with `-2`, `-3` added if
 that name already exists. Nothing is overwritten. A report holds the agreement, exact now and then, flag rates, byte
 identity, fingerprints now and then, the certificate it was compared against, and the sha256 of its call log. On a
-failure, stop: re-certify, or draft with `--air-gapped` (every item goes to review).
+failure, stop: re-certify, or draft with the local 8B (`--backend llamacpp`), the air-gapped default lane.
 
 ## 5. The monthly procedure
 

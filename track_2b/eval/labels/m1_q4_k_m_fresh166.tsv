@@ -1,0 +1,56 @@
+key	A_fix	A_class	B_fix	B_class	T_fix	T_class	final_fix	final	note_A
+wb010-fr	yes	stale	yes	REAL			yes	stale	Removed KoGu/dose sentences kept, heading missing; code line in German ("Folgant Indikationscode")
+wb011-fr	yes	german	yes	german			yes	german	New sentences inserted untranslated plus whole German paragraph duplicated; French last sentence lost
+wb013-it	yes	german	yes	german			yes	german	Large German passages left, duplicated dose sentence, misplaced heading
+wb015-fr	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb015-it	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb016-fr	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb016-it	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb017-fr	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb017-it	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb018-fr	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb018-it	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb019-fr	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb019-it	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb020-fr	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb020-it	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb021-fr	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb022-fr	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb022-it	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb023-fr	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb023-it	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb024-fr	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb024-it	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb025-fr	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb025-it	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb026-it	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb027-it	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb028-it	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting; "un antagonisti" still ungrammatical
+wb029-fr	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb029-it	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb030-fr	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb030-it	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting; "un antagonisti" still ungrammatical
+wb031-it	yes	minor	yes	minor			yes	minor	Non-standard insurance term instead of official AOS/AOMS wording; rest preexisting
+wb032-fr	yes	minor	no	equivalent	no	preexisting	no	preexisting	Added insurer as "assurance maladie obligatoire" not official "assurance obligatoire des soins"
+wb033-it	yes	german	yes	german			yes	german	German word "Folgender Indikationscode" left in new code sentence
+wb036-it	yes	stale	yes	REAL			yes	stale	Opening KoGu/code/unified price sentences missing; last sentence half German
+wb039-fr	yes	REAL	yes	REAL			yes	REAL	RYBREVANT replaced by amivantamab also in price-model/refund sentences; wrong scope
+wb042-it	yes	REAL	yes	REAL			yes	REAL	"il medico" narrowed to "l'oculochirurgo" for continuing treatment; German unchanged there
+wb043-fr	yes	REAL	yes	REAL			yes	REAL	Centre "A" rendered as "deux" with placeholders; médecin en cabinet narrowed to ophtalmochirurgien
+wb046-fr	no	equivalent	no	equivalent			no	equivalent	Ophtalmochirurgiens applied; unhyphenated spelling acceptable; extra mNVC fix harmless
+wb051-fr	no	exact	no	exact			no	exact	Amount updated; identical to official
+wb051-it	no	exact	no	exact			no	exact	Amount updated; identical to official
+wb056-it	yes	german	yes	german			yes	german	New elimination-diet sentence left almost entirely in German
+wb065-fr	yes	stale	yes	stale			yes	stale	"alle 6 Monate" not applied (still après 6 mois); also stray double period
+wb067-fr	yes	stale	yes	stale			yes	stale	Old "proportion fixe du prix de fabrique" kept alongside new Fr. 713.53; partly applied
+wb067-it	yes	stale	yes	stale			yes	stale	Fixed share/communication not replaced by Fr. 713.53 amount; change not applied
+wb068-fr	yes	german	yes	german			yes	german	"Une Vergütung", "un Progress" German words left in new exclusion sentence
+wb083-fr	yes	german	yes	german			yes	german	"In Combinaison avec un GLP-1-Analogue": German preposition and Germanised compound
+wb083-it	yes	german	yes	german			yes	german	"un GLP-1-Analogo": Germanised compound/capitalisation; should be analogo del GLP-1
+wb084-fr	yes	minor	yes	minor			yes	minor	Calque "un SGLT-2 inhibiteur" instead of inhibiteur du SGLT-2
+wb084-it	yes	minor	yes	minor			yes	minor	Calque "un SGLT-2 inibitore" instead of inibitore del SGLT-2
+wb085-fr	yes	german	yes	german			yes	german	"SGLT - 2 - inhibiteur": Germanised compound with hyphenation artefacts; should be inhibiteur du SGLT-2
+wb085-it	yes	minor	yes	german	yes	german	yes	german	Calque "SGLT-2-inibitore"; spurious bullet before "Almeno BMI 28"
+wb087-it	yes	cosmetic	yes	cosmetic			yes	cosmetic	Code sentence added correctly but "al assicuratore" lacks elision
+wb088-it	no	equivalent	no	equivalent			no	equivalent	Code sentence added correctly; wording differs harmlessly
+wb089-fr	no	equivalent	no	equivalent			no	equivalent	Refund sentence removed correctly; only trailing period differs

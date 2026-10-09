@@ -40,6 +40,8 @@ def compute():
     res["ready_quality"] = score.ready_quality()
     res["audit"] = score.audit_eval()
     res["baseline_plus"] = score.baseline_plus()
+    res["m1_q4_k_m"] = score.m1("q4_k_m")
+    res["post_edit_8b_q4_k_m"] = score.post_edit("runs/8b_q4_k_m_fresh166_g3_final.jsonl")
     return res
 
 
@@ -76,6 +78,9 @@ def headline(res):
          f"(95% upper bound {f['wilson95_severe_among_ready'][1]:.1f}% of ready drafts)",
          f"  pass rule (pre-registered): {'PASS' if f['pass'] else 'FAIL'}   cost CHF {res['economics']['chf_per_item_infomaniak']:.4f}/item "
          f"(Swiss provider price; USD {c['usd_per_item']:.4f} at the evaluation provider)",
+         (f"  Apertus 8B GGUF on CPU, same pipeline (R1): exact {res['m1_q4_k_m']['exact']['model']:.1f}% "
+          f"(+{res['m1_q4_k_m']['exact']['delta']:.1f}), ready {res['m1_q4_k_m']['ready_rate']:.1f}%, "
+          f"pass rule {'PASS' if res['m1_q4_k_m']['pass'] else 'FAIL'}: the air-gapped default" if res.get('m1_q4_k_m') else ""),
          "", "WHERE IT FELL SHORT (same pass rule)",
          f"  out-of-sample 2026 run, guards v2: {'PASS' if o['pass'] else 'FAIL'} (unflagged untranslated {o['unflagged_german_per100']:.2f}% > 2%)",
          f"  Apertus 8B (MLX DWQ, dev 120, guards3, no re-ask): {'PASS' if d['pass'] else 'FAIL'} (flagged {d['flag_rate']:.1f}% > 70%; "

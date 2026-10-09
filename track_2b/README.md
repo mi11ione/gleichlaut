@@ -27,7 +27,7 @@ In today's register:
 ## Two tools, one rule: numbers are code's job
 
 **Draft.** When the German changes, Gleichlaut locks the old French/Italian outside the edit, replaces every number
-with a slot code (⟨A⟩, ⟨B⟩ …) that code writes back, and lets Apertus 70B rewrite only the wording. A frozen stack of
+with a slot code (⟨A⟩, ⟨B⟩ …) that code writes back, and lets Apertus rewrite only the wording. A frozen stack of
 deterministic checks (edits stay inside the change, numbers/negation/modal verbs mirror the German, no German left,
 the change is applied, nothing dropped, terminology) marks each draft **ready** or **flagged**, and says why in the
 reviewer's own language. One re-ask with the complaints; the new draft is kept only if every check passes.
@@ -46,22 +46,26 @@ as an error.
 Test set: 166 French/Italian amendments from SL changes between Jun 2025 and Feb 2026, 154 in edit patterns never seen
 during design. The checks and all their resources were hashed before any output existed.
 
-| | Apertus 70B + checks | No-model start (old text, numbers updated by code) |
-|---|---|---|
-| Draft identical to the text BAG published | **17.5%** (+11.4 points, 95% CI [4.8, 18.7]) | 6.0% (old text + numbers updated) |
-| Token edits still needed to reach BAG's text | **42.4% fewer** (95% CI [31.0, 54.1]); 59.1% fewer on ready drafts | baseline |
-| Drafts ready for acceptance | **39.8%** of items | |
-| Errors introduced in ready drafts (meaning / stale / German left) | **0 / 0 / 0** | |
-| Same test, rerun with a new seed | +12.0 points, 41.6% ready, 0 meaning errors | |
-| Against our strongest no-model baseline (rules+: also copies changed names, deletes whole sentences) | +6.6 points [1.8, 12.0]; 41.3% fewer edits [29.7, 53.0] | 10.8% identical |
+| | Apertus 8B, CPU, air-gapped | Apertus 70B, certified endpoint | No-model start |
+|---|---|---|---|
+| Draft identical to the text BAG published | 16.9% (+10.8 points [4.8, 17.5]) | **17.5%** (+11.4 points [4.8, 18.7]) | 6.0% (old text, numbers updated by code) |
+| Token edits still needed to reach BAG's text | 20.9% fewer [7.6, 31.9] | **42.4% fewer** [31.0, 54.1] | baseline |
+| Drafts ready for acceptance | 36.1% | **39.8%** | |
+| Errors in ready drafts (meaning / stale / German left) | 0 / 1 / 2 | **0 / 0 / 0** | |
+| Ready drafts that still need any fix | 33 of 60 (mostly one insurance term) | **3 of 66** | |
+| Pre-registered pass rule | **PASS** | **PASS** (and again on a rerun with a new seed) | |
 
-Costs **CHF 0.0024 per draft** at a Swiss provider's published price for Apertus 70B: CHF 0.14 a month at today's
-volume, CHF 1.36 at ten times. Every number here is in [claims.tsv](claims.tsv) with the file and command that
+Against rules+, our strongest no-model baseline (it also copies changed names and deletes whole sentences, 10.8%
+identical), the 70B still adds +6.6 points [1.8, 12.0] and 41.3% fewer edits [29.7, 53.0].
+
+The 8B runs on the CPU you already have (153.4 s per draft on a 4-core runner). The 70B costs **CHF 0.0024 per draft**
+at a Swiss provider's published price: CHF 0.14 a month at today's volume, CHF 1.36 at ten times. Every number here is in [claims.tsv](claims.tsv) with the file and command that
 produce it.
 
-**Model size is measured, not assumed.** On SL conditions the 8B flags 85.0% of its drafts, so this lane runs the 70B.
-On 120 federal-statute amendments (Fedlex) the 70B is no better than the 8B (exact 48.3% vs 50.0%), so statutes run the
-8B on a CPU. Where Apertus fell short, with counts, and why those jobs are done by code: [docs/failure-modes.md](docs/failure-modes.md).
+**Model size is measured, not assumed.** On SL conditions both sizes pass the same pre-registered safety rule, so the
+8B on a CPU is sufficient and is the default: nothing leaves the building. The 70B is where it pays: it halves the
+editing left (42.4% vs 20.9% fewer edits) and its ready drafts almost never need a fix (3 of 66 vs 33 of 60). On 120
+federal-statute amendments (Fedlex) the 70B is no better than the 8B (exact 48.3% vs 50.0%), so statutes run the 8B. Where Apertus fell short, with counts, and why those jobs are done by code: [docs/failure-modes.md](docs/failure-modes.md).
 
 ## Where it plugs in at BAG
 
@@ -89,7 +93,7 @@ re-scores every run against `eval/results/`; drafts 5 statute paragraphs live if
 (`out/ui/index.html`).
 
 ```bash
-make run-offline    # adds the local CPU Apertus 8B (GGUF, sha256-pinned) for the air-gapped lane
+make run-offline    # adds the local CPU Apertus 8B (GGUF, sha256-pinned): the air-gapped default lane
 make certify        # certify your Apertus endpoint on the frozen 166-item suite before it may draft SL conditions
 make month          # one monthly cycle on the public feed (shadow mode)
 make test           # the test suite
@@ -101,7 +105,8 @@ make test           # the test suite
 |---|---|---|
 | Audit, checks, register, XLIFF/FHIR | any server, Python standard library + lxml | nothing |
 | Federal statutes | Apertus 8B GGUF on CPU, in process | nothing |
-| SL conditions | Apertus 70B on an endpoint you control (own GPUs, or a Swiss provider such as Infomaniak, Swisscom, PHOENIQS), admitted only by an endpoint-bound certificate | one limitation text per request (in shadow mode a published one; in pre-publication use BAG's draft German, which is why the endpoint must be one BAG controls), numbers as slot codes |
+| SL conditions, default | Apertus 8B GGUF on CPU, in process (passes the pre-registered rule) | nothing |
+| SL conditions, fewer edits | Apertus 70B on an endpoint you control (own GPUs, or a Swiss provider such as Infomaniak, Swisscom, PHOENIQS), admitted only by an endpoint-bound certificate | one limitation text per request (in shadow mode a published one; in pre-publication use BAG's draft German, which is why the endpoint must be one BAG controls), numbers as slot codes |
 
 No provider-specific code: any OpenAI-compatible Apertus endpoint works once it passes `make certify`. Build-time and
 runtime dependencies: [docs/dependencies.md](docs/dependencies.md); target architecture:
