@@ -27,7 +27,7 @@ on:
 permissions: { contents: read }
 concurrency: { group: shadow, cancel-in-progress: false }
 env:
-  GGUF: models/apertus-v1.5-8b-text-q4_k_m.gguf
+  GGUF_FILE: models/apertus-v1.5-8b-text-q4_k_m.gguf
   GGUF_URL: https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf
   GLEICHLAUT_MODEL_SHA256: a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299
 jobs:
@@ -113,8 +113,8 @@ jobs:
       - name: fetch and verify the GGUF
         run: |
           mkdir -p models
-          [ -f "$GGUF" ] || curl -sSL -A gleichlaut/0.1 -o "$GGUF" "$GGUF_URL"
-          echo "$GLEICHLAUT_MODEL_SHA256  $GGUF" | sha256sum -c -
+          [ -f "$GGUF_FILE" ] || curl -sSL -A gleichlaut/0.1 -o "$GGUF_FILE" "$GGUF_URL"
+          echo "$GLEICHLAUT_MODEL_SHA256  $GGUF_FILE" | sha256sum -c -
       - name: draft with the certified local 8B (make month, offline image, --network none)
         run: |
           set -o pipefail
