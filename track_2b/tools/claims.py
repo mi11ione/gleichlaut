@@ -59,7 +59,7 @@ def scan(files, rows):
         txt = re.sub(r"XLIFF \d\.\d((?: and |/|, )\d\.\d)?", "", txt)                         # format versions
         txt = re.sub(r"(Apache-|CC-BY-|XLIFF |FHIR R|IG |PublG Art\. |Art\. |T |su-d-)[\d.]+", "", txt)   # versions, articles, table ids
         txt = re.sub(r"95% (CI|upper|confidence|Wilson)", "", txt)                           # the confidence level itself
-        txt = re.sub(r"\*\*Team:\*\*[^\n]*|team 444", "", txt)                                 # team name
+        txt = re.sub(r"\*\*Team:\*\*[^\n]*|[Tt]eam 444", "", txt)                                 # team name
         txt = re.sub(r"95% (bound|interval)", "", txt)
         txt = re.sub(r"≤ ?5000 characters|≤ ?100 MB|< ?100 MB", "", txt)                       # form / template limits
         for m in NUM.finditer(txt):
