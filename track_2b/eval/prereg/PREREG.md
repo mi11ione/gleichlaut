@@ -58,8 +58,8 @@ History under this rule (all reported): dev 120 (guards v2, in-sample) pass; out
 
 Background (measured before this rule): the shipped Fedlex lane (8B MLX DWQ, code lane first, lock + slot guard +
 frozen G1–G4; the guard choice was made after seeing these outputs, so DEV) flags 38/120; a blind annotation of its 25
-unflagged non-exact drafts finds 0 real meaning errors but 4 with German left (EFZ for CFC/AFC) and 3 stale, i.e.
-7/120 = 5.8% unflagged stale + untranslated, above R0's 2% limit.
+unflagged non-exact drafts finds 0 real meaning errors but 4 with German left (EFZ for CFC/AFC) and 4 stale, i.e.
+8/120 = 6.7% unflagged stale + untranslated, above R0's 2% limit. (Background line corrected from "3 stale, 7/120" to the label file's count before any 70B call.)
 
 - Run: the same 120 FR/IT items, the same vendored research loop (`fed.lane.fed_draft`), with Apertus 70B through the
   development gateway (plain user messages, temperature 0, served model checked on every call), no digit mask (API).
