@@ -13,12 +13,60 @@ stub      wiring tests only: returns the old target text of the prompt unchanged
 Every live call can append a JSON line to a call log: ts, endpoint (scheme://host/path, never the key), model (requested),
 model_served, system_fingerprint, seed, prompt_tokens, completion_tokens, secs, key (payload sha256), tag, cached.
 
+Network: requests honour HTTPS_PROXY / HTTP_PROXY / NO_PROXY (urllib reads them from the environment) and an internal CA:
+SSL_CERT_FILE (or REQUESTS_CA_BUNDLE) is added to the default trust store of every HTTPS request (ssl_context()).
+Timeouts (openai): GLEICHLAUT_TIMEOUT s per attempt (default 120), GLEICHLAUT_RETRIES attempts (default 4) on 429/5xx/
+unreachable with exponential back-off GLEICHLAUT_BACKOFF s (default 5: waits 5, 10, 20 s), and at most GLEICHLAUT_DEADLINE s
+for one request over all its attempts (default 300): a dead endpoint fails within about five minutes.
+(GLEICHLAUT_HTTP_TIMEOUT / _HTTP_RETRIES / _HTTP_BACKOFF are accepted as older names.)
+
 Errors: every failure of a live endpoint (unreachable, timeout, HTTP error after retries, malformed answer, a non-Apertus
 model served) raises EndpointError; missing or invalid configuration raises ConfigError. Callers turn both into a one-line
 message and a non-zero exit code (docs/operations.md, exit codes)."""
-import datetime, hashlib, json, os, re, socket, threading, time, unicodedata, urllib.error, urllib.parse, urllib.request
+import datetime, hashlib, http.client, json, os, re, socket, ssl, threading, time, unicodedata, urllib.error, urllib.parse, urllib.request
 
 _LOCK = threading.Lock()
+TIMEOUT, RETRIES, BACKOFF, DEADLINE = 120.0, 4, 5.0, 300.0
+
+
+def _env(*names, default=None):
+    for n in names:
+        v = os.environ.get(n)
+        if v not in (None, ""): return v
+    return default
+
+
+def ca_file():
+    """the internal CA bundle to trust in addition to the system store: SSL_CERT_FILE, else REQUESTS_CA_BUNDLE, else None."""
+    return _env("SSL_CERT_FILE", "REQUESTS_CA_BUNDLE")
+
+
+def ssl_context():
+    """default HTTPS verification plus the CA file named by SSL_CERT_FILE / REQUESTS_CA_BUNDLE (an internal / proxy CA).
+    Verification is never switched off."""
+    ctx = ssl.create_default_context()
+    f = ca_file()
+    if f:
+        if not os.path.isfile(f):
+            raise ConfigError(f"SSL_CERT_FILE / REQUESTS_CA_BUNDLE points at {f!r}, which is not a readable file")
+        try: ctx.load_verify_locations(cafile=f)
+        except (ssl.SSLError, OSError, ValueError) as e:
+            raise ConfigError(f"cannot load the CA file {f!r} (SSL_CERT_FILE / REQUESTS_CA_BUNDLE): {e}")
+    return ctx
+
+
+def opener(https=True):
+    """an opener that reads HTTPS_PROXY / HTTP_PROXY / NO_PROXY now (urllib's global opener keeps the proxies of its first
+    use) and verifies HTTPS with ssl_context()."""
+    hs = [urllib.request.ProxyHandler()]
+    if https: hs.append(urllib.request.HTTPSHandler(context=ssl_context()))
+    return urllib.request.build_opener(*hs)
+
+
+def urlopen(req, timeout):
+    """urlopen through opener(): proxies from the environment, internal CA from SSL_CERT_FILE / REQUESTS_CA_BUNDLE."""
+    url = req.full_url if isinstance(req, urllib.request.Request) else req
+    return opener(url.lower().startswith("https:")).open(req, timeout=timeout)
 
 
 class EndpointError(RuntimeError):
@@ -101,29 +149,44 @@ class OpenAI:
         self.key = api_key if api_key is not None else os.environ.get("LLM_API_KEY", "")
         self.model = model or os.environ.get("LLM_NAME") or "swiss-ai/apertus-v1.5-70b"
         self.seed, self.log, self.record_to = seed, log, record_to
-        self.timeout = float(timeout or os.environ.get("GLEICHLAUT_HTTP_TIMEOUT", 300))
-        self.retries = max(1, int(retries or os.environ.get("GLEICHLAUT_HTTP_RETRIES", 8)))
-        self.backoff = float(backoff if backoff is not None else os.environ.get("GLEICHLAUT_HTTP_BACKOFF", 10))
+        try:
+            self.timeout = float(timeout or _env("GLEICHLAUT_TIMEOUT", "GLEICHLAUT_HTTP_TIMEOUT", default=TIMEOUT))
+            self.retries = max(1, int(retries or _env("GLEICHLAUT_RETRIES", "GLEICHLAUT_HTTP_RETRIES", default=RETRIES)))
+            self.backoff = float(backoff if backoff is not None else _env("GLEICHLAUT_BACKOFF", "GLEICHLAUT_HTTP_BACKOFF", default=BACKOFF))
+            self.deadline = float(_env("GLEICHLAUT_DEADLINE", default=DEADLINE))
+        except ValueError as e:
+            raise ConfigError(f"GLEICHLAUT_TIMEOUT / _RETRIES / _BACKOFF / _DEADLINE must be numbers: {e}")
         self.expect_served = set(expect_served) if expect_served else None
+        self.opener = opener(self.base.lower().startswith("https:"))
+        self.dead = None                     # set on the first EndpointError: parallel workers stop instead of waiting it out
 
     def _post(self, url, body, hdr):
-        last = None
+        last, t0, n = None, time.monotonic(), 0
         for k in range(self.retries):
+            if self.dead: raise EndpointError(self.dead)
+            left = self.deadline - (time.monotonic() - t0)
+            if left <= 0: break
+            n += 1
             try:
                 req = urllib.request.Request(url, data=json.dumps(body).encode(), headers=hdr, method="POST")
-                with urllib.request.urlopen(req, timeout=self.timeout) as r: raw = r.read()
+                with self.opener.open(req, timeout=min(self.timeout, left)) as r: raw = r.read()
                 try: return json.loads(raw)
                 except ValueError: raise EndpointError(f"{self.endpoint} answered with something that is not JSON: {raw[:120]!r}")
             except urllib.error.HTTPError as e:
                 try: detail = e.read()[:200].decode("utf-8", "replace")
                 except Exception: detail = ""
                 last = f"HTTP {e.code} from {self.endpoint}" + (f": {detail.strip()}" if detail.strip() else "")
-                if e.code in (401, 403): raise EndpointError(last + " (check LLM_API_KEY)")
+                if e.code in (401, 403):
+                    self.dead = last + " (check LLM_API_KEY)"; raise EndpointError(self.dead)
                 if e.code not in (429, 500, 502, 503, 504): raise EndpointError(last)
-            except (urllib.error.URLError, socket.timeout, ConnectionError, OSError) as e:
+            except (urllib.error.URLError, socket.timeout, ConnectionError, OSError, http.client.HTTPException) as e:
                 last = f"cannot reach {self.endpoint}: {getattr(e, 'reason', None) or e}"
-            if k < self.retries - 1: time.sleep(min(120, self.backoff * (k + 1)))
-        raise EndpointError(f"{last} (after {self.retries} attempt{'s' if self.retries > 1 else ''})")
+            if k < self.retries - 1:
+                wait = min(60.0, self.backoff * 2 ** k, max(0.0, self.deadline - (time.monotonic() - t0)))
+                time.sleep(wait)
+        self.dead = (f"{last or 'no answer'} (after {n} attempt{'s' if n > 1 else ''} in {time.monotonic() - t0:.0f} s; "
+                     f"GLEICHLAUT_TIMEOUT {self.timeout:g} s, GLEICHLAUT_RETRIES {self.retries}, GLEICHLAUT_DEADLINE {self.deadline:g} s)")
+        raise EndpointError(self.dead)
 
     def __call__(self, prompt, tag, cap, max_tokens):
         extra = {} if self.seed is None else {"seed": self.seed}
@@ -217,7 +280,9 @@ class LlamaCpp:
         from llama_cpp import Llama, LogitsProcessorList   # noqa: E402  (runtime dependency of the offline image only)
         import numpy as np
         from .core import gl2
-        self.llm = Llama(model_path=gguf_path, n_ctx=n_ctx, n_threads=n_threads or os.cpu_count(), logits_all=False, verbose=False)
+        self.n_threads = int(n_threads or os.environ.get("GLEICHLAUT_THREADS") or cpu_count())
+        self.llm = Llama(model_path=gguf_path, n_ctx=n_ctx, n_threads=self.n_threads, n_threads_batch=self.n_threads,
+                         logits_all=False, verbose=False)
         self.LP, self.np, self.lang_of_prompt, self.log = LogitsProcessorList, np, lang_of_prompt, log
         self.model = "gguf:" + os.path.basename(gguf_path)
         n = self.llm.n_vocab(); bad = {"fr": [], "it": []}
@@ -244,6 +309,12 @@ class LlamaCpp:
                     prompt_tokens=r.get("usage", {}).get("prompt_tokens"), cached=False)
         _log(self.log, dict(meta, tag=tag))
         return strip_think(text), meta
+
+
+def cpu_count():
+    """CPUs this process may use (the container's CPU set, not the host's), for llama.cpp n_threads."""
+    try: return max(1, len(os.sched_getaffinity(0)))
+    except (AttributeError, OSError): return max(1, os.cpu_count() or 1)
 
 
 def lang_of_prompt(prompt):

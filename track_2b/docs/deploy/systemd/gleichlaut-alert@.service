@@ -1,0 +1,8 @@
+# Started by OnFailure= of the gleichlaut units with the failed unit as instance: maps its exit code to an alert.
+[Unit]
+Description=Gleichlaut alert for %i
+
+[Service]
+Type=oneshot
+EnvironmentFile=-/etc/gleichlaut/alert.env
+ExecStart=/opt/gleichlaut/track_2b/docs/deploy/alert.sh %i

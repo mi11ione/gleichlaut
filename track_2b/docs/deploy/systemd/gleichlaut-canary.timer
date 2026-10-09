@@ -1,0 +1,10 @@
+# Monthly, one hour before the month run (the month run refuses if the latest canary failed or is > 31 days old).
+[Unit]
+Description=Gleichlaut monthly canary
+
+[Timer]
+OnCalendar=*-*-02 05:00:00 Europe/Zurich
+Persistent=true
+
+[Install]
+WantedBy=timers.target

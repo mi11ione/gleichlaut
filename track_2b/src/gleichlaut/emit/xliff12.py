@@ -5,14 +5,17 @@ unverified, 1.2 is the safe exchange format). One file per target language, one 
   items routed to a translator (no draft) carry no <target>.
   Numbers placed by code are <mrk mtype="protected"> (1.2's "do not translate" marker; <ph> is for native codes, not text),
   in the source as well; a number the model wrote itself stays unmarked and translatable, with a note.
-  <note>s (annotates target / source) carry the verdict, each guard finding as one sentence in the target language, the
-  divergence notice, the old German and the old target; <alt-trans alttranstype="previous-version"> holds the old
-  German -> old target pair so the CAT tool shows the previous version beside the draft.
+  The part of the new German the change inserted or rewrote is <mrk mtype="x-changed"> in the source (1.2's extension
+  value syntax x-...; protected numbers nest inside it).
+  <note>s (annotates target / source), all in the target language, carry the verdict, the German change, each guard
+  finding as one sentence (the ones a fixed rule marks as probably fine last, with the rule), the divergence notice, the
+  old German and the old target; <alt-trans alttranstype="previous-version"> holds the old German -> old target pair so the
+  CAT tool shows the previous version beside the draft. The whole text is one trans-unit (CAT tools segment 1.2 themselves).
 Validated against the OASIS XLIFF 1.2 strict XSD (data/schemas/xliff-1.2/) by validate.validate_xliff12."""
 import os
 import xml.etree.ElementTree as ET
 from .. import __version__, core
-from . import fhir, xliff
+from . import fhir, segment, xliff
 
 NS = "urn:oasis:names:tc:xliff:document:1.2"
 XMLNS = "http://www.w3.org/XML/1998/namespace"
@@ -44,27 +47,39 @@ def _note(tu, text, annotates="general", priority=None):
     n.text = text
 
 
+def _source(tu, v, lang):
+    """source = new German: x-changed spans with the protected numbers nested inside (and protected numbers outside)."""
+    src = v["de_new"]; el = ET.SubElement(tu, _q("source"), {f"{{{XMLNS}}}lang": "de-CH"})
+    ch, nums = segment.changed(v["de_old"], src), _source_spans(src)
+    outer = sorted([(a, b, "c") for a, b in ch] + [(a, b, "n") for a, b in nums if not any(c0 <= a and b <= c1 for c0, c1 in ch)])
+    num_c, chg_c = xliff.nt(lang, "code_number"), xliff.nt(lang, "changed")
+
+    def mk(span):
+        return "mrk", ({"mtype": "x-changed", "comment": chg_c} if span[2] == "c" else {"mtype": "protected", "comment": num_c})
+    xliff.inline(el, src, 0, len(src), outer, mk, _q)
+    for m in [m for m in el if m.get("mtype") == "x-changed"]:          # numbers inside a changed span
+        t = m.text or ""; m.text = ""
+        xliff.inline(m, t, 0, len(t), _source_spans(t), lambda sp: ("mrk", {"mtype": "protected", "comment": num_c}), _q)
+
+
 def trans_unit(body, v):
-    lang = fhir.LANGS[v["lang"]]
+    lang = fhir.LANGS[v["lang"]]; L = v["lang"]
     tu = ET.SubElement(body, _q("trans-unit"), {"id": v["key"], "resname": v["cud_id"], "approved": "no",
                                                  f"{{{XMLNS}}}space": "preserve"})
-    _marked(ET.SubElement(tu, _q("source"), {f"{{{XMLNS}}}lang": "de-CH"}), v["de_new"], _source_spans(v["de_new"]), "number")
+    _source(tu, v, L)
     if v["status"] != "human":
         t = ET.SubElement(tu, _q("target"), {"state": STATE[v["status"]], f"{{{XMLNS}}}lang": lang})
-        _marked(t, v["draft"], [(a, b) for a, b, _, who, _ in v["numbers"] if who == "code"],
-                "number placed by code from the German")
-    verdict = {"ready": "Gleichlaut: ready, every frozen guard passed; review and accept.",
-               "flagged": "Gleichlaut: flagged, a guard named a problem (see the notes); the target is a starting point.",
-               "human": "Gleichlaut: routed to a translator (German rewritten > 60%); no machine draft."}[v["status"]]
-    _note(tu, verdict, "target", "1")
+        _marked(t, v["draft"], [(a, b) for a, b, _, who, _ in v["numbers"] if who == "code"], xliff.nt(L, "code_number"))
+    _note(tu, xliff.nt(L, v["status"]), "target", "1")
     if v.get("banner"): _note(tu, v["banner"], "target", "1")
-    for f in v.get("findings", []):
-        _note(tu, xliff.finding_text(f, v["lang"]), "target", "2")
+    _note(tu, xliff.nt(L, "change", t=xliff.change_summary(v)), "source", "2")
+    for f, r in xliff.ordered_findings(v):
+        _note(tu, xliff.finding_text(f, L, r), "target", "3" if r else "2")
     model = [t for _, _, t, who, _ in v["numbers"] if who == "model"]
-    if model: _note(tu, "Numbers written by the model itself (check them): " + ", ".join(model), "target", "1")
-    _note(tu, "Previous German: " + v["de_old"], "source", "5")
-    _note(tu, "Previous target: " + v["tgt_old"], "target", "5")
-    _note(tu, f"{v['product']}; limitation {v['cud_id']}; SL {v['snap_old']} -> {v['snap_new']}", "general", "5")
+    if model: _note(tu, xliff.nt(L, "model_nums", x=", ".join(model)), "target", "1")
+    _note(tu, xliff.nt(L, "prev_de", t=v["de_old"]), "source", "5")
+    _note(tu, xliff.nt(L, "prev_tgt", t=v["tgt_old"]), "target", "5")
+    _note(tu, xliff.nt(L, "product", product=v["product"], code=v["cud_id"], old=xliff.date(v["snap_old"]), new=xliff.date(v["snap_new"])), "general", "5")
     alt = ET.SubElement(tu, _q("alt-trans"), {"alttranstype": "previous-version", "origin": "SL previous version", "tool-id": "gleichlaut"})
     ET.SubElement(alt, _q("source"), {f"{{{XMLNS}}}lang": "de-CH"}).text = v["de_old"]
     ET.SubElement(alt, _q("target"), {f"{{{XMLNS}}}lang": lang}).text = v["tgt_old"]
@@ -78,12 +93,8 @@ def document(views, meta, lang):
                                          "target-language": fhir.LANGS[lang], "datatype": "plaintext", "tool-id": "gleichlaut"})
     h = ET.SubElement(f, _q("header"))
     ET.SubElement(h, _q("tool"), {"tool-id": "gleichlaut", "tool-name": "Gleichlaut", "tool-version": __version__,
-                                  "tool-company": "Hack Apertus track 2B"})
-    for text in ("Machine drafts of amended SL limitation texts (BAG Spezialitaetenliste). Source = new German text; "
-                 "target = Gleichlaut draft (pre-translation). mrk mtype=protected = number placed by code from the German.",
-                 "state=translated: every frozen guard passed. state=needs-review-translation: a guard named a problem "
-                 "(see the unit notes). No target: routed to a translator.",
-                 f"model {meta['model']}; {meta['pipeline']}; run {meta['run']}"):
+                                  "tool-company": "Gleichlaut"})
+    for text in (xliff.nt(lang, "about12"), xliff.nt(lang, "states12"), xliff.provenance_note(meta, lang)):
         ET.SubElement(h, _q("note"), {"from": "gleichlaut"}).text = text
     body = ET.SubElement(f, _q("body"))
     for v in views:

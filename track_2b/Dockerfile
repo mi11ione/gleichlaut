@@ -17,10 +17,18 @@ USER app
 CMD ["python", "-m", "gleichlaut", "run"]
 
 FROM base AS offline
+# llama-cpp-python 0.3.35 is built from source for a generic x86-64/arm64 CPU (GGML_NATIVE=OFF: the image runs on any CPU of
+# the architecture, not only the build host's). libgomp1 is installed explicitly so that removing the compilers afterwards
+# keeps the OpenMP runtime the library links against; the import check fails the build if anything is missing.
+# The GGUF is not in the image: it is downloaded at run time into the mounted /models and sha256-checked (fetch_gguf).
 USER root
-RUN apt-get update && apt-get install -y --no-install-recommends build-essential cmake && rm -rf /var/lib/apt/lists/* \
- && CMAKE_ARGS="-DGGML_NATIVE=OFF" pip install -r /app/requirements-offline.txt \
- && apt-get purge -y build-essential cmake && apt-get autoremove -y
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential cmake libgomp1 \
+ && CMAKE_ARGS="-DGGML_NATIVE=OFF -DLLAMA_CURL=OFF -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_EXAMPLES=OFF" \
+    pip install -r /app/requirements-offline.txt \
+ && apt-get purge -y build-essential cmake && apt-get autoremove -y && rm -rf /var/lib/apt/lists/* \
+ && python -c "import llama_cpp, numpy; print('llama-cpp-python', llama_cpp.__version__, 'numpy', numpy.__version__)"
 USER app
-ENV GLEICHLAUT_GGUF=1
+# GLEICHLAUT_GGUF=1: `run` takes the live slice from the local GGUF (n_threads = the CPUs of the container; GLEICHLAUT_THREADS
+# overrides). GLEICHLAUT_MODELS: where the GGUF is cached (mount it).
+ENV GLEICHLAUT_GGUF=1 GLEICHLAUT_MODELS=/models
 CMD ["python", "-m", "gleichlaut", "run"]

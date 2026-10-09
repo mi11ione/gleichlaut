@@ -8,15 +8,21 @@
   draft      draft FR/IT for an item file (docs/item-schema.json) through a backend; resumable records + summary
   live       the live slice alone (5 Fedlex items) through LLM_BASE_URL or a local GGUF
   emit, ui   XLIFF 2.1 / FHIR and the review page (over a recorded run; --records/--items where the build supports them)
+  audit      the DE<->FR/IT congruence audit of the whole register (gleichlaut.audit; no model, arguments passed through)
+  feeds      list the BAG ePL FHIR feed dates that are published (resources API + polite HEAD probes), and which are local
+  items      build an item file from ePL FHIR exports: --from-fhir OLD NEW [--lang fr,it] --out items.json (gleichlaut.sl.epl)
   fetch-gguf download the pinned Apertus 8B GGUF and verify its sha256
 
 Routing (vision §3): corpus fedlex -> 8B, every draft reviewed; corpus sl -> 70B on a certified endpoint (exact endpoint +
-model, `gleichlaut certify`), or any model with --air-gapped, in which case every item is marked for review whatever the
-guards say. Items whose German changed > 60% of its tokens, or longer than 2500 characters, go to a human.
+model, `gleichlaut certify`) whose latest canary passed within 31 days, or any model with --air-gapped, in which case every
+item is marked for review whatever the guards say. Items whose German changed > 60% of its tokens go to a human; so do items
+longer than 2500 characters that need the model (a change the code lane applies by itself, numbers or months only, is drafted
+whatever its length).
 
 Exit codes: 0 ok | 1 reproduction or validation failed | 2 usage / bad input / missing configuration | 3 canary outside
-tolerance | 4 refused: endpoint not certified | 5 certificate FAIL | 6 endpoint or feed failed (records so far are kept;
-re-run to resume) | 7 certificate PENDING_REVIEW | 130 interrupted.  GLEICHLAUT_DEBUG=1 shows tracebacks."""
+tolerance, or drafting refused because the latest canary failed or is stale | 4 refused: endpoint not certified | 5
+certificate FAIL | 6 endpoint or feed failed (records so far are kept; re-run to resume) | 7 certificate PENDING_REVIEW |
+130 interrupted.  GLEICHLAUT_DEBUG=1 shows tracebacks."""
 import argparse, datetime, inspect, json, os, re, sys, time, urllib.error, urllib.request
 from collections import Counter
 from . import core, backends
@@ -44,6 +50,10 @@ class FeedError(Exception):
     """the BAG feed could not be fetched: exit 6."""
 
 
+class CanaryRefused(Exception):
+    """the SL lane was asked to draft through a certified endpoint whose latest canary failed or is too old: exit 3."""
+
+
 def banner(s): print(f"\n=== {s} " + "=" * max(0, 74 - len(s)), flush=True)
 def _now(): return datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
 
@@ -54,7 +64,7 @@ def fetch_gguf():
     if not (os.path.exists(p) and core.sha256(p) == GGUF_SHA):
         print(f"downloading {GGUF_URL} (~5 GB) ...", flush=True)
         req = urllib.request.Request(GGUF_URL, headers={"User-Agent": "gleichlaut/0.1"})
-        with urllib.request.urlopen(req, timeout=600) as r, open(p + ".part", "wb") as f:
+        with backends.urlopen(req, timeout=600) as r, open(p + ".part", "wb") as f:
             while True:
                 b = r.read(1 << 22)
                 if not b: break
@@ -83,7 +93,8 @@ def live_backend():
     if os.environ.get("SKIP_MODEL") == "1": return None, "SKIP_MODEL=1"
     if os.environ.get("LLM_BASE_URL"):
         b = backends.OpenAI(log=os.path.join(OUT, "live_calls.jsonl"),                 # fail fast: a demo slice, not a month
-                            retries=os.environ.get("GLEICHLAUT_HTTP_RETRIES") or 3, backoff=os.environ.get("GLEICHLAUT_HTTP_BACKOFF") or 5)
+                            retries=backends._env("GLEICHLAUT_RETRIES", "GLEICHLAUT_HTTP_RETRIES", default=3),
+                            backoff=backends._env("GLEICHLAUT_BACKOFF", "GLEICHLAUT_HTTP_BACKOFF", default=5))
         return b, f"endpoint {b.endpoint} model {b.model}"
     if os.environ.get("GLEICHLAUT_GGUF") == "1":
         p = fetch_gguf()
@@ -217,12 +228,22 @@ def load_items(path):
     return items
 
 
-def route(x):
-    """-> ('draft', None) | ('human', reason). Same rule as sl.mine (> 60% of German tokens changed = a rewrite)."""
+def code_only(x):
+    """True if the code lane applies this change by itself (numbers / months only: gl2.plan rule_only), so no model is
+    called for it, neither to draft nor to re-ask."""
+    try: return bool(core.gl2.plan(x["de_old"], x["de_new"], x["tgt_old"], x["lang"])["rule_only"])
+    except Exception: return False
+
+
+def route(x, corpus="sl"):
+    """-> ('draft', None) | ('human', reason). Same rule as sl.mine (> 60% of German tokens changed = a rewrite). The length
+    limit (the evaluated range of the model lane) applies only to items that need the model: a change the code lane applies
+    by itself is drafted whatever the length of the text."""
     r = x["change_ratio"]
     if r > MAXRATIO: return "human", f"German changed {100 * r:.0f}% of its tokens (> 60%): a rewrite, not an amendment"
-    if len(x["de_old"]) > MAXCH or len(x["de_new"]) > MAXCH: return "human", f"German text longer than {MAXCH} characters (outside the evaluated range)"
     if r == 0: return "human", "no change in the German tokens (spacing only)"
+    if (len(x["de_old"]) > MAXCH or len(x["de_new"]) > MAXCH) and not (corpus == "sl" and code_only(x)):
+        return "human", f"German text longer than {MAXCH} characters and the change needs the model (outside the evaluated range)"
     return "draft", None
 
 
@@ -241,7 +262,7 @@ def dry_run(items, corpus, gate=None, out=None):
     n = Counter()
     if gate: print(gate, file=out)
     for x in items:
-        rt, why = route(x)
+        rt, why = route(x, corpus)
         print(f"\n--- {x['key']} [{x['lang']}] change_ratio {x['change_ratio']:.3f} route {rt}" + (f": {why}" if why else ""), file=out)
         if rt == "human": n["human"] += 1; continue
         try:
@@ -271,7 +292,7 @@ def dry_run(items, corpus, gate=None, out=None):
 
 # ------------------------------------------------------------------ backends for draft / month
 def make_backend(a, out):
-    """-> (ask, label, review_reason). Raises ConfigError, Uncertified."""
+    """-> (ask, label, review_reason). Raises ConfigError, Uncertified, CanaryRefused."""
     log = os.path.join(out, "calls.jsonl")
     review = None
     if a.backend == "openai":
@@ -285,6 +306,18 @@ def make_backend(a, out):
                                   f"--air-gapped (every item then goes to review).")
             ask.expect_served = set(cert.get("models_served") or []) or None
             print(f"certification gate: {why}", flush=True)
+            st, cwhy = certify.canary_gate(cert)
+            gate = dict(certificate=cert.get("name"), certification=why, canary=st, canary_reason=cwhy)
+            if st == "failed": raise CanaryRefused(cwhy)
+            if st == "stale":
+                if not getattr(a, "allow_stale_canary", False): raise CanaryRefused(cwhy)
+                gate["override"] = "--allow-stale-canary"
+                _log_override(dict(ts=_now(), override="--allow-stale-canary", endpoint=ask.endpoint, model=ask.model,
+                                   certificate=cert.get("name"), reason=cwhy, out=os.path.abspath(out)))
+                print(f"WARNING: canary gate overridden with --allow-stale-canary: {cwhy}", flush=True)
+            else:
+                print(f"canary gate: {cwhy}", flush=True)
+            a._gate = gate
     elif a.backend == "llamacpp":
         ask = backends.LlamaCpp(a.gguf or fetch_gguf(), backends.lang_of_prompt, log=log); label = f"llamacpp {ask.model}"
         if a.corpus == "sl": review = "SL lane on a local, uncertified model: every item is reviewed"
@@ -295,6 +328,13 @@ def make_backend(a, out):
     if a.air_gapped and not review: review = "air-gapped: every item is reviewed"
     if a.corpus == "fedlex" and not review: review = "statute lane: every draft is reviewed (neither model size passes the rule on statutes)"
     return ask, label, review
+
+
+def _log_override(rec):
+    """every gate override is appended to state/gate-overrides.jsonl (and recorded in the run's summary.json)."""
+    from . import certify
+    os.makedirs(certify.state_dir(), exist_ok=True)
+    with open(certify.state_dir("gate-overrides.jsonl"), "a", encoding="utf-8") as f: f.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
 
 def _records(path):
@@ -323,8 +363,10 @@ def draft_items(items, ask, out, corpus="sl", review=None, label=""):
     P = core.Pipeline(ask, "g3") if corpus == "sl" else None
     with open(path, "a", encoding="utf-8") as f:
         for i, x in enumerate(todo):
-            rt, why = route(x); t0 = time.time()
+            rt, why = route(x, corpus); t0 = time.time()
             base = dict(key=x["key"], lang=x["lang"], change_ratio=x["change_ratio"], route=rt)
+            if rt == "draft" and (len(x["de_old"]) > MAXCH or len(x["de_new"]) > MAXCH):
+                base["route_note"] = f"longer than {MAXCH} characters; drafted because the code lane applies the change (no model call)"
             if rt == "human":
                 rec = dict(base, status="human", reason=why)
             else:
@@ -407,7 +449,10 @@ def _gate_text(a):
     if a.corpus != "sl" or a.air_gapped: return f"backend openai {backends.endpoint_id(os.environ['LLM_BASE_URL'])} (no certification needed: {'air-gapped' if a.air_gapped else 'fedlex'})"
     from . import certify
     cert, why = certify.lookup(os.environ["LLM_BASE_URL"], os.environ.get("LLM_NAME") or core.M70)
-    return f"certification gate: {'would PASS' if cert else 'would REFUSE'}: {why}"
+    if not cert: return f"certification gate: would REFUSE: {why}"
+    st, cwhy = certify.canary_gate(cert)
+    verdict = "would PASS" if st == "ok" else ("would PASS (stale canary overridden)" if st == "stale" and getattr(a, "allow_stale_canary", False) else "would REFUSE")
+    return f"certification gate: {verdict}: {why}; canary: {st}: {cwhy}"
 
 
 def _drafting(a, items, out, mode, extra=None):
@@ -418,6 +463,7 @@ def _drafting(a, items, out, mode, extra=None):
     ask, label, review = make_backend(a, out)
     print(f"drafting {len(items)} items through {label} -> {out}", flush=True)
     draft_items(items, ask, out, a.corpus, review, label)
+    if getattr(a, "_gate", None): extra = dict(extra or {}, gate=a._gate)
     summarise(items, out, mode, extra)
     if getattr(a, "emit", False):
         rc = passthrough("emit", ["--records", os.path.join(out, "records.jsonl"), "--items", os.path.join(out, "items.json"), "--n", "0", "--out", os.path.join(out, "emit")])
@@ -434,6 +480,8 @@ def _common(ap, default_backend="openai"):
     ap.add_argument("--dry-run", action="store_true", help="print routing, slot maps and the exact prompts; send nothing")
     ap.add_argument("--restart", action="store_true", help="set existing records aside and start over (default: resume)")
     ap.add_argument("--emit", action="store_true", help="afterwards run `emit` and `ui` on the records (where the build supports it)")
+    ap.add_argument("--allow-stale-canary", action="store_true",
+                    help="draft although the latest canary is older than GLEICHLAUT_CANARY_MAX_AGE_DAYS (logged; a FAILED canary still refuses)")
 
 
 def cmd_draft(rest):
@@ -449,7 +497,9 @@ def cmd_draft(rest):
 def cmd_month(rest):
     ap = argparse.ArgumentParser(prog="gleichlaut month", description="one month in operation: mine (or read) the German changes, "
                                  "route, draft, summarise")
-    ap.add_argument("--from", dest="d_from", help="old feed date YYYYMMDD"); ap.add_argument("--to", dest="d_to", help="new feed date YYYYMMDD")
+    ap.add_argument("--from", dest="d_from", help="old feed date YYYYMMDD, or 'previous' (where the last month run ended, else the "
+                    "feed published before --to)")
+    ap.add_argument("--to", dest="d_to", help="new feed date YYYYMMDD, or 'latest' (BAG's resources API)")
     ap.add_argument("--snapshots", help="snapshot dir (default $GLEICHLAUT_HIST or out/hist)")
     ap.add_argument("--fetch", action="store_true", help="download missing de/fr/it feeds of both dates from BAG (public)")
     ap.add_argument("--items", help="pre-publication mode: the SL team's own item file instead of the feed")
@@ -465,7 +515,16 @@ def cmd_month(rest):
         return _drafting(a, items, out, "pre-publication" if not published else "items (with published targets: shadow)",
                          dict(items_file=os.path.abspath(a.items)))
     if not (a.d_from and a.d_to): ap.error("give --from YYYYMMDD --to YYYYMMDD, or --items FILE")
-    from .sl import hist_dir, ingest, mine
+    from .sl import hist_dir, ingest, mine, feeds
+    if a.d_to == "latest":
+        try: a.d_to, how = feeds.resolve_latest(a.snapshots)
+        except ValueError as e: raise FeedError(str(e))
+        print(f"--to latest = {a.d_to} ({how})", flush=True)
+    if a.d_from == "previous":
+        try: a.d_from, how = feeds.resolve_previous(a.d_to, a.snapshots, os.path.join(OUT, "month"))
+        except ValueError as e: raise UsageError(str(e))
+        print(f"--from previous = {a.d_from} ({how})", flush=True)
+        if a.d_from >= a.d_to: raise UsageError(f"nothing to do: --from previous resolved to {a.d_from}, not before --to {a.d_to}")
     try: mine.check_snaps([a.d_from, a.d_to])
     except ValueError as e: raise UsageError(str(e))
     hd = hist_dir(a.snapshots); H = mine.Hist(hd)
@@ -532,6 +591,14 @@ def _dispatch(argv):
         from . import backtest; return backtest.main(rest) or 0
     if c == "draft": return cmd_draft(rest)
     if c == "month": return cmd_month(rest)
+    if c == "audit":
+        from . import audit; return audit.main(rest) or 0
+    if c == "feeds":
+        from .sl import feeds; return feeds.main(rest) or 0
+    if c == "items":
+        from .sl import epl
+        try: return epl.main(rest) or 0
+        except (OSError, ValueError) as e: raise UsageError(str(e))
     print(__doc__); return EXIT_USAGE
 
 
@@ -544,6 +611,8 @@ def main(argv=None):
         print(f"error: {e}", file=sys.stderr); return EXIT_USAGE
     except Uncertified as e:
         print(f"refusing: {e}", file=sys.stderr); return EXIT_UNCERTIFIED
+    except CanaryRefused as e:
+        print(f"refusing (canary): {e}", file=sys.stderr); return EXIT_CANARY
     except backends.EndpointError as e:
         print(f"ENDPOINT FAILED: {e}", file=sys.stderr); return EXIT_ENDPOINT
     except FeedError as e:

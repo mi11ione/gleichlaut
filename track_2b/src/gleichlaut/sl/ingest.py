@@ -39,9 +39,31 @@ def nrm(s):
     return re.sub(r"\s+", " ", s).strip()
 
 
-def extract(lines, meta=None):
+TRANSLATION = "http://hl7.org/fhir/StructureDefinition/translation"
+
+
+def translation(ext_holder, lang):
+    """the FHIR translation extension of a primitive (`_text`, `_valueString`) for lang ('fr' matches 'fr-CH'), or None."""
+    for e in (ext_holder or {}).get("extension", []) or []:
+        if e.get("url") != TRANSLATION: continue
+        sub = {x.get("url"): x for x in e.get("extension", []) or []}
+        code = (sub.get("lang") or {}).get("valueCode") or ""
+        if code.split("-")[0].lower() == lang: return (sub.get("content") or {}).get("valueString")
+    return None
+
+
+def _pick(obj, field, lang, file_lang):
+    """the text of obj[field] in `lang`: the element itself if the file is in that language, else its translation extension."""
+    if lang is None or lang == (file_lang or "de"): return obj.get(field)
+    return translation(obj.get("_" + field), lang)
+
+
+def extract(lines, meta=None, lang=None, file_lang=None):
     """ported from spikes/gleichlaut/s2/extract.py (stdin loop -> function). Reads both formats, so it works on every snapshot.
-    meta: optional dict; receives 'feed_timestamp' (the latest Bundle timestamp / meta.lastUpdated, if the feed has any)."""
+    meta: optional dict; receives 'feed_timestamp' (the latest Bundle timestamp / meta.lastUpdated, if the feed has any).
+    lang / file_lang (ePL bridge, sl.epl): extract the texts in `lang` from a file written in `file_lang` (default de): the
+    texts themselves when the languages agree, else their FHIR translation extensions; a text with neither is skipped.
+    With lang None (the default) every text is taken as it stands (the public feed: one file per language)."""
     lim, prod, conflict = {}, {}, {}
     def put(k, t):
         if k in lim and lim[k] != t: conflict.setdefault(k, [lim[k]]).append(t)
@@ -58,7 +80,8 @@ def extract(lines, meta=None):
                 mpd = mpd or r["id"]
                 for n in r.get("name", []): name = name or n.get("productName")
             elif rt == "ClinicalUseDefinition":
-                k = r["id"]; put(k, r["indication"]["diseaseSymptomProcedure"]["concept"]["text"]); keys.append(k)
+                k = r["id"]; t = _pick(r["indication"]["diseaseSymptomProcedure"]["concept"], "text", lang, file_lang)
+                if t is not None: put(k, t); keys.append(k)
             elif rt == "RegulatedAuthorization":
                 i = 0
                 for ind in r.get("indication", []) or []:
@@ -66,7 +89,8 @@ def extract(lines, meta=None):
                         if ex.get("url", "").endswith("regulatedAuthorization-limitation"):
                             for sub in ex.get("extension", []):
                                 if sub.get("url") == "limitationText":
-                                    k = f"RA:{r['id']}#{i}"; put(k, sub["valueString"]); keys.append(k); i += 1
+                                    k = f"RA:{r['id']}#{i}"; t = _pick(sub, "valueString", lang, file_lang); i += 1
+                                    if t is not None: put(k, t); keys.append(k)
         if mpd:
             p = prod.setdefault(mpd, dict(name=name, keys=[]))
             for k in keys:
@@ -79,13 +103,16 @@ def save(snap, path):
     print(path, len(snap["lim"]), "lims", len(snap["prod"]), "products", len(snap["conflict"]), "conflicts", file=sys.stderr)
 
 
+MIN_INTERVAL = 1.0            # seconds between two requests to BAG (<= 1 request per second, every request type)
 _last = [0.0]
-def _open(u, tries=4):
-    """polite GET: >= 1 s between requests, backoff on 429/5xx."""
+def _open(u, tries=4, method="GET", headers=None):
+    """polite request: >= MIN_INTERVAL s between requests, UA hackapertus-research/0.1, backoff on 429/5xx. Honours
+    HTTPS_PROXY / NO_PROXY and an internal CA in SSL_CERT_FILE (backends.urlopen)."""
+    from ..backends import urlopen
     for k in range(tries):
-        time.sleep(max(0.0, 1.0 - (time.time() - _last[0]))); _last[0] = time.time()
+        time.sleep(max(0.0, MIN_INTERVAL - (time.time() - _last[0]))); _last[0] = time.time()
         try:
-            return urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": UA}), timeout=120)
+            return urlopen(urllib.request.Request(u, headers=dict({"User-Agent": UA}, **(headers or {})), method=method), timeout=120)
         except urllib.error.HTTPError as e:
             if e.code not in (429, 500, 502, 503, 504) or k == tries - 1: raise
             time.sleep(5 * 2 ** k)

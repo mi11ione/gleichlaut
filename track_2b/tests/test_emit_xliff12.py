@@ -6,7 +6,7 @@ import os, re, sys, tempfile
 import xml.etree.ElementTree as ET
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src"))
 from gleichlaut import score
-from gleichlaut.emit import load, select, validate, xliff12
+from gleichlaut.emit import load, select, validate, xliff, xliff12
 
 X = "{urn:oasis:names:tc:xliff:document:1.2}"
 _C = {}
@@ -40,9 +40,14 @@ def test_units_carry_state_draft_protected_numbers_and_notes():
             assert t.get("state") == {"ready": "translated", "flagged": "needs-review-translation"}[v["status"]]
             assert "".join(t.itertext()) == v["draft"] and "".join(tu.find(X + "source").itertext()) == v["de_new"]
             prot = [m.text for m in t.iter(X + "mrk") if m.get("mtype") == "protected"]
+            assert [m.text for m in tu.find(X + "source").iter(X + "mrk") if m.get("mtype") == "protected"] == \
+                [m.group(0) for m in xliff12.core.gl2.NUMRX.finditer(v["de_new"])]
             assert prot == [n[2] for n in v["numbers"] if n[3] == "code"]
-            notes = [n.text for n in tu.findall(X + "note")]
-            assert "Previous German: " + v["de_old"] in notes and "Previous target: " + v["tgt_old"] in notes
+            notes = [n.text for n in tu.findall(X + "note")]; L = v["lang"]
+            assert xliff.nt(L, "prev_de", t=v["de_old"]) in notes and xliff.nt(L, "prev_tgt", t=v["tgt_old"]) in notes
+            assert xliff.nt(L, v["status"]) in notes and not any(n.startswith(("Previous", "Gleichlaut:")) for n in notes)
+            chg = [m for m in tu.find(X + "source").iter(X + "mrk") if m.get("mtype") == "x-changed"]
+            assert chg and all(m.get("comment") == xliff.nt(L, "changed") for m in chg)
             plain = [f["text"] for f in v["findings"]]
             assert all(any(s in n for n in notes) for s in plain)
             assert (v["status"] == "flagged") == bool([f for f in v["findings"] if f["gid"] != "corr"])
@@ -70,6 +75,15 @@ def test_xsd_rejects_broken_files():
         p = os.path.join(C["d"], f"bad-{name}.xlf"); open(p, "w", encoding="utf-8").write(s)
         errs = validate.validate_xliff12(p)
         assert errs and errs[0].startswith("XSD"), (name, errs)
+
+
+
+def test_header_tool_and_provenance():
+    for p in _setup()["paths"]:
+        r = ET.parse(p).getroot(); h = r.find(X + "file").find(X + "header")
+        assert h.find(X + "tool").get("tool-company") == "Gleichlaut"
+        txt = " ".join(n.text for n in h.findall(X + "note"))
+        assert "model model" not in txt and "Hack Apertus" not in txt and "swiss-ai/apertus" in txt
 
 
 if __name__ == "__main__":

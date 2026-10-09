@@ -352,8 +352,51 @@ def audit_eval():
     S = json.load(open(os.path.join(DATA, "audit", "audit_20261006_summary.json"), encoding="utf-8"))
     rows = [l.split("\t") for l in open(os.path.join(LABELS, "audit_20261006.tsv"), encoding="utf-8").read().splitlines()[1:]]
     real = [r for r in rows if r[6] == "yes"]; held = [r for r in rows if r[5] == "held"]
-    return dict(findings=len(rows), real=len(real), precision_pct=round(100 * len(real) / len(rows), 1),
+    rows2 = [l.split("\t") for l in open(os.path.join(LABELS, "audit2_20261006.tsv"), encoding="utf-8").read().splitlines()[1:]]
+    real2 = [r for r in rows2 if r[4] == "yes"]
+    allf = len(rows) + len(rows2); allreal = len(real) + len(real2)
+    v2 = dict(findings_all_kinds=allf, real_all_kinds=allreal, precision_all_pct=round(100 * allreal / allf, 1),
+              new_kinds_findings=len(rows2), new_kinds_real=len(real2),
+              by_kind={k: [sum(r[1] == k for r in rows2), sum(r[1] == k and r[4] == "yes" for r in real2)] for k in sorted({r[1] for r in rows2})},
+              real_new_beyond_known=len(real2), language_swaps=sum(r[1] == "language" and r[4] == "yes" for r in rows2),
+              editorial_real=sum(r[1] == "editorial" and r[4] == "yes" for r in rows2))
+    return dict(findings=len(rows), real=len(real), precision_pct=round(100 * len(real) / len(rows), 1), v2=v2,
                 precision_wilson95=[round(v, 1) for v in wilson(len(real), len(rows))],
                 real_new=sum(r[4] != "True" for r in real), known_found=sum(r[4] == "True" for r in rows),
                 held_findings=len(held), held_real=sum(r[6] == "yes" for r in held),
                 limitations_found=len({r[1] for r in rows}), summary=S)
+
+
+def baseline_plus():
+    """Apertus 70B (fresh 166) against rules+ (gleichlaut.baseline): exact match, paired cluster bootstrap over German
+    changes, and token edits still needed to reach BAG's text."""
+    from .baseline import rules_plus
+    I = load_items("items/items_fresh.json"); F = load_jsonl(RUNS["fresh166"]["final"]); norm = core.lock.norm
+    A, B, rows = [], [], []
+    for x in I:
+        rp = rules_plus(x); gold = norm(x["tgt_new"])
+        a = S["score_one"](x, rp, "1"); b = S["score_one"](x, F[x["key"]]["out"], "1")
+        A.append(a); B.append(b)
+        rows.append(dict(rules_plus=sum(S["edits"](norm(rp), gold).values()), draft=sum(S["edits"](norm(F[x["key"]]["out"]), gold).values()),
+                         pair=x["pair"], family=x["cluster"]))
+    n = len(I); ex_a = sum(r["exact"] for r in A); ex_b = sum(r["exact"] for r in B)
+    ci = S["boot_diff"](B, A, "exact")
+    import random
+    by = {}
+    for r in rows: by.setdefault(r["pair"], []).append(r)
+    ks = sorted(by); rng = random.Random(7); bs = []
+    for _ in range(4000):
+        smp = [r for k in (rng.choice(ks) for _ in ks) for r in by[k]]
+        s1, s2 = sum(r["rules_plus"] for r in smp), sum(r["draft"] for r in smp)
+        if s1: bs.append(100 * (s1 - s2) / s1)
+    bs.sort(); e1, e2 = sum(r["rules_plus"] for r in rows), sum(r["draft"] for r in rows)
+    fam = "981f07a8"; Af = [a for a, x in zip(A, I) if x["cluster"] != fam]; Bf = [b for b, x in zip(B, I) if x["cluster"] != fam]
+    cif = S["boot_diff"](Bf, Af, "exact")
+    return dict(n=n, rules_plus_exact_n=ex_a, rules_plus_exact=round(100 * ex_a / n, 1), model_exact=round(100 * ex_b / n, 1),
+                delta=round(100 * (ex_b - ex_a) / n, 1), ci95=[round(ci[0], 1), round(ci[1], 1)],
+                edits_rules_plus=e1, edits_draft=e2, edits_saved_pct=round(100 * (e1 - e2) / e1, 1),
+                edits_saved_ci95=[round(bs[int(.025 * len(bs))], 1), round(bs[int(.975 * len(bs))], 1)],
+                without_family=dict(n=len(Bf), rules_plus_exact=round(100 * sum(r["exact"] for r in Af) / len(Af), 1),
+                                    model_exact=round(100 * sum(r["exact"] for r in Bf) / len(Bf), 1),
+                                    delta=round(100 * (sum(r["exact"] for r in Bf) - sum(r["exact"] for r in Af)) / len(Bf), 1),
+                                    ci95=[round(cif[0], 1), round(cif[1], 1)]))

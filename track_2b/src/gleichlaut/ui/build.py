@@ -1,22 +1,29 @@
 """python3 -m gleichlaut.ui.build [--run fresh166 | --records R.jsonl --items I.json] [--out PATH] [--fragment]
+                                 [--audit data/audit/audit_20261006.json] [--hist DIR]
 
 One self-contained HTML review page (inline CSS/JS/data and embedded fonts; no request at view time; works from
-file://): a register of German changes on the left and the case under review on the right (German change, FR/IT drafts
-editable in place, checks ledger, decision). Diffs, number provenance and the plain-language guard findings are computed
+file://) with two tabs. "Register audit" (opens first with #audit): one row per finding of the pre-existing DE/FR/IT
+audit (ui/audit_view.py), the conflicting statements side by side, and the officer's two decisions (which language is
+right; Berichtigung / GÄL / none) with a note. "Drafts": a register of German changes on the left and the case under
+review on the right (German change, FR/IT drafts editable in place, checks ledger with flag triage, decision). Diffs, number provenance and the plain-language guard findings are computed
 here in Python from the same per-item views the emitters use (gleichlaut.emit.load); the header figures come from
-score.score_run(run)["summary"]["all"] (counts only for --records). Reviewer decisions stay in the browser
-(localStorage) and leave it only through Export XLIFF 2.1 / Export JSON / Copy decisions.
+score.score_run(run)["summary"]["all"] (counts only for --records) and, for the audit, eval/results/audit.json.
+Flag triage (emit/triage.py) only orders and collapses findings; pre-existing problems of the old text are a display
+notice ("ready (old text needs attention)"); neither changes a verdict or a metric. Reviewer decisions stay in the
+browser (localStorage) and leave it only through Export XLIFF 2.1 / Export JSON / Export CSV / Copy decisions;
+Import decisions loads an exported JSON back.
 --fragment writes the page without <!doctype>/<html>/<head>/<body> (title + style + content + script) for publishing as
 a claude.ai artifact; the default output is a complete standalone HTML document."""
 import argparse, base64, difflib, html, json, os, re
 from collections import Counter
 from .. import core, score
-from ..emit import explain, load
+from ..emit import explain, load, model_label, segment, triage, xliff
+from ..emit.segment import SENT_END, sentences          # noqa: F401  (one sentence splitter for page and XLIFF)
+from . import audit_view
 
 OUT = os.path.join(core.ROOT, "out", "ui", "index.html")
 FONTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fonts")
 TOK = re.compile(core.gl2.NUMRX.pattern + r"|\w+|\s+|[^\w\s]")        # numbers first: a number is one token
-SENT_END = re.compile(r"[.;:!?](\s+)(?=[A-ZÄÖÜÀÂÉÈÊÎÔÛÇ0-9(«\"–-])")
 WHOLE = 0.40          # a sentence block with more than this share of changed words is shown old-struck / new-underlined
 LABEL = {"fresh166": "fresh 2025 held-out set", "m3_seed1": "fresh 2025 held-out set, seed 1", "oos242": "out-of-sample 2026 set",
          "dev120": "development set (in-sample)", "dev120_8b": "development set, 8B"}
@@ -24,15 +31,6 @@ GLUE = 2              # changed runs separated by at most this many unchanged wo
 
 
 def _toks(s): return [(m.start(), m.group(0)) for m in TOK.finditer(s)]
-
-
-def sentences(s):
-    """-> [(start, end)] sentence spans covering s (the trailing space belongs to the sentence)."""
-    out, a = [], 0
-    for m in SENT_END.finditer(s):
-        out.append((a, m.end(1))); a = m.end(1)
-    if a < len(s) or not out: out.append((a, len(s)))
-    return out
 
 
 class _Segs:
@@ -162,21 +160,54 @@ def _date(s):
     return f"{s[6:8]}.{s[4:6]}.{s[:4]}" if re.fullmatch(r"\d{8}", s or "") else (s or "?")
 
 
-def _ledger(v):
-    """Checks ledger rows for one draft: [gid, name, state, finding sentences, raw detail, g-id label]."""
+def _ledger(v, rules):
+    """Checks ledger rows for one draft: [gid, name, state, [dict(t=sentence, c=corrects, r=triage rule)], raw detail,
+    g-id label]. Order (display only): failed checks with a finding to check, failed checks whose findings are all
+    probably fine, passed checks, checks not run."""
     L = v["lang"]; by = {}
-    for f in v["findings"]:
-        if f["gid"] != "corr": by.setdefault("slot" if f["gid"] == "unknown" else f["gid"], []).append(f)
+    for f, r in zip(v["findings"], rules):
+        if f["gid"] != "corr": by.setdefault("slot" if f["gid"] == "unknown" else f["gid"], []).append((f, r))
     rows = []
     for gid, lab, state, detail in v["lights"]:
         fs = by.get(gid, [])
-        txt = [dict(t=f["text"], c=f["corrects"]) for f in fs]
-        if gid == "reask": txt = [dict(t=explain.reask_text(v), c=False)]
+        txt = [dict(t=f["text"], c=f["corrects"], r=r) for f, r in fs]
+        txt = [x for x in txt if not x["r"]] + [x for x in txt if x["r"]]
+        if gid == "reask": txt = [dict(t=explain.reask_text(v), c=False, r=None)]
         rows.append([gid, explain.name(gid, L), state, txt, detail if state == "fail" else "", lab])
-    return rows
+    def key(r):
+        if r[2] == "fail" and r[0] == "reask": return 1                # how the draft was obtained, not a finding
+        if r[2] == "fail": return 0 if (not r[3] or any(not x["r"] for x in r[3])) else 1
+        return 2 if r[2] == "pass" else 3
+    return sorted(rows, key=key)
 
 
-def data(run="fresh166", records=None, items=None):
+def _old_text(v):
+    """Pre-existing problems of the old target text (display notice): [dict(k=kind, t=sentence, f=found language)]."""
+    return [dict(k=d.get("kind", "number"), t=d["text"], f=d.get("found")) for d in v.get("divergence") or []]
+
+
+def _xliff_notes(v, rules):
+    """The unit notes the page's XLIFF export writes (same texts as emit/xliff.py, target language), minus the old
+    texts (rebuilt in the page from the diff segments) and the review note (written at export time)."""
+    L = v["lang"]; N = [["verdict", "gleichlaut:verdict", "target", 1, xliff.nt(L, v["status"])]]
+    if v.get("banner"): N.append(["divergence", "gleichlaut:divergence", "target", 1, v["banner"]])
+    N.append(["change", "gleichlaut:change", "source", 2, xliff.nt(L, "change", t=xliff.change_summary(v))])
+    for i, (f, r) in enumerate(xliff.ordered_findings(v), 1):
+        N.append([f"finding-{i}", "gleichlaut:finding", "target", 3 if r else 1, xliff.finding_text(f, L, r)])
+    model = [t for _, _, t, who, _ in v["numbers"] if who == "model"]
+    if model: N.append(["model-numbers", "gleichlaut:model-numbers", "target", 1, xliff.nt(L, "model_nums", x=", ".join(model))])
+    return N
+
+
+def _family_labels(views):
+    """family id -> short label from its product names ('Darzalex, Darzalex SC' -> 'Darzalex')."""
+    names = {}
+    for v in views:
+        names.setdefault(v["family"], Counter())[re.split(r"\s+", v["product"].strip())[0]] += 1
+    return {f: " / ".join(n for n, _ in c.most_common(2)) for f, c in names.items()}
+
+
+def data(run="fresh166", records=None, items=None, audit=audit_view.AUDIT, hist=None):
     meta, views = load(run, records, items)
     if meta["custom"]:
         from ..emit import _read_items
@@ -186,32 +217,49 @@ def data(run="fresh166", records=None, items=None):
     groups = {}
     for v in views:
         g = groups.setdefault(v["pair"], dict(pair=v["pair"], product=v["product"], code=v["cud_id"], snap_old=_date(v["snap_old"]),
-                                              snap_new=_date(v["snap_new"]), family=v["family"], de=diff(v["de_old"], v["de_new"]), items={}))
+                                              snap_new=_date(v["snap_new"]), family=v["family"], de=diff(v["de_old"], v["de_new"]),
+                                              ch=segment.changed(v["de_old"], v["de_new"]), items={}))
         g["sum"] = summary(g["de"])
         corr = next((f for f in v["findings"] if f["gid"] == "corr"), None)
+        rules = triage.triage(v)
         it = dict(key=v["key"], lang=v["lang"], status=v["status"], rule_only=v["rule_only"], cud=v["cud_id"],
                   banner=v.get("banner"), corr=corr["text"] if corr else None, corr_note=explain.corr_note(v["lang"]) if corr else None,
-                  findings=[[f["gname"], f["text"], f["corrects"]] for f in v["findings"] if f["gid"] != "corr"])
+                  old=_old_text(v), xn=_xliff_notes(v, rules),
+                  findings=[[f["gname"], f["text"], f["corrects"], r] for f, r in zip(v["findings"], rules) if f["gid"] != "corr"])
+        guard = [r for f, r in zip(v["findings"], rules) if f["gid"] != "corr"]
+        it["tri"] = [sum(1 for r in guard if not r), sum(1 for r in guard if r)] if v["status"] == "flagged" else [0, 0]
         if v["status"] == "human":
             r = v.get("change_ratio")
             it.update(segs=[["e", v["tgt_old"]]], ledger=[], ratio=(round(100 * float(r)) if r not in (None, "") else None),
-                      reason=v.get("reason") or "")
+                      reason=v.get("reason") or "", bd=[[a, b, 0, 0] for a, b in sentences(v["de_new"])], nm=[])
         else:
-            it.update(segs=diff(v["tgt_old"], v["draft"], v["numbers"]), ledger=_ledger(v),
-                      model_numbers=sum(n[3] == "model" for n in v["numbers"]))
+            nm = [[a, b, who, slot] for a, b, _, who, slot in v["numbers"]]
+            it.update(segs=diff(v["tgt_old"], v["draft"], v["numbers"]), ledger=_ledger(v, rules),
+                      model_numbers=sum(n[3] == "model" for n in v["numbers"]), nm=nm,
+                      bd=[list(x) for x in segment.keep_whole(segment.align(v["de_new"], v["draft"]), [(a, b) for a, b, *_ in nm], 1)])
             if I: it["exact"] = core.lock.norm(v["draft"]) == core.lock.norm(I[v["key"]].get("tgt_new", ""))
         g["items"][v["lang"]] = it
-    fam = Counter(v["family"] for v in views)
+    fam = Counter(v["family"] for v in views); flab = _family_labels(views)
     counts = dict(items=len(views), changes=len(groups), ready=sum(v["status"] == "ready" for v in views),
                   flagged=sum(v["status"] == "flagged" for v in views), human=sum(v["status"] == "human" for v in views),
-                  divergent=sum(bool(v.get("banner")) or any(f["gid"] == "corr" for f in v["findings"]) for v in views),
+                  divergent=sum(bool(v.get("banner")) or bool(v.get("divergence")) or any(f["gid"] == "corr" for f in v["findings"]) for v in views),
+                  old_text=sum(bool(v.get("divergence")) for v in views),
                   code_numbers=sum(n[3] == "code" for v in views for n in v["numbers"]),
                   model_numbers=sum(n[3] == "model" for v in views for n in v["numbers"]))
-    if I: counts["exact"] = sum(1 for g in groups.values() for it in g["items"].values() if it.get("exact"))
+    G = list(groups.values())
+    counts["to_check"] = sum(it["tri"][0] for g in G for it in g["items"].values())
+    counts["probably_fine"] = sum(it["tri"][1] for g in G for it in g["items"].values())
+    if I: counts["exact"] = sum(1 for g in G for it in g["items"].values() if it.get("exact"))
     m = {k: meta[k] for k in ("run", "what", "stack", "model", "pipeline", "items_sha256", "run_sha256", "custom", "has_tgt_new")}
+    m["model"] = model_label(meta)
     m["label"] = LABEL.get(meta["run"], meta["what"]) if not meta["custom"] else "records " + meta["run"]
-    return dict(meta=m, all=summ["all"] if summ else None, groups=list(groups.values()),
-                families=sorted(fam.items(), key=lambda kv: (-kv[1], kv[0])), counts=counts)
+    xn = {L: dict(prev_de=xliff.NOTE[L]["prev_de"], prev_tgt=xliff.NOTE[L]["prev_tgt"], product=xliff.NOTE[L]["product"],
+                  about=xliff.nt(L, "about"), states=xliff.nt(L, "states"), prov=xliff.provenance_note(meta, L),
+                  review=xliff.NOTE[L]["review"], reviewed=xliff.NOTE[L]["reviewed"],
+                  dec={k: xliff.NOTE[L][k] for k in ("accept", "accept-edited", "send-back")}) for L in ("fr", "it")}
+    return dict(meta=m, all=summ["all"] if summ else None, groups=G, xn=xn,
+                families=[[f, n, flab.get(f, f)] for f, n in sorted(fam.items(), key=lambda kv: (-kv[1], kv[0]))], counts=counts,
+                audit=audit_view.data(audit, audit_view.RESULTS, hist) if audit else None)
 
 
 def fonts_css():
@@ -227,8 +275,8 @@ def fonts_css():
     return "\n".join(rules)
 
 
-def build(run="fresh166", out=OUT, records=None, items=None, fragment=False):
-    D = data(run, records, items)
+def build(run="fresh166", out=OUT, records=None, items=None, fragment=False, audit=audit_view.AUDIT, hist=None):
+    D = data(run, records, items, audit, hist)
     blob = json.dumps(D, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     body = BODY.replace("__DATA__", blob)
     head = HEAD.replace("__FONTS__", fonts_css())
@@ -248,11 +296,17 @@ def main(argv=None):
     ap.add_argument("--records", help="records JSONL (gleichlaut month / draft) instead of a recorded run; needs --items")
     ap.add_argument("--items", help="items file for --records")
     ap.add_argument("--fragment", action="store_true", help="no doctype/html/head/body (for a claude.ai artifact)")
+    ap.add_argument("--audit", default=audit_view.AUDIT, help="audit findings file for the Register audit tab ('' = no tab)")
+    ap.add_argument("--hist", help="SL snapshot dir (default $GLEICHLAUT_HIST or out/hist): fills audit snippets a finding lacks")
     a = ap.parse_args(argv)
-    p, D = build(a.run, a.out, a.records, a.items, a.fragment)
+    from ..sl import hist_dir
+    p, D = build(a.run, a.out, a.records, a.items, a.fragment, a.audit, hist_dir(a.hist))
     c = D["counts"]
+    au = D.get("audit")
     print(f"ui: {c['items']} drafts in {c['changes']} German changes ({c['ready']} ready, {c['flagged']} flagged"
-          + (f", {c['human']} routed to a translator" if c["human"] else "") + f") -> {p} ({os.path.getsize(p) // 1024} KB)")
+          + (f", {c['human']} routed to a translator" if c["human"] else "") + f"; flag findings {c['to_check']} to check, "
+          f"{c['probably_fine']} probably fine)" + (f"; audit {len(au['rows'])} findings" + (" (snippets from the SL snapshot)" if au["meta"]["hist"] else "") if au else "")
+          + f" -> {p} ({os.path.getsize(p) // 1024} KB)")
 
 
 if __name__ == "__main__":

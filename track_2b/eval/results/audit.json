@@ -16,6 +16,27 @@
    "dev": 10,
    "held": 11
   },
+  "by_kind": {
+   "editorial": 5,
+   "language": 1,
+   "number": 21,
+   "unit": 0
+  },
+  "by_kind_lang": {
+   "editorial": {
+    "de": 1,
+    "fr": 3,
+    "it": 1
+   },
+   "language": {
+    "it": 1
+   },
+   "number": {
+    "fr": 14,
+    "it": 7
+   },
+   "unit": {}
+  },
   "by_lang": {
    "fr": 14,
    "it": 7
@@ -23,20 +44,174 @@
   "count_only_differences": 230,
   "date": "20261006",
   "distinct_text_pairs": 21,
+  "editorial_by_rule": {
+   "E1": 1,
+   "E2": 3,
+   "E4": 1
+  },
   "findings": 21,
+  "findings_all": 27,
+  "findings_note": "'findings' counts the number findings (round 2); all kinds: by_kind",
+  "first_seen_by_kind": {
+   "editorial": {
+    "20260219": 5
+   },
+   "language": {
+    "20260801": 1
+   },
+   "number": {
+    "20260219": 19,
+    "20260601": 2
+   },
+   "unit": {}
+  },
   "fresh": {
+   "by_kind": {
+    "editorial": [],
+    "language": [
+     "wb079-it"
+    ],
+    "number": [
+     "wb004-it"
+    ],
+    "unit": []
+   },
    "items": 166,
-   "pairs": 1,
-   "with_preexisting": 1
+   "pairs": 2,
+   "with_any": 2,
+   "with_editorial": 0,
+   "with_language_or_number": 2,
+   "with_preexisting": 2
   },
   "generated_by": "python3 -m gleichlaut.audit --hist <dir> --date 20261006",
   "keytruda_bonus": {
-   "found": false,
-   "note": "not numeric (the IT slot carries French text); out of scope for this check"
+   "findings": [
+    {
+     "detected": "fr",
+     "fid": "L01",
+     "first_seen": "20260801",
+     "kind": "language",
+     "lang": "it"
+    }
+   ],
+   "found": true
   },
+  "language_any_snapshot": [
+   {
+    "detected": "fr",
+    "id": "KEYTRUDA.07---Inj-L-s---Urothelkarzinom--Monotherapie--KN045",
+    "lang": "it",
+    "product": [
+     "Keytruda"
+    ],
+    "snapshots": [
+     "20260801",
+     "20260901",
+     "20261001",
+     "20261006"
+    ]
+   }
+  ],
+  "language_fields_judged": {
+   "de": 1613,
+   "fr": 1640,
+   "it": 1612
+  },
+  "language_fields_too_short": {
+   "de": 75,
+   "fr": 48,
+   "it": 76
+  },
+  "language_findings": [
+   {
+    "detected": "fr",
+    "fid": "L01",
+    "first_seen": "20260801",
+    "id": "KEYTRUDA.07---Inj-L-s---Urothelkarzinom--Monotherapie--KN045",
+    "identical_to": [
+     "fr"
+    ],
+    "lang": "it",
+    "product": [
+     "Keytruda"
+    ],
+    "seen_in": 4
+   }
+  ],
+  "limitations_with_any_finding": 20,
   "limitations_with_finding": 17,
   "model_calls": 0,
   "n_limitations": 1688,
+  "number_explained_by_editorial": {
+   "N04": [
+    "E04"
+   ],
+   "N13": [
+    "E05"
+   ],
+   "N16": [
+    "E01"
+   ],
+   "N17": [
+    "E01"
+   ]
+  },
+  "per_snapshot": {
+   "20260219": {
+    "editorial": 14,
+    "language": 0,
+    "number": 115,
+    "unit": 0
+   },
+   "20260304": {
+    "editorial": 14,
+    "language": 0,
+    "number": 111,
+    "unit": 0
+   },
+   "20260401": {
+    "editorial": 14,
+    "language": 0,
+    "number": 111,
+    "unit": 0
+   },
+   "20260601": {
+    "editorial": 5,
+    "language": 0,
+    "number": 21,
+    "unit": 0
+   },
+   "20260701": {
+    "editorial": 5,
+    "language": 0,
+    "number": 21,
+    "unit": 0
+   },
+   "20260801": {
+    "editorial": 5,
+    "language": 1,
+    "number": 21,
+    "unit": 0
+   },
+   "20260901": {
+    "editorial": 5,
+    "language": 1,
+    "number": 21,
+    "unit": 0
+   },
+   "20261001": {
+    "editorial": 5,
+    "language": 1,
+    "number": 21,
+    "unit": 0
+   },
+   "20261006": {
+    "editorial": 5,
+    "language": 1,
+    "number": 21,
+    "unit": 0
+   }
+  },
   "recall": {
    "cases": {
     "BENEPALI4": {
@@ -201,6 +376,18 @@
    "precision": "3/50 = 6% (all categories)",
    "source": "spikes/gleichlaut/results.md (research, not shipped)"
   },
+  "snapshots_dated": [
+   "20260219",
+   "20260304",
+   "20260401",
+   "20260601",
+   "20260701",
+   "20260801",
+   "20260901",
+   "20261001",
+   "20261006"
+  ],
+  "stats_file": "data/audit/lang_stats_20261006.json.gz",
   "suppressed": {
    "glued": 5,
    "one": 51,
@@ -220,7 +407,7 @@
      ],
      [
       "kostengutsprache",
-      "médecin conseil"
+      "conseil"
      ],
      [
       "übermitteln",
@@ -228,11 +415,11 @@
      ],
      [
       "vorgängiger",
-      "médecin conseil"
+      "conseil"
      ],
      [
       "vertrauensarztes",
-      "médecin conseil"
+      "conseil"
      ],
      [
       "konsultation",
@@ -306,7 +493,7 @@
      ]
     ],
     "exceptions": 741,
-    "ids_with_exception": 473,
+    "ids_with_exception": 474,
     "p": 0.9,
     "support": 10,
     "term_pairs": 314
@@ -324,9 +511,186 @@
    "status": "off: not precise enough (docs/audit.md)"
   },
   "unbound_differences": 148,
-  "worklist": {
-   "n": 21,
-   "pool": 21
+  "unit_one_sided": [
+   {
+    "de_units": [
+     "w",
+     "y"
+    ],
+    "id": "DUPIXENT.02",
+    "lang": "it",
+    "tgt_units": [
+     "w"
+    ],
+    "value": "16"
+   },
+   {
+    "de_units": [
+     "w",
+     "y"
+    ],
+    "id": "DUPIXENT.02P",
+    "lang": "it",
+    "tgt_units": [
+     "w"
+    ],
+    "value": "16"
+   },
+   {
+    "de_units": [
+     "y"
+    ],
+    "id": "MAVIRET3",
+    "lang": "fr",
+    "tgt_units": [
+     "w",
+     "y"
+    ],
+    "value": "12"
+   },
+   {
+    "de_units": [
+     "m"
+    ],
+    "id": "MYOZYME4",
+    "lang": "fr",
+    "tgt_units": [
+     "m",
+     "min"
+    ],
+    "value": "10"
+   },
+   {
+    "de_units": [
+     "m"
+    ],
+    "id": "MYOZYME4",
+    "lang": "it",
+    "tgt_units": [
+     "m",
+     "min"
+    ],
+    "value": "10"
+   },
+   {
+    "de_units": [
+     "m"
+    ],
+    "id": "NEXVIADYME2",
+    "lang": "fr",
+    "tgt_units": [
+     "m",
+     "min"
+    ],
+    "value": "10"
+   },
+   {
+    "de_units": [
+     "m"
+    ],
+    "id": "NEXVIADYME2",
+    "lang": "it",
+    "tgt_units": [
+     "m",
+     "min"
+    ],
+    "value": "10"
+   },
+   {
+    "de_units": [
+     "m"
+    ],
+    "id": "OPFOLDA2",
+    "lang": "fr",
+    "tgt_units": [
+     "m",
+     "min"
+    ],
+    "value": "10"
+   },
+   {
+    "de_units": [
+     "m"
+    ],
+    "id": "OPFOLDA2",
+    "lang": "it",
+    "tgt_units": [
+     "m",
+     "min"
+    ],
+    "value": "10"
+   },
+   {
+    "de_units": [
+     "m",
+     "w"
+    ],
+    "id": "OTEZLA.03",
+    "lang": "fr",
+    "tgt_units": [
+     "w"
+    ],
+    "value": "12"
+   },
+   {
+    "de_units": [
+     "m",
+     "w"
+    ],
+    "id": "OTEZLA4",
+    "lang": "fr",
+    "tgt_units": [
+     "w"
+    ],
+    "value": "12"
+   },
+   {
+    "de_units": [
+     "m"
+    ],
+    "id": "POMBILITI2",
+    "lang": "fr",
+    "tgt_units": [
+     "m",
+     "min"
+    ],
+    "value": "10"
+   },
+   {
+    "de_units": [
+     "m"
+    ],
+    "id": "POMBILITI2",
+    "lang": "it",
+    "tgt_units": [
+     "m",
+     "min"
+    ],
+    "value": "10"
+   }
+  ],
+  "worklist_new": {
+   "pool": 6
   }
+ },
+ "v2": {
+  "by_kind": {
+   "editorial": [
+    5,
+    5
+   ],
+   "language": [
+    1,
+    1
+   ]
+  },
+  "editorial_real": 5,
+  "findings_all_kinds": 27,
+  "language_swaps": 1,
+  "new_kinds_findings": 6,
+  "new_kinds_real": 6,
+  "precision_all_pct": 59.3,
+  "real_all_kinds": 16,
+  "real_new_beyond_known": 6
  }
 }

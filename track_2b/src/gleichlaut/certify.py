@@ -18,9 +18,26 @@ New certificates, their call logs, the suite records and recorded responses go t
 default track_2b/state, gitignored): state/certificates/, state/runs/, state/cache/, state/canary/. The certificates shipped
 in eval/certificates/ are evidence of the evaluation (a replay and the Public AI runs) and are never consulted by certified().
 
+Integrity (a certificate is a claim that is re-checked every time it is used, not trusted as written):
+  run_records_sha256 / calls_log_sha256 / labels_sha256   sha256 of the suite records (state/runs/), the call log
+                     (state/certificates/<name>.calls.jsonl) and, after --resolve, the human labels (state/certificates/
+                     <name>.labels.tsv) the certificate was computed from
+  expires            certification date + GLEICHLAUT_CERT_DAYS (default 90; --valid-days); the gate also applies the
+                     validity configured at check time, whichever ends first
+  hmac_sha256        optional: HMAC-SHA256 of the certificate with the key in the file named by GLEICHLAUT_CERT_KEY. When that
+                     variable is set, unsigned or wrongly signed certificates and canary reports are refused. Keep the key
+                     outside state/ (root-owned file, Kubernetes Secret)
 certified(base_url, model) -> the newest certificate with kind "endpoint", the exact same endpoint id and model, status PASS,
-and the current freeze and suite hashes; else None. The newest certificate for an endpoint+model decides (a later FAIL
-revokes an earlier PASS).
+the current freeze and suite hashes, not expired, whose stored files match their hashes and whose records, re-scored here with
+the frozen checks and the reference labels (verify()), give PASS again with the same metrics; else None. So a hand-edited
+"status": "PASS" opens nothing: a forger has to produce suite records that really pass the frozen checks. Without
+GLEICHLAUT_CERT_KEY nothing stops a writer of state/ from re-dating a certificate or copying passing records; the HMAC does.
+The newest certificate for an endpoint+model decides (a later FAIL revokes an earlier PASS).
+
+Canary gate (canary_gate(), used by draft / month on the SL lane): the newest canary report for the certificate in use must
+have passed, and the newest check (that canary, or the certification itself) must be at most GLEICHLAUT_CANARY_MAX_AGE_DAYS
+old (default 31). A failed canary refuses (exit 3) until a later canary passes or the endpoint is re-certified; a stale one
+refuses unless --allow-stale-canary is given (logged to state/gate-overrides.jsonl and summary.json).
 
 Canary (`--canary [N]`, default 40 items): re-runs the first N suite items and compares them with the certified run of the
 same endpoint+model on the same items. Byte identity is reported as information only: at temperature 0 the 70B lane is not
@@ -29,8 +46,10 @@ deterministic (eval/results/m3.json: a seeded re-run of the fresh 166 gave 69.9%
 (exit 3) only on
   flag agreement < 0.85        (8x the measured disagreement of 1.8%: the guards now see a different model)
   exact drop > 5 points        (8x the measured change of +0.6 points, and the pass rule's minimum gain over rules-only)
-  a served model id not seen at certification."""
-import argparse, datetime, json, os, re, sys, time
+  a served model id not seen at certification.
+A system_fingerprint not seen at certification is a warning (recorded in the report), not a failure. Reports are never
+overwritten: state/canary/canary-<endpoint>--<model>-<UTC time>[-N].json."""
+import argparse, datetime, hashlib, hmac, json, os, re, sys, time
 from concurrent.futures import ThreadPoolExecutor
 from . import core, score, backends
 
@@ -41,6 +60,18 @@ CANARY_MIN_FLAG_AGREEMENT = 0.85
 CANARY_MAX_EXACT_DROP = 5.0
 LABEL_CLASSES = ("equivalent", "preexisting", "cosmetic", "minor", "german", "stale", "REAL", "garble")
 EXIT = dict(PASS=0, FAIL=5, PENDING_REVIEW=7)
+CERT_DAYS = 90
+CANARY_MAX_AGE_DAYS = 31
+
+
+def _days(var, default):
+    v = os.environ.get(var)
+    try: return float(v) if v not in (None, "") else float(default)
+    except ValueError: raise backends.ConfigError(f"{var} must be a number of days, got {v!r}")
+
+
+def cert_days(): return _days("GLEICHLAUT_CERT_DAYS", CERT_DAYS)
+def canary_max_age_days(): return _days("GLEICHLAUT_CANARY_MAX_AGE_DAYS", CANARY_MAX_AGE_DAYS)
 
 
 def state_dir(*parts):
@@ -67,8 +98,15 @@ def reference_labels():
 def run_suite(ask, n=None, workers=2):
     I = score.load_items(ITEMS)[:n] if n else score.load_items(ITEMS)
     P = core.Pipeline(ask, "g3")
-    t0 = time.time()
-    with ThreadPoolExecutor(workers) as ex: R = list(ex.map(P.run, I))
+    t0 = time.time(); ex = ThreadPoolExecutor(max(1, workers)); futs = []
+    try:
+        futs = [ex.submit(P.run, x) for x in I]
+        R = [f.result() for f in futs]
+    except BaseException:
+        for f in futs: f.cancel()              # a dead endpoint stops the run now, not after every queued item has timed out
+        raise
+    finally:
+        ex.shutdown(wait=True)
     return I, R, time.time() - t0
 
 
@@ -106,6 +144,165 @@ def certificate(name, kind, endpoint, model, I, R, secs, served, seeds, fingerpr
                 run_records=f"runs/certify_{name}.jsonl", calls_log=f"certificates/{name}.calls.jsonl")
 
 
+# ------------------------------------------------------------------ integrity: hashes, expiry, optional HMAC
+def _canon(c): return json.dumps({k: v for k, v in c.items() if k != "hmac_sha256"}, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+
+
+def cert_key():
+    """the HMAC key (bytes) from the file named by GLEICHLAUT_CERT_KEY, or None when the variable is unset."""
+    p = os.environ.get("GLEICHLAUT_CERT_KEY")
+    if not p: return None
+    try:
+        with open(p, "rb") as f: k = f.read().strip()
+    except OSError as e:
+        raise backends.ConfigError(f"GLEICHLAUT_CERT_KEY names {p!r}, which cannot be read: {e.strerror or e}")
+    if len(k) < 16: raise backends.ConfigError(f"the certificate key in {p!r} is shorter than 16 bytes")
+    return k
+
+
+def sign(c):
+    k = cert_key()
+    c.pop("hmac_sha256", None)
+    if k: c["hmac_sha256"] = hmac.new(k, _canon(c).encode("utf-8"), hashlib.sha256).hexdigest()
+    return c
+
+
+def check_signature(c):
+    """-> None if acceptable, else the reason. With no key configured, signatures are not checked."""
+    k = cert_key()
+    if not k: return None
+    if "hmac_sha256" not in c: return "unsigned, but GLEICHLAUT_CERT_KEY is set (every certificate and canary report must be signed)"
+    if not hmac.compare_digest(c["hmac_sha256"], hmac.new(k, _canon(c).encode("utf-8"), hashlib.sha256).hexdigest()):
+        return "HMAC does not match (edited, or signed with another key)"
+    return None
+
+
+def _write_json(path, obj):
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f: json.dump(obj, f, ensure_ascii=False, indent=1)
+    os.replace(tmp, path)
+
+
+def _unique(path):
+    """path, or path with -2, -3, ... before the extension: nothing is ever overwritten."""
+    base, ext = os.path.splitext(path); n = 1
+    while os.path.exists(path): n += 1; path = f"{base}-{n}{ext}"
+    return path
+
+
+def _parse_date(s):
+    try:
+        d = datetime.datetime.fromisoformat(str(s).replace("Z", "+00:00"))
+        return d if d.tzinfo else d.replace(tzinfo=datetime.timezone.utc)
+    except ValueError: return None
+
+
+def write_certificate(name, kind, endpoint, model, I, R, secs, served, seeds, fps, calls_log, extra_labels=None, labels_file=None,
+                      valid_days=None, date=None):
+    """write the suite records and the certificate (hashes of records, call log and labels; expiry; HMAC if a key is set)."""
+    for d in ("certificates", "runs"): os.makedirs(state_dir(d), exist_ok=True)
+    runs = state_dir("runs", f"certify_{name}.jsonl")
+    with open(runs, "w", encoding="utf-8") as f:
+        for r in R: f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    if not os.path.exists(calls_log): open(calls_log, "a").close()
+    c = certificate(name, kind, endpoint, model, I, R, secs, served, seeds, fps, extra_labels)
+    if date: c["date"] = date
+    days = float(valid_days) if valid_days is not None else cert_days()
+    c.update(valid_days=days, expires=(_parse_date(c["date"]) + datetime.timedelta(days=days)).isoformat(timespec="seconds"),
+             run_records_sha256=core.sha256(runs), calls_log=os.path.relpath(calls_log, state_dir()),
+             calls_log_sha256=core.sha256(calls_log))
+    if labels_file:
+        c.update(review_labels_file=os.path.relpath(labels_file, state_dir()), labels_sha256=core.sha256(labels_file))
+    sign(c)
+    p = state_dir("certificates", f"{name}.json")
+    _write_json(p, c)
+    return p, c
+
+
+def read_labels(path, R):
+    """TSV key<TAB>class -> ({key: {norm(output): class}}, bad lines)."""
+    lines = [l for l in open(path, encoding="utf-8").read().splitlines() if l.strip()]
+    if not lines or lines[0].split("\t")[:2] != ["key", "class"]: return None, ["the labels file must be a TSV with the header 'key<TAB>class'"]
+    extra, bad = {}, []
+    for l in lines[1:]:
+        k, cls = (l.split("\t") + [""])[:2]
+        if cls not in LABEL_CLASSES or k not in R: bad.append(l); continue
+        extra[k] = {core.lock.norm(R[k]["out"]): cls}
+    return extra, bad
+
+
+_VERIFIED = {}
+
+
+def verify(c, now=None):
+    """-> None if the certificate holds, else the reason. Re-checks everything the certificate claims (see the module doc)."""
+    now = now or _now(); name = c.get("name")
+    if c.get("kind") != "endpoint": return f"certificate {name} is of kind {c.get('kind')!r}: evidence only, never authorises"
+    if c.get("status") != "PASS": return f"certificate {name} has status {c.get('status')}"
+    bad = check_signature(c)
+    if bad: return f"certificate {name}: {bad}"
+    if c.get("freeze_sha256") != core.sha256(core.FREEZE):
+        return f"certificate {name} was made with other frozen code (freeze sha256 changed): re-certify"
+    if (c.get("suite") or {}).get("sha256") != core.sha256(os.path.join(core.ROOT, "data", ITEMS)):
+        return f"certificate {name} was made on another suite: re-certify"
+    made = _parse_date(c.get("date"))
+    if made is None: return f"certificate {name} has no valid date"
+    if made > now + datetime.timedelta(hours=1): return f"certificate {name} is dated in the future ({c.get('date')})"
+    stored = _parse_date(c.get("expires"))
+    if stored is None or not all(c.get(k) for k in ("run_records_sha256", "calls_log_sha256")):
+        return f"certificate {name} has no integrity fields (made by an older Gleichlaut): re-certify"
+    exp = min(stored, made + datetime.timedelta(days=cert_days()))
+    if now > exp: return f"certificate {name} expired on {exp.date().isoformat()} (made {made.date().isoformat()}; validity {cert_days():g} days): re-certify"
+    files = [("run_records", c.get("run_records"), c["run_records_sha256"]), ("call log", c.get("calls_log"), c["calls_log_sha256"])]
+    if c.get("review_labels_file") or c.get("labels_sha256"):
+        files.append(("review labels", c.get("review_labels_file"), c.get("labels_sha256")))
+    paths = {}
+    for what, rel, want in files:
+        p = state_dir(rel or "-")
+        if not rel or not os.path.isfile(p): return f"certificate {name}: its {what} file is missing ({rel})"
+        if core.sha256(p) != want: return f"certificate {name}: its {what} file ({rel}) does not match the sha256 in the certificate"
+        paths[what] = p
+    ck = (name, c["run_records_sha256"], c["calls_log_sha256"], c.get("labels_sha256"), json.dumps(c.get("metrics"), sort_keys=True),
+          json.dumps(c.get("models_served")), core.sha256(core.FREEZE))
+    if ck in _VERIFIED: return _VERIFIED[ck]
+    _VERIFIED[ck] = why = _recheck(c, paths)
+    return why
+
+
+def _recheck(c, paths):
+    """re-score the stored records with the frozen checks; the result must be the certificate's own PASS."""
+    name = c.get("name")
+    try:
+        R = [json.loads(l) for l in open(paths["run_records"], encoding="utf-8") if l.strip()]
+        I = score.load_items(ITEMS)
+        if [r.get("key") for r in R] != [x["key"] for x in I]:
+            return f"certificate {name}: its records do not cover the {len(I)} suite items in order"
+        extra = None
+        if "review labels" in paths:
+            extra, bad = read_labels(paths["review labels"], {r["key"]: r for r in R})
+            if extra is None or bad: return f"certificate {name}: its review labels file is not valid"
+        s, status, review, _ = evaluate(I, R, extra)
+    except AssertionError as e:
+        return f"certificate {name}: a stored guard verdict differs from the frozen checks ({e})"
+    except (ValueError, KeyError, TypeError, OSError) as e:
+        return f"certificate {name}: its records cannot be re-scored ({type(e).__name__}: {e})"
+    if status != "PASS": return f"certificate {name}: its records re-score to {status}, not PASS"
+    want = {k: s[k] for k in (c.get("metrics") or {})}
+    if json.loads(json.dumps(want)) != c.get("metrics") or review != c.get("needs_review"):
+        return f"certificate {name}: the metrics in the certificate differ from its re-scored records"
+    calls = []
+    for l in open(paths["call log"], encoding="utf-8"):
+        try: calls.append(json.loads(l))
+        except ValueError: return f"certificate {name}: its call log has a line that is not JSON"
+    need = sum(not r.get("rule_only") for r in R)
+    if len(calls) < need: return f"certificate {name}: its call log has {len(calls)} calls for {need} model-drafted items"
+    eps = {x.get("endpoint") for x in calls}
+    if eps != {c.get("endpoint")}: return f"certificate {name}: its call log names other endpoints {sorted(e for e in eps if e)}"
+    if sorted({x.get("model_served") or "" for x in calls}) != sorted(c.get("models_served") or []):
+        return f"certificate {name}: the models served in its call log differ from the certificate"
+    return None
+
+
 # ------------------------------------------------------------------ lookup
 def certificates():
     """-> [(path, certificate)] in the state directory, oldest first."""
@@ -117,7 +314,7 @@ def certificates():
             with open(os.path.join(d, f), encoding="utf-8") as fh: c = json.load(fh)
         except (OSError, ValueError): continue
         if isinstance(c, dict): out.append((os.path.join(d, f), c))
-    return sorted(out, key=lambda pc: pc[1].get("date", ""))
+    return sorted(out, key=lambda pc: (pc[1].get("date", ""), os.path.getmtime(pc[0])))
 
 
 def lookup(base_url, model):
@@ -128,11 +325,10 @@ def lookup(base_url, model):
     c = cands[-1]
     if c.get("status") != "PASS":
         return None, f"the newest certificate for {model} at {ep} ({c.get('name')}) has status {c.get('status')}"
-    if c.get("freeze_sha256") != core.sha256(core.FREEZE):
-        return None, f"certificate {c.get('name')} was made with other frozen code (freeze sha256 changed): re-certify"
-    if (c.get("suite") or {}).get("sha256") != core.sha256(os.path.join(core.ROOT, "data", ITEMS)):
-        return None, f"certificate {c.get('name')} was made on another suite: re-certify"
-    return c, f"certificate {c.get('name')} ({c.get('date')})"
+    why = verify(c)
+    if why: return None, why
+    return c, (f"certificate {c.get('name')} ({c.get('date')}, verified: records re-scored, hashes match"
+               f"{', HMAC ok' if cert_key() else ''}; expires {str(c.get('expires'))[:10]})")
 
 
 def certified(base_url, model):
@@ -141,7 +337,7 @@ def certified(base_url, model):
 
 
 # ------------------------------------------------------------------ canary
-def canary_report(I, R, ref, served=(), cert=None):
+def canary_report(I, R, ref, served=(), cert=None, fingerprints=()):
     S = core.SCORE; rows = []
     for x, r in zip(I, R):
         f = ref.get(x["key"])
@@ -158,7 +354,13 @@ def canary_report(I, R, ref, served=(), cert=None):
     if ex_ref - ex_now > CANARY_MAX_EXACT_DROP: reasons.append(f"exact dropped {ex_ref - ex_now:.1f} points > {CANARY_MAX_EXACT_DROP}")
     new_served = sorted(set(s for s in served if s) - set((cert or {}).get("models_served", []))) if cert else []
     if new_served: reasons.append(f"served model(s) not seen at certification: {new_served}")
-    return dict(ok=not reasons, reasons=reasons, n=n,
+    warnings = []
+    then = set((cert or {}).get("system_fingerprints") or [])
+    new_fp = sorted(set(f for f in fingerprints if f) - then) if then else []
+    if new_fp:
+        warnings.append(f"system_fingerprint changed: now {new_fp}, at certification {sorted(then)} (the serving build changed; "
+                         f"within tolerance, but consider re-certifying)")
+    return dict(ok=not reasons, reasons=reasons, warnings=warnings, fingerprint_changed=bool(new_fp), n=n,
                 tolerances=dict(min_flag_agreement=CANARY_MIN_FLAG_AGREEMENT, max_exact_drop_pts=CANARY_MAX_EXACT_DROP,
                                 derived_from="eval/results/m3.json (seeded re-run of the fresh 166)"),
                 flag_agreement=round(agree, 3), exact_now_pct=round(ex_now, 1), exact_ref_pct=round(ex_ref, 1),
@@ -167,6 +369,46 @@ def canary_report(I, R, ref, served=(), cert=None):
                 info=dict(byte_identical=sum(d["same_output"] for d in rows), byte_identical_pct=round(100 * sum(d["same_output"] for d in rows) / n, 1),
                           note="byte identity is information only: measured 69.9% at temperature 0 (eval/results/m3.json)"),
                 flag_changes=[d["key"] for d in rows if not d["same_flag"]])
+
+
+def canary_reports(endpoint=None, model=None, cert_name=None):
+    """-> [(path, report)] in state/canary/, oldest first, optionally for one endpoint / model / certificate."""
+    d = state_dir("canary"); out = []
+    if not os.path.isdir(d): return out
+    for f in sorted(os.listdir(d)):
+        if not f.endswith(".json"): continue
+        try:
+            with open(os.path.join(d, f), encoding="utf-8") as fh: r = json.load(fh)
+        except (OSError, ValueError): continue
+        if not isinstance(r, dict): continue
+        if endpoint and r.get("endpoint") != endpoint: continue
+        if model and r.get("model") != model: continue
+        if cert_name and r.get("certificate") != cert_name: continue
+        out.append((os.path.join(d, f), r))
+    return sorted(out, key=lambda pr: (pr[1].get("date", ""), os.path.getmtime(pr[0])))
+
+
+def canary_gate(cert, max_age_days=None, now=None):
+    """-> (state, reason): state 'ok' | 'failed' | 'stale'. The newest canary for this certificate decides; with none since
+    certification, the certification itself is the latest check."""
+    now = now or _now(); max_age = canary_max_age_days() if max_age_days is None else float(max_age_days)
+    reps = [(p, r) for p, r in canary_reports(cert.get("endpoint"), cert.get("model_requested"), cert.get("name"))]
+    unsigned = [p for p, r in reps if check_signature(r)]
+    reps = [(p, r) for p, r in reps if not check_signature(r)]
+    note = f" ({len(unsigned)} report(s) ignored: not signed with GLEICHLAUT_CERT_KEY)" if unsigned else ""
+    if reps:
+        p, r = reps[-1]; when, what = _parse_date(r.get("date")), f"canary {os.path.basename(p)}"
+        if not r.get("ok"):
+            return "failed", (f"the latest canary for certificate {cert.get('name')} ({os.path.basename(p)}, {r.get('date')}) FAILED: "
+                              f"{'; '.join(r.get('reasons') or [])}. Re-certify (make certify), or draft with --air-gapped{note}")
+    else:
+        when, what = _parse_date(cert.get("date")), f"certification {cert.get('name')}"
+    if when is None: return "stale", f"the date of the latest check ({what}) cannot be read{note}"
+    age = (now - when).total_seconds() / 86400
+    if age > max_age:
+        return "stale", (f"the latest check of this endpoint ({what}, {when.date().isoformat()}) is {age:.0f} days old "
+                         f"(> {max_age:g}; GLEICHLAUT_CANARY_MAX_AGE_DAYS). Run `make canary` first, or pass --allow-stale-canary{note}")
+    return "ok", f"latest check: {what}, {when.date().isoformat()}, {age:.0f} day(s) ago, passed{note}"
 
 
 def _read_log(log):
@@ -185,24 +427,26 @@ def _slug(s): return re.sub(r"[^A-Za-z0-9.]+", "-", s).strip("-")[:80]
 def resolve(cert_path, labels_path):
     """apply human labels (TSV: key<TAB>class) to the needs_review outputs of a PENDING_REVIEW certificate."""
     c = json.load(open(cert_path, encoding="utf-8"))
-    runs = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(cert_path))), c["run_records"])
+    bad = check_signature(c)
+    if bad: print(f"error: certificate {cert_path}: {bad}"); return 2
+    runs = state_dir(c["run_records"])
     if not os.path.exists(runs): print(f"error: the suite records of this certificate are missing: {runs}"); return 2
+    if c.get("run_records_sha256") and core.sha256(runs) != c["run_records_sha256"]:
+        print(f"error: the suite records {runs} do not match the sha256 in the certificate"); return 2
     R = {json.loads(l)["key"]: json.loads(l) for l in open(runs, encoding="utf-8")}
-    lines = [l for l in open(labels_path, encoding="utf-8").read().splitlines() if l.strip()]
-    if not lines or lines[0].split("\t")[:2] != ["key", "class"]:
-        print("error: the labels file must be a TSV with the header 'key<TAB>class'"); return 2
-    extra, bad = {}, []
-    for l in lines[1:]:
-        k, cls = (l.split("\t") + [""])[:2]
-        if cls not in LABEL_CLASSES or k not in R: bad.append(l); continue
-        extra[k] = {core.lock.norm(R[k]["out"]): cls}
+    extra, bad = read_labels(labels_path, R)
+    if extra is None: print("error: " + bad[0]); return 2
     if bad: print(f"error: {len(bad)} label line(s) with an unknown key or class (classes: {', '.join(LABEL_CLASSES)}): {bad[:3]}"); return 2
     I = [x for x in score.load_items(ITEMS) if x["key"] in R]
-    new = certificate(c["name"], c["kind"], c["endpoint"], c["model_requested"], I, [R[x["key"]] for x in I], c.get("wall_secs", 0),
-                      c.get("models_served", []), c.get("seeds", []), c.get("system_fingerprints", []), extra)
-    new.update(date=c["date"], resolved=_now().isoformat(timespec="seconds"),
-               review_labels=dict(path=os.path.basename(labels_path), sha256=core.sha256(labels_path), n=len(extra)))
-    json.dump(new, open(cert_path, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    keep = state_dir("certificates", f"{c['name']}.labels.tsv")
+    with open(labels_path, encoding="utf-8") as src, open(keep, "w", encoding="utf-8") as dst: dst.write(src.read())
+    log = state_dir(c.get("calls_log") or f"certificates/{c['name']}.calls.jsonl")
+    _, new = write_certificate(c["name"], c["kind"], c["endpoint"], c["model_requested"], I, [R[x["key"]] for x in I],
+                               c.get("wall_secs", 0), c.get("models_served", []), c.get("seeds", []), c.get("system_fingerprints", []),
+                               log, extra, labels_file=keep, valid_days=c.get("valid_days"), date=c["date"])
+    new.update(resolved=_now().isoformat(timespec="seconds"),
+               review_labels=dict(path=os.path.basename(labels_path), sha256=core.sha256(keep), n=len(extra)))
+    _write_json(state_dir("certificates", f"{c['name']}.json"), sign(new))
     print(f"certificate {cert_path}: {c['status']} -> {new['status']}  (still needs review: {len(new['needs_review'])})")
     return EXIT[new["status"]]
 
@@ -222,11 +466,21 @@ def main(argv=None):
     ap.add_argument("--workers", type=int, default=2)
     ap.add_argument("--resolve", metavar="CERT", help="apply human labels to a PENDING_REVIEW certificate (needs --labels)")
     ap.add_argument("--labels", metavar="TSV")
-    ap.add_argument("--list", action="store_true", help="list the certificates in the state directory")
+    ap.add_argument("--list", action="store_true", help="list the certificates in the state directory, each re-verified")
+    ap.add_argument("--valid-days", type=float, default=None, help=f"certificate validity in days (default GLEICHLAUT_CERT_DAYS or {CERT_DAYS})")
     a = ap.parse_args(argv)
+    try:
+        cert_key(); cert_days(); canary_max_age_days()
+    except backends.ConfigError as e:
+        print(f"error: {e}"); return 2
     if a.list:
         for p, c in certificates():
-            print(f"{c.get('status', '?'):14s} {c.get('kind', '?'):10s} {c.get('date', '?')}  {c.get('endpoint')}  {c.get('model_requested')}  {p}")
+            v = verify(c) if c.get("kind") == "endpoint" and c.get("status") == "PASS" else None
+            gate = ("holds" if not v else "DOES NOT HOLD: " + v) if c.get("kind") == "endpoint" and c.get("status") == "PASS" else "-"
+            print(f"{c.get('status', '?'):14s} {c.get('kind', '?'):10s} {c.get('date', '?')}  expires {str(c.get('expires', '?'))[:10]}  "
+                  f"{c.get('endpoint')}  {c.get('model_requested')}  {p}\n{'':16s}gate: {gate}")
+            if v is None and c.get("kind") == "endpoint" and c.get("status") == "PASS":
+                st, why = canary_gate(c); print(f"{'':16s}canary: {st}: {why}")
         return 0
     if a.resolve:
         if not a.labels: ap.error("--resolve needs --labels")
@@ -240,14 +494,18 @@ def main(argv=None):
         elif a.backend == "openai":
             probe = backends.OpenAI(); endpoint, model = probe.endpoint, probe.model; kind = "endpoint"
             name = a.name or f"{_slug(endpoint.split('//', 1)[-1])}--{_slug(model.split('/')[-1])}{'' if a.seed is None else '-seed' + str(a.seed)}-{stamp}"
+            if a.canary and not a.name: name = f"{_slug(endpoint.split('//', 1)[-1])}--{_slug(model.split('/')[-1])}-{stamp}"
         else:
             kind, endpoint, model = "evaluation", "Public AI via development gateway (evaluation only; may route outside Switzerland)", core.M70
             name = a.name or f"gateway-{stamp}"
             if not a.gw_dir: raise backends.ConfigError("the gateway backend is development-only: set GLEICHLAUT_GATEWAY_DIR (or --gw-dir)")
     except backends.ConfigError as e:
         print(f"error: {e}"); return 2
-    if a.canary: name = f"canary-{name}" if a.name else f"canary-{stamp}"
+    if a.canary: name = f"canary-{name}" if a.backend == "openai" or a.name else f"canary-{a.backend}-{stamp}"
     for d in ("certificates", "runs", "cache", "canary"): os.makedirs(state_dir(d), exist_ok=True)
+    sub = "canary" if a.canary else "certificates"; base, n = name, 1
+    while any(os.path.exists(state_dir(sub, name + e)) for e in (".json", ".calls.jsonl")) or os.path.exists(state_dir("runs", f"certify_{name}.jsonl")):
+        n += 1; name = f"{base}-{n}"                       # never overwrite a report, a certificate or its log
     log = state_dir("certificates" if not a.canary else "canary", f"{name}.calls.jsonl")
     try:
         if a.backend == "openai":
@@ -277,25 +535,26 @@ def main(argv=None):
     served, seeds, fps = _read_log(log)
     if a.backend == "cache": served, seeds, fps = {core.M70 + " (as recorded)"}, {"None"}, set()
     if a.canary:
-        rep = canary_report(I, R, ref, served, cert)
-        rep.update(date=_now().isoformat(timespec="seconds"), endpoint=endpoint, model=model, against=what,
-                   models_served=sorted(served), system_fingerprints=sorted(f for f in fps if f),
-                   fingerprints_at_certification=(cert or {}).get("system_fingerprints"))
-        p = state_dir("canary", f"{name}.json")
-        json.dump(rep, open(p, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        rep = canary_report(I, R, ref, served, cert, fps)
+        rep.update(name=name, date=_now().isoformat(timespec="seconds"), endpoint=endpoint, model=model, against=what,
+                   certificate=(cert or {}).get("name"), models_served=sorted(served), system_fingerprints=sorted(f for f in fps if f),
+                   fingerprints_at_certification=(cert or {}).get("system_fingerprints"),
+                   calls_log=os.path.relpath(log, state_dir()), calls_log_sha256=core.sha256(log) if os.path.exists(log) else None)
+        p = _unique(state_dir("canary", f"{name}.json"))
+        _write_json(p, sign(rep))
         print(json.dumps({k: rep[k] for k in rep if k not in ("flag_changes",)}, indent=1, ensure_ascii=False))
+        for w in rep["warnings"]: print(f"WARNING: {w}")
         print(f"CANARY {'PASSED' if rep['ok'] else 'FAILED: ' + '; '.join(rep['reasons'])}  (report {p})")
         return 0 if rep["ok"] else 3
     if a.n:
         print(json.dumps(evaluate(I, R)[0], indent=1)); return 0
-    with open(state_dir("runs", f"certify_{name}.jsonl"), "w", encoding="utf-8") as f:
-        for r in R: f.write(json.dumps(r, ensure_ascii=False) + "\n")
-    cert = certificate(name, kind, endpoint, model, I, R, secs, served, seeds, fps)
-    p = state_dir("certificates", f"{name}.json")
-    json.dump(cert, open(p, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    m = cert["metrics"]
-    print(f"certificate {p}\n  kind {kind}  status {cert['status']}  exact +{m['exact']['delta']} {m['exact']['ci95']}  flagged {m['flag_rate']}%  "
-          f"ready {m['ready_rate']}%  needs review {len(cert['needs_review'])}  served by {cert['models_served']}")
+    p, cert = write_certificate(name, kind, endpoint, model, I, R, secs, served, seeds, fps, log, valid_days=a.valid_days)
+    m = cert["metrics"]; ci = m["exact"]["ci95"]
+    print(f"certificate {p}\n  kind {kind}  status {cert['status']}  exact {m['exact']['delta']:+.1f} pts vs rules-only "
+          f"(95% CI {ci[0]:+.1f} to {ci[1]:+.1f})  flagged {m['flag_rate']}%  ready {m['ready_rate']}%  "
+          f"needs review {len(cert['needs_review'])}  served by {cert['models_served']}\n"
+          f"  expires {cert['expires'][:10]}  records sha256 {cert['run_records_sha256'][:12]}  call log sha256 {cert['calls_log_sha256'][:12]}"
+          f"  {'HMAC-signed' if 'hmac_sha256' in cert else 'unsigned (set GLEICHLAUT_CERT_KEY to sign)'}")
     if kind != "endpoint": print("  (a", kind, "certificate is evidence only: it never authorises the SL lane)")
     if cert["status"] == "PENDING_REVIEW":
         print(f"  label the {len(cert['needs_review'])} outputs listed in needs_review, then: "

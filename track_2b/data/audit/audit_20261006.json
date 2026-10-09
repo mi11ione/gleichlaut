@@ -4,6 +4,35 @@
 "date": "20261006",
 "model_calls": 0,
 "findings": 21,
+"findings_note": "'findings' counts the number findings (round 2); all kinds: by_kind",
+"by_kind": {
+"number": 21,
+"unit": 0,
+"language": 1,
+"editorial": 5
+},
+"by_kind_lang": {
+"number": {
+"it": 7,
+"fr": 14
+},
+"unit": {},
+"language": {
+"it": 1
+},
+"editorial": {
+"de": 1,
+"fr": 3,
+"it": 1
+}
+},
+"editorial_by_rule": {
+"E1": 1,
+"E2": 3,
+"E4": 1
+},
+"findings_all": 27,
+"limitations_with_any_finding": 20,
 "by_lang": {
 "it": 7,
 "fr": 14
@@ -26,6 +55,188 @@
 "thousands": 1
 },
 "n_limitations": 1688,
+"language_fields_judged": {
+"de": 1613,
+"fr": 1640,
+"it": 1612
+},
+"language_fields_too_short": {
+"de": 75,
+"fr": 48,
+"it": 76
+},
+"unit_one_sided": [
+{
+"id": "DUPIXENT.02",
+"lang": "it",
+"value": "16",
+"de_units": [
+"w",
+"y"
+],
+"tgt_units": [
+"w"
+]
+},
+{
+"id": "DUPIXENT.02P",
+"lang": "it",
+"value": "16",
+"de_units": [
+"w",
+"y"
+],
+"tgt_units": [
+"w"
+]
+},
+{
+"id": "MAVIRET3",
+"lang": "fr",
+"value": "12",
+"de_units": [
+"y"
+],
+"tgt_units": [
+"w",
+"y"
+]
+},
+{
+"id": "MYOZYME4",
+"lang": "fr",
+"value": "10",
+"de_units": [
+"m"
+],
+"tgt_units": [
+"m",
+"min"
+]
+},
+{
+"id": "MYOZYME4",
+"lang": "it",
+"value": "10",
+"de_units": [
+"m"
+],
+"tgt_units": [
+"m",
+"min"
+]
+},
+{
+"id": "NEXVIADYME2",
+"lang": "fr",
+"value": "10",
+"de_units": [
+"m"
+],
+"tgt_units": [
+"m",
+"min"
+]
+},
+{
+"id": "NEXVIADYME2",
+"lang": "it",
+"value": "10",
+"de_units": [
+"m"
+],
+"tgt_units": [
+"m",
+"min"
+]
+},
+{
+"id": "OPFOLDA2",
+"lang": "fr",
+"value": "10",
+"de_units": [
+"m"
+],
+"tgt_units": [
+"m",
+"min"
+]
+},
+{
+"id": "OPFOLDA2",
+"lang": "it",
+"value": "10",
+"de_units": [
+"m"
+],
+"tgt_units": [
+"m",
+"min"
+]
+},
+{
+"id": "OTEZLA.03",
+"lang": "fr",
+"value": "12",
+"de_units": [
+"m",
+"w"
+],
+"tgt_units": [
+"w"
+]
+},
+{
+"id": "OTEZLA4",
+"lang": "fr",
+"value": "12",
+"de_units": [
+"m",
+"w"
+],
+"tgt_units": [
+"w"
+]
+},
+{
+"id": "POMBILITI2",
+"lang": "fr",
+"value": "10",
+"de_units": [
+"m"
+],
+"tgt_units": [
+"m",
+"min"
+]
+},
+{
+"id": "POMBILITI2",
+"lang": "it",
+"value": "10",
+"de_units": [
+"m"
+],
+"tgt_units": [
+"m",
+"min"
+]
+}
+],
+"number_explained_by_editorial": {
+"N04": [
+"E04"
+],
+"N13": [
+"E05"
+],
+"N16": [
+"E01"
+],
+"N17": [
+"E01"
+]
+},
 "recall": {
 "limitations": 10,
 "of": 10,
@@ -186,9 +397,130 @@
 }
 },
 "keytruda_bonus": {
-"found": false,
-"note": "not numeric (the IT slot carries French text); out of scope for this check"
+"found": true,
+"findings": [
+{
+"fid": "L01",
+"kind": "language",
+"lang": "it",
+"detected": "fr",
+"first_seen": "20260801"
+}
+]
 },
+"language_findings": [
+{
+"fid": "L01",
+"id": "KEYTRUDA.07---Inj-L-s---Urothelkarzinom--Monotherapie--KN045",
+"product": [
+"Keytruda"
+],
+"lang": "it",
+"detected": "fr",
+"identical_to": [
+"fr"
+],
+"first_seen": "20260801",
+"seen_in": 4
+}
+],
+"snapshots_dated": [
+"20260219",
+"20260304",
+"20260401",
+"20260601",
+"20260701",
+"20260801",
+"20260901",
+"20261001",
+"20261006"
+],
+"per_snapshot": {
+"20260219": {
+"number": 115,
+"unit": 0,
+"language": 0,
+"editorial": 14
+},
+"20260304": {
+"number": 111,
+"unit": 0,
+"language": 0,
+"editorial": 14
+},
+"20260401": {
+"number": 111,
+"unit": 0,
+"language": 0,
+"editorial": 14
+},
+"20260601": {
+"number": 21,
+"unit": 0,
+"language": 0,
+"editorial": 5
+},
+"20260701": {
+"number": 21,
+"unit": 0,
+"language": 0,
+"editorial": 5
+},
+"20260801": {
+"number": 21,
+"unit": 0,
+"language": 1,
+"editorial": 5
+},
+"20260901": {
+"number": 21,
+"unit": 0,
+"language": 1,
+"editorial": 5
+},
+"20261001": {
+"number": 21,
+"unit": 0,
+"language": 1,
+"editorial": 5
+},
+"20261006": {
+"number": 21,
+"unit": 0,
+"language": 1,
+"editorial": 5
+}
+},
+"language_any_snapshot": [
+{
+"id": "KEYTRUDA.07---Inj-L-s---Urothelkarzinom--Monotherapie--KN045",
+"product": [
+"Keytruda"
+],
+"lang": "it",
+"detected": "fr",
+"snapshots": [
+"20260801",
+"20260901",
+"20261001",
+"20261006"
+]
+}
+],
+"first_seen_by_kind": {
+"number": {
+"20260219": 19,
+"20260601": 2
+},
+"unit": {},
+"language": {
+"20260801": 1
+},
+"editorial": {
+"20260219": 5
+}
+},
+"stats_file": "data/audit/lang_stats_20261006.json.gz",
 "s1_census_reference": {
 "precision": "3/50 = 6% (all categories)",
 "num": "3/15 = 20% strict",
@@ -210,7 +542,7 @@
 ],
 [
 "kostengutsprache",
-"médecin conseil"
+"conseil"
 ],
 [
 "übermitteln",
@@ -218,11 +550,11 @@
 ],
 [
 "vorgängiger",
-"médecin conseil"
+"conseil"
 ],
 [
 "vertrauensarztes",
-"médecin conseil"
+"conseil"
 ],
 [
 "konsultation",
@@ -252,7 +584,7 @@
 "distinct_pairs": 1620,
 "term_pairs": 314,
 "exceptions": 741,
-"ids_with_exception": 473,
+"ids_with_exception": 474,
 "examples": [
 [
 "patienten",
@@ -309,8 +641,21 @@
 },
 "fresh": {
 "items": 166,
-"with_preexisting": 1,
-"pairs": 1
+"with_preexisting": 2,
+"with_language_or_number": 2,
+"with_editorial": 0,
+"with_any": 2,
+"pairs": 2,
+"by_kind": {
+"number": [
+"wb004-it"
+],
+"unit": [],
+"language": [
+"wb079-it"
+],
+"editorial": []
+}
 }
 },
 "findings": [
@@ -320,7 +665,7 @@
 "Diaphin"
 ],
 "lang": "it",
-"kind": "numeric",
+"kind": "number",
 "score": 18,
 "half": "held",
 "group": "30102dcd36",
@@ -348,7 +693,22 @@
 ],
 "description": "DE has 6 (%), IT does not; IT has 12 (%), DE does not",
 "known": true,
-"rank": 1
+"rank": 1,
+"fid": "N01",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"…brikabgabepreises zuzüglich dem preisbezogenen Zuschlag von [6]% zuzüglich MWST. Aufgrund spezieller Vertriebsverhältnisse …",
+"…ezzo di fabbrica, più il supplemento attinente al prezzo di [12]% più la IVA. A causa della situazione particolare della dis…"
+],
+"explained_by": [],
+"first_seen": "20260219",
+"seen_in": 9
 },
 {
 "id": "DUPIXENT.05P",
@@ -356,7 +716,7 @@
 "Dupixent"
 ],
 "lang": "fr",
-"kind": "numeric",
+"kind": "number",
 "score": 18,
 "half": "dev",
 "group": "448f2fdcc9",
@@ -384,7 +744,22 @@
 ],
 "description": "DE has 15 (kg), FR does not; FR has 30 (kg), DE does not",
 "known": true,
-"rank": 2
+"rank": 2,
+"fid": "N02",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"…ierung von 300 mg alle 4 Wochen bei einem Körpergewicht von [15] - < 60 kg, bzw. von 200 mg alle 2 Wochen bei einem Körperge…",
+"…e de 300 mg toutes les 4 semaines pour un poids corporel de [30] kg à moins de 60 kg, ou de 200 mg toutes les 2 semaines pou…"
+],
+"explained_by": [],
+"first_seen": "20260601",
+"seen_in": 6
 },
 {
 "id": "DUPIXENT.05a",
@@ -392,7 +767,7 @@
 "Dupixent"
 ],
 "lang": "fr",
-"kind": "numeric",
+"kind": "number",
 "score": 18,
 "half": "held",
 "group": "a0a7d9bf9c",
@@ -420,7 +795,22 @@
 ],
 "description": "DE has 15 (kg), FR does not; FR has 30 (kg), DE does not",
 "known": true,
-"rank": 3
+"rank": 3,
+"fid": "N03",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"…ierung von 300 mg alle 4 Wochen bei einem Körpergewicht von [15] - < 60 kg, bzw. von 200 mg alle 2 Wochen bei einem Körperge…",
+"…e de 300 mg toutes les 4 semaines pour un poids corporel de [30] kg à moins de 60 kg, ou de 200 mg toutes les 2 semaines pou…"
+],
+"explained_by": [],
+"first_seen": "20260601",
+"seen_in": 6
 },
 {
 "id": "PREVYMIS.01",
@@ -428,7 +818,7 @@
 "Prevymis"
 ],
 "lang": "fr",
-"kind": "numeric",
+"kind": "number",
 "score": 18,
 "half": "dev",
 "group": "ad45704bc5",
@@ -456,7 +846,24 @@
 ],
 "description": "DE has 15 (kg), FR does not; FR has 5 (kg), DE does not",
 "known": false,
-"rank": 4
+"rank": 4,
+"fid": "N04",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"… 30 kg und für pädiatrische Patienten mit einem Gewicht von [15] kg bis unter 30 kg für eine Verabreichung ohne Ciclosporin,…",
+"…s 30 kg, ainsi que chez les patients pédiatriques pesant de1[5] kg à moins de 30 kg pour une administration sans ciclospori…"
+],
+"explained_by": [
+"E04"
+],
+"first_seen": "20260219",
+"seen_in": 9
 },
 {
 "id": "BENEPALI4",
@@ -464,7 +871,7 @@
 "Benepali"
 ],
 "lang": "fr",
-"kind": "numeric",
+"kind": "number",
 "score": 9,
 "half": "dev",
 "group": "235b75ce47",
@@ -482,7 +889,21 @@
 ],
 "description": "FR has 62.5 (kg), DE does not",
 "known": true,
-"rank": 5
+"rank": 5,
+"fid": "N05",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"… juvénile polyarticulaire active chez les patients pesant ≥ [62.5] kg et de l'arthrite psoriasique en cas de réponse inadéquat…"
+],
+"explained_by": [],
+"first_seen": "20260219",
+"seen_in": 9
 },
 {
 "id": "BEYFORTUS.01",
@@ -490,7 +911,7 @@
 "Beyfortus"
 ],
 "lang": "fr",
-"kind": "numeric",
+"kind": "number",
 "score": 9,
 "half": "held",
 "group": "53cb5cfe09",
@@ -508,7 +929,21 @@
 "tgt_only": [],
 "description": "DE has 14 (Tagen), FR does not",
 "known": false,
-"rank": 6
+"rank": 6,
+"fid": "N06",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"…en; ausgenommen sind folgende Fälle: – Geburt innerhalb von [14] Tagen nach Verabreichung der Impfung, – Frühgeburt vor 37 W…"
+],
+"explained_by": [],
+"first_seen": "20260219",
+"seen_in": 9
 },
 {
 "id": "CERDELGA",
@@ -516,7 +951,7 @@
 "Cerdelga"
 ],
 "lang": "fr",
-"kind": "numeric",
+"kind": "number",
 "score": 9,
 "half": "held",
 "group": "bbd2548249",
@@ -534,7 +969,21 @@
 "tgt_only": [],
 "description": "DE has 18 (Jahren), FR does not",
 "known": false,
-"rank": 7
+"rank": 7,
+"fid": "N07",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "de",
+"third": "it",
+"suggested_action": null,
+"context": [
+"Zur Monotherapie bei erwachsenen Patienten ab [18] Jahren mit gesicherter Diagnose eines Morbus Gaucher Typ I,…"
+],
+"explained_by": [],
+"first_seen": "20260219",
+"seen_in": 9
 },
 {
 "id": "CERDELGA",
@@ -542,7 +991,7 @@
 "Cerdelga"
 ],
 "lang": "it",
-"kind": "numeric",
+"kind": "number",
 "score": 9,
 "half": "held",
 "group": "945d5e992a",
@@ -560,7 +1009,21 @@
 "tgt_only": [],
 "description": "DE has 18 (Jahren), IT does not",
 "known": false,
-"rank": 8
+"rank": 8,
+"fid": "N08",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "de",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"Zur Monotherapie bei erwachsenen Patienten ab [18] Jahren mit gesicherter Diagnose eines Morbus Gaucher Typ I,…"
+],
+"explained_by": [],
+"first_seen": "20260219",
+"seen_in": 9
 },
 {
 "id": "CRESE.Kps.IM",
@@ -568,7 +1031,7 @@
 "Cresemba"
 ],
 "lang": "fr",
-"kind": "numeric",
+"kind": "number",
 "score": 9,
 "half": "held",
 "group": "dd8fb8247c",
@@ -586,7 +1049,21 @@
 "tgt_only": [],
 "description": "DE has 16 (kg), FR does not",
 "known": true,
-"rank": 9
+"rank": 9,
+"fid": "N09",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"…ter von 6 Jahren und mit einem Körpergewicht von mindestens [16] kg vergütet."
+],
+"explained_by": [],
+"first_seen": "20260219",
+"seen_in": 9
 },
 {
 "id": "EMGALITY.01",
@@ -594,7 +1071,7 @@
 "Emgality"
 ],
 "lang": "fr",
-"kind": "numeric",
+"kind": "number",
 "score": 9,
 "half": "dev",
 "group": "28b8075b41",
@@ -612,7 +1089,21 @@
 "tgt_only": [],
 "description": "DE has 120 (mg), FR does not",
 "known": false,
-"rank": 10
+"rank": 10,
+"fid": "N10",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "de",
+"third": "it",
+"suggested_action": null,
+"context": [
+"…hnittswert für die 3 Monate vor Therapiebeginn mit EMGALITY [120] mg reduziert wurde und diese Reduktion anhand eines Migräne…"
+],
+"explained_by": [],
+"first_seen": "20260219",
+"seen_in": 9
 },
 {
 "id": "EMGALITY.01",
@@ -620,7 +1111,7 @@
 "Emgality"
 ],
 "lang": "it",
-"kind": "numeric",
+"kind": "number",
 "score": 9,
 "half": "dev",
 "group": "33a1fb627a",
@@ -638,7 +1129,21 @@
 "tgt_only": [],
 "description": "DE has 120 (mg), IT does not",
 "known": false,
-"rank": 11
+"rank": 11,
+"fid": "N11",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "de",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"…hnittswert für die 3 Monate vor Therapiebeginn mit EMGALITY [120] mg reduziert wurde und diese Reduktion anhand eines Migräne…"
+],
+"explained_by": [],
+"first_seen": "20260219",
+"seen_in": 9
 },
 {
 "id": "ERELZI2",
@@ -646,7 +1151,7 @@
 "Erelzi"
 ],
 "lang": "fr",
-"kind": "numeric",
+"kind": "number",
 "score": 9,
 "half": "dev",
 "group": "a34a7e32f4",
@@ -664,7 +1169,21 @@
 ],
 "description": "FR has 62.5 (kg), DE does not",
 "known": true,
-"rank": 12
+"rank": 12,
+"fid": "N12",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"… juvénile polyarticulaire active chez les patients pesant ≥ [62.5] kg et de l'arthrite psoriasique en cas de réponse inadéquat…"
+],
+"explained_by": [],
+"first_seen": "20260219",
+"seen_in": 9
 },
 {
 "id": "FORSTEO-2",
@@ -674,7 +1193,7 @@
 "Sondelbay"
 ],
 "lang": "it",
-"kind": "numeric",
+"kind": "number",
 "score": 9,
 "half": "dev",
 "group": "8a5cf4a426",
@@ -692,7 +1211,23 @@
 "tgt_only": [],
 "description": "DE has 6 (monatigen), IT does not",
 "known": false,
-"rank": 13
+"rank": 13,
+"fid": "N13",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"…ebedingten Wirbelkörperfrakturen, die nach einer mindestens [6]-monatigen Therapie mit Calcitonin, SERM (selektiver Oestrog…"
+],
+"explained_by": [
+"E05"
+],
+"first_seen": "20260219",
+"seen_in": 9
 },
 {
 "id": "GALAFOLD3",
@@ -700,7 +1235,7 @@
 "Galafold"
 ],
 "lang": "fr",
-"kind": "numeric",
+"kind": "number",
 "score": 9,
 "half": "held",
 "group": "7322bf51a7",
@@ -719,7 +1254,21 @@
 ],
 "description": "FR has 2 (jours), DE does not",
 "known": false,
-"rank": 14
+"rank": 14,
+"fid": "N14",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "de",
+"third": "it",
+"suggested_action": null,
+"context": [
+"…iqué, à la posologie de 123 mg (1 gélule) une fois tous les [deux] jours à heure fixe, dans le traitement à long terme des adu…"
+],
+"explained_by": [],
+"first_seen": "20260219",
+"seen_in": 9
 },
 {
 "id": "GALAFOLD3",
@@ -727,7 +1276,7 @@
 "Galafold"
 ],
 "lang": "it",
-"kind": "numeric",
+"kind": "number",
 "score": 9,
 "half": "held",
 "group": "11f7c77992",
@@ -746,7 +1295,21 @@
 ],
 "description": "IT has 2 (giorni), DE does not",
 "known": false,
-"rank": 15
+"rank": 15,
+"fid": "N15",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "de",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"…. GALAFOLD al dosaggio di 123 mg (1 capsula) una volta ogni [due] giorni, alla stessa ora, è indicato per il trattamento a lu…"
+],
+"explained_by": [],
+"first_seen": "20260219",
+"seen_in": 9
 },
 {
 "id": "LEQVIO.01",
@@ -754,7 +1317,7 @@
 "Leqvio"
 ],
 "lang": "fr",
-"kind": "numeric",
+"kind": "number",
 "score": 9,
 "half": "dev",
 "group": "bbc0d1d17b",
@@ -772,7 +1335,23 @@
 "tgt_only": [],
 "description": "DE has 4 (mmol), FR does not",
 "known": false,
-"rank": 16
+"rank": 16,
+"fid": "N16",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "de",
+"third": "it",
+"suggested_action": null,
+"context": [
+"…it einem PCSK9-Inhibitor oder ein LDL-C Wert von kleiner 1 .[4] mmol/l erreicht werden. Die Vergütung in Kombination mit de…"
+],
+"explained_by": [
+"E01"
+],
+"first_seen": "20260219",
+"seen_in": 9
 },
 {
 "id": "LEQVIO.01",
@@ -780,7 +1359,7 @@
 "Leqvio"
 ],
 "lang": "it",
-"kind": "numeric",
+"kind": "number",
 "score": 9,
 "half": "dev",
 "group": "72a50cffb6",
@@ -798,7 +1377,23 @@
 "tgt_only": [],
 "description": "DE has 4 (mmol), IT does not",
 "known": false,
-"rank": 17
+"rank": 17,
+"fid": "N17",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "de",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"…it einem PCSK9-Inhibitor oder ein LDL-C Wert von kleiner 1 .[4] mmol/l erreicht werden. Die Vergütung in Kombination mit de…"
+],
+"explained_by": [
+"E01"
+],
+"first_seen": "20260219",
+"seen_in": 9
 },
 {
 "id": "NEMLUVIO.01",
@@ -806,7 +1401,7 @@
 "Nemluvio"
 ],
 "lang": "it",
-"kind": "numeric",
+"kind": "number",
 "score": 9,
 "half": "held",
 "group": "64c2037cf8",
@@ -824,7 +1419,21 @@
 "tgt_only": [],
 "description": "DE has 8 (Wochen), IT does not",
 "known": true,
-"rank": 18
+"rank": 18,
+"fid": "N18",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"…iner Erhaltungsdosis von 30 mg als subkutane Injektion alle [acht] Wochen, zur Behandlung erwachsener und jugendlicher Patient…"
+],
+"explained_by": [],
+"first_seen": "20260219",
+"seen_in": 9
 },
 {
 "id": "NEPEXTO",
@@ -832,7 +1441,7 @@
 "Nepexto"
 ],
 "lang": "fr",
-"kind": "numeric",
+"kind": "number",
 "score": 9,
 "half": "held",
 "group": "4c80bbe0c3",
@@ -850,7 +1459,21 @@
 ],
 "description": "FR has 62.5 (kg), DE does not",
 "known": true,
-"rank": 19
+"rank": 19,
+"fid": "N19",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"… juvénile polyarticulaire active chez les patients pesant ≥ [62.5] kg et de l'arthrite psoriasique en cas de réponse inadéquat…"
+],
+"explained_by": [],
+"first_seen": "20260219",
+"seen_in": 9
 },
 {
 "id": "DUPIXENT.02",
@@ -858,7 +1481,7 @@
 "Dupixent"
 ],
 "lang": "fr",
-"kind": "numeric",
+"kind": "number",
 "score": 8,
 "half": "held",
 "group": "623c3f358a",
@@ -888,7 +1511,22 @@
 "tgt_only": [],
 "description": "DE has 30 (kg), FR does not; DE has 15 (kg), FR does not",
 "known": true,
-"rank": 20
+"rank": 20,
+"fid": "N20",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"… alle zwei Wochen, bei Patienten mit einem Körpergewicht ab [30] kg bis unter 60 kg in einer Anfangsdosis von 400 mg als sub…",
+"…le zwei Wochen und bei Patienten mit einem Körpergewicht ab [15] kg bis unter 30 kg in einer Anfangsdosis von 600 mg (eine I…"
+],
+"explained_by": [],
+"first_seen": "20260219",
+"seen_in": 9
 },
 {
 "id": "DUPIXENT.02P",
@@ -896,7 +1534,7 @@
 "Dupixent"
 ],
 "lang": "fr",
-"kind": "numeric",
+"kind": "number",
 "score": 8,
 "half": "dev",
 "group": "98dbaca150",
@@ -926,16 +1564,240 @@
 "tgt_only": [],
 "description": "DE has 30 (kg), FR does not; DE has 15 (kg), FR does not",
 "known": true,
-"rank": 21
+"rank": 21,
+"fid": "N21",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"… alle zwei Wochen, bei Patienten mit einem Körpergewicht ab [30] kg bis unter 60 kg in einer Anfangsdosis von 400 mg als sub…",
+"…le zwei Wochen und bei Patienten mit einem Körpergewicht ab [15] kg bis unter 30 kg in einer Anfangsdosis von 600 mg (eine I…"
+],
+"explained_by": [],
+"first_seen": "20260219",
+"seen_in": 9
+},
+{
+"id": "KEYTRUDA.07---Inj-L-s---Urothelkarzinom--Monotherapie--KN045",
+"product": [
+"Keytruda"
+],
+"lang": "it",
+"kind": "language",
+"detected": "fr",
+"languages": [
+"it",
+"fr"
+],
+"odd_one_out": "it",
+"agrees_with": [
+"fr"
+],
+"identical_to": [
+"fr"
+],
+"fw": {
+"fr": 39,
+"it": 1
+},
+"margin": 2.159,
+"ntri": 480,
+"half": "dev",
+"context": [
+"Carcinome urothélial (monothérapie) KN045 (avec modèle de prix) Monothérapie du carcinome urothélial localement avancé ou métastatique chez les adultes ayant ét…"
+],
+"description": "The Italian field is written in French (identical to the French text); function words fr=39 vs it=1, trigram margin 2.159.",
+"suggested_action": null,
+"rank": 1,
+"fid": "L01",
+"first_seen": "20260801",
+"seen_in": 4
+},
+{
+"id": "LEQVIO.01",
+"product": [
+"Leqvio"
+],
+"lang": "de",
+"kind": "editorial",
+"languages": [
+"de"
+],
+"odd_one_out": "de",
+"rule": "E1",
+"surface": "1 .4",
+"suggestion": "1.4",
+"values": [
+"1.4",
+"1",
+"4"
+],
+"others_have_value": [
+"fr",
+"it"
+],
+"half": "dev",
+"context": [
+"…m PCSK9-Inhibitor oder ein LDL-C Wert von kleiner [1 .4] mmol/l erreicht werden. Die Vergütung in Kombinat…"
+],
+"description": "Probable typo in the German text: '1 .4' (likely '1.4', rule E1).",
+"suggested_action": null,
+"rank": 1,
+"fid": "E01",
+"first_seen": "20260219",
+"seen_in": 9
+},
+{
+"id": "DUPIXENT.07",
+"product": [
+"Dupixent"
+],
+"lang": "fr",
+"kind": "editorial",
+"languages": [
+"fr"
+],
+"odd_one_out": "fr",
+"rule": "E2",
+"surface": "de15",
+"suggestion": "de 15",
+"values": [
+"15"
+],
+"others_have_value": [
+"de",
+"it"
+],
+"half": "dev",
+"context": [
+"…uatre semaines, et chez les patients pesant moins [de15] kg à une dose initiale de 200 mg en injection sou…"
+],
+"description": "Probable typo in the French text: 'de15' (likely 'de 15', rule E2).",
+"suggested_action": null,
+"rank": 2,
+"fid": "E02",
+"first_seen": "20260219",
+"seen_in": 9
+},
+{
+"id": "DUPIXENT.07P",
+"product": [
+"Dupixent"
+],
+"lang": "fr",
+"kind": "editorial",
+"languages": [
+"fr"
+],
+"odd_one_out": "fr",
+"rule": "E2",
+"surface": "de15",
+"suggestion": "de 15",
+"values": [
+"15"
+],
+"others_have_value": [
+"de",
+"it"
+],
+"half": "dev",
+"context": [
+"…uatre semaines, et chez les patients pesant moins [de15] kg à une dose initiale de 200 mg en injection sou…"
+],
+"description": "Probable typo in the French text: 'de15' (likely 'de 15', rule E2).",
+"suggested_action": null,
+"rank": 3,
+"fid": "E03",
+"first_seen": "20260219",
+"seen_in": 9
+},
+{
+"id": "PREVYMIS.01",
+"product": [
+"Prevymis"
+],
+"lang": "fr",
+"kind": "editorial",
+"languages": [
+"fr"
+],
+"odd_one_out": "fr",
+"rule": "E2",
+"surface": "de15",
+"suggestion": "de 15",
+"values": [
+"15"
+],
+"others_have_value": [
+"de",
+"it"
+],
+"half": "dev",
+"context": [
+"…, ainsi que chez les patients pédiatriques pesant [de15] kg à moins de 30 kg pour une administration sans …"
+],
+"description": "Probable typo in the French text: 'de15' (likely 'de 15', rule E2).",
+"suggested_action": null,
+"rank": 4,
+"fid": "E04",
+"first_seen": "20260219",
+"seen_in": 9
+},
+{
+"id": "FORSTEO-2",
+"product": [
+"Forsteo",
+"Movymia",
+"Sondelbay"
+],
+"lang": "it",
+"kind": "editorial",
+"languages": [
+"it"
+],
+"odd_one_out": "it",
+"rule": "E4",
+"surface": "se mesi",
+"suggestion": "sei mesi",
+"values": [
+"6"
+],
+"others_have_value": [
+"de",
+"fr"
+],
+"half": "dev",
+"context": [
+"…tate radiologicamente, dopo una terapia di almeno [se mesi] con Calcitonina, SERM (modulatore selettivo del r…"
+],
+"description": "Probable typo in the Italian text: 'se mesi' (likely 'sei mesi', rule E4).",
+"suggested_action": null,
+"rank": 5,
+"fid": "E05",
+"first_seen": "20260219",
+"seen_in": 9
 }
 ],
 "fresh_items": [
 {
 "key": "wb004-it",
 "lang": "it",
+"kinds": [
+"number"
+],
 "findings": [
 {
+"kind": "number",
+"lang": "it",
 "side": "de",
+"values": [
+"8"
+],
+"detail": "The old German has 8 (Wochen); the old Italian does not.",
 "value": "8",
 "n": 1,
 "unit": "Wochen",
@@ -943,6 +1805,27 @@
 "context": [
 "…iner Erhaltungsdosis von 30 mg als subkutane Injektion alle [acht] Wochen, zur Behandlung erwachsener und jugendlicher Patient…"
 ]
+}
+]
+},
+{
+"key": "wb079-it",
+"lang": "it",
+"kinds": [
+"language"
+],
+"findings": [
+{
+"kind": "language",
+"lang": "it",
+"detected": "fr",
+"odd_one_out": "it",
+"fw": {
+"fr": 3
+},
+"margin": 0.893,
+"detail": "The old Italian text is written in French.",
+"text": "il vecchio testo italiano è in francese"
 }
 ]
 }

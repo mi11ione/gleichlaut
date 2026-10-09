@@ -1,0 +1,7 @@
+id	kind	cud	lang	real	note
+B00	editorial	DUPIXENT.07	fr	yes	FR "pesant moins de15 kg" lacks space between "de" and "15"; should be "de 15 kg".
+B01	editorial	LEQVIO.01	de	yes	DE "kleiner 1 .4 mmol/l" has stray space inside decimal; earlier same sentence correctly writes "1.4".
+B02	language	KEYTRUDA.07---Inj-L-s---Urothelkarzinom--Monotherapie--KN045	it	yes	IT field is verbatim the French text ("Carcinome urothélial (monothérapie)... Le code suivant doit être transmis").
+B03	editorial	FORSTEO-2	it	yes	IT "almeno se mesi" is a typo for "sei mesi" (DE/FR: 6 months).
+B04	editorial	PREVYMIS.01	fr	yes	FR "pesant de15 kg à moins de 30 kg" missing space; should be "de 15 kg".
+B05	editorial	DUPIXENT.07P	fr	yes	FR "pesant moins de15 kg" missing space; should be "de 15 kg".

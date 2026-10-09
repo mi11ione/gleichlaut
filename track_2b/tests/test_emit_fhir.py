@@ -87,6 +87,48 @@ def test_cud_id_follows_the_feed_rule():
     assert len(cud_id(dict(code_old="A" * 80, code_new=""))) == 64
 
 
+def test_two_records_one_output_id_merge_into_one_cud():
+    """Regression (real Sept -> Oct 2026 records): BAG merged SKYRIZI.01Pe and SKYRIZI.01 into one new CUD id; two items
+    mapping to the same output id must give ONE CUD (no duplicate fullUrl) with one Provenance per item, and validate."""
+    import contextlib, io
+    from gleichlaut.emit.__main__ import main as emit_main
+    I = {x["key"]: x for x in score.load_items(score.RUNS["fresh166"]["items"])}
+    F = score.load_jsonl(score.RUNS["fresh166"]["final"])
+    d = tempfile.mkdtemp(prefix="gl-fhir-merge-"); keys = ("wb000-fr", "wb001-fr")
+    items = [dict(key=k, lang="fr", de_old=I[k]["de_old"], de_new=I[k]["de_new"], tgt_old=I[k]["tgt_old"], product="Skyrizi",
+                  change_ratio=float(I[k]["de_ratio"]), code_old=old, cud_new="SKYRIZI.01")
+             for k, old in zip(keys, ("SKYRIZI.01Pe", "SKYRIZI.01"))]
+    ip, rp = os.path.join(d, "items.json"), os.path.join(d, "records.jsonl")
+    json.dump(items, open(ip, "w", encoding="utf-8"), ensure_ascii=False)
+    with open(rp, "w", encoding="utf-8") as fh:
+        for k in keys: fh.write(json.dumps(F[k], ensure_ascii=False) + "\n")
+    out = os.path.join(d, "emit")
+    with contextlib.redirect_stdout(io.StringIO()) as so:
+        assert emit_main(["--records", rp, "--items", ip, "--n", "0", "--out", out]) == 0, so.getvalue()
+    b = json.load(open(os.path.join(out, "fhir", os.listdir(os.path.join(out, "fhir"))[0]), encoding="utf-8"))
+    R = [e["resource"] for e in b["entry"]]
+    cuds = [r for r in R if r["resourceType"] == "ClinicalUseDefinition"]
+    provs = [r for r in R if r["resourceType"] == "Provenance"]
+    assert [c["id"] for c in cuds] == ["SKYRIZI.01"] and len(provs) == 2
+    assert {p["target"][0]["reference"] for p in provs} == {fhir.EPL + "ClinicalUseDefinition/SKYRIZI.01"}
+    assert {p["entity"][1]["what"]["identifier"]["value"] for p in provs} == {"SKYRIZI.01Pe", "SKYRIZI.01"}
+    assert cuds[0]["meta"]["tag"][0]["code"] == "flagged"                     # drafts differ -> a translator reconciles
+    ext = [{e["url"]: e for e in p["extension"][0]["extension"]} for p in provs]
+    assert all("merged" in e and "draft" in e for e in ext)
+    C = _setup(); assert C["FV"].validate_bundle(b) == [] and validate.parity(b, C["shape"]) == []
+
+
+def test_identical_drafts_on_one_id_keep_the_verdict():
+    meta, views = load("fresh166"); v = next(v for v in views if v["status"] == "ready" and v["lang"] == "fr")
+    w = dict(v, key=v["key"] + "-b")
+    b = fhir.bundle([v, w], meta, "fr")
+    cuds = [e["resource"] for e in b["entry"] if e["resource"]["resourceType"] == "ClinicalUseDefinition"]
+    assert len(cuds) == 1 and cuds[0]["meta"]["tag"][0]["code"] == "ready"
+    assert _setup()["FV"].validate_bundle(b) == []
+    b2 = fhir.bundle([v, dict(w, status="flagged")], meta, "fr")
+    assert [e["resource"]["meta"]["tag"][0]["code"] for e in b2["entry"] if e["resource"]["resourceType"] == "ClinicalUseDefinition"] == ["flagged"]
+
+
 if __name__ == "__main__":
     fs = [(n, f) for n, f in sorted(globals().items()) if n.startswith("test_") and callable(f)]
     for n, f in fs: f(); print("ok", n)

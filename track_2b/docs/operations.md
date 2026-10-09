@@ -1,11 +1,29 @@
 # Operations runbook
 
 For the person who runs Gleichlaut each month: install, configure, certify the model endpoint, run the month, hand the
-XLIFF to the translators, and know what each exit code and file means. The research and evaluation background is in the
+XLIFF to the translators, and know what each exit code and file means. **If you can do only one thing tomorrow, run the
+audit (§0): it needs no model, no endpoint and no IT approval.** The research and evaluation background is in the
 [README](../README.md) and the [technical report](../technical_report.md).
 
 All commands run from `track_2b/`. `make` targets run in Docker. The same commands without Docker are
 `PYTHONPATH=src python3 -m gleichlaut <command>`.
+
+## 0. Use it tomorrow: the congruence audit (monthly or quarterly, no model)
+
+```bash
+make audit                         # Docker: fetch the latest public feed if missing, audit every limitation -> out/audit/
+make audit AUDIT_DATE=20261001     # a given feed date (`make feeds` lists the published ones)
+PYTHONPATH=src python3 -m gleichlaut audit --hist out/hist --date 20261006 --out out/audit    # without Docker
+```
+
+`gleichlaut audit` compares the numbers of every German limitation with its French and Italian text and lists the
+divergences that are already published (a dose, a duration, an age that differs between the languages). It is
+deterministic, uses only the public feed (three plain GET requests to `epl.bag.admin.ch`, or none if the snapshots are
+already in `out/hist/`), sends nothing anywhere, and calls no model, so it needs no endpoint, no certificate and no
+approval for a new IT service. Run it after each monthly publication, or at least once a quarter before the triennial
+review. Output: `out/audit/audit_<date>.json` (every finding with its context) and `audit_<date>_summary.json`. The
+rules and their measured precision are in [docs/audit.md](audit.md). All arguments of `gleichlaut audit` are passed
+through unchanged (`AUDIT_ARGS=...` with `make`).
 
 ## 1. Install
 
@@ -31,8 +49,8 @@ drafts goes to review.
 
 ## 2. Configuration (`.env` / environment)
 
-Copy `.env.example` to `.env` and export it (`set -a; . ./.env; set +a`). `make` passes the `LLM_*` variables into the
-container. The key is never written to any file Gleichlaut creates.
+Copy `.env.example` to `.env` and export it (`set -a; . ./.env; set +a`). `make` passes the `LLM_*`, `GLEICHLAUT_*` tuning
+and proxy variables into the container. The key is never written to any file Gleichlaut creates.
 
 | Variable | Meaning | Default |
 |---|---|---|
@@ -42,10 +60,22 @@ container. The key is never written to any file Gleichlaut creates.
 | `GLEICHLAUT_STATE` | certificates, certification runs, canary reports | `./state` (gitignored; mounted by `make`) |
 | `GLEICHLAUT_OUT` | outputs of `run` | `./out` |
 | `GLEICHLAUT_HIST` | feed snapshots (compact JSON per date and language) | `./out/hist` |
-| `GLEICHLAUT_HTTP_TIMEOUT` / `_RETRIES` / `_BACKOFF` | per-request timeout (s), attempts, back-off step (s) on 429/5xx/unreachable | 300 / 8 / 10 |
+| `GLEICHLAUT_TIMEOUT` | seconds per attempt of one model request | 120 |
+| `GLEICHLAUT_RETRIES` | attempts per request on 429 / 5xx / unreachable / timeout | 4 |
+| `GLEICHLAUT_BACKOFF` | back-off step in seconds, doubled after each attempt (5, 10, 20) | 5 |
+| `GLEICHLAUT_DEADLINE` | at most this many seconds for one request over all its attempts: a dead endpoint fails within about 5 minutes (exit 6) | 300 |
+| `GLEICHLAUT_CERT_DAYS` | validity of a new certificate, and the maximum age the gate accepts | 90 |
+| `GLEICHLAUT_CANARY_MAX_AGE_DAYS` | the SL lane refuses to draft when the latest canary (or the certification) is older | 31 |
+| `GLEICHLAUT_CERT_KEY` | path of a file with a secret key (≥ 16 bytes): certificates and canary reports are HMAC-signed, unsigned ones refused. Keep it outside `state/` | unset |
+| `HTTPS_PROXY`, `HTTP_PROXY`, `NO_PROXY` | outgoing proxy for the endpoint, the BAG feed and the GGUF download (`make` passes them into the containers) | unset |
+| `SSL_CERT_FILE` (or `REQUESTS_CA_BUNDLE`) | PEM file of an internal / TLS-inspecting proxy CA, trusted in addition to the system store. `make` mounts the host file read-only into the container | unset |
+| `GLEICHLAUT_THREADS` | llama.cpp threads for the local 8B (default: the CPUs of the container) | CPU count |
 | `SKIP_MODEL=1` | skip the live slice in `make run` | |
 | `GLEICHLAUT_GATEWAY_DIR` | development gateway to Public AI. Evaluation only, never in production | unset |
 | `GLEICHLAUT_DEBUG=1` | show Python tracebacks instead of one-line errors | |
+
+The older names `GLEICHLAUT_HTTP_TIMEOUT` / `_HTTP_RETRIES` / `_HTTP_BACKOFF` still work. TLS verification is never
+switched off: behind a TLS-inspecting proxy, give its CA in `SSL_CERT_FILE`.
 
 ## 3. Certify the endpoint (once per endpoint and model, and again after every change)
 
@@ -56,14 +86,14 @@ suite. A model that merely calls itself `apertus-v1.5-70b` is not enough. Neithe
 
 ```bash
 make certify                     # 166 items, about 285 requests, under an hour (2 workers); ~CHF 0.40
-PYTHONPATH=src python3 -m gleichlaut certify --list      # what is in ./state/certificates
+PYTHONPATH=src python3 -m gleichlaut certify --list      # what is in ./state/certificates, each one re-verified
 ```
 
 Results go to `./state/`:
 
 | Path | Contents |
 |---|---|
-| `state/certificates/<name>.json` | `kind` (`endpoint`), `endpoint` (no key), `model_requested`, `models_served`, `system_fingerprints`, `seeds`, `freeze_sha256`, suite sha256, metrics, `status`, `needs_review` |
+| `state/certificates/<name>.json` | `kind` (`endpoint`), `endpoint` (no key), `model_requested`, `models_served`, `system_fingerprints`, `seeds`, `freeze_sha256`, suite sha256, metrics, `status`, `needs_review`, `expires`, `run_records_sha256`, `calls_log_sha256` (and `labels_sha256` after `--resolve`), `hmac_sha256` if a key is set |
 | `state/certificates/<name>.calls.jsonl` | the call log of the certification run |
 | `state/runs/certify_<name>.jsonl` | the 166 suite records (what the canary compares against) |
 | `state/cache/<name>/` | every raw response, addressed by the sha256 of its request |
@@ -80,14 +110,46 @@ PYTHONPATH=src python3 -m gleichlaut certify --resolve state/certificates/<name>
 The newest certificate for an endpoint and model decides. A later FAIL revokes an earlier PASS. A change to the frozen
 code or the suite invalidates every certificate, and you must certify again.
 
+**A certificate is re-checked every time it is used.** The gate does not trust the `status` field. Before every
+`draft`/`month` on the SL lane (and in `certify --list` and `--canary`) it checks that the certificate:
+
+- is not expired. `expires` is the certification date plus `GLEICHLAUT_CERT_DAYS` (default 90; `certify --valid-days`).
+  The validity configured at check time also applies, whichever ends first.
+- was made with the current frozen code (`freeze_sha256`) and suite.
+- still matches its stored files. These are the 166 suite records (`state/runs/`), the call log, and the review
+  labels, each against its sha256 in the certificate.
+- still gives PASS, with the same metrics, when those records are re-scored with the frozen guards and the reference
+  labels. A record whose stored guard verdict differs from the frozen checks is refused.
+- has a call log that names this endpoint and the models served.
+
+A hand-edited `"status": "PASS"` therefore opens nothing: to pass the gate, someone would have to produce suite records
+that really pass the frozen checks. Without a key, someone who can write to `state/` could still re-date a certificate
+or copy records that pass. Set `GLEICHLAUT_CERT_KEY` to close that gap. Every certificate and canary report is then
+HMAC-SHA256-signed, and an unsigned or altered one is refused. Create the key once
+(`head -c 32 /dev/urandom > /etc/gleichlaut/cert.key; chmod 400 /etc/gleichlaut/cert.key`) and keep it outside `state/`:
+a root-owned file, or a Kubernetes Secret. `make` mounts it read-only. Certificates made before this release have no
+integrity fields and are refused: certify again.
+
 **When to re-certify:** a new endpoint URL, a new `LLM_NAME`, a model or serving-stack upgrade announced by the
 provider, a canary failure, or a Gleichlaut upgrade that changes `eval/prereg/freeze.json`.
 
-## 4. Canary (monthly, before drafting)
+## 4. Canary (monthly, before drafting; it gates drafting)
 
 ```bash
 make canary                      # CANARY_N=40 by default: about 70 requests, a few minutes
 ```
+
+**The canary gates the SL lane.** `draft` and `month` (backend `openai`, corpus `sl`, not `--air-gapped`) refuse with
+exit 3 when:
+
+- the latest canary for the certificate in use **failed**. Only a later passing canary or a new certification lifts
+  this, and no flag overrides it.
+- the latest check is **older than 31 days** (`GLEICHLAUT_CANARY_MAX_AGE_DAYS`). The latest check is the newest
+  canary, or the certification itself when no canary has run since.
+
+`--allow-stale-canary` (`make month ALLOW_STALE_CANARY=1`) overrides the age check only. Each override is appended to
+`state/gate-overrides.jsonl` and recorded under `gate` in the run's `summary.json`. `--dry-run` shows what the gate
+would decide.
 
 The canary re-runs the first N suite items and compares them with this endpoint's certified run. At temperature 0 the
 70B lane is not byte-deterministic. A seeded re-run of the fresh 166 gave 69.9% identical outputs but flag agreement of
@@ -99,8 +161,14 @@ The canary **fails (exit 3)** if:
   also the pass rule's minimum gain over rules-only), or
 - a served model id was not seen at certification.
 
-Reports go to `state/canary/<name>.json` (agreement, exact now/then, flag rates, byte identity, fingerprints now/then).
-On a failure, stop: re-certify, or draft with `--air-gapped` (every item goes to review).
+A `system_fingerprint` (the serving build the endpoint reports) that was not seen at certification is a **warning**. It
+is printed, listed under `warnings`, and recorded as `fingerprint_changed: true`. It is not a failure, because providers
+rotate builds. Consider re-certifying when it appears.
+
+Each run writes its own report: `state/canary/canary-<endpoint>--<model>-<UTC time>.json`, with `-2`, `-3` added if
+that name already exists. Nothing is overwritten. A report holds the agreement, exact now and then, flag rates, byte
+identity, fingerprints now and then, the certificate it was compared against, and the sha256 of its call log. On a
+failure, stop: re-certify, or draft with `--air-gapped` (every item goes to review).
 
 ## 5. The monthly procedure
 
@@ -118,15 +186,44 @@ make month ITEMS=/path/to/sl-team-2026-11.json        # mounted read-only into t
 # or: PYTHONPATH=src python3 -m gleichlaut month --items sl-team-2026-11.json --out out/month/2026-11
 ```
 
+**Integration point for BAG's ePL team: items straight from ePL FHIR exports.** The ePL editor exports in the same FHIR
+format as the public feed: NDJSON, one product Bundle per line, CH EPL profile. `gleichlaut items` turns two such exports
+into the item file:
+
+```bash
+# last publication vs the month's draft export (only the German changed): pre-publication items, no tgt_new
+gleichlaut items --from-fhir foph-sl-publication-20261001-de.ndjson draft-2026-11.json --out sl-team-2026-11.json
+# two publications (FR/IT siblings -fr/-it next to the -de file are picked up): shadow items with tgt_new
+gleichlaut items --from-fhir foph-sl-publication-20260901-de.ndjson foph-sl-publication-20261001-de.ndjson --lang fr,it --out items.json
+```
+
+Each side can be one German NDJSON file whose `-fr`/`-it` siblings sit next to it, a comma-separated list of
+per-language files, or one file carrying French and Italian as FHIR translation extensions (`_text`, `lang` `fr-CH` /
+`it-CH`). The new side may be a single draft Bundle in JSON, or a Bundle of product Bundles, in which only the German
+changed. Changes are paired per product: the draft must keep the MedicinalProductDefinition id. Keys are
+`<CUD id>-<6 hex>-<lang>`, so the same change always gets the same key. Changes without an old FR/IT text go to
+`<out>.unmatched.json`. Nothing is sent anywhere (module `gleichlaut.sl.epl`).
+
 ### 5b. Shadow mode: the public feed (validation, monthly regression check)
 
 After BAG publishes a month, run the same pipeline on what changed between two feed dates. FR/IT texts that BAG already
 published become `tgt_new`. They are never shown to the model and are used only to score the drafts (`shadow_exact`).
 
 ```bash
-make month FROM=20261001 TO=20261101          # downloads the six de/fr/it feeds of both dates if missing
-# or: PYTHONPATH=src python3 -m gleichlaut month --from 20261001 --to 20261101 --fetch [--snapshots DIR]
+make feeds                                    # which feed dates BAG has published (and which are already local)
+make month                                    # FROM=previous TO=latest: the month since the last run, fetched if missing
+make month FROM=20260901 TO=20261001          # a given pair of published dates
+# or: PYTHONPATH=src python3 -m gleichlaut month --from 20260901 --to 20261001 --fetch [--snapshots DIR]
 ```
+
+`--to latest` asks BAG's resources API for the newest feed. If the API is unreachable, it uses the date the last
+`feeds`/`ingest latest` run recorded. `--from previous` is where the last completed month run ended
+(`out/month/*/summary.json`), so consecutive runs leave no gap, including across mid-month republications such as
+6 Oct 2026. With no earlier run, it is the feed published before `--to`. `gleichlaut feeds` lists the published dates
+from the resources API and from polite HEAD probes of the known file pattern: the 1st of each of the last 12 months, the
+research dates, and the dates already local. Add `--scan FROM TO` to probe every day of a range. Every request is spaced
+≥ 1 s apart and carries the User-Agent `hackapertus-research/0.1`. The results are kept in `out/hist/feeds.json`, so a
+published date is never probed twice. A feed that is not yet published is a clear error (exit 6), not an empty month.
 
 Feeds are streamed into compact snapshots (`out/hist/<YYYYMMDD>-<lang>.json`, about 5.5 MB each). The raw NDJSON is
 not kept unless you pass `--keep-raw DIR` to `gleichlaut.sl.ingest`. `ingest latest` stores the 'latest' feed under its
@@ -138,9 +235,12 @@ real publication date (feed timestamp, else HTTP Last-Modified as a Zurich date)
 1. **Items.** It reads the item file, or mines every German change between the two dates. For a feed run it also
    writes `unmatched.json`, which lists changes with no old FR/IT text under the same id. It validates the items
    against the schema and computes `change_ratio` where it is missing (the `sl.mine` rule).
-2. **Routing.** If more than 60% of the German tokens changed, or the German is longer than 2500 characters, the item
-   goes to `status: human` with a reason and is not drafted. A spacing-only change also goes to a human.
-3. **Gate.** On the SL lane through `openai`, the run continues only with a PASS endpoint certificate (else exit 4).
+2. **Routing.** If more than 60% of the German tokens changed, the item goes to `status: human` with a reason and is not
+   drafted. So does a spacing-only change. The 2500-character limit (the evaluated range of the model lane) applies only
+   to items that need the model. A change the code lane applies by itself (numbers or months only, e.g. a Dupixent
+   "16 → 24 weeks") is drafted whatever its length, with `route_note` saying so, and no model is called for it.
+3. **Gate.** On the SL lane through `openai`, the run continues only with a PASS endpoint certificate that verifies (§3;
+   else exit 4) and a passing, recent canary (§4; else exit 3).
 4. **Drafting.** Items are drafted one at a time through the backend. After each item, one JSON line is appended to
    `records.jsonl` and flushed. After a crash or Ctrl-C, run the same command again: finished keys are skipped and a
    torn last line is cut off. `--restart` sets the old records aside.
@@ -185,15 +285,40 @@ gleichlaut ui   --records out/month/<run>/records.jsonl --items out/month/<run>/
 | 0 | success | |
 | 1 | reproduction or validation failed (`run`, `replay`, `emit`) | do not use this build; see the step that failed |
 | 2 | usage error, bad item file (message lists the schema problems), missing configuration (`LLM_BASE_URL` unset, gateway dir unset), missing snapshots | fix the input or the configuration |
-| 3 | canary outside tolerance | re-certify, or `--air-gapped` |
-| 4 | refused: endpoint not certified for this model | `make certify` |
+| 3 | canary outside tolerance; or `draft`/`month` refused because the latest canary failed or is older than 31 days | `make canary`; on a failure re-certify, or `--air-gapped`; a stale canary can be overridden with `--allow-stale-canary` (logged) |
+| 4 | refused: no certificate for this endpoint and model that verifies (missing, FAIL, expired, other frozen code, files or HMAC do not match, records do not re-score to PASS) | `make certify`; the message names the reason |
 | 5 | certificate FAIL | do not use the endpoint for the SL lane |
-| 6 | endpoint or feed failed (unreachable, timeout, HTTP error after retries, non-Apertus model served, served model not seen at certification). For `live`: the live slice failed | records so far are kept; fix and re-run to resume |
+| 6 | endpoint or feed failed (unreachable, timeout or `GLEICHLAUT_DEADLINE` reached after retries, HTTP error, non-Apertus model served, served model not seen at certification, feed not published yet). For `live`: the live slice failed | records so far are kept; fix and re-run to resume |
 | 7 | certificate PENDING_REVIEW | label `needs_review`, then `certify --resolve` |
 | 130 | interrupted | re-run to resume |
 
 Errors are one line on stderr, with no traceback (`GLEICHLAUT_DEBUG=1` shows it). `make run` exits 0 when the
 reproduction passes, even if the live slice failed. Look for `LIVE SLICE FAILED`.
+
+**Scheduling and alerting.** [docs/deploy/](deploy/) has a systemd service and timer set (canary, month, audit) and a
+Kubernetes CronJob. The CronJob mounts a PVC for `state/` and `out/`, runs as a non-root user on a read-only root
+filesystem, and runs the canary as an init container before the month. It also lists which exit code should page whom:
+2 and 4 are configuration (operator), 3 is model drift (operator, stop drafting), 6 is an outage (retry next run, page if
+it repeats), and 1 is a broken build (developer).
+
+## 6b. Test environments: a fake endpoint
+
+```bash
+python -m gleichlaut.fake_endpoint --port 8099 --mode recorded      # or: make fake-endpoint FAKE_MODE=echo
+export LLM_BASE_URL=http://127.0.0.1:8099/v1
+```
+
+An OpenAI-compatible fake for staging and acceptance tests. It calls no model and binds to 127.0.0.1. Modes:
+
+- `recorded` answers with the recorded 70B responses. `certify` against it reproduces the recorded PASS, so the whole
+  path (`certify`, then `canary`, then `month`/`draft`) can be exercised without a model.
+- `echo` returns the old text unchanged, so the canary fails.
+- `non-apertus` answers as a non-Apertus model, which every backend refuses (exit 6).
+- `error` returns HTTP 500.
+- `hang` never answers, to test timeouts and `GLEICHLAUT_DEADLINE`.
+
+`--fingerprint` changes the reported `system_fingerprint`, which triggers the canary warning. The operations tests use
+the same server in process.
 
 ## 7. Logs
 
@@ -236,11 +361,14 @@ so treat `out/month/` of a pre-publication run accordingly. No personal data is 
   In pre-publication mode the German is **not yet public**, so use an endpoint you control (own hardware or a
   contracted Swiss-resident provider). Public AI was used for evaluation only. It may route outside Switzerland, so it
   is not a production endpoint.
-- **To BAG (`epl.bag.admin.ch`), only with `--fetch` / `gleichlaut.sl.ingest`:** plain GET requests for the public feeds.
+- **To BAG (`epl.bag.admin.ch`), only with `--fetch`, `--to latest`, `gleichlaut feeds` / `gleichlaut.sl.ingest`, `make audit`:**
+  plain GET/HEAD requests for the public feeds and the public resources API, at most one per second.
 - **Nothing else.** There is no telemetry and no update check. The review page makes no requests. With no
   `LLM_BASE_URL`, `make run` runs with `--network none`. The air-gapped lanes (8B GGUF on CPU) contact nothing after
   the one-time model download.
 - At build time only: the Docker base image (pinned by digest) and PyPI wheels (`docs/dependencies.md`).
+- Every outgoing request goes through `HTTPS_PROXY`/`HTTP_PROXY` unless `NO_PROXY` matches, and is verified against the
+  system CA store plus `SSL_CERT_FILE`.
 
 ## 10. Upgrade
 
@@ -256,10 +384,14 @@ so treat `out/month/` of a pre-publication run accordingly. No personal data is 
 ## 11. Quick reference
 
 ```bash
-make certify                                   # once per endpoint + model; exit 0 / 5 / 7
-make canary                                    # monthly; exit 3 on drift
+make audit                                     # the no-model congruence audit of the whole register (monthly / quarterly)
+make certify                                   # once per endpoint + model, and every 90 days; exit 0 / 5 / 7
+make canary                                    # monthly, before drafting; exit 3 on drift; drafting refuses without it
+make feeds                                     # published BAG feed dates
 make month ITEMS=sl-team.json                  # pre-publication drafting
-make month FROM=20261001 TO=20261101           # shadow mode on the public feed
+gleichlaut items --from-fhir OLD-de.ndjson DRAFT.json --out sl-team.json    # items from ePL exports
+make month                                     # shadow mode: --from previous --to latest
+make month FROM=20260901 TO=20261001           # shadow mode on a given pair of published feeds
 PYTHONPATH=src python3 -m gleichlaut month --items sl-team.json --dry-run     # prompts, slot maps, routing; no request
 PYTHONPATH=src python3 -m gleichlaut draft --items x.json --out out/x --backend stub   # wiring test, no model
 ```

@@ -32,6 +32,12 @@ def cud_id(x):
     return re.sub(r"[^A-Za-z0-9\-.]", "-", c)[:64]
 
 
+def _old_id(x):
+    """The previous limitation code of the item (None when not recorded): code_old / cud_old, ePL id rule."""
+    c = x.get("code_old") or x.get("cud_old")
+    return re.sub(r"[^A-Za-z0-9\-.]", "-", c)[:64] if c else None
+
+
 def _source_raw(f):
     """The model text the final output was unmasked from (None: rules only, no model call)."""
     if f["rule_only"]: return None
@@ -103,7 +109,7 @@ def _view(x, f, P, stack, check_recorded=True, any_raw=False):
     review_reason is shown as a finding; status "human" (or no draft) = routed to a translator."""
     from . import explain
     base = dict(key=x["key"], pair=x["pair"], lang=x["lang"], product=x.get("product") or "(product not recorded)",
-                cud_id=cud_id(x), snap_old=x.get("snap_old", "?"), snap_new=x.get("snap_new", "?"), family=x.get("cluster", "-"),
+                cud_id=cud_id(x), old_id=_old_id(x), snap_old=x.get("snap_old", "?"), snap_new=x.get("snap_new", "?"), family=x.get("cluster", "-"),
                 de_old=x["de_old"], de_new=x["de_new"], tgt_old=x["tgt_old"], change_ratio=x.get("change_ratio", x.get("de_ratio")),
                 divergence=explain.divergence(x), record_status=(f or {}).get("status"))
     base["banner"] = explain.banner(x, base["divergence"], None if f is None else f.get("out"))
@@ -171,11 +177,17 @@ def load_records(records, items):
     stem = os.path.splitext(os.path.basename(records))[0]
     if stem == "records": stem = os.path.basename(os.path.dirname(os.path.abspath(records))) or stem      # out/<run>/records.jsonl
     stem = re.sub(r"[^A-Za-z0-9_.-]+", "-", stem).strip("-") or "records"
-    model = next((r.get("model") for r in F.values() if r.get("model")), None) or os.environ.get("LLM_NAME") or "model not recorded"
-    meta = dict(run=stem, what=f"records {os.path.basename(records)} over items {os.path.basename(items)}", stack="g3", model=model,
+    model = next((r.get("model") for r in F.values() if r.get("model")), None) or os.environ.get("LLM_NAME") or None
+    meta = dict(run=stem, what=f"records {os.path.basename(records)} over items {os.path.basename(items)}", stack="g3",
+                model=model or "not recorded", model_known=bool(model),
                 pipeline=pipeline_id("g3"), items_sha256=core.sha256(items), run_sha256=core.sha256(records), custom=True,
                 has_tgt_new=all(x.get("tgt_new") for x in I), items_path=items, records_path=records)
     return meta, views
+
+
+def model_label(meta):
+    """The model id for notes and headers; 'recorded run <run>' when the records do not name the model."""
+    return meta["model"] if meta.get("model_known", True) else f"recorded run {meta['run']}"
 
 
 def select(views, n):

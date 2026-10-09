@@ -6,8 +6,9 @@ this module rephrases them and never adds, drops or reweighs a finding. Two addi
   - "corrects": the draft also changes a number the German does not touch, and the change brings the target closer to
     the German (e.g. Nemluvio IT 'ogni quattro settimane' -> 'ogni otto' where the German says 'alle acht Wochen').
     Findings caused by that change are annotated, not suppressed: the flag stands and a translator decides.
-  - "divergence": numbers on which the old target already disagrees with the old German, from
-    gleichlaut.audit.audit_item when that module is importable (skipped silently otherwise)."""
+  - "divergence": pre-existing problems of the old target text (numbers / units on which it disagrees with the old
+    German, a target text written in another language, editorial problems), from gleichlaut.audit.audit_item when that
+    module is importable (skipped silently otherwise). A display-level notice: it never changes a verdict."""
 import difflib, re
 from collections import Counter
 from .. import core
@@ -151,7 +152,18 @@ T = {
     "div_tg": {"fr": "l'ancien texte dit {c}, l'allemand non", "it": "il vecchio testo dice {c}, il tedesco no",
                "en": "the old text says {c}, the German does not"},
     "div_pair": {"fr": "allemand {d}, français {t}", "it": "tedesco {d}, italiano {t}", "en": "German {d}, target {t}"},
+    "lang_is": {"fr": "L'ancien texte français est en {x}.", "it": "Il vecchio testo italiano è in {x}.",
+                "en": "The previous target text is in {x}."},
+    "lang_not": {"fr": "L'ancien texte français ne semble pas être en français : {x}",
+                 "it": "Il vecchio testo italiano non sembra essere in italiano: {x}",
+                 "en": "The previous target text does not seem to be in the target language: {x}"},
 }
+LANGNAME = {"fr": {"de": "allemand", "fr": "français", "it": "italien", "en": "anglais", "rm": "romanche"},
+            "it": {"de": "tedesco", "fr": "francese", "it": "italiano", "en": "inglese", "rm": "romancio"},
+            "en": {"de": "German", "fr": "French", "it": "Italian", "en": "English", "rm": "Romansh"}}
+_LANGWORDS = {"de": r"german|deutsch|allemand|tedesco", "fr": r"french|franz|français|francese", "it": r"italian|italien|italiano",
+              "en": r"english|englisch|anglais|inglese", "rm": r"romansh|rätoroman|romanche|romancio"}
+KINDS = ("number", "unit", "language", "editorial")
 MODAL = {"MUST": {"fr": "obligation : doit", "it": "obbligo: deve", "en": "obligation: must"},
          "MAY": {"fr": "possibilité : peut", "it": "possibilità: può", "en": "permission: may"},
          "SHALL": {"fr": "recommandation : devrait", "it": "raccomandazione: dovrebbe", "en": "recommendation: should"}}
@@ -338,9 +350,38 @@ _TGK = ("tgt", "tgt_value", "tgt_old", "target", "tgt_num", "tgt_text", "tgt_sur
 _TXK = ("text", "msg", "message", "note", "summary", "detail", "what")
 
 
+def found_language(d, lang):
+    """The language an old text was found to be in, from an audit finding of kind 'language' (None when not stated):
+    a found / detected / actual / is_lang key, values[lang], or a language name in the detail sentence."""
+    for k in ("found", "detected", "actual", "is_lang", "found_lang", "detected_lang"):
+        v = d.get(k)
+        if isinstance(v, str) and v.lower()[:2] in LANGNAME["en"] and v.lower()[:2] != lang: return v.lower()[:2]
+    v = d.get("values")
+    if isinstance(v, dict):
+        v = v.get(lang)
+        if isinstance(v, (list, tuple)) and v: v = v[0]
+        if isinstance(v, str) and v.lower()[:2] in LANGNAME["en"] and v.lower()[:2] != lang: return v.lower()[:2]
+    txt = " ".join(str(d.get(k) or "") for k in ("detail", "text", "description", "message"))
+    m = re.search(r"\b(?:is|in|carries|contains|written in|est en|è in)\s+(\w+)", txt, re.I)
+    for code, rx in _LANGWORDS.items():
+        if code != lang and m and re.match(rx, m.group(1), re.I): return code
+    hits = [code for code, rx in _LANGWORDS.items() if code != lang and re.search(rx, txt, re.I)]
+    return hits[0] if len(hits) == 1 else None
+
+
+def _kind(d):
+    k = str(d.get("kind") or "").lower()
+    if k in KINDS: return k
+    if k in ("numeric", "num", "numbers"): return "number"
+    if k in ("lang", "wrong_language", "wrong-language"): return "language"
+    return "number" if ("side" in d or "value" in d or "values" in d) else "editorial"
+
+
 def divergence(x):
-    """-> [dict(text=..., raw=...)] from gleichlaut.audit.audit_item(x), [] when absent or empty. Accepts a list (or a
-    dict with a list under divergences / findings / items) of dicts, (de, tgt) pairs or strings."""
+    """-> [dict(text=..., raw=..., kind=number|unit|language|editorial, found=lang or None)] from
+    gleichlaut.audit.audit_item(x), [] when absent or empty. Accepts the current shape (dicts with side / value / unit /
+    context), the extended one (dicts with kind, lang, detail, values, odd_one_out), a dict with a list under
+    divergences / findings / items, (de, tgt) pairs or strings. Findings for the other target language are skipped."""
     if _audit_item is None: return []
     try: r = _audit_item(x)
     except Exception: return []
@@ -350,7 +391,17 @@ def divergence(x):
     L, res = x["lang"], []
     for d in r if isinstance(r, (list, tuple)) else [r]:
         raw = d if isinstance(d, str) else repr(d)
-        if isinstance(d, dict) and "side" in d and ("context" in d or "value" in d):
+        kind, found = "number", None
+        if isinstance(d, dict):
+            kind = _kind(d)
+            dl = d.get("lang") if d.get("lang") is not None else d.get("langs")
+            if isinstance(dl, str) and dl in ("fr", "it") and dl != L: continue
+            if isinstance(dl, (list, tuple)) and set(dl) & {"fr", "it"} and L not in dl: continue
+        if isinstance(d, dict) and kind == "language":
+            found = found_language(d, L)
+            det = next((str(d[k]) for k in _TXK if d.get(k)), "")
+            txt = tr(L, "lang_is", x=LANGNAME[rl(L)][found]) if found else tr(L, "lang_not", x=clip(det or raw, 120))
+        elif isinstance(d, dict) and "side" in d and ("context" in d or "value" in d):
             ctxs = d.get("context") or []
             c = ctxs[0] if isinstance(ctxs, list) and ctxs else ctxs if isinstance(ctxs, str) else ""
             m = re.search(r"(\S*\s+)?\[([^\]]+)\](\S*(?:\s+[^\s.,;:)]+)?)?", c)
@@ -358,9 +409,10 @@ def divergence(x):
             if d.get("unit") and m and d["unit"] not in phrase: phrase += " " + d["unit"]
             txt = tr(L, "div_de" if d["side"] == "de" else "div_tg", c=q(L, clip(phrase, 60)))
         elif isinstance(d, dict):
-            de = next((d[k] for k in _DEK if d.get(k) not in (None, "")), None)
-            tg = next((d[k] for k in _TGK if d.get(k) not in (None, "")), None)
-            if de is not None and tg is not None:
+            vals = d.get("values") if isinstance(d.get("values"), dict) else {}
+            de = next((d[k] for k in _DEK if d.get(k) not in (None, "")), vals.get("de"))
+            tg = next((d[k] for k in _TGK if d.get(k) not in (None, "")), vals.get(L))
+            if de not in (None, "", []) and tg not in (None, "", []):
                 fmt = lambda v: ", ".join(map(str, v)) if isinstance(v, (list, tuple, set)) else str(v)
                 txt = tr(L, "div_pair", d=q(L, clip(fmt(de), 80)), t=q(L, clip(fmt(tg), 80)))
             else:
@@ -369,7 +421,7 @@ def divergence(x):
             txt = tr(L, "div_pair", d=q(L, str(d[0])), t=q(L, str(d[1])))
         else:
             txt = str(d)
-        res.append(dict(text=clip(txt, 220), raw=raw))
+        res.append(dict(text=clip(txt, 220), raw=raw, kind=kind, found=found))
     return res
 
 
@@ -378,9 +430,14 @@ def banner(x, divs, out=None):
     passage, the old target's phrase is set against the German one ('ogni quattro settimane' vs 'alle acht Wochen')."""
     if not divs: return None
     L = x["lang"]; c = corrections(x, out) if out else None
+    lang = [d["text"] for d in divs if d.get("kind") == "language"]
+    rest = [d for d in divs if d.get("kind") != "language"]
+    if not rest: return " ".join(lang)
     if c and c["where"] and c["de"]:
-        return tr(L, "div", x=tr(L, "div_vs", t=q(L, c["where"][0][0]), d=q(L, c["de"][0])))
-    return tr(L, "div", x="; ".join(d["text"] for d in divs[:3]))
+        num = tr(L, "div", x=tr(L, "div_vs", t=q(L, c["where"][0][0]), d=q(L, c["de"][0])))
+    else:
+        num = tr(L, "div", x="; ".join(d["text"] for d in rest[:3]))
+    return " ".join(lang + [num])
 
 
 # ------------------------------------------------------------------------------------------- findings

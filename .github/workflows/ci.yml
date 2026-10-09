@@ -15,7 +15,7 @@ jobs:
       - run: pip install -r requirements.txt
       - name: data/ budget (<= 100 MB)
         run: test $(du -sk data | cut -f1) -le 102400 && du -sh data
-      - name: tests (incl. operations tests against an in-process fake endpoint on localhost)
+      - name: tests (incl. operations tests against gleichlaut.fake_endpoint, in process on localhost)
         run: PYTHONPATH=src python tests/run.py
       - name: claims (every number in README / report / notes -> results file)
         run: python tools/claims.py --scan README.md technical_report.md docs/notes-field.md

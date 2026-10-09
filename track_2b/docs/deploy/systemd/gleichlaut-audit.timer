@@ -1,0 +1,10 @@
+# Quarterly (the 3rd of Jan, Apr, Jul, Oct). Monthly works too: OnCalendar=*-*-03 07:00:00 Europe/Zurich
+[Unit]
+Description=Gleichlaut congruence audit
+
+[Timer]
+OnCalendar=*-01,04,07,10-03 07:00:00 Europe/Zurich
+Persistent=true
+
+[Install]
+WantedBy=timers.target

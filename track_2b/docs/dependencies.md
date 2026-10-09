@@ -27,3 +27,39 @@ publication.
 | Wayback Machine captures of the 2025 SL XMLPublications | building the fresh test set (done; items are in `data/items/`) |
 | GitHub Actions | CI and the CPU runs of the 8B GGUF (M1/M2) |
 | Claude Code (Anthropic) | coding assistant and hand-check labelling during development; not part of the solution |
+
+## GGUF provenance (the offline 8B lane)
+
+The file `make run-offline` and `gleichlaut fetch-gguf` download is pinned by sha256. **That sha256 is the file the
+evaluation used**: the 8B GGUF evaluation on the fresh 166 (`.github/workflows/m1.yml`, PREREG R1, CPU runners, same URL
+and sha256) and the offline workflow (`.github/workflows/offline.yml`). Any other file, including a re-quantisation of the same
+weights, is a different model build and has to be evaluated again (m1 workflow) before its results can be quoted.
+
+| Step | Repository (Hugging Face) | What it is |
+|---|---|---|
+| 1 | `swiss-ai/Apertus-v1.5-8B` | the official weights (safetensors, 18.4 GB; multimodal: text, image, audio) |
+| 2 | `andreasmartin/apertus-v1.5-8b-text` (revision `c0e7eeb6`, card `base_model: swiss-ai/Apertus-v1.5-8B`) | a third-party **text-only** extraction: the vision and audio towers removed, so llama.cpp can convert it |
+| 3 | `Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF` (revision `248ec68a`, 5 Sep 2026) | `apertus-v1.5-8b-text-q4_k_m.gguf`, made from step 2 with llama.cpp through ggml.ai's GGUF-my-repo space (its card says so; tag `gguf-my-repo`) |
+| pin | `GLEICHLAUT_MODEL_SHA256` | `a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299`, 5,059,027,136 bytes |
+
+Neither step 2 nor step 3 is published by swiss-ai, and no official GGUF exists (`docs/sources.md` §5.3). The chain was
+read from the repositories' model cards and the Hugging Face API on 9 Oct 2026. Step 2 is gated: accept the Apertus
+Acceptable Use Policy there.
+
+**Quantising it yourself** with llama.cpp, from the text-only weights:
+
+```bash
+git clone https://github.com/ggml-org/llama.cpp && cd llama.cpp
+pip install -r requirements/requirements-convert_hf_to_gguf.txt
+cmake -B build -DGGML_NATIVE=OFF -DLLAMA_CURL=OFF && cmake --build build --config Release -j --target llama-quantize
+hf download andreasmartin/apertus-v1.5-8b-text --revision c0e7eeb69c55c7810c91de3a1f97dde4d4b14b01 --local-dir apertus-v1.5-8b-text
+python convert_hf_to_gguf.py apertus-v1.5-8b-text --outtype bf16 --outfile apertus-v1.5-8b-text-bf16.gguf
+./build/bin/llama-quantize apertus-v1.5-8b-text-bf16.gguf apertus-v1.5-8b-text-q4_k_m.gguf Q4_K_M
+sha256sum apertus-v1.5-8b-text-q4_k_m.gguf
+```
+
+To start from the official `swiss-ai/Apertus-v1.5-8B` instead, first extract the text model, as step 2 did, because the
+multimodal checkpoint carries the vision and audio towers. Gleichlaut does not ship an extraction script. To use your
+own file, put it in `models/` under the base name of `GLEICHLAUT_MODEL_URL` and set `GLEICHLAUT_MODEL_SHA256` to its
+sha256. `fetch_gguf` finds a verified file and downloads nothing. Expect a different sha256 from the pin unless the
+llama.cpp version matches the one GGUF-my-repo used. Before relying on the file, run the m1 workflow on it.

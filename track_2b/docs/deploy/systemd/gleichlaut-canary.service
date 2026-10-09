@@ -1,0 +1,36 @@
+# Monthly canary of the certified 70B endpoint (docs/operations.md §4): 40 suite items, exit 3 on drift.
+# Exit codes -> alerts: docs/deploy/README.md. A non-zero exit fails the unit and starts gleichlaut-alert@.
+[Unit]
+Description=Gleichlaut canary of the certified endpoint
+Wants=network-online.target
+After=network-online.target
+OnFailure=gleichlaut-alert@%n.service
+
+[Service]
+Type=oneshot
+User=gleichlaut
+Group=gleichlaut
+WorkingDirectory=/opt/gleichlaut/track_2b
+EnvironmentFile=/etc/gleichlaut/gleichlaut.env
+Environment=PYTHONPATH=/opt/gleichlaut/track_2b/src PYTHONDONTWRITEBYTECODE=1
+Environment=GLEICHLAUT_STATE=/var/lib/gleichlaut/state GLEICHLAUT_OUT=/var/lib/gleichlaut/out GLEICHLAUT_HIST=/var/lib/gleichlaut/out/hist
+# the certificate HMAC key, readable only by this unit (systemd >= 248), kept out of the state directory.
+# Without a key (GLEICHLAUT_CERT_KEY unset) delete the next two lines.
+LoadCredential=cert.key:/etc/gleichlaut/cert.key
+Environment=GLEICHLAUT_CERT_KEY=%d/cert.key
+ExecStart=/opt/gleichlaut/venv/bin/python -m gleichlaut certify --backend openai --canary 40
+StateDirectory=gleichlaut
+TimeoutStartSec=2h
+# hardening: read-only system, writes only to /var/lib/gleichlaut
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+CapabilityBoundingSet=
+LockPersonality=yes
+MemoryMax=2G

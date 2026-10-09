@@ -39,6 +39,7 @@ def compute():
     res["post_edit"] = score.post_edit()
     res["ready_quality"] = score.ready_quality()
     res["audit"] = score.audit_eval()
+    res["baseline_plus"] = score.baseline_plus()
     return res
 
 
@@ -72,7 +73,7 @@ def headline(res):
          f"(+{f['exact']['delta']:.1f}, 95% CI [{f['exact']['ci95'][0]:+.1f}, {f['exact']['ci95'][1]:+.1f}])",
          f"  ready (unflagged) {f['unflagged']}/{f['n']} = {f['ready_rate']:.1f}%   flagged {f['flag_rate']:.1f}%   "
          f"unflagged real errors {f['unflagged_REAL']}  stale {f['unflagged_stale']}  untranslated {f['unflagged_german']}  "
-         f"(95% upper bound {f['wilson95_unflagged_real'][1]:.1f}%)",
+         f"(95% upper bound {f['wilson95_severe_among_ready'][1]:.1f}% of ready drafts)",
          f"  pass rule (pre-registered): {'PASS' if f['pass'] else 'FAIL'}   cost CHF {res['economics']['chf_per_item_infomaniak']:.4f}/item "
          f"(Swiss provider price; USD {c['usd_per_item']:.4f} at the evaluation provider)",
          "", "WHERE IT FELL SHORT (same pass rule)",

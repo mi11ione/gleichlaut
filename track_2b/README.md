@@ -2,7 +2,7 @@
 
 **Keeps the French and Italian of Switzerland's drug-reimbursement conditions in step with the German.** When BAG
 amends a condition in German, Gleichlaut drafts the matching French and Italian change with Apertus, and it audits the
-whole register for places where the languages already disagree. Numbers never pass through the model.
+whole register for places where the languages already disagree. Numbers never reach the model; code writes them.
 
 Track 2B · team 444 · maturity: feasibility study · Apertus v1.5 8B + 70B ·
 **[open the review register](https://mi11ione.github.io/gleichlaut/)** · [technical report](technical_report.md) ·
@@ -24,7 +24,7 @@ In today's register:
 | Cresemba `CRESE.Kps.IM` | body weight **≥ 16** kg | French drops the limit |
 | Dupixent ×4 `DUPIXENT.02` `.02P` `.05a` `.05P` | dose tier from **15** kg | French starts at **30** kg or omits the tier |
 
-## Two tools, one rule: the model never writes a number
+## Two tools, one rule: numbers are code's job
 
 **Draft.** When the German changes, Gleichlaut locks the old French/Italian outside the edit, replaces every number
 with a slot code (⟨A⟩, ⟨B⟩ …) that code writes back, and lets Apertus 70B rewrite only the wording. A frozen stack of
@@ -32,8 +32,10 @@ deterministic checks (edits stay inside the change, numbers/negation/modal verbs
 the change is applied, nothing dropped, terminology) marks each draft **ready** or **flagged**, and says why in the
 reviewer's own language. One re-ask with the complaints; the new draft is kept only if every check passes.
 
-**Audit.** Reads every current limitation in all three languages and lists the conditions whose numbers disagree. On
-the 6 Oct 2026 feed it reduces 1,688 limitations to **21 lines**, which contain **all 10** known divergent limitations.
+**Audit.** Reads every current limitation in all three languages and lists numbers that disagree, fields written in the
+wrong language and typos next to numbers. On the 6 Oct 2026 feed it reduces 1,688 limitations to **27 findings**: all
+**10** known divergent limitations, plus **6** problems nobody had listed, among them Keytruda's Italian field, which has
+held the French text since 1 Aug 2026. A blind annotator confirms 16 of the 27. No model is involved.
 
 The two meet in the review register. Nemluvio's old Italian already says "every 4 weeks"; Apertus' draft writes "every
 8 weeks", matching the German. BAG's own update kept the 4. The register shows the draft as a correction to check, not
@@ -41,16 +43,17 @@ as an error.
 
 ## Results (pre-registered, held out)
 
-Test set: 166 French/Italian amendments from 2025 SL changes, 154 in edit patterns never seen during design. The checks
-and all their resources were hashed before any output existed.
+Test set: 166 French/Italian amendments from SL changes between Jun 2025 and Feb 2026, 154 in edit patterns never seen
+during design. The checks and all their resources were hashed before any output existed.
 
-| | Apertus 70B + checks | Starting point a translator has today |
+| | Apertus 70B + checks | No-model start (old text, numbers updated by code) |
 |---|---|---|
 | Draft identical to the text BAG published | **17.5%** (+11.4 points, 95% CI [4.8, 18.7]) | 6.0% (old text + numbers updated) |
 | Token edits still needed to reach BAG's text | **42.4% fewer** (95% CI [31.0, 54.1]); 59.1% fewer on ready drafts | baseline |
 | Drafts ready for acceptance | **39.8%** of items | |
 | Errors introduced in ready drafts (meaning / stale / German left) | **0 / 0 / 0** | |
 | Same test, rerun with a new seed | +12.0 points, 41.6% ready, 0 meaning errors | |
+| Against our strongest no-model baseline (rules+: also copies changed names, deletes whole sentences) | +6.6 points [1.8, 12.0]; 41.3% fewer edits [29.7, 53.0] | 10.8% identical |
 
 Costs **CHF 0.0024 per draft** at a Swiss provider's published price for Apertus 70B: CHF 0.14 a month at today's
 volume, CHF 1.36 at ten times. Every number here is in [claims.tsv](claims.tsv) with the file and command that
@@ -65,11 +68,11 @@ On 120 federal-statute amendments (Fedlex) the 70B is no better than the 8B (exa
 | BAG today ([docs/sl-process.md](docs/sl-process.md)) | Gleichlaut |
 |---|---|
 | ePL editor: "Limitierungstext DE / FR / IT" fields per limitation | **Draft** proposes the FR and IT fields when the DE field changes |
-| Triennial review question: "…und die Übersetzungen sind kongruent?" | **Audit** answers it for the whole register in seconds |
+| Triennial review: applicants declare "…und die Übersetzungen sind kongruent?" | **Audit** gives BAG its own check of that declaration, for the whole register in seconds |
 | Federal translation tool STAR Transit | XLIFF 1.2 and 2.1, numbers protected, checks as notes |
 | Monthly FHIR R5 publication (CH EPL profile) | drafts emitted as ClinicalUseDefinition in the feed's own shape |
 
-**Shadow mode needs nobody's permission.** `gleichlaut month --from 20261001 --to 20261101 --fetch` mines the month's
+**Shadow mode needs nobody's permission.** `gleichlaut month --from 20260901 --to 20261001 --fetch` mines the month's
 German changes from the public feed, drafts them, and grades itself against what BAG publishes. First user group: BAG's
 Sektion Arzneimittelaufnahmen and the ePL team. Operator runbook: [docs/operations.md](docs/operations.md).
 
@@ -98,7 +101,7 @@ make test           # the test suite
 |---|---|---|
 | Audit, checks, register, XLIFF/FHIR | any server, Python standard library + lxml | nothing |
 | Federal statutes | Apertus 8B GGUF on CPU, in process | nothing |
-| SL conditions | Apertus 70B on an endpoint you control (own GPUs, or a Swiss provider such as Infomaniak, Swisscom, PHOENIQS), admitted only by an endpoint-bound certificate | one public limitation text per request, numbers as slot codes |
+| SL conditions | Apertus 70B on an endpoint you control (own GPUs, or a Swiss provider such as Infomaniak, Swisscom, PHOENIQS), admitted only by an endpoint-bound certificate | one limitation text per request (in shadow mode a published one; in pre-publication use BAG's draft German, which is why the endpoint must be one BAG controls), numbers as slot codes |
 
 No provider-specific code: any OpenAI-compatible Apertus endpoint works once it passes `make certify`. Build-time and
 runtime dependencies: [docs/dependencies.md](docs/dependencies.md); target architecture:

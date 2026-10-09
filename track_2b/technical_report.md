@@ -1,7 +1,7 @@
 # Technical report: Gleichlaut
 
 Keeping the French and Italian of Switzerland's drug-reimbursement conditions in step with the German, with Apertus.
-Numbers never pass through the model; frozen deterministic checks decide what is ready.
+Numbers never reach the model; frozen deterministic checks decide what is ready.
 
 - **Track:** Track 2B: Gleichlaut
 - **Event:** Online
@@ -15,7 +15,7 @@ Numbers never pass through the model; frozen deterministic checks decide what is
 French and Italian under one identifier, as three text fields in its ePL editor, published monthly for the 9.08 million
 people in basic insurance (22.6% of residents name French and 7.8% Italian as a main language). In 7.5 months of 2026,
 216 German texts changed (28.7 a month); BAG updated French and Italian in the same month for 208 of them. BAG's own
-review asks applicants whether "die Übersetzungen sind kongruent". Where they are not, the difference is a number: in
+review asks applicants to declare that "die Übersetzungen sind kongruent". Where they are not, the difference we find is a number: in
 the 6 Oct 2026 register, 10 limitations carry 5 independent divergences (Nemluvio every 8 weeks vs "ogni 4 settimane";
 Diaphin 6% vs 12%; a French-only "≥ 62.5 kg" condition in three etanercept biosimilars; a 16 kg limit missing in French
 for Cresemba; a 15–30 kg tier missing or shifted in French for four Dupixent limitations).
@@ -24,15 +24,16 @@ for Cresemba; a 15–30 kg tier missing or shifted in French for four Dupixent l
 replaces every number with a slot code that code writes back, lets Apertus rewrite the wording, and runs a frozen stack
 of deterministic checks that marks the draft ready or flagged and explains why in the reviewer's language. *Audit*:
 compares the numbers of every limitation across the three languages and lists the conditions that disagree. The model
-never writes a number and never judges anything.
+never sees a number (it wrote 0 digits in 285 calls; 3 number words it wrote were all flagged) and never judges anything.
 
-**Results.** On a pre-registered held-out set of 166 French/Italian amendments from 2025 (154 in edit patterns never
+**Results.** On a pre-registered held-out set of 166 French/Italian amendments from SL changes between Jun 2025 and Feb 2026 (154 in edit patterns never
 seen during design; checks and resources hashed before any output existed), Apertus 70B drafts equal BAG's published
-text **17.5%** of the time against **6.0%** for the translator's current starting point (old text with numbers
-updated): **+11.4 points, 95% CI [4.8, 18.7]**. They cut the token edits still needed to reach BAG's text by **42.4%**
+text **17.5%** of the time against **6.0%** for the no-model start (old text with numbers
+updated by code): **+11.4 points, 95% CI [4.8, 18.7]**; against rules+, our strongest no-model baseline, **+6.6 [1.8, 12.0]**. They cut the token edits still needed to reach BAG's text by **42.4%**
 [31.0, 54.1]. **39.8%** of drafts come out ready, with **0** meaning errors, stale changes or German left among them,
 and a rerun with a new seed passes the same rule (+12.0 points, 41.6% ready). The audit reduces 1,688 limitations to
-**21** lines that contain **all 10** known divergent limitations. A draft costs **CHF 0.0024** at a Swiss provider's
+**27** findings that contain **all 10** known divergent limitations and **6** new confirmed problems (a field in the
+wrong language, five typos next to numbers). A draft costs **CHF 0.0024** at a Swiss provider's
 published price for Apertus 70B. `make run` re-executes the recorded runs offline and re-derives every number.
 
 ## 2. Architecture
@@ -62,7 +63,7 @@ to its address and served model, earned by re-running the frozen 166-item suite 
 |---|---|---|---|
 | Audit, checks, register, XLIFF/FHIR | none | none | none |
 | Federal statutes | Apertus 8B GGUF, CPU, in process; drafts go to review | none | none |
-| SL conditions | Apertus 70B on a certified, user-controlled endpoint | that endpoint only | one public limitation text (DE old/new, FR or IT), numbers as slot codes |
+| SL conditions | Apertus 70B on a certified, user-controlled endpoint | that endpoint only | one limitation text (DE old/new, FR or IT), numbers as slot codes; before publication this is BAG's confidential draft, hence an endpoint BAG controls |
 
 Build time only: Docker base image (pinned by digest), PyPI, the sha256-pinned GGUF. Runtime dependencies and licences
 (Apache-2.0 weights under the Apertus AUP): `docs/dependencies.md`, `docs/target-architecture.md`. Public AI served the
@@ -124,6 +125,7 @@ German changes. Every ready non-exact draft was read in full; a seeded 20 flagge
 | Setup (FR+IT) | Set | n | Exact | Δ vs rules [95% CI] | Flagged | Ready | Ready with real / stale / untranslated | Rule |
 |---|---|---|---|---|---|---|---|---|
 | Rules only (old text + numbers) | held-out | 166 | 6.0% | | | | | |
+| rules+ (also copies names, deletes sentences) | held-out | 166 | 10.8% | | | | | |
 | **Apertus 70B + checks + re-ask** | **held-out** | **166** | **17.5%** | **+11.4 [4.8, 18.7]** | **60.2%** | **39.8%** | **0 / 0 / 0** | **PASS** |
 | same, unseen edit patterns | held-out | 154 | 15.6% | +12.3 [5.8, 20.1] | 60.4% | 39.6% | 0 / 0 / 0 | PASS |
 | same, rerun with seed 1 (R2) | held-out | 166 | 18.1% | +12.0 [5.4, 19.3] | 58.4% | 41.6% | 0 / 0 / 2 | PASS |
@@ -141,9 +143,12 @@ fewer token edits to reach BAG's published text (95% CI [31.0, 54.1]); 59.1% few
 **Stability.** The seeded rerun reproduced 69.9% of final outputs byte-for-byte and the ready/flagged verdict with
 κ 0.963; the API itself is not deterministic at temperature 0, which is why certification re-runs the whole suite.
 
-**Audit.** On the 6 Oct 2026 register: 21 findings in 17 limitations; all 10 known divergent limitations and all 13 of
-their known values are among them; a blind annotation finds 10 of the 21 real (47.6%, Wilson [28.3, 67.6]); the other
-11 are paraphrases such as "ab 18 Jahren" vs "adultes". Rules were frozen before measuring recall.
+**Audit.** On the 6 Oct 2026 register, numeric check: 21 findings in 17 limitations; all 10 known divergent limitations
+and all 13 of their known values are among them; a blind annotation finds 10 of the 21 real (47.6%, Wilson
+[28.3, 67.6]); the other 11 are paraphrases such as "ab 18 Jahren" vs "adultes", or typos. Language and editorial
+checks (added in round 2, rules written before any label): 6 findings, all 6 confirmed: Keytruda's Italian field holds
+the French text since 1 Aug 2026, and five typos next to numbers ("de15 kg", "1 .4 mmol/l", "se mesi"). In total 16 of
+27 findings are real (59.3%).
 
 **Labels.** Every ready non-exact draft and the flagged sample were read in full by a blind annotator; a second blind
 annotator re-labelled them (agreement 62 of 69, κ 0.532) and found no meaning error, stale change or German left among
@@ -168,10 +173,12 @@ At this volume a per-token Swiss endpoint costs CHF 0.14 a month; dedicated 70B 
   not cover drug-class names yet.
 - **Bounds counted honestly.** 0 errors in 66 ready drafts is 0 in 36 German changes and 18 edit families: 95% upper
   bounds 5.5% per draft, 9.6% per change, 17.6% per family. One boilerplate family supplies half of the ready drafts;
-  without it 75.8% are flagged.
+  without it 75.8% are flagged, which would fail the 70% flag cap of our own rule (exact gain without it: +14.4 over
+  rules-only, +8.3 [2.3, 15.2] over rules+).
 - **No check targets direction flips** (increase ↔ decrease); a single dropped word inside an edited window can pass.
 - **The held-out gold overlaps the dev pool's inputs:** 22 of the 166 published 2025 texts reappear as old texts in
-  the 2026 dev items; the check resources come only from the Jun 2025 capture.
+  the 2026 dev items. The vocabulary and terminology resources come from the Jun 2025 capture; the name whitelist
+  (product, substance and ATC names, no limitation texts) from the feed current at design time.
 - **The 5 divergences predate our window** (all present at the earliest capture, Jun/Jul 2025), so the backtest cannot
   say where they arose; the audit finds them today.
 
@@ -191,7 +198,8 @@ labels by blind Claude annotators. Apertus is the only model at runtime, and no 
 ## 8. Integration and next steps
 
 BAG writes limitation texts itself (KVV Art. 73) in an ePL editor with one field per language; applicants answer the
-"kongruent" question in the triennial review; the federal translation tool is STAR Transit (`docs/sl-process.md`).
+"kongruent" declaration in the triennial review (the audit gives BAG its own check of it); the federal translation tool
+is STAR Transit (`docs/sl-process.md`).
 Gleichlaut maps onto each: Draft proposes the FR/IT fields when the DE field changes, Audit answers the congruence
 question for the whole register, and translators receive XLIFF 1.2/2.1. Shadow mode (`gleichlaut month`) runs on the
 public feed every month and grades itself against BAG's publication, so a pilot with the Sektion Arzneimittelaufnahmen

@@ -49,17 +49,85 @@ def test_suppression_rules():
 
 
 def test_audit_item_on_the_fresh_items():
-    """the old Italian Nemluvio text (wb004-it) is the one fresh item whose old target already disagrees with the German."""
+    """old Italian Nemluvio (wb004-it) disagrees on a number; old 'Italian' Myoview (wb079-it) is French. No other fresh
+    item has a number, unit or language finding in its old texts."""
     X = score.load_items("items/items_fresh.json")
     hits = {x["key"]: A.audit_item(x) for x in X if A.audit_item(x)}
-    assert list(hits) == ["wb004-it"]
-    assert [(f["side"], f["value"], f["unit"]) for f in hits["wb004-it"]] == [("de", "8", "Wochen")]
+    div = {k: v for k, v in hits.items() if any(f["kind"] in ("number", "unit", "language") for f in v)}
+    assert sorted(div) == ["wb004-it", "wb079-it"]
+    assert [(f["side"], f["value"], f["unit"]) for f in hits["wb004-it"] if f["kind"] == "number"] == [("de", "8", "Wochen")]
+    lg = [f for f in hits["wb079-it"] if f["kind"] == "language"]
+    assert len(lg) == 1 and lg[0]["detected"] == "fr" and lg[0]["odd_one_out"] == "it" and "French" in lg[0]["detail"]
+
+
+def test_audit_item_shape_is_backwards_compatible():
+    """round-2 keys (side, value, unit, context) stay on number findings; every finding has kind, lang and an English detail."""
+    x = dict(key="k-fr", lang="fr", de_old="Danach alle acht Wochen. Senkung um 1 .4 mmol/l nach 3 Wochen.",
+             tgt_old="Ensuite toutes les quatre semaines. Réduction de 1,4 mmol/l après 3 mois.")
+    r = A.audit_item(x)
+    assert [f["kind"] for f in r] == ["number", "unit", "editorial"]   # FR 'quatre' = the '4' of DE '1 .4': no number finding
+    for f in r: assert f["kind"] in ("number", "unit", "language", "editorial") and f["lang"] and f["detail"].endswith(".")
+    n = r[0]; assert {"side", "value", "unit", "context", "values"} <= set(n)
+    u = r[1]; assert u["side"] == "fr" and u["values"] == ["3"] and "weeks" in u["detail"] and "months" in u["detail"]
+    e = r[2]; assert e["lang"] == "de" and e["surface"] == "1 .4" and e["suggestion"] == "1.4"
+    assert A.audit_item(x, kinds=("number",)) == r[:1]
+
+
+def test_language_check():
+    st = A.load_stats()
+    if st is None: raise unittest.SkipTest("no shipped register statistics " + A.STATS)
+    fr = ("Monothérapie du carcinome urothélial localement avancé ou métastatique chez les adultes ayant été prétraités "
+          "par chimiothérapie à base de platine au cours des 24 derniers mois.")
+    it = ("Monoterapia del carcinoma uroteliale localmente avanzato o metastatico negli adulti che sono stati pretrattati "
+          "con chemioterapia a base di platino entro gli ultimi 24 mesi.")
+    assert A.lang_check(fr, "it", st=st)["detected"] == "fr"
+    assert A.lang_check(it, "it", st=st)["detected"] == "it" and A.lang_check(fr, "fr", st=st)["detected"] == "fr"
+    assert A.lang_check(it, "fr", st=st)["detected"] == "it"
+    assert not A.lang_check("Keytruda KN045 200 mg", "it", st=st)["judged"]             # short: names and codes only
+    assert A.lang_check(fr, "it", st=None)["detected"] == "it"                          # no profile: B cannot confirm
+    assert not (A.FW["fr"] & A.FW["it"]) and "la" not in A.FW["fr"] and "la" not in A.FW["it"]
+
+
+def test_unit_check():
+    assert [(u["value"], u["de"], u["tgt"]) for u in A.unit_diff("nach 4 Wochen", "après 4 mois", "fr")] == [("4", "w", "m")]
+    assert [(u["value"], u["de"], u["tgt"]) for u in A.unit_diff("ab 15 kg", "da 15 mg", "it")] == [("15", "kg", "mg")]
+    assert not A.unit_diff("nach 4 Wochen", "après 4 semaines", "fr")
+    assert not A.unit_diff("4 Wochen und 4 Monate", "4 semaines et 4 mois", "fr")
+    assert not A.unit_diff("6 Monate und 6 Wochen", "6 mois", "fr")                     # one direction only: not a finding
+    assert A.unit_one_sided("6 Monate und 6 Wochen", "6 mois", "fr")
+    assert not A.unit_diff("ab dem 12. Lebensjahr, 12 Monate", "dès 12 ans, 12 mois", "fr")
+    assert not A.unit_diff("15 kg", "15 %", "fr")                                       # different dimensions
+
+
+def test_editorial_rules():
+    ed = lambda t, L, st=None: [(e["rule"], e["surface"], e["suggestion"]) for e in A.editorial(t, L, st)]
+    assert ed("LDL-C kleiner 1 .4 mmol/l", "de") == [("E1", "1 .4", "1.4")]
+    assert ed("patients pesant moins de15 kg", "fr") == [("E2", "de15", "de 15")]
+    assert ed("nach 4Wochen", "de") == [("E3", "4Wochen", "4 Wochen")]
+    assert not ed("1.4 mmol/l, 15 kg, FEV1 80 %, HER2, Code 21390.03, Punkte 1 ,2 und 3", "de")
+    st = dict(utri={"it": {"almeno sei mesi": 6, "almeno se mesi": 1}}, after={"it": {"mesi": 40, "settimane": 30}},
+              _vocab={"it": {"almeno", "mesi", "mese"}})
+    assert ed("terapia di almeno se mesi", "it", st) == [("E4", "se mesi", "sei mesi")]
+    assert ed("dopo 6 mese", "it", st) == [] and ed("dopo 6 mesu", "it", st) == [("E5", "6 mesu", "6 mesi")]
+    st["utri"]["it"]["almeno sei mesi"] = 4                                                # under the a-priori 5: silent
+    assert ed("terapia di almeno se mesi", "it", st) == []
+
+
+def test_lev1():
+    assert A.lev1("se", "sei") and A.lev1("monte", "monate") and A.lev1("dei", "sei")
+    assert not A.lev1("ab", "ba") and not A.lev1("sei", "sei") and not A.lev1("des", "deux")
 
 
 def test_snapshot_recall_and_counts_match_the_committed_summary():
     if not os.path.exists(os.path.join(H, "20261006-de.json")): raise unittest.SkipTest("no 20261006 snapshot in " + H)
-    F, S = A.run(H, "20261006"); R = A.recall(F)
+    F, S, X = A.run_all(H, "20261006")
+    N = [f for f in F if f["kind"] == "number"]; R = A.recall(N)
     assert all(r["all"] for r in R.values()) and len(R) == 10
-    assert not any(f["id"] == A.KNOWN_BONUS for f in F)
     ref = json.load(open(os.path.join(A.DEST, "audit_20261006_summary.json"), encoding="utf-8"))
-    assert len(F) == ref["findings"] and S["count_only_differences"] == ref["count_only_differences"]
+    assert len(N) == ref["findings"] and S["count_only_differences"] == ref["count_only_differences"]
+    assert {k: sum(f["kind"] == k for f in F) for k in ref["by_kind"]} == ref["by_kind"]
+    kt = [f for f in F if f["id"] == A.KNOWN_BONUS]
+    assert [(f["kind"], f["lang"], f["detected"], f["identical_to"]) for f in kt] == [("language", "it", "fr", ["fr"])]
+    com = json.load(open(os.path.join(A.DEST, "audit_20261006.json"), encoding="utf-8"))["findings"]
+    assert [(f["id"], f["lang"], f["rank"]) for f in N] == [(f["id"], f["lang"], f["rank"]) for f in com if f["kind"] == "number"]
+    for f in F: assert f["suggested_action"] is None and f["context"] and f["fid"]
