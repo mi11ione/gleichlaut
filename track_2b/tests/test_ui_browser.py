@@ -59,7 +59,7 @@ def test_landing_is_the_audit_tab_unless_drafts_is_asked_for():
     s = _dom(C["p"], "", "fr-CH,fr")
     assert re.search(r'id="t-audit"[^>]*aria-selected="true"', s) and "Audit du registre" in s
     s = _dom(C["p"], "#drafts", "it-CH")
-    assert re.search(r'id="t-drafts"[^>]*aria-selected="true"', s) and "Bozze" in s and re.search(r'<tr data-pair="[^"]+" aria-selected="true"', s)
+    assert re.search(r'id="t-drafts"[^>]*aria-selected="true"', s) and "Bozze" in s and re.search(r'<tr class="cnt" data-pair="[^"]+" aria-selected="true"', s)
 
 
 def test_three_levels_family_accept_and_start_from_old_text():

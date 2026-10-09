@@ -1,4 +1,4 @@
-"""Review page (gleichlaut.ui.build): self-contained (no external request, fonts embedded), < 1.5 MB, header figures
+"""Review page (gleichlaut.ui.build): self-contained (no external request, fonts embedded), < 1.2 MB, header figures
 from score.score_run, light/dark tokens, --fragment without document wrapper, and readable diffs (phrase-level; whole
 sentence struck/underlined when most of it changed). Runs under pytest or as `python3 tests/test_emit_ui.py`."""
 import json, os, re, sys, tempfile
@@ -22,12 +22,16 @@ def test_self_contained_and_small():
     assert not re.search(r"""(?:src|href)\s*=\s*["']?(?:https?:)?//""", s)
     assert not re.search(r"url\((?!data:)", s) and "@import" not in s
     assert s.count("@font-face") == 3 and "data:font/woff2;base64," in s
+    for fam in ("Public Sans", "Archivo", "Fragment Mono"): assert f"font-family:'{fam}'" in s, fam
+    assert "IBM Plex" not in s and "Source Sans" not in s and size < 1.2 * 1024 * 1024
 
 
 def test_tokens_light_dark_and_mobile():
     s, _, _ = _page()
     assert '@media (prefers-color-scheme:dark){:root:not([data-theme="light"])' in s and ':root[data-theme="dark"]' in s
-    assert "border-top:5px solid var(--red)" in s and "@media (max-width:900px)" in s and "@media print" in s
+    assert "--sig:#ff4f00" in s and "--sig:#ff6a26" in s and "--red" not in s and "border-top:5px" not in s
+    assert "--paper:#f4f5f1;--sheet:#fbfbf9" in s and "--paper:#0f1110;--sheet:#151816" in s
+    assert "@media (max-width:900px)" in s and "@media print" in s and 'class="tblock"' in s and 'tr class="grid" aria-hidden="true"' in s
 
 
 def test_header_figures_from_score_run():

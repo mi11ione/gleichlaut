@@ -4,52 +4,74 @@ No external request: fonts are inlined by build.fonts_css(), data by build.build
 HEAD = r"""<title>Gleichlaut Review</title>
 <style>
 __FONTS__
-/* LAYOUT. One ruled sheet (max-width 1320px, centred; side gutter via padding-inline, padding-block only), 5px Swiss-red
-   rule on top. 1 header: title + mono subtitle, two text tabs (Register audit | Drafts; the active one underlined on the
-   rule), then a two-column key-value block for the active tab between two black rules.
-   Register audit tab: lead sentence, filters, one ruled table row per audit finding (DE | FR | IT excerpts side by side,
-   conflicting values boxed in red, the odd-one-out language with a red bar, two decision columns + note), export row.
-   Below 900px each audit row becomes a labelled block.
-   2 work area: register (left, 5fr: filters, sticky-head table of German changes, export row) | case (right, 7fr:
-   1 German change, 2 Drafts FR|IT, 3 Checks ledger, 4 Decision). Below 900px the register sits above the case and every
-   table scrolls inside its own overflow-x container. 3 footer: provenance + legend of the marks. Print: A4, register
-   hidden, one case per page. Colour: ink on paper; red only for the top rule, failures, flags, pre-existing divergences
-   and the keyboard focus outline. No fills, no radii, no shadows. */
-:root{--paper:#ffffff;--ink:#0a0a0a;--ink2:#5f5f5b;--hair:#cfcfca;--rule:var(--ink);--red:#e1001a;--sel:var(--ink);--sel-ink:var(--paper);
---sans:"Source Sans 3","Frutiger","Avenir Next",Arial,sans-serif;--mono:"IBM Plex Mono",Menlo,Consolas,monospace;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0d0d0c;--ink:#ececea;--ink2:#9d9d97;--hair:#34342f;--red:#ff3b4e;color-scheme:dark}}
-:root[data-theme="dark"]{--paper:#0d0d0c;--ink:#ececea;--ink2:#9d9d97;--hair:#34342f;--red:#ff3b4e;color-scheme:dark}
+/* LAYOUT. An engineering drawing sheet / federal gazette hybrid. Page (paper) with one framed sheet (max-width 1320px,
+   1px ink frame, registration marks at the four corners). 1 header = a title block: a ruled grid of small cells (mono
+   9px labels: project, drawing, sheet, rev, date, freeze, model, run, checked by) with "Gleichlaut" set large in Archivo
+   condensed; two text tabs (Register audit | Drawings); a two-column key-value block for the active tab.
+   Register audit tab: lead, filters, one ruled table row per audit finding (drawing-grid column letters A-H above the
+   columns, row numbers in the margin; DE | FR | IT excerpts side by side, conflicting values boxed in signal orange,
+   the odd-one-out language with an orange bar, two decision columns + note), export row. Below 900px each audit row
+   becomes a labelled block.
+   2 work area: register (left, 5fr: filters, sticky-head table with column letters and margin row numbers, export
+   row) | case (right, 7fr, a decorative tick ruler along its left edge: §1 German change, §2 Drafts FR|IT, §3 Checks
+   ledger, §4 Decision). Below 900px the register sits above the case; no horizontal page scroll at 390px. 3 footer:
+   provenance + legend of the marks. Print: A4, register hidden, one case per page.
+   Type: Public Sans (texts), Archivo condensed (headings, big figures), Fragment Mono (metadata, labels, tables,
+   buttons). Colour: ink on a cool grey-green paper; ONE signal colour, international orange, for flags, failures,
+   "to check", divergences and the keyboard focus; ready stays ink. Language tags are small inverted mono boxes.
+   No radii, no shadows, no gradients, no fills except the inverted tags and the selected row. */
+:root{--paper:#f4f5f1;--sheet:#fbfbf9;--ink:#111312;--ink2:#5a5f58;--hair:#c9ccc4;--rule:var(--ink);--sig:#ff4f00;--sig-ink:#111312;
+--sel:var(--ink);--sel-ink:var(--sheet);
+--sans:"Public Sans","Helvetica Neue",Arial,sans-serif;--disp:"Archivo","Archivo Narrow","Helvetica Neue Condensed","Arial Narrow",sans-serif;
+--mono:"Fragment Mono","Helvetica Mono",Menlo,Consolas,monospace;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0f1110;--sheet:#151816;--ink:#e8eae4;--ink2:#9ba096;--hair:#353a36;--sig:#ff6a26;--sig-ink:#0f1110;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#0f1110;--sheet:#151816;--ink:#e8eae4;--ink2:#9ba096;--hair:#353a36;--sig:#ff6a26;--sig-ink:#0f1110;color-scheme:dark}
 *{box-sizing:border-box;border-radius:0}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--paper);color:var(--ink);font:400 13px/1.5 var(--mono);font-variant-numeric:tabular-nums;border-top:5px solid var(--red)}
+html{-webkit-text-size-adjust:100%;font-synthesis:none}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 13px/1.5 var(--mono);font-variant-numeric:tabular-nums;padding:28px 24px 40px}
 button,select,input,textarea{font:inherit;color:inherit}
-:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+:focus-visible{outline:2px solid var(--sig);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
-.sheet{max-width:1320px;margin:0 auto;padding-inline:max(16px,2.4vw);padding-block:0 28px}
+.sheet{max-width:1320px;margin:0 auto;padding-inline:max(16px,2vw);padding-block:0 24px;background:var(--sheet);border:1px solid var(--ink);position:relative}
+/* registration marks: thin ink L-shapes just outside the four corners of the sheet */
+.sheet::before,.sheet::after,.sheet>footer::before,.sheet>footer::after{content:"";position:absolute;width:12px;height:12px;border:0 solid var(--ink);pointer-events:none}
+.sheet::before{top:-9px;left:-9px;border-top-width:1px;border-left-width:1px}
+.sheet::after{top:-9px;right:-9px;border-top-width:1px;border-right-width:1px}
+.sheet>footer::before{bottom:-9px;left:-9px;border-bottom-width:1px;border-left-width:1px}
+.sheet>footer::after{bottom:-9px;right:-9px;border-bottom-width:1px;border-right-width:1px}
+#print.sheet::before,#print.sheet::after{display:none}
 .sans{font-family:var(--sans)}
 /* header */
-.hd{padding-block:22px 0}
+.hd{padding-block:16px 0}
+/* title block: a ruled grid of cells, each a 9px mono label over its value */
+.tblock{display:grid;grid-template-columns:minmax(220px,2.2fr) repeat(4,minmax(0,1fr));border:1px solid var(--ink);margin-bottom:0}
+.tblock>div{border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:4px 8px 5px;min-width:0;overflow-wrap:anywhere}
+.tblock>div:nth-child(5),.tblock>div:nth-child(9){border-right:0}
+.tblock .lbl{display:block;font:400 9px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--ink2)}
+.tblock .val{display:block;font:400 12px/1.35 var(--mono)}
+.tblock .tb-name{grid-row:span 3;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--ink);border-bottom:0;padding:6px 10px 8px}
+.tblock .tb-tools{grid-column:2/-1;display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;justify-content:flex-end;border-bottom:0;color:var(--ink2)}
 .hrow{display:flex;flex-wrap:wrap;gap:6px 24px;align-items:flex-end;justify-content:space-between}
-h1{font:400 34px/1.1 var(--sans);margin:0;letter-spacing:-.01em}
-.sub{margin:6px 0 0;color:var(--ink2)}
+h1{font:600 46px/0.95 var(--disp);font-stretch:75%;margin:2px 0 0;letter-spacing:-.015em}
+.sub{margin:4px 0 0;color:var(--ink2);font-size:11px}
 .tools{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;color:var(--ink2)}
-.tools b{color:var(--ink);font-weight:500}
+.tools b{color:var(--ink);font-weight:400}
 .tabs{display:flex;flex-wrap:wrap;gap:0 28px;margin-top:14px}
-.tab{background:none;border:0;border-bottom:3px solid transparent;padding:6px 0 5px;font:500 12px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);cursor:pointer}
+.tab{background:none;border:0;border-bottom:3px solid transparent;padding:8px 0 5px;font:400 12px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);cursor:pointer}
 .tab:hover{color:var(--ink)}
 .tab[aria-selected=true]{color:var(--ink);border-bottom-color:var(--ink)}
-.tab .c{color:var(--ink2);font-weight:400;margin-left:6px}.tab .c.r{color:var(--red)}
+.tab .c{color:var(--ink2);margin-left:6px}.tab .c.r{color:var(--ink);box-shadow:inset 0 -2px 0 var(--sig)}
 .kv{display:grid;grid-template-columns:1fr 1fr;gap:0 32px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin-top:0;padding-block:8px}
-.kv .big{font-weight:500;color:var(--red)}
+.kv .big{font:600 22px/1 var(--disp);font-stretch:75%;color:var(--ink)}.kv .big::before{content:"▲ ";color:var(--sig);font-size:13px;vertical-align:2px}
 .kv dl{margin:0;display:grid;grid-template-columns:minmax(120px,max-content) 1fr;gap:2px 16px;align-content:start}
 .kv dt{color:var(--ink2)}.kv dd{margin:0;overflow-wrap:anywhere}
-.kv .pass{font-weight:500}.kv .fail{color:var(--red);font-weight:500}
+.kv .pass{font:600 16px/1 var(--disp);font-stretch:75%}.kv .fail{color:var(--sig)}
 /* text buttons */
 .tb{background:none;border:0;padding:2px 0;cursor:pointer;text-decoration:none;border-bottom:2px solid transparent}
 .tb:hover{border-bottom-color:var(--hair)}
 .tb[aria-pressed=true]{border-bottom-color:var(--ink)}
 .box{background:none;border:1px solid var(--ink);padding:3px 9px;cursor:pointer;white-space:nowrap}
-.box[aria-pressed=true],.box.primary{background:var(--ink);color:var(--paper)}
+.box[aria-pressed=true],.box.primary{background:var(--ink);color:var(--sheet)}
 .box:disabled{opacity:.45;cursor:default}
 /* work area */
 .work{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:0 28px;margin-top:0}
@@ -57,15 +79,15 @@ h1{font:400 34px/1.1 var(--sans);margin:0;letter-spacing:-.01em}
 .filters{display:flex;flex-direction:column;gap:6px;padding-bottom:10px;border-bottom:1px solid var(--rule)}
 .fl{display:flex;flex-wrap:wrap;gap:2px 12px;align-items:baseline}
 .fl .k{color:var(--ink2);min-width:72px}
-.fl select,.fl input{background:var(--paper);border:0;border-bottom:1px solid var(--hair);padding:3px 0;min-width:0}
+.fl select,.fl input{background:var(--sheet);border:0;border-bottom:1px solid var(--hair);padding:3px 0;min-width:0}
 .fl input{flex:1 1 140px}.fl select{flex:0 1 auto;max-width:100%}
 .tbl{overflow-x:auto;min-width:0}
 .reg-wrap{overflow:auto;flex:1 1 auto;min-height:120px}
 table{border-collapse:collapse;width:100%}
-th{font:500 11px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em;text-align:left;color:var(--ink2);padding:6px 8px;border-bottom:1px solid var(--rule);vertical-align:bottom}
+th{font:400 11px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em;text-align:left;color:var(--ink2);padding:6px 8px;border-bottom:1px solid var(--rule);vertical-align:bottom}
 td{padding:5px 8px;border-bottom:1px solid var(--hair);vertical-align:top}
 #reg{table-layout:fixed;min-width:420px}
-#reg thead th{position:sticky;top:0;background:var(--paper);z-index:1}
+#reg thead th{position:sticky;top:0;background:var(--sheet);z-index:1}#reg thead tr.grid th{top:0}#reg thead tr+tr th{top:15px}
 #reg col.c-mark{width:84px}#reg col.c-no{width:46px}#reg col.c-prod{width:34%}
 #reg td{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
 #reg td.chg{font:400 14px/1.45 var(--sans)}
@@ -74,21 +96,36 @@ td{padding:5px 8px;border-bottom:1px solid var(--hair);vertical-align:top}
 #reg tr:hover td{background:color-mix(in srgb,var(--ink) 5%,transparent)}
 #reg tr[aria-selected=true] td{background:var(--sel);color:var(--sel-ink)}
 #reg tr[aria-selected=true] .mk.r{color:var(--sel-ink);text-decoration:underline}
-.mk{letter-spacing:-.02em}.mk.r{color:var(--red);font-weight:500}.mk.o{color:var(--ink2)}.mk.f{color:var(--ink);font-weight:500}
+.mk{display:inline-block;min-width:1.5em;text-align:center;letter-spacing:0}.mk.r{color:var(--sig)}.mk.o{color:var(--ink2)}.mk.f{color:var(--ink)}
+/* language tags: small inverted mono boxes */
+.lt{display:inline-block;font:400 10px/1.35 var(--mono);letter-spacing:.06em;background:var(--ink);color:var(--sheet);padding:0 4px;vertical-align:1px}
+.lt.s{background:var(--sig);color:var(--sig-ink)}
+/* drawing grid: column letters above the tables, row numbers in the margin */
+tr.grid th{font:400 9px/1 var(--mono);color:var(--ink2);text-align:center;padding:3px 0 2px;border-bottom:1px solid var(--hair);letter-spacing:0;text-transform:none}
+tr.grid th+th{border-left:1px solid var(--hair)}
+.rnw{padding-left:26px}
+.rn tbody{counter-reset:rn}
+.rn tbody tr.cnt{counter-increment:rn}
+.rn tbody tr.cnt>td:first-child{position:relative;overflow:visible}#reg tbody tr.cnt>td:first-child{overflow:visible}
+.rn tbody tr.cnt>td:first-child::before{content:counter(rn,decimal-leading-zero);position:absolute;left:-26px;top:6px;width:20px;text-align:right;font:400 9px/1.2 var(--mono);color:var(--ink2)}
 .count{color:var(--ink2);padding:6px 0}
 .export{display:flex;flex-wrap:wrap;gap:8px;padding:10px 0 12px;border-top:1px solid var(--rule)}
 .export .msg{color:var(--ink2);flex-basis:100%}
 .export .where{color:var(--ink2);flex-basis:100%;font-size:12px}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-#copybox{width:100%;height:90px;font:12px/1.4 var(--mono);border:1px solid var(--hair);background:var(--paper)}
+#copybox{width:100%;height:90px;font:12px/1.4 var(--mono);border:1px solid var(--hair);background:var(--sheet)}
 /* case */
-.case{min-width:0;padding-block:14px 0}
+.case{min-width:0;padding-block:14px 0;position:relative;padding-left:22px}
+/* decorative tick ruler along the left edge of the case pane (a tick every 8px, a longer one every 40px) */
+.case::before{content:"";position:absolute;left:0;top:0;bottom:0;width:11px;background:var(--ink2);opacity:.7;pointer-events:none;
+-webkit-mask:url(data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2711%27%20height=%2740%27%3E%3Cpath%20d=%27M0%20.5H11M0%208.5H5M0%2016.5H5M0%2024.5H5M0%2032.5H5%27%20stroke=%27black%27%20stroke-width=%271%27/%3E%3C/svg%3E) 0 0/11px 40px repeat-y;
+mask:url(data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2711%27%20height=%2740%27%3E%3Cpath%20d=%27M0%20.5H11M0%208.5H5M0%2016.5H5M0%2024.5H5M0%2032.5H5%27%20stroke=%27black%27%20stroke-width=%271%27/%3E%3C/svg%3E) 0 0/11px 40px repeat-y}
 .case:focus{outline:none}
-h2{font:400 22px/1.25 var(--sans);margin:0}
+h2{font:600 30px/1.05 var(--disp);font-stretch:75%;margin:0;letter-spacing:-.005em}
 .ref{color:var(--ink2);margin:4px 0 0;overflow-wrap:anywhere}
 .sec{border-top:1px solid var(--rule);margin-top:16px;padding-top:8px}
 .sl{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;color:var(--ink2);margin-bottom:8px}
-.sl .no{color:var(--ink);font-weight:500}
+.sl .no{color:var(--ink);font:600 15px/1 var(--disp);font-stretch:75%}.sl .no b{color:var(--sig);font-weight:600;margin-right:1px}
 .sl .t{color:var(--ink);font-weight:500;text-transform:uppercase;letter-spacing:.06em;font-size:11px}
 .sl .sp{margin-left:auto}
 .txt{font:400 17px/1.55 var(--sans);white-space:pre-wrap;overflow-wrap:anywhere}
@@ -99,19 +136,19 @@ del{margin-right:.2em}
 .gap{color:var(--ink2);font-family:var(--mono);font-size:13px;padding:0 4px}
 .n{font:400 .8em/1 var(--mono);border:1px solid var(--hair);padding:1px 3px;white-space:nowrap}
 .n sup{font-size:.7em;color:var(--ink2);margin-left:1px;vertical-align:.45em}
-.n.m{border-color:var(--red)}
+.n.m{border-color:var(--sig)}
 .drafts{display:grid;grid-template-columns:1fr 1fr;gap:0}
 .drafts.one{grid-template-columns:1fr}
 .dr{min-width:0;padding-right:16px}
 .dr+.dr{border-left:1px solid var(--hair);padding:0 0 0 16px}
 .dl{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin-bottom:6px}
-.dl .ln{font-weight:500}.dl .st{font-weight:500}.dl .st.r{color:var(--red)}.dl .key{color:var(--ink2);margin-left:auto}
+.dl .st.r{color:var(--ink)}.dl .st.r::before{content:"▲ ";color:var(--sig)}.dl .key{color:var(--ink2);margin-left:auto}
 .dl .cap{color:var(--ink2);font-size:12px;flex-basis:100%}
-.dl .tri{color:var(--ink2)}.dl .tri b{color:var(--red);font-weight:500}
+.dl .tri{color:var(--ink2)}.dl .tri b{color:var(--ink);font-weight:400;box-shadow:inset 0 -2px 0 var(--sig)}
 .ids{color:var(--ink2);margin-top:2px;font-size:12px}.ids summary{cursor:pointer;display:inline}
 .notice.lang{font-size:17px}.notice.lang p:first-child{font-weight:600}
-.notice{border-left:3px solid var(--red);padding:4px 0 4px 10px;margin:0 0 10px;font:400 15px/1.45 var(--sans)}
-.notice .mk{font-family:var(--mono);font-size:13px;color:var(--red);font-weight:500;margin-right:6px}
+.notice{border-left:3px solid var(--sig);padding:4px 0 4px 10px;margin:0 0 10px;font:400 15px/1.45 var(--sans)}
+.notice .mk{font-family:var(--mono);font-size:13px;color:var(--sig);margin-right:6px;min-width:0}
 .notice p{margin:0}.notice p+p{margin-top:4px}
 .ed{outline:1px solid transparent;padding:2px 4px;margin:0 -4px}
 .ed:hover{outline-color:var(--hair)}
@@ -124,25 +161,25 @@ del{margin-right:.2em}
 .ledger td{font-size:13px}
 .ledger td.res{white-space:nowrap}
 .ledger td.chk{width:34%}
-.ledger .FAIL{color:var(--red);font-weight:500}.ledger .FAILf{color:var(--ink);font-weight:500}.ledger .na{color:var(--ink2)}
+.ledger .FAIL{color:var(--ink)}.ledger .FAIL::before{content:"▲ ";color:var(--sig)}.ledger .FAILf{color:var(--ink)}.ledger .na{color:var(--ink2)}
 .ledger .fd{font:400 15px/1.4 var(--sans)}
 .ledger .fd p{margin:0}.ledger .fd p+p{margin-top:3px}
-.ledger .cn{display:block;font:500 12px/1.4 var(--mono);color:var(--red);margin-top:2px}
+.ledger .cn{display:block;font:400 12px/1.4 var(--mono);color:var(--ink);margin-top:2px}
 .ledger details{margin-top:3px;color:var(--ink2);font-size:12px}
 .ledger summary{cursor:pointer}
 .ledger details div{overflow-wrap:anywhere;white-space:pre-wrap}
 .ledger details.pf{color:var(--ink);font-size:inherit;margin-top:4px;border-top:1px dotted var(--hair);padding-top:3px}
 .ledger details.pf summary{font:400 12px/1.4 var(--mono);color:var(--ink2)}
 .ledger details.pf p{color:var(--ink2)}
-.ledger caption .tri{font-weight:400;color:var(--ink2);margin-left:8px}.ledger caption .tri b{color:var(--red);font-weight:500}
+.ledger caption .tri{font-weight:400;color:var(--ink2);margin-left:8px}.ledger caption .tri b{color:var(--ink);font-weight:400;box-shadow:inset 0 -2px 0 var(--sig)}
 .decs{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
 .decs.one{grid-template-columns:1fr}
 .dec{min-width:0;border-left:3px solid transparent;padding:4px 0 6px 10px}
 .dec.focus{border-left-color:var(--ink)}
 .btns{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
 .dec label{display:block;color:var(--ink2);margin-top:6px}
-.dec select{display:block;width:100%;margin-top:2px;background:var(--paper);border:1px solid var(--hair);padding:3px 4px}
-.dec textarea{display:block;width:100%;margin-top:2px;min-height:52px;resize:vertical;background:var(--paper);border:1px solid var(--hair);padding:4px 6px;font:400 15px/1.4 var(--sans)}
+.dec select{display:block;width:100%;margin-top:2px;background:var(--sheet);border:1px solid var(--hair);padding:3px 4px}
+.dec textarea{display:block;width:100%;margin-top:2px;min-height:52px;resize:vertical;background:var(--sheet);border:1px solid var(--hair);padding:4px 6px;font:400 15px/1.4 var(--sans)}
 .dec .stt{color:var(--ink2);margin-top:4px}
 .save{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid var(--hair)}
 .save .hint{color:var(--ink2)}
@@ -154,32 +191,32 @@ del{margin-right:.2em}
 #aud{table-layout:fixed;min-width:1080px}
 #aud col.a-no{width:58px}#aud col.a-lim{width:13%}#aud col.a-kind{width:150px}#aud col.a-dec{width:118px}#aud col.a-act{width:17%}
 #aud td.kd{overflow-wrap:anywhere;word-break:normal}#aud td.kd .oddl{display:block;margin-top:2px}
-#aud thead th{position:sticky;top:0;background:var(--paper);z-index:1}
+#aud thead th{position:sticky;top:0;background:var(--sheet);z-index:1}
 #aud td{font-size:13px}
-#aud tr.grp td{font:500 11px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink);padding:16px 8px 6px;border-bottom:1px solid var(--rule)}
+#aud tr.grp td{font:400 11px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink);padding:16px 8px 6px;border-bottom:1px solid var(--rule)}
 #aud tr.grp .mk{margin-right:8px}
 #aud .lim b{font:400 15px/1.3 var(--sans);display:block}
 #aud .lim .code{color:var(--ink2);overflow-wrap:anywhere}
 #aud .sub2{display:block;color:var(--ink2);font-size:12px;margin-top:3px;overflow-wrap:anywhere}
 #aud .term{display:block;font:400 14px/1.35 var(--sans);margin-top:4px;overflow-wrap:anywhere}
-#aud .term s{color:var(--red);text-decoration-thickness:1px}#aud .term u{text-decoration-thickness:2px;text-underline-offset:3px}
+#aud .term s{color:var(--sig);text-decoration-thickness:1px}#aud .term u{text-decoration-thickness:2px;text-underline-offset:3px}
 #aud tr.eqh td{padding:14px 8px 6px;border-bottom:1px solid var(--rule)}
-#aud tr.eqh button{background:none;border:0;padding:0;cursor:pointer;font:500 11px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink)}
+#aud tr.eqh button{background:none;border:0;padding:0;cursor:pointer;font:400 11px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink)}
 #aud tr.eqh button .mk{margin-right:8px}
-#aud tr.eq td{color:color-mix(in srgb,var(--ink) 85%,var(--paper))}
-.afl .fl input{background:var(--paper);border:0;border-bottom:1px solid var(--hair);padding:3px 0;min-width:0;flex:1 1 320px;max-width:440px}
+#aud tr.eq td{color:color-mix(in srgb,var(--ink) 85%,var(--sheet))}
+.afl .fl input{background:var(--sheet);border:0;border-bottom:1px solid var(--hair);padding:3px 0;min-width:0;flex:1 1 320px;max-width:440px}
 .fambar{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;padding-top:4px}
 .fambar .q{flex-basis:100%;font:400 14px/1.4 var(--sans)}.fambar .msg{color:var(--ink2);flex-basis:100%}
 .famline{color:var(--ink2);margin:2px 0 0;overflow-wrap:anywhere}.famline .tb{color:var(--ink)}
 .snip{font:400 14px/1.45 var(--sans);overflow-wrap:anywhere}
-.snip .v2{border:1px solid var(--red);padding:0 2px;font-weight:600;white-space:nowrap}
+.snip .v2{border:1px solid var(--sig);padding:0 2px;font-weight:600;white-space:nowrap}
 .snip .v1{border-bottom:1px solid var(--ink2)}
-.snip.src-s{color:color-mix(in srgb,var(--ink) 82%,var(--paper))}
+.snip.src-s{color:color-mix(in srgb,var(--ink) 82%,var(--sheet))}
 .snip .sx{display:block;font:400 11px/1.3 var(--mono);color:var(--ink2);margin-top:3px}
-td.odd{box-shadow:inset 3px 0 0 var(--red);padding-left:12px}
-.oddl{display:block;font:500 11px/1.3 var(--mono);color:var(--red);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
-#aud select{width:100%;background:var(--paper);border:1px solid var(--hair);padding:3px 4px}
-#aud textarea{display:block;width:100%;margin-top:4px;min-height:44px;resize:vertical;background:var(--paper);border:1px solid var(--hair);padding:3px 5px;font:400 14px/1.35 var(--sans)}
+td.odd{box-shadow:inset 3px 0 0 var(--sig);padding-left:12px}
+.oddl{display:block;font:400 11px/1.3 var(--mono);color:var(--ink);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+#aud select{width:100%;background:var(--sheet);border:1px solid var(--hair);padding:3px 4px}
+#aud textarea{display:block;width:100%;margin-top:4px;min-height:44px;resize:vertical;background:var(--sheet);border:1px solid var(--hair);padding:3px 5px;font:400 14px/1.35 var(--sans)}
 #aud .sug{color:var(--ink2);font-size:12px;margin-top:3px}
 #aud .stt{color:var(--ink2);font-size:12px;margin-top:3px}
 #aud .na{color:var(--ink2);font-style:italic}
@@ -193,7 +230,7 @@ footer p{margin:2px 0;overflow-wrap:anywhere}
  #aud tr{border-bottom:1px solid var(--rule);padding:8px 0 10px}#aud tr.grp{padding:0;border:0}
  #aud td{border:0;padding:3px 0}#aud td.odd{padding-left:10px}#aud td.odd>.oddl{display:none}
  .kv dl{grid-template-columns:minmax(96px,44%) minmax(0,1fr)}
- #aud td[data-l]::before{content:attr(data-l);display:block;font:500 11px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink2)}
+ #aud td[data-l]::before{content:attr(data-l);display:block;font:400 11px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink2)}
  .work{grid-template-columns:minmax(0,1fr)}
  .register{position:static;max-height:none;border-right:0;padding-right:0;border-bottom:1px solid var(--rule)}
  .reg-wrap{max-height:46vh}
@@ -201,7 +238,19 @@ footer p{margin:2px 0;overflow-wrap:anywhere}
  .kv{grid-template-columns:1fr}
  .drafts,.decs{grid-template-columns:1fr}
  .dr{padding-right:0}.dr+.dr{border-left:0;border-top:1px solid var(--hair);padding:12px 0 0;margin-top:12px}
- h1{font-size:30px}
+ h1{font-size:40px}
+ .tblock{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .tblock .tb-name{grid-column:1/-1;grid-row:auto;border-right:0;border-bottom:1px solid var(--ink)}
+ .tblock>div:nth-child(5),.tblock>div:nth-child(9){border-right:1px solid var(--hair)}
+ .tblock>div:nth-child(2n+1){border-right:0}
+ .tblock .tb-tools{grid-column:1/-1;justify-content:flex-start}
+ .rnw{padding-left:0}.rn tbody tr.cnt>td:first-child::before{display:none}
+ #aud tr.grid{display:none}
+ .case{padding-left:16px}.case::before{width:8px}
+}
+@media (max-width:480px){
+ body{padding:16px 10px 28px}
+ .sheet{padding-inline:12px}
 }
 @media print{
  @page{size:A4;margin:14mm}
@@ -218,9 +267,17 @@ footer p{margin:2px 0;overflow-wrap:anywhere}
 
 BODY = r"""<div class="sheet">
 <header class="hd">
- <div class="hrow">
-  <div><h1>Gleichlaut</h1><p class="sub" id="sub"></p></div>
-  <div class="tools"><span id="progress"></span><button class="tb" id="theme" type="button"></button>
+ <div class="tblock" role="group" aria-label="Title block">
+  <div class="tb-name"><span class="lbl" data-tb="project"></span><h1>Gleichlaut</h1><p class="sub" id="sub"></p></div>
+  <div><span class="lbl" data-tb="drawing"></span><span class="val" id="tb-drawing"></span></div>
+  <div><span class="lbl" data-tb="sheet"></span><span class="val" id="tb-sheet"></span></div>
+  <div><span class="lbl" data-tb="rev"></span><span class="val" id="tb-rev"></span></div>
+  <div><span class="lbl" data-tb="date"></span><span class="val" id="tb-date"></span></div>
+  <div><span class="lbl" data-tb="freeze"></span><span class="val" id="tb-freeze"></span></div>
+  <div><span class="lbl" data-tb="model"></span><span class="val" id="tb-model"></span></div>
+  <div><span class="lbl" data-tb="run"></span><span class="val" id="tb-run"></span></div>
+  <div><span class="lbl" data-tb="checked"></span><span class="val" id="tb-checked"></span></div>
+  <div class="tb-tools"><span id="progress"></span><button class="tb" id="theme" type="button"></button>
    <label><span id="l-ui"></span> <select id="ui-lang" aria-label="Interface language"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option></select></label></div>
  </div>
  <nav class="tabs" role="tablist" aria-label="Views"><button class="tab" role="tab" type="button" id="t-audit" aria-controls="p-audit"></button><button class="tab" role="tab" type="button" id="t-drafts" aria-controls="p-drafts"></button></nav>
@@ -230,8 +287,8 @@ BODY = r"""<div class="sheet">
  <p class="lead" id="a-lead"></p>
  <div class="afl"><div class="fl" id="a-show"></div><div class="fl" id="a-lang"></div><div class="fl" id="a-kind"></div>
   <div class="fl"><label class="k" for="rev" id="l-rev"></label><input type="text" id="rev" autocomplete="name"></div></div>
- <div class="tbl"><table id="aud"><colgroup><col class="a-no"><col class="a-lim"><col class="a-kind"><col><col><col><col class="a-dec"><col class="a-act"></colgroup>
-  <thead><tr><th id="ah-no"></th><th id="ah-lim"></th><th id="ah-kind"></th><th>DE</th><th>FR</th><th>IT</th><th id="ah-right"></th><th id="ah-act"></th></tr></thead><tbody></tbody></table></div>
+ <div class="tbl rnw"><table id="aud" class="rn"><colgroup><col class="a-no"><col class="a-lim"><col class="a-kind"><col><col><col><col class="a-dec"><col class="a-act"></colgroup>
+  <thead><tr class="grid" aria-hidden="true"><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th></tr><tr><th id="ah-no"></th><th id="ah-lim"></th><th id="ah-kind"></th><th><span class="lt">DE</span></th><th><span class="lt">FR</span></th><th><span class="lt">IT</span></th><th id="ah-right"></th><th id="ah-act"></th></tr></thead><tbody></tbody></table></div>
  <div class="count" id="a-shown"></div>
  <div class="export"><button class="box" id="a-json" type="button"></button><button class="box" id="a-csv" type="button"></button><button class="box" id="a-imp" type="button"></button>
   <span class="msg" id="a-msg" aria-live="polite"></span><span class="where" id="a-where"></span></div>
@@ -244,8 +301,8 @@ BODY = r"""<div class="sheet">
    <div class="fl"><select id="f-fam" aria-label="Family"></select><input type="search" id="f-q" aria-label="Search product or limitation code"></div>
    <div class="fambar" id="fam-bulk" hidden></div>
   </div>
-  <div class="tbl reg-wrap" id="reg-wrap"><table id="reg"><colgroup><col class="c-mark"><col class="c-no"><col class="c-prod"><col></colgroup>
-   <thead><tr><th id="h-mark"></th><th id="h-no"></th><th id="h-prod"></th><th id="h-chg"></th></tr></thead><tbody></tbody></table></div>
+  <div class="tbl reg-wrap rnw" id="reg-wrap"><table id="reg" class="rn"><colgroup><col class="c-mark"><col class="c-no"><col class="c-prod"><col></colgroup>
+   <thead><tr class="grid" aria-hidden="true"><th>A</th><th>B</th><th>C</th><th>D</th></tr><tr><th id="h-mark"></th><th id="h-no"></th><th id="h-prod"></th><th id="h-chg"></th></tr></thead><tbody></tbody></table></div>
   <div class="count" id="shown"></div>
   <div class="export"><button class="box" id="x-xlf" type="button"></button><button class="box" id="x-xlf12" type="button"></button><button class="box" id="x-json" type="button"></button><button class="box" id="x-copy" type="button"></button><button class="box" id="x-imp" type="button"></button>
    <span class="msg" id="x-msg" aria-live="polite"></span><span class="where" id="x-where"></span><textarea id="copybox" hidden readonly aria-label="Decisions JSON"></textarea></div>
@@ -294,7 +351,7 @@ de:{ui:"Sprache",sub:"Prüfregister",drafts:"Entwürfe",model:"Modell",run:"Lauf
  savedAt:"gespeichert",openSt:"offen",noEdit:"Zuerst den Entwurfstext bearbeiten (hineinklicken).",
  humanTxt:"An Übersetzung übergeben: Das Deutsche wurde zu mehr als 60 % neu geschrieben",humanShort:"An Übersetzung übergeben, kein maschineller Entwurf",humanPrev:"Bisheriger Text (direkt bearbeiten, um die neue Fassung zu schreiben):",
  none:"Keine Änderung entspricht diesen Filtern.",provenance:"Herkunft",
- legend:"Zeichen: [x] bereit · [!] markiert · [≠] der bisherige Text hat bereits ein Problem (weicht vom Deutschen ab oder ist in einer anderen Sprache) · [h] an Übersetzung übergeben · [a] übernommen · [e] bearbeitet übernommen · [r] zurückgewiesen · Tasten j/k oder ↑/↓ bewegen, Enter öffnet, f/i Sprache, 1/2/3 entscheiden, Ctrl/Cmd+Enter speichern und weiter",
+ legend:"Zeichen: ✓ bereit · ▲ markiert · ≠ der bisherige Text hat bereits ein Problem (weicht vom Deutschen ab oder ist in einer anderen Sprache) · h an Übersetzung übergeben · A übernommen · E bearbeitet übernommen · R zurückgewiesen · Tasten j/k oder ↑/↓ bewegen, Enter öffnet, f/i Sprache, 1/2/3 entscheiden, Ctrl/Cmd+Enter speichern und weiter",
  theme:"Darstellung",auto:"auto",light:"hell",dark:"dunkel",
  reasons:["","Zahl falsch","Deutsche Änderung nicht übernommen","Inhalt verloren","Deutsch stehen geblieben / nicht übersetzt","Terminologie","Formulierung","Anderes"],
  tabAudit:"Registerprüfung",tabDrafts:"Entwürfe",codeOnly:"Bereit heisst: vom Code geprüft, nicht von einer Person.",
@@ -319,7 +376,7 @@ de:{ui:"Sprache",sub:"Prüfregister",drafts:"Entwürfe",model:"Modell",run:"Lauf
  aShow:"Anzeigen",aKnownF:"Bekannt",aAllF:"Alle",aOpenF:"Offen",aDecF:"Entschieden",aKindF:"Art",aShown:"Befunde angezeigt",
  aSnap:"SL-Stand",aChecked:"Geprüfte Limitationen",aFindings:"Befunde",aOnLims:"in {n} Limitationen",aKnown:"Bekannte Abweichungen gefunden",aReal:"Echt bei Blindprüfung (Zahlen)",
  aHeld:"Zurückgehaltene Hälfte",aCalls:"Modellaufrufe",aCsv:"CSV exportieren",aNone:"Kein Befund entspricht diesen Filtern.",aNoFile:"Keine Prüfdatei in diesem Build.",
- aLegend:"Zeichen: [k] bekannte Abweichung, im Text belegt · [d] entschieden · rot umrahmt = widersprüchlicher Wert · unterstrichen = weitere Zahl · roter Balken = die Sprache, die von den beiden anderen abweicht (nicht unbedingt die falsche). Entscheide: welche Sprache die richtige Bedingung nennt, und die Massnahme (Berichtigung, GÄL, keine).",
+ aLegend:"Zeichen: K bekannte Abweichung, im Text belegt · D entschieden · rot umrahmt = widersprüchlicher Wert · unterstrichen = weitere Zahl · roter Balken = die Sprache, die von den beiden anderen abweicht (nicht unbedingt die falsche). Entscheide: welche Sprache die richtige Bedingung nennt, und die Massnahme (Berichtigung, GÄL, keine).",
  aExpl:"erklärt durch {x}",aFix:"wahrscheinlicher Tippfehler: «{a}» → «{b}»",aSince:"in der SL seit {d} ({n} Stände)",aFoundL:"Text auf {F}",oddLbl:"weicht ab",real:"echt",of:"von"},
 en:{ui:"UI",sub:"Review register",drafts:"drafts",model:"Model",run:"Run",guards:"Guards",items:"Items",changes:"Changes",ready:"Ready",flagged:"Flagged",
  exact:"Exact vs rules-only",rule:"Pre-registered rule",human:"Routed to a translator",divergent:"Previous text diverges",decided:"decided",
@@ -333,7 +390,7 @@ en:{ui:"UI",sub:"Review register",drafts:"drafts",model:"Model",run:"Run",guards
  savedAt:"saved",openSt:"open",noEdit:"Edit the draft text first (click into it).",
  humanTxt:"Routed to a translator: the German was rewritten by more than 60%",humanShort:"Routed to a translator, no machine draft",humanPrev:"Previous text (edit it in place to write the new version):",
  none:"No change matches these filters.",provenance:"Provenance",
- legend:"Marks: [x] ready · [!] flagged · [≠] the previous text already has a problem (diverges from the German or is in another language) · [h] routed to a translator · [a] accepted · [e] accepted edited · [r] sent back · keys j/k or ↑/↓ move, Enter opens, f/i language, 1/2/3 decide, Ctrl/Cmd+Enter save and next",
+ legend:"Marks: ✓ ready · ▲ flagged · ≠ the previous text already has a problem (diverges from the German or is in another language) · h routed to a translator · A accepted · E accepted edited · R sent back · keys j/k or ↑/↓ move, Enter opens, f/i language, 1/2/3 decide, Ctrl/Cmd+Enter save and next",
  theme:"Theme",auto:"auto",light:"light",dark:"dark",
  reasons:["","Number wrong","German change not applied","Content lost","German left / untranslated","Terminology","Wording","Other"],
  tabAudit:"Register audit",tabDrafts:"Drafts",codeOnly:"Ready means checked by code, not by a person.",
@@ -358,7 +415,7 @@ en:{ui:"UI",sub:"Review register",drafts:"drafts",model:"Model",run:"Run",guards
  aShow:"Show",aKnownF:"Known",aAllF:"All",aOpenF:"Open",aDecF:"Decided",aKindF:"Kind",aShown:"findings shown",
  aSnap:"SL snapshot",aChecked:"Limitations checked",aFindings:"Findings",aOnLims:"on {n} limitations",aKnown:"Known divergences found",aReal:"Real on blind check (numbers)",
  aHeld:"Held-out half",aCalls:"Model calls",aCsv:"Export CSV",aNone:"No finding matches these filters.",aNoFile:"No audit file in this build.",
- aLegend:"Marks: [k] known divergence, confirmed in the texts · [d] decided · red box = conflicting value · underlined = other number · red bar = the language that differs from the other two (not necessarily the wrong one). Decisions: which language states the right condition, and the action (Berichtigung, GÄL, none).",
+ aLegend:"Marks: K known divergence, confirmed in the texts · D decided · red box = conflicting value · underlined = other number · red bar = the language that differs from the other two (not necessarily the wrong one). Decisions: which language states the right condition, and the action (Berichtigung, GÄL, none).",
  aExpl:"explained by {x}",aFix:"probable typo: “{a}” → “{b}”",aSince:"in the SL since {d} ({n} snapshots)",aFoundL:"text in {F}",oddLbl:"odd one out",real:"real",of:"of"},
 fr:{ui:"Interface",sub:"Registre de révision",drafts:"brouillons",model:"Modèle",run:"Série",guards:"Contrôles",items:"Éléments",changes:"Changements",ready:"Prêts",flagged:"Signalés",
  exact:"Exact vs règles seules",rule:"Règle préenregistrée",human:"Confiés à un traducteur",divergent:"Ancien texte divergent",decided:"décidés",
@@ -372,7 +429,7 @@ fr:{ui:"Interface",sub:"Registre de révision",drafts:"brouillons",model:"Modèl
  savedAt:"enregistré",openSt:"ouvert",noEdit:"Modifiez d'abord le texte du brouillon (cliquez dedans).",
  humanTxt:"Confié à un traducteur : l'allemand a été réécrit à plus de 60 %",humanShort:"Confié à un traducteur, pas de brouillon machine",humanPrev:"Ancien texte (modifiez-le sur place pour écrire la nouvelle version) :",
  none:"Aucun changement ne correspond à ces filtres.",provenance:"Provenance",
- legend:"Marques : [x] prêt · [!] signalé · [≠] l'ancien texte a déjà un problème (diverge de l'allemand ou est dans une autre langue) · [h] confié à un traducteur · [a] accepté · [e] accepté modifié · [r] renvoyé · touches j/k ou ↑/↓ naviguer, Entrée ouvrir, f/i langue, 1/2/3 décider, Ctrl/Cmd+Entrée enregistrer et suivant",
+ legend:"Marques : ✓ prêt · ▲ signalé · ≠ l'ancien texte a déjà un problème (diverge de l'allemand ou est dans une autre langue) · h confié à un traducteur · A accepté · E accepté modifié · R renvoyé · touches j/k ou ↑/↓ naviguer, Entrée ouvrir, f/i langue, 1/2/3 décider, Ctrl/Cmd+Entrée enregistrer et suivant",
  theme:"Thème",auto:"auto",light:"clair",dark:"sombre",
  reasons:["","Nombre erroné","Changement allemand non appliqué","Contenu perdu","Allemand resté / non traduit","Terminologie","Formulation","Autre"],
  tabAudit:"Audit du registre",tabDrafts:"Brouillons",codeOnly:"Prêt signifie : vérifié par le code, pas par une personne.",
@@ -397,7 +454,7 @@ fr:{ui:"Interface",sub:"Registre de révision",drafts:"brouillons",model:"Modèl
  aShow:"Afficher",aKnownF:"Connues",aAllF:"Toutes",aOpenF:"Ouvertes",aDecF:"Décidées",aKindF:"Type",aShown:"constats affichés",
  aSnap:"État de la LS",aChecked:"Limitations contrôlées",aFindings:"Constats",aOnLims:"sur {n} limitations",aKnown:"Divergences connues trouvées",aReal:"Réels au contrôle à l'aveugle (nombres)",
  aHeld:"Moitié réservée",aCalls:"Appels au modèle",aCsv:"Exporter CSV",aNone:"Aucun constat ne correspond à ces filtres.",aNoFile:"Pas de fichier d'audit dans cette version.",
- aLegend:"Marques : [k] divergence connue, attestée dans les textes · [d] décidé · cadre rouge = valeur contradictoire · souligné = autre nombre · barre rouge = la langue qui diffère des deux autres (pas forcément la fausse). Décisions : quelle langue dit la bonne condition, et la mesure (Berichtigung, GÄL, aucune).",
+ aLegend:"Marques : K divergence connue, attestée dans les textes · D décidé · cadre rouge = valeur contradictoire · souligné = autre nombre · barre rouge = la langue qui diffère des deux autres (pas forcément la fausse). Décisions : quelle langue dit la bonne condition, et la mesure (Berichtigung, GÄL, aucune).",
  aExpl:"expliqué par {x}",aFix:"coquille probable : « {a} » → « {b} »",aSince:"dans la LS depuis le {d} ({n} états)",aFoundL:"texte en {F}",oddLbl:"diverge",real:"réels",of:"sur"},
 it:{ui:"Interfaccia",sub:"Registro di revisione",drafts:"bozze",model:"Modello",run:"Serie",guards:"Controlli",items:"Elementi",changes:"Modifiche",ready:"Pronte",flagged:"Segnalate",
  exact:"Esatte vs solo regole",rule:"Regola preregistrata",human:"Affidate a un traduttore",divergent:"Vecchio testo divergente",decided:"decise",
@@ -411,7 +468,7 @@ it:{ui:"Interfaccia",sub:"Registro di revisione",drafts:"bozze",model:"Modello",
  savedAt:"salvato",openSt:"aperta",noEdit:"Modificare prima il testo della bozza (cliccarci dentro).",
  humanTxt:"Affidata a un traduttore: il tedesco è stato riscritto per oltre il 60%",humanShort:"Affidata a un traduttore, nessuna bozza automatica",humanPrev:"Vecchio testo (modificarlo sul posto per scrivere la nuova versione):",
  none:"Nessuna modifica corrisponde a questi filtri.",provenance:"Provenienza",
- legend:"Segni: [x] pronta · [!] segnalata · [≠] il vecchio testo ha già un problema (diverge dal tedesco o è in un'altra lingua) · [h] affidata a un traduttore · [a] accettata · [e] accettata modificata · [r] rinviata · tasti j/k o ↑/↓ spostarsi, Invio aprire, f/i lingua, 1/2/3 decidere, Ctrl/Cmd+Invio salva e avanti",
+ legend:"Segni: ✓ pronta · ▲ segnalata · ≠ il vecchio testo ha già un problema (diverge dal tedesco o è in un'altra lingua) · h affidata a un traduttore · A accettata · E accettata modificata · R rinviata · tasti j/k o ↑/↓ spostarsi, Invio aprire, f/i lingua, 1/2/3 decidere, Ctrl/Cmd+Invio salva e avanti",
  theme:"Tema",auto:"auto",light:"chiaro",dark:"scuro",
  reasons:["","Numero errato","Modifica tedesca non applicata","Contenuto perso","Tedesco rimasto / non tradotto","Terminologia","Formulazione","Altro"],
  tabAudit:"Verifica del registro",tabDrafts:"Bozze",codeOnly:"Pronta significa: verificata dal codice, non da una persona.",
@@ -436,18 +493,18 @@ it:{ui:"Interfaccia",sub:"Registro di revisione",drafts:"bozze",model:"Modello",
  aShow:"Mostra",aKnownF:"Note",aAllF:"Tutte",aOpenF:"Aperte",aDecF:"Decise",aKindF:"Tipo",aShown:"rilievi mostrati",
  aSnap:"Stato dell'ES",aChecked:"Limitazioni controllate",aFindings:"Rilievi",aOnLims:"su {n} limitazioni",aKnown:"Divergenze note trovate",aReal:"Reali al controllo alla cieca (numeri)",
  aHeld:"Metà riservata",aCalls:"Chiamate al modello",aCsv:"Esporta CSV",aNone:"Nessun rilievo corrisponde a questi filtri.",aNoFile:"Nessun file di verifica in questa versione.",
- aLegend:"Segni: [k] divergenza nota, confermata nei testi · [d] decisa · riquadro rosso = valore in contraddizione · sottolineato = altro numero · barra rossa = la lingua che differisce dalle altre due (non per forza quella sbagliata). Decisioni: quale lingua indica la condizione giusta, e la misura (Berichtigung, GÄL, nessuna).",
+ aLegend:"Segni: K divergenza nota, confermata nei testi · D decisa · riquadro rosso = valore in contraddizione · sottolineato = altro numero · barra rossa = la lingua che differisce dalle altre due (non per forza quella sbagliata). Decisioni: quale lingua indica la condizione giusta, e la misura (Berichtigung, GÄL, nessuna).",
  aExpl:"spiegato da {x}",aFix:"refuso probabile: «{a}» → «{b}»",aSince:"nell'ES dal {d} ({n} stati)",aFoundL:"testo in {F}",oddLbl:"diverge",real:"reali",of:"su"}};
 // round-3 strings (three-level status, rules T5-T8, family action, old-text start, XLIFF 1.2, audit actions and reviewer)
 var TX2={
-de:{lfine:"markiert – alle Befunde wahrscheinlich in Ordnung",lcheck:"markiert – zu prüfen",fCheck:"Zu prüfen",fFine:"Wahrscheinlich in Ordnung",
+de:{tb:{project:"Projekt",drawing:"Zeichnung",sheet:"Blatt",rev:"Rev.",date:"Datum (SL-Stand)",freeze:"Freeze",model:"Modell",run:"Lauf",checked:"Geprüft von",checkedV:"eingefrorene Prüfungen"},lfine:"markiert – alle Befunde wahrscheinlich in Ordnung",lcheck:"markiert – zu prüfen",fCheck:"Zu prüfen",fFine:"Wahrscheinlich in Ordnung",
  triSplit:"Sortierung der Markierten (nur Anzeige)",triSplitV:"{c} zu prüfen · {f} mit allen Befunden wahrscheinlich in Ordnung",
  rT5:"T5 Zahlen ausserhalb",rT6:"T6 Orthografie",rT7:"T7 Verneinung",rT8:"T8 gleiche Werte",
  rdT5:"T5 Zahlen ausserhalb der Änderung: ausserhalb des geänderten Abschnitts ändert der Entwurf nur Zahlen, und zwar genau die Werte, die die deutsche Änderung ersetzt (Ocrevus 944.61 → 731.07).",
  rdT6:"T6 Orthografie: die nicht übernommene deutsche Änderung ist nur orthografisch (Umlaut/ß, Bindestrich wie Zeitpunkt → Zeit-punkt, Gross-/Kleinschreibung, Satzzeichen) oder eine Flexionsendung (bedürfen → bedarf, erste → erst).",
  rdT7:"T7 Verneinung: so gezählt, wie ein Leser zählt («nicht-» als Wortvorsilbe wie nicht-kleinzellig zählt nicht, französisch «ne … pas» einmal, «personne» als Nomen nicht), ändert der Entwurf die Zahl der Verneinungen genau wie das Deutsche.",
  rdT8:"T8 gleiche Werte: beide Seiten fügen dieselben Werte hinzu und entfernen dieselben, nur wie oft ein Wert vorkommt, unterscheidet sich (Kyprolis: 20481 im Deutschen zweimal, im Entwurf einmal).",
- legend:"Zeichen: [x] bereit · [~] markiert, alle Befunde wahrscheinlich in Ordnung · [!] markiert, zu prüfen · [≠] der bisherige Text hat bereits ein Problem (weicht vom Deutschen ab, ist in einer anderen Sprache oder nutzt einen vom BAG anderswo korrigierten Begriff) · [h] an Übersetzung übergeben · [a] übernommen · [e] bearbeitet übernommen · [r] zurückgewiesen · Tasten j/k oder ↑/↓ bewegen, Enter öffnet, f/i Sprache, 1/2/3 entscheiden, Ctrl/Cmd+Enter speichern und weiter",
+ legend:"Zeichen: ✓ bereit · ~ markiert, alle Befunde wahrscheinlich in Ordnung · ▲ markiert, zu prüfen · ≠ der bisherige Text hat bereits ein Problem (weicht vom Deutschen ab, ist in einer anderen Sprache oder nutzt einen vom BAG anderswo korrigierten Begriff) · h an Übersetzung übergeben · A übernommen · E bearbeitet übernommen · R zurückgewiesen · Tasten j/k oder ↑/↓ bewegen, Enter öffnet, f/i Sprache, 1/2/3 entscheiden, Ctrl/Cmd+Enter speichern und weiter",
  famAll:"Alle bereiten Entwürfe dieser Familie übernehmen ({n})",famAsk:"{n} offene bereite Entwürfe ({fr} FR, {it} IT) der Familie «{f}» unverändert übernehmen? Bereits entschiedene, bearbeitete und solche mit Hinweis zum bisherigen Text bleiben offen.",
  famYes:"Übernehmen bestätigen",famNo:"Abbrechen",famDone:"{n} bereite Entwürfe übernommen.",famNone:"Keine offenen bereiten Entwürfe in dieser Familie.",famOf:"Familie",famFilter:"nur diese Familie zeigen",famChanges:"{n} Änderungen",
  startOld:"Vom bisherigen Text ausgehen",startOldT:"Ersetzt den bearbeitbaren Entwurf durch den bisherigen Text mit den vom Code angewendeten Zahländerungen ({n}). «Entwurf wiederherstellen» macht es rückgängig.",startOldDone:"Bisheriger Text mit {n} Zahländerung(en) des Codes – jetzt bearbeiten.",
@@ -456,15 +513,15 @@ de:{lfine:"markiert – alle Befunde wahrscheinlich in Ordnung",lcheck:"markiert
  rev:"Prüfende Person",revPh:"Name (wird mit jedem Entscheid gespeichert)",decOn:"entschieden am {d} von {n}",decOnAnon:"entschieden am {d}",earlier:"in einer früheren Prüfung (Stand {s})",
  eqHead:"Wahrscheinlich gleichwertige Formulierung ({n})",eqWhy:"Grund",eqShow:"anzeigen",eqHide:"einklappen",
  kinds:{number:"Zahl",unit:"Einheit",language:"Sprache",editorial:"Redaktionell",terminology:"Terminologie"},termOld:"bisher",termNew:"vom BAG korrigiert zu",termWhere:"bereits korrigiert in: {x}",
- aLegend:"Zeichen: [k] bekannte Abweichung, im Text belegt · [d] entschieden · rot umrahmt = widersprüchlicher Wert · unterstrichen = weitere Zahl · roter Balken = die Sprache, die von den beiden anderen abweicht (nicht unbedingt die falsche). Entscheide: welche Sprache die richtige Bedingung nennt, und die Massnahme (von Amtes wegen berichtigen, in der dreijährlichen Überprüfung mit der Zulassungsinhaberin aufnehmen, Sprachdienst, keine, unklar). Ein Gesuch um Änderung der Limitation (GÄL) stellt die Zulassungsinhaberin, nicht das BAG. Entscheide gelten pro Befund (Limitation, Art, Sprache, Werte) und bleiben in der nächsten Prüfung erhalten."},
-en:{lfine:"flagged – all findings probably fine",lcheck:"flagged – to check",fCheck:"To check",fFine:"Probably fine",
+ aLegend:"Zeichen: K bekannte Abweichung, im Text belegt · D entschieden · rot umrahmt = widersprüchlicher Wert · unterstrichen = weitere Zahl · roter Balken = die Sprache, die von den beiden anderen abweicht (nicht unbedingt die falsche). Entscheide: welche Sprache die richtige Bedingung nennt, und die Massnahme (von Amtes wegen berichtigen, in der dreijährlichen Überprüfung mit der Zulassungsinhaberin aufnehmen, Sprachdienst, keine, unklar). Ein Gesuch um Änderung der Limitation (GÄL) stellt die Zulassungsinhaberin, nicht das BAG. Entscheide gelten pro Befund (Limitation, Art, Sprache, Werte) und bleiben in der nächsten Prüfung erhalten."},
+en:{tb:{project:"Project",drawing:"Drawing",sheet:"Sheet",rev:"Rev",date:"Date (SL snapshot)",freeze:"Freeze",model:"Model",run:"Run",checked:"Checked by",checkedV:"frozen checks"},lfine:"flagged – all findings probably fine",lcheck:"flagged – to check",fCheck:"To check",fFine:"Probably fine",
  triSplit:"Triage of the flagged (display only)",triSplitV:"{c} to check · {f} with every finding probably fine",
  rT5:"T5 numbers outside",rT6:"T6 orthography",rT7:"T7 negation",rT8:"T8 same values",
  rdT5:"T5 numbers outside the change: outside the changed passage the draft changes numbers only, exactly the values the German change replaces (Ocrevus 944.61 → 731.07).",
  rdT6:"T6 orthography: the German change not carried over is orthographic only (umlaut/ß, hyphenation such as Zeitpunkt → Zeit-punkt, case, punctuation) or an inflectional ending (bedürfen → bedarf, erste → erst).",
  rdT7:"T7 negation: counted the way a reader counts ('nicht-' as a word prefix as in nicht-kleinzellig does not count, French 'ne … pas' counts once, 'personne' as a noun does not count), the draft changes the number of negations exactly as the German does.",
  rdT8:"T8 same values: both sides add and remove the same values; only how often a value occurs differs (Kyprolis: 20481 twice in the German, once in the draft).",
- legend:"Marks: [x] ready · [~] flagged, all findings probably fine · [!] flagged, to check · [≠] the previous text already has a problem (diverges from the German, is in another language or uses a term BAG corrected elsewhere) · [h] routed to a translator · [a] accepted · [e] accepted edited · [r] sent back · keys j/k or ↑/↓ move, Enter opens, f/i language, 1/2/3 decide, Ctrl/Cmd+Enter save and next",
+ legend:"Marks: ✓ ready · ~ flagged, all findings probably fine · ▲ flagged, to check · ≠ the previous text already has a problem (diverges from the German, is in another language or uses a term BAG corrected elsewhere) · h routed to a translator · A accepted · E accepted edited · R sent back · keys j/k or ↑/↓ move, Enter opens, f/i language, 1/2/3 decide, Ctrl/Cmd+Enter save and next",
  famAll:"Accept all ready drafts of this edit family ({n})",famAsk:"Accept {n} open ready drafts ({fr} FR, {it} IT) of the family “{f}” as they are? Drafts already decided, edited, or with an old-text notice stay open.",
  famYes:"Confirm accept",famNo:"Cancel",famDone:"{n} ready drafts accepted.",famNone:"No open ready drafts in this family.",famOf:"Family",famFilter:"show this family only",famChanges:"{n} changes",
  startOld:"Start from the old text",startOldT:"Replaces the editable draft with the old text plus the number changes code applied ({n}). “Reset to draft” undoes it.",startOldDone:"Old text with {n} number change(s) applied by code – edit it now.",
@@ -473,15 +530,15 @@ en:{lfine:"flagged – all findings probably fine",lcheck:"flagged – to check"
  rev:"Reviewer",revPh:"Name (stored with each decision)",decOn:"decided on {d} by {n}",decOnAnon:"decided on {d}",earlier:"in an earlier audit (snapshot {s})",
  eqHead:"Probably equivalent wording ({n})",eqWhy:"Reason",eqShow:"show",eqHide:"collapse",
  kinds:{number:"number",unit:"unit",language:"language",editorial:"editorial",terminology:"terminology"},termOld:"old",termNew:"corrected by BAG to",termWhere:"already corrected in: {x}",
- aLegend:"Marks: [k] known divergence, confirmed in the texts · [d] decided · red box = conflicting value · underlined = other number · red bar = the language that differs from the other two (not necessarily the wrong one). Decisions: which language states the right condition, and the action (correct ex officio, raise with the holder in the triennial review, language service, none, unclear). An application to change a limitation (GÄL) is filed by the holder, not by BAG. Decisions belong to a finding (limitation, kind, language, values) and carry over to the next audit."},
-fr:{lfine:"signalé – tous les constats probablement sans problème",lcheck:"signalé – à vérifier",fCheck:"À vérifier",fFine:"Probablement sans problème",
+ aLegend:"Marks: K known divergence, confirmed in the texts · D decided · red box = conflicting value · underlined = other number · red bar = the language that differs from the other two (not necessarily the wrong one). Decisions: which language states the right condition, and the action (correct ex officio, raise with the holder in the triennial review, language service, none, unclear). An application to change a limitation (GÄL) is filed by the holder, not by BAG. Decisions belong to a finding (limitation, kind, language, values) and carry over to the next audit."},
+fr:{tb:{project:"Projet",drawing:"Dessin",sheet:"Feuille",rev:"Rév.",date:"Date (état LS)",freeze:"Gel",model:"Modèle",run:"Série",checked:"Contrôlé par",checkedV:"contrôles gelés"},lfine:"signalé – tous les constats probablement sans problème",lcheck:"signalé – à vérifier",fCheck:"À vérifier",fFine:"Probablement sans problème",
  triSplit:"Tri des signalés (affichage seulement)",triSplitV:"{c} à vérifier · {f} dont tous les constats sont probablement sans problème",
  rT5:"T5 nombres hors du passage",rT6:"T6 orthographe",rT7:"T7 négation",rT8:"T8 mêmes valeurs",
  rdT5:"T5 nombres hors du passage modifié : hors du passage modifié, le brouillon ne change que des nombres, exactement les valeurs que le changement allemand remplace (Ocrevus 944.61 → 731.07).",
  rdT6:"T6 orthographe : le changement allemand non repris n'est qu'orthographique (umlaut/ß, trait d'union comme Zeitpunkt → Zeit-punkt, majuscules, ponctuation) ou une terminaison flexionnelle (bedürfen → bedarf, erste → erst).",
  rdT7:"T7 négation : comptée comme un lecteur la compte (« nicht- » préfixe comme dans nicht-kleinzellig ne compte pas, « ne … pas » compte une fois, « personne » nom ne compte pas), le brouillon change le nombre de négations exactement comme l'allemand.",
  rdT8:"T8 mêmes valeurs : les deux côtés ajoutent et retirent les mêmes valeurs, seul le nombre d'occurrences diffère (Kyprolis : 20481 deux fois en allemand, une fois dans le brouillon).",
- legend:"Marques : [x] prêt · [~] signalé, tous les constats probablement sans problème · [!] signalé, à vérifier · [≠] l'ancien texte a déjà un problème (diverge de l'allemand, est dans une autre langue ou emploie un terme que l'OFSP a corrigé ailleurs) · [h] confié à un traducteur · [a] accepté · [e] accepté modifié · [r] renvoyé · touches j/k ou ↑/↓ naviguer, Entrée ouvrir, f/i langue, 1/2/3 décider, Ctrl/Cmd+Entrée enregistrer et suivant",
+ legend:"Marques : ✓ prêt · ~ signalé, tous les constats probablement sans problème · ▲ signalé, à vérifier · ≠ l'ancien texte a déjà un problème (diverge de l'allemand, est dans une autre langue ou emploie un terme que l'OFSP a corrigé ailleurs) · h confié à un traducteur · A accepté · E accepté modifié · R renvoyé · touches j/k ou ↑/↓ naviguer, Entrée ouvrir, f/i langue, 1/2/3 décider, Ctrl/Cmd+Entrée enregistrer et suivant",
  famAll:"Accepter tous les brouillons prêts de cette famille ({n})",famAsk:"Accepter tels quels {n} brouillons prêts encore ouverts ({fr} FR, {it} IT) de la famille « {f} » ? Ceux déjà décidés, modifiés ou avec un avis sur l'ancien texte restent ouverts.",
  famYes:"Confirmer l'acceptation",famNo:"Annuler",famDone:"{n} brouillons prêts acceptés.",famNone:"Aucun brouillon prêt ouvert dans cette famille.",famOf:"Famille",famFilter:"afficher seulement cette famille",famChanges:"{n} changements",
  startOld:"Partir de l'ancien texte",startOldT:"Remplace le brouillon modifiable par l'ancien texte avec les changements de nombres appliqués par le code ({n}). « Rétablir le brouillon » annule.",startOldDone:"Ancien texte avec {n} changement(s) de nombres du code – à modifier maintenant.",
@@ -490,15 +547,15 @@ fr:{lfine:"signalé – tous les constats probablement sans problème",lcheck:"s
  rev:"Réviseur ou réviseuse",revPh:"Nom (enregistré avec chaque décision)",decOn:"décidé le {d} par {n}",decOnAnon:"décidé le {d}",earlier:"lors d'un audit antérieur (état {s})",
  eqHead:"Formulation probablement équivalente ({n})",eqWhy:"Motif",eqShow:"afficher",eqHide:"replier",
  kinds:{number:"nombre",unit:"unité",language:"langue",editorial:"rédactionnel",terminology:"terminologie"},termOld:"ancien",termNew:"corrigé par l'OFSP en",termWhere:"déjà corrigé dans : {x}",
- aLegend:"Marques : [k] divergence connue, attestée dans les textes · [d] décidé · cadre rouge = valeur contradictoire · souligné = autre nombre · barre rouge = la langue qui diffère des deux autres (pas forcément la fausse). Décisions : quelle langue dit la bonne condition, et la mesure (corriger d'office, aborder avec le titulaire lors du réexamen triennal, service linguistique, aucune, pas clair). La demande de modification de la limitation (GÄL) est déposée par le titulaire, pas par l'OFSP. Les décisions valent par constat (limitation, type, langue, valeurs) et sont reprises au prochain audit."},
-it:{lfine:"segnalata – tutti i rilievi probabilmente in ordine",lcheck:"segnalata – da verificare",fCheck:"Da verificare",fFine:"Probabilmente in ordine",
+ aLegend:"Marques : K divergence connue, attestée dans les textes · D décidé · cadre rouge = valeur contradictoire · souligné = autre nombre · barre rouge = la langue qui diffère des deux autres (pas forcément la fausse). Décisions : quelle langue dit la bonne condition, et la mesure (corriger d'office, aborder avec le titulaire lors du réexamen triennal, service linguistique, aucune, pas clair). La demande de modification de la limitation (GÄL) est déposée par le titulaire, pas par l'OFSP. Les décisions valent par constat (limitation, type, langue, valeurs) et sont reprises au prochain audit."},
+it:{tb:{project:"Progetto",drawing:"Disegno",sheet:"Foglio",rev:"Rev.",date:"Data (stato ES)",freeze:"Congelamento",model:"Modello",run:"Serie",checked:"Controllato da",checkedV:"controlli congelati"},lfine:"segnalata – tutti i rilievi probabilmente in ordine",lcheck:"segnalata – da verificare",fCheck:"Da verificare",fFine:"Probabilmente in ordine",
  triSplit:"Smistamento delle segnalate (solo visualizzazione)",triSplitV:"{c} da verificare · {f} con tutti i rilievi probabilmente in ordine",
  rT5:"T5 numeri fuori dal passo",rT6:"T6 ortografia",rT7:"T7 negazione",rT8:"T8 stessi valori",
  rdT5:"T5 numeri fuori dal passo modificato: fuori dal passo modificato la bozza cambia solo numeri, esattamente i valori che la modifica tedesca sostituisce (Ocrevus 944.61 → 731.07).",
  rdT6:"T6 ortografia: la modifica tedesca non ripresa è solo ortografica (umlaut/ß, trattino come Zeitpunkt → Zeit-punkt, maiuscole, punteggiatura) o una desinenza flessiva (bedürfen → bedarf, erste → erst).",
  rdT7:"T7 negazione: contata come la conta un lettore («nicht-» prefisso come in nicht-kleinzellig non conta, il francese «ne … pas» conta una volta, «personne» sostantivo non conta), la bozza cambia il numero di negazioni esattamente come il tedesco.",
  rdT8:"T8 stessi valori: entrambe le parti aggiungono e tolgono gli stessi valori, cambia solo quante volte un valore compare (Kyprolis: 20481 due volte nel tedesco, una volta nella bozza).",
- legend:"Segni: [x] pronta · [~] segnalata, tutti i rilievi probabilmente in ordine · [!] segnalata, da verificare · [≠] il vecchio testo ha già un problema (diverge dal tedesco, è in un'altra lingua o usa un termine che l'UFSP ha corretto altrove) · [h] affidata a un traduttore · [a] accettata · [e] accettata modificata · [r] rinviata · tasti j/k o ↑/↓ spostarsi, Invio aprire, f/i lingua, 1/2/3 decidere, Ctrl/Cmd+Invio salva e avanti",
+ legend:"Segni: ✓ pronta · ~ segnalata, tutti i rilievi probabilmente in ordine · ▲ segnalata, da verificare · ≠ il vecchio testo ha già un problema (diverge dal tedesco, è in un'altra lingua o usa un termine che l'UFSP ha corretto altrove) · h affidata a un traduttore · A accettata · E accettata modificata · R rinviata · tasti j/k o ↑/↓ spostarsi, Invio aprire, f/i lingua, 1/2/3 decidere, Ctrl/Cmd+Invio salva e avanti",
  famAll:"Accetta tutte le bozze pronte di questa famiglia ({n})",famAsk:"Accettare così come sono {n} bozze pronte ancora aperte ({fr} FR, {it} IT) della famiglia «{f}»? Quelle già decise, modificate o con un avviso sul vecchio testo restano aperte.",
  famYes:"Conferma accettazione",famNo:"Annulla",famDone:"{n} bozze pronte accettate.",famNone:"Nessuna bozza pronta aperta in questa famiglia.",famOf:"Famiglia",famFilter:"mostra solo questa famiglia",famChanges:"{n} modifiche",
  startOld:"Parti dal vecchio testo",startOldT:"Sostituisce la bozza modificabile con il vecchio testo e le modifiche dei numeri applicate dal codice ({n}). «Ripristina la bozza» annulla.",startOldDone:"Vecchio testo con {n} modifica/he dei numeri del codice – ora da modificare.",
@@ -507,7 +564,7 @@ it:{lfine:"segnalata – tutti i rilievi probabilmente in ordine",lcheck:"segnal
  rev:"Revisore o revisora",revPh:"Nome (salvato con ogni decisione)",decOn:"deciso il {d} da {n}",decOnAnon:"deciso il {d}",earlier:"in una verifica precedente (stato {s})",
  eqHead:"Formulazione probabilmente equivalente ({n})",eqWhy:"Motivo",eqShow:"mostra",eqHide:"richiudi",
  kinds:{number:"numero",unit:"unità",language:"lingua",editorial:"redazionale",terminology:"terminologia"},termOld:"vecchio",termNew:"corretto dall'UFSP in",termWhere:"già corretto in: {x}",
- aLegend:"Segni: [k] divergenza nota, confermata nei testi · [d] decisa · riquadro rosso = valore in contraddizione · sottolineato = altro numero · barra rossa = la lingua che differisce dalle altre due (non per forza quella sbagliata). Decisioni: quale lingua indica la condizione giusta, e la misura (correggere d'ufficio, sollevare con il titolare nel riesame triennale, servizio linguistico, nessuna, non chiaro). La domanda di modifica della limitazione (GÄL) è presentata dal titolare, non dall'UFSP. Le decisioni valgono per rilievo (limitazione, tipo, lingua, valori) e restano alla verifica successiva."}};
+ aLegend:"Segni: K divergenza nota, confermata nei testi · D decisa · riquadro rosso = valore in contraddizione · sottolineato = altro numero · barra rossa = la lingua che differisce dalle altre due (non per forza quella sbagliata). Decisioni: quale lingua indica la condizione giusta, e la misura (correggere d'ufficio, sollevare con il titolare nel riesame triennale, servizio linguistico, nessuna, non chiaro). La domanda di modifica della limitazione (GÄL) è presentata dal titolare, non dall'UFSP. Le decisioni valgono per rilievo (limitazione, tipo, lingua, valori) e restano alla verifica successiva."}};
 Object.keys(TX2).forEach(function(L){Object.keys(TX2[L]).forEach(function(k){TX[L][k]=TX2[L][k]})});
 function pickUI(){if(TX[P.ui])return P.ui;var L=[];try{L=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||""]}catch(e){}
  for(var i=0;i<L.length;i++){var c=String(L[i]||"").slice(0,2).toLowerCase();if(TX[c])return c}return "de"}
@@ -532,18 +589,27 @@ ITEMS.forEach(function(it){if(!it.rt)return;var o=plain(it.segs,true),ops=it.rt[
  ops.forEach(function(op){o=o.slice(0,op[0])+op[2]+o.slice(op[1])});it.rt=[o,it.rt[1]]});
 function dec(it){return S.dec[it.key]}
 function oldIssue(it){return !!(it.banner||it.corr||(it.old&&it.old.length))}
-function mark(it){if(!it)return ['<span class="mk o">[ ]</span>',""];var d=dec(it);
- if(d)return ['<span class="mk">['+(d.decision==="accept"?"a":d.decision==="accept-edited"?"e":"r")+']</span>',d.decision];
- if(oldIssue(it))return ['<span class="mk r">[≠]</span>',"divergent"];
- if(it.status==="human")return ['<span class="mk">[h]</span>',"human"];
- return it.status==="ready"?['<span class="mk">[x]</span>',"ready"]:it.lvl==="fine"?['<span class="mk f">[~]</span>',"fine"]:['<span class="mk r">[!]</span>',"flagged"]}
+// marks: ✓ ready · ~ flagged, all findings probably fine · ▲ flagged, to check · ≠ old text diverges · h routed to a
+// translator · decided: A accepted, E accepted edited, R sent back (inverted tags)
+function mark(it){if(!it)return ['<span class="mk o">·</span>',""];var d=dec(it);
+ if(d)return ['<span class="mk"><span class="lt">'+(d.decision==="accept"?"A":d.decision==="accept-edited"?"E":"R")+'</span></span>',d.decision];
+ if(oldIssue(it))return ['<span class="mk r">≠</span>',"divergent"];
+ if(it.status==="human")return ['<span class="mk">h</span>',"human"];
+ return it.status==="ready"?['<span class="mk">✓</span>',"ready"]:it.lvl==="fine"?['<span class="mk f">~</span>',"fine"]:['<span class="mk r">▲</span>',"flagged"]}
 // ------------------------------------------------------------------ header and chrome
 var TAB=AU?"audit":"drafts";        // the Register audit tab is the landing view; #drafts or a draft's hash opens Drafts
 function kv(id,rows){$(id).innerHTML=rows.map(function(r){return "<dt"+(r[3]?' title="'+esc(r[3])+'"':"")+">"+esc(r[0])+"</dt><dd"+(r[2]?' class="'+r[2]+'"':"")+">"+esc(r[1])+"</dd>"}).join("")}
 function ddate(s){return /^\d{8}$/.test(s||"")?s.slice(6,8)+"."+s.slice(4,6)+"."+s.slice(0,4):(s||"?")}
 function chrome(){
  document.documentElement.lang=UL;$("l-ui").textContent=t("ui");applyTheme();
- $("sub").textContent=t("sub")+" · "+M.label+" · "+D.counts.items+" "+t("drafts");
+ $("sub").textContent=t("sub");
+ var fz0=(M.pipeline.match(/freeze sha256:([0-9a-f]+)/)||[])[1]||"",TB=t("tb");
+ document.querySelectorAll("[data-tb]").forEach(function(e){e.textContent=TB[e.dataset.tb]});
+ $("tb-drawing").textContent=M.label+" · "+D.counts.items+" "+t("drafts");
+ $("tb-sheet").textContent=(TAB==="audit"?"1 / 2 · "+t("tabAudit"):(AU?"2 / 2 · ":"1 / 1 · ")+t("tabDrafts"));
+ $("tb-rev").textContent=M.rev||"—";$("tb-date").textContent=ddate(AU?AU.meta.date:D.snap);
+ $("tb-freeze").textContent=fz0?fz0.slice(0,12):"—";$("tb-model").textContent=M.model;$("tb-run").textContent=M.run;
+ $("tb-checked").textContent=TB.checkedV+" "+(M.stack||"g3");
  $("t-audit").hidden=!AU;
  $("t-audit").innerHTML=esc(t("tabAudit"))+(AU?'<span class="c r">'+AU.rows.length+"</span>":"");$("t-drafts").innerHTML=esc(t("tabDrafts"))+'<span class="c">'+D.counts.items+"</span>";
  $("t-audit").setAttribute("aria-selected",TAB==="audit");$("t-drafts").setAttribute("aria-selected",TAB==="drafts");
@@ -552,7 +618,7 @@ function chrome(){
  $("prov").textContent=t("provenance")+": "+M.pipeline+" · outputs sha256:"+M.run_sha256.slice(0,16)+"… · items sha256:"+M.items_sha256.slice(0,16)+"…"+(AU?" · audit "+AU.meta.file+(AU.meta.results?" + "+AU.meta.results:""):"");
  if(TAB==="audit"){chromeAudit();return}
  var fz=(M.pipeline.match(/freeze sha256:([0-9a-f]+)/)||[])[1]||"";
- kv("kv-l",[[t("model"),M.model],[t("run"),M.run],[t("guards"),(M.stack==="g3"?"guards3 (frozen)":"guards v2 (frozen)")+(fz?" · freeze "+fz.slice(0,12):"")],
+ kv("kv-l",[[t("guards"),(M.stack==="g3"?"guards3 (frozen)":"guards v2 (frozen)")+(fz?" · freeze "+fz.slice(0,12):"")],
   [t("items"),String(D.counts.items)],[t("changes"),String(D.counts.changes)]]);
  var C=D.counts,r=[];
  if(A){r.push([t("ready"),A.unflagged+" · "+pct(A.ready_rate),"",t("codeOnly")]);r.push([t("flagged"),A.flagged+" · "+pct(A.flag_rate)]);
@@ -587,7 +653,7 @@ document.querySelector(".tabs").addEventListener("keydown",function(e){if(e.key=
 var AF={show:"all",lang:"all",kind:"all"},EQOPEN=false,ACTS=["exofficio","holder","langsvc","none","unclear"];
 function aDec(r){return SA[r.sig]||{}}
 function aDecided(r){var d=SA[r.sig];return !!(d&&(d.right||d.action))}
-function aMark(r){return ((r.known?'<span class="mk r">[k]</span>':"")+(aDecided(r)?'<span class="mk">[d]</span>':"")||'<span class="mk o">[ ]</span>')+"<br>"+esc(r.no||"")}
+function aMark(r){return ((r.known?'<span class="mk"><span class="lt s">K</span></span>':"")+(aDecided(r)?'<span class="mk"><span class="lt">D</span></span>':"")||'<span class="mk o">·</span>')+"<br>"+esc(r.no||"")}
 function aStatus(d){if(!d||!d.at)return t("openSt");var day=ddate(d.at.slice(0,10).replace(/-/g,""));
  var s=d.by?fmt(t("decOn"),{d:day,n:d.by}):fmt(t("decOnAnon"),{d:day});
  if(d.date&&AU&&d.date!==AU.meta.date)s+=" "+fmt(t("earlier"),{s:ddate(d.date)});return s}
@@ -620,7 +686,7 @@ function termHTML(r){var m=r.term;if(!m)return "";var h="";
  return h}
 function aRow(r){var d=aDec(r),cell=function(L){var odd=r.odd===L;return '<td data-l="'+L.toUpperCase()+(odd?" · "+esc(t("oddLbl")):"")+'"'+(odd?' class="odd"':"")+">"+(odd?'<span class="oddl">'+esc(t("oddLbl"))+"</span>":"")+snipHTML(r,L)+"</td>"};
  var odd=r.odd==="unclear"?t("aUnclear"):String(r.odd||"—").toUpperCase();
- var h='<tr data-sig="'+esc(r.sig)+'"'+(r.eq!=null&&!r.known?' class="eq"':"")+'><td data-l="'+esc(t("no"))+'">'+aMark(r)+"</td>"+
+ var h='<tr data-sig="'+esc(r.sig)+'" class="cnt'+(r.eq!=null&&!r.known?' eq':"")+'"><td data-l="'+esc(t("no"))+'">'+aMark(r)+"</td>"+
   '<td class="lim" data-l="'+esc(t("aLim"))+'"><b>'+esc(r.product||r.lim)+'</b><span class="code" title="'+esc(r.desc)+'">'+esc(r.lim)+"</span>"+
    (r.since?'<span class="sub2">'+esc(fmt(t("aSince"),{d:ddate(r.since),n:r.seen||"?"}))+"</span>":"")+"</td>"+
   '<td class="kd" data-l="'+esc(t("aKind"))+'">'+esc((t("kinds")[r.kind]||r.kind))+" · "+esc((r.lang||"").toUpperCase())+'<span class="oddl">'+esc(t("aOdd"))+": "+esc(odd)+"</span>"+
@@ -641,7 +707,7 @@ function aRow(r){var d=aDec(r),cell=function(L){var odd=r.odd===L;return '<td da
 function renderAudit(){if(!AU){$("p-audit").innerHTML='<p class="empty">'+esc(t("aNoFile"))+"</p>";return}
  var tb=document.querySelector("#aud tbody"),rows=AU.rows.filter(aOk),kn=rows.filter(function(r){return r.known}),
   ot=rows.filter(function(r){return !r.known&&r.eq==null}),eq=rows.filter(function(r){return !r.known&&r.eq!=null}),h="",m=AU.meta;
- if(kn.length)h+='<tr class="grp"><td colspan="8"><span class="mk r">[k]</span>'+esc(fmt(t("aKnownHead"),{k:m.known_found!=null?m.known_found:m.known_ids.length,n:m.known_of!=null?m.known_of:m.known_ids.length}))+"</td></tr>"+kn.map(aRow).join("");
+ if(kn.length)h+='<tr class="grp"><td colspan="8"><span class="lt s">K</span> '+esc(fmt(t("aKnownHead"),{k:m.known_found!=null?m.known_found:m.known_ids.length,n:m.known_of!=null?m.known_of:m.known_ids.length}))+"</td></tr>"+kn.map(aRow).join("");
  if(ot.length)h+='<tr class="grp"><td colspan="8">'+esc(t("aOtherHead"))+"</td></tr>"+ot.map(aRow).join("");
  if(eq.length)h+='<tr class="eqh"><td colspan="8"><button type="button" id="eq-tg" aria-expanded="'+EQOPEN+'"><span class="mk">['+(EQOPEN?"−":"+")+"]</span>"+esc(fmt(t("eqHead"),{n:eq.length}))+" · "+esc(EQOPEN?t("eqHide"):t("eqShow"))+"</button></td></tr>"+(EQOPEN?eq.map(aRow).join(""):"");
  tb.innerHTML=h||'<tr><td colspan="8" class="empty">'+esc(t("aNone"))+"</td></tr>";
@@ -671,7 +737,7 @@ function renderReg(){var tb=document.querySelector("#reg tbody"),h="";VIS=[];
   if(F.q&&(g.product+" "+g.code+" "+g.pair+" "+g.no).toLowerCase().indexOf(F.q)<0)return;
   if(!Ls.some(function(L){return okItem(g.items[L])}))return;VIS.push(g);
   var mk=(F.lang==="all"?["fr","it"]:[F.lang]).map(function(L){return mark(g.items[L])[0]}).join("");
-  h+='<tr data-pair="'+esc(g.pair)+'" aria-selected="'+(sel===g)+'"><td>'+mk+'</td><td>'+g.no+'</td><td class="prd" title="'+esc(g.product+" · "+g.code)+'">'+esc(g.product)+'<span class="pc">'+esc(g.code)+"</span>"+
+  h+='<tr class="cnt" data-pair="'+esc(g.pair)+'" aria-selected="'+(sel===g)+'"><td>'+mk+'</td><td>'+g.no+'</td><td class="prd" title="'+esc(g.product+" · "+g.code)+'">'+esc(g.product)+'<span class="pc">'+esc(g.code)+"</span>"+
    '</td><td class="chg" title="'+esc(g.sum)+'">'+esc(g.sum)+"</td></tr>"});
  tb.innerHTML=h||'<tr><td colspan="4" class="empty">'+esc(t("none"))+"</td></tr>";
  $("shown").textContent=VIS.length+" "+t("shown");
@@ -717,9 +783,9 @@ function stLabel(it){return it.status==="ready"?(oldIssue(it)?t("readyAttn"):t("
 function stRed(it){return (it.status==="flagged"&&it.lvl!=="fine")||oldIssue(it)}
 function langMsg(it,o){var a=t("adj")[it.lang]||LN(it.lang),f=t("lname")[o.f]||o.f;return fmt(t("oldLang"),{A:a,F:f})}
 function notice(it){var p=[],lang=false;
- (it.old||[]).forEach(function(o){if(o.k==="language"){lang=true;var um=o.f?langMsg(it,o):o.t;p.push('<p><span class="mk">[≠]</span>'+esc(um)+"</p>"+(o.f&&o.t!==um?'<p lang="'+it.lang+'">'+esc(o.t)+"</p>":""))}});
- if(it.banner&&!(lang&&(it.old||[]).every(function(o){return o.k==="language"})))p.push("<p>"+(lang?"":"<span class=\"mk\">[≠]</span>")+esc(it.banner)+"</p>");
- if(it.corr)p.push("<p>"+(p.length?"":"<span class=\"mk\">[≠]</span>")+esc(it.corr)+"</p>");
+ (it.old||[]).forEach(function(o){if(o.k==="language"){lang=true;var um=o.f?langMsg(it,o):o.t;p.push('<p><span class="mk">≠</span>'+esc(um)+"</p>"+(o.f&&o.t!==um?'<p lang="'+it.lang+'">'+esc(o.t)+"</p>":""))}});
+ if(it.banner&&!(lang&&(it.old||[]).every(function(o){return o.k==="language"})))p.push("<p>"+(lang?"":"<span class=\"mk\">≠</span>")+esc(it.banner)+"</p>");
+ if(it.corr)p.push("<p>"+(p.length?"":"<span class=\"mk\">≠</span>")+esc(it.corr)+"</p>");
  return p.length?'<div class="notice'+(lang?" lang":"")+'" role="note">'+p.join("")+"</div>":""}
 function curText(it){var e=S.edits[it.key];return e!=null?e:it.draft}
 function caseHTML(g,live){var Ls=langs(g),one=Ls.length<2?" one":"",h="";
@@ -728,11 +794,11 @@ function caseHTML(g,live){var Ls=langs(g),one=Ls.length<2?" one":"",h="";
   '<p class="famline">'+esc(t("famOf"))+": "+esc(FAML[g.family]||g.family)+" · "+esc(fmt(t("famChanges"),{n:famSize(g.family)}))+
    (live&&F.fam!==g.family&&famSize(g.family)>1?' · <button class="tb" type="button" data-fam="'+esc(g.family)+'">'+esc(t("famFilter"))+"</button>":"")+"</p>"+
   '<details class="ids"><summary>'+esc(t("ids"))+"</summary> "+esc(t("family"))+" "+esc(g.family)+(FAML[g.family]?" ("+esc(FAML[g.family])+")":"")+" · "+esc(t("pair"))+" "+esc(g.pair)+" · "+esc(t("itemsL"))+" "+esc(keys)+"</details>";
- h+='<section class="sec"><div class="sl"><span class="no">1</span><span class="t">'+esc(t("s1"))+"</span>"+(live?'<button class="tb sp" type="button" id="ctx">'+esc(ctxMode?t("ctxA"):t("ctxF"))+"</button>":"")+
+ h+='<section class="sec"><div class="sl"><span class="no"><b>§</b>1</span><span class="t">'+esc(t("s1"))+"</span>"+(live?'<button class="tb sp" type="button" id="ctx">'+esc(ctxMode?t("ctxA"):t("ctxF"))+"</button>":"")+
   '</div><div class="txt de" lang="de">'+segs(g.de,live&&ctxMode,false)+"</div></section>";
- h+='<section class="sec"><div class="sl"><span class="no">2</span><span class="t">'+esc(t("s2"))+'</span></div><div class="drafts'+one+'">';
+ h+='<section class="sec"><div class="sl"><span class="no"><b>§</b>2</span><span class="t">'+esc(t("s2"))+'</span></div><div class="drafts'+one+'">';
  Ls.forEach(function(L){var it=g.items[L],ed=S.edits[it.key];
-  h+='<div class="dr" data-lang="'+L+'"><div class="dl"><span class="ln" title="'+esc(it.key)+'">'+esc(LN(L))+'</span>·<span class="st'+(stRed(it)?" r":"")+'">'+esc(stLabel(it))+"</span>"+
+  h+='<div class="dr" data-lang="'+L+'"><div class="dl"><span class="ln" title="'+esc(it.key)+'"><span class="lt">'+L.toUpperCase()+"</span> "+esc(LN(L))+'</span>·<span class="st'+(stRed(it)?" r":"")+'">'+esc(stLabel(it))+"</span>"+
    (it.status==="flagged"?'<span class="tri">'+triHTML(it.tri[0],it.tri[1])+"</span>":"")+(it.rule_only?'<span class="key">rules</span>':"")+
    (it.status==="ready"?'<span class="cap">'+esc(t("codeOnly"))+"</span>":"")+"</div>"+notice(it);
   if(it.status==="human")h+='<p class="human">'+esc(it.reason&&!/rewritten|60/.test(it.reason)?t("humanShort"):t("humanTxt"))+(it.ratio!=null?" ("+it.ratio+"%)":"")+".</p>"+(it.reason?'<p class="ref">'+esc(it.reason)+"</p>":"")+"<p class=\"human\" style=\"color:var(--ink2)\">"+esc(t("humanPrev"))+"</p>";
@@ -741,12 +807,12 @@ function caseHTML(g,live){var Ls=langs(g),one=Ls.length<2?" one":"",h="";
   if(live)h+='<div class="edmeta" data-meta="'+esc(it.key)+'">'+edmeta(it.key)+"</div>";
   h+="</div>"});
  h+="</div></section>";
- h+='<section class="sec"><div class="sl"><span class="no">3</span><span class="t">'+esc(t("s3"))+"</span></div>";
- Ls.forEach(function(L){var it=g.items[L];h+='<div class="tbl"><table class="ledger"><caption>'+esc(LN(L))+(it.status==="flagged"?'<span class="tri">'+triHTML(it.tri[0],it.tri[1])+"</span>":"")+"</caption>";
+ h+='<section class="sec"><div class="sl"><span class="no"><b>§</b>3</span><span class="t">'+esc(t("s3"))+"</span></div>";
+ Ls.forEach(function(L){var it=g.items[L];h+='<div class="tbl"><table class="ledger"><caption><span class="lt">'+L.toUpperCase()+"</span> "+esc(LN(L))+(it.status==="flagged"?'<span class="tri">'+triHTML(it.tri[0],it.tri[1])+"</span>":"")+"</caption>";
   if(!it.ledger.length){h+='<tbody><tr><td class="na">'+esc(t("noChecks"))+"</td></tr></tbody></table></div>";return}
   h+="<thead><tr><th>"+esc(t("check"))+"</th><th>"+esc(t("result"))+"</th><th>"+esc(t("finding"))+"</th></tr></thead><tbody>";
   it.ledger.forEach(function(r){var st=r[2],res=st==="pass"?t("pass"):st==="fail"?t("fail"):t("na"),cls=st==="fail"?"FAIL":st==="pass"?"":"na";
-   if(st==="fail"&&r[3].length&&r[3].every(function(f){return f.r})){res=t("fail")+" [~]";cls="FAILf"}
+   if(st==="fail"&&r[3].length&&r[3].every(function(f){return f.r})){res="~ "+t("fail");cls="FAILf"}
    var fd=r[3].map(function(f){var p="<p>"+esc(f.t)+(f.c&&it.corr_note?'<span class="cn">[≠] '+esc(it.corr_note)+"</span>":"")+"</p>";
     return f.r?'<details class="pf" title="'+esc(t("rd"+f.r))+'"><summary>'+esc(t("pf"))+" · "+esc(t("r"+f.r))+"</summary>"+p+"</details>":p}).join("");
    if(!fd&&st!=="fail")fd='<span class="na">—</span>';
@@ -754,9 +820,9 @@ function caseHTML(g,live){var Ls=langs(g),one=Ls.length<2?" one":"",h="";
    h+='<tr><td class="chk" title="'+esc(r[5])+'">'+esc(r[1])+'</td><td class="res '+cls+'">'+esc(res)+'</td><td class="fd" lang="'+L+'">'+fd+"</td></tr>"});
   h+="</tbody></table></div>"});
  h+="</section>";
- if(live){h+='<section class="sec"><div class="sl"><span class="no">4</span><span class="t">'+esc(t("s4"))+'</span></div><div class="decs'+one+'">';
+ if(live){h+='<section class="sec"><div class="sl"><span class="no"><b>§</b>4</span><span class="t">'+esc(t("s4"))+'</span></div><div class="decs'+one+'">';
   Ls.forEach(function(L){var it=g.items[L],d=dec(it)||{};
-   h+='<div class="dec'+(L===focusL||Ls.length<2?" focus":"")+'" data-lang="'+L+'" data-key="'+esc(it.key)+'"><div class="dl"><span class="ln">'+esc(LN(L))+'</span><span class="key">'+esc(stLabel(it))+'</span></div><div class="btns">'+
+   h+='<div class="dec'+(L===focusL||Ls.length<2?" focus":"")+'" data-lang="'+L+'" data-key="'+esc(it.key)+'"><div class="dl"><span class="ln"><span class="lt">'+L.toUpperCase()+"</span> "+esc(LN(L))+'</span><span class="key">'+esc(stLabel(it))+'</span></div><div class="btns">'+
     [["accept","(1) "+t("accept")],["accept-edited","(2) "+t("acceptEd")],["send-back","(3) "+t("sendBack")]].map(function(b){
      return '<button class="box" type="button" data-d="'+b[0]+'" aria-pressed="'+(d.decision===b[0])+'">'+esc(b[1])+"</button>"}).join("")+"</div>"+
     "<label>"+esc(t("reason"))+'<select data-f="reason">'+t("reasons").map(function(r,i){var v=TX.en.reasons[i];return '<option value="'+esc(v)+'"'+(d.reason===v?" selected":"")+">"+esc(r||"—")+"</option>"}).join("")+"</select></label>"+

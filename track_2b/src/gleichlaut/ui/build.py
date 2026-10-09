@@ -31,7 +31,7 @@ OUT = os.path.join(core.ROOT, "out", "ui", "index.html")
 FONTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fonts")
 TOK = re.compile(core.gl2.NUMRX.pattern + r"|\w+|\s+|[^\w\s]")        # numbers first: a number is one token
 WHOLE = 0.40          # a sentence block with more than this share of changed words is shown old-struck / new-underlined
-LABEL = {"fresh166": "fresh 2025 held-out set", "m3_seed1": "fresh 2025 held-out set, seed 1", "oos242": "out-of-sample 2026 set",
+LABEL = {"fresh166": "held-out set (SL changes 06.2025–02.2026)", "m3_seed1": "held-out set, rerun seed 1", "oos242": "out-of-sample 2026 set",
          "dev120": "development set (in-sample)", "dev120_8b": "development set, 8B"}
 GLUE = 2              # changed runs separated by at most this many unchanged words merge into one phrase
 
@@ -291,26 +291,41 @@ def data(run="fresh166", records=None, items=None, audit=audit_view.AUDIT, hist=
     m = {k: meta[k] for k in ("run", "what", "stack", "model", "pipeline", "items_sha256", "run_sha256", "custom", "has_tgt_new")}
     m["model"] = model_label(meta)
     m["label"] = LABEL.get(meta["run"], meta["what"]) if not meta["custom"] else "records " + meta["run"]
+    m["rev"] = git_rev()
     xn = {L: dict(prev_de=xliff.NOTE[L]["prev_de"], prev_tgt=xliff.NOTE[L]["prev_tgt"], product=xliff.NOTE[L]["product"],
                   about=xliff.nt(L, "about"), states=xliff.nt(L, "states"), prov=xliff.provenance_note(meta, L),
                   review=xliff.NOTE[L]["review"], reviewed=xliff.NOTE[L]["reviewed"],
                   about12=xliff.nt(L, "about12"), states12=xliff.nt(L, "states12"), code_number=xliff.nt(L, "code_number"),
                   changed=xliff.nt(L, "changed"),
                   dec={k: xliff.NOTE[L][k] for k in ("accept", "accept-edited", "send-back")}) for L in ("fr", "it")}
-    return dict(meta=m, all=summ["all"] if summ else None, groups=G, xn=xn,
+    snaps = sorted({v["snap_new"] for v in views if re.fullmatch(r"\d{8}", str(v.get("snap_new") or ""))})
+    return dict(meta=m, all=summ["all"] if summ else None, groups=G, xn=xn, snap=snaps[-1] if snaps else None,
                 families=[[f, n, flab.get(f, f)] for f, n in sorted(fam.items(), key=lambda kv: (-kv[1], kv[0]))], counts=counts,
                 audit=audit_view.data(audit, audit_view.RESULTS, hist) if audit else None)
+
+
+def git_rev():
+    """The short commit for the title block: $GIT_COMMIT, else `git rev-parse --short HEAD` at build time, else None."""
+    c = os.environ.get("GIT_COMMIT", "").strip()
+    if c: return c[:12]
+    try:
+        import subprocess
+        r = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=core.ROOT, capture_output=True, text=True, timeout=5)
+        return (r.stdout.strip() or None) if r.returncode == 0 else None
+    except Exception:
+        return None
 
 
 def fonts_css():
     """@font-face rules with the vendored woff2 files inlined (base64), real fallback stacks in the CSS below."""
     rules = []
-    for fam, fn, w in (("Source Sans 3", "SourceSans3-latin-wght.woff2", "400 600"), ("IBM Plex Mono", "IBMPlexMono-400-latin.woff2", "400"),
-                       ("IBM Plex Mono", "IBMPlexMono-500-latin.woff2", "500")):
+    for fam, fn, w, st in (("Public Sans", "PublicSans-latin-wght.woff2", "400 600", "normal"),
+                           ("Archivo", "Archivo-latin-wdth75-wght500-600.woff2", "500 600", "75%"),
+                           ("Fragment Mono", "FragmentMono-400-latin.woff2", "400", "normal")):
         p = os.path.join(FONTS, fn)
         if not os.path.exists(p): continue
         b64 = base64.b64encode(open(p, "rb").read()).decode()
-        rules.append(f"@font-face{{font-family:'{fam}';font-style:normal;font-weight:{w};font-display:swap;"
+        rules.append(f"@font-face{{font-family:'{fam}';font-style:normal;font-weight:{w};font-stretch:{st};font-display:swap;"
                      f"src:url(data:font/woff2;base64,{b64}) format('woff2')}}")
     return "\n".join(rules)
 
