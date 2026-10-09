@@ -90,6 +90,7 @@ code: [docs/failure-modes.md](docs/failure-modes.md).
 **Shadow mode needs nobody's permission.** `gleichlaut month --from 20260901 --to 20261001 --fetch` mines the month's
 German changes from the public feed, drafts them, and grades itself against what BAG publishes. First user group: BAG's
 Sektion Arzneimittelaufnahmen and the ePL team. Operator runbook: [docs/operations.md](docs/operations.md).
+Phased pilot (audit first), owners, protection needs and monthly effort: [docs/adoption.md](docs/adoption.md).
 
 ## Run it
 

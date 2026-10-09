@@ -255,9 +255,10 @@ make month-70b ITEMS=/path/to/sl-team-2026-11.json    # the 70B through your cer
 # or: PYTHONPATH=src python3 -m gleichlaut month --items sl-team-2026-11.json --out out/month/2026-11
 ```
 
-**Integration point for BAG's ePL team: items straight from ePL FHIR exports.** The ePL editor exports in the same FHIR
-format as the public feed: NDJSON, one product Bundle per line, CH EPL profile. `gleichlaut items` turns two such exports
-into the item file:
+**Integration point for BAG's ePL team: items from FHIR exports.** The public feed is FHIR: NDJSON, one product Bundle
+per line, CH EPL profile (verified, [sl-process.md](sl-process.md) §4). Whether the internal ePL editor can export its
+unpublished drafts in the same format is not verified. If it can, `gleichlaut items` turns two such exports into the item
+file; if not, the item file has to be built from whatever ePL exports, following [`docs/item-schema.json`](item-schema.json):
 
 ```bash
 # last publication vs the month's draft export (only the German changed): pre-publication items, no tgt_new
@@ -494,7 +495,7 @@ make fetch-gguf                                # once: the pinned 8B GGUF into .
 make certify                                   # once: the 8B build certificate into ./state (signed with a key)
 make feeds                                     # published BAG feed dates
 make month ITEMS=sl-team.json                  # pre-publication drafting with the local 8B, --network none
-gleichlaut items --from-fhir OLD-de.ndjson DRAFT.json --out sl-team.json    # items from ePL exports
+gleichlaut items --from-fhir OLD-de.ndjson DRAFT.json --out sl-team.json    # items from FHIR exports (ePL draft export: unverified)
 make month                                     # shadow mode with the local 8B: --from previous --to latest
 make month FROM=20260901 TO=20261001           # shadow mode on a given pair of published feeds
 make certify-endpoint                          # 70B lane: once per endpoint + model, and every 90 days; exit 0 / 5 / 7
