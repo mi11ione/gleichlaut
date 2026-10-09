@@ -1,0 +1,45 @@
+key	label	flag_asrun	flag_guards3	note
+00-fr	stale	False	True	
+00-it	stale	False	True	
+01-fr	german	False	True	
+01-it	german	False	True	
+03-it	german	False	True	
+04-fr	stale	False	True	
+07-fr	stale	False	True	
+07-it	stale	False	True	
+08-fr	german	False	True	
+08-it	german	False	True	
+12-fr	stale	False	True	
+13-fr	equivalent	False	True	rewritten site condition, equivalent
+13-it	REAL	False	True	'centro di categoria A, B o C con i relativi reparti di ematologia o oncologia, o dermatologia': dermatology alone suffices; DE requires derm+med-onc, med-onc or haematology
+15-fr	equivalent	False	False	comma deletion not mirrored
+15-it	german	False	True	'revaskolarizzazione' hybrid
+16-fr	german	False	True	'im face ou sur la tête' (German 'im'; head for scalp)
+16-it	equivalent	False	False	position differs from gold, same meaning
+18-it	german	False	True	
+21-fr	stale	False	True	
+21-it	stale	False	True	
+22-fr	stale	False	True	
+22-it	stale	False	True	
+23-fr	stale	False	True	
+23-it	german	False	True	
+24-fr	stale	False	True	
+24-it	stale	False	True	
+26-fr	stale	False	True	
+26-it	stale	False	True	
+30-fr	stale	False	True	
+31-fr	REAL	False	True	keeps the mHSPC indication sentence the DE replaced; replaces the code sentence with 'Après consultation du médecin traitant' (treating physician, no cost approval)
+31-it	REAL	False	True	same as 31-fr: keeps the mHSPC indication, adds only 'Dopo consultazione del medico di fiducia' (no cost approval)
+32-fr	equivalent	False	False	brand kept in DE spelling (EZETIMIB ATORVASTATIN), gold uses FR spelling
+32-it	stale	False	True	
+33-fr	german	False	True	
+33-it	german	False	True	
+35-fr	equivalent	False	False	'Traitement à l'augmentation' awkward, same meaning
+35-it	REAL	False	False	'Trattamento alla riduzione della densità minerale ossea' = REDUCTION of bone density for 'Erhöhung' (increase)
+36-it	equivalent	False	True	'neurologo' for 'specialista in neurologia'
+40-fr	stale	False	True	
+40-it	stale	False	True	
+44-it	stale	False	True	
+45-it	stale	False	True	
+52-fr	equivalent	False	False	as 32-fr
+52-it	stale	False	True	

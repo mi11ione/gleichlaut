@@ -1,0 +1,60 @@
+arm	key	class	note
+2	00-it	garble	duplicated heading/indication block with truncated fragments; content kept
+2	05-it	garble	code sentence right, whole paragraph duplicated after it
+2	18-it	garble	code sentence right, paragraph fragment duplicated after it
+2	46-it	garble	code sentence right, whole paragraph duplicated after it
+2	26-fr	garble	deletion applied, indication sentence duplicated
+2	57-it	garble	exception applied, sentence duplicated with truncated fragment
+2	16-fr	equivalent	au visage ou sur le cuir chevelu chez l'adulte
+2	16-it	equivalent	nel viso o sul cuoio capelluto negli adulti
+2	56-fr	equivalent	de / transmis vs relatif à / communiqué
+2	57-fr	REAL	drops "un montant déterminé par emballage remis"
+2b	00-fr	german	heading left in German (Biliäres Karzinom)
+2b	00-it	german	heading left in German (Biliäres Karzinom)
+2b	16-fr	german	new face/scalp/adult condition inserted in German
+2b	16-it	german	"im viso" (German preposition)
+2b	33-it	german	"gemäss Referenzdokument Prophylaktische Impfungen" left in German
+2b	40-fr	german	heading left in German (Hepatozelluläres Karzinom)
+2b	40-it	german	heading left in German (Hepatozelluläres Karzinom)
+2b	04-it	stale	keeps "indicato" for DE "vergütet"
+2b	07-it	stale	new indication heading (endometrial dMMR/MSI-H, monotherapy) not added
+2b	12-it	stale	output = old text; keeps the IPF diagnosis requirement the DE deleted
+2b	21-fr	stale	output = old text ("indiqué" for "vergütet")
+2b	24-fr	stale	keeps "indiqué" for "vergütet"
+2b	26-fr	stale	output = old text; keeps the prior-approval requirement the DE deleted
+2b	31-it	stale	keeps the XTANDI indication sentence; new prior-approval requirement missing
+2b	35-fr	stale	output = old text; new men/osteoporosis indication not added
+2b	44-fr	stale	code removed but "le code suivant ... :" kept (dangling)
+2b	21-it	REAL	"viene come terapia sostitutiva": reimbursement predicate dropped
+2b	24-it	REAL	drops the condition "come terapia sostitutiva"
+2b	14-fr	cosmetic	product names in German spelling
+2b	32-fr	cosmetic	product name in German spelling
+2b	52-fr	cosmetic	product name in German spelling
+2b	25-it	equivalent	grammar errors ("Esso vengono", "1 penne"); content matches DE; copies DE typo OMOVH
+2b	01-fr	equivalent	
+2b	01-it	equivalent	
+2b	04-fr	equivalent	
+2b	05-it	equivalent	
+2b	08-fr	equivalent	
+2b	08-it	equivalent	
+2b	10-fr	equivalent	
+2b	12-fr	equivalent	
+2b	13-fr	equivalent	
+2b	13-it	equivalent	
+2b	15-it	equivalent	
+2b	17-fr	equivalent	
+2b	17-it	equivalent	
+2b	18-fr	equivalent	
+2b	18-it	equivalent	
+2b	19-fr	equivalent	
+2b	23-fr	equivalent	
+2b	23-it	equivalent	
+2b	33-fr	equivalent	
+2b	35-it	equivalent	
+2b	36-it	equivalent	
+2b	44-it	equivalent	
+2b	45-it	equivalent	
+2b	46-it	equivalent	
+2b	47-it	equivalent	
+2b	48-it	equivalent	
+2b	57-fr	equivalent	

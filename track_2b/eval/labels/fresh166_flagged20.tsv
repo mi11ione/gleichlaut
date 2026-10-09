@@ -1,0 +1,21 @@
+key	verdict	note
+wb074-fr	good	equivalent
+wb036-it	good	equivalent (G7: 'uniforme')
+wb056-it	good	equivalent (G7: ordinary Italian words absent from the SL corpus)
+wb013-it	bad	German left (Es wird ausschliesslich ..., Folgender Indikationscode ...)
+wb047-fr	bad	REAL: 'et' -> 'ou' not in DE
+wb010-fr	bad	stale + dropped indication sentence
+wb036-fr	good	equivalent
+wb073-fr	good	exact
+wb061-it	good	equivalent (gold also fixes a pre-existing product-name typo)
+wb038-it	good	exact
+wb011-fr	bad	stale: new sentence missing
+wb076-fr	good	equivalent
+wb042-it	good	equivalent (G7: 'oftalmochirurghi')
+wb047-it	good	equivalent (G7: 'oftalmochirurghi')
+wb045-fr	bad	REAL: 'et' -> 'ou', 'mNCVC' -> 'mNVC'
+wb050-it	good	exact
+wb057-fr	bad	stale: old dosage-transmission sentence kept
+wb072-fr	good	exact
+wb004-fr	good	equivalent (awkward 'Suivant code')
+wb060-it	bad	REAL: second 'del trattamento' also changed to 'rimunerazione' (DE changes one)

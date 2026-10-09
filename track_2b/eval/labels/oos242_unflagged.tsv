@@ -1,0 +1,47 @@
+key	class	note
+all012-it	equivalent	typo rivascularizzazione
+all020-fr	equivalent	awkward 'Suivant code d'indication à transmettre'
+all020-it	german	'Folgendo Indikationscode è da trasmettere' (German noun + garbled German 'Folgender')
+all023-fr	german	abbreviations left DE/EN: DME (OMD), RVO (OVR) [abbreviation-only]
+all023-it	german	abbreviation left DE/EN: RVO (OVR) [abbreviation-only]
+all052-fr	cosmetic	ATORVASTATINE vs official ATORVASTATIN
+all055-fr	cosmetic	product names EZETIMIB vs EZETIMIBE, "l'EZETIMIB"
+all057-fr	cosmetic	product name spelling
+all059-fr	cosmetic	product name spelling (re-ask fixed 'remboursé')
+all069-it	equivalent	con eccezione / con Cabozantinib
+all076-fr	cosmetic	product name spelling
+all077-it	REAL	'Prima di prescrivere INEGY è un'altra statina': drops 'provare con' (try another statin first)
+all081-fr	cosmetic	product name spelling (re-ask)
+all085-it	german	'Semaglutid pro settimana' (German drug spelling + 'pro' for 'a settimana')
+all089-fr	cosmetic	product name spelling (re-ask)
+all091-fr	german	heading 'immunothrombozytopénie (ITP)' Germanism spliced into first sentence
+all093-fr	german	same ITP heading pattern
+all095-fr	german	same ITP heading pattern
+all098-fr	german	same ITP heading pattern
+all101-it	equivalent	È da trasmettere il seguente codice d'indicazione
+all102-it	equivalent	same
+all103-fr	equivalent	Pour toutes les indications remboursables
+all104-it	equivalent	same as all101
+all116-it	equivalent	code sentence rewritten
+all117-it	equivalent	same
+all118-it	equivalent	same
+all122-fr	german	same ITP heading pattern
+all128-fr	equivalent	same as all103
+all130-it	equivalent	same as all101
+all131-fr	equivalent	same as all103
+all132-it	equivalent	same as all101
+all133-it	equivalent	same as all101
+all137-it	equivalent	dangling colon after 'alla cassa malati'
+all139-it	equivalent	'codice indicativo'
+all143-it	equivalent	arto superiore e/o inferiore
+all144-fr	equivalent	'code indiquant cette limitation'
+all144-it	equivalent	'codice indicativo'
+all145-fr	minor	'un GLP1-1-analogue' (DE calque/typo carried over)
+all145-it	minor	'un GLP1-1-analogo'
+all153-fr	equivalent	'code indiquant'
+all153-it	equivalent	'codice indicativo'
+all158-it	equivalent	code sentence
+all160-it	equivalent	code sentence
+all161-it	german	'dermatologi-sche', 'me-thotrexato' (DE hyphenation artefact + German suffix imported)
+all166-fr	equivalent	'code indiquant'
+all166-it	equivalent	'codice indicativo'

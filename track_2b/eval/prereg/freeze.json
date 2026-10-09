@@ -1,0 +1,120 @@
+{
+ "note": "sha256 of the frozen code, guard resources and test items. research_freeze = the hash in the 9 Oct 2026 freeze record written before any fresh-set output existed (null: vendored later for provenance, unchanged since).",
+ "files": [
+  {
+   "path": "src/gleichlaut/frozen/g3/guards3.py",
+   "sha256": "113aa7a12d6c9406bbac193d7b5946dd6d7ae56e805a5fbc03f3fbd467f6fdfd",
+   "research_freeze": "113aa7a12d6c9406bbac193d7b5946dd6d7ae56e805a5fbc03f3fbd467f6fdfd"
+  },
+  {
+   "path": "src/gleichlaut/frozen/g3/whitelist_fr.json",
+   "sha256": "ea60777e147b2cc847d7ffe058496685e9474a292a8fa99a170e89386f7bc425",
+   "research_freeze": "ea60777e147b2cc847d7ffe058496685e9474a292a8fa99a170e89386f7bc425"
+  },
+  {
+   "path": "src/gleichlaut/frozen/g3/whitelist_it.json",
+   "sha256": "8160299dedf70fdcdffa336329568298edcd362cfcb62cabf962ac69b6167e5f",
+   "research_freeze": "8160299dedf70fdcdffa336329568298edcd362cfcb62cabf962ac69b6167e5f"
+  },
+  {
+   "path": "src/gleichlaut/frozen/g3/vocab_fr.json",
+   "sha256": "869f28c6caaf5d7cbb70f07ea601f4c0df0a697d76c4001aed29b7e6d1da5e72",
+   "research_freeze": "869f28c6caaf5d7cbb70f07ea601f4c0df0a697d76c4001aed29b7e6d1da5e72"
+  },
+  {
+   "path": "src/gleichlaut/frozen/g3/vocab_it.json",
+   "sha256": "8286a7ef52d379a868a2ea3d869d5e89e2b6275ed274c43181e88d559cec1c2d",
+   "research_freeze": "8286a7ef52d379a868a2ea3d869d5e89e2b6275ed274c43181e88d559cec1c2d"
+  },
+  {
+   "path": "src/gleichlaut/frozen/g3/terms_fr.json",
+   "sha256": "4ee58c230d0c03f5d8753f33e9aabacb96dbf74b37ac2291a3e79b602c3ec993",
+   "research_freeze": "4ee58c230d0c03f5d8753f33e9aabacb96dbf74b37ac2291a3e79b602c3ec993"
+  },
+  {
+   "path": "src/gleichlaut/frozen/g3/terms_it.json",
+   "sha256": "cad76b00259a70cbf8469a8ee0a1b43e1d4799d29db954fccafa5e7002a38a57",
+   "research_freeze": "cad76b00259a70cbf8469a8ee0a1b43e1d4799d29db954fccafa5e7002a38a57"
+  },
+  {
+   "path": "src/gleichlaut/frozen/gl/guards.py",
+   "sha256": "d0d1e0d47e3828bf127e05572e055391a6eba9f9e89108b4c09e67a7fd1524f0",
+   "research_freeze": "d0d1e0d47e3828bf127e05572e055391a6eba9f9e89108b4c09e67a7fd1524f0"
+  },
+  {
+   "path": "src/gleichlaut/frozen/gl/gl70.py",
+   "sha256": "f2a207787b2ee024f67959ba5ba3001c7da44907effc50ec3e1d5fa8940ad3b8",
+   "research_freeze": "f2a207787b2ee024f67959ba5ba3001c7da44907effc50ec3e1d5fa8940ad3b8"
+  },
+  {
+   "path": "src/gleichlaut/frozen/gl/reask.py",
+   "sha256": "5b30a30a170117a9cc27baaeb6cf04395bf097c3475cb00d1db4e68286f84920",
+   "research_freeze": "5b30a30a170117a9cc27baaeb6cf04395bf097c3475cb00d1db4e68286f84920"
+  },
+  {
+   "path": "src/gleichlaut/frozen/run_v2.py",
+   "sha256": "d5460bba8d10ed5d47c78941b7035631e4f8e0572845a6d984d698afb22139ab",
+   "research_freeze": "d5460bba8d10ed5d47c78941b7035631e4f8e0572845a6d984d698afb22139ab"
+  },
+  {
+   "path": "data/items/items_fresh.json",
+   "sha256": "157ca97a6ccf207e3f570e66a79b4da543cab69f3bb88b01da5bc741a5df9b02",
+   "research_freeze": "157ca97a6ccf207e3f570e66a79b4da543cab69f3bb88b01da5bc741a5df9b02"
+  },
+  {
+   "path": "src/gleichlaut/frozen/common.py",
+   "sha256": "0ae44b4e6ba6e7fecc2d36d671a4afd5c7c6e5a60a062521339c63bdeac7c753",
+   "research_freeze": "0ae44b4e6ba6e7fecc2d36d671a4afd5c7c6e5a60a062521339c63bdeac7c753"
+  },
+  {
+   "path": "src/gleichlaut/frozen/s2/lock.py",
+   "sha256": "1409b2ad5f5acc68bc9ace45620f86131681ec6e33d9d30d62b3ad0141f9c29f",
+   "research_freeze": "1409b2ad5f5acc68bc9ace45620f86131681ec6e33d9d30d62b3ad0141f9c29f"
+  },
+  {
+   "path": "src/gleichlaut/frozen/s2/gl2.py",
+   "sha256": "08aefe04a102e13fe7d37fad2b05a47b23a96b8952a35b7e0341bba47d2f297c",
+   "research_freeze": "08aefe04a102e13fe7d37fad2b05a47b23a96b8952a35b7e0341bba47d2f297c"
+  },
+  {
+   "path": "src/gleichlaut/frozen/s2/s2b.py",
+   "sha256": "8bc92bcbcdea6dc3b1a41294b2e7600fdb123cfcf1494cdbf88d08ff14d0149d",
+   "research_freeze": null
+  },
+  {
+   "path": "src/gleichlaut/frozen/s2/s2.py",
+   "sha256": "fe911bbff2e9ca9b6cdeca7bbc1e4629f46b97903d6079b08ee35376c8e488f2",
+   "research_freeze": null
+  },
+  {
+   "path": "src/gleichlaut/frozen/s2/score2.py",
+   "sha256": "12c92967ea277a9b9e2e0043071305f8f08ed5a47fa3488825a709cf96ba9780",
+   "research_freeze": null
+  },
+  {
+   "path": "src/gleichlaut/frozen/g3/build_resources.py",
+   "sha256": "078209492aa86e9de41d14d7993747037e6cfb2009ad79b20eca892e1f45771f",
+   "research_freeze": null
+  },
+  {
+   "path": "src/gleichlaut/frozen/score_fresh.py",
+   "sha256": "a0e4d0622605bb8ae3b920e20f31fe78985f3e263bc29c7d8c028d545c54cf6a",
+   "research_freeze": null
+  },
+  {
+   "path": "src/gleichlaut/frozen/build_fresh.py",
+   "sha256": "b0f353c6c429055ff0eac517ea205e4842215e98e6e2ee31c90692076826d59d",
+   "research_freeze": null
+  },
+  {
+   "path": "data/items/items_oos.json",
+   "sha256": "2a2bfd7fa7c15c682add61b8d6c8e306a6ee5568132bdf637194526f4b552937",
+   "research_freeze": null
+  },
+  {
+   "path": "data/items/items_dev.json",
+   "sha256": "e62e53338870be39e2a3a1bea6ad8e12a8a798436bdc6d77f2e7d651a45b266e",
+   "research_freeze": null
+  }
+ ]
+}

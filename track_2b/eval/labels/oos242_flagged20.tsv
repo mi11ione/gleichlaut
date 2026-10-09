@@ -1,0 +1,21 @@
+key	verdict	note
+all089-it	good	viene rimborsato (equivalent)
+all164-it	good	code sentence replaces refund paragraph as in gold
+all073-fr	bad	stale: output = old text
+all121-fr	bad	stale heading + 'doit' -> 'devrait' (modal flip from DE OCR typo soIIte)
+all046-fr	bad	stale/mixed: old indication + dosage kept
+all087-fr	bad	German left (Asthma, Folgender Code ...) + deleted sentence kept
+all175-fr	bad	abbreviations PID ScS -> SSc ILD (EN/DE)
+all094-it	bad	stale: ITP heading not added
+all053-it	bad	simvastatina -> SIMVASTATIN, 'volte a' -> 'x pro'
+all103-it	bad	stale: output = old text
+all122-it	bad	heading missing + '- dar - stellt' German fragment
+all114-it	good	equivalent
+all147-it	good	equivalent
+all165-it	good	equivalent
+all018-fr	good	exact
+all174-fr	good	exact
+all165-fr	good	equivalent
+all151-it	bad	stale: heading + code change missing
+all163-fr	bad	REAL: deletes the code-transmission sentence the DE keeps
+all158-fr	good	equivalent
