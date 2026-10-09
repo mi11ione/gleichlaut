@@ -1,0 +1,28 @@
+{
+  "name" : "ch.fhir.ig.ch-epl",
+  "version" : "1.0.1",
+  "tools-version" : 3,
+  "type" : "IG",
+  "date" : "20260407140925",
+  "license" : "CC0-1.0",
+  "canonical" : "http://fhir.ch/ig/ch-epl",
+  "url" : "http://fhir.ch/ig/ch-epl/1.0.1",
+  "title" : "CH EPL (R5)",
+  "description" : "Implementation Guide CH EPL (R5) (built Tue, Apr 7, 2026 14:09+0000+00:00)",
+  "fhirVersions" : ["5.0.0"],
+  "dependencies" : {
+    "hl7.fhir.uv.extensions.r5" : "5.2.0",
+    "hl7.terminology.r5" : "7.1.0",
+    "hl7.fhir.uv.tools.r5" : "1.1.2"
+  },
+  "author" : "Federal Office of Public Health FOPH",
+  "maintainers" : [{
+    "name" : "Federal Office of Public Health FOPH",
+    "url" : "https://www.bag.admin.ch/bag/en/home/das-bag/kontakt-standort.html"
+  }],
+  "directories" : {
+    "lib" : "package",
+    "example" : "example"
+  },
+  "jurisdiction" : "urn:iso:std:iso:3166#CH"
+}

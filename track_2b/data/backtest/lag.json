@@ -1,0 +1,4716 @@
+{
+ "generated_by": "PYTHONPATH=src python3 -m gleichlaut.backtest --hist <2026 snapshot dir> --wb2025 <2025 XML dir>",
+ "inputs": {
+  "hist": "~/Desktop/hackapertus/spikes/gleichlaut/data/hist",
+  "wb2025": "~/Desktop/hackapertus/spikes/gleichlaut/data/wb2025",
+  "sha256": {
+   "20260219-de.json": "021ca69d2ad02b3583fc1e758d3a2937ae17b616e48f584c4e769960210ac2ec",
+   "20260219-fr.json": "d68736d183e9ad2f13ae12c0fd9dc7c05ab10ec3fae618e3454eaf7dd9ca7dc1",
+   "20260219-it.json": "059820d549fa27c4fd3a83bc0d13ca6a50d44b4354d9399191db1d72214bde2c",
+   "20260304-de.json": "f26d737d60a22df6ce62535385cf532ce987ce7d36dfdec570e2d209c177c216",
+   "20260304-fr.json": "c7d8ef2c63e97913a6f800684516a69a5bcc44e51eead33251b5d0bbc98012be",
+   "20260304-it.json": "f86c95a5a307227900e9c7326c6361ec39fe0e05239ba70fc2039e30eda1de2e",
+   "20260401-de.json": "b248dd15b6c719e684a17c8fd9ece602167463e3a99907a6992ab9bb77fea9d8",
+   "20260401-fr.json": "09e37b909c9c381526dfa041aa69de9961f2509680a0cdf91c05f61691851638",
+   "20260401-it.json": "af17e911e77851af6bdd1f9a7ad4f9e0fe4c1007c63342eae879baab26c8bd65",
+   "20260601-de.json": "8d848fde50c161d311bbbe6863d02aed952a9563cc5f4002d5bc49e4a344138b",
+   "20260601-fr.json": "d24792364d2c242c936d1279d01dae30e2af388c063925f65786e5c3f5d7dc85",
+   "20260601-it.json": "39e24d30a973402bd1dee8f4f9f1edd30442cbcda32a6f87cf23d754ab02b038",
+   "20260701-de.json": "d9baed7cbb6764bdcc6d68be0597e5385a256449b28c94057d3ea6e1627cf54e",
+   "20260701-fr.json": "6dfcfa8365d4e4bc7bb5b663a23e7ad68185db09a84062f2107e824c0e9b4f67",
+   "20260701-it.json": "feb7d9b7958434b6853881b39048fc2f9ec191edf5d42a3c2cb933fbc3dc4d94",
+   "20260801-de.json": "bfa816190ae751928c3bafa72c3b56028e76e905adfc348db0524f858d8e956a",
+   "20260801-fr.json": "057c10668c747e3ae639ac9192f15b3e9d0e692308a79cb8ae6ffef8e093324a",
+   "20260801-it.json": "ff803bb908e89171b32e30ebf28bfa6eba9295997fd785b8266dec5d5fc9e902",
+   "20260901-de.json": "6eba62334ff9512e5aeff408f29beea3fcd2c2044742b9ea8e62abe5e9308146",
+   "20260901-fr.json": "fc49abb0d52eca7b329e1dd22ebe09fb6a5f483d1b6efbf8d2f01ad0953d54fb",
+   "20260901-it.json": "9f97c6ddcacb4e58081609b630ae2355860602d9ed70c7b21d2ff606f70ff608",
+   "20261001-de.json": "64edb3b2452a1f98fd441782668b86483664dfd11b8074d9b1659c35c46a23dc",
+   "20261001-fr.json": "978719d98ca3972d8028bf10e645d2d0b06cd2ee22e1e008ccc5d9d13744c950",
+   "20261001-it.json": "ea41aade846e1f7ca6be7b8baaa41ffd6d08e69879c50c4d8af61e38a1cce919",
+   "20261006-de.json": "fe5e60f1931a6b345ae4687f9affbf1b05efa14263d20c16f410d3260228cc68",
+   "20261006-fr.json": "4d10dd047bdfd65a3bff5aca361706f2d3901c7872c6c9179948ede2f9477a54",
+   "20261006-it.json": "bcd86c674898d32f52b034674f54c67c2dac7cb893afc941e86da0642e1cd577",
+   "20250611/Preparations.xml": "ab071ebad1d502d6a80131e7c08963ed6681529d4e0c81ed46f046e883370f2f",
+   "20250731/Preparations.xml": "102f691db6cc465c926db6c12e5510b586cdd799d75125f3f1c7a4344bb5352c"
+  }
+ },
+ "prereg": "eval/prereg/PREREG.md R3",
+ "snapshots": [
+  "20260219",
+  "20260304",
+  "20260401",
+  "20260601",
+  "20260701",
+  "20260801",
+  "20260901",
+  "20261001",
+  "20261006"
+ ],
+ "excluded": {
+  "20260504": "publisher bug: drops every '<...>' span (restored in June)"
+ },
+ "wb2025": [
+  "20250601",
+  "20250701"
+ ],
+ "model_calls": 0,
+ "vision_figures_check": {
+  "steps": 8,
+  "snapshots": [
+   "20260219",
+   "20260304",
+   "20260401",
+   "20260601",
+   "20260701",
+   "20260801",
+   "20260901",
+   "20261001",
+   "20261006"
+  ],
+  "span_days": 229,
+  "span_months": 7.52,
+  "note_steps": "8 transitions between 9 usable snapshots; 6 are ~1 month, 01.04>01.06 is 2 months (May excluded) and 01.10>06.10 is 5 days. '7 monthly steps' is the 7-month denominator, not the number of steps.",
+  "distinct_draft_pairs": 216,
+  "distinct_draft_pairs_per_month": 28.7,
+  "quoted_31_per_month_is": "216/7 = 30.9",
+  "over60_matched_occurrences": 97,
+  "over60_distinct_text_pairs": 27,
+  "over60_by_step": [
+   {
+    "step": "20260219>20260304",
+    "occurrences": 1
+   },
+   {
+    "step": "20260304>20260401",
+    "occurrences": 0
+   },
+   {
+    "step": "20260401>20260601",
+    "occurrences": 8
+   },
+   {
+    "step": "20260601>20260701",
+    "occurrences": 72
+   },
+   {
+    "step": "20260701>20260801",
+    "occurrences": 2
+   },
+   {
+    "step": "20260801>20260901",
+    "occurrences": 10
+   },
+   {
+    "step": "20260901>20261001",
+    "occurrences": 4
+   },
+   {
+    "step": "20261001>20261006",
+    "occurrences": 0
+   }
+  ],
+  "quoted_14_per_month_is": "97/7 = 13.9: matched product occurrences, not distinct rewrites (distinct: 27, i.e. 3.6/month)"
+ },
+ "summary": {
+  "draft": {
+   "units": 216,
+   "occurrences": 489,
+   "fr": {
+    "status": {
+     "never": 4,
+     "same_step": 212
+    },
+    "lagged_steps_to_fix": {},
+    "lagged_days_to_fix": [],
+    "lagged_months_to_fix": {},
+    "lagged_with_de_change_at_fix_step": 0,
+    "never_reason": {
+     "window_end": 4
+    },
+    "occurrence_disagreements": 0
+   },
+   "it": {
+    "status": {
+     "never": 8,
+     "same_step": 208
+    },
+    "lagged_steps_to_fix": {},
+    "lagged_days_to_fix": [],
+    "lagged_months_to_fix": {},
+    "lagged_with_de_change_at_fix_step": 0,
+    "never_reason": {
+     "window_end": 8
+    },
+    "occurrence_disagreements": 0
+   },
+   "fr_and_it": {
+    "never": 4,
+    "never+same_step": 4,
+    "same_step": 208
+   }
+  },
+  "human": {
+   "units": 27,
+   "occurrences": 97,
+   "fr": {
+    "status": {
+     "lt_bug": 1,
+     "same_step": 26
+    },
+    "lagged_steps_to_fix": {},
+    "lagged_days_to_fix": [],
+    "lagged_months_to_fix": {},
+    "lagged_with_de_change_at_fix_step": 0,
+    "never_reason": {},
+    "occurrence_disagreements": 0
+   },
+   "it": {
+    "status": {
+     "lt_bug": 1,
+     "same_step": 26
+    },
+    "lagged_steps_to_fix": {},
+    "lagged_days_to_fix": [],
+    "lagged_months_to_fix": {},
+    "lagged_with_de_change_at_fix_step": 0,
+    "never_reason": {},
+    "occurrence_disagreements": 0
+   },
+   "fr_and_it": {
+    "lt_bug": 1,
+    "same_step": 26
+   }
+  }
+ },
+ "per_step": [
+  {
+   "step": "20260219>20260304",
+   "days": 13,
+   "draft": {
+    "units": 13,
+    "fr": {
+     "never": 1,
+     "same_step": 12
+    },
+    "it": {
+     "never": 1,
+     "same_step": 12
+    }
+   },
+   "human": {
+    "units": 1,
+    "fr": {
+     "same_step": 1
+    },
+    "it": {
+     "same_step": 1
+    }
+   }
+  },
+  {
+   "step": "20260304>20260401",
+   "days": 28,
+   "draft": {
+    "units": 10,
+    "fr": {
+     "same_step": 10
+    },
+    "it": {
+     "same_step": 10
+    }
+   },
+   "human": {
+    "units": 0,
+    "fr": {},
+    "it": {}
+   }
+  },
+  {
+   "step": "20260401>20260601",
+   "days": 61,
+   "draft": {
+    "units": 41,
+    "fr": {
+     "same_step": 41
+    },
+    "it": {
+     "never": 3,
+     "same_step": 38
+    }
+   },
+   "human": {
+    "units": 3,
+    "fr": {
+     "lt_bug": 1,
+     "same_step": 2
+    },
+    "it": {
+     "lt_bug": 1,
+     "same_step": 2
+    }
+   }
+  },
+  {
+   "step": "20260601>20260701",
+   "days": 30,
+   "draft": {
+    "units": 49,
+    "fr": {
+     "same_step": 49
+    },
+    "it": {
+     "same_step": 49
+    }
+   },
+   "human": {
+    "units": 15,
+    "fr": {
+     "same_step": 15
+    },
+    "it": {
+     "same_step": 15
+    }
+   }
+  },
+  {
+   "step": "20260701>20260801",
+   "days": 31,
+   "draft": {
+    "units": 51,
+    "fr": {
+     "same_step": 51
+    },
+    "it": {
+     "same_step": 51
+    }
+   },
+   "human": {
+    "units": 1,
+    "fr": {
+     "same_step": 1
+    },
+    "it": {
+     "same_step": 1
+    }
+   }
+  },
+  {
+   "step": "20260801>20260901",
+   "days": 31,
+   "draft": {
+    "units": 14,
+    "fr": {
+     "never": 2,
+     "same_step": 12
+    },
+    "it": {
+     "never": 2,
+     "same_step": 12
+    }
+   },
+   "human": {
+    "units": 5,
+    "fr": {
+     "same_step": 5
+    },
+    "it": {
+     "same_step": 5
+    }
+   }
+  },
+  {
+   "step": "20260901>20261001",
+   "days": 30,
+   "draft": {
+    "units": 24,
+    "fr": {
+     "never": 1,
+     "same_step": 23
+    },
+    "it": {
+     "never": 2,
+     "same_step": 22
+    }
+   },
+   "human": {
+    "units": 2,
+    "fr": {
+     "same_step": 2
+    },
+    "it": {
+     "same_step": 2
+    }
+   }
+  },
+  {
+   "step": "20261001>20261006",
+   "days": 5,
+   "draft": {
+    "units": 14,
+    "fr": {
+     "same_step": 14
+    },
+    "it": {
+     "same_step": 14
+    }
+   },
+   "human": {
+    "units": 0,
+    "fr": {},
+    "it": {}
+   }
+  }
+ ],
+ "draft_not_same_step": [
+  {
+   "step": "20260219>20260304",
+   "keys": [
+    "RA:6809e860-1d26-440d-92ea-f48cd0cbd23f#0>RA:02bf73b8-a9a2-4dc4-99f4-0929e6d83c8c#0",
+    "RA:d6723567-d449-44ec-8d00-9914f4572fb2#0>RA:77d97c83-d86c-4565-9ecf-62365309bbd2#0"
+   ],
+   "product": "Fasenra Inj Lös 30 mg",
+   "fr": {
+    "status": "never",
+    "reason": "window_end",
+    "later_seen": 7
+   },
+   "it": {
+    "status": "never",
+    "reason": "window_end",
+    "later_seen": 7
+   },
+   "de_edit": "- delete «•»"
+  },
+  {
+   "step": "20260401>20260601",
+   "keys": [
+    "RA:6dbd78dc-bb03-474a-a21c-468729160e13#1>TRUXIMA.01",
+    "RA:8d6107aa-d4f8-4202-bdd2-1c2b45509f8a#1>TRUXIMA.01"
+   ],
+   "product": "Truxima Inf Konz 100 mg/10 ml",
+   "fr": {
+    "status": "same_step"
+   },
+   "it": {
+    "status": "never",
+    "reason": "window_end",
+    "later_seen": 5
+   },
+   "de_edit": "- replace «follikuläremN on» with «follikulärem Non»\n- replace «posftivem» with «positivem»"
+  },
+  {
+   "step": "20260401>20260601",
+   "keys": [
+    "RA:5809b2bc-d16e-42fa-b089-bb29f341c6ea#1>RUXIENCE.01",
+    "RA:cd6bdc61-a7aa-4d9b-b739-182c335cc1e0#1>RUXIENCE.01"
+   ],
+   "product": "Ruxience Inf Konz 100 mg/10 ml",
+   "fr": {
+    "status": "same_step"
+   },
+   "it": {
+    "status": "never",
+    "reason": "window_end",
+    "later_seen": 5
+   },
+   "de_edit": "- replace «follikuläremN on» with «follikulärem Non»"
+  },
+  {
+   "step": "20260401>20260601",
+   "keys": [
+    "RA:78dc5eed-6b1a-4184-9400-c977c82b6364#1>RIXATHON.01",
+    "RA:d8921458-0b30-423c-950f-c6b73678f81b#1>RIXATHON.01"
+   ],
+   "product": "Rixathon Inf Konz 500 mg/50ml",
+   "fr": {
+    "status": "same_step"
+   },
+   "it": {
+    "status": "never",
+    "reason": "window_end",
+    "later_seen": 5
+   },
+   "de_edit": "- replace «follikuläremN on» with «follikulärem Non»\n- replace «posftivem» with «positivem»"
+  },
+  {
+   "step": "20260801>20260901",
+   "keys": [
+    "TEZSPIREF.02>TEZSPIREFa.02---CRSwNP"
+   ],
+   "product": "Tezspire Inj Lös 210 mg/1.91 ml Fertspr",
+   "fr": {
+    "status": "never",
+    "reason": "window_end",
+    "later_seen": 2
+   },
+   "it": {
+    "status": "never",
+    "reason": "window_end",
+    "later_seen": 2
+   },
+   "de_edit": "- replace «onasale» with «o nasale»\n- replace «omindestens» with «o mindestens»\n- replace «o» with «•»"
+  },
+  {
+   "step": "20260801>20260901",
+   "keys": [
+    "TEZSPIREP.02>TEZSPIREPa.02---CRSwNP"
+   ],
+   "product": "Tezspire Inj Lös 210 mg/1.91 ml Fertpen",
+   "fr": {
+    "status": "never",
+    "reason": "window_end",
+    "later_seen": 2
+   },
+   "it": {
+    "status": "never",
+    "reason": "window_end",
+    "later_seen": 2
+   },
+   "de_edit": "- replace «o» with «•»"
+  },
+  {
+   "step": "20260901>20261001",
+   "keys": [
+    "ROSUVASTAX-DROSSAPHARM.01>ROSUVASTAX-DROSSAPHARM.01"
+   ],
+   "product": "Rosuvastax-Drossapharm Filmtabl 20 mg",
+   "fr": {
+    "status": "never",
+    "reason": "window_end",
+    "later_seen": 1
+   },
+   "it": {
+    "status": "never",
+    "reason": "window_end",
+    "later_seen": 1
+   },
+   "de_edit": "- replace «Primärprä - vention» with «Primärprävention»"
+  },
+  {
+   "step": "20260901>20261001",
+   "keys": [
+    "OPDIVO.10---RCC-Nierenzellkarzinom>OPDIVO.10---RCC-Nierenzellkarzinom"
+   ],
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "fr": {
+    "status": "same_step"
+   },
+   "it": {
+    "status": "never",
+    "reason": "window_end",
+    "later_seen": 1
+   },
+   "de_edit": "- insert «)» after «Nierenzellkarzinom ( RCC»"
+  }
+ ],
+ "rows": {
+  "draft": [
+   {
+    "step": "20260219>20260304",
+    "ratio": 0.591,
+    "keys": [
+     "RA:da53bea9-cd43-4a1c-ac3d-d01ea446567d#1>RA:ccda4a51-6f9b-4c9b-b17e-2cd7d0c068e1#4"
+    ],
+    "product": "Blincyto Trockensub",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260219>20260304",
+    "ratio": 0.282,
+    "keys": [
+     "RA:da53bea9-cd43-4a1c-ac3d-d01ea446567d#2>RA:ccda4a51-6f9b-4c9b-b17e-2cd7d0c068e1#3"
+    ],
+    "product": "Blincyto Trockensub",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260219>20260304",
+    "ratio": 0.277,
+    "keys": [
+     "RA:014498df-e7f7-477b-bf11-2ec3f65593dc#3>RA:ac17e175-d340-49d0-a7a7-cccc8b8d50ed#4",
+     "RA:c1b139d3-ab43-4982-8850-d83feed2c2e7#3>RA:474ad1c2-5756-4aac-a5ec-b4c09dcf358e#4",
+     "RA:e27b0709-e197-4bb2-bc10-3011cb020193#3>RA:4bb595f1-4a98-4d4a-90e6-4edad65cc2b0#4"
+    ],
+    "product": "Verzenios Filmtabl 150 mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260219>20260304",
+    "ratio": 0.122,
+    "keys": [
+     "RA:5a011748-9502-4204-8e4a-0ef573e6fde0#0>RA:17c38a1e-44f1-4b0b-9ecf-8b02eaa80635#0"
+    ],
+    "product": "Jemperli Inf Konz 500 mg/10ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260219>20260304",
+    "ratio": 0.086,
+    "keys": [
+     "RA:9a1027db-da1e-42de-b9d5-495f9f51b4a4#0>RA:ede1dfd7-0130-4857-a66a-6ed49cd204e9#0"
+    ],
+    "product": "Myozyme Trockensub 50 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260219>20260304",
+    "ratio": 0.085,
+    "keys": [
+     "RA:6d40f32e-4279-4992-a644-5ee477841c1f#0>RA:28d030d6-8ac0-4304-9cdf-f0737d5b9f7a#0"
+    ],
+    "product": "Nexviadyme Trockensub 100 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260219>20260304",
+    "ratio": 0.066,
+    "keys": [
+     "RA:06bebe1d-1cca-4c4f-83a1-da580e14dd54#0>RA:893f71f4-577d-4ef7-8de9-ae7fc2798951#0",
+     "RA:9b9a1df0-65fb-41a8-8ead-83cd5f3bec50#0>RA:0c53aa5f-e798-48f2-bad8-b81dde9b0ef6#0"
+    ],
+    "product": "Opfolda Kaps 65 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260219>20260304",
+    "ratio": 0.017,
+    "keys": [
+     "RA:1340cc8e-98e0-46a2-96ce-eba7a504ebc0#0>RA:67186bc7-96a5-4cc7-90bc-da03e8c9f0cb#0"
+    ],
+    "product": "Rivaroxaban-Mepha vascular Filmtabl 2.5 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260219>20260304",
+    "ratio": 0.137,
+    "keys": [
+     "RA:cd74d3f8-46ae-42ee-a325-ea029ebe8d18#0>RA:71f69c46-380c-40b1-a7d4-407c2efdcc5e#0"
+    ],
+    "product": "Leqvio Inj Lös 284 mg/1.5ml Fertspr m Nadelschutz",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260219>20260304",
+    "ratio": 0.003,
+    "keys": [
+     "RA:6809e860-1d26-440d-92ea-f48cd0cbd23f#0>RA:02bf73b8-a9a2-4dc4-99f4-0929e6d83c8c#0",
+     "RA:d6723567-d449-44ec-8d00-9914f4572fb2#0>RA:77d97c83-d86c-4565-9ecf-62365309bbd2#0"
+    ],
+    "product": "Fasenra Inj Lös 30 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "never",
+     "reason": "window_end",
+     "later_seen": 7
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "never",
+     "reason": "window_end",
+     "later_seen": 7
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260219>20260304",
+    "ratio": 0.135,
+    "keys": [
+     "RA:222df1b3-d3ee-4ff4-ba01-64f151a399f1#0>RA:05e081f6-b780-4975-ac33-b28ef3bbab27#0",
+     "RA:e5e70e9b-3df3-47dd-ad9b-cfd3917c97d1#0>RA:acbfe488-fd2a-4318-a36d-83b9b2b24074#0"
+    ],
+    "product": "Praluent Inj Lös 150 mg/ml Fertigpen",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260219>20260304",
+    "ratio": 0.134,
+    "keys": [
+     "RA:87ba18ac-5fdf-4997-9985-27b0bfb0f439#0>RA:b44b7de2-69b3-4b93-9dbf-4430905d7e4e#0"
+    ],
+    "product": "Repatha Inj Lös 140 mg/ml Pen",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260219>20260304",
+    "ratio": 0.4,
+    "keys": [
+     "RA:af695630-53b5-4380-830b-8c64a226006b#0>RA:fd2124cf-f42a-4fc2-82ed-6dfdd87bcf51#0"
+    ],
+    "product": "Ameluz Gel 78 mg/g",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260304>20260401",
+    "ratio": 0.008,
+    "keys": [
+     "RA:526824a5-cc04-489c-bbf5-0538b152eba8#0>RA:318e9c93-fdb7-49e2-aa30-7609dfd9c567#0"
+    ],
+    "product": "Amvuttra Inj Lös 25 mg/0.5 ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260304>20260401",
+    "ratio": 0.004,
+    "keys": [
+     "RA:7e6cfaa0-939b-4576-b649-17fb85fc0a03#0>RA:a63c9ff9-ba00-4f39-867d-9c18dfac86cc#0"
+    ],
+    "product": "Wainzua Inj Lös 45 mg / 0.8 ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260304>20260401",
+    "ratio": 0.516,
+    "keys": [
+     "RA:019b70f0-fcad-4119-b0ed-6a62d043d9df#0>RA:70435757-7d99-49e6-b98e-7bdd02516ccb#0",
+     "RA:1f95cca6-a678-4d82-be95-8afcaa4a11ac#0>RA:843b195b-5316-4fcf-b6fd-0c38d697ebae#0",
+     "RA:2f497aa8-edfb-4092-9373-1cc460cb84f0#0>RA:109f5455-ceff-40d7-a18d-045609c7c327#0",
+     "RA:4f18b485-e1ff-4e55-a554-73c7bdd237a6#0>RA:6e7e024e-b76e-4f13-9c49-bf61e1aaa36e#0"
+    ],
+    "product": "Concerta Tabl 54 mg",
+    "n_occ": 16,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260304>20260401",
+    "ratio": 0.435,
+    "keys": [
+     "RA:2704b0b3-dca5-44bf-9eeb-3bf0eec7d5f8#0>RA:7ba9603b-96c3-46a4-9242-c51471b83ed3#0",
+     "RA:7be032a3-65a9-4bec-bc91-8b62d2a8c08c#0>RA:d53d40c7-6397-48f1-ac3d-2b66d1505d92#0",
+     "RA:ad70fadc-b8a7-49ba-ab3e-ac8b328a97f1#0>RA:6b9125c6-2e32-4356-81a5-139fb1d1bed5#0",
+     "RA:c00f1af6-11e4-434a-8f89-1d38ce94b119#0>RA:bd9af265-14e7-4e37-a753-092f12a9c07b#0"
+    ],
+    "product": "Methylphenidat Sandoz Ret Tabl 54 mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260304>20260401",
+    "ratio": 0.017,
+    "keys": [
+     "RA:e7bacbca-a095-4a4b-ac2c-78b6b58d347b#0>RA:127bf465-0cfa-4edf-8dd8-61df255ac2ca#0"
+    ],
+    "product": "Rivaroxaban Sandoz vascular Filmtabl 2.5 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260304>20260401",
+    "ratio": 0.109,
+    "keys": [
+     "RA:ff8b9e56-67fc-45d5-a3ff-f1062af2a577#2>RA:e4324d33-5329-4367-b096-43c5570979c7#4"
+    ],
+    "product": "Libtayo Inf Konz 350 mg/7 ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260304>20260401",
+    "ratio": 0.185,
+    "keys": [
+     "RA:22e29cdd-b8d4-461b-8399-d31d9416e600#0>RA:88e81405-26e9-449c-88f3-6884cd69afcd#0"
+    ],
+    "product": "Dacepton Inf Lös 100 mg/20 ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260304>20260401",
+    "ratio": 0.353,
+    "keys": [
+     "RA:482b3095-fb05-4966-9835-8c64f53e9849#0>RA:a52e26f4-2392-406b-94f8-cbe2e4186aaf#0"
+    ],
+    "product": "Mictonorm 45 mg Ret Kaps 45 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260304>20260401",
+    "ratio": 0.114,
+    "keys": [
+     "RA:ff8b9e56-67fc-45d5-a3ff-f1062af2a577#1>RA:e4324d33-5329-4367-b096-43c5570979c7#1"
+    ],
+    "product": "Libtayo Inf Konz 350 mg/7 ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260304>20260401",
+    "ratio": 0.082,
+    "keys": [
+     "RA:ce8ee341-d7a3-4577-92c3-702f0e886ecc#0>RA:091abddf-0f46-46e8-9e05-e75f5d97d91b#0"
+    ],
+    "product": "Vyndaqel Kaps 61 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.008,
+    "keys": [
+     "RA:2ce72dea-691c-41fe-88fb-ce75b0513ee8#2>TALTZ.03c"
+    ],
+    "product": "Taltz Inj Lös 80 mg/ml Fertigspritze",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.017,
+    "keys": [
+     "RA:9bc838c0-5e0b-43b8-b027-52bef112cc1a#2>TALTZ.03d"
+    ],
+    "product": "Taltz Inj Lös 80 mg/ml Fertigpen",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.012,
+    "keys": [
+     "RA:40c4312c-5282-4695-8224-2cea09c674e7#1>BIMZELX.03c",
+     "RA:b7f16604-0699-4ca6-bc3b-9bc4b0f02200#2>BIMZELX.03c"
+    ],
+    "product": "Bimzelx Inj Lös 160 mg/1ml Fertspr (Einzelpackung)",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.012,
+    "keys": [
+     "RA:176d78bc-5ca4-4d01-986d-7a0ed6681a21#1>BIMZELX.03b",
+     "RA:a4143a0a-6beb-441d-9320-5a34ec720227#2>BIMZELX.03b"
+    ],
+    "product": "Bimzelx Inj Lös 160 mg/1ml Fertpen (Einzelpackung)",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.002,
+    "keys": [
+     "RA:b5a385b2-afb9-4721-90b8-616be302ea96#5>DUPIXENT.04P",
+     "RA:e39ef8d3-4b66-4658-be66-adca8ba3ea39#5>DUPIXENT.04P"
+    ],
+    "product": "Dupixent Inj Lös 200 mg/1.14ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.002,
+    "keys": [
+     "RA:b5a385b2-afb9-4721-90b8-616be302ea96#2>DUPIXENT.02P",
+     "RA:e39ef8d3-4b66-4658-be66-adca8ba3ea39#2>DUPIXENT.02P"
+    ],
+    "product": "Dupixent Inj Lös 200 mg/1.14ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.003,
+    "keys": [
+     "RA:b5a385b2-afb9-4721-90b8-616be302ea96#1>DUPIXENT.01P",
+     "RA:e39ef8d3-4b66-4658-be66-adca8ba3ea39#1>DUPIXENT.01P"
+    ],
+    "product": "Dupixent Inj Lös 200 mg/1.14ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.003,
+    "keys": [
+     "RA:b5a385b2-afb9-4721-90b8-616be302ea96#3>DUPIXENT.03P",
+     "RA:e39ef8d3-4b66-4658-be66-adca8ba3ea39#3>DUPIXENT.03P"
+    ],
+    "product": "Dupixent Inj Lös 200 mg/1.14ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.003,
+    "keys": [
+     "RA:b5a385b2-afb9-4721-90b8-616be302ea96#4>DUPIXENT.07P",
+     "RA:e39ef8d3-4b66-4658-be66-adca8ba3ea39#4>DUPIXENT.07P"
+    ],
+    "product": "Dupixent Inj Lös 200 mg/1.14ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.023,
+    "keys": [
+     "RA:f5a2bbbc-b3e9-44c4-82e4-9bcbf22bb095#0>SKYCLARYS.01"
+    ],
+    "product": "Skyclarys Kaps 50 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.003,
+    "keys": [
+     "RA:329f1381-c004-41e4-b520-b1c81fc792a9#2>NUCALA-02",
+     "RA:f7934f8e-4292-4fd1-bf86-370ae32d0bc6#2>NUCALA-02"
+    ],
+    "product": "Nucala Inj Lös 100 mg/ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.001,
+    "keys": [
+     "RA:b5a385b2-afb9-4721-90b8-616be302ea96#7>DUPIXENT.06P",
+     "RA:e39ef8d3-4b66-4658-be66-adca8ba3ea39#7>DUPIXENT.06P"
+    ],
+    "product": "Dupixent Inj Lös 200 mg/1.14ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.005,
+    "keys": [
+     "RA:0460b8c9-dbb9-459e-9337-839f2f0314c6#2>SKYRIZI.04Pa",
+     "RA:0ba4b7ff-8c7f-4417-b6a4-70526a5c5604#2>SKYRIZI.04Pa"
+    ],
+    "product": "Skyrizi Inj Lös 180 mg/1.2 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.005,
+    "keys": [
+     "RA:e475fb0f-255a-4bde-a65b-ef68f97c5de6#2>SKYRIZI.04Df"
+    ],
+    "product": "Skyrizi Inf Konz 600 mg/10 ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.271,
+    "keys": [
+     "RA:df3a9f9e-7627-4aa4-8332-e91dad0c9815#0>VYDURA3.01"
+    ],
+    "product": "Vydura ODT Schmelztabl 75 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.014,
+    "keys": [
+     "RA:0f96891f-e4c4-4c64-8b3a-be07789a991e#0>ELZONRIS.01a"
+    ],
+    "product": "Elzonris Inf Konz 1 mg/ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.012,
+    "keys": [
+     "RA:9bc838c0-5e0b-43b8-b027-52bef112cc1a#0>TALTZ.01a"
+    ],
+    "product": "Taltz Inj Lös 80 mg/ml Fertigpen",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.014,
+    "keys": [
+     "RA:b5a385b2-afb9-4721-90b8-616be302ea96#0>DUPIXENT.XXP",
+     "RA:e39ef8d3-4b66-4658-be66-adca8ba3ea39#0>DUPIXENT.XXP"
+    ],
+    "product": "Dupixent Inj Lös 200 mg/1.14ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.137,
+    "keys": [
+     "RA:554cdabd-5837-4854-8d8a-1e122edaa3f8#0>EYLEA.XX",
+     "RA:9250dfef-e981-4948-ae1e-2fe815eab382#0>EYLEA.XX"
+    ],
+    "product": "Eylea Inj Lös 8 mg/0.07ml Fertspr",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.015,
+    "keys": [
+     "RA:6dbd78dc-bb03-474a-a21c-468729160e13#1>TRUXIMA.01",
+     "RA:8d6107aa-d4f8-4202-bdd2-1c2b45509f8a#1>TRUXIMA.01"
+    ],
+    "product": "Truxima Inf Konz 100 mg/10 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "never",
+     "reason": "window_end",
+     "later_seen": 5
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.01,
+    "keys": [
+     "RA:5809b2bc-d16e-42fa-b089-bb29f341c6ea#1>RUXIENCE.01",
+     "RA:cd6bdc61-a7aa-4d9b-b739-182c335cc1e0#1>RUXIENCE.01"
+    ],
+    "product": "Ruxience Inf Konz 100 mg/10 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "never",
+     "reason": "window_end",
+     "later_seen": 5
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.015,
+    "keys": [
+     "RA:78dc5eed-6b1a-4184-9400-c977c82b6364#1>RIXATHON.01",
+     "RA:d8921458-0b30-423c-950f-c6b73678f81b#1>RIXATHON.01"
+    ],
+    "product": "Rixathon Inf Konz 500 mg/50ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "never",
+     "reason": "window_end",
+     "later_seen": 5
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.124,
+    "keys": [
+     "RA:6958557b-2f98-45d3-aa09-e77a648ea11d#0>TAKHZYRO.01a"
+    ],
+    "product": "Takhzyro Inj Lös 300 mg/2ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.171,
+    "keys": [
+     "RA:4c9c831e-a384-4964-aa25-daeb313109fb#3>KYPROLIS.02a",
+     "RA:8971decf-248a-4acf-b183-830fb2b6bdf6#3>KYPROLIS.02a",
+     "RA:cc53499a-45df-4da0-8a13-de8d39af8d23#3>KYPROLIS.02a"
+    ],
+    "product": "Kyprolis Trockensub 60 mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.235,
+    "keys": [
+     "RA:4c9c831e-a384-4964-aa25-daeb313109fb#2>KYPROLIS.04a",
+     "RA:8971decf-248a-4acf-b183-830fb2b6bdf6#2>KYPROLIS.04a",
+     "RA:cc53499a-45df-4da0-8a13-de8d39af8d23#2>KYPROLIS.04a"
+    ],
+    "product": "Kyprolis Trockensub 60 mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.01,
+    "keys": [
+     "RA:0460b8c9-dbb9-459e-9337-839f2f0314c6#1>SKYRIZI.03Pa",
+     "RA:0ba4b7ff-8c7f-4417-b6a4-70526a5c5604#1>SKYRIZI.03Pa"
+    ],
+    "product": "Skyrizi Inj Lös 180 mg/1.2 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.01,
+    "keys": [
+     "RA:e475fb0f-255a-4bde-a65b-ef68f97c5de6#1>SKYRIZI.03Df"
+    ],
+    "product": "Skyrizi Inf Konz 600 mg/10 ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.415,
+    "keys": [
+     "RA:6fe33ad4-77cc-4f4d-ac96-2e3882954f86#0>LEDAGA.01"
+    ],
+    "product": "Ledaga Gel 160 mcg/g",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.009,
+    "keys": [
+     "RA:40c4312c-5282-4695-8224-2cea09c674e7#2>BIMZELX.04c",
+     "RA:b7f16604-0699-4ca6-bc3b-9bc4b0f02200#3>BIMZELX.04c"
+    ],
+    "product": "Bimzelx Inj Lös 160 mg/1ml Fertspr (Einzelpackung)",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.009,
+    "keys": [
+     "RA:176d78bc-5ca4-4d01-986d-7a0ed6681a21#2>BIMZELX.04b",
+     "RA:a4143a0a-6beb-441d-9320-5a34ec720227#3>BIMZELX.04b"
+    ],
+    "product": "Bimzelx Inj Lös 160 mg/1ml Fertpen (Einzelpackung)",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.008,
+    "keys": [
+     "RA:116e55bf-09ea-4b84-beba-7c9a46cfd56e#0>OGIVRPER.01a"
+    ],
+    "product": "Ogivri Trockensub 440 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.134,
+    "keys": [
+     "RA:b7f16604-0699-4ca6-bc3b-9bc4b0f02200#0>BIMZELX.01"
+    ],
+    "product": "Bimzelx Inj Lös 160 mg/1ml Fertspr (Doppelpackung)",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.134,
+    "keys": [
+     "RA:a4143a0a-6beb-441d-9320-5a34ec720227#0>BIMZELX.01a"
+    ],
+    "product": "Bimzelx Inj Lös 160 mg/1ml Fertpen (Doppelpackung)",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.004,
+    "keys": [
+     "RA:b5a385b2-afb9-4721-90b8-616be302ea96#8>DUPIXENT.08P",
+     "RA:e39ef8d3-4b66-4658-be66-adca8ba3ea39#8>DUPIXENT.08P"
+    ],
+    "product": "Dupixent Inj Lös 200 mg/1.14ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.007,
+    "keys": [
+     "RA:4b3350e9-279a-43a0-94af-fb3fcdbe4bd1#1>SKYRIZI.02Pe"
+    ],
+    "product": "Skyrizi Inj Lös 150 mg/ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.016,
+    "keys": [
+     "RA:9bc838c0-5e0b-43b8-b027-52bef112cc1a#1>TALTZ.02a"
+    ],
+    "product": "Taltz Inj Lös 80 mg/ml Fertigpen",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.011,
+    "keys": [
+     "RA:4b3350e9-279a-43a0-94af-fb3fcdbe4bd1#0>SKYRIZI.01Pe"
+    ],
+    "product": "Skyrizi Inj Lös 150 mg/ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.003,
+    "keys": [
+     "RA:329f1381-c004-41e4-b520-b1c81fc792a9#1>NUCALA.01",
+     "RA:f7934f8e-4292-4fd1-bf86-370ae32d0bc6#1>NUCALA.01"
+    ],
+    "product": "Nucala Inj Lös 100 mg/ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.034,
+    "keys": [
+     "RA:9a5147c1-5093-4b08-a96c-4d900498dfb6#0>SUNLENCA.01a"
+    ],
+    "product": "Sunlenca Inj Lös 463.5 mg/1.5ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.034,
+    "keys": [
+     "RA:ae6b3823-465a-4c86-aedb-dfc60d50afef#0>SUNLENCA.01"
+    ],
+    "product": "Sunlenca Filmtabl 300 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.031,
+    "keys": [
+     "RA:6dc333e8-b638-4fe7-868f-f88f2a42f39e#0>TAVNEOS"
+    ],
+    "product": "Tavneos Kaps 10 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.025,
+    "keys": [
+     "OYAVAS.R-B>OYAVAS.R-B"
+    ],
+    "product": "Oyavas Inf Konz 400 mg/16 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.165,
+    "keys": [
+     "PROLIA>PROLIA3"
+    ],
+    "product": "Prolia Inj Lös 60 mg/ml m Nadelschutz",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.034,
+    "keys": [
+     "ASPAVELI.01>ASPAVELI.01a"
+    ],
+    "product": "Aspaveli Inf Lös 1080 mg/20ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.416,
+    "keys": [
+     "AIMOVIG4>AIMOVIG.01"
+    ],
+    "product": "Aimovig Inj Lös 140 mg/ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.074,
+    "keys": [
+     "TEZSPIRE>TEZSPIREF.01"
+    ],
+    "product": "Tezspire Inj Lös 210 mg/1.91 ml Fertspr",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.074,
+    "keys": [
+     "TEZSPIRE>TEZSPIREP.01"
+    ],
+    "product": "Tezspire Inj Lös 210 mg/1.91 ml Fertpen",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.051,
+    "keys": [
+     "EzetSimvSpir>EzetSimvSpir"
+    ],
+    "product": "Ezetimib Simva Spirig HC Tabl 10/40 mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.047,
+    "keys": [
+     "EZETSIMVSand>EZETSIMVSand"
+    ],
+    "product": "Ezetimib Simvastatin Sandoz Tabl 10/80 mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.047,
+    "keys": [
+     "EZETSIMVZent>EZETSIMVZent"
+    ],
+    "product": "Ezetimib Simvastatin Zentiva Tabl 10/40 mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.075,
+    "keys": [
+     "EZETSIMVMeTe>EZETSIMVMeTe"
+    ],
+    "product": "Ezetimib-Simvastatin-Mepha Teva Tabl 10/10 mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.016,
+    "keys": [
+     "INEGY>INEGY"
+    ],
+    "product": "Inegy Tabl 10/10 mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.018,
+    "keys": [
+     "ATOZET2>ATOR-EZE-ZEN"
+    ],
+    "product": "Atorvastatin Ezetimib Zentiva Tabl 40/10mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.006,
+    "keys": [
+     "ATOZET2>ATOZET3"
+    ],
+    "product": "Atozet Filmtabl 10/10 mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.018,
+    "keys": [
+     "ATOZET2>EZE-ATOR-SAN"
+    ],
+    "product": "Ezetimib Atorvastatin Sandoz Filmtabl 10/20mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.023,
+    "keys": [
+     "ATOZET2>EZE-ATOR-SPI"
+    ],
+    "product": "Ezetimib Atorvastatin Spirig HC Tabl 10mg/10mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.029,
+    "keys": [
+     "ATOZET2>EZE-ATOR-MEP"
+    ],
+    "product": "Ezetimib-Atorvastatin-Mepha Filmtabl 10mg/10mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.051,
+    "keys": [
+     "EZET-ROS-AXA>EZET-ROS-AXA"
+    ],
+    "product": "Ezetimib Rosuvastatin axapharm Filmtabl 10/10mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.051,
+    "keys": [
+     "EZET-ROS-SAN>EZET-ROS-SAN"
+    ],
+    "product": "Ezetimib Rosuvastatin Sandoz Filmtabl 10 mg/20 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.051,
+    "keys": [
+     "EZETROSZENTI>EZETROSZENTI"
+    ],
+    "product": "Ezetimib Rosuvastatin Zentiva Filmtabl 10 mg/20 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.073,
+    "keys": [
+     "EZET-ROS-SPI>EZET-ROS-SPI"
+    ],
+    "product": "Ezetimib Rosuvastatin Spirig HC Filmtabl 10/5mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.05,
+    "keys": [
+     "EZET-ROS-VIA>EZET-ROS-VIA"
+    ],
+    "product": "Ezetimib-Rosuvastatin Viatris Filmtabl 10/20mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.049,
+    "keys": [
+     "EZET-ROS-MEP>EZET-ROS-MEP"
+    ],
+    "product": "Ezetimib-Rosuvastatin-Mepha Filmtabl 10mg/40mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.425,
+    "keys": [
+     "FRUZAQLA>FRUZAQLA.01"
+    ],
+    "product": "Fruzaqla Kaps 1 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.317,
+    "keys": [
+     "LYNPARZA.04>LYNPARZA.04a"
+    ],
+    "product": "Lynparza Filmtabl 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.512,
+    "keys": [
+     "CAPVAXIVE>CAPVAXIVE.XX"
+    ],
+    "product": "Capvaxive Inj Lös mit Nadel",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.007,
+    "keys": [
+     "HEMLIBRA.XXa>HEMLIBRA.XXb"
+    ],
+    "product": "Hemlibra Inj Lös 300 mg/2ml",
+    "n_occ": 6,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.5,
+    "keys": [
+     "CABOMETYX>CABOMETYX.XX"
+    ],
+    "product": "Cabometyx Filmtabl 40 mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.018,
+    "keys": [
+     "AVASTINGLIO>AVASTINGLIO"
+    ],
+    "product": "Avastin Inf Konz 400 mg/16ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.034,
+    "keys": [
+     "BEVACIZUMAB4>BEVACIZUMAB4"
+    ],
+    "product": "Bevacizumab-Teva Inf Konz 100 mg/4 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.018,
+    "keys": [
+     "MVASIGLIO2>MVASIGLIO2"
+    ],
+    "product": "Mvasi Inf Konz 400 mg/16ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.018,
+    "keys": [
+     "OYAVASGLIO2>OYAVASGLIO2"
+    ],
+    "product": "Oyavas Inf Konz 400 mg/16 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.037,
+    "keys": [
+     "OPDIVOEINF7>OPDIVOEINF8"
+    ],
+    "product": "Opdivo Inf Konz 40 mg/4 ml",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.015,
+    "keys": [
+     "OYAVAS.01>OYAVAS.01"
+    ],
+    "product": "Oyavas Inf Konz 400 mg/16 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.062,
+    "keys": [
+     "MABTHERA.04>MABTHERA.03a"
+    ],
+    "product": "MabThera Inf Konz 500 mg/50ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.12,
+    "keys": [
+     "RIXATHON.03>RIXATHON.03a"
+    ],
+    "product": "Rixathon Inf Konz 500 mg/50ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.157,
+    "keys": [
+     "RUXIENCE.03>RUXIENCE.03a"
+    ],
+    "product": "Ruxience Inf Konz 100 mg/10 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.12,
+    "keys": [
+     "TRUXIMA.03>TRUXIMA.03a"
+    ],
+    "product": "Truxima Inf Konz 100 mg/10 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.423,
+    "keys": [
+     "COMIRNATY>COMIRNATY1"
+    ],
+    "product": "Comirnaty LP.8.1 Inj Disp 30 mcg/Dosis",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.418,
+    "keys": [
+     "LENALIAC.12a>LENALIVI.15"
+    ],
+    "product": "Lenalidomid Viatris Kaps 5 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.019,
+    "keys": [
+     "OYAVAS.02>OYAVAS.02"
+    ],
+    "product": "Oyavas Inf Konz 400 mg/16 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.003,
+    "keys": [
+     "AVASTIN3.04>AVASTIN3.04a"
+    ],
+    "product": "Avastin Inf Konz 400 mg/16ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.003,
+    "keys": [
+     "AVASTIN3.03>AVASTIN3.03a"
+    ],
+    "product": "Avastin Inf Konz 400 mg/16ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.015,
+    "keys": [
+     "OYAVAS.05a>OYAVAS.05a"
+    ],
+    "product": "Oyavas Inf Konz 400 mg/16 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.011,
+    "keys": [
+     "OYAVAS.09>OYAVAS.09"
+    ],
+    "product": "Oyavas Inf Konz 400 mg/16 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.196,
+    "keys": [
+     "LYNPARZA.01>LYNPARZA.01a"
+    ],
+    "product": "Lynparza Filmtabl 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.048,
+    "keys": [
+     "POLIVY>POLIVY.01"
+    ],
+    "product": "Polivy Trockensub 140 mg i.v.",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.048,
+    "keys": [
+     "SPINRAZA2>SPINRAZA3"
+    ],
+    "product": "Spinraza Inj Lös 12 mg/5ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.038,
+    "keys": [
+     "OYAVAS.06>OYAVAS.06"
+    ],
+    "product": "Oyavas Inf Konz 400 mg/16 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.159,
+    "keys": [
+     "OZEMPIC3>OZEMPIC.01"
+    ],
+    "product": "Ozempic DualDose Inj Lös 2 mg/1.5ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.513,
+    "keys": [
+     "RETSEVMO.01>RETSEVMO.01---2L-NSCLC"
+    ],
+    "product": "Retsevmo Kaps 40 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.025,
+    "keys": [
+     "ABEVMY.08>ABEVMY.08a---HCC"
+    ],
+    "product": "Abevmy Inf Konz 400 mg/16 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.096,
+    "keys": [
+     "ADTRALZA.01>ADTRALZA.01b"
+    ],
+    "product": "Adtralza Inj Lös 150 mg/ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.04,
+    "keys": [
+     "IMFINZI.03>IMFINZI.03a"
+    ],
+    "product": "Imfinzi Inf Konz 120 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.145,
+    "keys": [
+     "OMVOHPen.01a>OMVOHPen.01b"
+    ],
+    "product": "Omvoh Inj Lös 100 mg/ml Fertpen",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.025,
+    "keys": [
+     "OMVOHDst.01a>OMVOHDst.01b"
+    ],
+    "product": "Omvoh Inf Konz 300 mg/15ml Durchstf",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.284,
+    "keys": [
+     "AQUIPTA.01>AQUIPTA.01a"
+    ],
+    "product": "Aquipta Tabl 60 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.019,
+    "keys": [
+     "IMFINZI.04>IMFINZI.04a"
+    ],
+    "product": "Imfinzi Inf Konz 120 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.333,
+    "keys": [
+     "OFEV.01>OFEV.01a"
+    ],
+    "product": "Ofev Kaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.411,
+    "keys": [
+     "NINTEDASA.01>NINTEDANIB.SANDOZ.XX"
+    ],
+    "product": "Nintedanib Sandoz Weichkaps 150 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.405,
+    "keys": [
+     "NINTEDASP.01>NINTEDANIB.SPIRIG.HC.XX"
+    ],
+    "product": "Nintedanib Spirig HC Weichkaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.411,
+    "keys": [
+     "NINTEDAZE.01>NINTEDANIB.ZENTIVA.XX"
+    ],
+    "product": "Nintedanib Zentiva Weichkaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.405,
+    "keys": [
+     "NINTEDAME.01>NINTEDANIB.MEPHA.XX"
+    ],
+    "product": "Nintedanib-Mepha Weichkaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.03,
+    "keys": [
+     "ABEVMY.01>ABEVMY.01a---Kolorektalkarzinom"
+    ],
+    "product": "Abevmy Inf Konz 400 mg/16 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.051,
+    "keys": [
+     "YERVOY.XX>YERVOY.XXa"
+    ],
+    "product": "Yervoy Inf Konz 50 mg/10 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.037,
+    "keys": [
+     "ABEVMY.02>ABEVMY.02a---Lungenkarzinom"
+    ],
+    "product": "Abevmy Inf Konz 400 mg/16 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.071,
+    "keys": [
+     "ABEVMY.04>ABEVMY.04a---Mammakarzinom"
+    ],
+    "product": "Abevmy Inf Konz 400 mg/16 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.086,
+    "keys": [
+     "OMVOHPen.02>OMVOHPen.02a"
+    ],
+    "product": "Omvoh Kombipack Inj Lös 1x100mg/1x200mg Fertpen",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.019,
+    "keys": [
+     "OMVOHDstf.02>OMVOHDstf.02a"
+    ],
+    "product": "Omvoh Inf Konz 300 mg/15ml Durchstf",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.022,
+    "keys": [
+     "TALVEY.01>TALVEY.01a"
+    ],
+    "product": "Talvey Inj Lös 40 mg/ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.053,
+    "keys": [
+     "ABEVMY.03>ABEVMY.03a---Nierenzellkarzinom"
+    ],
+    "product": "Abevmy Inf Konz 400 mg/16 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.313,
+    "keys": [
+     "AKEEGA.01>AKEEGA.XX---Einleitung"
+    ],
+    "product": "Akeega Filmtabl 50mg/500mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.015,
+    "keys": [
+     "ABEVMY.05>ABEVMY.05a---Ovarialkarzinom"
+    ],
+    "product": "Abevmy Inf Konz 400 mg/16 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.2,
+    "keys": [
+     "OFEV.02>OFEV.02a"
+    ],
+    "product": "Ofev Kaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.417,
+    "keys": [
+     "NINTEDASA.02>NINTEDANIB.SANDOZ.02"
+    ],
+    "product": "Nintedanib Sandoz Weichkaps 150 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.423,
+    "keys": [
+     "NINTEDASP.02>NINTEDANIB.SPIRIG.HC.02"
+    ],
+    "product": "Nintedanib Spirig HC Weichkaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.417,
+    "keys": [
+     "NINTEDAZE.02>NINTEDANIB.ZENTIVA.02"
+    ],
+    "product": "Nintedanib Zentiva Weichkaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.423,
+    "keys": [
+     "NINTEDAME.02>NINTEDANIB.MEPHA.02"
+    ],
+    "product": "Nintedanib-Mepha Weichkaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.024,
+    "keys": [
+     "SPINRAZA3>SPINRAZA.01"
+    ],
+    "product": "Spinraza Inj Lös 50 mg/5 ml",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.195,
+    "keys": [
+     "OFEV.03>OFEV.03a"
+    ],
+    "product": "Ofev Kaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.41,
+    "keys": [
+     "NINTEDASA.03>NINTEDANIB.SANDOZ.03"
+    ],
+    "product": "Nintedanib Sandoz Weichkaps 150 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.415,
+    "keys": [
+     "NINTEDASP.03>NINTEDANIB.SPIRIG.HC.03"
+    ],
+    "product": "Nintedanib Spirig HC Weichkaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.41,
+    "keys": [
+     "NINTEDAZE.03>NINTEDANIB.ZENTIVA.03"
+    ],
+    "product": "Nintedanib Zentiva Weichkaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.415,
+    "keys": [
+     "NINTEDAME.03>NINTEDANIB.MEPHA.03"
+    ],
+    "product": "Nintedanib-Mepha Weichkaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.442,
+    "keys": [
+     "OPZELURA.01>OPZELURA.01---Vitiligo-Erwachsene-und-Jugendliche-ab-12-Jahren"
+    ],
+    "product": "Opzelura Creme 15 mg/g",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.074,
+    "keys": [
+     "ABEVMY.06>ABEVMY.06a---Zervixkarzinom"
+    ],
+    "product": "Abevmy Inf Konz 400 mg/16 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.319,
+    "keys": [
+     "INVOKANA2>INVOKANA.01"
+    ],
+    "product": "Invokana Filmtabl 300 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.17,
+    "keys": [
+     "REVOLADE.02b>REVOLADE.02---SAA-2L-",
+     "REVOLADE.02b>REVOLADE.02a---SAA-2L-"
+    ],
+    "product": "Revolade Filmtabl 25 mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.148,
+    "keys": [
+     "REVOLADE.03b>REVOLADE.03a---ITP"
+    ],
+    "product": "Revolade Filmtabl 25 mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.149,
+    "keys": [
+     "ELTROM.ME.03>Eltrombopag-Generika.03a"
+    ],
+    "product": "Eltrombopag-Mepha Filmtabl 50 mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.149,
+    "keys": [
+     "ELTROM.ZE.03>Eltrombopag-Generika.03a"
+    ],
+    "product": "Eltrombopag Zentiva Filmtabl 25 mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.149,
+    "keys": [
+     "ELTROM.NO.03>Eltrombopag-Generika.03a"
+    ],
+    "product": "Eltrombopag NOBEL Filmtabl 75 mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.149,
+    "keys": [
+     "ELTROM.SP.03>Eltrombopag-Generika.03a"
+    ],
+    "product": "Eltrombopag Spirig HC Filmtabl 75 mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.149,
+    "keys": [
+     "ELTROM.AC.03>Eltrombopag-Generika.03a"
+    ],
+    "product": "Eltrombopag Accord Filmtabl 25 mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.172,
+    "keys": [
+     "REVOLADE.04b>REVOLADE.04a---ITP-Kinder"
+    ],
+    "product": "Revolade Filmtabl 25 mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.202,
+    "keys": [
+     "ELTROM.ME.04>Eltrombopag-Generika.04a"
+    ],
+    "product": "Eltrombopag-Mepha Filmtabl 50 mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.202,
+    "keys": [
+     "ELTROM.ZE.04>Eltrombopag-Generika.04a"
+    ],
+    "product": "Eltrombopag Zentiva Filmtabl 25 mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.202,
+    "keys": [
+     "ELTROM.NO.04>Eltrombopag-Generika.04a"
+    ],
+    "product": "Eltrombopag NOBEL Filmtabl 75 mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.202,
+    "keys": [
+     "ELTROM.SP.04>Eltrombopag-Generika.04a"
+    ],
+    "product": "Eltrombopag Spirig HC Filmtabl 75 mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.202,
+    "keys": [
+     "ELTROM.AC.04>Eltrombopag-Generika.04a"
+    ],
+    "product": "Eltrombopag Accord Filmtabl 25 mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.188,
+    "keys": [
+     "REVOLADE.01b>REVOLADE.01a---SAA-1L"
+    ],
+    "product": "Revolade Filmtabl 25 mg",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.008,
+    "keys": [
+     "TEZSPIREF.02>TEZSPIREFa.02---CRSwNP"
+    ],
+    "product": "Tezspire Inj Lös 210 mg/1.91 ml Fertspr",
+    "n_occ": 1,
+    "fr": {
+     "status": "never",
+     "reason": "window_end",
+     "later_seen": 2
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "never",
+     "reason": "window_end",
+     "later_seen": 2
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.002,
+    "keys": [
+     "TEZSPIREP.02>TEZSPIREPa.02---CRSwNP"
+    ],
+    "product": "Tezspire Inj Lös 210 mg/1.91 ml Fertpen",
+    "n_occ": 1,
+    "fr": {
+     "status": "never",
+     "reason": "window_end",
+     "later_seen": 2
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "never",
+     "reason": "window_end",
+     "later_seen": 2
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.205,
+    "keys": [
+     "JEMPERLI.02>JEMPERLI.02---Endometriumkarzinom-Kombi"
+    ],
+    "product": "Jemperli Inf Konz 500 mg/10 ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.032,
+    "keys": [
+     "JEMPERLI.01a>JEMPERLI.01---Endometriumkarzinom-Mono"
+    ],
+    "product": "Jemperli Inf Konz 500 mg/10 ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.049,
+    "keys": [
+     "ZELBO-COT.02>ZELBORAF.02---Kombination-mit-COTELLIC"
+    ],
+    "product": "Zelboraf Filmtabl 240 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.049,
+    "keys": [
+     "COTEL-ZEL.01>COTELLIC.01"
+    ],
+    "product": "Cotellic Filmtabl 20 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.517,
+    "keys": [
+     "KOSELUGO.01>KOSELUGO.01---Monotherapie"
+    ],
+    "product": "Koselugo Kaps 25 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.198,
+    "keys": [
+     "MAVENCLAD-2>MAVENCLAD.02---hochaktive-RRMS"
+    ],
+    "product": "Mavenclad Tabl 10 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.052,
+    "keys": [
+     "XEOMIN.01>XEOMIN.01a"
+    ],
+    "product": "Xeomin Trockensub 50 E",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.226,
+    "keys": [
+     "XTANDI.01>XTANDI.01---Kombination-LHRH-Antagonisten"
+    ],
+    "product": "Xtandi Filmtabl 40 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.139,
+    "keys": [
+     "XTANDI.02>XTANDI.02---Kombi-LHRH-Antagonisten"
+    ],
+    "product": "Xtandi Filmtabl 40 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.425,
+    "keys": [
+     "XTANDI.03>XTANDI.XX---KoGu"
+    ],
+    "product": "Xtandi Filmtabl 40 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.121,
+    "keys": [
+     "JARDIANCEME2>JARDIANCE-MET.01"
+    ],
+    "product": "Jardiance Met Filmtabl 5/850mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.456,
+    "keys": [
+     "RYBELSUS>RYBELSUS.01"
+    ],
+    "product": "Rybelsus N Tabl 9 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.226,
+    "keys": [
+     "ZEPOSIA.01>ZEPOSIA.01"
+    ],
+    "product": "Zeposia Starterpack Kaps 4 x 0.23 mg 3 x 0.46 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.018,
+    "keys": [
+     "ROSUVASTAX-DROSSAPHARM.01>ROSUVASTAX-DROSSAPHARM.01"
+    ],
+    "product": "Rosuvastax-Drossapharm Filmtabl 20 mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "never",
+     "reason": "window_end",
+     "later_seen": 1
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "never",
+     "reason": "window_end",
+     "later_seen": 1
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.003,
+    "keys": [
+     "DUPIXENT.06a>DUPIXENT.06-Pen---Chronische-Rhinosinusitis-mit-Nasenpolypen--CR"
+    ],
+    "product": "Dupixent Inj Lös 300 mg/2 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.001,
+    "keys": [
+     "DUPIXENT.06P>DUPIXENT.06-Pen---Chronische-Rhinosinusitis-mit-Nasenpolypen--CR"
+    ],
+    "product": "Dupixent Inj Lös 200 mg/1.14 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.025,
+    "keys": [
+     "SKYRIZI.04Pa>SKYRIZI.04---Colitis-Ulcerosa--nur-180-mg--360-mg--600-mg--2-Stk"
+    ],
+    "product": "Skyrizi Inj Lös 180 mg/1.2 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.025,
+    "keys": [
+     "SKYRIZI.04Df>SKYRIZI.04---Colitis-Ulcerosa--nur-180-mg--360-mg--600-mg--2-Stk"
+    ],
+    "product": "Skyrizi Inf Konz 600 mg/10 ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.021,
+    "keys": [
+     "WEGOVY.01>WEGOVY.01---Erwachsene"
+    ],
+    "product": "Wegovy Multi FixDose Inj Lös 0.5 mg (alt)",
+    "n_occ": 6,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.02,
+    "keys": [
+     "VERZENIO.04a>VERZENIO.04a"
+    ],
+    "product": "Verzenios Filmtabl 150 mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.2,
+    "keys": [
+     "SKYRIZI.XX>SKYRIZI.XX---EAP"
+    ],
+    "product": "Skyrizi Inj Lös 180 mg/1.2 ml",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.023,
+    "keys": [
+     "HEMGENIX.01>HEMGENIX.01---H-mophilie-B-bei-M-nner"
+    ],
+    "product": "Hemgenix Inf Konz 10ml 37-48 Stk, 181-240 kg KG",
+    "n_occ": 4,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.048,
+    "keys": [
+     "SKYRIZI.03Pa>SKYRIZI.03---Morbus-Crohn--nur-360-mg-und-600-mg-"
+    ],
+    "product": "Skyrizi Inj Lös 180 mg/1.2 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.048,
+    "keys": [
+     "SKYRIZI.03Df>SKYRIZI.03---Morbus-Crohn--nur-360-mg-und-600-mg-"
+    ],
+    "product": "Skyrizi Inf Konz 600 mg/10 ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.18,
+    "keys": [
+     "XTANDI.XX---KoGu>XTANDI.XX---KoGu"
+    ],
+    "product": "Xtandi Filmtabl 40 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.147,
+    "keys": [
+     "ELREXFIO>ELREXFIO.01"
+    ],
+    "product": "Elrexfio Inj Lös 76 mg/1.9 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.012,
+    "keys": [
+     "OPDIVO.10---RCC-Nierenzellkarzinom>OPDIVO.10---RCC-Nierenzellkarzinom"
+    ],
+    "product": "Opdivo Inj Lös, 600 mg/5 ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "never",
+     "reason": "window_end",
+     "later_seen": 1
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.032,
+    "keys": [
+     "TALZENNA>TALZENNA"
+    ],
+    "product": "Talzenna Kaps 0.5 mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.483,
+    "keys": [
+     "SKYRIZI-02>SKYRIZI.02---Psoriasis-Arthritis--nur-150-mg-"
+    ],
+    "product": "Skyrizi Inj Lös 150 mg/ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.483,
+    "keys": [
+     "SKYRIZI.02Pe>SKYRIZI.02---Psoriasis-Arthritis--nur-150-mg-"
+    ],
+    "product": "Skyrizi Inj Lös 150 mg/ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.116,
+    "keys": [
+     "SKYRIZI.01>SKYRIZI.01---Schwere-Plaque-Psoriasis--nur-150-mg-"
+    ],
+    "product": "Skyrizi Inj Lös 150 mg/ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.116,
+    "keys": [
+     "SKYRIZI.01Pe>SKYRIZI.01---Schwere-Plaque-Psoriasis--nur-150-mg-"
+    ],
+    "product": "Skyrizi Inj Lös 150 mg/ml",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.036,
+    "keys": [
+     "ZEPOSIA.02a>ZEPOSIA.02a"
+    ],
+    "product": "Zeposia Starterpack Kaps 4 x 0.23 mg 3 x 0.46 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.058,
+    "keys": [
+     "VERZENIO.02a>VERZENIO.02a"
+    ],
+    "product": "Verzenios Filmtabl 150 mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.065,
+    "keys": [
+     "VERZENIO.03a>VERZENIO.03a"
+    ],
+    "product": "Verzenios Filmtabl 150 mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.047,
+    "keys": [
+     "VERZENIO.01a>VERZENIO.01a"
+    ],
+    "product": "Verzenios Filmtabl 150 mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20261001>20261006",
+    "ratio": 0.189,
+    "keys": [
+     "NINTEDANIB.ZENTIVA.01>NINTEDANIB.ZENTIVA.01"
+    ],
+    "product": "Nintedanib Zentiva Weichkaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20261001>20261006",
+    "ratio": 0.189,
+    "keys": [
+     "NINTEDANIB.SANDOZ.01a>NINTEDANIB.SANDOZ.01a"
+    ],
+    "product": "Nintedanib Sandoz Weichkaps 150 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20261001>20261006",
+    "ratio": 0.189,
+    "keys": [
+     "NINTEDANIB.MEPHA.01>NINTEDANIB.MEPHA.01"
+    ],
+    "product": "Nintedanib-Mepha Weichkaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20261001>20261006",
+    "ratio": 0.189,
+    "keys": [
+     "NINTEDANIB.SPIRIG.HC.01>NINTEDANIB.SPIRIG.HC.01"
+    ],
+    "product": "Nintedanib Spirig HC Weichkaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20261001>20261006",
+    "ratio": 0.126,
+    "keys": [
+     "Eltrombopag-Generika.03a>Eltrombopag-Generika.03a"
+    ],
+    "product": "Eltrombopag Zentiva Filmtabl 25 mg",
+    "n_occ": 22,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20261001>20261006",
+    "ratio": 0.124,
+    "keys": [
+     "Eltrombopag-Generika.04a>Eltrombopag-Generika.04a"
+    ],
+    "product": "Eltrombopag Zentiva Filmtabl 25 mg",
+    "n_occ": 22,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20261001>20261006",
+    "ratio": 0.104,
+    "keys": [
+     "NINTEDANIB.ZENTIVA.02>NINTEDANIB.ZENTIVA.02"
+    ],
+    "product": "Nintedanib Zentiva Weichkaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20261001>20261006",
+    "ratio": 0.104,
+    "keys": [
+     "NINTEDANIB.SANDOZ.02>NINTEDANIB.SANDOZ.02"
+    ],
+    "product": "Nintedanib Sandoz Weichkaps 150 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20261001>20261006",
+    "ratio": 0.104,
+    "keys": [
+     "NINTEDANIB.MEPHA.02>NINTEDANIB.MEPHA.02"
+    ],
+    "product": "Nintedanib-Mepha Weichkaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20261001>20261006",
+    "ratio": 0.104,
+    "keys": [
+     "NINTEDANIB.SPIRIG.HC.02>NINTEDANIB.SPIRIG.HC.02"
+    ],
+    "product": "Nintedanib Spirig HC Weichkaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20261001>20261006",
+    "ratio": 0.101,
+    "keys": [
+     "NINTEDANIB.ZENTIVA.03>NINTEDANIB.ZENTIVA.03"
+    ],
+    "product": "Nintedanib Zentiva Weichkaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20261001>20261006",
+    "ratio": 0.101,
+    "keys": [
+     "NINTEDANIB.SANDOZ.03>NINTEDANIB.SANDOZ.03"
+    ],
+    "product": "Nintedanib Sandoz Weichkaps 150 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20261001>20261006",
+    "ratio": 0.101,
+    "keys": [
+     "NINTEDANIB.MEPHA.03>NINTEDANIB.MEPHA.03"
+    ],
+    "product": "Nintedanib-Mepha Weichkaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20261001>20261006",
+    "ratio": 0.101,
+    "keys": [
+     "NINTEDANIB.SPIRIG.HC.03>NINTEDANIB.SPIRIG.HC.03"
+    ],
+    "product": "Nintedanib Spirig HC Weichkaps 100 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   }
+  ],
+  "human": [
+   {
+    "step": "20260219>20260304",
+    "ratio": 0.713,
+    "keys": [
+     "RA:da53bea9-cd43-4a1c-ac3d-d01ea446567d#0>RA:ccda4a51-6f9b-4c9b-b17e-2cd7d0c068e1#1"
+    ],
+    "product": "Blincyto Trockensub",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.821,
+    "keys": [
+     "RA:7be3ace9-6c78-4e75-9a18-9610bb98b814#0>NUBEQA.Einl"
+    ],
+    "product": "Nubeqa Filmtabl 300 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.781,
+    "keys": [
+     "RA:3b2a3fbe-0af4-49bf-aa32-23832b859d40#3>NEMLUVIO.03a"
+    ],
+    "product": "Nemluvio Trockensub 30 mg c Solv Fertpen",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260401>20260601",
+    "ratio": 0.642,
+    "keys": [
+     "RA:41e0c364-6264-4c5f-a7bb-b028af0cca42#0>RECORMON2",
+     "RA:4b191ed9-4564-4e7b-87a0-ae13ee79361c#0>RECORMON2",
+     "RA:55677a5b-8a99-4867-96c7-445cad783af5#0>RECORMON2",
+     "RA:56ced50c-46b1-41d6-9fb5-72fe055c9751#0>RECORMON2"
+    ],
+    "product": "Recormon PS Inj Lös 4000 IE/0.3ml +Nadel",
+    "n_occ": 6,
+    "fr": {
+     "status": "lt_bug"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "lt_bug"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.607,
+    "keys": [
+     "RETSEVMO2.2L>RETSEVMO.01"
+    ],
+    "product": "Retsevmo Kaps 40 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.833,
+    "keys": [
+     "PREVENAR20>PREVENA20.02"
+    ],
+    "product": "Prevenar 20 Inj Susp mit Nadel",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.819,
+    "keys": [
+     "MVASI2.04>MVASI3.04"
+    ],
+    "product": "Mvasi Inf Konz 400 mg/16ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.818,
+    "keys": [
+     "ZIRABEV2.04>ZIRABEV.04a"
+    ],
+    "product": "Zirabev Inf Konz 400 mg/16 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.819,
+    "keys": [
+     "OYAVAS2.04>OYAVAS3.04"
+    ],
+    "product": "Oyavas Inf Konz 400 mg/16 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.819,
+    "keys": [
+     "BEVACIZU2.04>BEVACIZU3.04"
+    ],
+    "product": "Bevacizumab-Teva Inf Konz 100 mg/4 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.816,
+    "keys": [
+     "VEGZELMA.04>VEGZELMA.04a"
+    ],
+    "product": "Vegzelma Inf Konz 100 mg/4 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.81,
+    "keys": [
+     "MVASI2.03>MVASI3.03"
+    ],
+    "product": "Mvasi Inf Konz 400 mg/16ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.812,
+    "keys": [
+     "ZIRABEV2.03>ZIRABEV.03a"
+    ],
+    "product": "Zirabev Inf Konz 400 mg/16 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.809,
+    "keys": [
+     "OYAVAS2.03>OYAVAS3.03"
+    ],
+    "product": "Oyavas Inf Konz 400 mg/16 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.814,
+    "keys": [
+     "BEVACIZU2.03>BEVACIZU3.03"
+    ],
+    "product": "Bevacizumab-Teva Inf Konz 100 mg/4 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.811,
+    "keys": [
+     "VEGZELMA.03>VEGZELMA.03a"
+    ],
+    "product": "Vegzelma Inf Konz 100 mg/4 ml",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.777,
+    "keys": [
+     "THERAPIEBEG>REMINYL"
+    ],
+    "product": "Galantamin SR Zentiva Ret Kaps 16 mg",
+    "n_occ": 30,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.809,
+    "keys": [
+     "THERAPIEBEG>EXELON"
+    ],
+    "product": "Exelon Kaps 6 mg",
+    "n_occ": 5,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260601>20260701",
+    "ratio": 0.702,
+    "keys": [
+     "EBIXA>EBIXA2"
+    ],
+    "product": "Memantin-Mepha Teva Filmtabl 10 mg",
+    "n_occ": 14,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260701>20260801",
+    "ratio": 0.947,
+    "keys": [
+     "1010>ANTIDRYcalm"
+    ],
+    "product": "Antidry calm sensitive",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.628,
+    "keys": [
+     "APREMILDE.01>OTEZLA.02"
+    ],
+    "product": "Apremilast Devatis Filmtabl 30 mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.628,
+    "keys": [
+     "APREMILLE.01>OTEZLA.02"
+    ],
+    "product": "Apremilast Leman Starterpackung Filmtabl 4x10,4x20,19x30mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.633,
+    "keys": [
+     "APREMILSP.01>OTEZLA.02"
+    ],
+    "product": "Apremilast Spirig HC Starterpackung Filmtabl 4x10,4x20,19x30mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.633,
+    "keys": [
+     "APREMILME.01>OTEZLA.02"
+    ],
+    "product": "Apremilast-Mepha Starterpackung Filmtabl 4x10,4x20,19x30mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260801>20260901",
+    "ratio": 0.622,
+    "keys": [
+     "OTEZLA3>OTEZLA.02"
+    ],
+    "product": "Otezla Starterpackung Filmtabl 4x10,4x20,19x30mg",
+    "n_occ": 2,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.727,
+    "keys": [
+     "REMSIMA4>REMSIMA.05---Schwere-Plaque-Psoriasis"
+    ],
+    "product": "Remsima Trockensub 100 mg",
+    "n_occ": 1,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   },
+   {
+    "step": "20260901>20261001",
+    "ratio": 0.745,
+    "keys": [
+     "SOMATULINE2>SOMATULINE.01---NET"
+    ],
+    "product": "Somatuline Autogel Inj Lös 60 mg",
+    "n_occ": 3,
+    "fr": {
+     "status": "same_step"
+    },
+    "fr_disagree": false,
+    "it": {
+     "status": "same_step"
+    },
+    "it_disagree": false
+   }
+  ]
+ },
+ "definitions": {
+  "unit": "distinct (step, DE old text, DE new text) found by sl.mine; occurrences = its products/keys",
+  "draft": "<= 60% of DE tokens changed (sl.mine's change); human = > 60% rewrite",
+  "same_step": "the FR/IT text under the same key changed in the same step",
+  "lagged": "FR/IT unchanged in that step, changed in a later snapshot (fixed_at; days/steps). A later change is not verified to implement the DE change",
+  "never": "FR/IT unchanged until the end of the window, or until the DE text/product disappeared",
+  "target_missing": "no FR/IT text under the key (or positional alignment failed for old-format keys)",
+  "lt_bug": "old-format snapshot and a '<' in the FR/IT text (publisher bug, untrustworthy)"
+ }
+}

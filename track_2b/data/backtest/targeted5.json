@@ -1,0 +1,2196 @@
+{
+ "generated_by": "PYTHONPATH=src python3 -m gleichlaut.backtest --hist <2026 snapshot dir> --wb2025 <2025 XML dir>",
+ "inputs": {
+  "hist": "~/Desktop/hackapertus/spikes/gleichlaut/data/hist",
+  "wb2025": "~/Desktop/hackapertus/spikes/gleichlaut/data/wb2025",
+  "sha256": {
+   "20260219-de.json": "021ca69d2ad02b3583fc1e758d3a2937ae17b616e48f584c4e769960210ac2ec",
+   "20260219-fr.json": "d68736d183e9ad2f13ae12c0fd9dc7c05ab10ec3fae618e3454eaf7dd9ca7dc1",
+   "20260219-it.json": "059820d549fa27c4fd3a83bc0d13ca6a50d44b4354d9399191db1d72214bde2c",
+   "20260304-de.json": "f26d737d60a22df6ce62535385cf532ce987ce7d36dfdec570e2d209c177c216",
+   "20260304-fr.json": "c7d8ef2c63e97913a6f800684516a69a5bcc44e51eead33251b5d0bbc98012be",
+   "20260304-it.json": "f86c95a5a307227900e9c7326c6361ec39fe0e05239ba70fc2039e30eda1de2e",
+   "20260401-de.json": "b248dd15b6c719e684a17c8fd9ece602167463e3a99907a6992ab9bb77fea9d8",
+   "20260401-fr.json": "09e37b909c9c381526dfa041aa69de9961f2509680a0cdf91c05f61691851638",
+   "20260401-it.json": "af17e911e77851af6bdd1f9a7ad4f9e0fe4c1007c63342eae879baab26c8bd65",
+   "20260601-de.json": "8d848fde50c161d311bbbe6863d02aed952a9563cc5f4002d5bc49e4a344138b",
+   "20260601-fr.json": "d24792364d2c242c936d1279d01dae30e2af388c063925f65786e5c3f5d7dc85",
+   "20260601-it.json": "39e24d30a973402bd1dee8f4f9f1edd30442cbcda32a6f87cf23d754ab02b038",
+   "20260701-de.json": "d9baed7cbb6764bdcc6d68be0597e5385a256449b28c94057d3ea6e1627cf54e",
+   "20260701-fr.json": "6dfcfa8365d4e4bc7bb5b663a23e7ad68185db09a84062f2107e824c0e9b4f67",
+   "20260701-it.json": "feb7d9b7958434b6853881b39048fc2f9ec191edf5d42a3c2cb933fbc3dc4d94",
+   "20260801-de.json": "bfa816190ae751928c3bafa72c3b56028e76e905adfc348db0524f858d8e956a",
+   "20260801-fr.json": "057c10668c747e3ae639ac9192f15b3e9d0e692308a79cb8ae6ffef8e093324a",
+   "20260801-it.json": "ff803bb908e89171b32e30ebf28bfa6eba9295997fd785b8266dec5d5fc9e902",
+   "20260901-de.json": "6eba62334ff9512e5aeff408f29beea3fcd2c2044742b9ea8e62abe5e9308146",
+   "20260901-fr.json": "fc49abb0d52eca7b329e1dd22ebe09fb6a5f483d1b6efbf8d2f01ad0953d54fb",
+   "20260901-it.json": "9f97c6ddcacb4e58081609b630ae2355860602d9ed70c7b21d2ff606f70ff608",
+   "20261001-de.json": "64edb3b2452a1f98fd441782668b86483664dfd11b8074d9b1659c35c46a23dc",
+   "20261001-fr.json": "978719d98ca3972d8028bf10e645d2d0b06cd2ee22e1e008ccc5d9d13744c950",
+   "20261001-it.json": "ea41aade846e1f7ca6be7b8baaa41ffd6d08e69879c50c4d8af61e38a1cce919",
+   "20261006-de.json": "fe5e60f1931a6b345ae4687f9affbf1b05efa14263d20c16f410d3260228cc68",
+   "20261006-fr.json": "4d10dd047bdfd65a3bff5aca361706f2d3901c7872c6c9179948ede2f9477a54",
+   "20261006-it.json": "bcd86c674898d32f52b034674f54c67c2dac7cb893afc941e86da0642e1cd577",
+   "20250611/Preparations.xml": "ab071ebad1d502d6a80131e7c08963ed6681529d4e0c81ed46f046e883370f2f",
+   "20250731/Preparations.xml": "102f691db6cc465c926db6c12e5510b586cdd799d75125f3f1c7a4344bb5352c"
+  }
+ },
+ "prereg": "eval/prereg/PREREG.md R3",
+ "snapshots": [
+  "20260219",
+  "20260304",
+  "20260401",
+  "20260601",
+  "20260701",
+  "20260801",
+  "20260901",
+  "20261001",
+  "20261006"
+ ],
+ "excluded": {
+  "20260504": "publisher bug: drops every '<...>' span (restored in June)"
+ },
+ "wb2025": [
+  "20250601",
+  "20250701"
+ ],
+ "model_calls": 0,
+ "cases": [
+  {
+   "case": "Nemluvio",
+   "cud": "NEMLUVIO.01",
+   "tests": [
+    [
+     "it",
+     "lacks",
+     "8"
+    ]
+   ],
+   "timeline": [
+    {
+     "capture": "20250601",
+     "located": false
+    },
+    {
+     "capture": "20250701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "xml: code absent; same product's nearest DE text (code NEMLUVIO, change ratio 0.261 to the first 2026 text)"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260219",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260304",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260401",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260601",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260801",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260901",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261001",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261006",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    }
+   ],
+   "a": {
+    "earliest_capture": "20250701",
+    "present_in_earliest_capture": true,
+    "first_capture_with_divergence": "20250701",
+    "introduced_inside_2026_window": false
+   },
+   "b_current": {
+    "fr": {
+     "numbers_not_in_de": {
+      "count": 0,
+      "values": []
+     },
+     "de_numbers_missing_in_target": [],
+     "slot_diff_de_vs_target": [
+      "neg 4->7",
+      "modal:MUST 0->2"
+     ],
+     "divergence_tests": []
+    },
+    "it": {
+     "numbers_not_in_de": {
+      "count": 0,
+      "values": []
+     },
+     "de_numbers_missing_in_target": [
+      "8"
+     ],
+     "slot_diff_de_vs_target": [
+      "neg 4->5",
+      "modal:MUST 0->2"
+     ],
+     "divergence_tests": [
+      [
+       "it",
+       "lacks",
+       "8",
+       true
+      ]
+     ]
+    },
+    "catches": {
+     "it lacks 8": {
+      "numbers_not_in_de": false,
+      "note": "the check only looks for target numbers absent from the DE; a number the target drops is not its target",
+      "slot_diff_mentions": false
+     }
+    }
+   },
+   "c_de_changes_in_window": "no DE change of this limitation between consecutive usable 2026 snapshots"
+  },
+  {
+   "case": "Diaphin",
+   "cud": "DIAPHIN.6-",
+   "tests": [
+    [
+     "it",
+     "adds",
+     "12"
+    ],
+    [
+     "it",
+     "lacks",
+     "6"
+    ]
+   ],
+   "timeline": [
+    {
+     "capture": "20250601",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "xml LimitationCode"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20250701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "xml LimitationCode"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260219",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260304",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260401",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260601",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260801",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260901",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261001",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261006",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    }
+   ],
+   "a": {
+    "earliest_capture": "20250601",
+    "present_in_earliest_capture": true,
+    "first_capture_with_divergence": "20250601",
+    "introduced_inside_2026_window": false
+   },
+   "b_current": {
+    "fr": {
+     "numbers_not_in_de": {
+      "count": 0,
+      "values": []
+     },
+     "de_numbers_missing_in_target": [],
+     "slot_diff_de_vs_target": [],
+     "divergence_tests": []
+    },
+    "it": {
+     "numbers_not_in_de": {
+      "count": 1,
+      "values": [
+       "12"
+      ]
+     },
+     "de_numbers_missing_in_target": [
+      "6"
+     ],
+     "slot_diff_de_vs_target": [
+      "nums -{'6': 1} +{'12': 1}"
+     ],
+     "divergence_tests": [
+      [
+       "it",
+       "adds",
+       "12",
+       true
+      ],
+      [
+       "it",
+       "lacks",
+       "6",
+       true
+      ]
+     ]
+    },
+    "catches": {
+     "it adds 12": {
+      "numbers_not_in_de": true,
+      "slot_diff_mentions": true
+     },
+     "it lacks 6": {
+      "numbers_not_in_de": false,
+      "note": "the check only looks for target numbers absent from the DE; a number the target drops is not its target",
+      "slot_diff_mentions": true
+     }
+    }
+   },
+   "c_de_changes_in_window": "no DE change of this limitation between consecutive usable 2026 snapshots"
+  },
+  {
+   "case": "etanercept",
+   "cud": "NEPEXTO",
+   "tests": [
+    [
+     "fr",
+     "adds",
+     "62.5"
+    ]
+   ],
+   "timeline": [
+    {
+     "capture": "20250601",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "xml LimitationCode"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20250701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "xml LimitationCode"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260219",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260304",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260401",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260601",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260801",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260901",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261001",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261006",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    }
+   ],
+   "a": {
+    "earliest_capture": "20250601",
+    "present_in_earliest_capture": true,
+    "first_capture_with_divergence": "20250601",
+    "introduced_inside_2026_window": false
+   },
+   "b_current": {
+    "fr": {
+     "numbers_not_in_de": {
+      "count": 1,
+      "values": [
+       "62.5"
+      ]
+     },
+     "de_numbers_missing_in_target": [],
+     "slot_diff_de_vs_target": [
+      "neg 3->5",
+      "modal:MUST 0->1",
+      "nums -{} +{'62.5': 1}"
+     ],
+     "divergence_tests": [
+      [
+       "fr",
+       "adds",
+       "62.5",
+       true
+      ]
+     ]
+    },
+    "it": {
+     "numbers_not_in_de": {
+      "count": 0,
+      "values": []
+     },
+     "de_numbers_missing_in_target": [],
+     "slot_diff_de_vs_target": [
+      "modal:MAY 2->0",
+      "modal:MUST 0->1"
+     ],
+     "divergence_tests": []
+    },
+    "catches": {
+     "fr adds 62.5": {
+      "numbers_not_in_de": true,
+      "slot_diff_mentions": true
+     }
+    }
+   },
+   "c_de_changes_in_window": "no DE change of this limitation between consecutive usable 2026 snapshots"
+  },
+  {
+   "case": "etanercept",
+   "cud": "BENEPALI4",
+   "tests": [
+    [
+     "fr",
+     "adds",
+     "62.5"
+    ]
+   ],
+   "timeline": [
+    {
+     "capture": "20250601",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "xml LimitationCode"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20250701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "xml LimitationCode"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260219",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260304",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260401",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260601",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260801",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260901",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261001",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261006",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    }
+   ],
+   "a": {
+    "earliest_capture": "20250601",
+    "present_in_earliest_capture": true,
+    "first_capture_with_divergence": "20250601",
+    "introduced_inside_2026_window": false
+   },
+   "b_current": {
+    "fr": {
+     "numbers_not_in_de": {
+      "count": 1,
+      "values": [
+       "62.5"
+      ]
+     },
+     "de_numbers_missing_in_target": [],
+     "slot_diff_de_vs_target": [
+      "neg 3->5",
+      "modal:MUST 0->1",
+      "nums -{} +{'62.5': 1}"
+     ],
+     "divergence_tests": [
+      [
+       "fr",
+       "adds",
+       "62.5",
+       true
+      ]
+     ]
+    },
+    "it": {
+     "numbers_not_in_de": {
+      "count": 0,
+      "values": []
+     },
+     "de_numbers_missing_in_target": [],
+     "slot_diff_de_vs_target": [
+      "modal:MAY 2->0",
+      "modal:MUST 0->1"
+     ],
+     "divergence_tests": []
+    },
+    "catches": {
+     "fr adds 62.5": {
+      "numbers_not_in_de": true,
+      "slot_diff_mentions": true
+     }
+    }
+   },
+   "c_de_changes_in_window": "no DE change of this limitation between consecutive usable 2026 snapshots"
+  },
+  {
+   "case": "etanercept",
+   "cud": "ERELZI2",
+   "tests": [
+    [
+     "fr",
+     "adds",
+     "62.5"
+    ]
+   ],
+   "timeline": [
+    {
+     "capture": "20250601",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "xml LimitationCode"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20250701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "xml LimitationCode"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260219",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260304",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260401",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260601",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260801",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260901",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261001",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261006",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    }
+   ],
+   "a": {
+    "earliest_capture": "20250601",
+    "present_in_earliest_capture": true,
+    "first_capture_with_divergence": "20250601",
+    "introduced_inside_2026_window": false
+   },
+   "b_current": {
+    "fr": {
+     "numbers_not_in_de": {
+      "count": 1,
+      "values": [
+       "62.5"
+      ]
+     },
+     "de_numbers_missing_in_target": [],
+     "slot_diff_de_vs_target": [
+      "neg 3->5",
+      "modal:MUST 0->1",
+      "nums -{} +{'62.5': 1}"
+     ],
+     "divergence_tests": [
+      [
+       "fr",
+       "adds",
+       "62.5",
+       true
+      ]
+     ]
+    },
+    "it": {
+     "numbers_not_in_de": {
+      "count": 0,
+      "values": []
+     },
+     "de_numbers_missing_in_target": [],
+     "slot_diff_de_vs_target": [
+      "modal:MAY 2->0",
+      "modal:MUST 0->1"
+     ],
+     "divergence_tests": []
+    },
+    "catches": {
+     "fr adds 62.5": {
+      "numbers_not_in_de": true,
+      "slot_diff_mentions": true
+     }
+    }
+   },
+   "c_de_changes_in_window": "no DE change of this limitation between consecutive usable 2026 snapshots"
+  },
+  {
+   "case": "Cresemba",
+   "cud": "CRESE.Kps.IM",
+   "tests": [
+    [
+     "fr",
+     "lacks",
+     "16"
+    ]
+   ],
+   "timeline": [
+    {
+     "capture": "20250601",
+     "located": false
+    },
+    {
+     "capture": "20250701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "xml LimitationCode"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260219",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260304",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260401",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260601",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260801",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260901",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261001",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261006",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    }
+   ],
+   "a": {
+    "earliest_capture": "20250701",
+    "present_in_earliest_capture": true,
+    "first_capture_with_divergence": "20250701",
+    "introduced_inside_2026_window": false
+   },
+   "b_current": {
+    "fr": {
+     "numbers_not_in_de": {
+      "count": 0,
+      "values": []
+     },
+     "de_numbers_missing_in_target": [
+      "16"
+     ],
+     "slot_diff_de_vs_target": [
+      "nums -{'16': 1} +{}"
+     ],
+     "divergence_tests": [
+      [
+       "fr",
+       "lacks",
+       "16",
+       true
+      ]
+     ]
+    },
+    "it": {
+     "numbers_not_in_de": {
+      "count": 0,
+      "values": []
+     },
+     "de_numbers_missing_in_target": [],
+     "slot_diff_de_vs_target": [],
+     "divergence_tests": []
+    },
+    "catches": {
+     "fr lacks 16": {
+      "numbers_not_in_de": false,
+      "note": "the check only looks for target numbers absent from the DE; a number the target drops is not its target",
+      "slot_diff_mentions": true
+     }
+    }
+   },
+   "c_de_changes_in_window": "no DE change of this limitation between consecutive usable 2026 snapshots"
+  },
+  {
+   "case": "Dupixent",
+   "cud": "DUPIXENT.02P",
+   "tests": [
+    [
+     "fr",
+     "lacks",
+     "15"
+    ]
+   ],
+   "timeline": [
+    {
+     "capture": "20250601",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "xml: code absent; same product's nearest DE text (code DUPIXENT.02, change ratio 0.002 to the first 2026 text)"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20250701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "xml: code absent; same product's nearest DE text (code DUPIXENT.02, change ratio 0.002 to the first 2026 text)"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260219",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260304",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260401",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "predecessor: sl.mine paired it with the text of 20260601"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260601",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260801",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260901",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261001",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261006",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    }
+   ],
+   "a": {
+    "earliest_capture": "20250601",
+    "present_in_earliest_capture": true,
+    "first_capture_with_divergence": "20250601",
+    "introduced_inside_2026_window": false
+   },
+   "b_current": {
+    "fr": {
+     "numbers_not_in_de": {
+      "count": 0,
+      "values": []
+     },
+     "de_numbers_missing_in_target": [
+      "1",
+      "15",
+      "30"
+     ],
+     "slot_diff_de_vs_target": [
+      "neg 5->10",
+      "modal:MUST 0->3",
+      "nums -{'300': 3, '600': 1, '30': 2, '15': 3, '1': 1} +{}"
+     ],
+     "divergence_tests": [
+      [
+       "fr",
+       "lacks",
+       "15",
+       true
+      ]
+     ]
+    },
+    "it": {
+     "numbers_not_in_de": {
+      "count": 0,
+      "values": []
+     },
+     "de_numbers_missing_in_target": [],
+     "slot_diff_de_vs_target": [
+      "neg 5->6",
+      "modal:MUST 0->2",
+      "nums -{'21.1': 1} +{'21,1': 1}"
+     ],
+     "divergence_tests": []
+    },
+    "catches": {
+     "fr lacks 15": {
+      "numbers_not_in_de": false,
+      "note": "the check only looks for target numbers absent from the DE; a number the target drops is not its target",
+      "slot_diff_mentions": true
+     }
+    }
+   },
+   "c_de_changes_in_window": [
+    {
+     "step": "20260401>20260601",
+     "divergence_before": true,
+     "divergence_after_official": true,
+     "langs": {
+      "fr": {
+       "change_ratio": 0.002,
+       "route": "draft",
+       "rules_out": "Dermatite atopique – Patients adolescents Pour le traitement des adolescents de 12 à 17 ans, la seringue pré-remplie ou le stylo pré-rempli de 200 mg ou de 300 mg est remboursé. Dupilumab est remboursé chez les adolescents (12-17 ans) pour les patients pesant plus de 60 kg à une dose initiale de 600 mg en injection sous-cutanée (deux injections de 300 mg chacune), suivie d'une dose de 300 mg en injection sous-cutanée toutes les deux semaines, et pour les patients pesant moins de 60 kg à une dose initiale de 400 mg en injection sous- cutanée (deux injections de 200 mg chacune), suivie d'une dose de 200 mg en injection sous- cutanée toutes les deux semaines, chez les patients souffrant de dermatite atopique sévère (score IGA égal à 4 sur une échelle IGA de 0 à 4 ou score SCORAD >50 ou score EASI ≥21.1) si ces patients ne répondent pas de façon adéquate à un traitement local intensif de thérapies topiques sur ordonnance (corticoïdes topiques et/ou inhibiteurs de la calcineurine) et à une photothérapie (si disponible et indiquée) et, à partir de 16 ans, à un traitement systémique pendant au moins un mois avec un agent immunosuppresseur conventionnel (à l'exception des corticoïdes systémiques), ou si ces thérapies sont contre-indiquées ou ont dû être interrompues en raison d'événements indésirables pertinents sur le plan clinique. Dupilumab n'est pas remboursé en combinaison avec d'autres médicaments systémiques pour le traitement de la dermatite atopique. Si après 16 semaines de traitement avec le dupilumab aucune amélioration thérapeutique n’est survenue, c’est-à-dire aucune réduction de l'IGA de ≥ 2 points par rapport au score initial ou aucune amélioration de ≥50% du score EASI (EASI 50) par rapport au score initial ou aucune amélioration de ≥50% du score SCORAD (SCORAD 50) par rapport au score initial, le traitement doit être interrompu. Après 52 semaines de traitement ininterrompu de la dermatite atopique avec le dupilumab, une nouvelle garantie de prise en charge des frais par la caisse maladie doit être obtenue, après consultation préalable du médecin conseil. Le diagnostic, la prescription et le suivi du traitement du dupilumab dans l’indication de la dermatite atopique ne peuvent être effectués que par un spécialiste en dermatologie et vénérologie ou un spécialiste en allergologie et immunologie clinique. Le code suivant doit être transmis à l'assureur-maladie: 21258.02",
+       "rules_subs": [
+        [
+         "20819.02",
+         "21258.02",
+         true
+        ]
+       ],
+       "rule_only": true,
+       "model_windows": 0,
+       "model_called": false,
+       "draft": "Dermatite atopique – Patients adolescents Pour le traitement des adolescents de 12 à 17 ans, la seringue pré-remplie ou le stylo pré-rempli de 200 mg ou de 300 mg est remboursé. Dupilumab est remboursé chez les adolescents (12-17 ans) pour les patients pesant plus de 60 kg à une dose initiale de 600 mg en injection sous-cutanée (deux injections de 300 mg chacune), suivie d'une dose de 300 mg en injection sous-cutanée toutes les deux semaines, et pour les patients pesant moins de 60 kg à une dose initiale de 400 mg en injection sous- cutanée (deux injections de 200 mg chacune), suivie d'une dose de 200 mg en injection sous- cutanée toutes les deux semaines, chez les patients souffrant de dermatite atopique sévère (score IGA égal à 4 sur une échelle IGA de 0 à 4 ou score SCORAD >50 ou score EASI ≥21.1) si ces patients ne répondent pas de façon adéquate à un traitement local intensif de thérapies topiques sur ordonnance (corticoïdes topiques et/ou inhibiteurs de la calcineurine) et à une photothérapie (si disponible et indiquée) et, à partir de 16 ans, à un traitement systémique pendant au moins un mois avec un agent immunosuppresseur conventionnel (à l'exception des corticoïdes systémiques), ou si ces thérapies sont contre-indiquées ou ont dû être interrompues en raison d'événements indésirables pertinents sur le plan clinique. Dupilumab n'est pas remboursé en combinaison avec d'autres médicaments systémiques pour le traitement de la dermatite atopique. Si après 16 semaines de traitement avec le dupilumab aucune amélioration thérapeutique n’est survenue, c’est-à-dire aucune réduction de l'IGA de ≥ 2 points par rapport au score initial ou aucune amélioration de ≥50% du score EASI (EASI 50) par rapport au score initial ou aucune amélioration de ≥50% du score SCORAD (SCORAD 50) par rapport au score initial, le traitement doit être interrompu. Après 52 semaines de traitement ininterrompu de la dermatite atopique avec le dupilumab, une nouvelle garantie de prise en charge des frais par la caisse maladie doit être obtenue, après consultation préalable du médecin conseil. Le diagnostic, la prescription et le suivi du traitement du dupilumab dans l’indication de la dermatite atopique ne peuvent être effectués que par un spécialiste en dermatologie et vénérologie ou un spécialiste en allergologie et immunologie clinique. Le code suivant doit être transmis à l'assureur-maladie: 21258.02",
+       "draft_source": "rule-only (code)",
+       "flagged_g3": false,
+       "divergence_in_rules_out": true,
+       "divergence_in_draft": true,
+       "tgt_changed_officially": true,
+       "rules_out_equals_official": true,
+       "draft_equals_official": true,
+       "de_chars": 2597,
+       "pool_note": "DE longer than 2500 chars: sl.mine.build leaves it out of the item pool, so no recorded draft exists"
+      },
+      "it": {
+       "change_ratio": 0.002,
+       "route": "draft",
+       "rules_out": "Dermatite atopica – Adolescenti Per il trattamento degli adolescenti tra i 12 e 17 anni la siringa o la penna preriempita da 200 mg o 300 mg è rimborsata. Dupilumab è rimborsato negli adolescenti (12 – 17 anni) in pazienti con peso corporeo superiore a 60 kg ad una dose iniziale di 600 mg sotto forma di iniezione sottocutanea (due iniezioni da 300 mg ognuna), seguita da una dose di 300 mg sotto forma di iniezione sottocutanea ogni due settimane, in pazienti con un peso corporeo da 30 kg a meno di 60 kg a una dose iniziale di 400 mg sotto forma di iniezione sottocutanea (due iniezioni di 200 mg ognuna), seguita da una dose di 200 mg sotto forma di iniezione sottocutanea ogni due settimane, in pazienti con un peso corporeo da 15 kg a meno di 30 kg, alla dose iniziale di 600 mg (un'iniezione di 300 mg il giorno 1, seguita da 300 mg il giorno 15), seguita da una dose di 300 mg sotto forma di iniezione sottocutanea ogni quattro settimane (a partire da quattro settimane dopo il giorno 15) con dermatite atopica severa (IGA 4 su una scala IGA 0-4 o SCORAD >50 o EASI ≥21,1) se i pazienti non hanno risposto adeguatamente a un trattamento locale intensificato con terapie topiche soggette all’obbligo di prescrizione medica (corticosteroidi topici e/o inibitori della calcineurina) e fototerapia (se disponibile ed indicata) e, dal 16° anno di età, a un trattamento sistemico per almeno un mese con un immunosoppressore convenzionale (ad eccezione dei corticosteroidi sistemici), o quando queste terapie sono controindicate nei pazienti o hanno dovuto essere interrotte a causa di effetti collaterali clinicamente rilevanti. Dupilumab non è rimborsato in combinazione con altri medicamenti sistemici per il trattamento della dermatite atopica. Se dopo 16 settimane di trattamento con Dupilumab non si osserva alcun successo terapeutico, ovvero nessuna riduzione di ≥2 punti del punteggio IGA rispetto al valore iniziale o nessun miglioramento del ≥50% del punteggio EASI (EASI 50) rispetto al valore iniziale o nessun miglioramento del ≥50% del punteggio SCORAD (SCORAD 50) rispetto al valore iniziale, la terapia deve essere interrotta. Dopo 52 settimane di terapia ininterrotta della dermatite atopica con Dupilumab, è necessario ottenere una nuova garanzia di assunzione dei costi da parte dell’assicurazione malattia, previa consultazione del medico di fiducia. La diagnosi, la prescrizione e il controllo del trattamento con Dupilumab nell'indicazione della dermatite atopica possono avvenire esclusivamente da parte di un medico specialista in dermatologia e venereologia o da un medico specialista in allergologia e immunologia clinica. All’assicuratore malattia deve essere inviato il seguente codice: 21258.02",
+       "rules_subs": [
+        [
+         "20819.02",
+         "21258.02",
+         true
+        ]
+       ],
+       "rule_only": true,
+       "model_windows": 0,
+       "model_called": false,
+       "draft": "Dermatite atopica – Adolescenti Per il trattamento degli adolescenti tra i 12 e 17 anni la siringa o la penna preriempita da 200 mg o 300 mg è rimborsata. Dupilumab è rimborsato negli adolescenti (12 – 17 anni) in pazienti con peso corporeo superiore a 60 kg ad una dose iniziale di 600 mg sotto forma di iniezione sottocutanea (due iniezioni da 300 mg ognuna), seguita da una dose di 300 mg sotto forma di iniezione sottocutanea ogni due settimane, in pazienti con un peso corporeo da 30 kg a meno di 60 kg a una dose iniziale di 400 mg sotto forma di iniezione sottocutanea (due iniezioni di 200 mg ognuna), seguita da una dose di 200 mg sotto forma di iniezione sottocutanea ogni due settimane, in pazienti con un peso corporeo da 15 kg a meno di 30 kg, alla dose iniziale di 600 mg (un'iniezione di 300 mg il giorno 1, seguita da 300 mg il giorno 15), seguita da una dose di 300 mg sotto forma di iniezione sottocutanea ogni quattro settimane (a partire da quattro settimane dopo il giorno 15) con dermatite atopica severa (IGA 4 su una scala IGA 0-4 o SCORAD >50 o EASI ≥21,1) se i pazienti non hanno risposto adeguatamente a un trattamento locale intensificato con terapie topiche soggette all’obbligo di prescrizione medica (corticosteroidi topici e/o inibitori della calcineurina) e fototerapia (se disponibile ed indicata) e, dal 16° anno di età, a un trattamento sistemico per almeno un mese con un immunosoppressore convenzionale (ad eccezione dei corticosteroidi sistemici), o quando queste terapie sono controindicate nei pazienti o hanno dovuto essere interrotte a causa di effetti collaterali clinicamente rilevanti. Dupilumab non è rimborsato in combinazione con altri medicamenti sistemici per il trattamento della dermatite atopica. Se dopo 16 settimane di trattamento con Dupilumab non si osserva alcun successo terapeutico, ovvero nessuna riduzione di ≥2 punti del punteggio IGA rispetto al valore iniziale o nessun miglioramento del ≥50% del punteggio EASI (EASI 50) rispetto al valore iniziale o nessun miglioramento del ≥50% del punteggio SCORAD (SCORAD 50) rispetto al valore iniziale, la terapia deve essere interrotta. Dopo 52 settimane di terapia ininterrotta della dermatite atopica con Dupilumab, è necessario ottenere una nuova garanzia di assunzione dei costi da parte dell’assicurazione malattia, previa consultazione del medico di fiducia. La diagnosi, la prescrizione e il controllo del trattamento con Dupilumab nell'indicazione della dermatite atopica possono avvenire esclusivamente da parte di un medico specialista in dermatologia e venereologia o da un medico specialista in allergologia e immunologia clinica. All’assicuratore malattia deve essere inviato il seguente codice: 21258.02",
+       "draft_source": "rule-only (code)",
+       "flagged_g3": false,
+       "divergence_in_rules_out": null,
+       "divergence_in_draft": null,
+       "tgt_changed_officially": true,
+       "rules_out_equals_official": true,
+       "draft_equals_official": true,
+       "de_chars": 2597,
+       "pool_note": "DE longer than 2500 chars: sl.mine.build leaves it out of the item pool, so no recorded draft exists"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "case": "Dupixent",
+   "cud": "DUPIXENT.02",
+   "tests": [
+    [
+     "fr",
+     "lacks",
+     "15"
+    ]
+   ],
+   "timeline": [
+    {
+     "capture": "20250601",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "xml LimitationCode"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20250701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "xml LimitationCode"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260219",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260304",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260401",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260601",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260801",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260901",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261001",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261006",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    }
+   ],
+   "a": {
+    "earliest_capture": "20250601",
+    "present_in_earliest_capture": true,
+    "first_capture_with_divergence": "20250601",
+    "introduced_inside_2026_window": false
+   },
+   "b_current": {
+    "fr": {
+     "numbers_not_in_de": {
+      "count": 0,
+      "values": []
+     },
+     "de_numbers_missing_in_target": [
+      "1",
+      "15",
+      "30"
+     ],
+     "slot_diff_de_vs_target": [
+      "neg 5->10",
+      "modal:MUST 0->3",
+      "nums -{'300': 3, '600': 1, '30': 2, '15': 3, '1': 1} +{}"
+     ],
+     "divergence_tests": [
+      [
+       "fr",
+       "lacks",
+       "15",
+       true
+      ]
+     ]
+    },
+    "it": {
+     "numbers_not_in_de": {
+      "count": 0,
+      "values": []
+     },
+     "de_numbers_missing_in_target": [],
+     "slot_diff_de_vs_target": [
+      "neg 5->6",
+      "modal:MUST 0->2",
+      "nums -{'21.1': 1} +{'21,1': 1}"
+     ],
+     "divergence_tests": []
+    },
+    "catches": {
+     "fr lacks 15": {
+      "numbers_not_in_de": false,
+      "note": "the check only looks for target numbers absent from the DE; a number the target drops is not its target",
+      "slot_diff_mentions": true
+     }
+    }
+   },
+   "c_de_changes_in_window": "no DE change of this limitation between consecutive usable 2026 snapshots"
+  },
+  {
+   "case": "Dupixent",
+   "cud": "DUPIXENT.05a",
+   "tests": [
+    [
+     "fr",
+     "adds",
+     "30"
+    ],
+    [
+     "fr",
+     "lacks",
+     "15"
+    ]
+   ],
+   "timeline": [
+    {
+     "capture": "20250601",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "xml LimitationCode"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20250701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "xml LimitationCode"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260219",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ],
+     "caveat": "old-format export drops '<...>' spans and this limitation contains '<' from June on: text may be truncated"
+    },
+    {
+     "capture": "20260304",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ],
+     "caveat": "old-format export drops '<...>' spans and this limitation contains '<' from June on: text may be truncated"
+    },
+    {
+     "capture": "20260401",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "predecessor: sl.mine paired it with the text of 20260601"
+     ],
+     "divergence": [
+      true
+     ],
+     "caveat": "old-format export drops '<...>' spans and this limitation contains '<' from June on: text may be truncated"
+    },
+    {
+     "capture": "20260601",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260801",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260901",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261001",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261006",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    }
+   ],
+   "a": {
+    "earliest_capture": "20250601",
+    "present_in_earliest_capture": true,
+    "first_capture_with_divergence": "20250601",
+    "introduced_inside_2026_window": false
+   },
+   "b_current": {
+    "fr": {
+     "numbers_not_in_de": {
+      "count": 1,
+      "values": [
+       "30"
+      ]
+     },
+     "de_numbers_missing_in_target": [
+      "15"
+     ],
+     "slot_diff_de_vs_target": [
+      "neg 1->2",
+      "modal:MAY 1->0",
+      "modal:MUST 0->3",
+      "nums -{'15': 1} +{'30': 1}"
+     ],
+     "divergence_tests": [
+      [
+       "fr",
+       "adds",
+       "30",
+       true
+      ],
+      [
+       "fr",
+       "lacks",
+       "15",
+       true
+      ]
+     ]
+    },
+    "it": {
+     "numbers_not_in_de": {
+      "count": 0,
+      "values": []
+     },
+     "de_numbers_missing_in_target": [],
+     "slot_diff_de_vs_target": [
+      "modal:MUST 0->2",
+      "nums -{'6': 1, '11': 1} +{}"
+     ],
+     "divergence_tests": []
+    },
+    "catches": {
+     "fr adds 30": {
+      "numbers_not_in_de": true,
+      "slot_diff_mentions": true
+     },
+     "fr lacks 15": {
+      "numbers_not_in_de": false,
+      "note": "the check only looks for target numbers absent from the DE; a number the target drops is not its target",
+      "slot_diff_mentions": true
+     }
+    }
+   },
+   "c_de_changes_in_window": [
+    {
+     "step": "20260401>20260601",
+     "divergence_before": true,
+     "divergence_after_official": true,
+     "langs": {},
+     "not_a_real_change": "publisher bug: the old-format snapshot dropped a '<...>' span that the next snapshot has; sl.mine drops such pairs, so Gleichlaut would not have drafted anything here",
+     "de_edit": "- insert «< 60 kg , bzw . von 200 mg alle 2 Wochen bei einem Körpergewicht ab 60 kg , bei Kindern von 6 bis 11 Jahren mit schwerem Typ 2 Asthma , gekennzeichnet durch folgende Kriterien :» after «von 15 -»"
+    }
+   ]
+  },
+  {
+   "case": "Dupixent",
+   "cud": "DUPIXENT.05P",
+   "tests": [
+    [
+     "fr",
+     "adds",
+     "30"
+    ],
+    [
+     "fr",
+     "lacks",
+     "15"
+    ]
+   ],
+   "timeline": [
+    {
+     "capture": "20250601",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "xml: code absent; same product's nearest DE text (code DUPIXENT.05a, change ratio 0.003 to the first 2026 text)"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20250701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "xml: code absent; same product's nearest DE text (code DUPIXENT.05a, change ratio 0.003 to the first 2026 text)"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260219",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ],
+     "caveat": "old-format export drops '<...>' spans and this limitation contains '<' from June on: text may be truncated"
+    },
+    {
+     "capture": "20260304",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "identical DE text"
+     ],
+     "divergence": [
+      true
+     ],
+     "caveat": "old-format export drops '<...>' spans and this limitation contains '<' from June on: text may be truncated"
+    },
+    {
+     "capture": "20260401",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "predecessor: sl.mine paired it with the text of 20260601"
+     ],
+     "divergence": [
+      true
+     ],
+     "caveat": "old-format export drops '<...>' spans and this limitation contains '<' from June on: text may be truncated"
+    },
+    {
+     "capture": "20260601",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260701",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260801",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260901",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261001",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261006",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    }
+   ],
+   "a": {
+    "earliest_capture": "20250601",
+    "present_in_earliest_capture": true,
+    "first_capture_with_divergence": "20250601",
+    "introduced_inside_2026_window": false
+   },
+   "b_current": {
+    "fr": {
+     "numbers_not_in_de": {
+      "count": 1,
+      "values": [
+       "30"
+      ]
+     },
+     "de_numbers_missing_in_target": [
+      "15"
+     ],
+     "slot_diff_de_vs_target": [
+      "neg 1->2",
+      "modal:MAY 1->0",
+      "modal:MUST 0->3",
+      "nums -{'15': 1} +{'30': 1}"
+     ],
+     "divergence_tests": [
+      [
+       "fr",
+       "adds",
+       "30",
+       true
+      ],
+      [
+       "fr",
+       "lacks",
+       "15",
+       true
+      ]
+     ]
+    },
+    "it": {
+     "numbers_not_in_de": {
+      "count": 0,
+      "values": []
+     },
+     "de_numbers_missing_in_target": [],
+     "slot_diff_de_vs_target": [
+      "modal:MUST 0->2",
+      "nums -{'6': 1, '11': 1} +{}"
+     ],
+     "divergence_tests": []
+    },
+    "catches": {
+     "fr adds 30": {
+      "numbers_not_in_de": true,
+      "slot_diff_mentions": true
+     },
+     "fr lacks 15": {
+      "numbers_not_in_de": false,
+      "note": "the check only looks for target numbers absent from the DE; a number the target drops is not its target",
+      "slot_diff_mentions": true
+     }
+    }
+   },
+   "c_de_changes_in_window": [
+    {
+     "step": "20260401>20260601",
+     "divergence_before": true,
+     "divergence_after_official": true,
+     "langs": {},
+     "not_a_real_change": "publisher bug: the old-format snapshot dropped a '<...>' span that the next snapshot has; sl.mine drops such pairs, so Gleichlaut would not have drafted anything here",
+     "de_edit": "- insert «< 60 kg , bzw . von 200 mg alle 2 Wochen bei einem Körpergewicht ab 60 kg , bei Kindern von 6 bis 11 Jahren mit schwerem Typ 2 Asthma , gekennzeichnet durch folgende Kriterien :» after «von 15 -»\n- replace «20819.05» with «21258.05»"
+    }
+   ]
+  },
+  {
+   "case": "Keytruda (bonus)",
+   "cud": "KEYTRUDA.07---Inj-L-s---Urothelkarzinom--Monotherapie--KN045",
+   "tests": [
+    [
+     "it",
+     "is_fr",
+     null
+    ]
+   ],
+   "timeline": [
+    {
+     "capture": "20250601",
+     "located": false
+    },
+    {
+     "capture": "20250701",
+     "located": false
+    },
+    {
+     "capture": "20260219",
+     "located": false
+    },
+    {
+     "capture": "20260304",
+     "located": false
+    },
+    {
+     "capture": "20260401",
+     "located": false
+    },
+    {
+     "capture": "20260601",
+     "located": false
+    },
+    {
+     "capture": "20260701",
+     "located": false
+    },
+    {
+     "capture": "20260801",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20260901",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261001",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    },
+    {
+     "capture": "20261006",
+     "located": true,
+     "variants": 1,
+     "methods": [
+      "CUD id"
+     ],
+     "divergence": [
+      true
+     ]
+    }
+   ],
+   "a": {
+    "earliest_capture": "20260801",
+    "present_in_earliest_capture": true,
+    "first_capture_with_divergence": "20260801",
+    "introduced_inside_2026_window": true,
+    "note": "the limitation (or a traceable predecessor) first appears inside the window and is divergent from its first publication: a new limitation, not an amendment of an existing one"
+   },
+   "b_current": {
+    "fr": {
+     "numbers_not_in_de": {
+      "count": 0,
+      "values": []
+     },
+     "de_numbers_missing_in_target": [],
+     "slot_diff_de_vs_target": [
+      "neg 0->1",
+      "modal:MAY 0->1",
+      "modal:MUST 0->2",
+      "modal:SHALL 2->0"
+     ],
+     "divergence_tests": []
+    },
+    "it": {
+     "numbers_not_in_de": {
+      "count": 0,
+      "values": []
+     },
+     "de_numbers_missing_in_target": [],
+     "slot_diff_de_vs_target": [
+      "modal:SHALL 2->0"
+     ],
+     "divergence_tests": [
+      [
+       "it",
+       "is_fr",
+       null,
+       true
+      ]
+     ]
+    },
+    "catches": {
+     "it is_fr None": {
+      "numbers_not_in_de": false,
+      "slot_diff_mentions": false,
+      "note": "no numeric signal: the Italian slot carries the French text"
+     }
+    }
+   },
+   "c_de_changes_in_window": "no DE change of this limitation between consecutive usable 2026 snapshots",
+   "origin_context": {
+    "snapshot": "20260701",
+    "key": "KEYTRUDA.07",
+    "product": "Keytruda Inf Konz 100 mg/4ml",
+    "change_ratio": 0.011,
+    "de": "Urothelkarzinom (Monotherapie) KN045 (mit Preismodell) Als Monotherapie zur Behandlung des lokal fortgeschrittenen oder metastasierten Urothelkarzinom bei Erwachsenen, die innerhalb der letzten 24 Monate mit platinbasierter Chemotherapie vorbehandelt wurden. Patienten, deren platinbasierte Therapie länger als 24 Monate zurückliegt, sollen vor Beginn einer Behandlung mit KEYTRUDA erneut in erster Linie platinbasiert behandelt werden, erst bei erneuter Progression auf diese Therapie innerhalb von 24 Monaten soll in der 2. Linie mit der Therapie von KEYTRUDA begonnen werden. Folgender Code ist an den Krankenversicherer zu übermitteln: 20416.07",
+    "fr": "Carcinome urothélial (monothérapie) KN045 (avec modèle de prix) Monothérapie du carcinome urothélial localement avancé ou métastatique chez les adultes ayant été prétraités par chimiothérapie à base de platine au cours des 24 derniers mois. Les patients dont le traitement à base de platine remonte à plus de 24 mois doivent de nouveau recevoir un traitement de première ligne à base de platine avant le traitement par KEYTRUDA; un traitement de 2e ligne avec KEYTRUDA ne peut être initié qu'en cas de nouvelle progression dans les 24 mois suivant le traitement à base de platine. Le code suivant doit être transmis à l’assurance maladie: 20416.07",
+    "it": "Carcinoma uroteliale (monoterapia) KN045 (con modello di prezzo) In monoterapia per il trattamento del carcinoma uroteliale localmente avanzato o metastatico in pazienti adulti sottoposti a precedente chemioterapia a base di platino nell'arco degli ultimi 24 mesi. I pazienti la cui terapia a base di platino risale a oltre 24 mesi devono essere nuovamente sottoposti a trattamento di prima linea a base di platino prima dell'inizio della terapia con KEYTRUDA; la terapia con KEYTRUDA può essere avviata in 2° linea soltanto in caso di nuova progressione nel corso di questa terapia entro 24 mesi. All’assicuratore malattie deve essere inviato il seguente codice: 20416.07",
+    "divergence": false,
+    "note": "context only, not part of R3: the limitation is new in the window; its nearest existing limitation of the same brand in the previous snapshot is treated as the old text, to show what an amendment-style draft from it would have been",
+    "fr_draft": {
+     "change_ratio": 0.011,
+     "route": "draft",
+     "rules_out": "Carcinome urothélial (monothérapie) KN045 (avec modèle de prix) Monothérapie du carcinome urothélial localement avancé ou métastatique chez les adultes ayant été prétraités par chimiothérapie à base de platine au cours des 24 derniers mois. Les patients dont le traitement à base de platine remonte à plus de 24 mois doivent de nouveau recevoir un traitement de première ligne à base de platine avant le traitement par KEYTRUDA; un traitement de 2e ligne avec KEYTRUDA ne peut être initié qu'en cas de nouvelle progression dans les 24 mois suivant le traitement à base de platine. Le code suivant doit être transmis à l’assurance maladie: 22159.07",
+     "rules_subs": [
+      [
+       "20416.07",
+       "22159.07",
+       true
+      ]
+     ],
+     "rule_only": true,
+     "model_windows": 0,
+     "model_called": false,
+     "draft": "Carcinome urothélial (monothérapie) KN045 (avec modèle de prix) Monothérapie du carcinome urothélial localement avancé ou métastatique chez les adultes ayant été prétraités par chimiothérapie à base de platine au cours des 24 derniers mois. Les patients dont le traitement à base de platine remonte à plus de 24 mois doivent de nouveau recevoir un traitement de première ligne à base de platine avant le traitement par KEYTRUDA; un traitement de 2e ligne avec KEYTRUDA ne peut être initié qu'en cas de nouvelle progression dans les 24 mois suivant le traitement à base de platine. Le code suivant doit être transmis à l’assurance maladie: 22159.07",
+     "draft_source": "rule-only (code)",
+     "flagged_g3": false
+    },
+    "it_draft": {
+     "change_ratio": 0.011,
+     "route": "draft",
+     "rules_out": "Carcinoma uroteliale (monoterapia) KN045 (con modello di prezzo) In monoterapia per il trattamento del carcinoma uroteliale localmente avanzato o metastatico in pazienti adulti sottoposti a precedente chemioterapia a base di platino nell'arco degli ultimi 24 mesi. I pazienti la cui terapia a base di platino risale a oltre 24 mesi devono essere nuovamente sottoposti a trattamento di prima linea a base di platino prima dell'inizio della terapia con KEYTRUDA; la terapia con KEYTRUDA può essere avviata in 2° linea soltanto in caso di nuova progressione nel corso di questa terapia entro 24 mesi. All’assicuratore malattie deve essere inviato il seguente codice: 22159.07",
+     "rules_subs": [
+      [
+       "20416.07",
+       "22159.07",
+       true
+      ]
+     ],
+     "rule_only": true,
+     "model_windows": 0,
+     "model_called": false,
+     "draft": "Carcinoma uroteliale (monoterapia) KN045 (con modello di prezzo) In monoterapia per il trattamento del carcinoma uroteliale localmente avanzato o metastatico in pazienti adulti sottoposti a precedente chemioterapia a base di platino nell'arco degli ultimi 24 mesi. I pazienti la cui terapia a base di platino risale a oltre 24 mesi devono essere nuovamente sottoposti a trattamento di prima linea a base di platino prima dell'inizio della terapia con KEYTRUDA; la terapia con KEYTRUDA può essere avviata in 2° linea soltanto in caso di nuova progressione nel corso di questa terapia entro 24 mesi. All’assicuratore malattie deve essere inviato il seguente codice: 22159.07",
+     "draft_source": "rule-only (code)",
+     "flagged_g3": false,
+     "divergence_in_rules_out": false,
+     "divergence_in_draft": false
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+# Vendored schemas (used by `gleichlaut.emit.validate`)
+
+Fetched once on 9 Oct 2026 (User-Agent `hackapertus-research/0.1`) and stored byte-identical, so validation never needs
+the network. `validate.py` reports the sha256 of every file it used in `validation.json`.
+
+| Directory | What | Source | Licence |
+|---|---|---|---|
+| `xliff-2.1/xliff_core_2.0.xsd` | XLIFF 2.1 core schema (the 2.1 core keeps the `urn:oasis:names:tc:xliff:document:2.0` namespace and this file name) | https://docs.oasis-open.org/xliff/xliff-core/v2.1/os/schemas/xliff_core_2.0.xsd | Copyright © OASIS Open 2018, OASIS Standard; copying and redistribution permitted by the OASIS notices of the standard (TC IPR statement: https://www.oasis-open.org/committees/xliff/ipr.php) |
+| `xliff-2.1/informativeCopiesOf3rdPartySchemas/w3c/xml.xsd` | W3C schema for the `xml:` namespace, imported by the core XSD (same relative path as in the OASIS distribution) | https://docs.oasis-open.org/xliff/xliff-core/v2.1/os/schemas/informativeCopiesOf3rdPartySchemas/w3c/xml.xsd (OASIS' informative copy of http://www.w3.org/2001/xml.xsd) | © W3C; the file states no licence, W3C publishes its schemas under the W3C Document / Software licences (https://www.w3.org/copyright/) |
+| `ch-epl/StructureDefinition-ch-idmp-clinicalusedefinition-indication.json`, `ch-epl/package.json` | CH EPL (R5) IG 1.0.1 profile for ClinicalUseDefinition (indication), and the package manifest | https://fhir.ch/ig/ch-epl/package.tgz (`package/` directory), canonical http://fhir.ch/ig/ch-epl | CC0-1.0 (package.json), author FOPH |
+| `fhir-r5/*.profile.json` | FHIR R5 (5.0.0) base StructureDefinitions: Bundle, Provenance, Device, Meta, Narrative, Coding, CodeableConcept, CodeableReference, Reference, Identifier, Extension | https://hl7.org/fhir/R5/{name}.profile.json | CC0 (HL7 FHIR licence, https://hl7.org/fhir/R5/license.html) |
+| `fhir-r5/terminology/` | R5 ValueSets and CodeSystems behind the required bindings the emitted resources use (bundle-type, narrative-status, clinical-use-definition-type, provenance-entity-role, device-status, device-nametype, identifier-use) and publication-status | https://hl7.org/fhir/R5/{valueset,codesystem}-{name}.json | CC0 (as above) |
+| `epl-feed/cud_shape.json` | Paths, JSON types, id rule, fullUrl and narrative rule of every ClinicalUseDefinition in BAG's ePL feed (15,030 entries, 1,688 ids, de/fr/it), plus one sample entry per language; written by `python3 -m gleichlaut.emit.validate --survey sl-de.ndjson sl-fr.ndjson sl-it.ndjson` (streams the files; sha256 of each in the JSON) | https://epl.bag.admin.ch/static/sl/publication/fhir/foph-sl-publication-latest-{de,fr,it}.ndjson (5 Oct 2026) | official federal publication (BAG); reuse as official text |
+
+Not vendored: the CH EPL `ch-idmp-bundle` profile (the drafts do not claim it: it requires product entries a translation
+draft does not carry) and the XLIFF 2.1 Schematron (`xliff_core_2.1.sch`, XSLT 2 binding, which lxml cannot run; the
+core constraints that matter here are coded in `validate.validate_xliff`).

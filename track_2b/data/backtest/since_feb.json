@@ -1,0 +1,364 @@
+{
+ "generated_by": "PYTHONPATH=src python3 -m gleichlaut.backtest --hist <2026 snapshot dir> --wb2025 <2025 XML dir>",
+ "inputs": {
+  "hist": "~/Desktop/hackapertus/spikes/gleichlaut/data/hist",
+  "wb2025": "~/Desktop/hackapertus/spikes/gleichlaut/data/wb2025",
+  "sha256": {
+   "20260219-de.json": "021ca69d2ad02b3583fc1e758d3a2937ae17b616e48f584c4e769960210ac2ec",
+   "20260219-fr.json": "d68736d183e9ad2f13ae12c0fd9dc7c05ab10ec3fae618e3454eaf7dd9ca7dc1",
+   "20260219-it.json": "059820d549fa27c4fd3a83bc0d13ca6a50d44b4354d9399191db1d72214bde2c",
+   "20260304-de.json": "f26d737d60a22df6ce62535385cf532ce987ce7d36dfdec570e2d209c177c216",
+   "20260304-fr.json": "c7d8ef2c63e97913a6f800684516a69a5bcc44e51eead33251b5d0bbc98012be",
+   "20260304-it.json": "f86c95a5a307227900e9c7326c6361ec39fe0e05239ba70fc2039e30eda1de2e",
+   "20260401-de.json": "b248dd15b6c719e684a17c8fd9ece602167463e3a99907a6992ab9bb77fea9d8",
+   "20260401-fr.json": "09e37b909c9c381526dfa041aa69de9961f2509680a0cdf91c05f61691851638",
+   "20260401-it.json": "af17e911e77851af6bdd1f9a7ad4f9e0fe4c1007c63342eae879baab26c8bd65",
+   "20260601-de.json": "8d848fde50c161d311bbbe6863d02aed952a9563cc5f4002d5bc49e4a344138b",
+   "20260601-fr.json": "d24792364d2c242c936d1279d01dae30e2af388c063925f65786e5c3f5d7dc85",
+   "20260601-it.json": "39e24d30a973402bd1dee8f4f9f1edd30442cbcda32a6f87cf23d754ab02b038",
+   "20260701-de.json": "d9baed7cbb6764bdcc6d68be0597e5385a256449b28c94057d3ea6e1627cf54e",
+   "20260701-fr.json": "6dfcfa8365d4e4bc7bb5b663a23e7ad68185db09a84062f2107e824c0e9b4f67",
+   "20260701-it.json": "feb7d9b7958434b6853881b39048fc2f9ec191edf5d42a3c2cb933fbc3dc4d94",
+   "20260801-de.json": "bfa816190ae751928c3bafa72c3b56028e76e905adfc348db0524f858d8e956a",
+   "20260801-fr.json": "057c10668c747e3ae639ac9192f15b3e9d0e692308a79cb8ae6ffef8e093324a",
+   "20260801-it.json": "ff803bb908e89171b32e30ebf28bfa6eba9295997fd785b8266dec5d5fc9e902",
+   "20260901-de.json": "6eba62334ff9512e5aeff408f29beea3fcd2c2044742b9ea8e62abe5e9308146",
+   "20260901-fr.json": "fc49abb0d52eca7b329e1dd22ebe09fb6a5f483d1b6efbf8d2f01ad0953d54fb",
+   "20260901-it.json": "9f97c6ddcacb4e58081609b630ae2355860602d9ed70c7b21d2ff606f70ff608",
+   "20261001-de.json": "64edb3b2452a1f98fd441782668b86483664dfd11b8074d9b1659c35c46a23dc",
+   "20261001-fr.json": "978719d98ca3972d8028bf10e645d2d0b06cd2ee22e1e008ccc5d9d13744c950",
+   "20261001-it.json": "ea41aade846e1f7ca6be7b8baaa41ffd6d08e69879c50c4d8af61e38a1cce919",
+   "20261006-de.json": "fe5e60f1931a6b345ae4687f9affbf1b05efa14263d20c16f410d3260228cc68",
+   "20261006-fr.json": "4d10dd047bdfd65a3bff5aca361706f2d3901c7872c6c9179948ede2f9477a54",
+   "20261006-it.json": "bcd86c674898d32f52b034674f54c67c2dac7cb893afc941e86da0642e1cd577",
+   "20250611/Preparations.xml": "ab071ebad1d502d6a80131e7c08963ed6681529d4e0c81ed46f046e883370f2f",
+   "20250731/Preparations.xml": "102f691db6cc465c926db6c12e5510b586cdd799d75125f3f1c7a4344bb5352c"
+  }
+ },
+ "prereg": "eval/prereg/PREREG.md R3",
+ "snapshots": [
+  "20260219",
+  "20260304",
+  "20260401",
+  "20260601",
+  "20260701",
+  "20260801",
+  "20260901",
+  "20261001",
+  "20261006"
+ ],
+ "excluded": {
+  "20260504": "publisher bug: drops every '<...>' span (restored in June)"
+ },
+ "wb2025": [
+  "20250601",
+  "20250701"
+ ],
+ "model_calls": 0,
+ "status": "DEV numbers. The 362 items are the 2026 pool: guards v2 was shaped on the dev 120 (in-sample) and guards3 was designed on the 242 after the out-of-sample run failed. Only the fresh 2025 set (data/items/items_fresh.json) is held out.",
+ "what": "Recorded 70B outputs (whole-paragraph locked rewrite, guards v2, one re-ask: data/runs/70b_dev120_v2_final.jsonl, 70b_oos242_v2_final.jsonl) on the 362-item 2026 pool, placed on the snapshot transition where the DE change first qualified. ready/flagged = core.check_only(score.RUNS[run]['stack']='v2').check(x, out)['flag'] (asserted equal to the recorded flag). ready_g3_recheck = the same recorded outputs re-guarded with guards3 (the shipped stack); the outputs themselves came from the v2 re-ask loop, so this is not what a guards3 run would have produced.",
+ "pool_stats": {
+  "de_pairs": 216,
+  "too_long": 30,
+  "excl_tgt_unchanged": 5,
+  "eligible": 181,
+  "clusters": 100,
+  "chosen_de": 60,
+  "items": 120,
+  "by_transition": {
+   "20260701>20260801": 17,
+   "20260601>20260701": 15,
+   "20260901>20261001": 5,
+   "20260304>20260401": 4,
+   "20260219>20260304": 5,
+   "20260401>20260601": 9,
+   "20260801>20260901": 5
+  }
+ },
+ "unmapped_items": [],
+ "per_transition": [
+  {
+   "step": "20260219>20260304",
+   "days": 13,
+   "de_changes": {
+    "matched": 19,
+    "draft_lane_new_distinct": 13,
+    "human_lane_over60_occurrences": 1,
+    "human_lane_over60_new_distinct": 1,
+    "excluded_too_long": 7,
+    "excluded_target_unchanged_or_missing": 0,
+    "in_pool": 6
+   },
+   "items": {
+    "all": 12,
+    "fr": 6,
+    "it": 6
+   },
+   "exact": 1,
+   "rule_only": 0,
+   "ready_v2": 4,
+   "flagged_v2": 8,
+   "ready_v2_by_label": {
+    "equivalent": 3,
+    "exact": 1
+   },
+   "ready_g3_recheck": 3,
+   "flagged_g3_recheck": 9,
+   "families": 6,
+   "largest_family": {
+    "family": "ec23a2f6",
+    "items": 2
+   }
+  },
+  {
+   "step": "20260304>20260401",
+   "days": 28,
+   "de_changes": {
+    "matched": 28,
+    "draft_lane_new_distinct": 10,
+    "human_lane_over60_occurrences": 0,
+    "human_lane_over60_new_distinct": 0,
+    "excluded_too_long": 3,
+    "excluded_target_unchanged_or_missing": 0,
+    "in_pool": 7
+   },
+   "items": {
+    "all": 14,
+    "fr": 7,
+    "it": 7
+   },
+   "exact": 2,
+   "rule_only": 0,
+   "ready_v2": 5,
+   "flagged_v2": 9,
+   "ready_v2_by_label": {
+    "equivalent": 3,
+    "exact": 2
+   },
+   "ready_g3_recheck": 4,
+   "flagged_g3_recheck": 10,
+   "families": 7,
+   "largest_family": {
+    "family": "c8c91447",
+    "items": 2
+   }
+  },
+  {
+   "step": "20260401>20260601",
+   "days": 61,
+   "de_changes": {
+    "matched": 318,
+    "draft_lane_new_distinct": 41,
+    "human_lane_over60_occurrences": 8,
+    "human_lane_over60_new_distinct": 3,
+    "excluded_too_long": 6,
+    "excluded_target_unchanged_or_missing": 3,
+    "in_pool": 32
+   },
+   "items": {
+    "all": 64,
+    "fr": 32,
+    "it": 32
+   },
+   "exact": 44,
+   "rule_only": 38,
+   "ready_v2": 38,
+   "flagged_v2": 26,
+   "ready_v2_by_label": {
+    "equivalent": 3,
+    "exact": 32,
+    "german": 3
+   },
+   "ready_g3_recheck": 36,
+   "flagged_g3_recheck": 28,
+   "families": 13,
+   "largest_family": {
+    "family": "250a1b64",
+    "items": 28
+   }
+  },
+  {
+   "step": "20260601>20260701",
+   "days": 30,
+   "de_changes": {
+    "matched": 189,
+    "draft_lane_new_distinct": 49,
+    "human_lane_over60_occurrences": 72,
+    "human_lane_over60_new_distinct": 15,
+    "excluded_too_long": 4,
+    "excluded_target_unchanged_or_missing": 0,
+    "in_pool": 45
+   },
+   "items": {
+    "all": 90,
+    "fr": 45,
+    "it": 45
+   },
+   "exact": 24,
+   "rule_only": 4,
+   "ready_v2": 40,
+   "flagged_v2": 50,
+   "ready_v2_by_label": {
+    "REAL": 1,
+    "cosmetic": 9,
+    "equivalent": 5,
+    "exact": 24,
+    "german": 1
+   },
+   "ready_g3_recheck": 39,
+   "flagged_g3_recheck": 51,
+   "families": 32,
+   "largest_family": {
+    "family": "6d4e78ae",
+    "items": 10
+   }
+  },
+  {
+   "step": "20260701>20260801",
+   "days": 31,
+   "de_changes": {
+    "matched": 124,
+    "draft_lane_new_distinct": 51,
+    "human_lane_over60_occurrences": 2,
+    "human_lane_over60_new_distinct": 1,
+    "excluded_too_long": 3,
+    "excluded_target_unchanged_or_missing": 0,
+    "in_pool": 48
+   },
+   "items": {
+    "all": 96,
+    "fr": 48,
+    "it": 48
+   },
+   "exact": 0,
+   "rule_only": 0,
+   "ready_v2": 27,
+   "flagged_v2": 69,
+   "ready_v2_by_label": {
+    "equivalent": 20,
+    "german": 5,
+    "minor": 2
+   },
+   "ready_g3_recheck": 21,
+   "flagged_g3_recheck": 75,
+   "families": 24,
+   "largest_family": {
+    "family": "1419029a",
+    "items": 16
+   }
+  },
+  {
+   "step": "20260801>20260901",
+   "days": 31,
+   "de_changes": {
+    "matched": 28,
+    "draft_lane_new_distinct": 14,
+    "human_lane_over60_occurrences": 10,
+    "human_lane_over60_new_distinct": 5,
+    "excluded_too_long": 3,
+    "excluded_target_unchanged_or_missing": 0,
+    "in_pool": 11
+   },
+   "items": {
+    "all": 22,
+    "fr": 11,
+    "it": 11
+   },
+   "exact": 0,
+   "rule_only": 0,
+   "ready_v2": 9,
+   "flagged_v2": 13,
+   "ready_v2_by_label": {
+    "equivalent": 7,
+    "minor": 2
+   },
+   "ready_g3_recheck": 4,
+   "flagged_g3_recheck": 18,
+   "families": 10,
+   "largest_family": {
+    "family": "1601e95e",
+    "items": 4
+   }
+  },
+  {
+   "step": "20260901>20261001",
+   "days": 30,
+   "de_changes": {
+    "matched": 60,
+    "draft_lane_new_distinct": 24,
+    "human_lane_over60_occurrences": 4,
+    "human_lane_over60_new_distinct": 2,
+    "excluded_too_long": 4,
+    "excluded_target_unchanged_or_missing": 2,
+    "in_pool": 18
+   },
+   "items": {
+    "all": 36,
+    "fr": 18,
+    "it": 18
+   },
+   "exact": 4,
+   "rule_only": 0,
+   "ready_v2": 9,
+   "flagged_v2": 27,
+   "ready_v2_by_label": {
+    "equivalent": 6,
+    "exact": 2,
+    "german": 1
+   },
+   "ready_g3_recheck": 6,
+   "flagged_g3_recheck": 30,
+   "families": 10,
+   "largest_family": {
+    "family": "7ed8b06b",
+    "items": 8
+   }
+  },
+  {
+   "step": "20261001>20261006",
+   "days": 5,
+   "de_changes": {
+    "matched": 68,
+    "draft_lane_new_distinct": 14,
+    "human_lane_over60_occurrences": 0,
+    "human_lane_over60_new_distinct": 0,
+    "excluded_too_long": 0,
+    "excluded_target_unchanged_or_missing": 0,
+    "in_pool": 14
+   },
+   "items": {
+    "all": 28,
+    "fr": 14,
+    "it": 14
+   },
+   "exact": 17,
+   "rule_only": 0,
+   "ready_v2": 0,
+   "flagged_v2": 28,
+   "ready_v2_by_label": {},
+   "ready_g3_recheck": 0,
+   "flagged_g3_recheck": 28,
+   "families": 2,
+   "largest_family": {
+    "family": "7d7fcead",
+    "items": 24
+   }
+  }
+ ],
+ "totals": {
+  "items": 362,
+  "ready_v2": 132,
+  "flagged_v2": 230,
+  "ready_g3_recheck": 113,
+  "exact": 92,
+  "rule_only": 42,
+  "ready_v2_by_label": {
+   "equivalent": 47,
+   "exact": 61,
+   "german": 10,
+   "REAL": 1,
+   "cosmetic": 9,
+   "minor": 4
+  }
+ }
+}

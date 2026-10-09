@@ -1,0 +1,119 @@
+{
+ "source": "BAG ePL FHIR feed (foph-sl-publication-latest-{de,fr,it}.ndjson, fetched 5 Oct 2026)",
+ "files": {
+  "sl-de.ndjson": {
+   "sha256": "9eec089d47057f2a89550967ba7ef95fa38c31fdb89123f428564aec4ab6d972",
+   "bundles": 6749,
+   "cud_entries": 5010
+  },
+  "sl-fr.ndjson": {
+   "sha256": "1de4a0038c9a3149f3cd467377023aa8d491e9b4f2d7f876f138663e364195dd",
+   "bundles": 6749,
+   "cud_entries": 5010
+  },
+  "sl-it.ndjson": {
+   "sha256": "7f593c222dc74dda0b54482c448d3180a35ecae44bafec088161a25175a35508",
+   "bundles": 6749,
+   "cud_entries": 5010
+  }
+ },
+ "cud_entries": 15030,
+ "unique_ids": 1688,
+ "paths": {
+  "id": {
+   "str": 15030
+  },
+  "indication.diseaseSymptomProcedure.concept.text": {
+   "str": 15030
+  },
+  "resourceType": {
+   "str": 15030
+  },
+  "text.div": {
+   "str": 15030
+  },
+  "text.status": {
+   "str": 15030
+  },
+  "type": {
+   "str": 15030
+  }
+ },
+ "always": [
+  "id",
+  "indication.diseaseSymptomProcedure.concept.text",
+  "resourceType",
+  "text.div",
+  "text.status",
+  "type"
+ ],
+ "fullUrl_base": "http://fhir.epl.bag.admin.ch/ClinicalUseDefinition/",
+ "fullUrl": {
+  "base_ok": 15030
+ },
+ "id_regex": "[A-Za-z0-9\\-.]{1,64}",
+ "ids_matching_regex": 1688,
+ "narrative": {
+  "escaped_text": 14953,
+  "rule": "div == <div xmlns=xhtml> + html.escape(text, quote=False) + </div>"
+ },
+ "samples": {
+  "de": {
+   "fullUrl": "http://fhir.epl.bag.admin.ch/ClinicalUseDefinition/ABEVMY.RB",
+   "resource": {
+    "resourceType": "ClinicalUseDefinition",
+    "id": "ABEVMY.RB",
+    "text": {
+     "status": "generated",
+     "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Austausch Referenzpräparat/Biosimilar Für alle Indikationen, die einer Kostengutsprache bedürfen, ist keine neue Kostengutsprache für die Behandlung mit ABEVMY nötig, wenn in derselben Indikation bereits eine Kostengutsprache für das Referenzpräparat oder ein anderes Biosimilar besteht.</div>"
+    },
+    "type": "indication",
+    "indication": {
+     "diseaseSymptomProcedure": {
+      "concept": {
+       "text": "Austausch Referenzpräparat/Biosimilar Für alle Indikationen, die einer Kostengutsprache bedürfen, ist keine neue Kostengutsprache für die Behandlung mit ABEVMY nötig, wenn in derselben Indikation bereits eine Kostengutsprache für das Referenzpräparat oder ein anderes Biosimilar besteht."
+      }
+     }
+    }
+   }
+  },
+  "fr": {
+   "fullUrl": "http://fhir.epl.bag.admin.ch/ClinicalUseDefinition/ABEVMY.RB",
+   "resource": {
+    "resourceType": "ClinicalUseDefinition",
+    "id": "ABEVMY.RB",
+    "text": {
+     "status": "generated",
+     "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Substitution préparation de référence/biosimilaire Pour toutes les indications nécessitant une garantie de prise en charge, aucune nouvelle garantie de prise en charge n'est nécessaire pour le traitement par ABEVMY s'il existe déjà une garantie de prise en charge pour la préparation de référence ou un autre biosimilaire dans la même indication.</div>"
+    },
+    "type": "indication",
+    "indication": {
+     "diseaseSymptomProcedure": {
+      "concept": {
+       "text": "Substitution préparation de référence/biosimilaire Pour toutes les indications nécessitant une garantie de prise en charge, aucune nouvelle garantie de prise en charge n'est nécessaire pour le traitement par ABEVMY s'il existe déjà une garantie de prise en charge pour la préparation de référence ou un autre biosimilaire dans la même indication."
+      }
+     }
+    }
+   }
+  },
+  "it": {
+   "fullUrl": "http://fhir.epl.bag.admin.ch/ClinicalUseDefinition/ABEVMY.RB",
+   "resource": {
+    "resourceType": "ClinicalUseDefinition",
+    "id": "ABEVMY.RB",
+    "text": {
+     "status": "generated",
+     "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Sostituzione preparato di riferimento/biosimilare Per tutte le indicazioni che necessitano di una garanzia di assunzione dei costi, non è richiesta una nuova garanzia di assunzione dei costi per il trattamento con ABEVMY se esiste già una garanzia di assunzione dei costi per il prodotto di riferimento o per un altro biosimilare nella stessa indicazione.</div>"
+    },
+    "type": "indication",
+    "indication": {
+     "diseaseSymptomProcedure": {
+      "concept": {
+       "text": "Sostituzione preparato di riferimento/biosimilare Per tutte le indicazioni che necessitano di una garanzia di assunzione dei costi, non è richiesta una nuova garanzia di assunzione dei costi per il trattamento con ABEVMY se esiste già una garanzia di assunzione dei costi per il prodotto di riferimento o per un altro biosimilare nella stessa indicazione."
+      }
+     }
+    }
+   }
+  }
+ }
+}
