@@ -154,7 +154,8 @@ German changes. Every ready non-exact draft was read in full; a seeded 20 flagge
 
 **Labels.** A blind second Claude agent re-labelled the 69-draft fresh sample (49 ready non-exact + 20 flagged): agreement
 on "needs a fix" 62 of 69, Cohen's κ 0.532; it found no meaning error, stale change or untranslated German among the ready
-drafts. **Review effort:** 13 of 20 sampled flagged drafts needed no change (Wilson [43.3, 81.9]). **Backtest** (R3):
+drafts. A blind third annotator broke all 7 disagreements (it sided with the second in 7 of 7); by majority of three, 3 of
+the 66 ready drafts need a small fix and 13 of the 20 sampled flagged drafts need none. **Review effort:** 13 of 20 sampled flagged drafts needed no change (Wilson [43.3, 81.9]). **Backtest** (R3):
 216 German changes; French changed in the same step 212 times, Italian 208, neither later; all 10 divergent limitations
 were already divergent at the earliest capture (Jun/Jul 2025), so we cannot show where they arose.
 
@@ -179,8 +180,9 @@ on CPU does. The binding cost is review: 60% of drafts are flagged. Translator m
 - **SL legal status:** the equal-authority rule (PublG Art. 14) covers the official collections; we found no statute
   making SL limitations equally binding in all three languages.
 - **8B SL numbers are MLX DWQ on dev items**; the shipped GGUF is unmeasured here. The 70B has not been self-hosted.
-- **Labels** are by Claude agents (first and blind second annotator); the team lead's adjudication of 7 disagreements is
-  pending (`eval/labels/ADJUDICATION.md`). Translator time saved is unmeasured.
+- **Labels** are by Claude agents only (first, blind second, and a blind third that broke all 7 disagreements); no
+  human labelled anything. 3 of the 66 ready drafts need a small fix (a terminology choice, two spacing slips).
+  Translator time saved is unmeasured.
 - **API non-determinism:** identical requests at temperature 0 do not always return the same text; a seeded rerun
   changed 30.1% of final outputs (docs/provenance.md). Certification of any endpoint therefore re-runs the whole suite.
 
@@ -195,7 +197,7 @@ validates XLIFF and FHIR; builds the review page. `claims.tsv` maps every number
 fails on drift. Pre-registrations: `eval/prereg/PREREG.md` (R0–R5), committed before each run.
 
 **Coding assistants and labellers.** Code written with Claude Code agents (Anthropic) under the team lead's direction;
-hand checks by Claude Code agents, with a blind second Claude annotator. Apertus is the only model at runtime and no model
+labels by Claude Code agents (blind second and third annotators); no human labels. Apertus is the only model at runtime and no model
 judges outputs.
 
 ## 8. Next steps

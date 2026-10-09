@@ -55,8 +55,9 @@ every group (all, unseen/seen families, FR, IT) matches.
 
 Labels are the hand checks of the research runs (`eval/labels/`): every unflagged non-exact output was read in full
 against the old and new German and the official French/Italian, plus a seeded sample of 20 flagged outputs (seed
-20261009). They were made by Claude Code agents during the research and are declared as such; disagreement-adjudicated
-second labels by the team lead are part of the remaining work (see `technical_report.md` §6).
+20261009). They were made by Claude Code agents during the research and are declared as such. A blind second Claude annotator
+re-labelled the fresh-set sample, and a blind third Claude annotator broke the 7 disagreements (majority of three;
+`eval/labels/ADJUDICATION.md`). No labels are human.
 
 ## 6. What the model field shows and does not show
 

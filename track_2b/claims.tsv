@@ -60,6 +60,9 @@ cost_secs	17.15	eval/results/cost_fresh166.json	model_secs_per_item	{:.2f}	PYTHO
 ag_agree	62	eval/results/agreement_fresh166.json	agree	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 ag_n	69	eval/results/agreement_fresh166.json	n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 ag_kappa	0.532	eval/results/agreement_fresh166.json	kappa	{:.3f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+tie_n	7	eval/results/agreement_fresh166.json	tiebreak.disagreements	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+tie_sided	7	eval/results/agreement_fresh166.json	tiebreak.third_sided_with_second	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+tie_fix	3	eval/results/agreement_fresh166.json	tiebreak.final_unflagged_needs_fix	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 ag_unfl_n	49	eval/results/agreement_fresh166.json	unflagged_n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 eco_per_month	28.7	eval/results/economics.json	de_changes_per_month	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 eco_changes	216	eval/results/economics.json	de_changes	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes

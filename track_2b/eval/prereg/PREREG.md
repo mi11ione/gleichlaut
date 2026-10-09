@@ -30,8 +30,9 @@ History under this rule (all reported): dev 120 (guards v2, in-sample) pass; out
 - Run: Apertus 8B GGUF builds (Q4_K_M first, then Q8_0) on the fresh 166 with the shipped pipeline (frozen code,
   guards3, at most one re-ask), greedy, the 8B digit/number-word logit mask on. Runner: GitHub Actions CPU (not a team
   machine).
-- Labels: every unflagged non-exact output plus a seeded 20 flagged (seed 20261009); an agent pre-labels, the team lead
-  adjudicates every disagreement; Cohen's κ reported.
+- Labels: every unflagged non-exact output plus a seeded 20 flagged (seed 20261009); two blind Claude annotators, a third
+  blind Claude annotator breaks every disagreement (majority of three); Cohen's κ reported; no human labels. (Amended
+  before any R1 run: the original text had the team lead adjudicating.)
 - Decision: if any 8B build meets R0 on the fresh 166, the SL default becomes the local 8B. Otherwise the 70B lane stays
   the SL default and the 8B stays the air-gapped fallback in which **every** item is marked for review.
 - Kill / report rule: if Q4_K_M is more than 10 points below the MLX DWQ dev reference on exact match, report it and keep

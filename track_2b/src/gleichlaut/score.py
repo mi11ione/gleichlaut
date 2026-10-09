@@ -190,7 +190,11 @@ def agreement():
     pa, pA, pB = agree / n, sum(A[k] == "yes" for k in keys) / n, sum(B[k]["fix"] == "yes" for k in keys) / n
     pe = pA * pB + (1 - pA) * (1 - pB)
     severe = ("REAL", "stale", "german")
-    return dict(n=n, agree=agree, kappa=round((pa - pe) / (1 - pe), 3),
+    T = {c[0]: c[1] for c in (l.split("\t") for l in open(os.path.join(LABELS, "fresh166_tiebreak.tsv"), encoding="utf-8").read().splitlines()[1:])}
+    final = {k: (A[k] if A[k] == B[k]["fix"] else T[k]) for k in keys}          # majority of three on "needs a fix"
+    tie = dict(disagreements=len(T), third_sided_with_second=sum(T[k] == B[k]["fix"] for k in T),
+               final_unflagged_needs_fix=sum(final[k] == "yes" for k in U), final_flagged_sample_no_fix=sum(final[k] == "no" for k in F))
+    return dict(n=n, agree=agree, tiebreak=tie, kappa=round((pa - pe) / (1 - pe), 3),
                 unflagged_n=len(U), unflagged_second_severe=sum(B[k]["cls"] in severe for k in U),
                 unflagged_second_classes=dict(sorted(Counter(B[k]["cls"] for k in U).items())),
                 unflagged_second_needs_fix=sum(B[k]["fix"] == "yes" for k in U),

@@ -1,0 +1,8 @@
+key	needs_fix	class	note
+wb004-fr	yes	minor	Deletions/additions correct; "Suivant code à transmettre" is a calque (should be "Le code suivant doit être transmis"); spacing inside parentheses.
+wb032-it	yes	minor	OKP rendered as non-standard "assicurazione malattia obbligatoria" instead of "assicurazione obbligatoria delle cure medico-sanitarie"; change otherwise applied.
+wb045-fr	no	equivalent	Ophtalmochirurgiens applied; unrequested et->ou, OVCR parentheses, mNVC typo fixes align with German, no condition changed.
+wb047-fr	no	equivalent	Ophtalmochirurgiens applied; unrequested et->ou aligns with German oder, no condition changed.
+wb076-fr	yes	german	Structure correct; "GLP-1-analogue" is a Germanised compound, should be "analogue du GLP-1".
+wb085-fr	yes	cosmetic	SGLT-2 line added correctly but spaced as "SGLT - 2".
+wb085-it	yes	cosmetic	SGLT-2 line added correctly but spaced as "SGLT - 2".

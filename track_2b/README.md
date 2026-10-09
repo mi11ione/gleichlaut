@@ -119,7 +119,7 @@ On-premise or air-gapped; build-time and runtime dependencies are separated in
 
 ## Declarations
 
-Coding assistant: the code was written with Claude Code agents (Anthropic) under the team lead's direction. Hand checks
-of model outputs were made by Claude Code agents and re-labelled blind by a second agent; disagreements go to the team
-lead. Apertus is the only model at runtime. Code Apache-2.0; report CC-BY-4.0; SL and Fedlex texts are official federal
+Coding assistant: the code was written with Claude Code agents (Anthropic) under the team lead's direction. Labels of
+model outputs were made by Claude Code agents, re-labelled by a blind second agent, with a blind third agent breaking
+disagreements; no human labels. Apertus is the only model at runtime. Code Apache-2.0; report CC-BY-4.0; SL and Fedlex texts are official federal
 publications.
