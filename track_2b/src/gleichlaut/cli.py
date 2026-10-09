@@ -71,10 +71,10 @@ def cmd_live():
 def cmd_emit(n=10):
     banner(f"[5] emit: FHIR ClinicalUseDefinition + XLIFF 2.1 for {n} items, validated")
     try:
-        from . import emit
+        from .emit.__main__ import main as emit_main
     except ImportError as e:
         print("emit not available:", e); return 1
-    return emit.main(["--run", "fresh166", "--n", str(n), "--out", os.path.join(OUT, "emit")])
+    return emit_main(["--run", "fresh166", "--n", str(n), "--out", os.path.join(OUT, "emit")]) or 0
 
 
 def cmd_ui():
@@ -139,7 +139,7 @@ def main(argv=None):
     if c == "live": return cmd_live()
     if c == "fetch-gguf": fetch_gguf(); return 0
     if c == "emit":
-        from . import emit; return emit.main(rest)
+        from .emit.__main__ import main as emit_main; return emit_main(rest) or 0
     if c == "ui":
         from .ui import build; return build.main(rest) or 0
     if c == "backtest":
