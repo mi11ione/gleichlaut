@@ -5,8 +5,12 @@
 # docs/dependencies.md. No secrets are baked in: the model endpoint comes from LLM_* environment variables at run time.
 # Base image pinned by digest (the multi-arch index of python:3.12-slim as published on Docker Hub, looked up 9 Oct 2026
 # via the registry API; its linux/amd64 manifest is sha256:2b4f19dae3a777dfc3b76730bda1e82e1f66ab2a2686fa93ca78edbfb4f04ffe).
+# Pulled through Google's public Docker Hub mirror by default: the same digest, no Docker Hub login or rate limit, so a
+# Docker Hub outage cannot break `make run`. Override with `--build-arg BASE=python:3.12-slim@sha256:...` (or a registry
+# you control); the digest pins the exact image either way.
 # To upgrade: look up the new index digest (docs/operations.md, "Upgrade"), replace it here, run `make run` and `make test`.
-FROM python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1 AS base
+ARG BASE=mirror.gcr.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1
+FROM ${BASE} AS base
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PYTHONPATH=/app/src PIP_NO_CACHE_DIR=1 PIP_DISABLE_PIP_VERSION_CHECK=1
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt && useradd --create-home --uid 10001 app
