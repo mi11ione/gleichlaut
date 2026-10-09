@@ -1,0 +1,47 @@
+key	A_fix	A_class	B_fix	B_class	T_fix	T_class	final_fix	final	note_A
+wb010-it	yes	stale	yes	stale			yes	stale	Deleted KoGu/dose sentences kept; German heading and 'Folgore Indikationscode' left untranslated.
+wb011-it	yes	german	yes	german			yes	german	New sentences start with German 'Nur'; misplaced mid-text; calque 'codice indicativo'.
+wb014-fr	yes	stale	yes	stale			yes	stale	Heading 'Colite ulcéreuse' missing; code sentence has German 'Folguer Indikationscode'.
+wb015-it	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assicurazione obbligatoria di malattia'.
+wb016-it	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assicurazione obbligatoria di malattia'.
+wb017-it	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assicurazione obbligatoria di malattia'.
+wb018-it	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assicurazione obbligatoria di malattia'.
+wb019-it	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assicurazione obbligatoria di malattia'.
+wb020-it	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assicurazione obbligatoria di malattia'.
+wb021-it	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assicurazione obbligatoria di malattia'.
+wb022-it	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assicurazione obbligatoria di malattia'.
+wb023-it	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assicurazione obbligatoria di malattia' instead of AOMS term.
+wb024-it	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assicurazione obbligatoria di malattia'.
+wb025-it	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assicurazione obbligatoria di malattia'.
+wb026-fr	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assurance obligatoire de maladie'.
+wb026-it	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assicurazione obbligatoria di malattia'.
+wb027-it	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assicurazione obbligatoria di malattia'.
+wb028-it	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assicurazione obbligatoria di malattia'.
+wb029-fr	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assurance obligatoire de maladie' instead of 'assurance obligatoire des soins'.
+wb029-it	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assicurazione obbligatoria di malattia'.
+wb030-fr	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assurance obligatoire de maladie'.
+wb030-it	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assicurazione obbligatoria di malattia'.
+wb031-it	yes	minor	yes	minor			yes	minor	OKP rendered as non-standard 'assicurazione obbligatoria di malattia'.
+wb032-fr	yes	minor	yes	cosmetic	yes	minor	yes	minor	Non-standard 'assurance maladie obligatoire' with markdown ** artefacts.
+wb032-it	yes	minor	yes	minor			yes	minor	Non-standard 'assicurazione obbligatoria di malattia' with markdown ** artefacts.
+wb033-fr	yes	german	yes	german			yes	german	Code sentence begins with German-derived pseudo-word 'Folgoureux'.
+wb033-it	yes	german	yes	german			yes	german	Code sentence left largely German: 'Folgore Indikationscode è an den Krankenversicherer zu übermitteln'.
+wb036-it	yes	stale	yes	stale			yes	stale	New opening (KoGu, indication code, uniform price) not added; last sentence calqued.
+wb038-it	no	exact	no	exact			no	exact	Price-model sentences correctly deleted; identical to official.
+wb042-it	yes	minor	yes	REAL	yes	minor	yes	minor	Oculochirurghi applied; unrequested change of 'medico' to 'oculochirurgo' in b).
+wb044-it	yes	minor	yes	REAL	yes	minor	yes	minor	Ophthalmochirurgen applied; also unrequested change of 'medico' to 'oftalmochirurgo' in b).
+wb045-fr	yes	minor	yes	REAL	yes	minor	yes	minor	Ophtalmochirurgiens applied; unrequested change of 'médecin' to 'ophtalmochirurgien' in b).
+wb048-fr	yes	minor	yes	REAL	yes	minor	yes	minor	Ophtalmochirurgiens applied; unrequested change of 'médecin' to 'ophtalmochirurgien' in b).
+wb054-fr	yes	german	yes	german			yes	german	Code sentence has German 'Folguer Indikationscode'.
+wb054-it	yes	german	yes	german			yes	german	Code sentence begins with Germanised 'Folgente'; calque 'codice indicativo'.
+wb058-it	yes	stale	yes	stale			yes	stale	Deleted dosage sentence (incl. Kd) kept, old KoGu in heading; German 'Preismodell', 'Folgore Code'.
+wb060-it	no	equivalent	no	equivalent			no	equivalent	Therapiedauer->Vergütungsdauer rendered 'durata massima della rimunerazione'; correct.
+wb067-it	yes	stale	yes	stale			yes	stale	Fixed amount Fr. 713.53 not applied; 'quota fissa' kept; garbled replacement sentence.
+wb068-fr	yes	german	no	equivalent	yes	german	yes	german	Exclusion sentence correct; German hyphenation artefact 'I-CANS' copied instead of ICANS.
+wb069-fr	yes	stale	yes	stale			yes	stale	New first-line APL indication missing, deleted KoGu kept, German 'Retinoinsäurerezeptor' inserted.
+wb069-it	yes	stale	yes	stale			yes	stale	Deleted KoGu sentence kept; new indications added with calques ('nuova', 'basso fino intermedio').
+wb084-fr	yes	cosmetic	yes	cosmetic			yes	cosmetic	SGLT-2 line added correctly; spacing artefact 'SGLT - 2'.
+wb084-it	yes	cosmetic	yes	cosmetic			yes	cosmetic	SGLT-2 line added correctly; spacing artefact 'SGLT - 2'.
+wb087-fr	yes	german	yes	german			yes	german	Code sentence has German 'Folguer Code'.
+wb087-it	yes	minor	yes	cosmetic	yes	minor	yes	minor	Code sentence added; elision error 'al assicuratore', telegraphic wording.
+wb088-fr	yes	german	yes	german			yes	german	Code sentence has German 'Folguer Code'.

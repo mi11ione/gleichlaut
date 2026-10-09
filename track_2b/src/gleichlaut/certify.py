@@ -78,6 +78,7 @@ LABEL_CLASSES = ("equivalent", "preexisting", "cosmetic", "minor", "german", "st
 BUILD_NAME = "8b-q4_k_m-fresh166"                                    # the shipped build certificate (M1, PREREG R1)
 M1_RUN, M1_LABELS = "data/runs/8b_q4_k_m_fresh166_g3_final.jsonl", "eval/labels/m1_q4_k_m_fresh166.tsv"
 GGUF_SHA_Q4 = "a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299"
+GGUF_SHA_Q8 = "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d"     # M2, eval/certificates/8b-q8_0-fresh166.json
 EXIT = dict(PASS=0, FAIL=5, PENDING_REVIEW=7)
 CERT_DAYS = 90
 CANARY_MAX_AGE_DAYS = 31
@@ -516,7 +517,7 @@ def import_run(records, gguf_sha256, labels, name=None, runtime=None, dest=None,
         runtime, src = pinned_llama(), "requirements-offline.txt pin (the version the M1 workflow installed)"
     else: src = "--llama-cpp-version"
     secs = sum(float(r.get("wall_secs") or 0) for r in RR)
-    gf = gguf_file or ("apertus-v1.5-8b-text-q4_k_m.gguf" if gguf_sha256 == GGUF_SHA_Q4 else None)
+    gf = gguf_file or {GGUF_SHA_Q4: "apertus-v1.5-8b-text-q4_k_m.gguf", GGUF_SHA_Q8: "apertus-v1.5-8b-text-q8_0.gguf"}.get(gguf_sha256)
     return write_build_certificate(name or f"build-{gguf_sha256[:12]}-{_now().strftime('%Y%m%dT%H%M%SZ')}", I, RR, secs, gguf_sha256, gf,
                                    runtime, src, f"imported run {os.path.relpath(os.path.abspath(records), core.ROOT)}",
                                    labels_path=labels, records_path=records, dest=dest)

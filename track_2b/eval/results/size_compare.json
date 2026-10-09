@@ -1,0 +1,48 @@
+{
+ "q4_k_m": {
+  "edits_70b": 3362,
+  "edits_8b": 4617,
+  "edits_rules": 5834,
+  "exact_70b": 17.5,
+  "exact_8b": 16.9,
+  "exact_diff_ci95": [
+   -3.0,
+   3.6
+  ],
+  "exact_diff_pts": 0.6,
+  "items_70b_fewer_edits": 100,
+  "items_8b_fewer_edits": 23,
+  "n": 166,
+  "pairs": 83,
+  "saved_70b_pct": 42.4,
+  "saved_8b_pct": 20.9,
+  "saved_diff_ci95": [
+   8.7,
+   34.9
+  ],
+  "saved_diff_pts": 21.5
+ },
+ "q8_0": {
+  "edits_70b": 3362,
+  "edits_8b": 3903,
+  "edits_rules": 5834,
+  "exact_70b": 17.5,
+  "exact_8b": 17.5,
+  "exact_diff_ci95": [
+   -3.0,
+   2.4
+  ],
+  "exact_diff_pts": 0.0,
+  "items_70b_fewer_edits": 81,
+  "items_8b_fewer_edits": 26,
+  "n": 166,
+  "pairs": 83,
+  "saved_70b_pct": 42.4,
+  "saved_8b_pct": 33.1,
+  "saved_diff_ci95": [
+   -1.3,
+   20.2
+  ],
+  "saved_diff_pts": 9.3
+ }
+}

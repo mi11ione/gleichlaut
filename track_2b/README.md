@@ -39,8 +39,8 @@ Keytruda's Italian field (which we had spotted by hand before), which has held t
 also learns from BAG's own corrections: where BAG replaced a term in some texts, it flags the texts that still use the
 old one. That finds four French texts naming the wrong drug class and four ungrammatical Italian ones (8 of 11 findings
 confirmed). On two lists it was never designed on, MiGeL and the Analysenliste, **7 of 11** findings are real; the
-Analysenliste's Italian, for example, makes a test billable after 13 repetitions where German and French say 14. A blind
-annotator confirms every count here. No model is involved.
+Analysenliste's Italian, for example, makes a test billable after 13 repetitions where German and French say 14. Every
+count here was confirmed by blind Claude annotators (`eval/labels/`); the audit itself calls no model.
 
 The two meet in the review register. Nemluvio's old Italian already says "every 4 weeks"; Apertus' draft writes "every
 8 weeks", matching the German. BAG's own update kept the 4. The register shows the draft as a correction to check, not
@@ -49,29 +49,34 @@ as an error.
 ## Results (pre-registered, held out)
 
 Test set: 166 French/Italian amendments from SL changes between Jun 2025 and Feb 2026, 154 in edit patterns never seen
-during design. The checks and all their resources were hashed before any output existed.
+during design. The checks and all their resources were hashed before any output existed (the freeze predates this
+repository; `eval/prereg/PREREG.md` says what can and cannot be verified from here).
 
-| | Apertus 8B, CPU, air-gapped | Apertus 70B, certified endpoint | No-model start |
-|---|---|---|---|
-| Draft identical to the text BAG published | 16.9% (+10.8 points [4.8, 17.5]) | **17.5%** (+11.4 points [4.8, 18.7]) | 6.0% (old text, numbers updated by code) |
-| Token edits still needed to reach BAG's text | 20.9% fewer [7.6, 31.9] | **42.4% fewer** [31.0, 54.1] | baseline |
-| Drafts ready for acceptance | 36.1% | **39.8%** | |
-| Errors in ready drafts (meaning / stale / German left) | 0 / 1 / 2 | **0 / 0 / 0** | |
-| Ready drafts that still need any fix | 33 of 60 (mostly one insurance term) | **3 of 66** | |
-| Pre-registered pass rule | **PASS** | **PASS** (and again on a rerun with a new seed) | |
+| | Apertus 8B Q4_K_M, CPU, 8 GiB | Apertus 8B Q8_0, CPU, 16 GiB | Apertus 70B, certified endpoint | No-model start |
+|---|---|---|---|---|
+| Draft identical to the text BAG published | 16.9% (+10.8 points [4.8, 17.5]) | 17.5% (+11.4 points [4.8, 18.7]) | **17.5%** (+11.4 points [4.8, 18.7]) | 6.0% (old text, numbers updated by code) |
+| Token edits still needed to reach BAG's text | 20.9% fewer [7.6, 31.9] | 33.1% fewer [20.8, 43.9] | **42.4% fewer** [31.0, 54.1] | baseline |
+| Drafts ready for acceptance | 36.1% | 37.3% | **39.8%** | |
+| Errors in ready drafts (meaning / stale / German left) | 0 / 1 / 2 | **0 / 0 / 0** | **0 / 0 / 0** | |
+| Ready drafts that still need any fix | 33 of 60 (mostly one insurance term) | 25 of 62 (mostly the same term) | **3 of 66** | |
+| Pre-registered pass rule | **PASS** | **PASS** | **PASS** (and again on a rerun with a new seed) | |
 
 Against rules+, our strongest no-model baseline (it also copies changed names and deletes whole sentences, 10.8%
 identical), the 70B still adds +6.6 points [1.8, 12.0] and 41.3% fewer edits [29.7, 53.0].
 
-The 8B runs on the CPU you already have (153.4 s per draft on a 4-core runner). The 70B costs **CHF 0.0024 per draft**
-at a Swiss provider's published price: CHF 0.14 a month at today's volume, CHF 1.36 at ten times. Every number here is in [claims.tsv](claims.tsv) with the file and command that
-produce it.
+The 8B runs on the CPU you already have (153.4 s per draft for Q4_K_M, 200.5 s for Q8_0, on a 4-core runner). The 70B
+costs **CHF 0.0024 per draft** at a Swiss provider's published price: CHF 0.14 a month at today's volume, CHF 1.36 at
+ten times. Every number here is in [claims.tsv](claims.tsv) with the file and command that produce it.
 
-**Model size is measured, not assumed.** On SL conditions both sizes pass the same pre-registered safety rule, so the
-8B on a CPU is sufficient and is the default: nothing leaves the building. The 70B is where it pays: it saves twice as
-many edits (42.4% vs 20.9% fewer than the no-model start), and its ready drafts rarely need a fix to the amendment (3 of 66
-vs 33 of 60). On 120
-federal-statute amendments (Fedlex) the 70B is no better than the 8B (exact 48.3% vs 50.0%), so statutes run the 8B. Where Apertus fell short, with counts, and why those jobs are done by code: [docs/failure-modes.md](docs/failure-modes.md).
+**Model size is measured, not assumed.** On SL conditions every build passes the same pre-registered safety rule, so
+the 8B on a CPU is sufficient and is the default: nothing leaves the building. Quantisation matters as much as size: the
+8B at Q8_0 matches the 70B on identical drafts (17.5% each) and has no error in any ready draft. The 70B
+saves more edits, 9.3 points more than Q8_0 (paired 95% CI [−1.3, 20.2], not significant) and 21.5 more than Q4_K_M
+([8.7, 34.9]), and its ready drafts rarely need a fix to the amendment (3 of 66). So: Q4_K_M on an 8 GiB box, Q8_0
+where 16 GiB is available (`BUILD=q8_0`), the 70B where an endpoint you control is available and the extra edits are
+worth it. On 120 federal-statute amendments (Fedlex) the 70B is no better than the 8B (exact 48.3% vs 50.0%, measured
+with the 8B MLX build), so statutes run the 8B. Where Apertus fell short, with counts, and why those jobs are done by
+code: [docs/failure-modes.md](docs/failure-modes.md).
 
 ## Where it plugs in at BAG
 
@@ -89,7 +94,8 @@ Sektion Arzneimittelaufnahmen and the ePL team. Operator runbook: [docs/operatio
 ## Run it
 
 ```bash
-make run            # Docker, CPU, about 30 s on a GitHub runner, no network (--network none unless LLM_BASE_URL is set)
+make run            # Docker, CPU, about a minute, no network (--network none unless LLM_BASE_URL is set)
+make local-run      # the same without Docker: Python ≥ 3.9, lxml for the XSD check (67 s on a laptop)
 ```
 
 It verifies the sha256 of the frozen code, checks and test items; **re-executes the recorded Apertus runs end-to-end
@@ -100,10 +106,12 @@ re-scores every run against `eval/results/`; drafts 5 statute paragraphs live if
 
 ```bash
 make run-offline    # adds the local CPU Apertus 8B (GGUF, sha256-pinned): the air-gapped default lane
+                    # BUILD=q8_0 for the 8.6 GB build on a 16 GiB box (certified too, see Results)
 make certify        # build certificate for the pinned 8B GGUF from its recorded held-out run (seconds, offline)
 make certify-endpoint # certify your own Apertus 70B endpoint on the frozen 166-item suite
 make month          # one monthly cycle on the public feed with the local 8B (shadow mode); make month-70b uses your endpoint
-make test           # the test suite
+make audit          # the audit of today's register: streams ~270 MB of public feed once, no model (~1 min)
+make test           # the test suite (about 6 min; make local-test without Docker)
 ```
 
 ## Sovereign by construction
@@ -125,8 +133,10 @@ runtime dependencies: [docs/dependencies.md](docs/dependencies.md); target archi
   hash-checked (`eval/prereg/freeze.json`); `make run` re-runs it from the recorded model responses.
 - **Every rule was written before its test:** `eval/prereg/PREREG.md`, with run timestamps from the gateway ledger.
   The first out-of-sample run failed the rule; it is reported, and the fix was tested on new data.
-- **Labelling anyone can re-run:** every ready draft was read in full by a blind annotator, re-labelled by a second,
-  disagreements broken by a third (agreement κ 0.532; worklists and labels in `eval/labels/`).
+- **Labelling you can re-run:** every ready draft was read in full by a blind Claude annotator, re-labelled by a second,
+  disagreements broken by a third (agreement κ 0.532). The worklists, the exact annotator instructions
+  (`eval/labels/PROTOCOL.md`) and every label are in `eval/labels/`; no human labels were used, and a BAG translator's
+  read of the ready drafts is the first thing a pilot should add.
 - **Every number is traceable:** `claims.tsv` maps every number in this README, the report and the form notes to a
   results file; CI fails on drift.
 

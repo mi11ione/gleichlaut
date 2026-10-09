@@ -326,6 +326,44 @@ def post_edit(final=None):
     return out
 
 
+def size_compare(builds=("q4_k_m", "q8_0")):
+    """Model size, paired: the 70B (fresh 166) against each 8B GGUF build on the same items. Paired cluster bootstrap over
+    German changes (4000 resamples, seed 7) of the difference in token edits saved against the rules-only start, and the
+    frozen scorer's paired bootstrap of the exact-match difference. Same pipeline, guards and items in every arm; the
+    arms differ in model size and in serving (70B: Public AI API in bf16/fp8 across two backends, see
+    docs/research/model-identity-and-quantisation.md; 8B: GGUF on CPU with the digit mask)."""
+    import random
+    I = {x["key"]: x for x in load_items("items/items_fresh.json")}; norm = core.lock.norm
+    F70 = load_jsonl(RUNS["fresh166"]["final"]); out = {}
+    for b in builds:
+        rel = f"runs/8b_{b}_fresh166_g3_final.jsonl"
+        if not os.path.exists(os.path.join(DATA, rel)): continue
+        F8 = load_jsonl(rel); rows, A, B = [], [], []
+        for k, x in I.items():
+            gold = norm(x["tgt_new"]); r1 = norm(core.gl2.rules(x["de_old"], x["de_new"], x["tgt_old"], x["lang"])[0])
+            e = lambda t: sum(S["edits"](norm(t), gold).values())
+            rows.append(dict(pair=x["pair"], rules=sum(S["edits"](r1, gold).values()), m70=e(F70[k]["out"]), m8=e(F8[k]["out"])))
+            A.append(S["score_one"](x, F8[k]["out"], "1")); B.append(S["score_one"](x, F70[k]["out"], "1"))
+        by = {}
+        for r in rows: by.setdefault(r["pair"], []).append(r)
+        ks = sorted(by); rng = random.Random(7); bs = []
+        for _ in range(4000):
+            smp = [r for kk in (rng.choice(ks) for _ in ks) for r in by[kk]]
+            t = sum(r["rules"] for r in smp)
+            if t: bs.append(100 * (sum(r["m8"] for r in smp) - sum(r["m70"] for r in smp)) / t)
+        bs.sort(); t = sum(r["rules"] for r in rows); ci = S["boot_diff"](B, A, "exact")
+        out[b] = dict(n=len(rows), pairs=len(ks), edits_rules=t, edits_70b=sum(r["m70"] for r in rows), edits_8b=sum(r["m8"] for r in rows),
+                      saved_70b_pct=round(100 * (t - sum(r["m70"] for r in rows)) / t, 1),
+                      saved_8b_pct=round(100 * (t - sum(r["m8"] for r in rows)) / t, 1),
+                      saved_diff_pts=round(100 * (sum(r["m8"] for r in rows) - sum(r["m70"] for r in rows)) / t, 1),
+                      saved_diff_ci95=[round(bs[int(.025 * len(bs))], 1), round(bs[int(.975 * len(bs))], 1)],
+                      exact_70b=round(100 * sum(r["exact"] for r in B) / len(B), 1), exact_8b=round(100 * sum(r["exact"] for r in A) / len(A), 1),
+                      exact_diff_pts=round(100 * (sum(r["exact"] for r in B) - sum(r["exact"] for r in A)) / len(A), 1),
+                      exact_diff_ci95=[round(ci[0], 1), round(ci[1], 1)],
+                      items_70b_fewer_edits=sum(r["m70"] < r["m8"] for r in rows), items_8b_fewer_edits=sum(r["m8"] < r["m70"] for r in rows))
+    return out
+
+
 def ready_quality():
     """What 'ready' means on the fresh set, with honest bounds: errors the draft introduced vs errors it carried forward
     from the old text (old French naming angiotensin-II receptor antagonists 'inhibiteur de l'enzyme de conversion de
@@ -431,6 +469,10 @@ def m1(build="q4_k_m"):
     secs = [R[k].get("wall_secs", 0) for k in R]
     s["cpu_secs_per_item"] = round(sum(secs) / len(secs), 1); s["model_digit_items"] = sum((R[k].get("digits_raw") or 0) > 0 or (R[k].get("reask_digits") or 0) > 0 for k in R)
     s["build"] = build
+    L = list(new.values()); n = len(L); ag = sum(r["A_fix"] == r["B_fix"] for r in L)
+    pA = sum(r["A_fix"] == "yes" for r in L) / n; pB = sum(r["B_fix"] == "yes" for r in L) / n; pe = pA * pB + (1 - pA) * (1 - pB)
+    s["annotators"] = dict(n=n, needs_fix_agree=ag, needs_fix_kappa=round((ag / n - pe) / (1 - pe), 3) if pe < 1 else None,
+                           class_agree=sum(r["A_class"] == r["B_class"] for r in L), tiebreak=sum(bool(r["T_class"]) for r in L))
     return s
 
 

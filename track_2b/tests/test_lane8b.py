@@ -70,6 +70,17 @@ def test_shipped_build_certificate_verifies_and_reproduces_m1():
         assert certify.certified("recorded responses (data/cache)", core.M70) is None           # never an endpoint certificate
 
 
+def test_shipped_q8_0_build_certificate_verifies_and_reproduces_m2():
+    c = json.load(open(os.path.join(ROOT, "eval", "certificates", "8b-q8_0-fresh166.json"), encoding="utf-8"))
+    assert c["kind"] == "build" and c["status"] == "PASS" and c["gguf"]["sha256"] == certify.GGUF_SHA_Q8 == cli.BUILDS["q8_0"][1]
+    m2 = json.load(open(os.path.join(ROOT, "eval", "results", "m1_q8_0.json"), encoding="utf-8"))
+    for k in ("exact", "flag_rate", "ready_rate", "unflagged", "unflagged_REAL", "unflagged_stale", "unflagged_german", "pass_rule"):
+        assert c["metrics"][k] == m2[k], k
+    with tmpdir() as d, env(GLEICHLAUT_STATE=d):
+        cert, why = certify.build_lookup(certify.GGUF_SHA_Q8, "0.3.35")
+        assert cert and cert["name"] == "8b-q8_0-fresh166", why
+
+
 def _copy_shipped(d, **edit):
     """the shipped certificate copied into state/certificates, optionally edited by hand."""
     os.makedirs(os.path.join(d, "certificates"), exist_ok=True)

@@ -1,5 +1,5 @@
 {
- "note": "First and last model call per run, from the development gateway's append-only ledger (UTC), and the commits that touched PREREG.md. R2 (M3, tag gleichlaut-m3) and R5 (Fedlex 70B, tag gleichlaut-fed70b) must start after the commit that added them. gl-70b-v2 is the fresh research run (before this repository existed).",
+ "note": "First and last model call per run, from the development gateway's append-only ledger (UTC), and the commits that touched PREREG.md. R2 (M3, tag gleichlaut-m3) and R5 (Fedlex 70B, tag gleichlaut-fed70b) must start after the commit that added them. gl-70b-v2 is the fresh research run (before this repository existed). Re-read from the ledger on 10 Oct 2026 (the previous copy was taken while M3 was still running: 121 of its 283 calls).",
  "runs": {
   "gl-70b-v2": {
    "calls": 285,
@@ -7,9 +7,9 @@
    "last": "2026-10-09T11:33:41+00:00"
   },
   "gleichlaut-m3": {
-   "calls": 121,
+   "calls": 283,
    "first": "2026-10-09T18:27:22+00:00",
-   "last": "2026-10-09T18:47:48+00:00"
+   "last": "2026-10-09T19:35:52+00:00"
   },
   "gleichlaut-fed70b": {
    "calls": 82,

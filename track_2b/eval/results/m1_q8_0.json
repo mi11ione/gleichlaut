@@ -1,0 +1,102 @@
+{
+ "annotators": {
+  "class_agree": 39,
+  "n": 46,
+  "needs_fix_agree": 45,
+  "needs_fix_kappa": 0.789,
+  "tiebreak": 7
+ },
+ "build": "q8_0",
+ "chrf": {
+  "ci95": [
+   4.0,
+   6.3
+  ],
+  "delta": 5.1,
+  "model": 91.1,
+  "rules": 86.0
+ },
+ "cpu_secs_per_item": 200.5,
+ "ef1": {
+  "ci95": [
+   38.1,
+   51.8
+  ],
+  "delta": 45.0,
+  "model": 53.0,
+  "rules": 7.9
+ },
+ "exact": {
+  "ci95": [
+   4.8,
+   18.7
+  ],
+  "delta": 11.4,
+  "model": 17.5,
+  "rules": 6.0
+ },
+ "exact_flagged": 12,
+ "exact_n": 29,
+ "families": 55,
+ "flag_rate": 62.7,
+ "flagged": 104,
+ "flagged_sample": {
+  "n": 20,
+  "no_fix": 1
+ },
+ "model_digit_items": 0,
+ "n": 166,
+ "pairs": 83,
+ "pass": true,
+ "pass_rule": {
+  "exact_gain": [
+   11.4,
+   true
+  ],
+  "flag_rate": [
+   62.7,
+   true
+  ],
+  "unflagged_real": [
+   0.0,
+   true
+  ],
+  "unflagged_stale_untranslated": [
+   0.0,
+   true
+  ]
+ },
+ "ready_minor_terminology": 23,
+ "ready_needs_fix": 25,
+ "ready_rate": 37.3,
+ "reasked": 100,
+ "replaced": 1,
+ "rules_exact_n": 10,
+ "unflagged": 62,
+ "unflagged_REAL": 0,
+ "unflagged_REAL_per100": 0.0,
+ "unflagged_classes": {
+  "cosmetic": 2,
+  "equivalent": 19,
+  "exact": 17,
+  "minor": 23,
+  "preexisting": 1
+ },
+ "unflagged_german": 0,
+ "unflagged_german_per100": 0.0,
+ "unflagged_stale": 0,
+ "unflagged_stale_per100": 0.0,
+ "unflagged_unlabelled": 0,
+ "wilson95_severe_among_ready": [
+  0.0,
+  5.8
+ ],
+ "wilson95_unflagged_real": [
+  0.0,
+  2.3
+ ],
+ "wilson95_unflagged_stale_untranslated": [
+  0.0,
+  2.3
+ ]
+}

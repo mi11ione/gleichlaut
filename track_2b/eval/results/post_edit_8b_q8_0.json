@@ -1,0 +1,41 @@
+{
+ "all": {
+  "edits_saved_ci95": [
+   20.8,
+   43.9
+  ],
+  "edits_saved_pct": 33.1,
+  "items_draft_fewer": 109,
+  "items_draft_more": 34,
+  "items_draft_zero": 30,
+  "n": 166,
+  "token_edits_from_draft": 3903,
+  "token_edits_from_rules": 5834
+ },
+ "flagged": {
+  "edits_saved_ci95": [
+   16.8,
+   43.9
+  ],
+  "edits_saved_pct": 31.6,
+  "items_draft_fewer": 60,
+  "items_draft_more": 31,
+  "items_draft_zero": 12,
+  "n": 104,
+  "token_edits_from_draft": 3420,
+  "token_edits_from_rules": 4998
+ },
+ "ready": {
+  "edits_saved_ci95": [
+   23.7,
+   59.2
+  ],
+  "edits_saved_pct": 42.2,
+  "items_draft_fewer": 49,
+  "items_draft_more": 3,
+  "items_draft_zero": 18,
+  "n": 62,
+  "token_edits_from_draft": 483,
+  "token_edits_from_rules": 836
+ }
+}

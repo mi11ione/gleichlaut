@@ -43,13 +43,17 @@ TUNING   = -e GLEICHLAUT_TIMEOUT -e GLEICHLAUT_RETRIES -e GLEICHLAUT_BACKOFF -e 
            -e GLEICHLAUT_CANARY_MAX_AGE_DAYS -e GLEICHLAUT_THREADS -e GLEICHLAUT_DEBUG
 ENVS     = -e LLM_NAME -e LLM_BASE_URL -e LLM_API_KEY -e SKIP_MODEL $(TUNING) $(PROXY) $(CA) $(CERTKEY)
 # the 8B lane gets no LLM_* variables: it never talks to an endpoint
-ENVS8B   = $(TUNING) $(PROXY) $(CA) $(CERTKEY) -e GLEICHLAUT_MODEL_URL -e GLEICHLAUT_MODEL_SHA256 -e GLEICHLAUT_MODELS=/models
+ENVS8B   = $(TUNING) $(PROXY) $(CA) $(CERTKEY) -e GLEICHLAUT_BUILD=$(BUILD) -e GLEICHLAUT_MODEL_URL -e GLEICHLAUT_MODEL_SHA256 -e GLEICHLAUT_MODELS=/models
 NET      = $(if $(LLM_BASE_URL),,--network none)
 AS_ME    = --user $$(id -u):$$(id -g)
 STATE    = -v $(CURDIR)/state:/app/state -e GLEICHLAUT_STATE=/app/state
 CANARY_N ?= 40
-GGUF_SHA ?= a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299
-GGUF     ?= /models/apertus-v1.5-8b-text-q4_k_m.gguf
+# BUILD picks the certified 8B GGUF: q4_k_m (5.1 GB, 8 GiB RAM; the default) or q8_0 (8.6 GB, 16 GiB RAM; PREREG R1, M2)
+BUILD    ?= q4_k_m
+SHA_q4_k_m = a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299
+SHA_q8_0   = dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d
+GGUF_SHA ?= $(SHA_$(BUILD))
+GGUF     ?= /models/apertus-v1.5-8b-text-$(BUILD).gguf
 MONTH_ARGS ?=
 MONTH_SEL = $(if $(ITEMS),--items /app/in/items.json --out /app/out/month/$(basename $(notdir $(ITEMS))),--from $(FROM) --to $(TO) --fetch)
 ITEMS_MOUNT = $(if $(ITEMS),-v $(abspath $(ITEMS)):/app/in/items.json:ro)
@@ -68,7 +72,7 @@ run:
 run-offline:
 	docker build --target offline -t $(IMAGE)-offline .
 	mkdir -p models out
-	docker run --rm $(ENVS) -e GLEICHLAUT_MODEL_URL -e GLEICHLAUT_MODEL_SHA256 -e GLEICHLAUT_MODELS=/models \
+	docker run --rm $(ENVS) -e GLEICHLAUT_BUILD=$(BUILD) -e GLEICHLAUT_MODEL_URL -e GLEICHLAUT_MODEL_SHA256 -e GLEICHLAUT_MODELS=/models \
 	  $(AS_ME) -v $(CURDIR)/models:/models -v $(CURDIR)/out:/app/out $(IMAGE)-offline
 
 test:
@@ -81,7 +85,7 @@ certify:
 	docker build --target base -t $(IMAGE) .
 	mkdir -p state
 	docker run --rm --network none $(TUNING) $(CERTKEY) $(AS_ME) $(STATE) $(IMAGE) python -m gleichlaut certify \
-	  --import-run data/runs/8b_q4_k_m_fresh166_g3_final.jsonl --gguf-sha256 $(GGUF_SHA) --labels eval/labels/m1_q4_k_m_fresh166.tsv
+	  --import-run data/runs/8b_$(BUILD)_fresh166_g3_final.jsonl --gguf-sha256 $(GGUF_SHA) --labels eval/labels/m1_$(BUILD)_fresh166.tsv
 
 # The same certificate from a run of the frozen 166 suite on this machine's CPU (offline image; slow: ~7 h on 4 cores).
 certify-build:
@@ -133,7 +137,9 @@ audit:
 	docker run --rm $(PROXY) $(CA) $(AS_ME) -v $(CURDIR)/out:/app/out $(IMAGE) sh -c '\
 	  d=$(AUDIT_DATE); if [ "$$d" = latest ]; then d=$$(python -m gleichlaut feeds --latest) || exit 6; fi; \
 	  for L in de fr it; do [ -f out/hist/$$d-$$L.json ] || python -m gleichlaut.sl.ingest $$d --langs $$L || exit 6; done; \
-	  python -m gleichlaut audit --hist out/hist --date $$d --out out/audit $(AUDIT_ARGS)'
+	  T=; [ $$(ls out/hist/*-de.json 2>/dev/null | wc -l) -lt 2 ] && { T="--terms data/audit/term_pairs_20261006.json"; \
+	    echo "one snapshot only: terminology uses the term pairs learned from the 2026 snapshots (data/audit/term_pairs_20261006.json)"; }; \
+	  python -m gleichlaut audit --hist out/hist --date $$d --out out/audit $$T $(AUDIT_ARGS)'
 
 feeds:
 	docker build --target base -t $(IMAGE) .

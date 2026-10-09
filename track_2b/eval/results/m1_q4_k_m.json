@@ -1,4 +1,11 @@
 {
+ "annotators": {
+  "class_agree": 51,
+  "n": 55,
+  "needs_fix_agree": 54,
+  "needs_fix_kappa": 0.899,
+  "tiebreak": 2
+ },
  "build": "q4_k_m",
  "chrf": {
   "ci95": [

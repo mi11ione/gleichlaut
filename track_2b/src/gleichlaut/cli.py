@@ -46,9 +46,18 @@ import argparse, datetime, inspect, json, os, re, sys, time, urllib.error, urlli
 from collections import Counter
 from . import core, backends
 
-GGUF_URL = os.environ.get("GLEICHLAUT_MODEL_URL",
-                          "https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf")
-GGUF_SHA = os.environ.get("GLEICHLAUT_MODEL_SHA256", "a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299")
+# The two certified 8B builds (PREREG R1: M1 Q4_K_M, M2 Q8_0; build certificates in eval/certificates/). GLEICHLAUT_BUILD
+# picks one; GLEICHLAUT_MODEL_URL / GLEICHLAUT_MODEL_SHA256 override both (any other file needs its own certificate).
+BUILDS = {
+    "q4_k_m": ("https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf",
+               "a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299"),     # 5.1 GB, an 8 GiB box
+    "q8_0": ("https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf",
+             "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d"),       # 8.6 GB, a 16 GiB box
+}
+BUILD = os.environ.get("GLEICHLAUT_BUILD") or "q4_k_m"
+if BUILD not in BUILDS: sys.exit(f"error: GLEICHLAUT_BUILD={BUILD!r}: one of {', '.join(BUILDS)}")
+GGUF_URL = os.environ.get("GLEICHLAUT_MODEL_URL") or BUILDS[BUILD][0]
+GGUF_SHA = os.environ.get("GLEICHLAUT_MODEL_SHA256") or BUILDS[BUILD][1]
 MODELS = os.environ.get("GLEICHLAUT_MODELS", os.path.join(core.ROOT, "models"))
 
 
@@ -85,7 +94,7 @@ def fetch_gguf():
     M = models_dir(); os.makedirs(M, exist_ok=True)
     p = os.path.join(M, os.path.basename(GGUF_URL))
     if not (os.path.exists(p) and core.sha256(p) == GGUF_SHA):
-        print(f"downloading {GGUF_URL} (~5 GB) ...", flush=True)
+        print(f"downloading {GGUF_URL} ({BUILD}: 5-9 GB) ...", flush=True)
         req = urllib.request.Request(GGUF_URL, headers={"User-Agent": "gleichlaut/0.1"})
         with backends.urlopen(req, timeout=600) as r, open(p + ".part", "wb") as f:
             while True:

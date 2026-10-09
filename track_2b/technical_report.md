@@ -32,11 +32,12 @@ text **17.5%** of the time against **6.0%** for the no-model start (old text wit
 updated by code): **+11.4 points, 95% CI [4.8, 18.7]**; against rules+, our strongest no-model baseline, **+6.6 [1.8, 12.0]**. They cut the token edits still needed to reach BAG's text by **42.4%**
 [31.0, 54.1]. **39.8%** of drafts come out ready, with **0** meaning errors, stale changes or German left among them,
 and a rerun with a new seed passes the same rule (+12.0 points, 41.6% ready). **The shipped Apertus 8B, on a CPU,
-passes the same pre-registered rule** (+10.8 points [4.8, 17.5], 36.1% ready, 0 meaning errors among ready drafts), so
-the default deployment is fully air-gapped; the 70B saves twice as many edits (42.4% vs 20.9% fewer than the no-model start) and its
-ready drafts rarely need a fix to the amendment (3 of 66 vs 33 of 60). The audit reduces 1,688 limitations to
-**27** findings that contain **all 10** known divergent limitations and **6** new confirmed problems (a field in the
-wrong language, five typos next to numbers). A draft costs **CHF 0.0024** at a Swiss provider's
+passes the same pre-registered rule** (Q4_K_M: +10.8 points [4.8, 17.5], 36.1% ready, 0 meaning errors among ready
+drafts), so the default deployment is fully air-gapped. At Q8_0 the 8B matches the 70B on identical drafts (17.5%), with
+0 errors of any severe kind among its 62 ready drafts; the 70B still saves more edits (42.4% vs 33.1% for Q8_0, paired
+difference 9.3 points [−1.3, 20.2]; vs 20.9% for Q4_K_M) and its ready drafts rarely need a fix to the amendment (3 of 66). The audit reduces 1,688 limitations to
+**27** findings that contain **all 10** known divergent limitations, **5** new confirmed problems (typos next to
+numbers) and Keytruda's Italian field holding the French text (spotted by hand before the language check existed). A draft costs **CHF 0.0024** at a Swiss provider's
 published price for Apertus 70B. `make run` re-executes the recorded runs offline and re-derives every number.
 
 ## 2. Architecture
@@ -81,6 +82,7 @@ evaluation only.
 |---|---|---|
 | SL drafting | Apertus v1.5 70B | Public AI through a budget gateway; temperature 0; plain user messages; served model logged |
 | SL and statute drafting (default) | Apertus v1.5 8B GGUF Q4_K_M, sha256-pinned | 4-core CPU GitHub runners via llama.cpp (R1, 153.4 s per draft); greedy; digit and number-word logit mask |
+| SL drafting (16 GiB option) | Apertus v1.5 8B GGUF Q8_0, sha256-pinned | the same runners (R1/M2, 200.5 s per draft) |
 | research arms (dev, statutes) | Apertus v1.5 8B, MLX 4-bit DWQ | a laptop; this build agreed with bf16 on 548 of 648 decisions in our parity battery, the GGUF on 622 |
 
 Public AI's `apertus-v1.5-8b` name serves the 70B (identical greedy outputs in 760 of 792 cells, 70B-level MMLU), so
@@ -92,11 +94,15 @@ One prompt (Appendix A): old and new German, a code-derived list of the German c
 text, numbers as slot codes; the model returns the amended paragraph. The 70B wrote 0 digits in 285 calls; in 3 of 166
 drafts it wrote a number word itself ("due", "quatre", "quattro"), and all 3 were flagged; the 8B cannot emit either.
 **Size is measured on the same items in both directions.** SL conditions (pre-registered R1, same pipeline, same 166
-items): the 8B GGUF passes the rule (flagged 63.9%; ready drafts 0 meaning errors, 3 stale or German), so under R1 the
-SL default is the local 8B; the 70B is measured to be worth its endpoint where editing time matters (ready drafts
-needing a fix 3 of 66 vs 33 of 60, edits saved 42.4% vs 20.9%). The research-phase MLX build had flagged 85.0% on dev
+items): both 8B GGUF builds pass the rule (Q4_K_M: flagged 63.9%, ready drafts 0 meaning errors and 3 stale or German;
+Q8_0: flagged 62.7%, ready drafts 0 / 0 / 0), so under R1 the SL default is the local 8B. Quantisation matters as much
+as size: Q8_0 ties the 70B on exact match and is within the paired CI on edits saved (33.1% vs 42.4%, difference
+[−1.3, 20.2]); Q4_K_M is clearly behind on edits (20.9%, difference [8.7, 34.9]). The 70B is worth its endpoint where
+editing time matters (ready drafts needing a fix: 3 of 66, against 25 of 62 for Q8_0 and 33 of 60 for Q4_K_M, mostly one
+insurance term). The research-phase MLX build had flagged 85.0% on dev
 items without the re-ask. Federal statutes (pre-registered R5, 120 paragraphs): the 70B is no better (exact
-48.3% vs 50.0%; 2 vs 0 real errors among drafts marked ready), so statutes use the 8B on CPU, and their drafts go to
+48.3% vs 50.0%, measured with the 8B MLX build; 2 vs 0 real errors among drafts marked ready; the GGUF builds on the
+same items are pre-registered as R6 and running), so statutes use the 8B on CPU, and their drafts go to
 review because German job titles ("EFZ") need a terminology list that only exists for the SL so far.
 
 ### 3.3 Where Apertus fell short, and what does that job instead
@@ -138,9 +144,10 @@ German changes. Every ready non-exact draft was read in full; a seeded 20 flagge
 | same, unseen edit patterns | held-out | 154 | 15.6% | +12.3 [5.8, 20.1] | 60.4% | 39.6% | 0 / 0 / 0 | PASS |
 | same, rerun with seed 1 (R2) | held-out | 166 | 18.1% | +12.0 [5.4, 19.3] | 58.4% | 41.6% | 0 / 0 / 2 | PASS |
 | Apertus 70B, earlier checks | out-of-sample | 242 | 29.3% | +14.9 [9.9, 20.7] | 61.6% | 38.4% | 1 / 0 / 10 | FAIL |
-| **Apertus 8B GGUF on CPU + checks + re-ask (R1)** | **held-out** | **166** | **16.9%** | **+10.8 [4.8, 17.5]** | **63.9%** | **36.1%** | **0 / 1 / 2** | **PASS** |
+| **Apertus 8B GGUF Q4_K_M on CPU + checks + re-ask (R1)** | **held-out** | **166** | **16.9%** | **+10.8 [4.8, 17.5]** | **63.9%** | **36.1%** | **0 / 1 / 2** | **PASS** |
+| **Apertus 8B GGUF Q8_0 on CPU, same (R1, M2)** | **held-out** | **166** | **17.5%** | **+11.4 [4.8, 18.7]** | **62.7%** | **37.3%** | **0 / 0 / 0** | **PASS** |
 | Apertus 8B (MLX DWQ), no re-ask | dev | 120 | 15.0% | +9.2 [3.3, 15.8] | 85.0% | 15.0% | 1 / 0 / 0 | FAIL |
-| Statutes: 8B | Fedlex (dev) | 120 | 50.0% | rules 35.0% | 31.7% | 68.3% | 0 / 4 / 4 | review all |
+| Statutes: 8B (MLX DWQ) | Fedlex (dev) | 120 | 50.0% | rules 35.0% | 31.7% | 68.3% | 0 / 4 / 4 | review all |
 | Statutes: 70B | Fedlex (dev) | 120 | 48.3% | rules 35.0% | 23.3% | 76.7% | 2 / 1 / 5 | review all |
 
 ![Exact-match gain per arm](docs/fig_arms.svg)

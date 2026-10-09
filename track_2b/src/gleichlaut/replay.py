@@ -43,6 +43,9 @@ def compute():
     res["baseline_plus"] = score.baseline_plus()
     res["m1_q4_k_m"] = score.m1("q4_k_m")
     res["post_edit_8b_q4_k_m"] = score.post_edit("runs/8b_q4_k_m_fresh166_g3_final.jsonl")
+    res["m1_q8_0"] = score.m1("q8_0")
+    res["post_edit_8b_q8_0"] = score.post_edit("runs/8b_q8_0_fresh166_g3_final.jsonl")
+    res["size_compare"] = score.size_compare()
     return res
 
 
