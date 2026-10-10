@@ -185,6 +185,7 @@ text are one insurer word: mostly the Italian termbase entry, the bare head «as
 [docs/termbase.md](docs/termbase.md#fourth-review-11-oct-2026-italian-translator)); in French BAG itself published its minority « assurance maladie ». The two blind annotators agreed on all
 19 labelled drafts (`eval/results/r12_terms.json`).
 Phased pilot (audit first), owners, protection needs and monthly effort: [docs/adoption.md](docs/adoption.md).
+Phase-1 pilot pack in German (draft mandate, protection-needs analysis, management note, one GEVER case sheet per audit issue; owners left for BAG to fill in): [docs/pilot/](docs/pilot/README.md).
 
 ## Run it
 

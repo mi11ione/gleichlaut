@@ -10,6 +10,9 @@ the source, **UNVERIFIED** means we found no public source. Every number comes f
 file is named next to the number. Numbers marked *assumption* were not measured. They are there to be replaced by the
 office's own figures.
 
+The phase-1 pilot pack (German drafts: project mandate, protection-needs analysis, management note, one case sheet per
+audit issue) is in [pilot/](pilot/README.md).
+
 ## 1. Three phases
 
 | | Phase 1: audit | Phase 2: drafting in shadow mode | Phase 3: drafting in the office |

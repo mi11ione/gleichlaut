@@ -1,0 +1,49 @@
+# Fallblatt 02: Dupixent (Zahl)
+
+Spezialitätenliste (SL), Prüfung der Sprachfassungen DE/FR/IT, Lauf vom 06.10.2026 (Phase 1, Pilot).
+
+| Feld | Inhalt |
+|---|---|
+| Präparat(e) | Dupixent |
+| Limitierung(en), Kennung in der Publikation | `DUPIXENT.05P`, `DUPIXENT.05a` |
+| Art der Prüfung | Zahl (Wert mit Einheit) |
+| Betroffene Sprachfassung(en) | FR |
+| Abweichung | Zahl, FR: DE 15 · FR 30 |
+| Erstmals festgestellt | erstmals am 01.06.2026, nicht vorhanden am 01.04.2026; vorhanden in 6 von 6 geprüften Ständen ab diesem Datum |
+| Blinde Einstufung | real: Bedeutung weicht ab (N02: real; N03: real) |
+| Herkunft der Einstufung | zwei blinde Claude-Annotatoren, ein dritter bei Uneinigkeit (Mehrheit, PREREG R14); keine Einstufung durch das BAG |
+| Hinweis | Fall war vor Entwicklung der Prüfregel bekannt (kein unabhängiger Treffer) |
+| Nachschlagen | https://sl.bag.admin.ch/sl, Präparat «Dupixent» suchen, Limitierung in DE, FR und IT vergleichen; Rohdaten: https://epl.bag.admin.ch/static/sl/publication/fhir/foph-sl-publication-20261006-de.ndjson (ebenso `-fr`, `-it`) |
+
+## Auszüge
+
+Wörtlich aus der Publikation vom 06.10.2026; die abweichenden Werte sind **fett**. «…» kürzt den Text.
+
+### Befund N02
+
+- **DE:** …ierung von 300 mg alle 4 Wochen bei einem Körpergewicht von **15** - \< 60 kg, bzw. von 200 mg alle 2 Wochen bei einem Körperge…
+- **FR:** …e de 300 mg toutes les 4 semaines pour un poids corporel de **30 kg** à moins de 60 kg, ou de 200 mg toutes les 2 semaines pou…
+- **IT:** …di 300 mg ogni 4 settimane per un peso corporeo di **15** - \< 60 kg, o di 200 mg ogni 2 settimane per un peso corporeo di 60 kg o più, nei bambini…
+
+Begründung der blinden Einstufung (Annotator, englisch, unverändert): *DE 15-\<60 kg vs FR 30-\<60 kg.*
+
+### Befund N03
+
+- **DE:** …ierung von 300 mg alle 4 Wochen bei einem Körpergewicht von **15** - \< 60 kg, bzw. von 200 mg alle 2 Wochen bei einem Körperge…
+- **FR:** …e de 300 mg toutes les 4 semaines pour un poids corporel de **30 kg** à moins de 60 kg, ou de 200 mg toutes les 2 semaines pou…
+- **IT:** …di 300 mg ogni 4 settimane per un peso corporeo di **15** - \< 60 kg, o di 200 mg ogni 2 settimane per un peso corporeo di 60 kg o più, nei bambini…
+
+Begründung der blinden Einstufung (Annotator, englisch, unverändert): *DE 15-\<60 kg vs FR 30-\<60 kg.*
+
+## Bearbeitung (durch BAG auszufüllen)
+
+| Feld | Eintrag |
+|---|---|
+| Geschäftsnummer (GEVER) | durch BAG zu ergänzen |
+| Sprache der Verfügung | aus dem Dossier: ______ |
+| Entscheid | ☐ Abweichung bestätigt, Bedeutung betroffen ☐ Abweichung bestätigt, nur Form ☐ keine Abweichung ☐ weitere Abklärung |
+| Massnahme | ☐ Korrektur im ordentlichen Verfahren (Weg durch BAG festzulegen) ☐ Korrektur bei nächster Änderung oder Überprüfung ☐ keine |
+| Bemerkung | |
+| Visum (Name, Datum) | |
+
+Quelle: `data/audit/audit_20261006.json`, Befunde N02, N03; erzeugt mit `python3 tools/pilot_sheets.py` (ohne Modellaufruf).

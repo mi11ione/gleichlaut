@@ -1,0 +1,43 @@
+# Fallblatt X5: Zavicefta (Verneinung, experimentell)
+
+Spezialitätenliste (SL), Prüfung der Sprachfassungen DE/FR/IT, Lauf vom 06.10.2026 (Phase 1, Pilot).
+
+> **Experimentelle Prüfung, standardmässig aus.** Dieser Befund stammt aus einer Prüfart, die ihr vorab festgelegtes Präzisionsziel nicht erreicht hat; sie ist im Standardlauf ausgeschaltet. Der Befund wurde von beiden blinden Annotatoren bestätigt und wird deshalb zur Prüfung vorgelegt.
+
+| Feld | Inhalt |
+|---|---|
+| Präparat(e) | Zavicefta |
+| Limitierung(en), Kennung in der Publikation | `ZAVICEFTA2` |
+| Art der Prüfung | Verneinung: experimentelle Prüfung, standardmässig aus |
+| Betroffene Sprachfassung(en) | FR |
+| Abweichung | Verneinung, FR: FR verneint («n’»), DE nicht |
+| Erstmals festgestellt | nicht datiert (die experimentelle Prüfung wird nicht über frühere Stände datiert) |
+| Blinde Einstufung | geringfügig: Form fehlerhaft, Bedeutung erhalten (G18: minor) |
+| Herkunft der Einstufung | zwei blinde Claude-Annotatoren, übereinstimmend (PREREG R15); keine Einstufung durch das BAG |
+| Hinweis | experimentelle Prüfart; 31 Befunde im Register, davon 6 bestätigt (eval/results/audit_r15.json) |
+| Nachschlagen | https://sl.bag.admin.ch/sl, Präparat «Zavicefta» suchen, Limitierung in DE, FR und IT vergleichen; Rohdaten: https://epl.bag.admin.ch/static/sl/publication/fhir/foph-sl-publication-20261006-de.ndjson (ebenso `-fr`, `-it`) |
+
+## Auszüge
+
+Wörtlich aus der Publikation vom 06.10.2026; die abweichenden Werte sind **fett**. «…» kürzt den Text.
+
+### Befund G18
+
+- **DE:** Die Pfizer AG vergütet dem Leistungserbringer, bei dem eine angebrochene Packung ZAVICEFTA verfällt, auf dessen erste Aufforderung hin den Anteil des Fabrikabgabepreises für die Anzahl der verfallenen Ampullen zurück.
+- **FR:** À la première demande d’un prestataire de service **n’**ayant pas utilisé l’intégralité du contenu d’une boîte de ZAVICEFTA, la société Pfizer AG rembourse à celui-ci la part du prix de fabrique proportionnelle au nombre d’ampoules non utilisées.
+- **IT:** …rimborsa al prestatore di servizi, alla sua prima richiesta, la quota del prezzo di fabbrica per la consegna corrispondente al numero di flaconcini…
+
+Begründung der blinden Einstufung (Annotator, englisch, unverändert): *DE refund for "verfallenen Ampullen" of "angebrochene Packung"; FR "ampoules non utilisées"; expired vs unused, practically equivalent.*
+
+## Bearbeitung (durch BAG auszufüllen)
+
+| Feld | Eintrag |
+|---|---|
+| Geschäftsnummer (GEVER) | durch BAG zu ergänzen |
+| Sprache der Verfügung | aus dem Dossier: ______ |
+| Entscheid | ☐ Abweichung bestätigt, Bedeutung betroffen ☐ Abweichung bestätigt, nur Form ☐ keine Abweichung ☐ weitere Abklärung |
+| Massnahme | ☐ Korrektur im ordentlichen Verfahren (Weg durch BAG festzulegen) ☐ Korrektur bei nächster Änderung oder Überprüfung ☐ keine |
+| Bemerkung | |
+| Visum (Name, Datum) | |
+
+Quelle: `data/audit/audit_20261006.json`, Befund G18; erzeugt mit `python3 tools/pilot_sheets.py` (ohne Modellaufruf).
