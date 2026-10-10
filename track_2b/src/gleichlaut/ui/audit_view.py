@@ -97,6 +97,12 @@ def highlight(text, lang, hot):
     for m in re.finditer(r"\[([^\]]{1,240})\]", text):
         plain += text[pos:m.start()]; marks.append((len(plain), len(plain) + len(m.group(1)), 2)); plain += m.group(1); pos = m.end()
     plain += text[pos:]
+    return _render(plain, lang, hot, marks)
+
+
+def _render(plain, lang, hot, marks):
+    """plain text + [(start, end, 2)] spans -> [[text, 0|1|2]] (numbers outside the spans: 2 when in `hot`, else 1)."""
+    marks = list(marks)
     words = NUMW.get(lang, NUMW["de"])
     for m in _num_rx(lang).finditer(plain):
         if any(a <= m.start() < b for a, b, _ in marks): continue
@@ -164,11 +170,55 @@ def _window(full_ref, ctx_ref, ref_lang, full, lang, w=70):
     return ("…" if a > 0 else "") + full[a:b].strip() + ("…" if b < len(full) else "")
 
 
-def rows(F, hist=None, date="20261006"):
+def _ctxs(f, kind, L):
+    """[(lang, context)] of a finding: the '[x]' contexts the audit wrote, in the language they quote."""
+    out = []
+    for x in f.get("de_only") or []: out += [("de", c) for c in (x.get("context") or [])[:1]]
+    for x in f.get("tgt_only") or []: out += [(L, c) for c in (x.get("context") or [])[:1]]
+    top = f.get("context")
+    if kind in ("editorial", "terminology", "unit") and L in LANGS and isinstance(top, (list, tuple)) and top and isinstance(top[0], str):
+        out.append((L, top[0]))
+    return [(k, c) for k, c in out if isinstance(c, str) and "[" in c]
+
+
+def _passage(c):
+    return re.sub(r"\s+", " ", re.sub(r"[…\[\]]", "", c)).strip().lower()
+
+
+def conflict_key(f, kind, L, V, term=None):
+    """What a finding says is different, independent of the limitation (and, for number and unit findings, of the
+    target language): two findings with the same key on sibling texts are the same issue."""
+    if kind == "number":
+        tgt = sorted(set(V.get("fr", ())) | set(V.get("it", ()))) if not (f.get("de_only") or f.get("tgt_only")) else \
+            sorted({_canon(x.get("value")) for x in f.get("tgt_only") or []})
+        de = sorted(V.get("de", ())) if not (f.get("de_only") or f.get("tgt_only")) else sorted({_canon(x.get("value")) for x in f.get("de_only") or []})
+        return ("number", tuple(de), tuple(tgt))
+    if kind == "unit": return ("unit", str(f.get("value") or ""), str(f.get("de_unit") or ""), str(f.get("tgt_unit") or ""))
+    if kind == "language": return ("language", L or "", str(f.get("detected") or f.get("found") or ""))
+    if kind == "editorial": return ("editorial", L or "", str(f.get("surface") or ""), str(f.get("suggestion") or ""))
+    if kind == "terminology":
+        o = f.get("old_phrase") or (term[0] if term else "") or ""; n = f.get("new_phrase") or (term[1] if term else "") or ""
+        return ("terminology", L or "", _passage(o), _passage(n))
+    return (kind, L or "", re.sub(r"\s+", " ", str(f.get("description") or ""))[:120])
+
+
+def dating(first, seen, snaps):
+    """What the audit's dating says about one finding (audit.date_findings: first_seen = the first of the usable snapshots
+    of the year in which it is present, seen_in = in how many it is present): first, prev (the snapshot before first,
+    where it was absent; None when first is the earliest snapshot checked), n (present in n snapshots) of m (snapshots
+    from first on), earliest (first is the earliest snapshot checked)."""
+    if not first: return None
+    snaps = sorted(snaps or [])
+    if first not in snaps: return dict(first=first, prev=None, n=seen, m=None, earliest=False)
+    i = snaps.index(first)
+    return dict(first=first, prev=snaps[i - 1] if i > 0 else None, n=seen, m=len(snaps) - i, earliest=i == 0)
+
+
+def rows(F, hist=None, date="20261006", snaps=None):
     by = {}
     for f in F: by.setdefault((f.get("id"), f.get("lang")), []).append(f)
     out, seen = [], set()
-    for f in F:
+    for fi, f in enumerate(F):
         lim, L, kind = f.get("id"), f.get("lang"), _kind(f)
         langs = f.get("languages") or f.get("langs") or (["de", L] if L else [])
         other = {"fr": "it", "it": "fr"}.get(L)
@@ -212,7 +262,11 @@ def rows(F, hist=None, date="20261006"):
         seen.add(rid)
         n = 2
         while any(r["sig"] == sig for r in out): sig = sig.split("#")[0] + f"#{n}"; n += 1
-        out.append(dict(rid=rid, sig=sig, eq=_eq(f) if kind == "number" else None,
+        brands = [str(x).split()[0].lower() for x in (f.get("product") if isinstance(f.get("product"), (list, tuple)) else [prod]) if str(x).strip()]
+        anchors = {"lim:" + str(lim)} | {"brand:" + b for b in brands} | {"ctx:" + _passage(c) for _, c in _ctxs(f, kind, L)}
+        out.append(dict(rid=rid, sig=sig, eq=_eq(f) if kind == "number" else None, fid=f.get("fid") or "", fi=fi,
+                        vals={k: sorted(v) for k, v in V.items() if v}, gk=list(conflict_key(f, kind, L, V, term)), anchors=sorted(anchors),
+                        dating=dating(f.get("first_seen"), f.get("seen_in"), snaps),
                         term=dict(old=term[0], new=term[1], where=term[2]) if term else None, rank=f.get("rank"), no=f.get("fid") or (str(f["rank"]) if f.get("rank") is not None else ""),
                         lim=lim, product=prod, kind=kind, lang=L, langs=langs, known=bool(f.get("known")),
                         odd=odd, sug=ACTIONS.get(f.get("suggested_action") or "", f.get("suggested_action") or ""), desc=f.get("description") or f.get("detail") or "",
@@ -226,6 +280,96 @@ def rows(F, hist=None, date="20261006"):
     return out
 
 
+GROUPING = ("Findings are one issue when they name the same difference (same kind and same conflicting values: the German "
+            "and target values of a number, the unit, the detected language, the typo and its correction, the old and new "
+            "term) on the same text: the same limitation, a sibling limitation of the same product, or the same quoted "
+            "passage; a typo that the audit says explains a number difference joins that difference; a terminology "
+            "notice is one issue per language and term pair, wherever the old term still stands.")
+
+
+def issues(R):
+    """Group the rows of one audit into issues (GROUPING): -> [dict(iid, key, rows=[row indexes], ...)] in row order.
+    Deterministic: depends only on the findings, not on any decision or on the order of the input."""
+    up = list(range(len(R)))
+    def root(i):
+        while up[i] != i: up[i] = up[up[i]]; i = up[i]
+        return i
+    def join(i, j):
+        a, b = root(i), root(j)
+        if a != b: up[max(a, b)] = min(a, b)
+    for i, r in enumerate(R):
+        for j in range(i + 1, len(R)):
+            q = R[j]
+            if r["gk"] != q["gk"]: continue
+            if r["kind"] == "terminology" or set(r["anchors"]) & set(q["anchors"]): join(i, j)
+        for j, q in enumerate(R):
+            if q["lim"] == r["lim"] and q["fid"] and (q["fid"] in r["expl"] or r["fid"] in q["expl"]): join(i, j)
+    G = {}
+    for i in range(len(R)): G.setdefault(root(i), []).append(i)
+    out = []
+    for n, (_, ix) in enumerate(sorted(G.items(), key=lambda kv: kv[1][0])):
+        M = [R[i] for i in ix]
+        uniq = lambda xs: list(dict.fromkeys(x for x in xs if x))
+        odd = uniq(r["odd"] for r in M)
+        langs = [L for L in LANGS if any(r["lang"] == L for r in M)]
+        vals = {L: sorted(set().union(*[set(r["vals"].get(L, ())) for r in M])) for L in LANGS}
+        dt = [r["dating"] for r in M if r["dating"]]
+        what = []
+        for r in M:
+            k, L, f = r["kind"], r["lang"], r
+            if k == "number": w = [k, L, " ".join(r["vals"].get("de", [])) or "—", " ".join(r["vals"].get(L, [])) or "—"]
+            elif k == "editorial" and r["fix"]: w = [k, L, r["fix"][0], r["fix"][1]]
+            elif k == "terminology" and r["term"]: w = [k, L, r["term"]["old"] or "", r["term"]["new"] or ""]
+            elif k == "language": w = [k, L, str(r["found"] or ""), ""]
+            else: w = [k, L, r["desc"], ""]
+            if w not in what: what.append(w)
+        out.append(dict(iid=f"{n + 1:02d}", key=hashlib.sha1("\n".join(sorted(r["sig"] for r in M)).encode()).hexdigest()[:10],
+                        rows=ix, fids=[r["no"] or r["fid"] for r in M], lims=uniq(r["lim"] for r in M),
+                        products=uniq(r["product"] for r in M), kinds=uniq(r["kind"] for r in M), langs=langs,
+                        known=any(r["known"] for r in M), eq=all(r["eq"] is not None for r in M) and not any(r["known"] for r in M),
+                        term=all(r["kind"] == "terminology" for r in M), odd=odd[0] if len(odd) == 1 else "unclear",
+                        vals={L: v for L, v in vals.items() if v}, what=what, dating=min(dt, key=lambda d: d["first"]) if dt else None))
+    return out
+
+
+def _locate(full, c):
+    """(start, end) in `full` of the '[x]' part of an audit context, or None when the context is not found verbatim."""
+    s = c.strip().strip("…").strip()
+    i = s.find("["); j = s.find("]", i)
+    if i < 0 or j < 0: return None
+    plain = s[:i] + s[i + 1:j] + s[j + 1:]
+    at = full.find(plain)
+    if at < 0: return None
+    return (at + i, at + j - 1)
+
+
+def full_texts(F, R, hist=None, date="20261006"):
+    """{limitation: {lang: [[text, 0|1|2]]}}: the full DE/FR/IT texts of every limitation with a finding (snapshot files,
+    else data/audit/audit_texts_<date>.json), the passages the findings quote and their conflicting values marked 2 as in
+    the excerpts, other numbers 1."""
+    out = {}
+    for lim in dict.fromkeys(r["lim"] for r in R):
+        full = _hist_texts(hist, date, lim)
+        if not full: continue
+        spans = {L: [] for L in LANGS}; hot = set()
+        for r in R:
+            f = F[r["fi"]]
+            if f.get("id") != lim: continue
+            if r["kind"] == "number": hot |= set().union(*[set(v) for v in r["vals"].values()])
+            if r["kind"] == "editorial" and isinstance(f.get("values"), (list, tuple)) and f["values"]: hot.add(_canon(f["values"][0]))
+            for L, c in _ctxs(f, r["kind"], r["lang"]):
+                sp = _locate(full.get(L, ""), c) if L in full else None
+                if sp: spans[L].append(sp)
+            dt = f.get("de_term")
+            if r["kind"] == "terminology" and isinstance(dt, str) and dt and "de" in full:
+                k = full["de"].lower().find(dt.lower())
+                if k >= 0: spans["de"].append((k, k + len(dt)))
+        # a quoted passage is marked where the finding quotes it; in a language without one (the third language of a
+        # number finding), the conflicting values are marked as in the excerpts
+        out[lim] = {L: _render(full[L], L, set() if spans[L] else hot, [(a, b, 2) for a, b in sorted(set(spans[L]))]) for L in LANGS if full.get(L)}
+    return out
+
+
 def data(path=AUDIT, results=RESULTS, hist=None):
     """-> dict(meta, rows) for the page, or None when there is no audit file."""
     if not path or not os.path.exists(path): return None
@@ -236,7 +380,8 @@ def data(path=AUDIT, results=RESULTS, hist=None):
     R = json.load(open(results, encoding="utf-8")) if results and os.path.exists(results) else {}
     rec = S.get("recall") or R.get("summary", {}).get("recall") or {}
     known_ids = sorted({f.get("id") for f in F if f.get("known")})
-    meta = dict(date=date, file=os.path.relpath(path, core.ROOT), results=os.path.relpath(results, core.ROOT) if R else None,
+    snaps = S.get("snapshots_dated") or sorted({f.get("first_seen") for f in F if f.get("first_seen")})
+    meta = dict(date=date, snapshots=snaps, grouping=GROUPING, file=os.path.relpath(path, core.ROOT), results=os.path.relpath(results, core.ROOT) if R else None,
                 n_limitations=S.get("n_limitations") or R.get("summary", {}).get("n_limitations"),
                 findings=R.get("findings", len(F)), limitations=R.get("limitations_found", S.get("limitations_with_finding")),
                 known_found=R.get("known_found", rec.get("limitations")), known_of=rec.get("of"), known_ids=known_ids,
@@ -257,4 +402,7 @@ def data(path=AUDIT, results=RESULTS, hist=None):
                 main_new_real=V2.get("real_new_beyond_known") if same else None,
                 term=TM["findings"] if TM.get("findings") == nterm else nterm, term_real=TM.get("real") if TM.get("findings") == nterm else None,
                 more=os.path.relpath(MORE, core.ROOT) if TM else None)
-    return dict(meta=meta, rows=rows(F, hist, date))
+    R = rows(F, hist, date, snaps)
+    I = issues(R)
+    meta.update(issues=len(I))
+    return dict(meta=meta, rows=R, issues=I, texts=full_texts(F, R, hist, date))

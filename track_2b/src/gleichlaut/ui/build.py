@@ -42,6 +42,7 @@ TOK = re.compile(core.gl2.NUMRX.pattern + r"|\w+|\s+|[^\w\s]")        # numbers 
 WHOLE = 0.40          # a sentence block with more than this share of changed words is shown old-struck / new-underlined
 LABEL = {"fresh166": "held-out set (SL changes 06.2025–02.2026)", "m3_seed1": "held-out set, rerun seed 1", "oos242": "out-of-sample 2026 set",
          "dev120": "development set (in-sample)", "dev120_8b": "development set, 8B"}
+PERIOD = {"fresh166": "06.2025–02.2026", "m3_seed1": "06.2025–02.2026"}      # the SL changes a recorded run drafts (drafts banner)
 GLUE = 2              # changed runs separated by at most this many unchanged words merge into one phrase
 
 
@@ -302,6 +303,7 @@ def data(run="fresh166", records=None, items=None, audit=audit_view.AUDIT, hist=
     m["model"] = model_label(meta)
     m["label"] = LABEL.get(meta["run"], meta["what"]) if not meta["custom"] else "records " + meta["run"]
     m["rev"] = git_rev()
+    m["period"] = None if meta["custom"] else PERIOD.get(meta["run"])
     ml = (m["model"] or "").lower()
     m["lane"] = "70b" if "70b" in ml else "8b" if "8b" in ml else None      # SL lanes: 8B on CPU (default) | 70B endpoint (fewer edits)
     xn = {L: dict(prev_de=xliff.NOTE[L]["prev_de"], prev_tgt=xliff.NOTE[L]["prev_tgt"], product=xliff.NOTE[L]["product"],

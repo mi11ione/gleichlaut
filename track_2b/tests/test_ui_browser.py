@@ -48,10 +48,11 @@ ERR = "window.__err=[];window.addEventListener('error',function(e){window.__err.
 def test_audit_tab_opens_with_hash_and_german_default():
     C = _page(); s = _dom(C["p"], "#audit", "de-CH,de")
     assert re.search(r'id="t-audit"[^>]*aria-selected="true"', s) and re.search(r'id="p-audit"[^>]*role="tabpanel"(?![^>]*hidden)', s)
-    R = C["D"]["audit"]["rows"]; eq = [r for r in R if r["eq"] is not None and not r["known"]]
-    assert len(re.findall(r'<tr data-sig="[A-Za-z0-9]', s)) == len(R) - len(eq) and "Registerprüfung" in s and 'lang="de"' in s
-    if eq: assert f"Wahrscheinlich gleichwertige Formulierung ({len(eq)})" in s          # collapsed, counted, never dropped
-    assert "Von Amtes wegen in der nächsten Publikation berichtigen" in s and ">GÄL<" not in s
+    I = C["D"]["audit"]["issues"]; eq = [i for i in I if i["eq"]]          # one row per issue (grouped findings)
+    assert len(re.findall(r'<tr data-iss="[0-9a-f]{10}"', s)) == len(I) - len(eq) and "Registerprüfung" in s and 'lang="de"' in s
+    if eq: assert f"Wahrscheinlich gleichwertige Formulierung ({len(eq)})" in s     # collapsed, counted, never dropped
+    assert sum(len(i["rows"]) for i in I) == len(C["D"]["audit"]["rows"])            # every finding is in exactly one issue
+    assert "Von Amtes wegen" in s and "Sprachdienst" in s and ">GÄL<" not in s
 
 
 def test_landing_is_the_drafts_tab_and_audit_by_hash():

@@ -23,7 +23,7 @@ def test_self_contained_and_small():
     assert not re.search(r"url\((?!data:)", s) and "@import" not in s
     assert s.count("@font-face") == 3 and "data:font/woff2;base64," in s
     for fam in ("Public Sans", "Archivo", "Fragment Mono"): assert f"font-family:'{fam}'" in s, fam
-    assert "IBM Plex" not in s and "Source Sans" not in s and size < 1.2 * 1024 * 1024
+    assert "IBM Plex" not in s and "Source Sans" not in s and size < 1.4 * 1024 * 1024   # full audit texts (officer request) included
 
 
 def test_tokens_light_dark_and_mobile():

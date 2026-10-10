@@ -106,3 +106,18 @@ if __name__ == "__main__":
     fs = [(n, f) for n, f in sorted(globals().items()) if n.startswith("test_") and callable(f)]
     for n, f in fs: f(); print("ok", n)
     print(f"{len(fs)} passed")
+
+
+def test_findings_group_into_issues_deterministically():
+    A = _audit(); R = A["rows"]; I = A["issues"]
+    ix = sorted(i for g in I for i in g["rows"])
+    assert ix == list(range(len(R)))                                         # a partition: every finding in exactly one issue
+    assert len(I) < len(R) and I == audit_view.issues(list(R))               # grouping is a pure function of the findings
+    for g in I:
+        M = [R[i] for i in g["rows"]]
+        assert len({tuple(r["gk"]) for r in M}) == 1 or any(r["expl"] for r in M)   # same conflict, or a typo explaining it
+    dup = next(g for g in I if len(g["rows"]) > 1)                             # sibling products are one decision
+    assert len(g["fids"]) == len(g["rows"]) and dup["iid"]
+    for g in I:
+        d = g["dating"]
+        if d: assert d["first"] and (d["prev"] is None) == d["earliest"]      # "since the earliest snapshot" vs "first appeared between"
