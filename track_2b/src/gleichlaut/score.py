@@ -403,6 +403,15 @@ def audit_recall():
     return out
 
 
+def audit_grouping():
+    """How the register groups the audit for decision (ui.audit_view.issues): findings naming the same difference on the
+    same text are one issue. Counts the number/unit/language/editorial findings, the terminology notices and the issues."""
+    from .ui import audit_view
+    A = audit_view.data(hist=None); R = A["rows"]
+    return dict(findings=sum(r["kind"] != "terminology" for r in R), terminology=sum(r["kind"] == "terminology" for r in R),
+                rows=len(R), issues=len(A["issues"]), issues_terminology=sum(all(R[i]["kind"] == "terminology" for i in I["rows"]) for I in A["issues"]))
+
+
 def size_compare(builds=("q4_k_m", "q8_0")):
     """Model size, paired: the 70B (fresh 166) against each 8B GGUF build on the same items. Paired cluster bootstrap over
     German changes (4000 resamples, seed 7) of the difference in token edits saved against the rules-only start, and the

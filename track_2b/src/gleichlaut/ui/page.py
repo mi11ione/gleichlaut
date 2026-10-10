@@ -37,7 +37,7 @@ button,select,input,textarea{font:inherit;color:inherit}
 .tools{margin-left:auto;display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;color:var(--ink2);font:400 12px/1.4 var(--mono)}
 .tools b{color:var(--ink);font-weight:400}
 .tools select{background:none;border:0;border-bottom:1px solid var(--hair);padding:1px 0}
-.ctx{margin:0;padding:9px 0 10px;color:var(--ink2);font:400 13px/1.45 var(--sans);border-bottom:1px solid var(--hair)}
+.ctx{margin:0;padding:9px 0 10px;color:var(--ink2);font:400 13px/1.45 var(--sans);border-bottom:1px solid var(--hair);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ctx b{color:var(--ink);font-weight:500}
 /* buttons */
 .tb{background:none;border:0;padding:1px 0;cursor:pointer;color:var(--ink2);border-bottom:1px solid transparent}
@@ -62,20 +62,20 @@ th{font:400 11px/1.4 var(--mono);text-align:left;color:var(--ink2);padding:6px 8
 td{padding:6px 8px;border-bottom:1px solid var(--hair);vertical-align:top}
 #reg,#aud{table-layout:fixed}
 #reg thead th,#aud thead th{position:sticky;top:0;background:var(--paper);z-index:1}
-#reg col.c-mark{width:50px}#reg col.c-no{width:62px}#reg col.c-prod{width:44%}
-#reg td:first-child{text-overflow:clip;padding-right:2px}
+#reg col.c-fr,#reg col.c-it{width:30px}#reg col.c-prod{width:46%}
+#reg td.m{text-overflow:clip;padding-inline:4px;text-align:center}#reg th.m{text-align:center;padding-inline:4px}
 #reg td,#aud td{cursor:pointer}
 #reg td{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #reg td.no{font:400 11px/1.6 var(--mono);color:var(--ink2)}
 #reg td.prd{font-weight:500}
 #reg td.prd .pc{display:block;font:400 11px/1.4 var(--mono);color:var(--ink2);overflow:hidden;text-overflow:ellipsis;font-weight:400}
-#reg td.chg{color:var(--ink2)}
+#reg td.chg{color:var(--ink2);white-space:normal}#reg td.chg .cl{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35}
 #reg tr:hover td,#aud tr.cnt:hover td{background:var(--wash)}
 #reg tr[aria-selected=true] td,#aud tr[aria-selected=true] td{background:var(--sel);color:var(--sel-ink)}
 #reg tr[aria-selected=true] td *,#aud tr[aria-selected=true] td *{color:var(--sel-ink)!important}
 .mk{display:inline-block;min-width:1.3em;text-align:center;font:400 13px/1 var(--mono)}.mk.r{color:var(--sig)}.mk.o,.mk.f{color:var(--ink2)}
-.lt{display:inline-block;font:400 10px/1.4 var(--mono);letter-spacing:.04em;border:1px solid currentColor;padding:0 3px;vertical-align:1px}
-.lt.s{border-color:var(--sig);color:var(--sig)}
+.lt{font:400 11px/1.4 var(--mono);letter-spacing:.04em;color:var(--ink2)}
+.lt.s{color:var(--sig)}
 .count{color:var(--ink2);padding:6px 0;font:400 12px/1.4 var(--mono)}
 .export{display:flex;flex-wrap:wrap;gap:8px;padding:8px 0 12px;border-top:1px solid var(--hair)}
 .export .msg{color:var(--ink2);flex-basis:100%;font:400 12px/1.4 var(--mono)}
@@ -91,23 +91,34 @@ td{padding:6px 8px;border-bottom:1px solid var(--hair);vertical-align:top}
 .case:focus{outline:none}
 h2{font:600 32px/1.05 var(--disp);font-stretch:75%;margin:0;letter-spacing:-.005em}
 .ref{color:var(--ink2);margin:6px 0 0;font:400 12px/1.5 var(--mono);overflow-wrap:anywhere}
-.sec{border-top:1px solid var(--hair);margin-top:20px;padding-top:10px}
-.sl{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;margin-bottom:10px;font:400 11px/1.4 var(--mono);color:var(--ink2);text-transform:uppercase;letter-spacing:.05em}
-.sl .no{color:var(--ink);font-weight:400}.sl .no b{display:none}
-.sl .t{color:var(--ink)}
-.sl .sp{margin-left:auto;text-transform:none;letter-spacing:0}
+.sec{border-top:1px solid var(--hair);margin-top:22px;padding-top:10px;position:relative}
+.sl{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;margin-bottom:12px;font:600 14px/1.3 var(--sans);color:var(--ink)}
+.sl .no{position:absolute;left:-28px;font:400 12px/1.6 var(--mono);color:var(--ink2)}.sl .no b{display:none}
+.sl .sp{margin-left:auto;font:400 12px/1.4 var(--mono)}
+.back{display:none;margin-bottom:12px}
 .txt{font:400 17px/1.6 var(--sans);white-space:pre-wrap;overflow-wrap:anywhere;max-width:70ch}
 .de{border-left:2px solid var(--hair);padding-left:14px}
 ins{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px;text-decoration-color:var(--ink)}
 del{color:var(--ink2);text-decoration:line-through;text-decoration-thickness:1px;margin-right:.2em}
 .gap{color:var(--ink2);font-family:var(--mono);font-size:13px;padding:0 4px}
-.n{font:400 .82em/1 var(--mono);border:1px solid var(--hair);padding:1px 3px;white-space:nowrap}
-.n sup{font-size:.68em;color:var(--ink2);margin-left:1px;vertical-align:.45em}
-.n.m{border-color:var(--sig)}
-.drafts{display:grid;grid-template-columns:1fr 1fr;gap:0}
-.drafts.one{grid-template-columns:1fr}
-.dr{min-width:0;padding-right:18px}
-.dr+.dr{border-left:1px solid var(--hair);padding:0 0 0 18px}
+.n{font:inherit;border-bottom:1px dotted var(--ink2);white-space:nowrap}
+.n sup{display:none;font:400 .6em/1 var(--mono);color:var(--ink2);margin-left:1px;vertical-align:.5em}
+.case.slots .n sup{display:inline}
+.n.m{border:1px solid var(--sig);padding:0 2px}
+.drafts{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,auto);column-gap:36px}
+.drafts.one{grid-template-columns:minmax(0,1fr)}
+.lang{display:grid;grid-row:span 4;grid-template-rows:subgrid;min-width:0;row-gap:0}
+.lang>*{min-width:0}
+.lh1{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;padding-bottom:8px;font:400 12px/1.5 var(--mono);color:var(--ink2)}
+.lh1 .ln{font:600 15px/1.3 var(--sans);color:var(--ink)}
+.lh1 .st{color:var(--ink)}.lh1 .st.r{color:var(--sig)}.lh1 .key{margin-left:auto;padding:0}
+.lang .body{padding-bottom:4px}
+.lang .why{border-top:1px solid var(--hair);margin-top:14px;padding-top:10px}
+.lang .why .wh{display:flex;flex-wrap:wrap;gap:2px 10px;font:400 12px/1.5 var(--mono);color:var(--ink2);margin-bottom:4px}
+.lang .why .tri b{color:var(--ink);font-weight:400}
+.lang .dec{border-top:1px solid var(--hair);margin-top:12px;padding:10px 0 4px 0;border-left:0}
+.lang .dec.focus .btns .box{border-color:var(--ink)}
+.dec .btns .box{padding:7px 14px;font-size:13px}
 .dl{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin-bottom:8px;font:400 12px/1.5 var(--mono);color:var(--ink2)}
 .dl .ln{color:var(--ink)}
 .dl .st{color:var(--ink)}.dl .st.r{color:var(--sig)}
@@ -150,7 +161,7 @@ details[open]>summary{margin-bottom:6px}
 .dec select,.dec textarea{display:block;width:100%;margin-top:3px;background:var(--paper);border:1px solid var(--hair);padding:4px 6px;font:400 14px/1.4 var(--sans);color:var(--ink)}
 .dec textarea{min-height:52px;resize:vertical}
 .dec .stt,.stt{color:var(--ink2);margin-top:4px;font:400 12px/1.4 var(--mono)}
-.save{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--hair)}
+.save{position:sticky;bottom:0;z-index:2;background:var(--paper);display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-top:16px;padding:10px 0;border-top:1px solid var(--rule)}
 .save .hint{color:var(--ink2);font:400 12px/1.4 var(--mono)}
 .empty{color:var(--ink2);padding:24px 0}
 .fambar{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;padding-top:4px}
@@ -162,9 +173,9 @@ details[open]>summary{margin-bottom:6px}
 #aud td.ap .code{display:block;font-size:11px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #aud td.aw{font:400 12px/1.45 var(--mono);color:var(--ink)}
 #aud td.aw .kd{display:block;color:var(--ink2)}
-#aud tr.grp td{cursor:default;font:400 11px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);padding:14px 8px 5px;border-bottom:1px solid var(--rule);background:none!important}
+#aud tr.grp td{cursor:default;font:600 12px/1.4 var(--sans);color:var(--ink);padding:14px 8px 5px;border-bottom:1px solid var(--rule);background:none!important}
 #aud tr.eqh td{cursor:default;padding:12px 8px 5px;border-bottom:1px solid var(--rule)}
-#aud tr.eqh button{background:none;border:0;padding:0;cursor:pointer;font:400 11px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--ink2)}
+#aud tr.eqh button{background:none;border:0;padding:0;cursor:pointer;font:600 12px/1.4 var(--sans);color:var(--ink2)}
 #aud tr.eq td{color:var(--ink2)}
 /* audit case */
 .snip{font:400 15px/1.55 var(--sans);overflow-wrap:anywhere}
@@ -188,7 +199,9 @@ table.mem{width:100%;table-layout:auto;margin:4px 0 6px}
 table.mem td{font-size:13px;padding:6px 10px 6px 0;cursor:default}
 table.mem td.mf{width:44px;white-space:nowrap;color:var(--ink2);font-family:var(--mono)}table.mem td.mc{width:40%}
 table.mem .code{color:var(--ink2);font-size:12px}table.mem .sub2{display:block;color:var(--ink2);font-size:12px}
-.adec{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 28px}
+.adec{display:grid;grid-template-columns:minmax(0,1fr);gap:14px 0}
+.adec .btns .box{padding:7px 14px;font-size:13px}.adec .grp2{display:flex;flex-wrap:wrap;gap:6px;align-items:baseline;margin-top:6px}
+.adec .grp2 .lbl{font:400 12px/1.4 var(--mono);color:var(--ink2);min-width:9em}
 .adec label.q{display:block;font:400 12px/1.4 var(--mono);color:var(--ink2);margin-bottom:4px}
 .adec select,.adec textarea{width:100%;background:var(--paper);border:1px solid var(--hair);padding:4px 6px;font:400 14px/1.4 var(--sans);color:var(--ink)}
 .adec textarea{display:block;margin-top:8px;min-height:60px;resize:vertical}
@@ -209,6 +222,9 @@ footer p{margin:6px 0 0;overflow-wrap:anywhere;max-width:150ch}
 [hidden]{display:none!important}
 @media (max-width:900px){
  .app{padding-inline:16px}
+ .work.case-open .register{display:none}.back{display:inline-block}.sl .no{position:static}
+ .lang{display:block;grid-row:auto}.drafts{grid-template-rows:none}.lang+.lang{border-top:1px solid var(--rule);margin-top:18px;padding-top:12px}
+ .register .key{display:none}.ctx{white-space:normal}
  .key>span{white-space:normal}.tools{gap:6px 12px}.wm{font-size:22px}.views{gap:16px}.box{white-space:normal}
  .bar{position:static}.views{align-self:auto}.view{margin-bottom:0;padding-bottom:4px}.tools{margin-left:0}
  .work{grid-template-columns:minmax(0,1fr)}
@@ -237,7 +253,7 @@ BODY = r"""<div class="app">
 <header class="bar">
  <span class="wm">Gleichlaut</span>
  <nav class="views" role="tablist" aria-label="Views"><button class="view" role="tab" type="button" id="t-drafts" aria-controls="p-drafts"></button><button class="view" role="tab" type="button" id="t-audit" aria-controls="p-audit"></button></nav>
- <div class="tools"><span id="progress"></span><button class="box primary" id="x-dec" type="button"></button>
+ <div class="tools"><span id="progress"></span><button class="box" id="x-dec" type="button"></button>
   <label><span id="l-ui" class="vh"></span><select id="ui-lang" aria-label="Interface language"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option></select></label><button class="tb" id="theme" type="button"></button></div>
 </header>
 <p class="ctx" id="ctxline"></p>
@@ -262,8 +278,8 @@ BODY = r"""<div class="app">
    <div class="fl"><select id="f-fam" aria-label="Family"></select><input type="search" id="f-q" aria-label="Search product or limitation code"></div>
    <div class="fambar" id="fam-bulk" hidden></div>
   </div>
-  <div class="tbl reg-wrap" id="reg-wrap"><table id="reg"><colgroup><col class="c-mark"><col class="c-no"><col class="c-prod"><col></colgroup>
-   <thead><tr><th id="h-mark"></th><th id="h-no"></th><th id="h-prod"></th><th id="h-chg"></th></tr></thead><tbody></tbody></table></div>
+  <div class="tbl reg-wrap" id="reg-wrap"><table id="reg"><colgroup><col class="c-fr"><col class="c-it"><col class="c-prod"><col></colgroup>
+   <thead><tr><th class="m">FR</th><th class="m">IT</th><th id="h-prod"></th><th id="h-chg"></th></tr></thead><tbody></tbody></table></div>
   <div class="count" id="shown"></div>
   <p class="key" id="reg-key"></p>
   <div class="export"><button class="box" id="x-xlf" type="button"></button><button class="box" id="x-xlf12" type="button"></button><button class="box" id="x-copy" type="button"></button><button class="box" id="x-imp" type="button"></button>
@@ -543,7 +559,7 @@ de:{sub:"Prüfregister · Apertus entwirft, Code prüft",divergent:"Entwürfe, d
  exportDec:"Entscheide exportieren (JSON)",where:"Entscheide bleiben in diesem Browser, bis Sie sie exportieren. Massgeblich sind das ePL und der XLIFF-Rücklauf, nicht diese Seite.",
  keyReg:[["✓","bereit"],["~","markiert, alle Befunde wahrscheinlich in Ordnung"],["▲","markiert, zu prüfen"],["≠","bisheriger Text hat schon ein Problem"],["h","an Übersetzung übergeben"],["AER","übernommen / bearbeitet / zurückgewiesen"]],
  keyNum:["vom Code aus dem Deutschen gesetzte Zahl (Platzhalter A)","orange umrahmt: Zahl vom Modell geschrieben, prüfen","neu","entfernt"],
- keyAud:[["K","bekannte Abweichung"],["D","entschieden"],["v2","widersprüchlicher Wert"],["v1","weitere Zahl"],["bar","Sprache, die von den beiden anderen abweicht"]]},
+ keyAud:[["✓","entschieden"],["v2","widersprüchlicher Wert"],["v1","weitere Zahl"],["bar","Sprache, die von den beiden anderen abweicht"]]},
 en:{sub:"Review register · Apertus drafts, code checks",divergent:"Drafts whose old text already has a problem",
  tb:{project:"Project",drawing:"Drawing",sheet:"Sheet",rev:"Rev",date:"Date (SL snapshot)",lane:"Lane",model:"Model",run:"Run",checked:"Checked by",checkedV:"frozen checks"},
  lane70:"fewer edits (optional): 70B, certified endpoint",lane8:"default: 8B on CPU, air-gapped",laneDef:"default lane: 8B on CPU, air-gapped",drawingBy:"{l}, {n} drafts by Apertus {m}",
@@ -557,7 +573,7 @@ en:{sub:"Review register · Apertus drafts, code checks",divergent:"Drafts whose
  exportDec:"Export decisions (JSON)",where:"Decisions stay in this browser until you export them. The system of record is ePL and the XLIFF round trip, not this page.",
  keyReg:[["✓","ready"],["~","flagged, all findings probably fine"],["▲","flagged, to check"],["≠","old text already has a problem"],["h","routed to a translator"],["AER","accepted / edited / sent back"]],
  keyNum:["number placed by code from the German (slot A)","orange frame: number the model wrote, check it","new","removed"],
- keyAud:[["K","known divergence"],["D","decided"],["v2","conflicting value"],["v1","other number"],["bar","language that differs from the other two"]]},
+ keyAud:[["✓","decided"],["v2","conflicting value"],["v1","other number"],["bar","language that differs from the other two"]]},
 fr:{sub:"Registre de révision · Apertus rédige, le code contrôle",divergent:"Brouillons dont l'ancien texte a déjà un problème",
  tb:{project:"Projet",drawing:"Dessin",sheet:"Feuille",rev:"Rév.",date:"Date (état LS)",lane:"Voie",model:"Modèle",run:"Série",checked:"Contrôlé par",checkedV:"contrôles gelés"},
  lane70:"moins de corrections (optionnelle) : 70B, point d'accès certifié",lane8:"par défaut : 8B sur CPU, hors réseau",laneDef:"voie par défaut : 8B sur CPU, hors réseau",drawingBy:"{l}, {n} brouillons d'Apertus {m}",
@@ -571,7 +587,7 @@ fr:{sub:"Registre de révision · Apertus rédige, le code contrôle",divergent:
  exportDec:"Exporter les décisions (JSON)",where:"Les décisions restent dans ce navigateur jusqu'à leur export. Le système de référence est l'ePL et l'aller-retour XLIFF, pas cette page.",
  keyReg:[["✓","prêt"],["~","signalé, tous les constats probablement sans problème"],["▲","signalé, à vérifier"],["≠","l'ancien texte a déjà un problème"],["h","confié à un traducteur"],["AER","accepté / modifié / renvoyé"]],
  keyNum:["nombre placé par le code à partir de l'allemand (code A)","cadre orange : nombre écrit par le modèle, à vérifier","nouveau","supprimé"],
- keyAud:[["K","divergence connue"],["D","décidé"],["v2","valeur contradictoire"],["v1","autre nombre"],["bar","langue qui diffère des deux autres"]]},
+ keyAud:[["✓","décidé"],["v2","valeur contradictoire"],["v1","autre nombre"],["bar","langue qui diffère des deux autres"]]},
 it:{sub:"Registro di revisione · Apertus redige, il codice controlla",divergent:"Bozze il cui vecchio testo ha già un problema",
  tb:{project:"Progetto",drawing:"Disegno",sheet:"Foglio",rev:"Rev.",date:"Data (stato ES)",lane:"Corsia",model:"Modello",run:"Serie",checked:"Controllato da",checkedV:"controlli congelati"},
  lane70:"meno correzioni (opzionale): 70B, endpoint certificato",lane8:"predefinita: 8B su CPU, senza rete",laneDef:"corsia predefinita: 8B su CPU, senza rete",drawingBy:"{l}, {n} bozze di Apertus {m}",
@@ -585,12 +601,12 @@ it:{sub:"Registro di revisione · Apertus redige, il codice controlla",divergent
  exportDec:"Esporta le decisioni (JSON)",where:"Le decisioni restano in questo browser finché non le esportate. Il sistema di riferimento è l'ePL con il ciclo XLIFF, non questa pagina.",
  keyReg:[["✓","pronta"],["~","segnalata, tutti i rilievi probabilmente in ordine"],["▲","segnalata, da verificare"],["≠","il vecchio testo ha già un problema"],["h","affidata a un traduttore"],["AER","accettata / modificata / rinviata"]],
  keyNum:["numero inserito dal codice a partire dal tedesco (codice A)","riquadro arancione: numero scritto dal modello, da verificare","nuovo","tolto"],
- keyAud:[["K","divergenza nota"],["D","decisa"],["v2","valore in contraddizione"],["v1","altro numero"],["bar","lingua che differisce dalle altre due"]]}};
+ keyAud:[["✓","decisa"],["v2","valore in contraddizione"],["v1","altro numero"],["bar","lingua che differisce dalle altre due"]]}};
 Object.keys(TX3).forEach(function(L){Object.keys(TX3[L]).forEach(function(k){TX[L][k]=TX3[L][k]})});
 // round-5 strings: the register audit for the scientific officer (issues, dating, full texts, several actions, filing CSV)
 // and the drafts banner (past changes used to test the tool; drafts are for translators)
 var TX4={
-de:{aLead:"Jede Zeile ist ein Fall: eine Stelle, an der der deutsche, französische und italienische Text einer Limitation in der SL vom {d} Verschiedenes sagen, vom Code ohne Modell gefunden. Alle drei Sprachfassungen sind gleichermassen verbindlich: Richtig ist die Fassung, die dem Entscheid des BAG entspricht, und welche das ist, weiss die Prüfung nicht – bitte mit dem Entscheiddossier abgleichen. {a} Befunde + {t} Terminologie-Hinweise in {n} Fällen; ein Entscheid zu einem Fall gilt für alle seine Befunde (jeder lässt sich auch einzeln entscheiden).",
+de:{aLead:"Jede Zeile ist ein Fall: eine Stelle, an der der deutsche, französische und italienische Text einer Limitation in der SL vom {d} Verschiedenes sagen, vom Code ohne Modell gefunden. Massgebend ist die Fassung, die dem Entscheid des BAG entspricht; welche das ist, weiss die Prüfung nicht – bitte mit dem Entscheiddossier abgleichen. {a} Befunde + {t} Terminologie-Hinweise in {n} Fällen; ein Entscheid zu einem Fall gilt für alle seine Befunde (jeder lässt sich auch einzeln entscheiden).",
  aKnownHead:"Vor dieser Prüfung von unserer früheren Erhebung erfasst (von Hand geprüft): {k} von {n} gefunden",aOtherHead:"Weitere Befunde der Prüfung",
  aTermHead:"Terminologie-Hinweise: vom BAG anderswo korrigierter Begriff ({n} Fälle, {m} Hinweise)",eqHead:"Wahrscheinlich gleichwertige Formulierung ({n})",
  aKnown:"Vor dieser Prüfung erfasst (frühere Erhebung)",aConf:"Von blinden KI-Annotatoren (Claude) bestätigt",aConfV:"{r} von {a} Befunden ({k} früher erfasst + {x} neu) · {tr} von {t} Hinweisen",
@@ -605,13 +621,13 @@ de:{aLead:"Jede Zeile ist ein Fall: eine Stelle, an der der deutsche, französis
  csvIss:"Fälle exportieren (CSV, für GEVER)",aCsv:"Befunde exportieren (CSV)",yes:"ja",no2:"nein",
  csvHead:["Fall","Befunde","Produkt","Limitation","Sprachen","Art","Werte","Datierung","Vor dieser Prüfung erfasst","Fassung gemäss Entscheid","Massnahmen","Notiz","Entschieden am","Entschieden von","Prüfung (SL-Stand)","Einzeln entschieden"],
  progA:"{i}/{n} Fälle entschieden ({x}/{a} + {y}/{t} Befunde)",aAllN:"Alle ({n} Fälle)",aKnownF:"Früher erfasst",aShownI:"{n} Fälle angezeigt ({m} Befunde)",aNone:"Kein Fall entspricht diesen Filtern.",
- keyAud:[["K","vor dieser Prüfung erfasst (frühere Erhebung)"],["D","entschieden"],["v2","widersprüchlicher Wert"],["v1","weitere Zahl"],["bar","Sprache, die von den beiden anderen abweicht"]],
+ keyAud:[["✓","entschieden"],["v2","widersprüchlicher Wert"],["v1","weitere Zahl"],["bar","Sprache, die von den beiden anderen abweicht"]],
  grouping:"Befunde bilden einen Fall, wenn sie dieselbe Abweichung (dieselben widersprüchlichen Werte, Einheit, Sprache, denselben Tippfehler oder dasselbe Begriffspaar) im selben Text nennen: in derselben Limitation, einer Geschwisterlimitation desselben Produkts oder derselben zitierten Passage; ein Tippfehler, der laut Prüfung eine Zahlabweichung erklärt, gehört zu ihr; ein Terminologie-Hinweis ist ein Fall pro Sprache und Begriffspaar.",
  aLegend:"Zeichen: K vor dieser Prüfung von unserer früheren Erhebung erfasst (von Hand geprüft) · D entschieden · rot umrahmt = widersprüchlicher Wert · unterstrichen = weitere Zahl · roter Balken = die Sprache, die von den beiden anderen abweicht (nicht unbedingt die falsche). Fälle: {g} Entscheide: welche Fassung dem Entscheid des BAG entspricht (das weiss die Prüfung nicht) und eine oder mehrere Massnahmen. Ein Entscheid zu einem Fall wird bei jedem seiner Befunde gespeichert (Limitation, Art, Sprache, Werte) und bleibt in der nächsten Prüfung erhalten.",
  tbA:{rev:"Fälle",lane:"Methode",model:"Verglichen mit",run:"Geprüfte Limitationen",checked:"Bestätigt durch"},revA:"{n} Fälle · {f} Befunde",laneA:"nur Code, kein Modell",modelA:"{n} SL-Stände, {a} – {b}",checkedA:"blinde KI-Annotatoren (Claude)",drawA:"Registerprüfung DE/FR/IT, SL-Stand {d}",
  dB1:"Diese {c} deutschen Änderungen sind vergangene SL-Änderungen{p}, mit denen Gleichlaut getestet wurde – keine offene Arbeit: Das BAG hat ihr Französisch und Italienisch bereits publiziert. ",
  dB2:"Die Entwürfe sind für die Übersetzung bestimmt (in STAR Transit, über XLIFF); ob ein Entwurf übernommen, bearbeitet oder zurückgewiesen wird, entscheidet die Übersetzerin oder der Übersetzer."},
-en:{aLead:"Each row is one issue: a place where the German, French and Italian texts of a limitation say different things in the SL of {d}, found by code without a model. All three language versions are equally binding, so the right version is the one that matches BAG's decision, and the audit cannot tell which one that is: check the decision file. {a} findings + {t} terminology notices in {n} issues; a decision on an issue applies to all its findings (each can still be decided separately).",
+en:{aLead:"Each row is one issue: a place where the German, French and Italian texts of a limitation say different things in the SL of {d}, found by code without a model. What counts is the version that matches BAG's decision, and the audit cannot tell which one that is: check the decision file. {a} findings + {t} terminology notices in {n} issues; a decision on an issue applies to all its findings (each can still be decided separately).",
  aKnownHead:"Listed before this audit by our earlier census (hand-checked): {k} of {n} found",aOtherHead:"Further findings of the audit",
  aTermHead:"Terminology notices: a term BAG corrected elsewhere ({n} issues, {m} notices)",eqHead:"Probably equivalent wording ({n})",
  aKnown:"Listed before this audit (our earlier census)",aConf:"Confirmed by blind AI annotators (Claude)",aConfV:"{r} of {a} findings ({k} listed earlier + {x} new) · {tr} of {t} notices",
@@ -626,13 +642,13 @@ en:{aLead:"Each row is one issue: a place where the German, French and Italian t
  csvIss:"Export issues (CSV, for GEVER)",aCsv:"Export findings (CSV)",yes:"yes",no2:"no",
  csvHead:["Issue","Findings","Product","Limitation","Languages","Kind","Values","Dating","Listed before this audit","Version matching the decision","Actions","Note","Decided on","Decided by","Audit (SL of)","Decided separately"],
  progA:"{i}/{n} issues decided ({x}/{a} + {y}/{t} findings)",aAllN:"All ({n} issues)",aKnownF:"Listed earlier",aShownI:"{n} issues shown ({m} findings)",aNone:"No issue matches these filters.",
- keyAud:[["K","listed before this audit (earlier census)"],["D","decided"],["v2","conflicting value"],["v1","other number"],["bar","language that differs from the other two"]],
+ keyAud:[["✓","decided"],["v2","conflicting value"],["v1","other number"],["bar","language that differs from the other two"]],
  grouping:"findings are one issue when they name the same difference (the same conflicting values, unit, language, typo or term pair) on the same text: the same limitation, a sibling limitation of the same product, or the same quoted passage; a typo the audit says explains a number difference joins it; a terminology notice is one issue per language and term pair.",
  aLegend:"Marks: K listed before this audit by our earlier census (hand-checked) · D decided · red box = conflicting value · underlined = other number · red bar = the language that differs from the other two (not necessarily the wrong one). Issues: {g} Decisions: which version matches BAG's decision (the audit cannot know), and one or more actions. A decision on an issue is stored with each of its findings (limitation, kind, language, values) and carries over to the next audit.",
  tbA:{rev:"Issues",lane:"Method",model:"Compared with",run:"Limitations checked",checked:"Confirmed by"},revA:"{n} issues · {f} findings",laneA:"code only, no model",modelA:"{n} SL snapshots, {a} – {b}",checkedA:"blind AI annotators (Claude)",drawA:"Register audit DE/FR/IT, SL of {d}",
  dB1:"These {c} German changes are past SL updates{p} used to test Gleichlaut, not pending work: BAG has already published their French and Italian. ",
  dB2:"The drafts are meant for translators (in STAR Transit, via XLIFF); accepting, editing or sending back a draft is the translator's decision."},
-fr:{aLead:"Chaque ligne est un cas : un endroit où les textes allemand, français et italien d'une limitation disent des choses différentes dans la LS du {d}, trouvé par le code, sans modèle. Les trois versions linguistiques font également foi : la bonne version est celle qui correspond à la décision de l'OFSP, et l'audit ne peut pas savoir laquelle ; vérifiez-la dans le dossier de décision. {a} constats + {t} avis de terminologie en {n} cas ; une décision sur un cas vaut pour tous ses constats (chacun peut aussi être décidé séparément).",
+fr:{aLead:"Chaque ligne est un cas : un endroit où les textes allemand, français et italien d'une limitation disent des choses différentes dans la LS du {d}, trouvé par le code, sans modèle. Ce qui compte est la version conforme à la décision de l'OFSP, et l'audit ne peut pas savoir laquelle ; vérifiez-la dans le dossier de décision. {a} constats + {t} avis de terminologie en {n} cas ; une décision sur un cas vaut pour tous ses constats (chacun peut aussi être décidé séparément).",
  aKnownHead:"Recensées avant cet audit par notre inventaire antérieur (vérifiées à la main) : {k} sur {n} trouvées",aOtherHead:"Autres constats de l'audit",
  aTermHead:"Avis de terminologie : terme corrigé ailleurs par l'OFSP ({n} cas, {m} avis)",eqHead:"Formulation probablement équivalente ({n})",
  aKnown:"Recensées avant cet audit (inventaire antérieur)",aConf:"Confirmés par des annotateurs IA à l'aveugle (Claude)",aConfV:"{r} des {a} constats ({k} déjà recensés + {x} nouveaux) · {tr} des {t} avis",
@@ -647,13 +663,13 @@ fr:{aLead:"Chaque ligne est un cas : un endroit où les textes allemand, frança
  csvIss:"Exporter les cas (CSV, pour GEVER)",aCsv:"Exporter les constats (CSV)",yes:"oui",no2:"non",
  csvHead:["Cas","Constats","Produit","Limitation","Langues","Type","Valeurs","Datation","Recensé avant cet audit","Version conforme à la décision","Mesures","Remarque","Décidé le","Décidé par","Audit (état LS)","Décidé séparément"],
  progA:"{i}/{n} cas décidés ({x}/{a} + {y}/{t} constats)",aAllN:"Tous ({n} cas)",aKnownF:"Déjà recensés",aShownI:"{n} cas affichés ({m} constats)",aNone:"Aucun cas ne correspond à ces filtres.",
- keyAud:[["K","recensé avant cet audit (inventaire antérieur)"],["D","décidé"],["v2","valeur contradictoire"],["v1","autre nombre"],["bar","langue qui diffère des deux autres"]],
+ keyAud:[["✓","décidé"],["v2","valeur contradictoire"],["v1","autre nombre"],["bar","langue qui diffère des deux autres"]],
  grouping:"des constats forment un cas quand ils nomment la même divergence (mêmes valeurs contradictoires, unité, langue, coquille ou paire de termes) dans le même texte : la même limitation, une limitation sœur du même produit ou le même passage cité ; une coquille qui, selon l'audit, explique une divergence de nombre la rejoint ; un avis de terminologie forme un cas par langue et paire de termes.",
  aLegend:"Marques : K recensé avant cet audit par notre inventaire antérieur (vérifié à la main) · D décidé · cadre rouge = valeur contradictoire · souligné = autre nombre · barre rouge = la langue qui diffère des deux autres (pas forcément la fausse). Cas : {g} Décisions : quelle version correspond à la décision de l'OFSP (l'audit ne peut pas le savoir), et une ou plusieurs mesures. Une décision sur un cas est enregistrée avec chacun de ses constats (limitation, type, langue, valeurs) et reprise au prochain audit.",
  tbA:{rev:"Cas",lane:"Méthode",model:"Comparé à",run:"Limitations contrôlées",checked:"Confirmé par"},revA:"{n} cas · {f} constats",laneA:"code seul, sans modèle",modelA:"{n} états de la LS, {a} – {b}",checkedA:"annotateurs IA à l'aveugle (Claude)",drawA:"Audit du registre DE/FR/IT, LS du {d}",
  dB1:"Ces {c} changements allemands sont des modifications passées de la LS{p}, utilisées pour tester Gleichlaut, pas du travail en attente : l'OFSP a déjà publié leur français et leur italien. ",
  dB2:"Les brouillons sont destinés aux traducteurs (dans STAR Transit, via XLIFF) ; accepter, modifier ou renvoyer un brouillon est la décision du traducteur ou de la traductrice."},
-it:{aLead:"Ogni riga è un caso: un punto in cui i testi tedesco, francese e italiano di una limitazione dicono cose diverse nell'ES del {d}, trovato dal codice, senza modello. Le tre versioni linguistiche fanno ugualmente fede: quella giusta è la versione conforme alla decisione dell'UFSP, e la verifica non può sapere quale sia; controllarla nel dossier della decisione. {a} rilievi + {t} avvisi di terminologia in {n} casi; una decisione su un caso vale per tutti i suoi rilievi (ognuno può anche essere deciso separatamente).",
+it:{aLead:"Ogni riga è un caso: un punto in cui i testi tedesco, francese e italiano di una limitazione dicono cose diverse nell'ES del {d}, trovato dal codice, senza modello. Conta la versione conforme alla decisione dell'UFSP, e la verifica non può sapere quale sia; controllarla nel dossier della decisione. {a} rilievi + {t} avvisi di terminologia in {n} casi; una decisione su un caso vale per tutti i suoi rilievi (ognuno può anche essere deciso separatamente).",
  aKnownHead:"Censite prima di questa verifica dal nostro censimento precedente (controllate a mano): {k} su {n} trovate",aOtherHead:"Altri rilievi della verifica",
  aTermHead:"Avvisi di terminologia: termine corretto altrove dall'UFSP ({n} casi, {m} avvisi)",eqHead:"Formulazione probabilmente equivalente ({n})",
  aKnown:"Censite prima di questa verifica (censimento precedente)",aConf:"Confermati da annotatori IA alla cieca (Claude)",aConfV:"{r} di {a} rilievi ({k} già censiti + {x} nuovi) · {tr} di {t} avvisi",
@@ -668,7 +684,7 @@ it:{aLead:"Ogni riga è un caso: un punto in cui i testi tedesco, francese e ita
  csvIss:"Esporta i casi (CSV, per GEVER)",aCsv:"Esporta i rilievi (CSV)",yes:"sì",no2:"no",
  csvHead:["Caso","Rilievi","Prodotto","Limitazione","Lingue","Tipo","Valori","Datazione","Censito prima di questa verifica","Versione conforme alla decisione","Misure","Nota","Deciso il","Deciso da","Verifica (stato ES)","Deciso separatamente"],
  progA:"{i}/{n} casi decisi ({x}/{a} + {y}/{t} rilievi)",aAllN:"Tutti ({n} casi)",aKnownF:"Già censiti",aShownI:"{n} casi mostrati ({m} rilievi)",aNone:"Nessun caso corrisponde a questi filtri.",
- keyAud:[["K","censito prima di questa verifica (censimento precedente)"],["D","deciso"],["v2","valore in contraddizione"],["v1","altro numero"],["bar","lingua che differisce dalle altre due"]],
+ keyAud:[["✓","deciso"],["v2","valore in contraddizione"],["v1","altro numero"],["bar","lingua che differisce dalle altre due"]],
  grouping:"i rilievi formano un caso quando indicano la stessa divergenza (stessi valori in contraddizione, unità, lingua, refuso o coppia di termini) nello stesso testo: la stessa limitazione, una limitazione sorella dello stesso prodotto o lo stesso passo citato; un refuso che secondo la verifica spiega una divergenza di numero vi si aggiunge; un avviso di terminologia è un caso per lingua e coppia di termini.",
  aLegend:"Segni: K censito prima di questa verifica dal nostro censimento precedente (controllato a mano) · D deciso · riquadro rosso = valore in contraddizione · sottolineato = altro numero · barra rossa = la lingua che differisce dalle altre due (non per forza quella sbagliata). Casi: {g} Decisioni: quale versione corrisponde alla decisione dell'UFSP (la verifica non può saperlo), e una o più misure. Una decisione su un caso è salvata con ciascuno dei suoi rilievi (limitazione, tipo, lingua, valori) e resta alla verifica successiva.",
  tbA:{rev:"Casi",lane:"Metodo",model:"Confrontato con",run:"Limitazioni controllate",checked:"Confermato da"},revA:"{n} casi · {f} rilievi",laneA:"solo codice, nessun modello",modelA:"{n} stati dell'ES, {a} – {b}",checkedA:"annotatori IA alla cieca (Claude)",drawA:"Verifica del registro DE/FR/IT, ES del {d}",
@@ -677,16 +693,16 @@ it:{aLead:"Ogni riga è un caso: un punto in cui i testi tedesco, francese e ita
 Object.keys(TX4).forEach(function(L){Object.keys(TX4[L]).forEach(function(k){TX[L][k]=TX4[L][k]})});
 // redesign (10 Oct 2026): one bar, a context line, list + case in both views, statistics in the footer
 var TX5={
-de:{aboutH:"Über dieses Register",aBind:"Alle drei Sprachfassungen sind gleichermassen verbindlich: Richtig ist die Fassung, die dem Entscheid des BAG entspricht, und das weiss die Prüfung nicht.",
+de:{backList:"Liste",slotsT:"Platzhalter zeigen",famChange1:"1 Änderung",aThen:"Weiter",aOr:"Oder",aboutH:"Über dieses Register",aBind:"Massgebend ist die Fassung, die dem Entscheid des BAG entspricht; welche das ist, weiss die Prüfung nicht.",
  aKnownHeadS:"Von unserer früheren Erhebung erfasst · {k} von {n} gefunden",aTermHeadS:"Terminologie · {n}",aWhat:"Was abweicht",aDating:"Seit wann",aNote2:"Hinweis",aTermL:"Begriff",
  aTexts:"Die Texte",aActL:"Massnahmen und Notiz",saveNextI:"Speichern, nächster Fall",keysA:"j/k oder ↑/↓ wechseln · Ctrl/Cmd+Enter speichern und weiter",lane:"Spur",laneM:"Methode",comparedW:"Verglichen mit"},
-en:{aboutH:"About this register",aBind:"All three language versions are equally binding: the right one is the version that matches BAG's decision, which the audit cannot know.",
+en:{backList:"List",slotsT:"Show number slots",famChange1:"1 change",aThen:"Then",aOr:"Or",aboutH:"About this register",aBind:"What counts is the version that matches BAG's decision; which one that is, the audit cannot know.",
  aKnownHeadS:"Listed by our earlier census · {k} of {n} found",aTermHeadS:"Terminology · {n}",aWhat:"What differs",aDating:"Since when",aNote2:"Note",aTermL:"Term",
  aTexts:"The texts",aActL:"Actions and note",saveNextI:"Save, next issue",keysA:"j/k or ↑/↓ move · Ctrl/Cmd+Enter save and next",lane:"Lane",laneM:"Method",comparedW:"Compared with"},
-fr:{aboutH:"À propos de ce registre",aBind:"Les trois versions linguistiques font également foi : la bonne est celle qui correspond à la décision de l'OFSP, ce que l'audit ne peut pas savoir.",
+fr:{backList:"Liste",slotsT:"Afficher les emplacements",famChange1:"1 modification",aThen:"Ensuite",aOr:"Ou",aboutH:"À propos de ce registre",aBind:"Ce qui compte est la version conforme à la décision de l'OFSP ; laquelle, l'audit ne peut pas le savoir.",
  aKnownHeadS:"Recensés par notre inventaire antérieur · {k} sur {n} trouvés",aTermHeadS:"Terminologie · {n}",aWhat:"Ce qui diverge",aDating:"Depuis quand",aNote2:"Remarque",aTermL:"Terme",
  aTexts:"Les textes",aActL:"Mesures et remarque",saveNextI:"Enregistrer, cas suivant",keysA:"j/k ou ↑/↓ naviguer · Ctrl/Cmd+Entrée enregistrer et continuer",lane:"Voie",laneM:"Méthode",comparedW:"Comparé avec"},
-it:{aboutH:"Informazioni su questo registro",aBind:"Le tre versioni linguistiche fanno ugualmente fede: quella giusta è la versione conforme alla decisione dell'UFSP, che la verifica non può conoscere.",
+it:{backList:"Elenco",slotsT:"Mostra i segnaposto",famChange1:"1 modifica",aThen:"Poi",aOr:"Oppure",aboutH:"Informazioni su questo registro",aBind:"Conta la versione conforme alla decisione dell'UFSP; quale sia, la verifica non può saperlo.",
  aKnownHeadS:"Censiti dal nostro inventario precedente · {k} su {n} trovati",aTermHeadS:"Terminologia · {n}",aWhat:"Che cosa diverge",aDating:"Da quando",aNote2:"Nota",aTermL:"Termine",
  aTexts:"I testi",aActL:"Misure e nota",saveNextI:"Salva, caso successivo",keysA:"j/k o ↑/↓ spostarsi · Ctrl/Cmd+Invio salva e continua",lane:"Corsia",laneM:"Metodo",comparedW:"Confrontato con"}};
 Object.keys(TX5).forEach(function(L){Object.keys(TX5[L]).forEach(function(k){TX[L][k]=TX5[L][k]})});
@@ -744,9 +760,10 @@ function chrome(){
  $("p-audit").hidden=TAB!=="audit";$("p-drafts").hidden=TAB!=="drafts";
  $("x-dec").textContent=t("exportDec");$("where").textContent=t("where");$("about-h").textContent=t("aboutH");
  $("prov").textContent=t("provenance")+": "+M.pipeline+" · outputs sha256:"+M.run_sha256.slice(0,16)+"… · items sha256:"+M.items_sha256.slice(0,16)+"…"+(AU?" · audit "+AU.meta.file+(AU.meta.results?" + "+AU.meta.results:"")+(AU.meta.more?" + "+AU.meta.more:""):"")+(M.rev?" · rev "+M.rev:"");
- if(TAB==="audit"){chromeAudit();return}
+ if(TAB==="audit"){chromeAudit();$("ctxline").title=$("ctxline").textContent;return}
  // one line of context: what these drafts are, whose decision they are
  $("ctxline").innerHTML="<b>"+esc(cap(fmt(t("drawingBy"),{l:M.label,n:C.items,m:MS})))+".</b> "+esc((M.custom?"":fmt(t("dB1"),{c:C.changes,p:M.period?" ("+M.period+")":""}))+t("dB2"));
+ $("ctxline").title=$("ctxline").textContent;
  var fz=(M.pipeline.match(/freeze sha256:([0-9a-f]+)/)||[])[1]||"";
  kv("kv-l",[[t("guards"),(M.stack==="g3"?"guards3 (frozen)":"guards v2 (frozen)")+(fz?" · freeze "+fz.slice(0,12):"")],
   [t("items"),String(D.counts.items)],[t("changes"),String(D.counts.changes)],["Model",M.model],["Run",M.run],
@@ -765,7 +782,7 @@ function chrome(){
  seg("f-lang",t("language"),[["all","FR+IT"],["fr","FR"],["it","IT"]],F.lang,function(v){F.lang=v;if(v!=="all")focusL=v;famBar();renderReg();renderCase()});
  var fs=$("f-fam");fs.innerHTML="";fs.appendChild(new Option(t("allFam")+" ("+D.families.length+")",""));
  D.families.forEach(function(f){var o=new Option(f[2]+" · "+f[1],f[0]);o.title=t("family")+" "+f[0];fs.appendChild(o)});fs.value=F.fam;$("f-q").placeholder=t("search");famBar();
- $("h-mark").textContent="";$("h-no").textContent=t("no");$("h-prod").textContent=t("product");$("h-chg").textContent=t("change");
+ $("h-prod").textContent=t("product");$("h-chg").textContent=t("change");
  $("x-xlf").textContent=t("xlf");$("x-xlf12").textContent=t("xlf12");$("x-copy").textContent=t("copy");$("x-imp").textContent=t("imp");
  $("reg-key").innerHTML=keyHTML(t("keyReg"));$("legend").textContent=t("legend");
  $("legend2").textContent=t("triHead")+" "+["T1","T2","T3","T4","T5","T6","T7","T8"].map(function(r){return t("rd"+r)}).join(" · ");progress()}
@@ -806,7 +823,7 @@ function aMigrate(){if(!AU)return;var ch=false;
   legacy.forEach(function(d){if(same)d.via=1;else d.own=true});ch=true});
  if(ch)saveA()}
 aMigrate();
-function aMark(I){return ((I.known?'<span class="lt s" title="'+esc(t("aKnown"))+'">K</span>':"")+(iDecided(I)?' <span class="lt" title="'+esc(t("aDecF"))+'">D</span>':""))||'<span class="mk o">·</span>'}
+function aMark(I){return iDecided(I)?'<span class="mk" title="'+esc(t("aDecF"))+'">✓</span>':""}
 function aStatus(d){if(!d||!d.at)return t("openSt");var day=ddate(d.at.slice(0,10).replace(/-/g,""));
  var s=d.by?fmt(t("decOn"),{d:day,n:d.by}):fmt(t("decOnAnon"),{d:day});
  if(d.date&&AU&&d.date!==AU.meta.date)s+=" "+fmt(t("earlier"),{s:ddate(d.date)});return s}
@@ -841,7 +858,10 @@ function aOk(I){if(AF.lang!=="all"&&I.langs.indexOf(AF.lang)<0)return false;if(A
  if(AF.since&&!newAfter(I,AF.since))return false;
  switch(AF.show){case "known":return I.known;case "open":return !iDecided(I);case "decided":return iDecided(I);default:return true}}
 function segHTML(s){return s.map(function(x){return x[1]===2?'<span class="v2'+(x[0].length>16?" w":"")+'">'+esc(x[0])+"</span>":x[1]===1?'<span class="v1">'+esc(x[0])+"</span>":esc(x[0])}).join("")}
-function snipHTML(r,L){var s=r.snip[L];if(!s||!s.length)return '<span class="na">'+esc(r.lang===L||L==="de"?t("aNoSnip"):"—")+"</span>";
+function trimSeg(s){if(!s||!s.length)return s;s=s.map(function(x){return x.slice()});
+ if(/^…\S/.test(s[0][0])&&!s[0][1]){var k=s[0][0].search(/\s/);if(k>0)s[0][0]="…"+s[0][0].slice(k+1)}
+ var z=s.length-1;if(/\S…$/.test(s[z][0])&&!s[z][1]){var q=s[z][0].slice(0,-1).search(/\s\S*$/);if(q>0)s[z][0]=s[z][0].slice(0,q)+" …"}return s}
+function snipHTML(r,L){var s=trimSeg(r.snip[L]);if(!s||!s.length)return '<span class="na">'+esc(r.lang===L||L==="de"?t("aNoSnip"):"—")+"</span>";
  return '<div class="snip'+(r.src[L]==="snapshot"?" src-s":"")+'" lang="'+L+'"'+(r.src[L]==="snapshot"?' title="'+esc(t("aSnapSrc"))+'"':"")+">"+segHTML(s)+"</div>"}
 function termHTML(r){var m=r.term;if(!m)return "";var h="";
  if(m.old||m["new"])h+='<span class="term" lang="'+esc(r.lang||"")+'">'+esc(t("termOld"))+" <s>"+esc(m.old||"?")+"</s> · "+esc(t("termNew"))+" <u>"+esc(m["new"]||"?")+"</u></span>";
@@ -849,13 +869,14 @@ function termHTML(r){var m=r.term;if(!m)return "";var h="";
  return h}
 function uniqP(xs){var o=[];xs.forEach(function(x){if(x&&o.indexOf(x)<0)o.push(x)});return o}
 // the decision controls, for an issue (scope "i") or one finding decided separately (scope "m")
-function ctlRight(d){return '<select data-a="right" aria-label="'+esc(t("aRight"))+'">'+[["",""],["DE","DE"],["FR","FR"],["IT","IT"],["unclear",t("rUnclear")]].map(function(o){
-  return '<option value="'+o[0]+'"'+(d.right===o[0]?" selected":"")+">"+esc(o[1]||"—")+"</option>"}).join("")+"</select>"}
-function ctlActs(d){var A=aActs(d),acts=t("acts"),ck=function(v,lab,row){return '<label class="ck'+(row?" row":"")+'"><input type="checkbox" data-a="act" value="'+v+'"'+(A.indexOf(v)>=0?" checked":"")+"> "+esc(lab)+"</label>"};
- var h='<div class="acts" role="group" aria-label="'+esc(t("aAction"))+'"><span class="fixl">'+esc(acts.fix)+':</span><span class="fixg">'+ck("fix_de","DE")+ck("fix_fr","FR")+ck("fix_it","IT")+"</span>";
- ["langsvc","decfile","pending","none","falsealarm"].forEach(function(v){h+=ck(v,acts[v],1)});
- A.forEach(function(v){if(ACTS.indexOf(v)<0)h+=ck(v,acts[v]||v,1)});            // an action of an earlier page version stays visible
- return h+"</div>"}
+function ctlRight(d){return '<div class="btns" role="group" aria-label="'+esc(t("aRight"))+'">'+[["DE","DE"],["FR","FR"],["IT","IT"],["unclear",t("rUnclear")]].map(function(o,i){
+  return '<button type="button" class="box" data-a="right" data-v="'+o[0]+'" aria-pressed="'+(d.right===o[0])+'">'+esc(o[1])+"</button>"}).join("")+"</div>"}
+function ctlActs(d){var A=aActs(d),acts=t("acts"),b=function(v,lab){return '<button type="button" class="box" data-a="act" data-v="'+v+'" aria-pressed="'+(A.indexOf(v)>=0)+'">'+esc(lab)+"</button>"};
+ var h='<div class="grp2" role="group" aria-label="'+esc(acts.fix)+'"><span class="lbl">'+esc(acts.fix)+"</span>"+b("fix_de","DE")+b("fix_fr","FR")+b("fix_it","IT")+"</div>"+
+  '<div class="grp2"><span class="lbl">'+esc(t("aThen"))+"</span>"+b("langsvc",acts.langsvc)+b("decfile",acts.decfile)+b("pending",acts.pending)+"</div>"+
+  '<div class="grp2"><span class="lbl">'+esc(t("aOr"))+"</span>"+b("none",acts.none)+b("falsealarm",acts.falsealarm)+"</div>";
+ A.forEach(function(v){if(ACTS.indexOf(v)<0)h+='<div class="grp2">'+b(v,acts[v]||v)+"</div>"});           // an action of an earlier page version stays visible
+ return h}
 function ctlNote(d){return '<textarea data-a="note" aria-label="'+esc(t("aNote"))+'" placeholder="'+esc(t("aNote"))+'">'+esc(d.note||"")+"</textarea>"}
 function iStatus(I){var d=iDec(I),o=iOwn(I),s=aStatus(d);if(I.M.length>1)s+=" · "+fmt(t("appliesAll"),{n:I.M.length-o});if(o)s+=" · "+fmt(t("someOwn"),{n:o});return s}
 function ftHTML(I){var h="";
@@ -881,7 +902,8 @@ function whatTxt(I){return I.what.map(function(w){var L=(w[1]||"").toUpperCase()
 function aRow(I){var codes=I.lims.length>2?I.lims.slice(0,2).join(" · ")+" +"+(I.lims.length-2):I.lims.join(" · ");
  return '<tr data-iss="'+esc(I.key)+'" class="cnt'+(I.eq?" eq":"")+'" aria-selected="'+(ASEL===I)+'"><td>'+aMark(I)+"</td>"+
   '<td class="ap"><b>'+esc(uniqP(I.products).join(", ")||I.lims[0])+'</b><span class="code" title="'+esc(I.lims.join("\n"))+'">'+esc(codes)+"</span></td>"+
-  '<td class="aw"><span class="kd">'+esc(I.kinds.map(function(k){return t("kinds")[k]||k}).join(" + "))+"</span>"+esc(whatTxt(I))+"</td></tr>"}
+  '<td class="aw"><span class="kd">'+esc(I.kinds.map(function(k){return t("kinds")[k]||k}).join(" + "))+"</span>"+esc(short(whatTxt(I),70))+"</td></tr>"}
+function short(x,n){return x.length>n?x.slice(0,n).replace(/\s+\S*$/,"")+" …":x}
 function renderAudit(){if(!AU){$("p-audit").innerHTML='<p class="empty">'+esc(t("aNoFile"))+"</p>";return}
  var tb=document.querySelector("#aud tbody"),Is=IS.filter(aOk),kn=Is.filter(function(I){return I.known}),
   ot=Is.filter(function(I){return !I.known&&!I.eq&&!I.term}),tm=Is.filter(function(I){return !I.known&&!I.eq&&I.term}),eq=Is.filter(function(I){return !I.known&&I.eq}),h="",m=AU.meta;
@@ -906,7 +928,7 @@ function aCaseHTML(I){var r=I.M[0],d=iDec(I)||{},n=I.M.length,odd=I.odd==="uncle
   if(x.fix)sub.push(fmt(t("aFix"),{a:x.fix[0],b:x.fix[1]}));
   if(x.eq!=null)sub.push(t("eqWhy")+": "+(x.eq||"—"));
   if(x.expl&&x.expl.length)sub.push(fmt(t("aExpl"),{x:x.expl.join(", ")}))});
- var h="<h2>"+esc(uniqP(I.products).join(", ")||I.lims[0])+'</h2><p class="ref">'+esc(I.lims.join(" · "))+" · "+esc(t("ahNo"))+" "+esc(I.iid)+" · "+esc(I.fids.join(" "))+(I.known?" · "+esc(t("aKnown")):"")+"</p>";
+ var h='<button class="tb back" type="button" data-back="1">← '+esc(t("backList"))+"</button><h2>"+esc(uniqP(I.products).join(", ")||I.lims[0])+'</h2><p class="ref">'+esc(I.lims.join(" · "))+" · "+esc(t("ahNo"))+" "+esc(I.iid)+" · "+esc(I.fids.join(" "))+(I.known?" · "+esc(t("aKnown")):"")+"</p>";
  h+='<section class="sec"><div class="sl"><span class="no">1</span><span class="t">'+esc(t("aWhat"))+'</span></div><dl class="facts">'+
   "<dt>"+esc(t("aKind"))+"</dt><dd>"+esc(I.kinds.map(function(k){return t("kinds")[k]||k}).join(" + "))+" · "+esc(whatTxt(I))+"</dd>"+
   "<dt>"+esc(t("aOdd"))+"</dt><dd>"+esc(odd)+"</dd>"+
@@ -915,18 +937,24 @@ function aCaseHTML(I){var r=I.M[0],d=iDec(I)||{},n=I.M.length,odd=I.odd==="uncle
   (r.term?"<dt>"+esc(t("aTermL"))+"</dt><dd>"+termHTML(r)+"</dd>":"")+"</dl></section>";
  h+='<section class="sec"><div class="sl"><span class="no">2</span><span class="t">'+esc(t("aTexts"))+'</span></div><div class="ftg">'+
   ["de","fr","it"].map(function(L){var o=I.odd===L;return '<div class="ftc'+(o?" odd":"")+'"><div class="lh"><span class="lt">'+L.toUpperCase()+"</span>"+(o?'<span class="oddl">'+esc(t("oddLbl"))+"</span>":"")+"</div>"+snipHTML(r,L)+"</div>"}).join("")+"</div>"+
-  '<details class="ft" data-k="ft"'+(OPEN["ft"+I.key]!==false?" open":"")+"><summary>"+esc(t("ft"))+(I.lims.length>1?" · "+esc(fmt(t("ftN"),{n:I.lims.length})):"")+"</summary>"+(OPEN["ft"+I.key]!==false?ftHTML(I):"")+"</details></section>";
+  '<details class="ft" data-k="ft"'+(OPEN["ft"+I.key]?" open":"")+"><summary>"+esc(t("ft"))+(I.lims.length>1?" · "+esc(fmt(t("ftN"),{n:I.lims.length})):"")+"</summary>"+(OPEN["ft"+I.key]?ftHTML(I):"")+"</details></section>";
+ if(shortTexts(I))h=h.slice(0,h.lastIndexOf('<section class="sec"><div class="sl"><span class="no">2</span>'))+'<section class="sec"><div class="sl"><span class="no">2</span><span class="t">'+esc(t("aTexts"))+"</span></div>"+ftHTML(I)+"</section>";
  var no=3;
  if(n>1){h+='<section class="sec"><div class="sl"><span class="no">'+no+'</span><span class="t">'+esc(fmt(t("mem"),{n:n}))+"</span></div>"+memHTML(I)+"</section>";no++}
  h+='<section class="sec"><div class="sl"><span class="no">'+no+'</span><span class="t">'+esc(t("s4"))+'</span></div><div class="adec"><div><label class="q">'+esc(t("aRight"))+"</label>"+ctlRight(d)+
-  (r.sug?'<div class="sug">'+esc(t("aSug"))+": "+esc(t("acts")[r.sug]||r.sug)+"</div>":"")+'</div><div><label class="q">'+esc(t("aActL"))+"</label>"+ctlActs(d)+ctlNote(d)+"</div></div>"+
+  (r.sug?'<div class="sug">'+esc(t("aSug"))+": "+esc(t("acts")[r.sug]||r.sug)+"</div>":"")+'</div><div><label class="q">'+esc(t("aAction"))+"</label>"+ctlActs(d)+ctlNote(d)+"</div></div>"+
   '<div class="stt" id="a-stt">'+esc(iStatus(I))+'</div><div class="save"><button class="box primary" type="button" id="a-next">'+esc(t("saveNextI"))+'</button><span class="hint">'+esc(t("keysA"))+"</span></div></section>";
  return h}
+function shortTexts(I){return I.lims.every(function(lim){var T=AU.texts[lim];return T&&["de","fr","it"].every(function(L){return (T[L]||[]).reduce(function(n,x){return n+x[0].length},0)<=800})})}
 function renderACase(){var c=$("acase");if(!ASEL){c.innerHTML='<p class="empty">'+esc(t("aNone"))+"</p>";return}c.innerHTML=aCaseHTML(ASEL)}
 function issueOf(el){if(el.closest("#acase"))return ASEL;var tr=el.closest("tr[data-iss]");if(!tr)return null;var k=tr.dataset.iss;return IS.filter(function(I){return I.key===k})[0]||null}
 function rowOf(sig){return AU.rows.filter(function(x){return x.sig===sig})[0]}
 function stamp(d){d.at=new Date().toISOString();d.by=who();d.date=AU.meta.date;return d}
-function upd(d,f){if(f.dataset.a==="act"){var A=aActs(d).filter(function(v){return v!==f.value});if(f.checked)A.push(f.value);d.actions=A;delete d.action}else d[f.dataset.a]=f.value;return d}
+function upd(d,f){var v=f.dataset.v!=null?f.dataset.v:f.value,on=f.tagName==="BUTTON"?f.getAttribute("aria-pressed")!=="true":f.checked;
+ if(f.dataset.a==="act"){var A=aActs(d).filter(function(x){return x!==v});
+  if(on){if(v==="none"||v==="falsealarm")A=[];else A=A.filter(function(x){return x!=="none"&&x!=="falsealarm"});A.push(v)}d.actions=A;delete d.action}
+ else if(f.dataset.a==="right")d.right=f.tagName==="BUTTON"?(on?v:""):v;
+ else d[f.dataset.a]=f.value;return d}
 function aRefresh(I){var tr=document.querySelector('#aud tr[data-iss="'+I.key+'"]');if(tr)tr.cells[0].innerHTML=aMark(I);var st=$("a-stt");if(st&&ASEL===I)st.textContent=iStatus(I);progress()}
 function aSet(f){var I=issueOf(f);if(!I)return;var mt=f.closest(".mem tr[data-sig]");
  if(mt){var sg=mt.dataset.sig,d=upd(clone(SA[sg]),f);d.own=true;delete d.via;SA[sg]=stamp(d);saveA();var st=mt.querySelector(".stt");if(st)st.textContent=t("memOwn")+" · "+aStatus(SA[sg])}
@@ -935,10 +963,12 @@ function aSet(f){var I=issueOf(f);if(!I)return;var mt=f.closest(".mem tr[data-si
  aRefresh(I)}
 function aNext(){var i=AVIS.indexOf(ASEL);renderAudit();var j=AVIS.indexOf(ASEL);ASEL=AVIS[(j>=0?j:i)+1]||ASEL;aMarkSel(true);renderACase();var c=$("acase");if(c.getBoundingClientRect().top<0)c.scrollIntoView()}
 (function(){var tb=document.querySelector("#aud tbody"),c=$("acase");
- tb.addEventListener("click",function(e){var tr=e.target.closest("tr[data-iss]");if(!tr)return;ASEL=issueOf(tr);aMarkSel();renderACase();if(window.innerWidth<=900)c.scrollIntoView()});
+ tb.addEventListener("click",function(e){var tr=e.target.closest("tr[data-iss]");if(!tr)return;ASEL=issueOf(tr);aMarkSel();renderACase();if(window.innerWidth<=900){$("p-audit").classList.add("case-open");window.scrollTo(0,0)}});
  c.addEventListener("change",function(e){var f=e.target.closest("[data-a]");if(f)aSet(f)});
  c.addEventListener("input",function(e){var f=e.target.closest("textarea[data-a]");if(f)aSet(f)});
  c.addEventListener("click",function(e){if(e.target.closest("#a-next")){aNext();return}
+  if(e.target.closest("[data-back]")){$("p-audit").classList.remove("case-open");aMarkSel(true);return}
+  var ab=e.target.closest("button[data-a]");if(ab){aSet(ab);var y=window.scrollY;renderACase();window.scrollTo(0,y);return}
   var b=e.target.closest("button[data-split],button[data-join]");if(!b)return;var I=ASEL,sg=b.closest("tr[data-sig]").dataset.sig;
   if(b.dataset.split){var d=clone(SA[sg]||iDec(I));d.own=true;delete d.via;if(!aHas(d))d.at=null;SA[sg]=d}
   else{var base=iDec(I);if(base)SA[sg]=clone(base);else delete SA[sg]}
@@ -949,7 +979,8 @@ function aNext(){var i=AVIS.indexOf(ASEL);renderAudit();var j=AVIS.indexOf(ASEL)
  document.addEventListener("keydown",function(e){if(TAB!=="audit")return;var tg=e.target,typing=tg.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(tg.tagName);
   if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)){e.preventDefault();aNext();return}
   if(typing||e.altKey||e.metaKey||e.ctrlKey)return;if(tg.closest&&tg.closest(".views"))return;
-  if(e.key==="j"||e.key==="ArrowDown"){e.preventDefault();aMove(1)}else if(e.key==="k"||e.key==="ArrowUp"){e.preventDefault();aMove(-1)}})})();
+  if(e.key==="j"||e.key==="ArrowDown"){e.preventDefault();aMove(1)}else if(e.key==="k"||e.key==="ArrowUp"){e.preventDefault();aMove(-1)}
+  else if(/^[1-4]$/.test(e.key)&&ASEL){var bt=c.querySelectorAll('.adec button[data-a="right"]')[+e.key-1];if(bt){aSet(bt);renderACase()}}})})();
 function iRow(I){var d=iDec(I)||{},acts=TX[UL].acts,A=aActs(d);
  var what=I.what.map(function(w){var L=(w[1]||"").toUpperCase();
   if(w[0]==="number")return "DE "+w[2]+" / "+L+" "+w[3];
@@ -988,16 +1019,15 @@ function renderReg(){var tb=document.querySelector("#reg tbody"),h="";VIS=[];
  G.forEach(function(g){var Ls=langs(g);if(!Ls.length)return;if(F.fam&&g.family!==F.fam)return;
   if(F.q&&(g.product+" "+g.code+" "+g.pair+" "+g.no).toLowerCase().indexOf(F.q)<0)return;
   if(!Ls.some(function(L){return okItem(g.items[L])}))return;VIS.push(g);
-  var mk=(F.lang==="all"?["fr","it"]:[F.lang]).map(function(L){return mark(g.items[L])[0]}).join("");
-  h+='<tr class="cnt" data-pair="'+esc(g.pair)+'" aria-selected="'+(sel===g)+'"><td>'+mk+'</td><td class="no">'+g.no+'</td><td class="prd" title="'+esc(g.product+" · "+g.code)+'">'+esc(g.product)+'<span class="pc">'+esc(g.code)+"</span>"+
-   '</td><td class="chg" title="'+esc(g.sum)+'">'+esc(g.sum)+"</td></tr>"});
+  h+='<tr class="cnt" data-pair="'+esc(g.pair)+'" aria-selected="'+(sel===g)+'"><td class="m">'+mark(g.items.fr)[0]+'</td><td class="m">'+mark(g.items.it)[0]+'</td><td class="prd" title="'+esc(g.product+" · "+g.code+" · "+g.no)+'">'+esc(g.product)+'<span class="pc">'+esc(g.code)+" · "+esc(g.no)+"</span>"+
+   '</td><td class="chg" title="'+esc(g.sum)+'"><div class="cl">'+esc(g.sum)+"</div></td></tr>"});
  tb.innerHTML=h||'<tr><td colspan="4" class="empty">'+esc(t("none"))+"</td></tr>";
  $("shown").textContent=VIS.length+" "+t("shown");
  if(VIS.indexOf(sel)<0){sel=VIS[0]||null;if(sel)markSel();renderCase()}}
 function markSel(scroll){document.querySelectorAll("#reg tbody tr").forEach(function(r){var on=sel&&r.dataset.pair===sel.pair;r.setAttribute("aria-selected",on);
  if(on&&scroll){var w=$("reg-wrap"),top=r.offsetTop-w.offsetTop,hh=28;if(top-hh<w.scrollTop)w.scrollTop=top-hh;else if(top+r.offsetHeight>w.scrollTop+w.clientHeight)w.scrollTop=top+r.offsetHeight-w.clientHeight}})}
 document.querySelector("#reg tbody").addEventListener("click",function(e){var r=e.target.closest("tr[data-pair]");if(!r)return;
- sel=G.filter(function(g){return g.pair===r.dataset.pair})[0];markSel();renderCase();if(window.innerWidth<=900)$("case").scrollIntoView()});
+ sel=G.filter(function(g){return g.pair===r.dataset.pair})[0];markSel();renderCase();if(window.innerWidth<=900){$("p-drafts").classList.add("case-open");window.scrollTo(0,0)}});
 $("f-fam").onchange=function(){F.fam=this.value;famAsk=false;famMsg="";famBar();renderReg()};
 // family bulk action: accept every open ready draft of the selected edit family, after an in-page confirmation
 var famAsk=false,famMsg="",FAMN={};G.forEach(function(g){FAMN[g.family]=(FAMN[g.family]||0)+1});
@@ -1016,7 +1046,7 @@ function famBar(){var b=$("fam-bulk");if(!F.fam){b.hidden=true;b.innerHTML="";fa
   save();famAsk=false;famMsg=fmt(t("famDone"),{n:T2.length});famBar();renderReg();if(sel)renderCase();progress()}}
 $("f-q").oninput=function(){F.q=this.value.trim().toLowerCase();renderReg()};
 function move(d){if(!VIS.length)return;var i=VIS.indexOf(sel);i=Math.max(0,Math.min(VIS.length-1,(i<0?0:i+d)));sel=VIS[i];markSel(true);renderCase()}
-function refreshRow(g){var r=document.querySelector('#reg tr[data-pair="'+g.pair+'"]');if(r)r.cells[0].innerHTML=(F.lang==="all"?["fr","it"]:[F.lang]).map(function(L){return mark(g.items[L])[0]}).join("")}
+function refreshRow(g){var r=document.querySelector('#reg tr[data-pair="'+g.pair+'"]');if(r){r.cells[0].innerHTML=mark(g.items.fr)[0];r.cells[1].innerHTML=mark(g.items.it)[0]}}
 // ------------------------------------------------------------------ text rendering
 function chip(s,edit){var slot=(s[3]||"").replace(/[⟨⟩]/g,""),m=s[2]==="model";
  var tip=(m?"number written by the model: check it":"number placed by code from the German")+(slot?" (slot "+slot+")":"");
@@ -1040,60 +1070,58 @@ function notice(it){var p=[],lang=false;
  if(it.corr)p.push("<p>"+(p.length?"":"<span class=\"mk\">≠</span>")+esc(it.corr)+"</p>");
  return p.length?'<div class="notice'+(lang?" lang":"")+'" role="note"><p class="xl">'+esc(t("expl")+" ("+it.lang.toUpperCase()+")")+"</p>"+p.join("")+"</div>":""}
 function curText(it){var e=S.edits[it.key];return e!=null?e:it.draft}
-function caseHTML(g,live){var Ls=langs(g),one=Ls.length<2?" one":"",h="";
- var keys=["fr","it"].filter(function(L){return g.items[L]}).map(function(L){return g.items[L].key}).join(", ");
- h+="<h2>"+esc(g.product)+'</h2><p class="ref">'+esc(t("limitation"))+" "+esc(g.code)+" · SL "+esc(g.snap_old)+" → "+esc(g.snap_new)+" · "+esc(t("no"))+" "+g.no+"</p>"+
-  '<p class="famline">'+esc(t("famOf"))+": "+esc(FAML[g.family]||g.family)+" · "+esc(fmt(t("famChanges"),{n:famSize(g.family)}))+
-   (live&&F.fam!==g.family&&famSize(g.family)>1?' · <button class="tb" type="button" data-fam="'+esc(g.family)+'">'+esc(t("famFilter"))+"</button>":"")+"</p>"+
-  '<details class="ids"><summary>'+esc(t("ids"))+"</summary> "+esc(t("family"))+" "+esc(g.family)+(FAML[g.family]?" ("+esc(FAML[g.family])+")":"")+" · "+esc(t("pair"))+" "+esc(g.pair)+" · "+esc(t("itemsL"))+" "+esc(keys)+"</details>";
- h+='<section class="sec"><div class="sl"><span class="no"><b>§</b>1</span><span class="t">'+esc(t("s1"))+"</span>"+(live?'<button class="tb sp" type="button" id="ctx">'+esc(ctxMode?t("ctxA"):t("ctxF"))+"</button>":"")+
-  '</div><div class="txt de" lang="de">'+segs(g.de,live&&ctxMode,false)+"</div></section>";
- h+='<section class="sec"><div class="sl"><span class="no"><b>§</b>2</span><span class="t">'+esc(t("s2"))+'</span></div><div class="drafts'+one+'">';
- Ls.forEach(function(L){var it=g.items[L],ed=S.edits[it.key];
-  h+='<div class="dr" data-lang="'+L+'"><div class="dl"><span class="ln" title="'+esc(it.key)+'"><span class="lt">'+L.toUpperCase()+"</span> "+esc(LN(L))+'</span>·<span class="st'+(stRed(it)?" r":"")+'">'+esc(stLabel(it))+"</span>"+
-   (it.status==="flagged"?'<span class="tri">'+triHTML(it.tri[0],it.tri[1])+"</span>":"")+(it.rule_only?'<span class="key">rules</span>':"")+
-   (it.status==="ready"?'<span class="cap">'+esc(t("codeOnly"))+"</span>":"")+"</div>"+notice(it);
-  if(it.status==="human")h+='<p class="human">'+esc(it.reason&&!/rewritten|60/.test(it.reason)?t("humanShort"):t("humanTxt"))+(it.ratio!=null?" ("+it.ratio+"%)":"")+".</p>"+(it.reason?'<p class="ref">'+esc(it.reason)+"</p>":"")+"<p class=\"human\" style=\"color:var(--ink2)\">"+esc(t("humanPrev"))+"</p>";
-  var body=ed!=null?esc(ed):segs(it.segs,false,live);
-  h+='<div class="txt'+(live?" ed":"")+'" lang="'+L+'"'+(live?' contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true" aria-label="'+esc(LN(L))+'" data-key="'+esc(it.key)+'"':"")+">"+body+"</div>";
-  if(live)h+='<div class="edmeta" data-meta="'+esc(it.key)+'">'+edmeta(it.key)+"</div>";
-  h+="</div>"});
- h+="</div>";
- if(live){var kn=t("keyNum");h+='<p class="key"><span><span class="n">8<sup>A</sup></span> '+esc(kn[0])+'</span><span><span class="n m">8</span> '+esc(kn[1])+
-  '</span><span><ins>ab</ins> '+esc(kn[2])+'</span><span><del>ab</del> '+esc(kn[3])+"</span></p>"}
- h+="</section>";
- // §3: per draft, at most three reasons in plain wording in the reviewer's language (the same as the XLIFF notes), the
- // full checks ledger with its internal codes collapsed below
- h+='<section class="sec"><div class="sl"><span class="no"><b>§</b>3</span><span class="t">'+esc(t("s3"))+"</span></div>";
- Ls.forEach(function(L){var it=g.items[L],LL=L.toUpperCase();
-  h+='<div class="why"><div class="dl"><span class="ln"><span class="lt">'+LL+"</span> "+esc(LN(L))+'</span>·<span class="xl">'+esc(t("expl")+" ("+LL+")")+"</span>"+
-   (it.status==="flagged"?'<span class="tri">'+triHTML(it.tri[0],it.tri[1])+"</span>":"")+"</div>";
-  if(!it.ledger.length){h+='<p class="ok">'+esc(t("noChecks"))+"</p></div>";return}
-  var W=it.why||[[],0],sh=W[0];
-  if(sh.length)h+='<ol class="reasons" lang="'+L+'">'+sh.map(function(x){return "<li"+(x[1]?' class="low"':"")+">"+esc(x[0])+"</li>"}).join("")+"</ol>";
-  else h+='<p class="ok">'+esc(t("allPass"))+(it.status==="ready"?" "+esc(t("codeOnly")):"")+"</p>";
-  if(W[1]>sh.length)h+='<p class="more">'+esc(fmt(t("moreN"),{n:W[1]-sh.length}))+"</p>";
-  if(it.tb)h+='<p class="tb" lang="'+L+'">'+esc(it.tb)+"</p>";   // termbase advisory: its own low-priority line, not one of the three
-  h+='<details class="chk"><summary>'+esc(fmt(t("chkDetail"),{n:it.ledger.length}))+'</summary><div class="tbl"><table class="ledger">';
-  h+="<thead><tr><th>"+esc(t("check"))+" ("+LL+")</th><th>"+esc(t("result"))+"</th><th>"+esc(t("finding"))+" ("+LL+")</th></tr></thead><tbody>";
+// one column per language, rows aligned across the two (subgrid): status · text · why · decision. The decision sits
+// under its own draft; the save bar stays in view at the bottom of the case.
+var SLOTS=false;
+function langHTML(g,L,live){var it=g.items[L],ed=S.edits[it.key],LL=L.toUpperCase();
+ var a='<article class="lang" data-lang="'+L+'"><div class="lh1"><span class="ln" title="'+esc(it.key)+'">'+esc(LN(L))+'</span><span class="st'+(stRed(it)?" r":"")+'">'+esc(stLabel(it))+"</span>"+(it.rule_only?'<span class="key">rules</span>':"")+"</div>";
+ a+='<div class="body">'+notice(it);
+ if(it.status==="human")a+='<p class="human">'+esc(it.reason&&!/rewritten|60/.test(it.reason)?t("humanShort"):t("humanTxt"))+(it.ratio!=null?" ("+it.ratio+"%)":"")+".</p>"+(it.reason?'<p class="ref">'+esc(it.reason)+"</p>":"")+'<p class="human" style="color:var(--ink2)">'+esc(t("humanPrev"))+"</p>";
+ var body=ed!=null?esc(ed):segs(it.segs,false,live);
+ a+='<div class="txt'+(live?" ed":"")+'" lang="'+L+'"'+(live?' contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true" aria-label="'+esc(LN(L))+'" data-key="'+esc(it.key)+'"':"")+">"+body+"</div>";
+ if(live)a+='<div class="edmeta" data-meta="'+esc(it.key)+'">'+edmeta(it.key)+"</div>";
+ a+="</div>";
+ // why: at most three reasons in plain wording in the reviewer's language (the same as the XLIFF notes); the termbase note
+ // on its own line; the full checks ledger with its internal codes collapsed below
+ a+='<div class="why"><div class="wh"><span class="xl">'+esc(t("expl")+" ("+LL+")")+"</span>"+(it.status==="flagged"?'<span class="tri">'+triHTML(it.tri[0],it.tri[1])+"</span>":"")+"</div>";
+ if(!it.ledger.length)a+='<p class="ok">'+esc(t("noChecks"))+"</p>";
+ else{var W=it.why||[[],0],sh=W[0];
+  if(sh.length)a+='<ol class="reasons" lang="'+L+'">'+sh.map(function(x){return "<li"+(x[1]?' class="low"':"")+">"+esc(x[0])+"</li>"}).join("")+"</ol>";
+  else a+='<p class="ok">'+esc(t("allPass"))+(it.status==="ready"?" "+esc(t("codeOnly")):"")+"</p>";
+  if(W[1]>sh.length)a+='<p class="more">'+esc(fmt(t("moreN"),{n:W[1]-sh.length}))+"</p>";
+  if(it.tb)a+='<p class="tb" lang="'+L+'">'+esc(it.tb)+"</p>";
+  a+='<details class="chk"><summary>'+esc(fmt(t("chkDetail"),{n:it.ledger.length}))+'</summary><div class="tbl"><table class="ledger">';
+  a+="<thead><tr><th>"+esc(t("check"))+" ("+LL+")</th><th>"+esc(t("result"))+"</th><th>"+esc(t("finding"))+" ("+LL+")</th></tr></thead><tbody>";
   it.ledger.forEach(function(r){var st=r[2],res=st==="pass"?t("pass"):st==="fail"?t("fail"):t("na"),cls=st==="fail"?"FAIL":st==="pass"?"":"na";
    if(st==="fail"&&r[3].length&&r[3].every(function(f){return f.r})){res="~ "+t("fail");cls="FAILf"}
    var fd=r[3].map(function(f){var p="<p>"+esc(f.t)+(f.c&&it.corr_note?'<span class="cn">[≠] '+esc(it.corr_note)+"</span>":"")+"</p>";
     return f.r?'<details class="pf" title="'+esc(t("rd"+f.r))+'"><summary>'+esc(t("pf"))+" · "+esc(t("r"+f.r))+"</summary>"+p+"</details>":p}).join("");
    if(!fd&&st!=="fail")fd='<span class="na">—</span>';
    if(r[4])fd+="<details><summary>"+esc(t("raw"))+" · "+esc(r[5])+"</summary><div>"+esc(r[4])+"</div></details>";
-   h+='<tr><td class="chk" title="'+esc(r[5])+'">'+esc(r[1])+'</td><td class="res '+cls+'">'+esc(res)+'</td><td class="fd" lang="'+L+'">'+fd+"</td></tr>"});
-  h+="</tbody></table></div></details></div>"});
- h+="</section>";
- if(live){h+='<section class="sec"><div class="sl"><span class="no"><b>§</b>4</span><span class="t">'+esc(t("s4"))+'</span></div><div class="decs'+one+'">';
-  Ls.forEach(function(L){var it=g.items[L],d=dec(it)||{};
-   h+='<div class="dec'+(L===focusL||Ls.length<2?" focus":"")+'" data-lang="'+L+'" data-key="'+esc(it.key)+'"><div class="dl"><span class="ln"><span class="lt">'+L.toUpperCase()+"</span> "+esc(LN(L))+'</span><span class="key">'+esc(stLabel(it))+'</span></div><div class="btns">'+
-    [["accept","(1) "+t("accept")],["accept-edited","(2) "+t("acceptEd")],["send-back","(3) "+t("sendBack")]].map(function(b){
-     return '<button class="box" type="button" data-d="'+b[0]+'" aria-pressed="'+(d.decision===b[0])+'">'+esc(b[1])+"</button>"}).join("")+"</div>"+
-    "<label>"+esc(t("reason"))+'<select data-f="reason">'+t("reasons").map(function(r,i){var v=TX.en.reasons[i];return '<option value="'+esc(v)+'"'+(d.reason===v?" selected":"")+">"+esc(r||"—")+"</option>"}).join("")+"</select></label>"+
-    "<label>"+esc(t("note"))+'<textarea data-f="note" lang="'+L+'">'+esc(d.note||"")+"</textarea></label>"+
-    '<div class="stt">'+esc(d.decision?t("savedAt")+" · "+d.at.slice(0,16).replace("T"," "):t("openSt"))+"</div></div>"});
-  h+='</div><div class="save"><button class="box primary" type="button" id="savenext">'+esc(t("saveNext"))+'</button><span class="hint">'+esc(t("keys"))+"</span></div></section>"}
+   a+='<tr><td class="chk" title="'+esc(r[5])+'">'+esc(r[1])+'</td><td class="res '+cls+'">'+esc(res)+'</td><td class="fd" lang="'+L+'">'+fd+"</td></tr>"});
+  a+="</tbody></table></div></details>"}
+ a+="</div>";
+ if(live){var d=dec(it)||{};
+  a+='<div class="dec'+(L===focusL||langs(g).length<2?" focus":"")+'" data-lang="'+L+'" data-key="'+esc(it.key)+'"><div class="btns">'+
+   [["accept","1 "+t("accept")],["accept-edited","2 "+t("acceptEd")],["send-back","3 "+t("sendBack")]].map(function(b){
+    return '<button class="box" type="button" data-d="'+b[0]+'" aria-pressed="'+(d.decision===b[0])+'">'+esc(b[1])+"</button>"}).join("")+"</div>"+
+   "<label>"+esc(t("reason"))+'<select data-f="reason">'+t("reasons").map(function(r,i){var v=TX.en.reasons[i];return '<option value="'+esc(v)+'"'+(d.reason===v?" selected":"")+">"+esc(r||"—")+"</option>"}).join("")+"</select></label>"+
+   "<label>"+esc(t("note"))+'<textarea data-f="note" lang="'+L+'">'+esc(d.note||"")+"</textarea></label>"+
+   '<div class="stt">'+esc(d.decision?t("savedAt")+" · "+d.at.slice(0,16).replace("T"," "):t("openSt"))+"</div></div>"}
+ else a+="<div></div>";
+ return a+"</article>"}
+function caseHTML(g,live){var Ls=langs(g),one=Ls.length<2?" one":"",h="",nf=famSize(g.family);
+ var keys=["fr","it"].filter(function(L){return g.items[L]}).map(function(L){return g.items[L].key}).join(", ");
+ if(live)h+='<button class="tb back" type="button" data-back="1">← '+esc(t("backList"))+"</button>";
+ h+="<h2>"+esc(g.product)+'</h2><p class="ref">'+esc(t("limitation"))+" "+esc(g.code)+" · SL "+esc(g.snap_old)+" → "+esc(g.snap_new)+" · "+esc(t("no"))+" "+g.no+" · "+
+  esc(t("famOf"))+" "+esc(FAML[g.family]||g.family)+" · "+esc(nf===1?t("famChange1"):fmt(t("famChanges"),{n:nf}))+
+  (live&&F.fam!==g.family&&nf>1?' · <button class="tb" type="button" data-fam="'+esc(g.family)+'">'+esc(t("famFilter"))+"</button>":"")+"</p>";
+ h+='<section class="sec"><div class="sl"><span class="no">1</span><span class="t">'+esc(t("s1"))+"</span>"+(live?'<button class="tb sp" type="button" id="ctx">'+esc(ctxMode?t("ctxA"):t("ctxF"))+"</button>":"")+
+  '</div><div class="txt de" lang="de">'+segs(g.de,live&&ctxMode,false)+"</div></section>";
+ h+='<section class="sec"><div class="sl"><span class="no">2</span><span class="t">'+esc(t("s2"))+"</span>"+(live?'<button class="tb sp" type="button" id="slots" aria-pressed="'+SLOTS+'" title="'+esc(t("keyNum")[0])+'">'+esc(t("slotsT"))+"</button>":"")+
+  '</div><div class="drafts'+one+'">'+Ls.map(function(L){return langHTML(g,L,live)}).join("")+"</div></section>";
+ if(live)h+='<div class="save"><button class="box primary" type="button" id="savenext">'+esc(t("saveNext"))+'</button><span class="hint">'+esc(t("keys"))+"</span></div>";
+ h+='<details class="ids"><summary>'+esc(t("ids"))+"</summary> "+esc(t("family"))+" "+esc(g.family)+(FAML[g.family]?" ("+esc(FAML[g.family])+")":"")+" · "+esc(t("pair"))+" "+esc(g.pair)+" · "+esc(t("itemsL"))+" "+esc(keys)+"</details>";
  return h}
 function edmeta(key){var it=byKey[key],e=S.edits[key]!=null;
  return (e?"<span>"+esc(t("edited"))+'</span><button class="tb" type="button" data-reset="'+esc(key)+'">'+esc(t("reset"))+"</button>":"<span>"+esc(t("editHint"))+"</span>")+
@@ -1102,19 +1130,21 @@ function edmeta(key){var it=byKey[key],e=S.edits[key]!=null;
   (it.rt&&S.edits[key]===it.rt[0]?"<span>"+esc(fmt(t("startOldDone"),{n:it.rt[1]}))+"</span>":"")}
 function renderCase(){var c=$("case");if(!sel){c.innerHTML='<p class="empty">'+esc(t("none"))+"</p>";return}
  try{if(TAB==="drafts"&&location.hash.slice(1)!==sel.pair)history.replaceState(null,"","#"+sel.pair)}catch(e){}
- var Ls=langs(sel);if(Ls.indexOf(focusL)<0)focusL=Ls[0];c.innerHTML=caseHTML(sel,true);wire(c)}
+ var Ls=langs(sel);if(Ls.indexOf(focusL)<0)focusL=Ls[0];c.classList.toggle("slots",SLOTS);c.innerHTML=caseHTML(sel,true);wire(c)}
 function copyText(s,ok,fail){var box=$("clipbox");
  function fallback(){try{box.value=s;box.select();if(document.execCommand&&document.execCommand("copy")){ok();return}}catch(e){}fail()}
  try{if(navigator.clipboard&&navigator.clipboard.writeText&&window.isSecureContext!==false){navigator.clipboard.writeText(s).then(ok,fallback)}else fallback()}catch(e){fallback()}}
 function wire(c){
  var b=$("ctx");if(b)b.onclick=function(){ctxMode=!ctxMode;renderCase()};
+ var sb=$("slots");if(sb)sb.onclick=function(){SLOTS=!SLOTS;c.classList.toggle("slots",SLOTS);sb.setAttribute("aria-pressed",SLOTS)};
  c.querySelectorAll(".ed").forEach(function(el){var key=el.dataset.key,it=byKey[key];
   el.addEventListener("keydown",function(e){if(e.key==="Enter"&&!(e.metaKey||e.ctrlKey))e.preventDefault()});
   el.addEventListener("paste",function(e){e.preventDefault();var tx=(e.clipboardData||window.clipboardData).getData("text").replace(/\s*\n\s*/g," ");document.execCommand("insertText",false,tx)});
   el.addEventListener("focus",function(){setFocus(it.lang)});
   el.addEventListener("input",function(){var v=readEd(el);if(v===it.draft||(it.status==="human"&&v===plain(it.segs,false)))delete S.edits[key];else S.edits[key]=v;save();
    var m=c.querySelector('[data-meta="'+key+'"]');if(m)m.innerHTML=edmeta(key)})});
- c.addEventListener("click",function(e){var r=e.target.closest("[data-reset]");if(r){delete S.edits[r.dataset.reset];var d=S.dec[r.dataset.reset];if(d&&d.decision==="accept-edited"){delete S.dec[r.dataset.reset]};save();renderCase();refreshRow(sel);progress();return}
+ c.addEventListener("click",function(e){if(e.target.closest("[data-back]")){$("p-drafts").classList.remove("case-open");markSel(true);return}
+  var r=e.target.closest("[data-reset]");if(r){delete S.edits[r.dataset.reset];var d=S.dec[r.dataset.reset];if(d&&d.decision==="accept-edited"){delete S.dec[r.dataset.reset]};save();renderCase();refreshRow(sel);progress();return}
   var so=e.target.closest("[data-start]");if(so){var k0=so.dataset.start;S.edits[k0]=byKey[k0].rt[0];save();renderCase();
    var ed0=c.querySelector('.ed[data-key="'+k0+'"]');if(ed0)ed0.focus();return}
   var fl=e.target.closest("[data-fam]");if(fl){F.fam=fl.dataset.fam;$("f-fam").value=F.fam;famBar();renderReg();return}

@@ -48,6 +48,7 @@ def compute():
     res["size_compare"] = score.size_compare()
     res["shadow_20260901_20261001"] = score.shadow_month()
     res["audit_recall"] = score.audit_recall()
+    res["audit_grouping"] = score.audit_grouping()
     from . import termbase
     res["termbase"] = termbase.measure()          # display-only advisory: how often it fires on ready drafts, what it explains
     return res

@@ -36,8 +36,9 @@ wrong language and typos next to numbers. On the 6 Oct 2026 feed it reduces 1,68
 **10** known divergent limitations, plus **6** more problems: five typos next to numbers that nobody had listed, and
 Keytruda's Italian field (which we had spotted by hand before), which has held the French text since 1 Aug 2026. It
 also learns from BAG's own corrections: where BAG replaced a term in some texts, it flags the texts that still use the
-old one. That finds four French texts naming the wrong drug class and four ungrammatical Italian ones (8 of 11 findings
-confirmed). On two lists it was never designed on, MiGeL and the Analysenliste, **7 of 11** findings are real; the
+old one. That finds four French texts naming the wrong drug class and four ungrammatical Italian ones (8 of 11 notices
+confirmed). In the review register the 27 findings and 11 terminology notices become 18 issues, one decision each:
+sibling products that share a divergence are one issue. On two lists it was never designed on, MiGeL and the Analysenliste, **7 of 11** findings are real; the
 Analysenliste's Italian, for example, makes a test billable after 13 repetitions where German and French say 14. Every
 count here was confirmed by blind Claude annotators (`eval/labels/`); the audit itself calls no model. Its recall,
 measured independently on 1,000 divergences planted into clean limitations: 77.2% [74.5, 79.7] overall, 93.0% for a

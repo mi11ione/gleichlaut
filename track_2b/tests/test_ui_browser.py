@@ -60,11 +60,11 @@ def test_landing_is_the_drafts_tab_and_audit_by_hash():
     s = _dom(C["p"], "", "fr-CH,fr")                 # 01 Drafts (Apertus drafts, code checks) first; the audit's headline beside it
     assert re.search(r'id="t-drafts"[^>]*aria-selected="true"', s) and "Brouillons" in s
     assert re.search(r'id="t-audit"[^>]*>[^<]*<span class="c">18</span>', s)          # the audit's issue count in the bar
-    assert re.search(r'id="ctxline"><b>[^<]*Apertus 70B', s) and "moins de corrections (optionnelle)" in s and "Exporter les décisions (JSON)" in s
+    assert re.search(r'id="ctxline"[^>]*><b>[^<]*Apertus 70B', s) and "moins de corrections (optionnelle)" in s and "Exporter les décisions (JSON)" in s
     s = _dom(C["p"], "#audit", "it-CH")
     assert re.search(r'id="t-audit"[^>]*aria-selected="true"', s) and "Verifica del registro" in s
     s = _dom(C["p"], "#wb013", "en")                 # one numbering: the address is the number
-    assert re.search(r'<tr class="cnt" data-pair="wb013" aria-selected="true"><td>.*?</td><td class="no">wb013</td>', s) and "No. wb013" in s
+    assert re.search(r'<tr class="cnt" data-pair="wb013" aria-selected="true"><td class="m">.*?</td><td class="m">.*?</td><td class="prd"[^>]*>[^<]*<span class="pc">[^<]*· wb013</span>', s) and "No. wb013" in s
     assert "explanation (FR)" in s and "Check detail: all" in s
 
 
