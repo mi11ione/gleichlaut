@@ -50,9 +50,10 @@ button,select,input,textarea{font:inherit;color:inherit}
 /* two panes */
 .work{display:grid;grid-template-columns:minmax(320px,440px) minmax(0,1fr);gap:0 36px}
 .register{border-right:1px solid var(--hair);padding:10px 20px 0 0;min-width:0;position:sticky;top:56px;align-self:start;height:calc(100vh - 56px);display:flex;flex-direction:column}
-.filters{display:flex;flex-direction:column;gap:5px;padding-bottom:9px;font:400 12px/1.4 var(--mono)}
-.fl{display:flex;flex-wrap:wrap;gap:2px 12px;align-items:baseline}
-.fl .k{color:var(--ink2);min-width:64px}
+.filters{display:flex;flex-wrap:wrap;gap:6px 14px;padding-bottom:9px;font:400 12px/1.4 var(--mono);align-items:baseline}
+.fl{display:flex;flex-wrap:wrap;gap:2px 6px;align-items:baseline}
+.fl .k{color:var(--ink2)}
+.fl:has(input){flex:1 1 100%}
 .fl select,.fl input{background:none;border:0;border-bottom:1px solid var(--hair);padding:3px 0;min-width:0;font:400 13px/1.3 var(--sans)}
 .fl input{flex:1 1 140px}.fl select{flex:0 1 auto;max-width:100%}
 .tbl{overflow-x:auto;min-width:0}
@@ -71,12 +72,13 @@ td{padding:6px 8px;border-bottom:1px solid var(--hair);vertical-align:top}
 #reg td.prd .pc{display:block;font:400 11px/1.4 var(--mono);color:var(--ink2);overflow:hidden;text-overflow:ellipsis;font-weight:400}
 #reg td.chg{color:var(--ink2);white-space:normal}#reg td.chg .cl{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35}
 #reg tr:hover td,#aud tr.cnt:hover td{background:var(--wash)}
-#reg tr[aria-selected=true] td,#aud tr[aria-selected=true] td{background:var(--sel);color:var(--sel-ink)}
+#reg tr[aria-selected=true] td,#aud tr[aria-selected=true] td,#reg tr[aria-selected=true]:hover td,#aud tr[aria-selected=true]:hover td{background:var(--sel);color:var(--sel-ink)}
 #reg tr[aria-selected=true] td *,#aud tr[aria-selected=true] td *{color:var(--sel-ink)!important}
 .mk{display:inline-block;min-width:1.3em;text-align:center;font:400 13px/1 var(--mono)}.mk.r{color:var(--sig)}.mk.o,.mk.f{color:var(--ink2)}
 .lt{font:400 11px/1.4 var(--mono);letter-spacing:.04em;color:var(--ink2)}
 .lt.s{color:var(--sig)}
-.count{color:var(--ink2);padding:6px 0;font:400 12px/1.4 var(--mono)}
+.count{color:var(--ink2);padding:6px 0 10px;font:400 11px/1.6 var(--mono);border-top:1px solid var(--hair)}
+.count .key{display:inline;padding:0;margin-left:10px}.count .key>span{margin-right:8px}
 .export{display:flex;flex-wrap:wrap;gap:8px;padding:8px 0 12px;border-top:1px solid var(--hair)}
 .export .msg{color:var(--ink2);flex-basis:100%;font:400 12px/1.4 var(--mono)}
 .key{margin:0;padding:6px 0 0;color:var(--ink2);font:400 11px/1.7 var(--mono);overflow-wrap:anywhere}
@@ -211,7 +213,12 @@ table.mem .code{color:var(--ink2);font-size:12px}table.mem .sub2{display:block;c
 .acts input{accent-color:var(--ink);margin:0;transform:translateY(1px)}
 .sug{color:var(--ink2);font:400 12px/1.4 var(--mono);margin-top:6px}
 /* footer: what the register is, its numbers, provenance, the full legend */
-footer{border-top:1px solid var(--rule);margin-top:32px;padding:12px 0 40px;color:var(--ink2);font:400 12px/1.6 var(--mono)}
+footer{border-top:1px solid var(--hair);margin-top:32px;padding:10px 0 32px;color:var(--ink2);font:400 11px/1.6 var(--mono)}
+.menu{position:relative}.menu>summary{list-style:none;cursor:pointer}.menu>summary::-webkit-details-marker{display:none}
+.menu>summary::after{content:" ▾"}
+.menu .mm{position:absolute;right:0;top:calc(100% + 6px);z-index:10;background:var(--paper);border:1px solid var(--ink);padding:8px 12px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:240px;font:400 13px/1.4 var(--sans)}
+.menu .mm .tb{color:var(--ink)}.menu .mm .msg{color:var(--ink2);font:400 11px/1.4 var(--mono)}
+.who{margin-top:10px;font:400 12px/1.4 var(--mono);color:var(--ink2)}.who input{background:none;border:0;border-bottom:1px solid var(--hair);padding:2px 0;font:400 14px/1.4 var(--sans);color:var(--ink);min-width:220px}
 footer h3{font:500 13px/1.4 var(--sans);color:var(--ink);margin:0 0 8px}
 footer p{margin:6px 0 0;overflow-wrap:anywhere;max-width:150ch}
 .kv{display:grid;grid-template-columns:1fr 1fr;gap:0 40px}
@@ -253,20 +260,23 @@ BODY = r"""<div class="app">
 <header class="bar">
  <span class="wm">Gleichlaut</span>
  <nav class="views" role="tablist" aria-label="Views"><button class="view" role="tab" type="button" id="t-drafts" aria-controls="p-drafts"></button><button class="view" role="tab" type="button" id="t-audit" aria-controls="p-audit"></button></nav>
- <div class="tools"><span id="progress"></span><button class="box" id="x-dec" type="button"></button>
+ <div class="tools"><span id="progress"></span>
+  <details class="menu" id="xmenu"><summary class="box" id="x-sum"></summary><div class="mm">
+   <button class="tb" id="x-dec" type="button"></button><button class="tb" id="x-xlf" type="button"></button><button class="tb" id="x-xlf12" type="button"></button>
+   <button class="tb" id="x-copy" type="button"></button><button class="tb" id="x-imp" type="button"></button>
+   <button class="tb" id="a-csv-i" type="button"></button><button class="tb" id="a-csv" type="button"></button><button class="tb" id="a-imp" type="button"></button>
+   <span class="msg" id="x-msg" aria-live="polite"></span><span class="msg" id="a-msg" aria-live="polite"></span><span class="msg" id="where"></span>
+   <textarea id="copybox" hidden readonly aria-label="Decisions JSON"></textarea></div></details>
   <label><span id="l-ui" class="vh"></span><select id="ui-lang" aria-label="Interface language"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option></select></label><button class="tb" id="theme" type="button"></button></div>
 </header>
 <p class="ctx" id="ctxline"></p>
 <div class="work" id="p-audit" role="tabpanel" aria-labelledby="t-audit" hidden>
  <section class="register" aria-label="Issues">
   <div class="filters"><div class="fl" id="a-show"></div><div class="fl" id="a-lang"></div><div class="fl" id="a-kind"></div><div class="fl" id="a-since" hidden></div>
-   <div class="fl"><label class="k" for="rev" id="l-rev"></label><input type="text" id="rev" autocomplete="name"></div></div>
+</div>
   <div class="tbl reg-wrap" id="aud-wrap"><table id="aud"><colgroup><col class="a-mk"><col><col class="a-what"></colgroup>
    <thead><tr><th id="ah-no"></th><th id="ah-lim"></th><th id="ah-kind"></th></tr></thead><tbody></tbody></table></div>
   <div class="count" id="a-shown"></div>
-  <p class="key" id="aud-key"></p>
-  <div class="export"><button class="box" id="a-csv-i" type="button"></button><button class="box" id="a-csv" type="button"></button><button class="box" id="a-imp" type="button"></button>
-   <span class="msg" id="a-msg" aria-live="polite"></span></div>
  </section>
  <section class="case" id="acase" tabindex="-1" aria-label="Issue"></section>
 </div>
@@ -280,16 +290,13 @@ BODY = r"""<div class="app">
   </div>
   <div class="tbl reg-wrap" id="reg-wrap"><table id="reg"><colgroup><col class="c-fr"><col class="c-it"><col class="c-prod"><col></colgroup>
    <thead><tr><th class="m">FR</th><th class="m">IT</th><th id="h-prod"></th><th id="h-chg"></th></tr></thead><tbody></tbody></table></div>
-  <div class="count" id="shown"></div>
-  <p class="key" id="reg-key"></p>
-  <div class="export"><button class="box" id="x-xlf" type="button"></button><button class="box" id="x-xlf12" type="button"></button><button class="box" id="x-copy" type="button"></button><button class="box" id="x-imp" type="button"></button>
-   <span class="msg" id="x-msg" aria-live="polite"></span><textarea id="copybox" hidden readonly aria-label="Decisions JSON"></textarea></div>
+  <div class="count"><span id="shown"></span> <span class="key" id="reg-key"></span></div>
  </section>
  <section class="case" id="case" tabindex="-1" aria-label="Case"></section>
 </div>
 <input type="file" id="imp-file" accept="application/json,.json" class="vh" tabindex="-1" aria-hidden="true">
 <textarea id="clipbox" class="vh" tabindex="-1" aria-hidden="true" readonly></textarea>
-<footer><h3 id="about-h"></h3><div class="kv"><dl id="kv-l"></dl><dl id="kv-r"></dl></div><p id="where"></p><p id="prov"></p><p id="legend"></p><p id="legend2"></p></footer>
+<footer><p id="prov"></p></footer>
 </div>
 <div id="print"></div>
 <script type="application/json" id="data">__DATA__</script>
@@ -693,16 +700,16 @@ it:{aLead:"Ogni riga è un caso: un punto in cui i testi tedesco, francese e ita
 Object.keys(TX4).forEach(function(L){Object.keys(TX4[L]).forEach(function(k){TX[L][k]=TX4[L][k]})});
 // redesign (10 Oct 2026): one bar, a context line, list + case in both views, statistics in the footer
 var TX5={
-de:{backList:"Liste",slotsT:"Platzhalter zeigen",famChange1:"1 Änderung",aThen:"Weiter",aOr:"Oder",aboutH:"Über dieses Register",aBind:"Massgebend ist die Fassung, die dem Entscheid des BAG entspricht; welche das ist, weiss die Prüfung nicht.",
+de:{ctxA:"Der Code vergleicht alle {n} Limitationen auf DE/FR/IT, ohne Modell. Zu entscheiden ist, welche Fassung dem Entscheid des BAG entspricht.",export:"Export",ctxD:"Vergangene Änderungen, vom BAG bereits publiziert; die Entwürfe sind für die Übersetzung.",whereS:"Entscheide bleiben in diesem Browser, bis sie exportiert werden.",backList:"Liste",slotsT:"Platzhalter zeigen",famChange1:"1 Änderung",aThen:"Weiter",aOr:"Oder",aboutH:"Über dieses Register",aBind:"Massgebend ist die Fassung, die dem Entscheid des BAG entspricht; welche das ist, weiss die Prüfung nicht.",
  aKnownHeadS:"Von unserer früheren Erhebung erfasst · {k} von {n} gefunden",aTermHeadS:"Terminologie · {n}",aWhat:"Was abweicht",aDating:"Seit wann",aNote2:"Hinweis",aTermL:"Begriff",
  aTexts:"Die Texte",aActL:"Massnahmen und Notiz",saveNextI:"Speichern, nächster Fall",keysA:"j/k oder ↑/↓ wechseln · Ctrl/Cmd+Enter speichern und weiter",lane:"Spur",laneM:"Methode",comparedW:"Verglichen mit"},
-en:{backList:"List",slotsT:"Show number slots",famChange1:"1 change",aThen:"Then",aOr:"Or",aboutH:"About this register",aBind:"What counts is the version that matches BAG's decision; which one that is, the audit cannot know.",
+en:{ctxA:"Code compares all {n} limitations in DE/FR/IT, no model. Each issue needs one decision: which version matches BAG's decision.",export:"Export",ctxD:"Past changes, already published by BAG; the drafts are for translators.",whereS:"Decisions stay in this browser until exported.",backList:"List",slotsT:"Show number slots",famChange1:"1 change",aThen:"Then",aOr:"Or",aboutH:"About this register",aBind:"What counts is the version that matches BAG's decision; which one that is, the audit cannot know.",
  aKnownHeadS:"Listed by our earlier census · {k} of {n} found",aTermHeadS:"Terminology · {n}",aWhat:"What differs",aDating:"Since when",aNote2:"Note",aTermL:"Term",
  aTexts:"The texts",aActL:"Actions and note",saveNextI:"Save, next issue",keysA:"j/k or ↑/↓ move · Ctrl/Cmd+Enter save and next",lane:"Lane",laneM:"Method",comparedW:"Compared with"},
-fr:{backList:"Liste",slotsT:"Afficher les emplacements",famChange1:"1 modification",aThen:"Ensuite",aOr:"Ou",aboutH:"À propos de ce registre",aBind:"Ce qui compte est la version conforme à la décision de l'OFSP ; laquelle, l'audit ne peut pas le savoir.",
+fr:{ctxA:"Le code compare les {n} limitations en DE/FR/IT, sans modèle. Chaque cas demande une décision : quelle version correspond à la décision de l'OFSP.",export:"Exporter",ctxD:"Modifications passées, déjà publiées par l'OFSP ; les brouillons sont destinés aux traducteurs.",whereS:"Les décisions restent dans ce navigateur jusqu'à leur exportation.",backList:"Liste",slotsT:"Afficher les emplacements",famChange1:"1 modification",aThen:"Ensuite",aOr:"Ou",aboutH:"À propos de ce registre",aBind:"Ce qui compte est la version conforme à la décision de l'OFSP ; laquelle, l'audit ne peut pas le savoir.",
  aKnownHeadS:"Recensés par notre inventaire antérieur · {k} sur {n} trouvés",aTermHeadS:"Terminologie · {n}",aWhat:"Ce qui diverge",aDating:"Depuis quand",aNote2:"Remarque",aTermL:"Terme",
  aTexts:"Les textes",aActL:"Mesures et remarque",saveNextI:"Enregistrer, cas suivant",keysA:"j/k ou ↑/↓ naviguer · Ctrl/Cmd+Entrée enregistrer et continuer",lane:"Voie",laneM:"Méthode",comparedW:"Comparé avec"},
-it:{backList:"Elenco",slotsT:"Mostra i segnaposto",famChange1:"1 modifica",aThen:"Poi",aOr:"Oppure",aboutH:"Informazioni su questo registro",aBind:"Conta la versione conforme alla decisione dell'UFSP; quale sia, la verifica non può saperlo.",
+it:{ctxA:"Il codice confronta tutte le {n} limitazioni in DE/FR/IT, senza modello. Ogni caso chiede una decisione: quale versione è conforme alla decisione dell'UFSP.",export:"Esporta",ctxD:"Modifiche passate, già pubblicate dall'UFSP; le bozze sono per i traduttori.",whereS:"Le decisioni restano in questo browser finché non vengono esportate.",backList:"Elenco",slotsT:"Mostra i segnaposto",famChange1:"1 modifica",aThen:"Poi",aOr:"Oppure",aboutH:"Informazioni su questo registro",aBind:"Conta la versione conforme alla decisione dell'UFSP; quale sia, la verifica non può saperlo.",
  aKnownHeadS:"Censiti dal nostro inventario precedente · {k} su {n} trovati",aTermHeadS:"Terminologia · {n}",aWhat:"Che cosa diverge",aDating:"Da quando",aNote2:"Nota",aTermL:"Termine",
  aTexts:"I testi",aActL:"Misure e nota",saveNextI:"Salva, caso successivo",keysA:"j/k o ↑/↓ spostarsi · Ctrl/Cmd+Invio salva e continua",lane:"Corsia",laneM:"Metodo",comparedW:"Confrontato con"}};
 Object.keys(TX5).forEach(function(L){Object.keys(TX5[L]).forEach(function(k){TX[L][k]=TX5[L][k]})});
@@ -739,7 +746,7 @@ function mark(it){if(!it)return ['<span class="mk o">·</span>',""];var d=dec(it
  return it.status==="ready"?['<span class="mk">✓</span>',"ready"]:it.lvl==="fine"?['<span class="mk f">~</span>',"fine"]:['<span class="mk r">▲</span>',"flagged"]}
 // ------------------------------------------------------------------ header and chrome
 var TAB="drafts";        // landing view: 01 Drafts (Apertus drafts, code checks); #audit opens 02 Register audit, #wbNNN a draft
-function kv(id,rows){$(id).innerHTML=rows.map(function(r){return "<dt"+(r[3]?' title="'+esc(r[3])+'"':"")+">"+esc(r[0])+"</dt><dd"+(r[2]?' class="'+r[2]+'"':"")+">"+esc(r[1])+"</dd>"}).join("")}
+function kv(id,rows){if(!$(id))return;$(id).innerHTML=rows.map(function(r){return "<dt"+(r[3]?' title="'+esc(r[3])+'"':"")+">"+esc(r[0])+"</dt><dd"+(r[2]?' class="'+r[2]+'"':"")+">"+esc(r[1])+"</dd>"}).join("")}
 function ddate(s){return /^\d{8}$/.test(s||"")?s.slice(6,8)+"."+s.slice(4,6)+"."+s.slice(0,4):(s||"?")}
 function grp(n){var s=String(n==null?"—":n);return /^\d{4,6}$/.test(s)?s.slice(0,-3)+(UL==="en"?",":"’")+s.slice(-3):s}
 var MS=M.lane==="70b"?"70B":M.lane==="8b"?"8B":M.model;
@@ -758,11 +765,14 @@ function chrome(){
  $("t-audit").setAttribute("aria-selected",TAB==="audit");$("t-drafts").setAttribute("aria-selected",TAB==="drafts");
  $("t-audit").tabIndex=TAB==="audit"?0:-1;$("t-drafts").tabIndex=TAB==="drafts"?0:-1;
  $("p-audit").hidden=TAB!=="audit";$("p-drafts").hidden=TAB!=="drafts";
- $("x-dec").textContent=t("exportDec");$("where").textContent=t("where");$("about-h").textContent=t("aboutH");
- $("prov").textContent=t("provenance")+": "+M.pipeline+" · outputs sha256:"+M.run_sha256.slice(0,16)+"… · items sha256:"+M.items_sha256.slice(0,16)+"…"+(AU?" · audit "+AU.meta.file+(AU.meta.results?" + "+AU.meta.results:"")+(AU.meta.more?" + "+AU.meta.more:""):"")+(M.rev?" · rev "+M.rev:"");
+ $("x-sum").textContent=t("export");$("x-dec").textContent=t("exportDec");$("where").textContent=t("where");
+ ["x-xlf","x-xlf12","x-copy","x-imp","x-msg"].forEach(function(i){$(i).hidden=TAB==="audit"});["a-csv-i","a-csv","a-imp","a-msg"].forEach(function(i){$(i).hidden=TAB!=="audit"});
+ var fz1=(M.pipeline.match(/freeze sha256:([0-9a-f]+)/)||[])[1]||"";
+ $("prov").textContent=M.pipeline.split(";")[0]+(fz1?" · freeze "+fz1.slice(0,12):"")+" · outputs "+M.run_sha256.slice(0,12)+(M.rev?" · rev "+M.rev:"")+" · "+t("whereS");
+ $("prov").title=M.pipeline+" · outputs sha256:"+M.run_sha256+" · items sha256:"+M.items_sha256+(AU?" · audit "+AU.meta.file:"");
  if(TAB==="audit"){chromeAudit();$("ctxline").title=$("ctxline").textContent;return}
  // one line of context: what these drafts are, whose decision they are
- $("ctxline").innerHTML="<b>"+esc(cap(fmt(t("drawingBy"),{l:M.label,n:C.items,m:MS})))+".</b> "+esc((M.custom?"":fmt(t("dB1"),{c:C.changes,p:M.period?" ("+M.period+")":""}))+t("dB2"));
+ $("ctxline").innerHTML="<b>"+esc(cap(fmt(t("drawingBy"),{l:M.label,n:C.items,m:MS})))+".</b> "+esc(M.custom?t("dB2"):t("ctxD"));
  $("ctxline").title=$("ctxline").textContent;
  var fz=(M.pipeline.match(/freeze sha256:([0-9a-f]+)/)||[])[1]||"";
  kv("kv-l",[[t("guards"),(M.stack==="g3"?"guards3 (frozen)":"guards v2 (frozen)")+(fz?" · freeze "+fz.slice(0,12):"")],
@@ -778,14 +788,16 @@ function chrome(){
  if(C.flagged)r.push([t("triage"),triTxt(C.to_check,C.probably_fine)]);
  if(C.divergent)r.push([t("divergent"),String(C.divergent)]);
  kv("kv-r",r);
- seg("f-status",t("status"),[["open",t("open")],["ready",t("ready")],["check",t("fCheck")],["fine",t("fFine")],["flagged",t("flagged")],["divergent",t("divF")],["decided",t("decidedF")],["all",t("all")]],F.status,function(v){F.status=v;renderReg()});
- seg("f-lang",t("language"),[["all","FR+IT"],["fr","FR"],["it","IT"]],F.lang,function(v){F.lang=v;if(v!=="all")focusL=v;famBar();renderReg();renderCase()});
+ selF("f-status",t("status"),[["open",t("open")],["ready",t("ready")],["check",t("fCheck")],["fine",t("fFine")],["flagged",t("flagged")],["divergent",t("divF")],["decided",t("decidedF")],["all",t("all")]],F.status,function(v){F.status=v;renderReg()});
+ selF("f-lang",t("language"),[["all","FR+IT"],["fr","FR"],["it","IT"]],F.lang,function(v){F.lang=v;if(v!=="all")focusL=v;famBar();renderReg();renderCase()});
  var fs=$("f-fam");fs.innerHTML="";fs.appendChild(new Option(t("allFam")+" ("+D.families.length+")",""));
  D.families.forEach(function(f){var o=new Option(f[2]+" · "+f[1],f[0]);o.title=t("family")+" "+f[0];fs.appendChild(o)});fs.value=F.fam;$("f-q").placeholder=t("search");famBar();
  $("h-prod").textContent=t("product");$("h-chg").textContent=t("change");
  $("x-xlf").textContent=t("xlf");$("x-xlf12").textContent=t("xlf12");$("x-copy").textContent=t("copy");$("x-imp").textContent=t("imp");
- $("reg-key").innerHTML=keyHTML(t("keyReg"));$("legend").textContent=t("legend");
- $("legend2").textContent=t("triHead")+" "+["T1","T2","T3","T4","T5","T6","T7","T8"].map(function(r){return t("rd"+r)}).join(" · ");progress()}
+ $("reg-key").innerHTML=keyHTML(t("keyReg").filter(function(k){return ["✓","▲","~","≠"].indexOf(k[0])>=0}).map(function(k){return [k[0],k[1].split(",")[0]]}));
+ $("reg-key").title=t("legend");progress()}
+function selF(id,label,opts,cur,fn){var s=$(id);s.innerHTML='<label class="k" for="'+id+'-s">'+esc(label)+'</label><select id="'+id+'-s">'+opts.map(function(o){
+  return '<option value="'+esc(o[0])+'"'+(o[0]===cur?" selected":"")+">"+esc(o[1])+"</option>"}).join("")+"</select>";$(id+"-s").onchange=function(){fn(this.value)}}
 function seg(id,label,opts,cur,fn){var s=$(id);s.innerHTML='<span class="k">'+esc(label)+"</span>";
  opts.forEach(function(o){var b=document.createElement("button");b.type="button";b.className="tb";b.textContent=o[1];b.setAttribute("aria-pressed",o[0]===cur);
   b.onclick=function(){s.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});fn(o[0])};s.appendChild(b)})}
@@ -830,29 +842,28 @@ function aStatus(d){if(!d||!d.at)return t("openSt");var day=ddate(d.at.slice(0,1
 function dating(x){if(!x)return "";if(x.earliest&&x.n===x.m)return fmt(t("dA"),{n:x.n,d:ddate(x.first)});
  if(x.prev&&x.n===x.m)return fmt(t("dB"),{p:ddate(x.prev),d:ddate(x.first),n:x.n});return fmt(t("dC"),{d:ddate(x.first),n:x.n,m:x.m==null?"?":x.m})}
 function chromeAudit(){var m=AU.meta,nf=AU.rows.length;
- $("ctxline").innerHTML="<b>"+esc(fmt(t("drawA"),{d:ddate(m.date)}))+".</b> "+esc(fmt(t("t2t"),{n:grp(m.n_limitations),d:ddate(m.date),k:m.known_found!=null?m.known_found:m.known_ids.length,o:m.known_of!=null?m.known_of:m.known_ids.length}))+" "+esc(t("aBind"));
+ $("ctxline").innerHTML="<b>"+esc(fmt(t("drawA"),{d:ddate(m.date)}))+".</b> "+esc(fmt(t("ctxA"),{n:grp(m.n_limitations)}));
  var bk=m.by_kind?Object.keys(m.by_kind).filter(function(k){return k!=="terminology"}).map(function(k){return m.by_kind[k]+" "+(t("kinds")[k]||k)}).join(", "):"";
  kv("kv-l",[[t("aSnap"),ddate(m.date)],[t("aChecked"),m.n_limitations!=null?grp(m.n_limitations):"—"],
   [t("aFindings"),fmt(t("aFindingsV"),{a:m.main,b:bk,t:m.term,n:IS.length}).replace(" ()","")],[t("laneM"),t("laneA")]]);
  var r=[[t("aKnown"),(m.known_found!=null?m.known_found:m.known_ids.length)+" / "+(m.known_of!=null?m.known_of:m.known_ids.length),"big"]];
  if(m.main_real!=null&&m.term_real!=null)r.push([t("aConf"),fmt(t("aConfV"),{r:m.main_real,a:m.main,k:m.main_real-(m.main_new_real||0),x:m.main_new_real||0,tr:m.term_real,t:m.term})]);
  var sn0=m.snapshots||[];if(sn0.length)r.push([t("comparedW"),fmt(t("modelA"),{n:sn0.length,a:ddate(sn0[0]),b:ddate(sn0[sn0.length-1])})]);
- kv("kv-r",r);$("aud-key").innerHTML=keyHTML(t("keyAud"));
- seg("a-show",t("aShow"),[["all",fmt(t("aAllN"),{n:IS.length})],["known",t("aKnownF")+" ("+IS.filter(function(I){return I.known}).length+")"],["open",t("aOpenF")],["decided",t("aDecF")]],AF.show,function(v){AF.show=v;renderAudit()});
- seg("a-lang",t("language"),[["all","DE+FR+IT"],["de","DE"],["fr","FR"],["it","IT"]],AF.lang,function(v){AF.lang=v;renderAudit()});
+ kv("kv-r",r);
+ selF("a-show",t("aShow"),[["all",fmt(t("aAllN"),{n:IS.length})],["known",t("aKnownF")+" ("+IS.filter(function(I){return I.known}).length+")"],["open",t("aOpenF")],["decided",t("aDecF")]],AF.show,function(v){AF.show=v;renderAudit()});
+ selF("a-lang",t("language"),[["all","DE+FR+IT"],["de","DE"],["fr","FR"],["it","IT"]],AF.lang,function(v){AF.lang=v;renderAudit()});
  var ks=[["all",t("all")]];["number","unit","language","editorial","terminology"].forEach(function(k){var n=IS.filter(function(I){return I.kinds.indexOf(k)>=0}).length;if(n)ks.push([k,t("kinds")[k]+" ("+n+")"])});
  IS.forEach(function(I){I.kinds.forEach(function(k){if(!ks.some(function(x){return x[0]===k}))ks.push([k,k])})});
- seg("a-kind",t("aKindF"),ks,AF.kind,function(v){AF.kind=v;renderAudit()});
+ selF("a-kind",t("aKindF"),ks,AF.kind,function(v){AF.kind=v;renderAudit()});
  // "new since": the snapshots the audit dates against (summary.snapshots_dated), each with the issues first seen after it
  var sn=(m.snapshots||[]).slice(0,-1),ss=$("a-since");
  if(sn.length&&IS.some(function(I){return I.dating})){var o='<label class="k" for="a-since-s">'+esc(t("newSince"))+'</label><select id="a-since-s"><option value="">'+esc(t("newAny"))+"</option>";
   sn.forEach(function(d){var n=IS.filter(function(I){return newAfter(I,d)}).length;o+='<option value="'+d+'"'+(AF.since===d?" selected":"")+">"+esc(ddate(d))+" ("+n+")</option>"});
   ss.innerHTML=o+"</select>";ss.hidden=false;$("a-since-s").onchange=function(){AF.since=this.value;renderAudit()}}else ss.hidden=true;
- $("l-rev").textContent=t("rev");$("rev").placeholder=t("revPh");$("rev").value=P.reviewer||"";
  $("ah-no").textContent="";$("ah-lim").textContent=t("aLim");$("ah-kind").textContent=t("aWhat");
  $("a-csv-i").textContent=t("csvIss");$("a-csv").textContent=t("aCsv");$("a-imp").textContent=t("imp");
- $("legend").textContent=fmt(t("aLegend"),{g:t("grouping")});$("legend2").textContent="";progress()}
-$("rev").addEventListener("input",function(){P.reviewer=this.value;lsSet("gleichlaut:prefs",P)});
+ progress()}
+
 function newAfter(I,d){return I.M.some(function(r){return r.dating&&r.dating.first>d})}
 function aOk(I){if(AF.lang!=="all"&&I.langs.indexOf(AF.lang)<0)return false;if(AF.kind!=="all"&&I.kinds.indexOf(AF.kind)<0)return false;
  if(AF.since&&!newAfter(I,AF.since))return false;
@@ -943,6 +954,7 @@ function aCaseHTML(I){var r=I.M[0],d=iDec(I)||{},n=I.M.length,odd=I.odd==="uncle
  if(n>1){h+='<section class="sec"><div class="sl"><span class="no">'+no+'</span><span class="t">'+esc(fmt(t("mem"),{n:n}))+"</span></div>"+memHTML(I)+"</section>";no++}
  h+='<section class="sec"><div class="sl"><span class="no">'+no+'</span><span class="t">'+esc(t("s4"))+'</span></div><div class="adec"><div><label class="q">'+esc(t("aRight"))+"</label>"+ctlRight(d)+
   (r.sug?'<div class="sug">'+esc(t("aSug"))+": "+esc(t("acts")[r.sug]||r.sug)+"</div>":"")+'</div><div><label class="q">'+esc(t("aAction"))+"</label>"+ctlActs(d)+ctlNote(d)+"</div></div>"+
+  '<div class="who"><label>'+esc(t("rev"))+' <input type="text" data-rev="1" autocomplete="name" value="'+esc(P.reviewer||"")+'" placeholder="'+esc(t("revPh"))+'"></label></div>'+
   '<div class="stt" id="a-stt">'+esc(iStatus(I))+'</div><div class="save"><button class="box primary" type="button" id="a-next">'+esc(t("saveNextI"))+'</button><span class="hint">'+esc(t("keysA"))+"</span></div></section>";
  return h}
 function shortTexts(I){return I.lims.every(function(lim){var T=AU.texts[lim];return T&&["de","fr","it"].every(function(L){return (T[L]||[]).reduce(function(n,x){return n+x[0].length},0)<=800})})}
@@ -965,7 +977,7 @@ function aNext(){var i=AVIS.indexOf(ASEL);renderAudit();var j=AVIS.indexOf(ASEL)
 (function(){var tb=document.querySelector("#aud tbody"),c=$("acase");
  tb.addEventListener("click",function(e){var tr=e.target.closest("tr[data-iss]");if(!tr)return;ASEL=issueOf(tr);aMarkSel();renderACase();if(window.innerWidth<=900){$("p-audit").classList.add("case-open");window.scrollTo(0,0)}});
  c.addEventListener("change",function(e){var f=e.target.closest("[data-a]");if(f)aSet(f)});
- c.addEventListener("input",function(e){var f=e.target.closest("textarea[data-a]");if(f)aSet(f)});
+ c.addEventListener("input",function(e){if(e.target.dataset&&e.target.dataset.rev){P.reviewer=e.target.value;lsSet("gleichlaut:prefs",P);return}var f=e.target.closest("textarea[data-a]");if(f)aSet(f)});
  c.addEventListener("click",function(e){if(e.target.closest("#a-next")){aNext();return}
   if(e.target.closest("[data-back]")){$("p-audit").classList.remove("case-open");aMarkSel(true);return}
   var ab=e.target.closest("button[data-a]");if(ab){aSet(ab);var y=window.scrollY;renderACase();window.scrollTo(0,y);return}
@@ -1078,7 +1090,7 @@ function langHTML(g,L,live){var it=g.items[L],ed=S.edits[it.key],LL=L.toUpperCas
  a+='<div class="body">'+notice(it);
  if(it.status==="human")a+='<p class="human">'+esc(it.reason&&!/rewritten|60/.test(it.reason)?t("humanShort"):t("humanTxt"))+(it.ratio!=null?" ("+it.ratio+"%)":"")+".</p>"+(it.reason?'<p class="ref">'+esc(it.reason)+"</p>":"")+'<p class="human" style="color:var(--ink2)">'+esc(t("humanPrev"))+"</p>";
  var body=ed!=null?esc(ed):segs(it.segs,false,live);
- a+='<div class="txt'+(live?" ed":"")+'" lang="'+L+'"'+(live?' contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true" aria-label="'+esc(LN(L))+'" data-key="'+esc(it.key)+'"':"")+">"+body+"</div>";
+ a+='<div class="txt'+(live?" ed":"")+'" lang="'+L+'"'+(live?' contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true" title="'+esc(t("editHint"))+'" aria-label="'+esc(LN(L))+'" data-key="'+esc(it.key)+'"':"")+">"+body+"</div>";
  if(live)a+='<div class="edmeta" data-meta="'+esc(it.key)+'">'+edmeta(it.key)+"</div>";
  a+="</div>";
  // why: at most three reasons in plain wording in the reviewer's language (the same as the XLIFF notes); the termbase note
@@ -1124,7 +1136,7 @@ function caseHTML(g,live){var Ls=langs(g),one=Ls.length<2?" one":"",h="",nf=famS
  h+='<details class="ids"><summary>'+esc(t("ids"))+"</summary> "+esc(t("family"))+" "+esc(g.family)+(FAML[g.family]?" ("+esc(FAML[g.family])+")":"")+" · "+esc(t("pair"))+" "+esc(g.pair)+" · "+esc(t("itemsL"))+" "+esc(keys)+"</details>";
  return h}
 function edmeta(key){var it=byKey[key],e=S.edits[key]!=null;
- return (e?"<span>"+esc(t("edited"))+'</span><button class="tb" type="button" data-reset="'+esc(key)+'">'+esc(t("reset"))+"</button>":"<span>"+esc(t("editHint"))+"</span>")+
+ return (e?"<span>"+esc(t("edited"))+'</span><button class="tb" type="button" data-reset="'+esc(key)+'">'+esc(t("reset"))+"</button>":"")+
   ((it.status!=="human"||e)?'<button class="tb" type="button" data-copy="'+esc(key)+'">'+esc(t("copyTxt"))+'</button><span class="cpmsg" aria-live="polite"></span>':"")+
   (it.rt&&it.rt[0]!==it.draft&&S.edits[key]!==it.rt[0]?'<button class="tb" type="button" data-start="'+esc(key)+'" title="'+esc(fmt(t("startOldT"),{n:it.rt[1]}))+'">'+esc(t("startOld"))+"</button>":"")+
   (it.rt&&S.edits[key]===it.rt[0]?"<span>"+esc(fmt(t("startOldDone"),{n:it.rt[1]}))+"</span>":"")}
