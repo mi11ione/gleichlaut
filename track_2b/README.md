@@ -70,6 +70,13 @@ repository; `eval/prereg/PREREG.md` says what can and cannot be verified from he
 Against rules+, our strongest no-model baseline (it also copies changed names and deletes whole sentences, 10.8%
 identical), the 70B still adds +6.6 points [1.8, 12.0] and 41.3% fewer edits [29.7, 53.0].
 
+**What it is worth at today's volume.** BAG publishes about 57.4 French and Italian limitation texts a month that
+follow a German change. Starting from the old text with updated numbers, a translator makes about 2,020 word-level
+edits a month to reach the published wording (35.1 per text); starting from the default 8B draft that drops by about
+670 a month (23.5 per text), from the 70B by about 850 (20.3 per text). The audit adds what is not done today: a full
+three-language comparison of all 1,688 conditions in about a minute, each issue with its texts side by side. A timed
+pilot turns edits into hours.
+
 The 8B runs on the CPU you already have (200.5 s per draft for the default Q8_0, 153.4 s for Q4_K_M, on a 4-core
 runner). The 70B costs **CHF 0.0024 per draft** at a Swiss provider's published price: CHF 0.14 a month at today's volume, CHF 1.36 at
 ten times. Every number here is in [claims.tsv](claims.tsv) with the file and command that produce it.

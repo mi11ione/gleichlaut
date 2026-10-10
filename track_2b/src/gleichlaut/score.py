@@ -420,6 +420,24 @@ def audit_grouping():
                 rows=len(R), issues=len(A["issues"]), issues_terminology=sum(all(R[i]["kind"] == "terminology" for i in I["rows"]) for I in A["issues"]))
 
 
+def value():
+    """What the drafting saves at today's volume, in the unit we measured: word-level (token) edits a translator would
+    still make to reach BAG's published text, per FR/IT text and per month (economics: FR/IT items per month from the
+    backtest), for the rules-only start, the default 8B Q8_0 and the 70B. Time per edit is not measured (a timed pilot
+    turns this into hours)."""
+    E = json.load(open(os.path.join(core.ROOT, "eval", "results", "economics.json"), encoding="utf-8"))
+    S2 = json.load(open(os.path.join(core.ROOT, "eval", "results", "size_compare.json"), encoding="utf-8"))["q8_0"]
+    n, per_month = S2["n"], E["fr_it_items_per_month"]
+    per_item = lambda e: e / n
+    out = dict(items_per_month=per_month, n=n,
+               edits_per_text_rules=round(per_item(S2["edits_rules"]), 1), edits_per_text_8b=round(per_item(S2["edits_8b"]), 1),
+               edits_per_text_70b=round(per_item(S2["edits_70b"]), 1))
+    out["saved_per_month_8b"] = int(round((S2["edits_rules"] - S2["edits_8b"]) / n * per_month, -1))
+    out["saved_per_month_70b"] = int(round((S2["edits_rules"] - S2["edits_70b"]) / n * per_month, -1))
+    out["edits_per_month_rules"] = int(round(S2["edits_rules"] / n * per_month, -1))
+    return out
+
+
 def size_compare(builds=("q4_k_m", "q8_0")):
     """Model size, paired: the 70B (fresh 166) against each 8B GGUF build on the same items. Paired cluster bootstrap over
     German changes (4000 resamples, seed 7) of the difference in token edits saved against the rules-only start, and the

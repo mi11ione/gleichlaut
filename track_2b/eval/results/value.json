@@ -1,0 +1,10 @@
+{
+ "edits_per_month_rules": 2020,
+ "edits_per_text_70b": 20.3,
+ "edits_per_text_8b": 23.5,
+ "edits_per_text_rules": 35.1,
+ "items_per_month": 57.4,
+ "n": 166,
+ "saved_per_month_70b": 850,
+ "saved_per_month_8b": 670
+}
