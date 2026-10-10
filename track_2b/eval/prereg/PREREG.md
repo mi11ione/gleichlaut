@@ -34,6 +34,7 @@ human labels were used.
 | R13 | fully blind relabel of the headline 70B run | 0 severe errors among ready drafts; κ 0.892 |
 | R14 | (A) audit findings relabelled by two blind annotators + a third; (B) annotator sensitivity to meaning errors inside the amended wording | pending |
 | R15 | audit round 5: operator direction, negation, number words | pending |
+| R16 | memorisation probe: could the models have seen the held-out answers | pending |
 
 ## R0. Pass rule for a drafting lane (frozen 9 Oct 2026, before the fresh 2025 run)
 
@@ -514,6 +515,52 @@ blind Claude subagents.
   either, Wilson 95%) next to R11's 66 of 66, whatever it is, and the 95% bound on severe errors among ready drafts
   divided by the both-annotator in-span recall (descriptive). If recall is below R11's, the README says that "0 meaning
   errors among ready drafts" is bounded by this recall. No decision attached: no earlier outcome is re-opened.
+
+## R16. Memorisation probe: could Apertus have seen the held-out answers? (frozen 10 Oct 2026, before any model call)
+
+An Apertus-team juror: the answers of the fresh 166 (BAG's published FR/IT texts for changes June 2025 – February 2026,
+`items_fresh.json` `tgt_new`) may predate Apertus v1.5's training cutoff. R16 asks the models to continue those texts
+word for word and compares them with texts the models have almost certainly seen and texts they cannot have seen.
+
+- **Sets** (`tools/r16_memo.py build`, deterministic, `--check` rebuilds it byte for byte; committed with this rule as
+  `data/memo/r16_items.json`). Texts `nrm()`'d, at least 200 characters and at least 10 words in the second half,
+  deduplicated by exact text. **T** (test answers): every fresh-166 `tgt_new`: 160 texts (80 FR, 80 IT). **P**
+  (positive control, long-standing): limitations of the 1 June 2025 XML (`20250611/Preparations.xml`) with
+  `ValidFromDate` before 1 Jan 2023 whose FR/IT text is unchanged in every 2026 snapshot from 1 June to 6 Oct 2026 (the
+  Feb–May files drop `<...>` spans), not in T or N; `random.Random('20261016-<lang>').sample` of 60 per language from
+  278 FR / 276 IT candidates: 120 texts (valid from 2007–2022). **N** (negative control, after any plausible cutoff):
+  BAG's new FR/IT texts of the two live months (Aug and Sep 2026, `data/shadow/*/items.json` `tgt_new`), different from
+  the item's old text and absent from both 2025 XML captures and from every 2026 snapshot up to the month's old snapshot,
+  not in T: 62 texts (32 FR, 30 IT; 24 Aug, 38 Sep). T and N are alike in kind (both are new versions of an older text,
+  so their first halves often repeat older wording); P is a text that stood unchanged for 3–19 years.
+- **Probe.** Each text is cut after half of its words (`len(words) // 2`, a word boundary); the prompt is one plain user
+  message, no system message, no assistant prefill: `Continue this Swiss drug-reimbursement limitation text word for
+  word, exactly as published by the BAG. Output only the continuation.` + blank line + the first half. Temperature 0,
+  `max_tokens` 300, one call per text.
+- **Models.** (1) Apertus 70B (`swiss-ai/apertus-v1.5-70b`) through the development gateway (`backends.Gateway`, tag
+  `gleichlaut-r16-70b`, sequential with a 1 s pause, User-Agent hackapertus-research/0.1); the served `model` field is
+  checked on every call and any other model is refused; every response recorded in `data/memo/r16_70b/responses/` (its
+  own folder). (2) Optional: the shipped 8B GGUF Q8_0 on GitHub Actions CPU runners (workflow `r16-8b`), the same
+  prompts through llama-cpp-python's chat completion (the GGUF's chat template), greedy, **no** logit mask (the digit
+  ban would forbid numbers in the continuation), responses in `data/memo/r16_8b_q8_0/responses/`. If the 8B arm is not
+  run, that is stated.
+- **Scoring** (`score.memorisation` -> `eval/results/memorisation.json`, re-derived by `replay` from the recorded
+  responses). Response and true second half normalised alike: `nrm()`, NFC, typographic apostrophes to `'`; a leading
+  `...` / `…` dropped; a response that starts with the whole first half has it removed (counted). Words = split on spaces,
+  compared exactly. Per text: (a) **next-10** = the first 10 words equal the true next 10 words (primary); (b) **LCP** =
+  number of leading words equal; (c) **chrF** (the frozen scorer's `chrf`) of the first k response words against the first
+  k true words, k = min(100, words in the second half). Secondary for T and N texts whose old text starts with the same
+  first half and continues differently: whether the response's chrF (first k words) is higher against the new
+  continuation than against the old one (ties apart).
+- **Statistics.** Per set: next-10 rate, mean LCP, mean chrF. Differences T − N and P − N with a percentile bootstrap 95%
+  CI (10,000 resamples of texts within each set, `random.Random(20261016)`), and a two-sided Mann–Whitney p (normal
+  approximation, tie-corrected) for LCP and chrF.
+- **Decision, stated now, per model.** Memorisation of the test answers is **flagged** if T's next-10 rate exceeds N's
+  by more than 10 points **and** the bootstrap CI of T − N excludes 0. Otherwise T is reported as "no evidence of
+  memorisation beyond the negative control". Probe sensitivity: if P − N meets the same criterion, the probe detects
+  memorisation of long-standing texts; if it does not, the report says that the probe found none even for texts unchanged
+  for years, so a null result on T is weak evidence. If memorisation is flagged, README and report say so next to the
+  fresh-166 headline, with the numbers. Whatever comes out is reported as is.
 
 ## R4. Post-freeze changes
 

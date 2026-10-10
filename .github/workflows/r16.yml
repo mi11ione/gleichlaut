@@ -1,0 +1,43 @@
+# PREREG R16: memorisation probe, optional 8B arm. The shipped Apertus 8B GGUF Q8_0 continues the first half of each
+# limitation text in data/memo/r16_items.json (tools/r16_memo.py run8b: one user message, temperature 0, no logit mask).
+# Manual trigger only. Every raw response is uploaded per shard; scored by gleichlaut.score.memorisation.
+name: r16-8b
+on:
+  workflow_dispatch:
+    inputs:
+      shards: { description: "number of shards", required: true, default: "12" }
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs: { matrix: "${{ steps.m.outputs.matrix }}" }
+    steps:
+      - id: m
+        env: { N: "${{ inputs.shards }}" }
+        run: python3 -c "import json, os; n = int(os.environ['N']); print('matrix=' + json.dumps({'include':[{'k':k,'n':n} for k in range(n)]}))" >> $GITHUB_OUTPUT
+  shard:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    permissions: { contents: read }
+    strategy: { fail-fast: false, max-parallel: 20, matrix: "${{ fromJson(needs.plan.outputs.matrix) }}" }
+    defaults: { run: { working-directory: track_2b } }
+    env:
+      URL_q8_0: https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf
+      SHA_q8_0: dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: { python-version: "3.12" }
+      - uses: actions/cache@v6
+        with: { path: track_2b/models, key: "gguf-q8_0" }
+      - name: fetch and verify GGUF
+        run: |
+          mkdir -p models; F=models/q8_0.gguf
+          [ -f $F ] || curl -sSL --retry 5 -A gleichlaut/0.1 -o $F "$URL_q8_0"
+          echo "$SHA_q8_0  $F" | sha256sum -c -
+      - run: CMAKE_ARGS="-DGGML_NATIVE=OFF" pip install --require-hashes -r requirements.txt -r requirements-offline.txt
+      - name: run shard
+        run: PYTHONPATH=src python tools/r16_memo.py run8b --gguf models/q8_0.gguf --shard ${{ matrix.k }} --of ${{ matrix.n }}
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with: { name: "r16-8b-${{ matrix.k }}of${{ matrix.n }}", path: track_2b/data/memo/r16_8b_q8_0, if-no-files-found: warn }
