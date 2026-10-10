@@ -36,7 +36,10 @@ at any number token recall is 55.5%, and flipped operators or dropped negations 
 Pre-registered checks for them (R15) find 74.5% of planted operator flips and 44.0% of dropped negations, but only 6 of
 their 31 register findings are confirmed (real or minor), so they ship off. Among those 6 are three divergences nobody
 had listed: Amvuttra's French stop rule says an NIS increase "≤ 10" points where German and Italian say "> 10", and the
-Italian of Beyonttra and Vyndaqel says "on deve" (for "non deve"), so a ban on combining reads as an obligation.
+Italian of Beyonttra and Vyndaqel says "on deve" (for "non deve"), so a ban on combining reads as an obligation. The
+certified 8B as a pre-registered log-probability filter (R18; threshold fixed on planted copies) separates planted flips
+well (AUROC 0.955) but keeps 13 of the 31 register findings, 2 of them confirmed (15.4%), and calls Amvuttra's flip the
+same condition: the checks stay off.
 
 **Results: drafting.** On a pre-registered held-out set of 166 French/Italian amendments from SL changes between Jun
 2025 and Feb 2026 (154 in edit patterns never seen during design; checks and resources hashed before any output

@@ -1406,3 +1406,97 @@ def annotator_crossfamily():
         out_a[name] = d
     return dict(prereg="R17 (part B)", model=D["model"], requests=len(D["requests"]), served=dict(served), max_tokens=D["max_tokens"],
                 audit=audit, real_errors=out_a)
+
+
+R18_NAMED = ("AMVUTTRA.01a", "BEYONTTRA", "VYNDAQEL.01b")
+
+
+def _auroc(pos, neg):
+    """P(score of a positive > score of a negative), ties count one half."""
+    if not pos or not neg: return None
+    v = sorted([(s, 1) for s in pos] + [(s, 0) for s in neg]); rk, i = 0.0, 0
+    while i < len(v):                                        # rank sum of the positives, tied ranks averaged
+        j = i
+        while j < len(v) and v[j][0] == v[i][0]: j += 1
+        rk += (i + j + 1) / 2 * sum(w for _, w in v[i:j]); i = j
+    return (rk - len(pos) * (len(pos) + 1) / 2) / (len(pos) * len(neg))
+
+
+def audit_apertus_filter():
+    """PREREG R18: the certified Apertus 8B Q8_0 as a log-probability filter on the round-5 audit findings that ship off.
+    Re-derived from the recorded run (data/r18/runs/8b_q8_0/records.jsonl, keyed by sentence pair) and data/r18/items.json:
+    threshold t* by Youden's J on the planted fit half, AUROC on the planted test half (bootstrap over copies), t* applied
+    unchanged to the 31 register findings, precision before / after against the R15 blind labels, the decision rule."""
+    import random, re
+    D = json.load(open(os.path.join(DATA, "r18", "items.json"), encoding="utf-8"))
+    run = os.path.join(DATA, "r18", "runs", "8b_q8_0")
+    if not os.path.exists(os.path.join(run, "records.jsonl")): return None
+    R = {r["pk"]: r for r in (json.loads(l) for l in open(os.path.join(run, "records.jsonl"), encoding="utf-8") if l.strip())}
+    I = D["items"]; missing = sorted({x["pk"] for x in I if x["pk"] not in R})
+    sc = lambda x: R[x["pk"]]["p_diff"]
+    r4 = lambda v: None if v is None else round(v, 4)
+    g4 = lambda v: None if v is None else float(f"{v:.4g}")          # scores and threshold: 4 significant digits (many sit near 0)
+    # planted copies: (planted, control) per copy
+    pl = {x["uid"][3:]: x for x in I if x["set"] == "planted" and x["pk"] in R}
+    ct = {x["uid"][3:]: x for x in I if x["set"] == "control" and x["pk"] in R}
+    C = [(pl[k], ct[k]) for k in sorted(pl) if k in ct]
+    fit = [c for c in C if c[0]["split"] == "fit"]; test = [c for c in C if c[0]["split"] == "test"]
+    pos = lambda S: [sc(a) for a, _ in S]; neg = lambda S: [sc(b) for _, b in S]
+    rate = lambda v, t: sum(s >= t for s in v) / len(v) if v else None
+    best = None
+    for t in sorted(set(pos(fit) + neg(fit)), reverse=True):
+        j = rate(pos(fit), t) - rate(neg(fit), t)
+        if best is None or j > best[0] + 1e-15: best = (j, t)
+    J, T = best
+    rng = random.Random(20261018); B = []
+    for _ in range(2000):
+        S = [test[rng.randrange(len(test))] for _ in test]; B.append(_auroc(pos(S), neg(S)))
+    B.sort()
+    def block(S):
+        return dict(copies=len(S), auroc=r4(_auroc(pos(S), neg(S))), tpr_at_t=r4(rate(pos(S), T)), fpr_at_t=r4(rate(neg(S), T)),
+                    mean_planted=g4(sum(pos(S)) / len(S)) if S else None, mean_control=g4(sum(neg(S)) / len(S)) if S else None)
+    types = sorted({a["type"] for a, _ in C})
+    planted = dict(fit=block(fit), test=dict(block(test), auroc_ci95=[r4(B[49]), r4(B[1949])]), all=block(C),
+                   by_type={t: dict(test=block([c for c in test if c[0]["type"] == t]), all=block([c for c in C if c[0]["type"] == t]),
+                                    by_lang={L: block([c for c in C if c[0]["type"] == t and c[0]["lang"] == L]) for L in ("fr", "it")})
+                            for t in types},
+                   detected_by_r15=dict(copies=sum(a["detected"] for a, _ in C), kept=sum(a["detected"] and sc(a) >= T for a, _ in C)),
+                   not_detected_by_r15=dict(copies=sum(not a["detected"] for a, _ in C), kept=sum((not a["detected"]) and sc(a) >= T for a, _ in C)))
+    # register
+    parse = lambda t: (lambda m: m.group(1) if m else None)(re.search(r"\b(ja|nein)\b", (t or "").lower()))
+    reg = []
+    for x in (x for x in I if x["set"] == "register"):
+        r = R.get(x["pk"])
+        reg.append(dict(fid=x["fid"], id=x["wid"], limitation=x["cud"], lang=x["lang"], kind=x["kind"], label=x["final"],
+                        confirmed=x["confirmed"], score=g4(r["p_diff"]) if r else None, kept=bool(r) and r["p_diff"] >= T,
+                        answers=[parse(r["ab"]["raw"]), parse(r["ba"]["raw"])] if r else None))
+    def prec(S):
+        k = [r for r in S if r["kept"]]; y = sum(r["confirmed"] for r in k)
+        return dict(findings=len(S), confirmed=sum(r["confirmed"] for r in S), kept=len(k), kept_confirmed=y,
+                    precision_before_pct=round(100 * sum(r["confirmed"] for r in S) / len(S), 1) if S else None,
+                    precision_after_pct=round(100 * y / len(k), 1) if k else None,
+                    wilson95_after_pct=[round(v, 1) for v in wilson(y, len(k))] if k else None)
+    allp = prec(reg); kinds = {k: prec([r for r in reg if r["kind"] == k]) for k in ("operator", "negation", "number_word")}
+    ok = allp["kept"] > 0 and allp["precision_after_pct"] >= 50 and allp["kept_confirmed"] >= 4
+    dec = dict(rule="kept precision >= 50% and >= 4 of the 6 confirmed kept; then per kind kept precision >= 50%",
+               precision_ok=bool(allp["kept"]) and allp["precision_after_pct"] >= 50, confirmed_kept_ok=allp["kept_confirmed"] >= 4,
+               pass_=ok, proposed_on={k: ok and bool(v["kept"]) and v["precision_after_pct"] >= 50 for k, v in kinds.items()})
+    dec["pass"] = dec.pop("pass_")
+    pc = [r["score"] for r in reg if r["confirmed"]]; pn = [r["score"] for r in reg if not r["confirmed"]]
+    real = [r["score"] for r in reg if r["label"] == "real"]; rest = [r["score"] for r in reg if r["label"] != "real"]
+    ans = Counter(parse(R[k]["ab"]["raw"]) or "other" for k in R) + Counter(parse(R[k]["ba"]["raw"]) or "other" for k in R)
+    gates = json.load(open(os.path.join(run, "shards.json"), encoding="utf-8")) if os.path.exists(os.path.join(run, "shards.json")) else []
+    return dict(prereg="R18", model="Apertus 8B GGUF Q8_0 (certified build), llama-cpp-python, CPU runners",
+                pairs=dict(n=len(D["pairs"]), scored=len(R), missing=len(missing)),
+                shards=dict(n=len(gates), certificate_verified=sum(bool(g.get("certificate")) for g in gates),
+                            certificates=sorted({g.get("certificate") for g in gates if g.get("certificate")})),
+                threshold=dict(t=g4(T), youden_j_fit=r4(J), chosen_on="planted fit half"),
+                planted=planted,
+                register=dict(all=allp, by_kind=kinds, auroc_confirmed_vs_not=r4(_auroc(pc, pn)), auroc_real_vs_rest=r4(_auroc(real, rest)),
+                              named={r["limitation"]: dict(fid=r["fid"], score=r["score"], kept=r["kept"]) for r in reg if r["limitation"] in R18_NAMED},
+                              confirmed=[dict(fid=r["fid"], limitation=r["limitation"], lang=r["lang"], kind=r["kind"], label=r["label"],
+                                              score=r["score"], kept=r["kept"]) for r in reg if r["confirmed"]],
+                              rows=reg),
+                generation=dict(answers=dict(sorted(ans.items())), calls=2 * len(R),
+                                mean_mass=r4(sum(R[k][o]["mass"] for k in R for o in ("ab", "ba")) / (2 * len(R))) if R else None),
+                decision=dec)

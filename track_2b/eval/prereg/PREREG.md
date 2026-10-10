@@ -36,7 +36,7 @@ human labels were used.
 | R15 | audit round 5: operator direction, negation, number words | recall up (operator 74.5%, number word 84.0%; negation dropped 44.0%), precision 11–25%: no kind passes, all off |
 | R16 | memorisation probe: could the models have seen the held-out answers | no evidence beyond the negative control (70B, 8B); probe sensitivity not shown |
 | R17 | real errors BAG fixed without a German change (Claude annotators); Apertus 70B as a non-Claude annotator | 17 content changes: needs fix by both 5 (shown) / 7 (hidden), the same 4 severe; Apertus confirms all 49 findings (κ 0.000), flags 2 of 17 |
-| R18 | Apertus 8B log-probability filter on the round-5 audit findings that ship off (threshold from planted copies, applied to the 31 register findings) | pending |
+| R18 | Apertus 8B log-probability filter on the round-5 audit findings that ship off (threshold from planted copies, applied to the 31 register findings) | planted AUROC 0.955; register kept 13, 2 of 6 confirmed (15.4%): fails, the kinds stay off |
 
 ## R0. Pass rule for a drafting lane (frozen 9 Oct 2026, before the fresh 2025 run)
 
@@ -873,3 +873,18 @@ data the change was designed on is labelled "dev" in every table.
   (a), 1 of 17 (b); controls 0 and 0; needs-fix κ with the Claude annotators 0.532 / 0.452 (a), −0.059 / −0.059 (b).
   The 70B does not discriminate on either task, so it neither confirms nor contradicts the Claude labels
   (`eval/results/annotator_crossfamily.json`, responses `data/r17/apertus70b/`).
+- **R18, 11 Oct 2026:** pre-registered at commit 6eb5201 (19:12 UTC, 10 Oct) before any model run; tool and items at
+  e28a421; workflow `r18-8b`, run 38078975036 (20 CPU shards, all succeeded, build certificate 8b-q8_0-fresh166 verified
+  on all 20; no smoke run), 1,366 of 1,366 pairs, 2,732 calls (`data/r18/runs/8b_q8_0/`). **Planted** (R15 held copies,
+  800 + 800 controls): threshold by Youden's J on the fit half t* = 5.9e-8 (J 0.781: controls score near 0); AUROC
+  **test 0.955** [0.941, 0.968] (fit 0.943), at t* TPR 84.2%, FPR 4.1% on test; by type (test) operator 0.997, negation
+  added 0.982, number word 0.949, negation dropped 0.889; kept 472 of the 516 copies the R15 checks detect. **Register**
+  (31 findings): kept 13, of them confirmed 2: precision 6 of 31 = 19.4% before, **2 of 13 = 15.4%** after (Wilson 95%
+  [4.3, 42.2]); kept BEYONTTRA (score 0.497) and VYNDAQEL.01b (0.357), dropped **AMVUTTRA.01a** (FR "≤ 10" vs "> 10",
+  score 1.3e-12: both orders answer "Ja"), DECADURABOL2, ZAVICEFTA2, HEMLIBRA.XXb (all minor). The highest scores (≈ 1)
+  go to 6 false findings (AMVUTTRA.02 FR twice, a Keytruda IT, one Italian «cinque volte» sentence shared by LEQVIO,
+  PRALUENT and REPATHA). Per kind kept / confirmed: operator 1 / 0, negation 9 / 2, number word 3 / 0. AUROC confirmed vs not 0.453,
+  real vs rest 0.631 (descriptive). Generated answers: "Ja" 2,051, "Nein" 681 of 2,732. **Outcome:** precision 15.4% < 50%
+  and 2 < 4 of the 6 confirmed kept: **fails**; operator, negation and number_word stay off and the blind spots stand.
+  The 8B tells a planted one-word flip from its untouched sentence, but not the register's real divergences from its
+  alignment and parser artefacts (`eval/results/audit_apertus_filter.json`).

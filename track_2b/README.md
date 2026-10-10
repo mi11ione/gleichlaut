@@ -55,7 +55,11 @@ find 74.5% of planted operator flips, 44.0% of dropped negations and 84.0% of ch
 their 31 register findings are confirmed (real or minor), so they ship off and the blind spots stand ([docs/audit.md](docs/audit.md)). Among the 6 are three divergences nobody had
 listed: Amvuttra's French stop rule says an NIS increase "≤ 10" points where German and Italian say
 "> 10", and the Italian of Beyonttra and Vyndaqel says "on deve essere combinato" (a typo for "non deve") where the
-German says "darf nicht … kombiniert werden": a ban that reads as an obligation.
+German says "darf nicht … kombiniert werden": a ban that reads as an obligation. Put Apertus in front of these checks as a
+pre-registered yes/no filter (R18: the certified 8B's log-probability that the two sentences state a different condition,
+threshold fixed on planted copies), and it separates planted flips from the untouched sentences well (AUROC 0.955) but
+keeps 13 of the 31 register findings with only 2 confirmed among them (15.4%; Amvuttra's "≤ 10" judged the same
+condition), so the checks stay off ([eval/results/audit_apertus_filter.json](eval/results/audit_apertus_filter.json)).
 
 The two meet in the review register. Nemluvio's old Italian already says "every 4 weeks"; the 70B draft (the register's
 "fewer edits" lane) writes "every 8 weeks", matching the German, and the register shows it as a correction to check, not

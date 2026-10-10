@@ -1,0 +1,818 @@
+{
+ "decision": {
+  "confirmed_kept_ok": false,
+  "pass": false,
+  "precision_ok": false,
+  "proposed_on": {
+   "negation": false,
+   "number_word": false,
+   "operator": false
+  },
+  "rule": "kept precision >= 50% and >= 4 of the 6 confirmed kept; then per kind kept precision >= 50%"
+ },
+ "generation": {
+  "answers": {
+   "ja": 2051,
+   "nein": 681
+  },
+  "calls": 2732,
+  "mean_mass": 0.9137
+ },
+ "model": "Apertus 8B GGUF Q8_0 (certified build), llama-cpp-python, CPU runners",
+ "pairs": {
+  "missing": 0,
+  "n": 1366,
+  "scored": 1366
+ },
+ "planted": {
+  "all": {
+   "auroc": 0.9486,
+   "copies": 800,
+   "fpr_at_t": 0.035,
+   "mean_control": 0.006208,
+   "mean_planted": 0.4471,
+   "tpr_at_t": 0.825
+  },
+  "by_type": {
+   "negation_add": {
+    "all": {
+     "auroc": 0.97,
+     "copies": 200,
+     "fpr_at_t": 0.035,
+     "mean_control": 0.00268,
+     "mean_planted": 0.4433,
+     "tpr_at_t": 0.865
+    },
+    "by_lang": {
+     "fr": {
+      "auroc": 0.9678,
+      "copies": 100,
+      "fpr_at_t": 0.03,
+      "mean_control": 0.005136,
+      "mean_planted": 0.5144,
+      "tpr_at_t": 0.9
+     },
+     "it": {
+      "auroc": 0.9729,
+      "copies": 100,
+      "fpr_at_t": 0.04,
+      "mean_control": 0.0002236,
+      "mean_planted": 0.3722,
+      "tpr_at_t": 0.83
+     }
+    },
+    "test": {
+     "auroc": 0.9816,
+     "copies": 86,
+     "fpr_at_t": 0.0465,
+     "mean_control": 0.003158,
+     "mean_planted": 0.4767,
+     "tpr_at_t": 0.8721
+    }
+   },
+   "negation_drop": {
+    "all": {
+     "auroc": 0.8854,
+     "copies": 200,
+     "fpr_at_t": 0.025,
+     "mean_control": 0.002375,
+     "mean_planted": 0.27,
+     "tpr_at_t": 0.615
+    },
+    "by_lang": {
+     "fr": {
+      "auroc": 0.8703,
+      "copies": 100,
+      "fpr_at_t": 0.04,
+      "mean_control": 0.004748,
+      "mean_planted": 0.2603,
+      "tpr_at_t": 0.57
+     },
+     "it": {
+      "auroc": 0.903,
+      "copies": 100,
+      "fpr_at_t": 0.01,
+      "mean_control": 1.306e-06,
+      "mean_planted": 0.2796,
+      "tpr_at_t": 0.66
+     }
+    },
+    "test": {
+     "auroc": 0.8893,
+     "copies": 92,
+     "fpr_at_t": 0.0217,
+     "mean_control": 6.915e-09,
+     "mean_planted": 0.3048,
+     "tpr_at_t": 0.6196
+    }
+   },
+   "number_word": {
+    "all": {
+     "auroc": 0.9462,
+     "copies": 200,
+     "fpr_at_t": 0.055,
+     "mean_control": 0.01245,
+     "mean_planted": 0.4743,
+     "tpr_at_t": 0.88
+    },
+    "by_lang": {
+     "fr": {
+      "auroc": 0.963,
+      "copies": 100,
+      "fpr_at_t": 0.05,
+      "mean_control": 0.005038,
+      "mean_planted": 0.4555,
+      "tpr_at_t": 0.89
+     },
+     "it": {
+      "auroc": 0.931,
+      "copies": 100,
+      "fpr_at_t": 0.06,
+      "mean_control": 0.01986,
+      "mean_planted": 0.4932,
+      "tpr_at_t": 0.87
+     }
+    },
+    "test": {
+     "auroc": 0.9487,
+     "copies": 94,
+     "fpr_at_t": 0.0638,
+     "mean_control": 0.005354,
+     "mean_planted": 0.4433,
+     "tpr_at_t": 0.9043
+    }
+   },
+   "operator": {
+    "all": {
+     "auroc": 0.9895,
+     "copies": 200,
+     "fpr_at_t": 0.025,
+     "mean_control": 0.00733,
+     "mean_planted": 0.601,
+     "tpr_at_t": 0.94
+    },
+    "by_lang": {
+     "fr": {
+      "auroc": 0.9906,
+      "copies": 100,
+      "fpr_at_t": 0.02,
+      "mean_control": 0.004748,
+      "mean_planted": 0.5774,
+      "tpr_at_t": 0.93
+     },
+     "it": {
+      "auroc": 0.9882,
+      "copies": 100,
+      "fpr_at_t": 0.03,
+      "mean_control": 0.009913,
+      "mean_planted": 0.6246,
+      "tpr_at_t": 0.95
+     }
+    },
+    "test": {
+     "auroc": 0.9965,
+     "copies": 95,
+     "fpr_at_t": 0.0316,
+     "mean_control": 3.09e-08,
+     "mean_planted": 0.6174,
+     "tpr_at_t": 0.9684
+    }
+   }
+  },
+  "detected_by_r15": {
+   "copies": 516,
+   "kept": 472
+  },
+  "fit": {
+   "auroc": 0.9426,
+   "copies": 433,
+   "fpr_at_t": 0.03,
+   "mean_control": 0.009681,
+   "mean_planted": 0.435,
+   "tpr_at_t": 0.8106
+  },
+  "not_detected_by_r15": {
+   "copies": 284,
+   "kept": 188
+  },
+  "test": {
+   "auroc": 0.9549,
+   "auroc_ci95": [
+    0.9408,
+    0.9681
+   ],
+   "copies": 367,
+   "fpr_at_t": 0.0409,
+   "mean_control": 0.002111,
+   "mean_planted": 0.4615,
+   "tpr_at_t": 0.842
+  }
+ },
+ "prereg": "R18",
+ "register": {
+  "all": {
+   "confirmed": 6,
+   "findings": 31,
+   "kept": 13,
+   "kept_confirmed": 2,
+   "precision_after_pct": 15.4,
+   "precision_before_pct": 19.4,
+   "wilson95_after_pct": [
+    4.3,
+    42.2
+   ]
+  },
+  "auroc_confirmed_vs_not": 0.54,
+  "auroc_real_vs_rest": 0.5833,
+  "by_kind": {
+   "negation": {
+    "confirmed": 4,
+    "findings": 18,
+    "kept": 9,
+    "kept_confirmed": 2,
+    "precision_after_pct": 22.2,
+    "precision_before_pct": 22.2,
+    "wilson95_after_pct": [
+     6.3,
+     54.7
+    ]
+   },
+   "number_word": {
+    "confirmed": 1,
+    "findings": 9,
+    "kept": 3,
+    "kept_confirmed": 0,
+    "precision_after_pct": 0.0,
+    "precision_before_pct": 11.1,
+    "wilson95_after_pct": [
+     0.0,
+     56.2
+    ]
+   },
+   "operator": {
+    "confirmed": 1,
+    "findings": 4,
+    "kept": 1,
+    "kept_confirmed": 0,
+    "precision_after_pct": 0.0,
+    "precision_before_pct": 25.0,
+    "wilson95_after_pct": [
+     0.0,
+     79.3
+    ]
+   }
+  },
+  "confirmed": [
+   {
+    "fid": "O01",
+    "kept": false,
+    "kind": "operator",
+    "label": "real",
+    "lang": "fr",
+    "limitation": "AMVUTTRA.01a",
+    "score": 1.288e-12
+   },
+   {
+    "fid": "G03",
+    "kept": true,
+    "kind": "negation",
+    "label": "real",
+    "lang": "it",
+    "limitation": "BEYONTTRA",
+    "score": 0.4974
+   },
+   {
+    "fid": "G04",
+    "kept": false,
+    "kind": "negation",
+    "label": "minor",
+    "lang": "it",
+    "limitation": "DECADURABOL2",
+    "score": 2.02e-11
+   },
+   {
+    "fid": "G17",
+    "kept": true,
+    "kind": "negation",
+    "label": "real",
+    "lang": "it",
+    "limitation": "VYNDAQEL.01b",
+    "score": 0.3567
+   },
+   {
+    "fid": "G18",
+    "kept": false,
+    "kind": "negation",
+    "label": "minor",
+    "lang": "fr",
+    "limitation": "ZAVICEFTA2",
+    "score": 1.029e-08
+   },
+   {
+    "fid": "W01",
+    "kept": false,
+    "kind": "number_word",
+    "label": "minor",
+    "lang": "fr",
+    "limitation": "HEMLIBRA.XXb",
+    "score": 1.152e-08
+   }
+  ],
+  "named": {
+   "AMVUTTRA.01a": {
+    "fid": "O01",
+    "kept": false,
+    "score": 1.288e-12
+   },
+   "BEYONTTRA": {
+    "fid": "G03",
+    "kept": true,
+    "score": 0.4974
+   },
+   "VYNDAQEL.01b": {
+    "fid": "G17",
+    "kept": true,
+    "score": 0.3567
+   }
+  },
+  "rows": [
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": true,
+    "fid": "O01",
+    "id": "R01",
+    "kept": false,
+    "kind": "operator",
+    "label": "real",
+    "lang": "fr",
+    "limitation": "AMVUTTRA.01a",
+    "score": 1.288e-12
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "O02",
+    "id": "R18",
+    "kept": true,
+    "kind": "operator",
+    "label": "not",
+    "lang": "it",
+    "limitation": "NPLATE4",
+    "score": 1.383e-06
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "O03",
+    "id": "R19",
+    "kept": false,
+    "kind": "operator",
+    "label": "not",
+    "lang": "it",
+    "limitation": "OPDIVO.03a",
+    "score": 2.605e-13
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "O04",
+    "id": "R05",
+    "kept": false,
+    "kind": "operator",
+    "label": "not",
+    "lang": "it",
+    "limitation": "WYNZORA",
+    "score": 3.756e-09
+   },
+   {
+    "answers": [
+     "nein",
+     "nein"
+    ],
+    "confirmed": false,
+    "fid": "G01",
+    "id": "R22",
+    "kept": true,
+    "kind": "negation",
+    "label": "not",
+    "lang": "fr",
+    "limitation": "AMVUTTRA.02",
+    "score": 0.9999
+   },
+   {
+    "answers": [
+     "nein",
+     "nein"
+    ],
+    "confirmed": false,
+    "fid": "G02",
+    "id": "R03",
+    "kept": true,
+    "kind": "negation",
+    "label": "not",
+    "lang": "fr",
+    "limitation": "AMVUTTRA.02",
+    "score": 1.0
+   },
+   {
+    "answers": [
+     "ja",
+     "nein"
+    ],
+    "confirmed": true,
+    "fid": "G03",
+    "id": "R29",
+    "kept": true,
+    "kind": "negation",
+    "label": "real",
+    "lang": "it",
+    "limitation": "BEYONTTRA",
+    "score": 0.4974
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": true,
+    "fid": "G04",
+    "id": "R28",
+    "kept": false,
+    "kind": "negation",
+    "label": "minor",
+    "lang": "it",
+    "limitation": "DECADURABOL2",
+    "score": 2.02e-11
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "G05",
+    "id": "R00",
+    "kept": false,
+    "kind": "negation",
+    "label": "not",
+    "lang": "fr",
+    "limitation": "ERBITUX5",
+    "score": 1.221e-10
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "G06",
+    "id": "R17",
+    "kept": false,
+    "kind": "negation",
+    "label": "not",
+    "lang": "it",
+    "limitation": "GALAFOLD3",
+    "score": 2.41e-12
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "G07",
+    "id": "R12",
+    "kept": false,
+    "kind": "negation",
+    "label": "not",
+    "lang": "it",
+    "limitation": "HEMLIBRA.XXb",
+    "score": 1.806e-12
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "G08",
+    "id": "R20",
+    "kept": false,
+    "kind": "negation",
+    "label": "not",
+    "lang": "fr",
+    "limitation": "KEYTRUDA.03",
+    "score": 7.661e-13
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "G09",
+    "id": "R15",
+    "kept": false,
+    "kind": "negation",
+    "label": "not",
+    "lang": "fr",
+    "limitation": "KEYTRUDA.03---Inj-L-s---1L-plattenepitheliales-NSCLC-KN407",
+    "score": 7.661e-13
+   },
+   {
+    "answers": [
+     "nein",
+     "nein"
+    ],
+    "confirmed": false,
+    "fid": "G10",
+    "id": "R30",
+    "kept": true,
+    "kind": "negation",
+    "label": "not",
+    "lang": "it",
+    "limitation": "KEYTRUDA.XX---Inf-Konz",
+    "score": 1.0
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "G11",
+    "id": "R02",
+    "kept": false,
+    "kind": "negation",
+    "label": "not",
+    "lang": "fr",
+    "limitation": "LIORESAL",
+    "score": 5.694e-10
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "G12",
+    "id": "R06",
+    "kept": false,
+    "kind": "negation",
+    "label": "not",
+    "lang": "it",
+    "limitation": "LIORESAL",
+    "score": 3.504e-09
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "G13",
+    "id": "R07",
+    "kept": true,
+    "kind": "negation",
+    "label": "not",
+    "lang": "fr",
+    "limitation": "MABTHERA.02",
+    "score": 6.08e-05
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "G14",
+    "id": "R10",
+    "kept": true,
+    "kind": "negation",
+    "label": "not",
+    "lang": "fr",
+    "limitation": "RIXATHON.02",
+    "score": 6.08e-05
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "G15",
+    "id": "R21",
+    "kept": true,
+    "kind": "negation",
+    "label": "not",
+    "lang": "fr",
+    "limitation": "RUXIENCE.02",
+    "score": 6.08e-05
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "G16",
+    "id": "R23",
+    "kept": true,
+    "kind": "negation",
+    "label": "not",
+    "lang": "fr",
+    "limitation": "TRUXIMA.02",
+    "score": 6.08e-05
+   },
+   {
+    "answers": [
+     "ja",
+     "nein"
+    ],
+    "confirmed": true,
+    "fid": "G17",
+    "id": "R11",
+    "kept": true,
+    "kind": "negation",
+    "label": "real",
+    "lang": "it",
+    "limitation": "VYNDAQEL.01b",
+    "score": 0.3567
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": true,
+    "fid": "G18",
+    "id": "R04",
+    "kept": false,
+    "kind": "negation",
+    "label": "minor",
+    "lang": "fr",
+    "limitation": "ZAVICEFTA2",
+    "score": 1.029e-08
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": true,
+    "fid": "W01",
+    "id": "R09",
+    "kept": false,
+    "kind": "number_word",
+    "label": "minor",
+    "lang": "fr",
+    "limitation": "HEMLIBRA.XXb",
+    "score": 1.152e-08
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "W02",
+    "id": "R08",
+    "kept": false,
+    "kind": "number_word",
+    "label": "not",
+    "lang": "it",
+    "limitation": "IDEFIRIX",
+    "score": 2.26e-12
+   },
+   {
+    "answers": [
+     "nein",
+     "nein"
+    ],
+    "confirmed": false,
+    "fid": "W03",
+    "id": "R14",
+    "kept": true,
+    "kind": "number_word",
+    "label": "not",
+    "lang": "it",
+    "limitation": "LEQVIO.01",
+    "score": 0.9992
+   },
+   {
+    "answers": [
+     "nein",
+     "nein"
+    ],
+    "confirmed": false,
+    "fid": "W04",
+    "id": "R24",
+    "kept": true,
+    "kind": "number_word",
+    "label": "not",
+    "lang": "it",
+    "limitation": "PRALUENT.01a",
+    "score": 0.9992
+   },
+   {
+    "answers": [
+     "nein",
+     "nein"
+    ],
+    "confirmed": false,
+    "fid": "W05",
+    "id": "R26",
+    "kept": true,
+    "kind": "number_word",
+    "label": "not",
+    "lang": "it",
+    "limitation": "REPATHA.01a",
+    "score": 0.9992
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "W06",
+    "id": "R13",
+    "kept": false,
+    "kind": "number_word",
+    "label": "not",
+    "lang": "fr",
+    "limitation": "STELARAPP4",
+    "score": 2.516e-12
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "W07",
+    "id": "R25",
+    "kept": false,
+    "kind": "number_word",
+    "label": "not",
+    "lang": "it",
+    "limitation": "STELARAPP4",
+    "score": 2.193e-12
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "W08",
+    "id": "R27",
+    "kept": false,
+    "kind": "number_word",
+    "label": "not",
+    "lang": "fr",
+    "limitation": "TEPKINLY.01a",
+    "score": 1.229e-12
+   },
+   {
+    "answers": [
+     "ja",
+     "ja"
+    ],
+    "confirmed": false,
+    "fid": "W09",
+    "id": "R16",
+    "kept": false,
+    "kind": "number_word",
+    "label": "not",
+    "lang": "fr",
+    "limitation": "TEPKINLY.01b",
+    "score": 1.229e-12
+   }
+  ]
+ },
+ "shards": {
+  "certificate_verified": 20,
+  "certificates": [
+   "8b-q8_0-fresh166"
+  ],
+  "n": 20
+ },
+ "threshold": {
+  "chosen_on": "planted fit half",
+  "t": 5.936e-08,
+  "youden_j_fit": 0.7806
+ }
+}

@@ -446,6 +446,17 @@ xf_b_fix	1	eval/results/annotator_crossfamily.json	real_errors.reference_hidden.
 xf_b_sev	1	eval/results/annotator_crossfamily.json	real_errors.reference_hidden.errors.severe.k	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 xf_a_ctl_fix	0	eval/results/annotator_crossfamily.json	real_errors.reference_shown.controls.needs_fix.k	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 xf_b_ctl_fix	0	eval/results/annotator_crossfamily.json	real_errors.reference_hidden.controls.needs_fix.k	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+r18_auc_test	0.955	eval/results/audit_apertus_filter.json	planted.test.auroc	{:.3f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+r18_auc_lo	0.941	eval/results/audit_apertus_filter.json	planted.test.auroc_ci95.0	{:.3f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+r18_auc_hi	0.968	eval/results/audit_apertus_filter.json	planted.test.auroc_ci95.1	{:.3f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+r18_auc_op	0.997	eval/results/audit_apertus_filter.json	planted.by_type.operator.test.auroc	{:.3f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+r18_auc_negdrop	0.889	eval/results/audit_apertus_filter.json	planted.by_type.negation_drop.test.auroc	{:.3f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+r18_kept	13	eval/results/audit_apertus_filter.json	register.all.kept	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+r18_kept_conf	2	eval/results/audit_apertus_filter.json	register.all.kept_confirmed	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+r18_prec_before	19.4	eval/results/audit_apertus_filter.json	register.all.precision_before_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+r18_prec_after	15.4	eval/results/audit_apertus_filter.json	register.all.precision_after_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+r18_pairs	1366	eval/results/audit_apertus_filter.json	pairs.n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+r18_shards	20	eval/results/audit_apertus_filter.json	shards.certificate_verified	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 r12_aug_drafted	22	eval/results/r12_terms.json	months.20260801-20260901.drafted	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 r12_aug_changed	19	eval/results/r12_terms.json	months.20260801-20260901.prompts_changed	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 r12_aug_calls	22	eval/results/r12_terms.json	months.20260801-20260901.model_calls	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes

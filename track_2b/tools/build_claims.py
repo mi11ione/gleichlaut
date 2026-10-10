@@ -316,6 +316,16 @@ for cid, path, fmt in (("xf_requests", "requests", "{}"), ("xf_audit_n", "audit.
                        ("xf_a_ctl_fix", XFa + "controls.needs_fix.k", "{}"), ("xf_b_ctl_fix", XFb + "controls.needs_fix.k", "{}")):
     C.append((cid, XF, path, fmt, RE))
 
+# PREREG R18: the certified 8B as a log-probability filter on the round-5 audit findings
+AF = "eval/results/audit_apertus_filter.json"
+for cid, path, fmt in (("r18_auc_test", "planted.test.auroc", "{:.3f}"), ("r18_auc_lo", "planted.test.auroc_ci95.0", "{:.3f}"),
+                       ("r18_auc_hi", "planted.test.auroc_ci95.1", "{:.3f}"), ("r18_auc_op", "planted.by_type.operator.test.auroc", "{:.3f}"),
+                       ("r18_auc_negdrop", "planted.by_type.negation_drop.test.auroc", "{:.3f}"),
+                       ("r18_kept", "register.all.kept", "{}"), ("r18_kept_conf", "register.all.kept_confirmed", "{}"),
+                       ("r18_prec_before", "register.all.precision_before_pct", "{:.1f}"), ("r18_prec_after", "register.all.precision_after_pct", "{:.1f}"),
+                       ("r18_pairs", "pairs.n", "{}"), ("r18_shards", "shards.certificate_verified", "{}")):
+    C.append((cid, AF, path, fmt, RE))
+
 # PREREG R12: house wording in the drafting prompt (variant v3-terms) beside the frozen pipeline on both live months
 R12 = "eval/results/r12_terms.json"
 for mk, mon in (("aug", "20260801-20260901"), ("sep", "20260901-20261001")):
