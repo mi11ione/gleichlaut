@@ -159,9 +159,9 @@ def advice(v, hs=None, carried=False):
 
 
 NOTE = {"fr": dict(head="Phrase maison pour {de} : {house} ({n} limitations)", wrote="le brouillon écrit {x}",
-                   var=" (variante publiée dans {k} limitation(s))"),
+                   var=" (variante publiée dans {k} limitations)", var_1=" (variante publiée dans 1 limitation)"),
         "it": dict(head="Frase in uso all'UFSP per {de}: {house} ({n} limitazioni)", wrote="la bozza scrive {x}",
-                   var=" (variante pubblicata in {k} limitazione/i)")}
+                   var=" (variante pubblicata in {k} limitazioni)", var_1=" (variante pubblicata in 1 limitazione)")}
 GIST = 140             # a sentence longer than this is shown as the part that differs, with two words around it
 
 
@@ -192,7 +192,7 @@ def advisory_text(A, L):
         de = a["de"] if len(a["de"]) <= 100 else a["de"][:100].rsplit(" ", 1)[0] + " …"
         s = N["head"].format(de=_q(L, de), house=_q(L, h), n=a["support"]) + (" ; " if L == "fr" else "; ")
         s += N["wrote"].format(x=_q(L, w))
-        if a.get("variant"): s += N["var"].format(k=a["variant"])
+        if a.get("variant"): s += N["var_1" if a["variant"] == 1 else "var"].format(k=a["variant"])
         parts.append(s + ".")
     return " ".join(parts)
 

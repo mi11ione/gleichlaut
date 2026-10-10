@@ -13,6 +13,7 @@
  <text>
   <body>
    <conceptEntry id="sl001">
+    <descrip type="subjectField">SL limitations: reimbursement</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Krankenversicherer</term>
@@ -33,28 +34,9 @@
       <note>minority variant in the register; house rendering: assureur-maladie</note>
      </termSec>
     </langSec>
-    <langSec xml:lang="it">
-     <termSec>
-      <term>assicuratore</term>
-      <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 522 limitations</admin>
-      <note>522 of 889 limitations whose German contains the term (59%)</note>
-     </termSec>
-     <termSec>
-      <term>assicurazione malattia</term>
-      <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 282 limitations</admin>
-      <note>minority variant in the register; house rendering: assicuratore</note>
-     </termSec>
-     <termSec>
-      <term>assicurazione malattie</term>
-      <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 97 limitations</admin>
-      <note>minority variant in the register; house rendering: assicuratore</note>
-     </termSec>
-    </langSec>
    </conceptEntry>
    <conceptEntry id="sl002">
+    <descrip type="subjectField">SL limitations: reimbursement</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Kostengutsprache</term>
@@ -85,6 +67,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl003">
+    <descrip type="subjectField">SL limitations: reimbursement</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Vertrauensarzt</term>
@@ -109,6 +92,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl004">
+    <descrip type="subjectField">SL limitations: reimbursement</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Indikationscode</term>
@@ -139,6 +123,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl005">
+    <descrip type="subjectField">SL limitations: prescription and setting</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Facharzt</term>
@@ -147,14 +132,15 @@
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
-      <term>spécialistes</term>
+      <term>spécialiste</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
       <admin type="source">mined from BAG SL 06.10.2026, 165 limitations</admin>
-      <note>165 of 284 limitations whose German contains the term (58%)</note>
+      <note>165 of 284 limitations whose German contains the term (58%); the register writes «spécialistes»</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl006">
+    <descrip type="subjectField">SL limitations: pricing</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Mehrwertsteuer</term>
@@ -177,6 +163,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl007">
+    <descrip type="subjectField">SL limitations: pricing</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Fabrikabgabepreis</term>
@@ -201,6 +188,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl008">
+    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Monotherapie</term>
@@ -225,6 +213,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl009">
+    <descrip type="subjectField">SL limitations: reimbursement</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Rückerstattung</term>
@@ -249,6 +238,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl010">
+    <descrip type="subjectField">SL limitations: pricing</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Zulassungsinhaberin</term>
@@ -279,6 +269,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl011">
+    <descrip type="subjectField">SL limitations: pricing</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Preismodell</term>
@@ -303,6 +294,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl012">
+    <descrip type="subjectField">SL limitations: prescription and setting</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Verordnung</term>
@@ -327,6 +319,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl013">
+    <descrip type="subjectField">SL limitations: reimbursement</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Limitierung</term>
@@ -351,6 +344,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl014">
+    <descrip type="subjectField">SL limitations: prescription and setting</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Poliklinik</term>
@@ -359,28 +353,29 @@
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
-      <term>policliniques</term>
+      <term>policlinique</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
       <admin type="source">mined from BAG SL 06.10.2026, 63 limitations</admin>
-      <note>63 of 103 limitations whose German contains the term (61%)</note>
+      <note>63 of 103 limitations whose German contains the term (61%); the register writes «policliniques»</note>
      </termSec>
      <termSec>
-      <term>polycliniques</term>
+      <term>polyclinique</term>
       <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
       <admin type="source">mined from BAG SL 06.10.2026, 35 limitations</admin>
-      <note>minority variant in the register; house rendering: policliniques</note>
+      <note>minority variant in the register; house rendering: policlinique</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
-      <term>policlinici</term>
+      <term>policlinico</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
       <admin type="source">mined from BAG SL 06.10.2026, 85 limitations</admin>
-      <note>85 of 103 limitations whose German contains the term (82%)</note>
+      <note>85 of 103 limitations whose German contains the term (82%); the register writes «policlinici»</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl015">
+    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Therapiebeginn</term>
@@ -397,6 +392,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl016">
+    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Antikörper</term>
@@ -421,6 +417,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl017">
+    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Diagnosestellung</term>
@@ -445,6 +442,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl018">
+    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Körpergewicht</term>
@@ -469,6 +467,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl019">
+    <descrip type="subjectField">SL limitations: product status</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Originalpräparat</term>
@@ -485,6 +484,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl020">
+    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Erstlinientherapie</term>
@@ -501,6 +501,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl021">
+    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Erhaltungstherapie</term>
@@ -525,6 +526,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl022">
+    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Erstlinienbehandlung</term>
@@ -549,6 +551,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl023">
+    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Unverträglichkeit</term>
@@ -573,6 +576,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl024">
+    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Behandlungsbeginn</term>
@@ -589,6 +593,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl025">
+    <descrip type="subjectField">SL limitations: product status</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Biosimilar</term>
@@ -613,6 +618,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl026">
+    <descrip type="subjectField">SL limitations: product status</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Referenzpräparat</term>
@@ -637,6 +643,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl027">
+    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Verlaufskontrolle</term>
@@ -653,6 +660,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl028">
+    <descrip type="subjectField">SL limitations: reimbursement</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>obligatorische Krankenpflegeversicherung</term>
@@ -677,6 +685,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl029">
+    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Kontraindikation</term>
@@ -701,6 +710,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl030">
+    <descrip type="subjectField">SL limitations: pricing</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Publikumspreis</term>
@@ -717,6 +727,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl031">
+    <descrip type="subjectField">SL limitations: reimbursement</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Vergütungskriterien</term>
@@ -741,6 +752,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl032">
+    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Sekundärprävention</term>
@@ -765,6 +777,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl033">
+    <descrip type="subjectField">SL limitations: prescription and setting</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Erstverschreibung</term>
@@ -781,6 +794,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl034">
+    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Primärprävention</term>
@@ -805,6 +819,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl035">
+    <descrip type="subjectField">SL limitations: prescription and setting</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Erstverordnung</term>
@@ -829,6 +844,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl036">
+    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Therapieabbruch</term>
@@ -845,6 +861,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl037">
+    <descrip type="subjectField">SL limitations: product status</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Fachinformation</term>
@@ -869,6 +886,7 @@
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl038">
+    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Zweitlinientherapie</term>

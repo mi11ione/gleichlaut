@@ -40,8 +40,8 @@ also learns from BAG's own corrections: where BAG replaced a term in some texts,
 old one. That finds four French texts naming the wrong drug class, four ungrammatical Italian ones and three French
 texts still saying «communiqué» where the register now says «transmis» (11 of 11 notices confirmed; 4 change the meaning).
 In all, blind annotators confirm 17 of the 27 findings as real (63.0%; the 17th is the number check's view of the
-Italian typo «se mesi», which the editorial check also finds). In the review register the 27 findings and 11 terminology notices become 18 issues, one decision each:
-sibling products that share a divergence are one issue. On two lists it was never designed on, MiGeL and the Analysenliste, **6 of 11** findings are real; the
+Italian typo «se mesi», which the editorial check also finds). In the review register the 27 findings and 11 terminology notices (38 in all) become 18 issues, one decision each,
+3 of them probably equivalent wording and shown collapsed: sibling products that share a divergence are one issue. On two lists it was never designed on, MiGeL and the Analysenliste, **6 of 11** findings are real; the
 Analysenliste's Italian, for example, makes a test billable after 13 repetitions where German and French say 14. Each
 finding was read by two blind Claude annotators, the second in reverse order, and a third where their answers differed
 (pre-registered R14: they agree whether a finding is real on all 49, κ 1.000); the confirmed counts above are their majority. A single first
@@ -127,7 +127,7 @@ code: [docs/failure-modes.md](docs/failure-modes.md).
 | ePL editor: "Limitierungstext DE / FR / IT" fields per limitation | **Draft** proposes the FR and IT fields when the DE field changes |
 | Triennial review: applicants declare "…und die Übersetzungen sind kongruent?" | **Audit** gives BAG its own check of that declaration, for the whole register in seconds |
 | Federal translation tool STAR Transit | XLIFF 1.2 and 2.1, numbers protected, checks as notes |
-| Terminology (TermStar) | BAG's house renderings mined from the register itself: 65 entries as TBX, plus a terminology note on any draft that departs from them, and a note where a sentence the draft wrote departs from BAG's dominant wording of a fixed sentence such as the indication-code formula ([docs/termbase.md](docs/termbase.md)) |
+| Terminology (TermStar) | BAG's house renderings mined from the register itself: 64 entries as TBX, plus a terminology note on any draft that departs from them, and a note where a sentence the draft wrote departs from BAG's dominant wording of a fixed sentence such as the indication-code formula ([docs/termbase.md](docs/termbase.md)) |
 | Monthly FHIR R5 publication (CH EPL profile) | drafts emitted as ClinicalUseDefinition in the feed's own shape |
 
 **Shadow mode needs nobody's permission.** `gleichlaut month --from 20260901 --to 20261001 --fetch` mines the month's
@@ -181,7 +181,8 @@ stays. September misses only the 70% flag cap; August Q8_0 misses only the Germa
 "GLP1-1-Analogon" as in the frozen run; the August 70B gets worse (a French draft left "Maximal" and dropped
 "médicamenteuse", REAL for both annotators; two kept a fragment of a deleted sentence). Most other differences from BAG's
 text are one insurer word: mostly the Italian termbase entry, the bare head «assicuratore», where BAG writes
-«assicuratore malattie»; in French BAG itself published its minority « assurance maladie ». The two blind annotators agreed on all
+«assicuratore malattie» (the shipped termbase has since dropped that entry: the register splits, no phrase is a majority;
+[docs/termbase.md](docs/termbase.md#fourth-review-11-oct-2026-italian-translator)); in French BAG itself published its minority « assurance maladie ». The two blind annotators agreed on all
 19 labelled drafts (`eval/results/r12_terms.json`).
 Phased pilot (audit first), owners, protection needs and monthly effort: [docs/adoption.md](docs/adoption.md).
 

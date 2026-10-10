@@ -157,6 +157,43 @@ def test_counts_explained_by_sentences_both_remove():
     assert explain.tally_mirrored(v, v["draft"], f["detail"])
     assert not explain.tally_mirrored(v, v["draft"], "Slots: nums DE +{} -{}, target +{} -{}")
 
+
+def test_garbled_german_is_not_called_well_formed_and_german_order_is_noted():
+    """A token that starts like a German word of the text ('Folguer', 'Folgore' for 'Folgender') is never 'probably fine:
+    a well-formed target word' (rule T1); a code of a German compound written before the target noun ('un CD38
+    anticorps', German 'CD38 Antikörper') gets a low-priority note; verdicts unchanged."""
+    from gleichlaut.emit import triage, xliff
+    de = "Folgender Code ist an den Krankenversicherer zu übermitteln: 21912.01."
+    assert not triage.well_formed("Folguer", "fr", de) and not triage.well_formed("Folgore", "it", de)
+    assert triage.well_formed("récidivants", "fr", de)
+    assert triage.well_formed("folgore", "it", de, "il folgore cade") is True        # already in the old text
+    meta, views = load("q8_0"); V = {v["key"]: v for v in views}
+    v = V["wb004-fr"]; E = xliff.explanation(v)
+    assert v["status"] == "flagged" and not any("Folguer" in t and "bien formé" in t for t, _ in E["top"])
+    for k, w in (("wb008-fr", explain.q("fr", "CD38 anticorps")), ("wb008-it", explain.q("it", "CD38 anticorpo"))):
+        n = xliff.explanation(V[k])["note"]
+        assert n and w in n and ("Ordre des mots allemand" in n or "Ordine delle parole tedesco" in n), (k, n)
+    assert V["wb008-fr"]["status"] == "flagged"
+
+
+def test_singular_and_plural_in_the_notes():
+    from gleichlaut.emit import xliff
+    assert xliff.nt("it", "checks_more", n=1, x="a") == "1 altro punto rilevato dai controlli, non ripreso sopra: a"
+    assert xliff.nt("it", "checks_more", n=3, x="a").startswith("3 altri punti rilevati dai controlli, non ripresi sopra")
+    assert xliff.nt("fr", "checks_more", n=1, x="a").startswith("1 autre point relevé par les contrôles, non repris ci-dessus")
+    assert explain.tr("fr", "more", n=1) == "et 1 autre" and explain.tr("fr", "more", n=4) == "et 4 autres"
+    for L in ("fr", "it"):
+        assert not re.search(r"\(s\)|/i\b|/e\b", " ".join(str(x) for x in xliff.NOTE[L].values()))
+
+
+def test_change_not_applied_says_what_the_check_knows():
+    """The addition is there in Omvoh wb013, untranslated and outside the changed passage: 'not found translated in the
+    right place', not 'does not seem to be carried over'."""
+    meta, views = load("q8_0"); V = {v["key"]: v for v in views}
+    t = " ".join(x for x, _ in __import__("gleichlaut.emit.xliff", fromlist=["x"]).explanation(V["wb013-it"])["top"])
+    assert "non risulta tradotta al posto giusto nella bozza" in t and "non sembra ripresa" not in t
+
+
 if __name__ == "__main__":
     fs = [(n, f) for n, f in sorted(globals().items()) if n.startswith("test_") and callable(f)]
     for n, f in fs: f(); print("ok", n)

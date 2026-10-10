@@ -213,7 +213,9 @@ def _ledger(v, rules):
     rows = []
     for gid, lab, state, detail in v["lights"]:
         fs = by.get(gid, [])
-        txt = [dict(t=f["text"], c=f["corrects"], r=r) for f, r in fs]
+        # a deletion that mirrors the German's reads as in the explanation's grey line (low priority, 'M'), not as content lost
+        txt = [dict(t=m, c=f["corrects"], r="M") if m else dict(t=f["text"], c=f["corrects"], r=r)
+               for f, r in fs for m in ((None if r else xliff.mirror_text(f, v)),)]
         txt = [x for x in txt if not x["r"]] + [x for x in txt if x["r"]]
         if gid == "reask": txt = [dict(t=explain.reask_text(v), c=False, r=None)]
         rows.append([gid, explain.name(gid, L), state, txt, detail if state == "fail" else "", lab])
@@ -306,6 +308,7 @@ def data(run="fresh166", records=None, items=None, audit=audit_view.AUDIT, hist=
                   old=_old_text(v), xn=_xliff_notes(v, rules), why=_why(v, E), tb=_note(v, E),
                   findings=[[f["gname"], f["text"], f["corrects"], r] for f, r in zip(v["findings"], rules) if f["gid"] != "corr"])
         it["tri"] = E["counts"] if v["status"] == "flagged" else [0, 0]          # the header counts what the reasons list shows
+        if v["status"] == "ready" and xliff.termbase_note(v): it["termq"] = 1      # a ready draft with a terminology note: in its header
         if v["status"] == "flagged": it["lvl"] = "check" if it["tri"][0] else "fine"
         if v["status"] == "human":
             r = v.get("change_ratio")
@@ -348,7 +351,9 @@ def data(run="fresh166", records=None, items=None, audit=audit_view.AUDIT, hist=
                   about=xliff.nt(L, "about"), states=xliff.nt(L, "states"), prov=xliff.provenance_note(meta, L),
                   review=xliff.NOTE[L]["review"], reviewed=xliff.NOTE[L]["reviewed"],
                   about12=xliff.nt(L, "about12"), states12=xliff.nt(L, "states12"), code_number=xliff.nt(L, "code_number"),
-                  changed=xliff.nt(L, "changed"),
+                  changed=xliff.nt(L, "changed"), reasons=xliff.NOTE[L]["reasons"], sent_back=xliff.nt(L, "sent_back"),
+                  rejected=xliff.nt(L, "rejected", t="{t}"), reviewed1=xliff.NOTE[L]["reviewed_1"],
+                  accepted={st: xliff.nt(L, "accepted", v=xliff.NOTE[L]["v_" + st]) for st in ("ready", "flagged", "human")},
                   dec={k: xliff.NOTE[L][k] for k in ("accept", "accept-edited", "send-back")}) for L in ("fr", "it")}
     snaps = sorted({v["snap_new"] for v in views if re.fullmatch(r"\d{8}", str(v.get("snap_new") or ""))})
     return dict(meta=m, all=summ["all"] if summ else None, groups=G, xn=xn, snap=snaps[-1] if snaps else None,

@@ -63,8 +63,11 @@ def _source(tu, v, lang, beads):
         _src_marks(last, src, a0, a1, ch, nums, lang)
 
 
-def _target(t, v, beads, lang):
-    """target = the draft, one <mrk mtype="seg"> per segment (mids as in seg-source), code numbers protected inside."""
+def _target(t, v, beads, lang, text=None):
+    """target = the draft (or a reviewer's edited text, then one segment and no number markers), one <mrk mtype="seg">
+    per segment (mids as in seg-source), code numbers protected inside."""
+    if text is not None:
+        ET.SubElement(t, _q("mrk"), {"mtype": "seg", "mid": "1"}).text = text; return
     out = v["draft"]; code = [(a, b) for a, b, _, who, _ in v["numbers"] if who == "code"]; num_c = xliff.nt(lang, "code_number")
     for k, (_, _, b0, b1) in enumerate(beads, 1):
         m = ET.SubElement(t, _q("mrk"), {"mtype": "seg", "mid": str(k)})
@@ -77,24 +80,40 @@ def beads_of(v):
     return segment.beads(v["de_new"], v["draft"], [(a, b) for a, b, *_ in v["numbers"]])
 
 
-def trans_unit(body, v):
+def trans_unit(body, v, dec=None, final=False):
+    """One unit; dec: the reviewer's decision (review page JSON export). Accepted -> target state signed-off (final with
+    final=True), approved=yes, an edited text replaces the draft; sent back -> an empty target with state
+    needs-translation and the rejected draft in <alt-trans alttranstype="rejected">, never as a pre-translation."""
     lang = fhir.LANGS[v["lang"]]; L = v["lang"]
-    tu = ET.SubElement(body, _q("trans-unit"), {"id": v["key"], "resname": v["cud_id"], "approved": "no",
+    d = (dec or {}).get("decision"); text = None
+    if d in ("accept", "accept-edited") and not (v["draft"] or (dec.get("text") or "").strip()): d = None
+    if d == "accept-edited" and (dec.get("text") or "").strip(): text = dec["text"]
+    tu = ET.SubElement(body, _q("trans-unit"), {"id": v["key"], "resname": v["cud_id"], "approved": "yes" if d in ("accept", "accept-edited") else "no",
                                                  f"{{{XMLNS}}}space": "preserve"})
-    B = beads_of(v)
+    B = beads_of(v) if text is None else [(0, len(v["de_new"]), 0, len(text))]
     _source(tu, v, L, B)
-    if v["status"] != "human":
-        t = ET.SubElement(tu, _q("target"), {"state": STATE[v["status"]], f"{{{XMLNS}}}lang": lang})
-        _target(t, v, B, L)
-    for nid, cat, ap, pr, text in xliff.unit_notes(v, prev=True):           # the same notes as XLIFF 2.1
-        _note(tu, text, {None: "general"}.get(ap, ap), pr, {"checks": "gleichlaut-checks", "debug": "gleichlaut-debug"}.get(nid, "gleichlaut"))
+    if d == "send-back":
+        ET.SubElement(tu, _q("target"), {"state": "needs-translation", f"{{{XMLNS}}}lang": lang})
+    elif v["status"] != "human" or text is not None:
+        st = ("final" if final else "signed-off") if d in ("accept", "accept-edited") else STATE[v["status"]]
+        t = ET.SubElement(tu, _q("target"), {"state": st, f"{{{XMLNS}}}lang": lang})
+        _target(t, v, B, L, text)
+    head = xliff.decided_notes(v, d) if d else []
+    for nid, cat, ap, pr, tx in head + [n for n in xliff.unit_notes(v, prev=True) if not (head and n[0] == "verdict")]:   # the notes of XLIFF 2.1
+        _note(tu, tx, {None: "general"}.get(ap, ap), pr, {"checks": "gleichlaut-checks", "debug": "gleichlaut-debug"}.get(nid, "gleichlaut"))
+    if d:
+        why = "; ".join(x for x in (xliff.reason_text(L, dec.get("reason") or ""), dec.get("note")) if x)
+        _note(tu, xliff.review_text(L, d, dec.get("at"), why), "target", "1")
+    if d == "send-back" and v.get("draft"):
+        rj = ET.SubElement(tu, _q("alt-trans"), {"alttranstype": "rejected", "origin": "Gleichlaut draft, sent back on review", "tool-id": "gleichlaut"})
+        ET.SubElement(rj, _q("target"), {f"{{{XMLNS}}}lang": lang}).text = v["draft"]
     alt = ET.SubElement(tu, _q("alt-trans"), {"alttranstype": "previous-version", "origin": "SL previous version", "tool-id": "gleichlaut"})
     ET.SubElement(alt, _q("source"), {f"{{{XMLNS}}}lang": "de-CH"}).text = v["de_old"]
     ET.SubElement(alt, _q("target"), {f"{{{XMLNS}}}lang": lang}).text = v["tgt_old"]
     return tu
 
 
-def document(views, meta, lang):
+def document(views, meta, lang, decisions=None, final=False):
     ET.register_namespace("", NS)
     root = ET.Element(_q("xliff"), {"version": "1.2"})
     f = ET.SubElement(root, _q("file"), {"original": f"gleichlaut:{meta['run']}", "source-language": "de-CH",
@@ -104,17 +123,22 @@ def document(views, meta, lang):
                                   "tool-company": "Gleichlaut"})
     for text in (xliff.nt(lang, "about12"), xliff.nt(lang, "states12"), xliff.provenance_note(meta, lang)):
         ET.SubElement(h, _q("note"), {"from": "gleichlaut"}).text = text
+    if decisions is not None:
+        ET.SubElement(h, _q("note"), {"from": "gleichlaut"}).text = xliff.nt(
+            lang, "reviewed", n=sum(1 for v in views if v["lang"] == lang and v["key"] in decisions))
     body = ET.SubElement(f, _q("body"))
     for v in views:
-        if v["lang"] == lang: trans_unit(body, v)
+        if v["lang"] == lang: trans_unit(body, v, (decisions or {}).get(v["key"]), final)
     return ET.ElementTree(root)
 
 
-def write(views, meta, out_dir):
-    """-> [paths]: out_dir/gleichlaut-<run>-de-CH_<trg>.xliff12.xlf per target language present."""
+def write(views, meta, out_dir, decisions=None, final=False):
+    """-> [paths]: out_dir/gleichlaut-<run>-de-CH_<trg>.xliff12.xlf per target language present (…-reviewed.xliff12.xlf
+    with decisions)."""
     os.makedirs(out_dir, exist_ok=True); paths = []
     for lang in fhir.LANGS:
         if not any(v["lang"] == lang for v in views): continue
-        p = os.path.join(out_dir, f"gleichlaut-{meta['run']}-de-CH_{fhir.LANGS[lang]}.xliff12.xlf")
-        document(views, meta, lang).write(p, encoding="utf-8", xml_declaration=True); paths.append(p)
+        tail = "-reviewed" if decisions is not None else ""
+        p = os.path.join(out_dir, f"gleichlaut-{meta['run']}-de-CH_{fhir.LANGS[lang]}{tail}.xliff12.xlf")
+        document(views, meta, lang, decisions, final).write(p, encoding="utf-8", xml_declaration=True); paths.append(p)
     return paths

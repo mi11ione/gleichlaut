@@ -5,7 +5,9 @@
 Writes DIR/fhir/*.fhir.json (one Bundle per target language), DIR/xliff/*.xlf (XLIFF 2.1, one file per target
 language), DIR/xliff/*.xliff12.xlf (XLIFF 1.2 strict, unless --no-xliff12) and DIR/validation.json, validates them
 (emit/validate.py) and exits 1 on any validation error. --decisions applies the review page's JSON export and also writes
-DIR/xliff/*-reviewed.xlf (XLIFF 2.1, accepted targets state=reviewed, or final with --final), validated the same way.
+DIR/xliff/*-reviewed.xlf (XLIFF 2.1, accepted targets state=reviewed, or final with --final) and *-reviewed.xliff12.xlf
+(XLIFF 1.2, signed-off / final; sent back: empty target, needs-translation, the draft in alt-trans rejected), validated
+the same way.
 Items routed to a translator (records status "human") have no draft: they appear in XLIFF without a target and are
 left out of FHIR. No model calls."""
 import argparse, os, sys
@@ -22,7 +24,7 @@ def main(argv=None):
     ap.add_argument("--out", default=os.path.join(core.ROOT, "out", "emit"))
     ap.add_argument("--xliff12", dest="xliff12", action="store_true", default=True, help="also write XLIFF 1.2 strict (default)")
     ap.add_argument("--no-xliff12", dest="xliff12", action="store_false")
-    ap.add_argument("--decisions", help="the review page's JSON export: also write reviewed XLIFF 2.1")
+    ap.add_argument("--decisions", help="the review page's JSON export: also write reviewed XLIFF 2.1 and 1.2")
     ap.add_argument("--final", action="store_true", help="with --decisions: accepted targets get state=final (default reviewed)")
     a = ap.parse_args(argv)
     meta, views = load(a.run, a.records, a.items); V = select(views, a.n)
@@ -32,7 +34,9 @@ def main(argv=None):
     drafts = [v for v in V if v["status"] != "human"]
     fp = fhir.write(drafts, meta, os.path.join(a.out, "fhir")); xp = xliff.write(V, meta, os.path.join(a.out, "xliff"))
     x12 = xliff12.write(V, meta, os.path.join(a.out, "xliff")) if a.xliff12 else []
-    if a.decisions: xp += xliff.write(V, meta, os.path.join(a.out, "xliff"), D, a.final)
+    if a.decisions:
+        xp += xliff.write(V, meta, os.path.join(a.out, "xliff"), D, a.final)
+        if a.xliff12: x12 += xliff12.write(V, meta, os.path.join(a.out, "xliff"), D, a.final)
     rep = validate.validate_files(fp, xp, x12)
     rep.update(run=meta["run"], items=[v["key"] for v in V], ready=sum(v["status"] == "ready" for v in V),
                flagged=sum(v["status"] == "flagged" for v in V), human=sum(v["status"] == "human" for v in V),

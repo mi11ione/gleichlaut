@@ -427,9 +427,11 @@ def _mark(s, words):
 def experimental(A, date, labels=None):
     """Round-5 findings (operator, negation, number word: findings_r5, PREREG R15) that both blind annotators confirmed
     (final label real or minor in eval/labels/audit_r15_<date>.tsv). Every round-5 kind ships off (summary.round5.on): they
-    are shown apart, read-only, and never counted in the headline or the issues. None without round-5 findings or labels.
-    Each row: fid, lim, product, kind, lang, label, what [kind, lang, DE, target] and the excerpts (DE, target) with the
-    finding's words highlighted."""
+    are shown apart, never counted in the headline or the 18 issues, but each is decidable like an issue (kind
+    "experimental", one issue per finding, its own signature) and exported as its own kind. None without round-5 findings
+    or labels. Each row: fid, lim, product, kind ("experimental"), xkind (operator | negation | number_word), lang, label,
+    what [kind, lang, DE, target], the excerpts (DE, target) with the finding's words highlighted, and the row fields the
+    page's issue view reads (sig, rid, no, odd, vals, src, ...); issues: one per row (iid X1.., key, rows)."""
     F5 = A.get("findings_r5") if isinstance(A, dict) else None
     p = labels or R15_LABELS.format(date=date)
     if not F5 or not os.path.exists(p): return None
@@ -453,10 +455,19 @@ def experimental(A, date, labels=None):
             de = next((c for x in f.get("de_only") or [] for c in x.get("context") or []), "")
             tg = next((c for x in f.get("tgt_only") or [] for c in x.get("context") or []), "")
         prod = f.get("product"); prod = ", ".join(prod) if isinstance(prod, (list, tuple)) else (prod or "")
-        out.append(dict(fid=f.get("fid"), lim=f.get("id"), product=prod, kind=k, lang=L, label=fl, what=what, desc=f.get("description") or "",
-                        snip={"de": highlight(de, "de", set()) if de else None, L: highlight(tg, L, set()) if tg else None}))
+        sig = "|".join([str(f.get("id") or ""), "experimental:" + str(k), str(L or ""), f"{what[2]}>{what[3]}"])
+        snip = {kk: x for kk, x in (("de", highlight(de, "de", set()) if de else None), (L, highlight(tg, L, set()) if tg else None)) if x}
+        out.append(dict(fid=f.get("fid"), lim=f.get("id"), product=prod, kind="experimental", xkind=k, lang=L, label=fl, what=what,
+                        desc=f.get("description") or "", snip=snip, src={kk: "context" for kk in snip}, sig=sig, no=f.get("fid") or "",
+                        rid=hashlib.sha1(sig.encode()).hexdigest()[:10], odd=f.get("odd_one_out") if f.get("odd_one_out") in LANGS else "unclear",
+                        vals={}, known=False, eq=None, term=None, expl=[], fix=None, found=None, dating=None, rank=None, langs=["de", L],
+                        sug=ACTIONS.get(f.get("suggested_action") or "", f.get("suggested_action") or "")))
     S = A.get("summary", {}).get("round5") or {}
-    return dict(n=len(F5), confirmed=len(out), on=S.get("on") or {}, labels=os.path.relpath(p, core.ROOT), rows=out)
+    I = [dict(iid=f"X{n + 1}", key=hashlib.sha1(("exp\n" + r["sig"]).encode()).hexdigest()[:10], rows=[n], fids=[r["no"]], lims=[r["lim"]],
+              products=[r["product"]] if r["product"] else [], kinds=["experimental"], langs=[x for x in LANGS if x in ("de", r["lang"])],
+              known=False, eq=False, term=False, odd=r["odd"], vals={}, exp=True,
+              what=[["experimental", r["lang"], r["what"][2], r["what"][3], r["xkind"]]], dating=None) for n, r in enumerate(out)]
+    return dict(n=len(F5), confirmed=len(out), on=S.get("on") or {}, labels=os.path.relpath(p, core.ROOT), rows=out, issues=I)
 
 
 def data(path=AUDIT, results=RESULTS, hist=None):
@@ -494,4 +505,8 @@ def data(path=AUDIT, results=RESULTS, hist=None):
     R = rows(F, hist, date, snaps)
     I = issues(R)
     meta.update(issues=len(I))
-    return dict(meta=meta, rows=R, issues=I, texts=full_texts(F, R, hist, date), exp=experimental(A, date))
+    T = full_texts(F, R, hist, date); X = experimental(A, date)
+    for r in (X or {}).get("rows", []):              # the full texts of an experimental finding's limitation, when at hand
+        full = _hist_texts(hist, date, r["lim"]) if r["lim"] not in T else {}
+        if full: T[r["lim"]] = {L: _render(full[L], L, set(), []) for L in LANGS if full.get(L)}
+    return dict(meta=meta, rows=R, issues=I, texts=T, exp=X)

@@ -392,9 +392,32 @@ REJECT = {("fr", "Universitätsklinik"): "fragment (« universitaires »)", ("fr
           ("fr", "Zweitlinientherapie"): "fragment (« traitement de deuxième »)",
           ("fr", "Stammzelltransplantation"): "fragment (« cellules souches »)",
           ("it", "Stammzelltransplantation"): "fragment («cellule staminali»)",
-          ("it", "Verlaufskontrolle"): "fragment («effettuati»; house only in the 1 Sep 2026 snapshot, PREREG R12)"}
+          ("it", "Verlaufskontrolle"): "fragment («effettuati»; house only in the 1 Sep 2026 snapshot, PREREG R12)",
+          # Italian translator's review (11 Oct 2026): «assicuratore» is a truncated head; the register's full phrases split
+          # («assicuratore malattie» 312, «assicurazione malattia» 288, «assicuratore malattia» 160 of the 889 limitations
+          # whose German has the term): no phrase is a majority, so no dominant rendering (M6), as for the other fragments
+          ("it", "Krankenversicherer"): "fragment («assicuratore»; the full phrase splits: «assicuratore malattie» 312, "
+                                        "«assicurazione malattia» 288, «assicuratore malattia» 160 of 889 limitations)"}
 DROP_VARIANTS = {("fr", "Mehrwertsteuer"): {"récupérée", "réclamée"}, ("fr", "Körpergewicht"): {"pesant"},
-                 ("it", "Erstlinienbehandlung"): {"linea di pazienti adulti"}}
+                 ("it", "Erstlinienbehandlung"): {"linea di pazienti adulti"},
+                 # the insurance («assicurazione»), not the insurer: not a rendering of Krankenversicherer (translator's review)
+                 ("it", "Krankenversicherer"): {"assicurazione malattia", "assicurazione malattie"}}
+# Review (11 Oct 2026): a term is listed in its base form (singular), as a termbase lists it; the mined surface form stays
+# in "register_form" and the matching (preferred_tokens, inflection-tolerant) is unchanged. Counts are the mined ones.
+LEMMA = {("fr", "Poliklinik"): {"policliniques": "policlinique", "polycliniques": "polyclinique"},
+         ("it", "Poliklinik"): {"policlinici": "policlinico"},
+         ("fr", "Fachärztin / Facharzt"): {"spécialistes": "spécialiste"}}
+# Subject field of each head (TBX-Basic subjectField, concept level; TermStar maps it to its subject field): the groups
+# the heads were chosen from (docs/termbase.md, "Which German terms").
+SUBJECT = {"reimbursement": ("Krankenversicherer", "Kostengutsprache", "Vertrauensarzt", "Indikationscode", "Limitierung",
+                             "Rückerstattung", "Vergütung", "Kostenübernahme", "obligatorische Krankenpflegeversicherung",
+                             "Krankenkasse", "Vergütungskriterien"),
+           "pricing": ("Fabrikabgabepreis", "Publikumspreis", "Mehrwertsteuer", "Preismodell", "Rückvergütung", "Zulassungsinhaberin"),
+           "prescription and setting": ("Fachärztin / Facharzt", "Universitätsklinik", "Poliklinik", "Verschreibung", "Verordnung",
+                                        "Erstverschreibung", "Erstverordnung"),
+           "product status": ("Originalpräparat", "Generikum", "Referenzpräparat", "Biosimilar", "Fachinformation")}
+SUBJECT_OF = {t: f"SL limitations: {k}" for k, ts in SUBJECT.items() for t in ts}
+SUBJECT_DEFAULT = "SL limitations: therapy and clinical course"
 
 
 def review(entries):
@@ -402,6 +425,10 @@ def review(entries):
         k = (e["lang"], e["term"])
         if k in DROP_VARIANTS: e["variants"] = [v for v in e["variants"] if v["text"] not in DROP_VARIANTS[k]]
         if k in REJECT and e.get("house"): e["house"] = False; e["note"] = f"rejected on review: {REJECT[k]}"
+        if k in LEMMA:
+            if e.get("preferred") in LEMMA[k]: e["register_form"] = e["preferred"]; e["preferred"] = LEMMA[k][e["preferred"]]
+            for v in e["variants"]:
+                if v["text"] in LEMMA[k]: v["register_form"] = v["text"]; v["text"] = LEMMA[k][v["text"]]
     return entries
 
 
@@ -493,6 +520,7 @@ def tbx(tb):
         if not E: continue
         k += 1
         ce = ET.SubElement(body, q("conceptEntry"), {"id": f"sl{k:03d}"})
+        ET.SubElement(ce, q("descrip"), {"type": "subjectField"}).text = SUBJECT_OF.get(term, SUBJECT_DEFAULT)
         de = ET.SubElement(ce, q("langSec"), {XL: "de"})
         ts = ET.SubElement(de, q("termSec")); ET.SubElement(ts, q("term")).text = term.split(" / ")[-1]
         n_de = max(e["limitations_with_term"] for e in E.values())
@@ -505,7 +533,8 @@ def tbx(tb):
             ET.SubElement(ts, q("termNote"), {"type": "administrativeStatus"}).text = "preferredTerm-admn-sts"
             ET.SubElement(ts, q("admin"), {"type": "source"}).text = f"mined from BAG SL {date}, {e['support']} limitations"
             ET.SubElement(ts, q("note")).text = (f"{e['support']} of {e['limitations_with_term']} limitations whose German "
-                                                 f"contains the term ({round(100 * e['share'])}%)")
+                                                 f"contains the term ({round(100 * e['share'])}%)"
+                                                 + (f"; the register writes «{e['register_form']}»" if e.get("register_form") else ""))
             for v in e["variants"]:
                 vs = ET.SubElement(ls, q("termSec")); ET.SubElement(vs, q("term")).text = v["text"]
                 ET.SubElement(vs, q("termNote"), {"type": "administrativeStatus"}).text = "admittedTerm-admn-sts"
@@ -538,7 +567,9 @@ def validate_tbx(path):
         i = ce.get("id")
         if not i or not re.fullmatch(r"[A-Za-z_][\w.-]*", i) or i in ids: err.append(f"conceptEntry id {i!r} missing, not an NCName or duplicate")
         ids.add(i)
-        LS = list(ce)
+        D = [x for x in ce if x.tag == q("descrip")]; LS = [x for x in ce if x.tag != q("descrip")]
+        if list(ce)[:len(D)] != D: err.append(f"{i}: concept-level descrip must come before the langSecs")
+        if any(x.get("type") != "subjectField" or not (x.text or "").strip() for x in D): err.append(f"{i}: descrip must be a non-empty subjectField")
         if len(LS) < 2 or any(x.tag != q("langSec") or not x.get(XL) for x in LS): err.append(f"{i}: needs >= 2 langSec with xml:lang")
         for ls in LS:
             if not len(ls) or any(t.tag != q("termSec") for t in ls): err.append(f"{i}: langSec must hold termSec only"); continue
@@ -579,7 +610,8 @@ NOTE = {"fr": dict(head="Terme maison pour {de} : {pref} ({n} limitations)", wr
                    fewer="le brouillon l'écrit {k} fois, l'allemand a le terme {n} fois"),
         "it": dict(head="Termine in uso all'UFSP per {de}: {pref} ({n} limitazioni)", wrote="la bozza scrive {x}",
                    absent="assente dalla bozza", carried="", kept="il testo (già prima) scrive {x}",
-                   fewer="la bozza lo scrive {k} volta/e, il tedesco ha il termine {n} volte")}
+                   fewer="la bozza lo scrive {k} volte, il tedesco ha il termine {n} volte",
+                   fewer_1="la bozza lo scrive 1 volta, il tedesco ha il termine {n} volte")}
 FUZZY = 0.6
 KEPT_FUZZY = 0.7       # "kept", a wording found by similarity: at least this similar, two words or more, no word of the house rendering
 NEAR = 4              # "kept": tokens around the draft's own insertions count as inserted ('à transmettre à la caisse maladie')
@@ -768,7 +800,7 @@ def advisory_text(A, L):
         s += " ; " if L == "fr" else "; "
         if a["kind"] == "kept": s += N["kept"].format(x=_q(L, a["wrote"]))
         elif a["wrote"]: s += N["wrote"].format(x=_q(L, a["wrote"]))
-        elif a.get("n_draft"): s += N["fewer"].format(k=a["n_draft"], n=a["n_de"])
+        elif a.get("n_draft"): s += N["fewer_1" if a["n_draft"] == 1 and "fewer_1" in N else "fewer"].format(k=a["n_draft"], n=a["n_de"])
         else: s += N["absent"]
         parts.append(s + ".")
     return " ".join(parts)

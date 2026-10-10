@@ -31,6 +31,29 @@ def test_shipped_termbase_has_the_house_renderings_the_register_uses():
             assert v["limitations"] >= T.VAR_MIN and not T._inflection(v["tokens"], e["preferred_tokens"])
 
 
+def test_translator_review_insurer_base_forms_and_subject_field():
+    """11 Oct 2026, Italian translator: the bare head «assicuratore» is a fragment (the full phrase splits, no majority),
+    «assicurazione malattia» is the insurance, not the insurer; a term is listed in its base form; IT Fabrikabgabepreis
+    stays «prezzo di fabbrica» (the register's majority); every TBX concept has a subject field."""
+    E = _entries()
+    it = E[("it", "Krankenversicherer")]
+    assert not it["house"] and "fragment" in it["note"] and not it["variants"]
+    assert ("it", "Krankenversicherer") not in T.load() and ("fr", "Krankenversicherer") in T.load()
+    assert E[("it", "Poliklinik")]["preferred"] == "policlinico" and E[("it", "Poliklinik")]["register_form"] == "policlinici"
+    assert E[("fr", "Poliklinik")]["preferred"] == "policlinique" and E[("fr", "Poliklinik")]["variants"][0]["text"] == "polyclinique"
+    assert E[("fr", "Fachärztin / Facharzt")]["preferred"] == "spécialiste"
+    assert E[("it", "Fabrikabgabepreis")]["preferred"] == "prezzo di fabbrica"
+    q = lambda t: f"{{{T.TBX_NS}}}{t}"
+    C = ET.parse(T.TBX).getroot().findall(f".//{q('conceptEntry')}")
+    assert C and all(c[0].tag == q("descrip") and c[0].get("type") == "subjectField" and c[0].text.startswith("SL limitations: ") for c in C)
+    src = open(T.TBX, encoding="utf-8").read()
+    assert "<term>policlinico</term>" in src and "assicurazione malattia" not in src
+    # the advisory matches the register's plural through the base form: a draft writing «policlinici» is fine
+    v = dict(lang="it", status="ready", de_old="x", de_new="Verschreibung durch die Poliklinik.", tgt_old="y",
+             draft="Prescrizione da parte dei policlinici.")
+    assert not [a for a in T.advice(v) if a["term"] == "Poliklinik"]
+
+
 def test_tbx_is_valid_and_rebuilt_from_the_json():
     assert T.validate_tbx(T.TBX) == []
     d = tempfile.mkdtemp(prefix="gl-tbx-"); p = os.path.join(d, "x.tbx")
@@ -203,6 +226,7 @@ def test_measure_equals_the_committed_results():
     assert replay._cmp(got, json.load(open(RES, encoding="utf-8"))) == []
     r = got["runs"]
     assert r["8b_q4_k_m"]["ready_minor"] == 29 and r["8b_q8_0"]["ready_minor"] == 23          # = m1_<build>.json
+    assert r["8b_q8_0"]["ready_needs_fix_with_advisory"] == 22 and got["termbase"]["house_total"] == 64
     assert all(x["ready_minor_with_advisory"] <= x["ready_minor"] <= x["ready_needs_fix"] <= x["ready"] for x in r.values())
 
 

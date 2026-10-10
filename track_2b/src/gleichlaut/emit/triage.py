@@ -6,7 +6,10 @@ Rules (each one is also stated in the page legend, in the interface language):
   T1 vocabulary   a Vocabulary (out-of-vocabulary, G7) finding whose every word is a well-formed target-language word:
                   letters of the target alphabet only (no ä/ö/ß, no ü in Italian), at least 4 letters, no German letter
                   sequence (sch, ck, tz, -ung, -keit, -heit, -lich, -isch), not a word of the new German text and not
-                  sharing its first 8 letters with one (hormonsensible / hormonsensitivem stays "check").
+                  sharing its first 8 letters with one (hormonsensible / hormonsensitivem stays "check"), and, when capitalised,
+                  not starting with the first 4 letters of a German word of the text of 6 letters or more unless the old
+                  target text already has the word (Folguer / Folgore for Folgender: a German word left garbled, stays
+                  "check"; the lower-case cognate ophtalmochirurgiens stays probably fine).
   T2 modal        a modal-verb (obligation) finding where the draft's extra 'doit/doivent … / deve/devono …' equals the
                   change in German 'ist/sind … zu <verb>' constructions (German necessity without a modal verb, which the
                   slot check does not count as one), and the text with the extra modal (the draft when the German adds, the
@@ -53,13 +56,20 @@ def _words(detail):
     return [w.strip() for w in detail.split(":", 1)[-1].split(",") if w.strip()]
 
 
-def well_formed(w, lang, de_new):
+GERMAN_STEM = 4       # T1: a capitalised word that starts like a German word of the text (>= 6 letters) is a German word cut
+                      # or garbled ('Folguer' / 'Folgore' / 'Folgente' for 'Folgender'), not a well-formed target word; a
+                      # lower-case cognate ('ophtalmochirurgiens' next to 'Ophthalmochirurgen') stays well-formed
+
+
+def well_formed(w, lang, de_new, old=""):
     if len(w) < 4 or lang not in ALPHA: return False
     if not re.fullmatch(f"[{ALPHA[lang]}]+(?:[-'’][{ALPHA[lang]}]+)*", w.lower()): return False
     if GERMANISH.search(w): return False
     lw = w.lower()
     for g in set(re.findall(r"\w+", de_new.lower())):
         if g == lw or (len(lw) >= 8 and len(g) >= 8 and g[:8] == lw[:8]): return False
+        if w[:1].isupper() and len(g) >= 6 and g[:GERMAN_STEM] == lw[:GERMAN_STEM] and not re.search(r"(?<!\w)" + re.escape(lw) + r"(?!\w)", old.lower()):
+            return False
     return True
 
 
@@ -90,7 +100,7 @@ def rule(f, v):
     gid = f["gid"]
     if gid == "g7":
         ws = _words(d)
-        if ws and all(well_formed(explain.case_in(v["draft"], w), L, v["de_new"]) for w in ws): return "T1"
+        if ws and all(well_formed(explain.case_in(v["draft"], w), L, v["de_new"], v.get("tgt_old") or "") for w in ws): return "T1"
     if gid in ("g1", "g5"):
         ws = _words(d)
         if ws and all(acronym(explain.case_in(v["draft"], w)) for w in ws): return "T4"

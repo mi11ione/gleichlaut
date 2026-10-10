@@ -157,6 +157,37 @@ def test_mirror_is_decided_by_aligned_position_not_by_word_counts():
     assert core.lock.norm(out) != core.lock.norm(out2)
 
 
+def test_review_decisions_sent_back_has_no_target_and_accepted_drops_the_flagged_verdict():
+    """A sent-back unit never carries the rejected draft as pre-translation (XLIFF 2.1: no target, the draft in a note;
+    XLIFF 1.2: an empty target with state needs-translation, the draft in alt-trans rejected); an accepted unit's verdict
+    note is the reviewed note, not 'flagged … to correct'; the reviewer's reason is in the file's language."""
+    from gleichlaut.emit import xliff12
+    meta, views = load("q8_0"); d = tempfile.mkdtemp(prefix="gl-xlf-rev-")
+    fl = [v for v in views if v["status"] == "flagged" and v["lang"] == "it"][:2]
+    D = {fl[0]["key"]: dict(decision="send-back", reason="Content lost", note="", at="2026-10-11T10:00:00Z"),
+         fl[1]["key"]: dict(decision="accept", reason="Wording", note="", at="2026-10-11T10:01:00Z")}
+    V = [v for v in views if v["key"] in D]
+    for p in xliff.write(V, meta, d, D) + xliff12.write(V, meta, d, D):
+        assert (validate.validate_xliff12(p) if p.endswith(".xliff12.xlf") else validate.validate_xliff(p)) == [], p
+    r = ET.parse(os.path.join(d, "gleichlaut-q8_0-de-CH_it-CH-reviewed.xlf")).getroot()
+    U = {u.get("id"): u for u in r.iter(X + "unit")}
+    sb, ac = U[fl[0]["key"]], U[fl[1]["key"]]
+    assert all(s.find(X + "target") is None and s.get("subState") == "gleichlaut:sent-back" for s in sb.findall(X + "segment"))
+    N = {n.get("id"): n.text for n in sb.find(X + "notes")}
+    assert N["verdict"].startswith("Rinviata in revisione") and fl[0]["draft"] in N["rejected"] and "contenuto perso" in N["review"]
+    A = {n.get("id"): n.text for n in ac.find(X + "notes")}
+    assert A["verdict"].startswith("Rivista e accettata") and "segnalata" in A["verdict"] and "formulazione" in A["review"]
+    assert not any("Il testo d'arrivo è la bozza, da correggere" in (n.text or "") for n in ac.find(X + "notes"))
+    x = open(os.path.join(d, "gleichlaut-q8_0-de-CH_it-CH-reviewed.xliff12.xlf"), encoding="utf-8").read()
+    N12 = "{urn:oasis:names:tc:xliff:document:1.2}"
+    T = {t.get("id"): t for t in ET.fromstring(x.encode()).iter(N12 + "trans-unit")}
+    t0 = T[fl[0]["key"]].find(N12 + "target")
+    assert t0.get("state") == "needs-translation" and not "".join(t0.itertext())
+    rj = [a for a in T[fl[0]["key"]].findall(N12 + "alt-trans") if a.get("alttranstype") == "rejected"]
+    assert len(rj) == 1 and "".join(rj[0].find(N12 + "target").itertext()) == fl[0]["draft"]
+    assert T[fl[1]["key"]].get("approved") == "yes" and T[fl[1]["key"]].find(N12 + "target").get("state") == "signed-off"
+
+
 def test_sentence_segments_and_changed_marks():
     C = _setup(); V = {v["key"]: v for v in C["V"]}; multi = 0
     from gleichlaut.emit import segment

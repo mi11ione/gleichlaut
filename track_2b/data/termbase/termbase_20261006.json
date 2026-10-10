@@ -89,7 +89,7 @@
    "term": "Fachärztin / Facharzt",
    "lang": "fr",
    "limitations_with_term": 284,
-   "preferred": "spécialistes",
+   "preferred": "spécialiste",
    "support": 165,
    "share": 0.581,
    "variants": [],
@@ -97,7 +97,8 @@
    "preferred_tokens": "spécialistes",
    "dice": 0.603,
    "without_preferred": 132,
-   "dominance": 1.0
+   "dominance": 1.0,
+   "register_form": "spécialistes"
   },
   {
    "term": "Mehrwertsteuer",
@@ -260,23 +261,25 @@
    "term": "Poliklinik",
    "lang": "fr",
    "limitations_with_term": 103,
-   "preferred": "policliniques",
+   "preferred": "policlinique",
    "support": 63,
    "share": 0.612,
    "variants": [
     {
      "tokens": "polycliniques",
-     "text": "polycliniques",
+     "text": "polyclinique",
      "limitations": 35,
      "without_preferred": 35,
-     "dice": 0.933
+     "dice": 0.933,
+     "register_form": "polycliniques"
     }
    ],
    "house": true,
    "preferred_tokens": "policliniques",
    "dice": 0.759,
    "without_preferred": 40,
-   "dominance": 0.643
+   "dominance": 0.643,
+   "register_form": "policliniques"
   },
   {
    "term": "Therapiebeginn",
@@ -786,27 +789,13 @@
    "preferred": "assicuratore",
    "support": 522,
    "share": 0.587,
-   "variants": [
-    {
-     "tokens": "assicurazione malattia",
-     "text": "assicurazione malattia",
-     "limitations": 282,
-     "without_preferred": 282,
-     "dice": 0.687
-    },
-    {
-     "tokens": "assicurazione malattie",
-     "text": "assicurazione malattie",
-     "limitations": 97,
-     "without_preferred": 97,
-     "dice": 0.536
-    }
-   ],
-   "house": true,
+   "variants": [],
+   "house": false,
    "preferred_tokens": "assicuratore",
    "dice": 0.635,
    "without_preferred": 517,
-   "dominance": 0.579
+   "dominance": 0.579,
+   "note": "rejected on review: fragment («assicuratore»; the full phrase splits: «assicuratore malattie» 312, «assicurazione malattia» 288, «assicuratore malattia» 160 of 889 limitations)"
   },
   {
    "term": "Kostengutsprache",
@@ -1072,7 +1061,7 @@
    "term": "Poliklinik",
    "lang": "it",
    "limitations_with_term": 103,
-   "preferred": "policlinici",
+   "preferred": "policlinico",
    "support": 85,
    "share": 0.825,
    "variants": [],
@@ -1080,7 +1069,8 @@
    "preferred_tokens": "policlinici",
    "dice": 0.904,
    "without_preferred": 18,
-   "dominance": 1.0
+   "dominance": 1.0,
+   "register_form": "policlinici"
   },
   {
    "term": "Therapiebeginn",

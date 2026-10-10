@@ -31,7 +31,7 @@ drafts (as is or edited) -> state="reviewed" (or "final" with final=True), subSt
 gleichlaut:accepted-edited, target = the accepted text; sent back -> state="initial" subState="gleichlaut:sent-back".
 <originalData> is not used for context: it holds only the native data of inline codes (<data> elements referenced by
 dataRef), so context there would be invalid use."""
-import os
+import os, re
 import xml.etree.ElementTree as ET
 from . import fhir, model_label, segment, triage
 
@@ -51,19 +51,21 @@ NOTE = {
         "states": "state=translated + subState=gleichlaut:ready : tous les contrôles sont passés, réviser et accepter. "
                   "state=translated + subState=gleichlaut:flagged : un contrôle a relevé un problème, voir les remarques de l'unité ; "
                   "la cible est le brouillon à corriger, ne pas la remplacer par une prétraduction. "
-                  "state=initial + subState=gleichlaut:human : pas de brouillon, à traduire.",
+                  "state=initial + subState=gleichlaut:human : pas de brouillon, à traduire. "
+                  "state=initial + subState=gleichlaut:sent-back : brouillon rejeté à la révision, pas de cible, à traduire.",
         "about12": "Brouillons automatiques des textes de limitation modifiés de la liste des spécialités (LS, OFSP). Source = "
                    "nouveau texte allemand ; cible = brouillon Gleichlaut (prétraduction). mrk mtype=x-changed : partie que "
                    "l'allemand a changée ; mrk mtype=protected : nombre placé par le code à partir de l'allemand.",
         "states12": "state=translated : tous les contrôles automatiques sont passés. state=needs-review-translation : un contrôle a "
-                    "relevé un problème (voir les remarques de l'unité). Pas de cible : confié à un traducteur.",
+                    "relevé un problème (voir les remarques de l'unité). state=needs-translation avec une cible vide : "
+                    "brouillon rejeté à la révision (dans alt-trans rejected), à traduire. Pas de cible : confié à un traducteur.",
         "prov": "Modèle {model} ; {pipeline} ; série {run}",
         "prov_run": "Série enregistrée {run} (modèle non indiqué dans les enregistrements) ; {pipeline}",
         "product": "{product} ; limitation {code} ; LS {old} → {new}",
         "prev_de": "Allemand précédent : {t}", "prev_tgt": "Texte français précédent : {t}",
         "change": "Changement allemand : {t}", "fine": "probablement sans problème, règle {r} : {why}",
         "model_nums": "Nombres écrits par le modèle lui-même (à vérifier) : {x}",
-        "review": "Révision : {d}", "reviewed": "Export révisé : {n} unité(s) décidée(s)",
+        "review": "Révision : {d}", "reviewed": "Export révisé : {n} unités décidées", "reviewed_1": "Export révisé : 1 unité décidée",
         "accept": "accepté", "accept-edited": "accepté modifié", "send-back": "renvoyé",
         "code_number": "nombre placé par le code à partir de l'allemand", "changed": "partie changée par l'allemand",
         "T1": "mot français bien formé, seulement absent du vocabulaire connu",
@@ -92,31 +94,44 @@ NOTE = {
         "lex": "aussi employé dans les limitations françaises de l'OFSP", "lex_old": "déjà dans l'ancien texte",
         "lex_both": "déjà dans l'ancien texte ou aussi employé dans les limitations françaises de l'OFSP",
         "lex_words": "{w} ({why})", "g4_de": "l'allemand le répète aussi",
-        "checks_more": "{n} autre(s) point(s) relevé(s) par les contrôles, non repris ci-dessus : {x}",
+        "checks_more": "{n} autres points relevés par les contrôles, non repris ci-dessus : {x}",
+        "checks_more_1": "1 autre point relevé par les contrôles, non repris ci-dessus : {x}",
+        "accepted": "Révisé et accepté : la cible est le texte accepté à la révision. Les remarques des contrôles ci-dessous "
+                    "portent sur le brouillon d'origine ({v}).",
+        "sent_back": "Renvoyé à la révision : à traduire. Pas de cible ; le brouillon rejeté figure dans la remarque "
+                     "« Brouillon rejeté », pas dans la cible.",
+        "rejected": "Brouillon rejeté à la révision (ne pas le reprendre tel quel) : {t}",
+        "v_ready": "prêt", "v_flagged": "signalé", "v_human": "confié à un traducteur",
+        "reasons": {"Number wrong": "nombre erroné", "German change not applied": "changement allemand non appliqué",
+                    "Content lost": "contenu perdu", "German left / untranslated": "allemand resté / non traduit",
+                    "Terminology": "terminologie", "Wording": "formulation", "Other": "autre"},
+        "order": "Ordre des mots allemand ? Le brouillon écrit {x} (allemand {d}) : en français, le complément suit en principe le nom.",
         "debug": "Sortie brute des contrôles (codes internes de Gleichlaut, pour l'assistance technique ; pas une remarque de traduction) : {x}"},
  "it": {"ready": "Pronta: tutti i controlli automatici superati. Verificata dal codice, non ancora da una persona: da rivedere.",
-        "flagged": "Segnalata: un controllo automatico ha rilevato un problema (vedi le note). La destinazione è la bozza, da correggere.",
+        "flagged": "Segnalata: un controllo automatico ha rilevato un problema (vedi le note). Il testo d'arrivo è la bozza, da correggere.",
         "human": "Affidata a un traduttore: il tedesco è stato riscritto per oltre il 60%; nessuna bozza automatica.",
         "about": "Bozze automatiche dei testi di limitazione modificati dell'elenco delle specialità (ES, UFSP). Fonte = nuovo testo "
-                 "tedesco, un segmento per frase; destinazione = bozza Gleichlaut. Nella fonte, gleichlaut:changed marca la parte "
-                 "modificata dal tedesco. Nella destinazione, gleichlaut:code-number (translate=no) marca un numero inserito dal codice "
+                 "tedesco, un segmento per frase; testo d'arrivo = bozza Gleichlaut. Nella fonte, gleichlaut:changed marca la parte "
+                 "modificata dal tedesco. Nel testo d'arrivo, gleichlaut:code-number (translate=no) marca un numero inserito dal codice "
                  "a partire dal tedesco, gleichlaut:model-number un numero scritto dal modello (da verificare).",
         "states": "state=translated + subState=gleichlaut:ready: tutti i controlli superati, rivedere e accettare. "
                   "state=translated + subState=gleichlaut:flagged: un controllo ha rilevato un problema, vedi le note dell'unità; "
-                  "la destinazione è la bozza da correggere, non sostituirla con una pretraduzione. "
-                  "state=initial + subState=gleichlaut:human: nessuna bozza, da tradurre.",
+                  "il testo d'arrivo è la bozza da correggere, non sostituirla con una pretraduzione. "
+                  "state=initial + subState=gleichlaut:human: nessuna bozza, da tradurre. "
+                  "state=initial + subState=gleichlaut:sent-back: bozza respinta in revisione, nessun testo d'arrivo, da tradurre.",
         "about12": "Bozze automatiche dei testi di limitazione modificati dell'elenco delle specialità (ES, UFSP). Fonte = "
-                   "nuovo testo tedesco; destinazione = bozza Gleichlaut (pretraduzione). mrk mtype=x-changed: parte modificata "
+                   "nuovo testo tedesco; testo d'arrivo = bozza Gleichlaut (pretraduzione). mrk mtype=x-changed: parte modificata "
                    "dal tedesco; mrk mtype=protected: numero inserito dal codice a partire dal tedesco.",
         "states12": "state=translated: tutti i controlli automatici superati. state=needs-review-translation: un controllo ha "
-                    "rilevato un problema (vedi le note dell'unità). Nessuna destinazione: affidata a un traduttore.",
+                    "rilevato un problema (vedi le note dell'unità). state=needs-translation con testo d'arrivo vuoto: "
+                    "bozza respinta in revisione (in alt-trans rejected), da tradurre. Nessun testo d'arrivo: affidata a un traduttore.",
         "prov": "Modello {model}; {pipeline}; serie {run}",
         "prov_run": "Serie registrata {run} (modello non indicato nelle registrazioni); {pipeline}",
         "product": "{product}; limitazione {code}; ES {old} → {new}",
         "prev_de": "Tedesco precedente: {t}", "prev_tgt": "Testo italiano precedente: {t}",
         "change": "Modifica tedesca: {t}", "fine": "probabilmente in ordine, regola {r}: {why}",
         "model_nums": "Numeri scritti dal modello stesso (da verificare): {x}",
-        "review": "Revisione: {d}", "reviewed": "Esportazione rivista: {n} unità decise",
+        "review": "Revisione: {d}", "reviewed": "Esportazione rivista: {n} unità decise", "reviewed_1": "Esportazione rivista: 1 unità decisa",
         "accept": "accettata", "accept-edited": "accettata modificata", "send-back": "rinviata",
         "code_number": "numero inserito dal codice a partire dal tedesco", "changed": "parte modificata dal tedesco",
         "T1": "parola italiana ben formata, solo assente dal vocabolario noto",
@@ -145,14 +160,46 @@ NOTE = {
         "lex": "usata anche nelle limitazioni italiane dell'UFSP", "lex_old": "già nel vecchio testo",
         "lex_both": "già nel vecchio testo o usata anche nelle limitazioni italiane dell'UFSP",
         "lex_words": "{w} ({why})", "g4_de": "anche il tedesco lo ripete",
-        "checks_more": "{n} altro/i punto/i rilevato/i dai controlli, non ripreso/i sopra: {x}",
+        "checks_more": "{n} altri punti rilevati dai controlli, non ripresi sopra: {x}",
+        "checks_more_1": "1 altro punto rilevato dai controlli, non ripreso sopra: {x}",
+        "accepted": "Rivista e accettata: il testo d'arrivo è quello accettato in revisione. Le note dei controlli qui sotto "
+                    "riguardano la bozza originale ({v}).",
+        "sent_back": "Rinviata in revisione: da tradurre. Nessun testo d'arrivo; la bozza respinta figura nella nota «Bozza "
+                     "respinta», non nel testo d'arrivo.",
+        "rejected": "Bozza respinta in revisione (da non riprendere così com'è): {t}",
+        "v_ready": "pronta", "v_flagged": "segnalata", "v_human": "affidata a un traduttore",
+        "reasons": {"Number wrong": "numero errato", "German change not applied": "modifica tedesca non applicata",
+                    "Content lost": "contenuto perso", "German left / untranslated": "tedesco rimasto / non tradotto",
+                    "Terminology": "terminologia", "Wording": "formulazione", "Other": "altro"},
+        "order": "Ordine delle parole tedesco? La bozza scrive {x} (tedesco {d}): in italiano il complemento segue di norma il nome.",
         "debug": "Uscita grezza dei controlli (codici interni di Gleichlaut, per l'assistenza tecnica; non una nota di traduzione): {x}"}}
 
 
 def nt(lang, k, **kw):
+    """A note text in the target language; a key with a singular form (k + "_1") takes it when n == 1."""
     from . import explain
+    if kw.get("n") == 1 and k + "_1" in NOTE[lang]: k += "_1"
     s = NOTE[lang][k].format(**kw)
     return explain._fr(s) if lang == "fr" else s
+
+
+def reason_text(lang, reason):
+    """A review reason as stored by the page (English value of its list) in the target language; free text unchanged."""
+    return NOTE[lang]["reasons"].get(reason, reason) if lang in NOTE else reason
+
+
+def decided_notes(v, d):
+    """-> [[id, category, appliesTo, priority, text]] replacing the verdict note of a decided unit: accepted -> the
+    reviewed note (the 'flagged … to correct' verdict no longer describes the target), sent back -> the sent-back note
+    plus the rejected draft as a note (it is never the target). [] when undecided."""
+    L = v["lang"]
+    if d in ("accept", "accept-edited"):
+        return [["verdict", "gleichlaut:verdict", "target", "1", nt(L, "accepted", v=NOTE[L]["v_" + v["status"]])]]
+    if d == "send-back":
+        N = [["verdict", "gleichlaut:verdict", None, "1", nt(L, "sent_back")]]
+        if v.get("draft"): N.append(["rejected", "gleichlaut:rejected-draft", None, "2", nt(L, "rejected", t=v["draft"])])
+        return N
+    return []
 
 
 def review_text(lang, d, at=None, why=""):
@@ -296,6 +343,39 @@ def _typo_note(v):
     return nt(L, "typo", x=x)
 
 
+# a code of a German compound ('CD38 Antikörper', 'CD38-Antikörper') right before a target noun: German word order
+# ('un CD38 anticorps')
+ORDER_DE = re.compile(r"(?<![\w-])([A-Z][A-Za-z]{0,4}\d[\w]*)[- ]([A-ZÄÖÜ][a-zäöüß]{3,})")
+
+
+def _order_note(v):
+    """A low-priority note (not a check, never a verdict): the draft writes a code of a German hyphen compound right before
+    a target-language noun ('un CD38 anticorps' for 'CD38-Antikörper'), German word order, where the old text did not."""
+    import re
+    from . import explain
+    L, d = v["lang"], v.get("draft") or ""
+    if L not in NOTE or not d or v.get("status") == "human": return None
+    for m in ORDER_DE.finditer(v.get("de_new") or ""):
+        code = m.group(1)
+        k = re.search(r"(?<![\w-])" + re.escape(code) + r"\s+([^\W\d_A-Z][^\W\d_]{3,})", d)
+        if k and k.group(0) not in (v.get("tgt_old") or ""):
+            return nt(L, "order", x=explain.q(L, k.group(0)), d=explain.q(L, m.group(0)))
+    return None
+
+
+def mirror_text(f, v):
+    """The low-priority note of a 'removed more than the German' finding whose lost words all sit in sentences the German
+    itself removes (deleted_by_german): a statement when the draft drops the matching sentence one to one, else a question;
+    None otherwise. The same text in the explanation's grey line and in the checks detail."""
+    import re
+    from . import explain
+    L = v["lang"]; dl = deleted_by_german(f, v)
+    if not dl or L not in NOTE: return None
+    if dl[2]: return nt(L, "del_whole", u=explain.q(L, explain.clip(dl[0], 120)), x=explain.q(L, explain.clip(dl[3], 120)))
+    x = re.split(r"\s?:\s", f["text"], maxsplit=1)[-1]
+    return nt(L, "del_de", verb=NOTE[L]["del_verb"][dl[1]], u=explain.q(L, explain.clip(dl[0], 90)), x=x)
+
+
 def reasons(v, old=True):
     """-> [dict(kind=divergence|finding|model-numbers|summary|typography, text, low, rank, gid, rule, tier[, tally])]: the items
     of tier "reason" first (most actionable first, low ones last), then the notes, then the details (see the comment
@@ -321,9 +401,7 @@ def reasons(v, old=True):
         elif L in NOTE and tally(f) and v.get("draft") and explain.tally_mirrored(v, v["draft"], f["detail"]):
             text, low, tier = f"{base} ({nt(L, 'fine_plain', why=NOTE[L]['tally_mirror'])})", True, "detail"
         elif dl and L in NOTE:
-            x = re.split(r"\s?:\s", f["text"], maxsplit=1)[-1]
-            if dl[2]: text = nt(L, "del_whole", u=explain.q(L, explain.clip(dl[0], 120)), x=explain.q(L, explain.clip(dl[3], 120)))
-            else: text = nt(L, "del_de", verb=NOTE[L]["del_verb"][dl[1]], u=explain.q(L, explain.clip(dl[0], 90)), x=x)
+            text = mirror_text(f, v)
             low, tier = True, "note"
         else:
             text, low = base, f["gid"] == "record"
@@ -339,6 +417,8 @@ def reasons(v, old=True):
         seen.add(k)
     t = _typo_note(v)
     if t: R.append(dict(kind="typography", text=t, low=True, rank=10, gid="typo", rule=None, tier="note"))
+    o = _order_note(v)
+    if o: R.append(dict(kind="order", text=o, low=True, rank=10.5, gid="order", rule=None, tier="note"))
     if v.get("status") == "flagged" and L in NOTE and not any(x["tier"] == "reason" for x in R):
         F = [x for x in R if x["kind"] == "finding"]
         M = [x for x in F if x["tier"] == "note"]
@@ -485,19 +565,22 @@ def unit(file_el, v, dec=None, final=False):
     L = v["lang"]
     u = ET.SubElement(file_el, _q("unit"), {"id": v["key"], "name": v["cud_id"]})
     notes = ET.SubElement(u, _q("notes"))
-    for nid, cat, ap, pr, text in unit_notes(v, prev=True):
-        _note(notes, text, cat, nid, ap, pr)
     state, sub = STATE[v["status"]]; text = None
     d = (dec or {}).get("decision")
-    if d in ("accept", "accept-edited") and (v["draft"] or (dec.get("text") or "").strip()):
+    if d in ("accept", "accept-edited") and not (v["draft"] or (dec.get("text") or "").strip()): d = None
+    if d in ("accept", "accept-edited"):
         text = dec.get("text") if d == "accept-edited" and dec.get("text") else None
         state, sub = ("final" if final else "reviewed"), ("gleichlaut:accepted-edited" if text is not None else "gleichlaut:accepted")
     elif d == "send-back":
         state, sub = "initial", "gleichlaut:sent-back"
+    head = decided_notes(v, d) if d else []
+    for nid, cat, ap, pr, t in head + [n for n in unit_notes(v, prev=True) if not (head and n[0] == "verdict")]:
+        _note(notes, t, cat, nid, ap, pr)
     if d:
-        why = "; ".join(x for x in (dec.get("reason"), dec.get("note")) if x)
+        why = "; ".join(x for x in (reason_text(L, dec.get("reason") or ""), dec.get("note")) if x)
         _note(notes, review_text(L, d, dec.get("at"), why), "gleichlaut:review", "review", "target", "1")
-    segments(u, v, state, sub, text, with_target=v["status"] != "human" or text is not None)
+    # a sent-back unit carries no target: the rejected draft is in its note, never a pre-translation
+    segments(u, v, state, sub, text, with_target=d != "send-back" and (v["status"] != "human" or text is not None))
     return u
 
 

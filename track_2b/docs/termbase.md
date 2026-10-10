@@ -87,20 +87,22 @@ The mining produced 76 house renderings (40 French, 36 Italian) for the 54 heads
 of that output (`termbase.REJECT`, `DROP_VARIANTS`; read by the team's coding agent against the register, not by a
 linguist) set aside 11 renderings that are fragments of the real term (« début » for Therapiebeginn, « standard »,
 « lignes », « cellules souches » …) and 4 variants that are not renderings of the term. They stay in the JSON with the
-reason and are neither exported nor used. What ships: **65 house renderings (32 French, 33 Italian) and 9 variants**.
-Re-mining reproduces the files byte for byte. A selection, with support / limitations whose German has the term:
+reason and are neither exported nor used. A BAG Italian translator's review (11 Oct 2026, [below](#fourth-review-11-oct-2026-italian-translator))
+set aside one more, IT Krankenversicherer, and moved three terms to their base form. What ships: **64 house renderings
+(32 French, 32 Italian) and 7 variants**. Re-mining reproduces the files byte for byte. A selection, with support /
+limitations whose German has the term:
 
 | German | French (share) | Italian (share) |
 |---|---|---|
-| Krankenversicherer | assureur-maladie 505/890 (57%); variant assurance maladie 266 | assicuratore 522/889 (59%); variants assicurazione malattia 282, assicurazione malattie 97 |
+| Krankenversicherer | assureur-maladie 505/890 (57%); variant assurance maladie 266 | no dominant rendering (head «assicuratore» 522/889 is a fragment; «assicuratore malattie» 312, «assicurazione malattia» 288, «assicuratore malattia» 160) |
 | Kostengutsprache | garantie de prise en charge 374/611 (61%) | garanzia di assunzione dei costi 365/611 (60%); variant garanzia di assunzione delle spese 91 |
 | Vertrauensarzt | médecin-conseil 522/581 (90%) | medico di fiducia 519/581 (89%) |
 | obligatorische Krankenpflegeversicherung | assurance obligatoire des soins 33/41 (80%) | assicurazione obbligatoria delle cure medico-sanitarie 34/41 (83%) |
 | Indikationscode | code d'indication 262/345 (76%) | codice di indicazione 182/345 (53%); variant codice d'indicazione 99 |
 | Zulassungsinhaberin | titulaire de l'autorisation 134/138 (97%) | titolare dell'omologazione 97/138 (70%); variant titolare dell'autorizzazione 42 |
-| Fabrikabgabepreis | prix de fabrique 159/249 (64%) | prezzo di fabbrica 205/249 (82%) |
+| Fabrikabgabepreis | prix de fabrique 159/249 (64%) | prezzo di fabbrica 205/249 (82%; «prezzo di fabbrica per la consegna» in 17) |
 | Mehrwertsteuer | taxe sur la valeur ajoutée 152/248 (61%) | no dominant rendering ("IVA" and "imposta sul valore aggiunto" split) |
-| Poliklinik | policliniques 63/103 (61%); variant polycliniques 35 | policlinici 85/103 (82%) |
+| Poliklinik | policlinique 63/103 (61%; the register writes «policliniques»); variant polyclinique 35 | policlinico 85/103 (82%; the register writes «policlinici») |
 
 The register itself is not uniform. For "Krankenversicherer", BAG writes "assureur-maladie" in 57% of the French texts
 and "assurance maladie" in 266 limitations. The translator's complaint is partly a complaint about the register. The
@@ -111,7 +113,7 @@ termbase makes that split visible with counts and does not pretend to a uniformi
 - Fragments, where the full phrase varies too much to keep 60% of its occurrences: FR Originalpräparat "originale"
   (BAG also writes "préparation originale"), FR Therapiebeginn "début", FR Zweitlinientherapie "traitement de deuxième"
   ("ligne" / "intention" split), FR Universitätsklinik "universitaires", FR/IT Therapielinie "lignes" / "linee",
-  FR/IT Standardtherapie "standard", IT Krankenversicherer "assicuratore" ("malattia" / "malattie" split).
+  FR/IT Standardtherapie "standard".
 - Variants that are not renderings of the term: FR Mehrwertsteuer "récupérée", "réclamée" (the verb next to it);
   IT Erstlinienbehandlung "linea di pazienti adulti".
 - Rückerstattung and Vergütungskriterien both lead to "remboursement" / "rimborso". This is correct many-to-one,
@@ -181,20 +183,21 @@ runs: majority of three for the 70B, `m1_<build>_fresh166.tsv` for the 8B builds
 | | 70B | 8B Q4_K_M | 8B Q8_0 |
 |---|---|---|---|
 | Ready drafts | 66 | 60 | 62 |
-| Ready drafts with an advisory | 1 | 29 | 22 |
+| Ready drafts with an advisory | 1 | 28 | 22 |
 | Ready drafts labelled "needs a fix" / with an advisory | 3 / 1 | 33 / 27 | 25 / 22 |
 | Labelled minor (one term) / explained by the advisory | 1 / 1 | 29 / 27 | 23 / 22 |
-| Advisories on ready drafts where BAG's text has the house rendering | 1 of 1 | 28 of 29 | 22 of 22 |
-| Advisories on ready drafts labelled "no fix needed" | 0 | 2 | 0 |
-| Flagged drafts with an advisory | 21 of 100 | 39 of 106 | 34 of 104 |
+| Advisories on ready drafts where BAG's text has the house rendering | 1 of 1 | 28 of 28 | 22 of 22 |
+| Advisories on ready drafts labelled "no fix needed" | 0 | 1 | 0 |
+| Flagged drafts with an advisory | 18 of 100 | 38 of 106 | 31 of 104 |
 
 On the 8B builds the advisory accounts for nearly all of the "ready but needs a fix" drafts. Almost all of them are
 one German term, the OKP: "obligatorische Krankenpflegeversicherung", which the 8B renders "assurance obligatoire de
 maladie" or "assicurazione obbligatoria di malattia". Not explained: wb084-fr/-it ("un SGLT-2 inhibiteur", a calque, not
 a head term) and wb087-it (an elision error). The 70B's one minor case, wb032-it, is the same OKP term. The two
-Q4_K_M advisories on drafts labelled "no fix" are wb032-fr ("assurance maladie obligatoire"; one of the three
-annotators called it a non-standard insurance term, the majority did not) and wb088-it (BAG's own
-text keeps "assicurazione malattia", the minority variant; this is the one disagreement with BAG). Flagged drafts get
+Q4_K_M advisory on a draft labelled "no fix" is wb032-fr ("assurance maladie obligatoire"; one of the three
+annotators called it a non-standard insurance term, the majority did not). (Until 11 Oct 2026 there was a second,
+wb088-it, where BAG's own text keeps "assicurazione malattia": the one disagreement with BAG, gone with the Italian
+Krankenversicherer entry; see the fourth review.) Flagged drafts get
 advisories more often because they already depart from the old text more: German left in the draft, rewritten
 sentences. (Before the third review: 17, 37 and 31 flagged drafts. The ready-draft rows did not change: the 4 / 2 / 3 more
 flagged drafts are wordings in text the draft wrote, such as "caisse maladie" or "assicurazione malattia" in a
@@ -289,6 +292,34 @@ Presentation only; verdicts, drafts and scores are unchanged. Before / after on 
   (7 / 8 / 9 of 10 / 13 / 13 hedged sentences); left in German: "le brouillon la laisse en allemand" (0 / 2 / 0); a
   sentence the German removes that the draft keeps: named (2 / 9 / 8). The rest stays "vérifier qu'elle est traduite".
 - **Segments.** "I.T. 02.06", "z.B.", "ca. 6" no longer split a segment.
+
+## Fourth review (11 Oct 2026, Italian translator)
+
+A BAG Italian translator read the termbase and the register. The mining rules are unchanged; three review entries
+(`termbase.REJECT`, `DROP_VARIANTS`, `LEMMA`) and a subject field were added, and the files re-mined from the 6 Oct
+snapshot:
+
+- **IT Krankenversicherer.** The translator: BAG writes «assicuratore malattie»; the head «assicuratore» is truncated,
+  and «assicurazione malattia» is the insurance, not the insurer. The register (889 Italian limitations whose German has
+  the term): «assicuratore malattie» 312, «assicurazione malattia» 288, «assicuratore malattia» 160,
+  «assicuratore-malattie» 19. No full phrase is a majority, so by the rule for a house rendering (M6: more than half)
+  there is none; the bare head is set aside as a fragment, like « début » or « standard », and the two «assicurazione»
+  variants are dropped as not renderings of the term. The Italian insurer note no longer fires. French
+  « assurance maladie » stays a recorded variant: BAG publishes it in 266 limitations, and a carried-over recorded
+  variant gets no note, so BAG's own amendments are not flagged (the metonymy is the same; a terminologist can decide).
+- **Poliklinik, Facharzt.** A termbase lists the base form: «policlinico» (the register writes «policlinici»),
+  « policlinique » / variant « polyclinique », « spécialiste ». Only the shown form changed (`register_form` keeps the
+  mined one); matching is inflection-tolerant and its counts are the mined ones.
+- **IT Fabrikabgabepreis.** The translator proposed «prezzo di fabbrica per la consegna». The register writes it in 17
+  of the 249 limitations; «prezzo di fabbrica» alone in 205 (82%). The rule keeps «prezzo di fabbrica».
+- **TBX subject field.** Each concept carries `<descrip type="subjectField">` (reimbursement, pricing, prescription and
+  setting, product status, therapy and clinical course: the groups the heads were picked from), which TermStar maps to
+  its subject field. No definitions: they would be written by hand, and the termbase writes nothing by hand.
+
+Numbers that changed: 65 → **64** house renderings (Italian 33 → 32), 9 → 7 variants; 8B Q4_K_M ready drafts with an
+advisory 29 → 28 (wb088-it, the one advisory where BAG's text differed, is gone: 28 of 28 now agree with BAG); flagged
+drafts with an advisory 21 / 39 / 34 → 18 / 38 / 31. Unchanged: the 22 of the 25 Q8_0 "ready but needs a fix" drafts
+the advisory names, and 27 of the 33 for Q4_K_M.
 
 ## Caveats
 

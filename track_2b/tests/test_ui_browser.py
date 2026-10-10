@@ -57,8 +57,9 @@ def test_audit_tab_opens_with_hash_and_german_default():
     if eq: assert f"Wahrscheinlich gleichwertige Formulierung ({len(eq)})" in s     # collapsed, counted, never dropped
     assert sum(len(i["rows"]) for i in I) == len(C["D"]["audit"]["rows"])            # every finding is in exactly one issue
     assert "Von Amtes wegen" in s and "Sprachdienst" in s and ">GÄL<" not in s
-    assert re.search(r'id="ex-tg" aria-expanded="true">\[−\] Experimentelle Prüfungen \(standardmässig aus\) · 6 von 31 bestätigt</button>', s)
-    assert len(re.findall(r'<tr class="exp" data-exp="[OGW]\d\d"', s)) == 6 and 'data-exp="O01"' in s and 'data-exp="G03"' in s and 'data-exp="G17"' in s
+    assert re.search(r'id="ex-tg" aria-expanded="false">\[\+\] Experimentelle Prüfungen \(ausgeschaltet\) · 6 von 31 Befunden von zwei blinden Annotatoren bestätigt · 0 entschieden</button>', s)
+    assert "27 Befunde + 11 Terminologie-Hinweise = 38, zusammengefasst in 18 Fälle; 3 davon wahrscheinlich gleichwertig (eingeklappt)." in html.unescape(s)
+    assert "15 Fälle in der Liste + 3 eingeklappt (wahrscheinlich gleichwertig) = 18 von 18 Fällen · 38 von 38 Befunden und Hinweisen" in html.unescape(s)
 
 
 def test_landing_is_the_audit_tab_and_drafts_by_hash():
@@ -70,12 +71,14 @@ def test_landing_is_the_audit_tab_and_drafts_by_hash():
     s = _dom(C["p"], "#drafts", "fr-CH,fr")
     assert re.search(r'id="t-drafts"[^>]*aria-selected="true"', s) and "Brouillons" in s and "Exporter les décisions (JSON)" in s
     ctx = re.search(r'<p class="ctx" id="ctxline"[^>]*>(.*?)</p>', s, re.S).group(1); txt = html.unescape(re.sub(r"<select.*?</select>", "", ctx, flags=re.S))
-    assert '<option value="8b" selected="">Apertus 8B Q8_0 · CPU (par défaut)</option>' in ctx and '<option value="70b">Apertus 70B · point d\'accès (moins de corrections)</option>' in html.unescape(ctx)
-    assert "166 brouillons d'Apertus 8B Q8_0." in txt and "62 prêts (37.3%) · 104 signalés · 17.5% identiques" in txt and "La voie par défaut" in txt
+    assert '<option value="8b" selected="">Jeu de test (publié) · 8B Q8_0, CPU (par défaut)</option>' in ctx and '<option value="70b">Jeu de test (publié) · 70B, point d\'accès (moins de corrections)</option>' in html.unescape(ctx)
+    assert '<option value="aug2026">Essai à blanc 08.2026 (hors production) · 8B Q8_0, CPU</option>' in ctx
+    assert "Jeu de test mis de côté : modifications passées de la LS 06.2025–02.2026, déjà publiées par l'OFSP, 166 brouillons d'Apertus 8B Q8_0." in txt
+    assert "62 prêts (37.3%) · 104 signalés · 17.5% identiques" in txt and "La variante par défaut" in txt
     assert "moins de corrections" not in txt and "70B" not in txt                       # the default lane claims no fewer edits
     s = _dom(C["p"], "#70b/wb013", "fr-CH,fr")                                         # the optional lane, same numbering
     ctx = html.unescape(re.sub(r"<select.*?</select>", "", re.search(r'<p class="ctx" id="ctxline"[^>]*>(.*?)</p>', s, re.S).group(1), flags=re.S))
-    assert "166 brouillons d'Apertus 70B." in ctx and "66 prêts (39.8%) · 100 signalés · 17.5% identiques" in ctx and "La voie 70B optionnelle" in ctx
+    assert "166 brouillons d'Apertus 70B." in ctx and "66 prêts (39.8%) · 100 signalés · 17.5% identiques" in ctx and "La variante 70B optionnelle" in ctx
     assert '<option value="70b" selected="">' in s and re.search(r'<tr class="cnt" data-pair="wb013" aria-selected="true">', s)
     s = _dom(C["p"], "#wb013", "en")                 # one numbering: the address is the number
     assert re.search(r'<tr class="cnt" data-pair="wb013" aria-selected="true"><td class="m">.*?</td><td class="m">.*?</td><td class="prd"[^>]*>[^<]*<span class="pc">[^<]*· wb013</span>', s) and "No. wb013" in s
@@ -115,7 +118,7 @@ def test_lane_select_switches_and_hash_keeps_the_lane():
     o = json.loads(html.unescape(re.findall(r'<pre id="out">(.*?)</pre>', s, re.S)[-1]))
     assert not o["err"] and o["h"].startswith("#70b/") and "166 drafts by Apertus 70B." in html.unescape(s)
     s = _dom(C["p"], "#aug2026", "de")                           # a live month of the default 8B
-    assert "Live-Monat 08.2026 (SL 01.08.2026 → 01.09.2026), 38 Entwürfe von Apertus 8B Q8_0." in html.unescape(s)
+    assert "Schattenlauf 08.2026 (SL 01.08.2026 → 01.09.2026), nicht für den produktiven Einsatz, 38 Entwürfe von Apertus 8B Q8_0." in html.unescape(s)
     assert "4 bereit · 18 markiert · 16 an die Übersetzung · 1 von 22 identisch" in html.unescape(s)
 
 
@@ -135,7 +138,56 @@ def test_save_next_waits_for_a_decision_legend_and_storage_note():
                    "st:st.textContent,done:st.className,label:b.textContent,err:window.__err});document.body.appendChild(e)},300);")
     o = json.loads(html.unescape(re.search(r'<pre id="out">(.*?)</pre>', _dom(C["p"], "#audit", "en", probe), re.S).group(1)))
     assert not o["err"] and o["d0"] is True and o["d1"] is False and o["label"] == "Save, next issue"
-    assert o["h"].startswith("Counts as decided once an answer below") and "done" in o["done"]
+    assert o["h"].startswith("Counts as decided once a version (or not clear yet) or at least one action is chosen, even only “Send to the language service”") and "done" in o["done"]
+
+
+def test_experimental_findings_are_decidable_and_exported_as_their_own_kind():
+    C = _page()
+    probe = ERR + ("setTimeout(function(){document.getElementById('ex-tg').click();var rows=document.querySelectorAll('#aud tr[data-iss]').length;"
+                   "var x=document.querySelector('#aud tr[data-iss]:last-child');x.querySelector('td').click();"
+                   "var h=document.getElementById('acase').textContent;document.querySelector('#acase button[data-a=\"act\"][data-v=\"langsvc\"]').click();"
+                   "var R=window.GleichlautReview,p=R.payload(),csv=R.auditCsv(),xi=p.audit_issues.filter(function(i){return i.kind==='experimental check'});"
+                   "var e=document.createElement('pre');e.id='out';e.textContent=JSON.stringify({rows:rows,h:h,xi:xi.length,dec:xi.filter(function(i){return i.decided}).length,"
+                   "kinds:Object.keys(p.audit_rows).map(function(k){return p.audit_rows[k].kind}),csv:csv.indexOf('experimental check')>=0,"
+                   "head:document.getElementById('ex-tg').textContent,prog:document.getElementById('progress').textContent,err:window.__err});document.body.appendChild(e)},300);")
+    o = json.loads(html.unescape(re.search(r'<pre id="out">(.*?)</pre>', _dom(C["p"], "#audit", "en", probe), re.S).group(1)))
+    assert not o["err"], o["err"]
+    assert o["rows"] == 15 + 6 and "Both blind annotators" not in o["h"] and "both blind annotators: " in o["h"]
+    assert o["xi"] == 6 and o["dec"] == 1 and o["kinds"] == ["experimental check"] and o["csv"]
+    assert o["head"].endswith("· 1 decided") and o["prog"].startswith("0/18 issues decided")      # outside the 18 issues
+
+
+def test_family_labels_distinct_in_every_lane():
+    C = _page()
+    probe = ERR + ("setTimeout(function(){var o=[].map.call(document.querySelectorAll('#f-fam option'),function(x){return x.textContent});"
+                   "var e=document.createElement('pre');e.id='out';e.textContent=JSON.stringify({o:o,err:window.__err});document.body.appendChild(e)},300);")
+    for h in ("#drafts", "#sep2026/drafts", "#aug2026/drafts", "#70b/drafts"):
+        o = json.loads(html.unescape(re.search(r'<pre id="out">(.*?)</pre>', _dom(C["p"], h, "en", probe), re.S).group(1)))
+        assert not o["err"] and len(o["o"]) > 2 and len(set(o["o"])) == len(o["o"]), (h, [x for x in o["o"] if o["o"].count(x) > 1])
+
+
+def test_import_merges_several_files_and_accept_edited_says_why():
+    C = _page(); D = C["D"]
+    it = next(it for g in D["groups"] for it in g["items"].values() if it["status"] == "flagged" and it["lang"] == "fr")
+    rd = next(it for g in D["groups"] for it in g["items"].values() if it["status"] == "ready" and it.get("termq")
+              and not (it["old"] or it.get("banner") or it.get("corr")))
+    a = {"run_sha256": D["meta"]["run_sha256"], "decisions": {it["key"]: {"decision": "accept", "at": "2026-10-09T10:00:00Z"}}}
+    b = {"run_sha256": D["meta"]["run_sha256"], "decisions": {it["key"]: {"decision": "send-back", "at": "2026-10-10T10:00:00Z"},
+                                                              rd["key"]: {"decision": "accept", "at": "2026-10-10T10:00:00Z"}}}
+    probe = ERR + ("setTimeout(function(){var R=window.GleichlautReview,m=R.importDecisions(" + json.dumps([a, b]) + ");"
+                   "location.hash='#" + rd["key"][:-3] + "';setTimeout(function(){var d=R.payload().decisions;"
+                   "var b2=document.querySelector('.dec[data-key=\"" + rd["key"] + "\"] button[data-d=\"accept-edited\"]'),w=document.getElementById('ae-" + rd["key"] + "');"
+                   "var st=document.querySelector('.lang[data-lang=\"" + rd["lang"] + "\"] .lh1 .st').textContent,tip=(document.querySelector('.lang .n')||{}).title||'';"
+                   "var e=document.createElement('pre');e.id='out';e.textContent=JSON.stringify({m:m,d:d[" + json.dumps(it["key"]) + "].decision,n:Object.keys(d).length,"
+                   "dis:b2.disabled,why:w.textContent,hid:w.hidden,st:st,tip:tip,where:document.getElementById('where').textContent,err:window.__err});document.body.appendChild(e)},300)},300);")
+    o = json.loads(html.unescape(re.search(r'<pre id="out">(.*?)</pre>', _dom(C["p"], "#drafts", "it", probe), re.S).group(1)))
+    assert not o["err"], o["err"]
+    assert o["m"].startswith("2 file uniti: 2 decisioni sulle bozze") and "In contrasto, tenuta la più recente: " + it["key"] in o["m"], o["m"]
+    assert o["d"] == "send-back" and o["n"] == 2                                     # the newest decision per item wins
+    assert o["dis"] is True and not o["hid"] and o["why"].startswith("«2 Accetta modificata» diventa disponibile")
+    assert o["st"] == "pronta · termine da verificare"
+    assert o["tip"] == "" or o["tip"].startswith("numero inserito dal codice") or o["tip"].startswith("numero scritto dal modello")
+    assert "più file JSON insieme" in o["where"]
 
 
 def test_no_horizontal_overflow_at_phone_width():

@@ -119,9 +119,12 @@ T = {
     "n_add": {"fr": "ajoute {x}", "it": "aggiunge {x}", "en": "adds {x}"},
     "n_rem": {"fr": "retire {x}", "it": "toglie {x}", "en": "removes {x}"},
     "n_none": {"fr": "aucun changement", "it": "nessun cambiamento", "en": "no change"},
-    "unknown": {"fr": "Le brouillon contient {n} code(s) de nombre inconnu(s) : vérifier les nombres.",
-                "it": "La bozza contiene {n} codice/i numerico/i sconosciuto/i: verificare i numeri.",
-                "en": "The draft contains {n} unknown number code(s): check the numbers."},
+    "unknown": {"fr": "Le brouillon contient {n} codes de nombre inconnus : vérifier les nombres.",
+                "it": "La bozza contiene {n} codici numerici sconosciuti: verificare i numeri.",
+                "en": "The draft contains {n} unknown number codes: check the numbers."},
+    "unknown_1": {"fr": "Le brouillon contient un code de nombre inconnu : vérifier les nombres.",
+                  "it": "La bozza contiene un codice numerico sconosciuto: verificare i numeri.",
+                  "en": "The draft contains an unknown number code: check the numbers."},
     "g1": {"fr": "Mots allemands restés dans le texte : {x}", "it": "Parole tedesche rimaste nel testo: {x}",
            "en": "German words left in the text: {x}"},
     "g5": {"fr": "Mots repris de l'allemand sans traduction : {x}", "it": "Parole riprese dal tedesco senza traduzione: {x}",
@@ -131,14 +134,17 @@ T = {
     "g7": {"fr": "Mot jamais vu dans les limitations françaises (coquille ?) : {x}",
            "it": "Parola mai vista nelle limitazioni italiane (refuso?): {x}",
            "en": "Word never seen in target-language limitations (typo?): {x}"},
-    "g2_rep": {"fr": "Le changement allemand {u} → {v} ne semble pas appliqué.",
-               "it": "Il cambiamento tedesco {u} → {v} non sembra applicato.",
-               "en": "The German change {u} → {v} does not seem to be applied."},
-    "g2_add": {"fr": "L'ajout allemand {v} ne semble pas repris.", "it": "L'aggiunta tedesca {v} non sembra ripresa.",
-               "en": "The German addition {v} does not seem to be carried over."},
-    "g2_del": {"fr": "La suppression allemande de {u} ne semble pas reprise.",
-               "it": "La soppressione tedesca di {u} non sembra ripresa.",
-               "en": "The German removal of {u} does not seem to be carried over."},
+    # what the check knows: the change is not found, translated, at its place in the draft (it may be missing, left in
+    # German, or written elsewhere: Omvoh wb013 has the addition, untranslated, outside the changed passage)
+    "g2_rep": {"fr": "Le changement allemand {u} → {v} n'est pas trouvé, traduit, à sa place dans le brouillon.",
+               "it": "Il cambiamento tedesco {u} → {v} non risulta tradotto al posto giusto nella bozza.",
+               "en": "The German change {u} → {v} is not found translated in the right place in the draft."},
+    "g2_add": {"fr": "L'ajout allemand {v} n'est pas trouvé, traduit, à sa place dans le brouillon.",
+               "it": "L'aggiunta tedesca {v} non risulta tradotta al posto giusto nella bozza.",
+               "en": "The German addition {v} is not found translated in the right place in the draft."},
+    "g2_del": {"fr": "La suppression allemande de {u} n'est pas trouvée à sa place dans le brouillon.",
+               "it": "La soppressione tedesca di {u} non risulta ripresa al posto giusto nella bozza.",
+               "en": "The German removal of {u} is not found carried over in the right place in the draft."},
     "g2_add_s": {"fr": "L'allemand ajoute ou réécrit ici la phrase {v} : vérifier qu'elle est traduite dans le brouillon.",
                  "it": "Il tedesco aggiunge o riscrive qui la frase {v}: verificare che sia tradotta nella bozza.",
                  "en": "The German adds or rewrites the sentence {v} here: check that the draft translates it."},
@@ -162,7 +168,8 @@ T = {
     "g4": {"fr": "Passage répété (une seule fois dans l'ancien texte) : {x}",
            "it": "Passo ripetuto (una sola volta nel vecchio testo): {x}",
            "en": "Passage repeated (once only in the old text): {x}"},
-    "more": {"fr": "et {n} autre(s)", "it": "e altri {n}", "en": "and {n} more"},
+    "more": {"fr": "et {n} autres", "it": "e altri {n}", "en": "and {n} more"},
+    "more_1": {"fr": "et 1 autre", "it": "e 1 altro", "en": "and 1 more"},
     "corr": {"fr": "Le brouillon corrige aussi une divergence de l'ancien texte : {o} → {n} (l'allemand dit {d}). À vérifier.",
              "it": "La bozza corregge anche una divergenza del vecchio testo: {o} → {n} (il tedesco dice {d}). Da verificare.",
              "en": "The draft also corrects a divergence of the old text: {o} → {n} (the German says {d}). Please check."},
@@ -202,6 +209,7 @@ MODAL = {"MUST": {"fr": "obligation : doit", "it": "obbligo: deve", "en": "oblig
 def rl(lang): return lang if lang in ("fr", "it") else "en"
 def _fr(s): return re.sub(r" ([;:!?»])", "\u00a0\\1", s).replace("« ", "«\u00a0") if s else s
 def tr(lang, k, **kw):
+    if kw.get("n") == 1 and k + "_1" in T: k += "_1"            # singular form
     s = T[k][rl(lang)].format(**kw)
     return _fr(s) if rl(lang) == "fr" else s
 def q(lang, s): a, b = QUOTE[rl(lang)]; return f"{a}{s}{b}"

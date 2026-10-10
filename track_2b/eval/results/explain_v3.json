@@ -77,10 +77,10 @@
     "left_to_house": 2,
     "notes": {
      "kept": 8,
-     "missing": 24,
-     "variant": 8
+     "missing": 21,
+     "variant": 5
     },
-    "rewrote_variant": 1,
+    "rewrote_variant": 0,
     "rewrote_wording": 2
    }
   },
@@ -153,8 +153,8 @@
     "left_to_house": 3,
     "notes": {
      "kept": 8,
-     "missing": 87,
-     "variant": 8
+     "missing": 83,
+     "variant": 5
     },
     "rewrote_variant": 0,
     "rewrote_wording": 1
@@ -228,10 +228,10 @@
     "left_to_house": 3,
     "notes": {
      "kept": 8,
-     "missing": 64,
-     "variant": 9
+     "missing": 61,
+     "variant": 5
     },
-    "rewrote_variant": 1,
+    "rewrote_variant": 0,
     "rewrote_wording": 1
    }
   },
@@ -315,13 +315,13 @@
     "lexicon_partly": 0
    },
    "termbase": {
-    "left_to_house": 19,
+    "left_to_house": 16,
     "notes": {
      "kept": 1,
      "missing": 22,
-     "variant": 6
+     "variant": 3
     },
-    "rewrote_variant": 6,
+    "rewrote_variant": 3,
     "rewrote_wording": 0
    }
   },
@@ -394,13 +394,13 @@
     "lexicon_partly": 0
    },
    "termbase": {
-    "left_to_house": 16,
+    "left_to_house": 15,
     "notes": {
      "kept": 1,
-     "missing": 42,
-     "variant": 4
+     "missing": 41,
+     "variant": 3
     },
-    "rewrote_variant": 4,
+    "rewrote_variant": 3,
     "rewrote_wording": 0
    }
   },
@@ -475,13 +475,13 @@
     "lexicon_partly": 0
    },
    "termbase": {
-    "left_to_house": 21,
+    "left_to_house": 20,
     "notes": {
      "kept": 1,
-     "missing": 37,
-     "variant": 4
+     "missing": 36,
+     "variant": 3
     },
-    "rewrote_variant": 4,
+    "rewrote_variant": 3,
     "rewrote_wording": 0
    }
   }

@@ -11,7 +11,7 @@
    },
    "drafts": 166,
    "flagged": 100,
-   "flagged_with_advisory": 21,
+   "flagged_with_advisory": 18,
    "ready": 66,
    "ready_advisory_keys": [
     "wb032-it"
@@ -31,20 +31,18 @@
    "run": "runs/70b_fresh166_g3_final.jsonl"
   },
   "8b_q4_k_m": {
-   "advisories_ready": 29,
+   "advisories_ready": 28,
    "advisories_ready_agree_with_bag": 28,
    "by_kind": {
-    "missing": 28,
-    "variant": 1
+    "missing": 28
    },
    "by_term": {
     "fr:obligatorische Krankenpflegeversicherung": 14,
-    "it:Krankenversicherer": 1,
     "it:obligatorische Krankenpflegeversicherung": 14
    },
    "drafts": 166,
    "flagged": 106,
-   "flagged_with_advisory": 39,
+   "flagged_with_advisory": 38,
    "ready": 60,
    "ready_advisory_keys": [
     "wb015-fr",
@@ -74,15 +72,11 @@
     "wb029-it",
     "wb030-fr",
     "wb031-it",
-    "wb032-fr",
-    "wb088-it"
+    "wb032-fr"
    ],
-   "ready_advisory_keys_bag_differs": [
-    "wb088-it"
-   ],
+   "ready_advisory_keys_bag_differs": [],
    "ready_advisory_keys_labelled_no_fix": [
-    "wb032-fr",
-    "wb088-it"
+    "wb032-fr"
    ],
    "ready_exact_with_advisory": 0,
    "ready_minor": 29,
@@ -122,7 +116,7 @@
    "ready_minor_with_advisory": 27,
    "ready_needs_fix": 33,
    "ready_needs_fix_with_advisory": 27,
-   "ready_with_advisory": 29,
+   "ready_with_advisory": 28,
    "run": "runs/8b_q4_k_m_fresh166_g3_final.jsonl"
   },
   "8b_q8_0": {
@@ -137,7 +131,7 @@
    },
    "drafts": 166,
    "flagged": 104,
-   "flagged_with_advisory": 34,
+   "flagged_with_advisory": 31,
    "ready": 62,
    "ready_advisory_keys": [
     "wb015-it",
@@ -207,13 +201,13 @@
   "heads": 54,
   "house": {
    "fr": 32,
-   "it": 33
+   "it": 32
   },
-  "house_total": 65,
-  "sha256": "fee0ee5be5948f23e584ddd80df2731ed43ff42505964d153477767c8a7c93f6",
+  "house_total": 64,
+  "sha256": "2fbb29edf82d55b5147806046491a710a3bf406ee35b832dfaac5db65ff1e4ff",
   "variants": {
    "fr": 3,
-   "it": 6
+   "it": 4
   }
  }
 }
