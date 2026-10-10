@@ -15,6 +15,9 @@ something different in each language is a condition nobody can apply consistentl
   listed (Nemluvio, Diaphin). In the register they become 18 issues, one decision each. On 1,000 divergences planted into clean texts it finds
   93.0% of changed numbers, 73.0% of changed units and 75.0% of deleted clauses. Flipped operators and negations remain
   blind spots: pre-registered checks find 74.5% of planted operator flips but only 6 of 31 register findings are confirmed, so they ship off.
+  Even so they surfaced three divergences nobody had listed: Amvuttra's French stop rule says an NIS increase "≤ 10"
+  points where German and Italian say "> 10", and the Italian of Beyonttra and Vyndaqel says "on deve essere combinato"
+  where the German says "darf nicht … kombiniert werden", so a ban reads as an obligation.
 - **Drafting is a review aid, air-gapped on a CPU** with Apertus 8B. When the German changes, Apertus pre-fills the French
   and Italian, code writes every number, and frozen checks say why a draft needs a look. On 166 held-out amendments
   (83 German changes) its drafts need 33.1% fewer word edits, about 670 a month at today's volume, and its 62 ready
