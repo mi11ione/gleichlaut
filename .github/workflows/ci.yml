@@ -23,7 +23,7 @@ jobs:
       - name: tests (incl. operations tests against gleichlaut.fake_endpoint, in process on localhost)
         run: PYTHONPATH=src python tests/run.py
       - name: claims (every number in README / report / notes -> results file)
-        run: python tools/claims.py --scan README.md technical_report.md docs/notes-field.md
+        run: python tools/claims.py --scan README.md technical_report.md docs/notes-field.md ../README.md
       - name: no secrets in the tree
         run: "! git grep -I -n -E '(sk-[A-Za-z0-9]{20,}|hf_[A-Za-z0-9]{30,}|BEGIN [A-Z ]*PRIVATE KEY|publicai\\.key)' -- . ':!.github'"
   make-run:

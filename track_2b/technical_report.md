@@ -6,7 +6,7 @@ Numbers never reach the model; frozen deterministic checks decide what is ready.
 - **Track:** Track 2B: Gleichlaut
 - **Event:** Online
 - **Team:** 444
-- **Demo:** `VIDEO_URL` · review register: https://mi11ione.github.io/gleichlaut/
+- **Review register (live):** https://mi11ione.github.io/gleichlaut/
 - **Declared maturity:** feasibility study
 
 ## 1. Summary

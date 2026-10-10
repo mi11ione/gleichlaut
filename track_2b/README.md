@@ -5,8 +5,7 @@ amends a condition in German, Gleichlaut drafts the matching French and Italian 
 whole register for places where the languages already disagree. Numbers never reach the model; code writes them.
 
 Track 2B · team 444 · maturity: feasibility study · Apertus v1.5 8B + 70B ·
-**[open the review register](https://mi11ione.github.io/gleichlaut/)** · [technical report](technical_report.md) ·
-[demo video](VIDEO_URL)
+**[open the review register](https://mi11ione.github.io/gleichlaut/)** · [technical report](technical_report.md)
 
 ## The job
 
