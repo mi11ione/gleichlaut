@@ -466,6 +466,168 @@
    "of_tests": 13,
    "tests": 13
   },
+  "round5": {
+   "by_kind": {
+    "negation": 18,
+    "number_word": 9,
+    "operator": 4
+   },
+   "by_kind_half": {
+    "negation": {
+     "dev": 4,
+     "held": 14
+    },
+    "number_word": {
+     "dev": 5,
+     "held": 4
+    },
+    "operator": {
+     "dev": 1,
+     "held": 3
+    }
+   },
+   "by_kind_lang": {
+    "negation": {
+     "fr": 11,
+     "it": 7
+    },
+    "number_word": {
+     "fr": 4,
+     "it": 5
+    },
+    "operator": {
+     "fr": 1,
+     "it": 3
+    }
+   },
+   "findings": 31,
+   "limitations": 27,
+   "note": "PREREG R15: operator / negation / number_word, reported apart from the kinds above (findings_r5 in audit_<date>.json); 'on' is set by the R15 outcome; number findings carry a display-only 'counterpart'",
+   "number_counterparts": {
+    "N01": {
+     "de": [
+      {
+       "for_value": "12",
+       "src": "digit",
+       "unit": "%",
+       "value": "6"
+      }
+     ],
+     "it": [
+      {
+       "for_value": "6",
+       "src": "digit",
+       "unit": "%",
+       "value": "12"
+      }
+     ]
+    },
+    "N02": {
+     "de": [
+      {
+       "for_value": "30",
+       "src": "digit",
+       "unit": "kg",
+       "value": "15"
+      }
+     ],
+     "fr": [
+      {
+       "for_value": "15",
+       "src": "digit",
+       "unit": "kg",
+       "value": "30"
+      }
+     ]
+    },
+    "N03": {
+     "de": [
+      {
+       "for_value": "30",
+       "src": "digit",
+       "unit": "kg",
+       "value": "15"
+      }
+     ],
+     "fr": [
+      {
+       "for_value": "15",
+       "src": "digit",
+       "unit": "kg",
+       "value": "30"
+      }
+     ]
+    },
+    "N04": {
+     "de": [
+      {
+       "for_value": "5",
+       "src": "digit",
+       "unit": "kg",
+       "value": "15"
+      }
+     ],
+     "fr": [
+      {
+       "for_value": "15",
+       "src": "digit",
+       "unit": "kg",
+       "value": "5"
+      }
+     ]
+    },
+    "N16": {
+     "fr": [
+      {
+       "for_value": "4",
+       "src": "digit",
+       "unit": "mmol",
+       "value": "1.4"
+      }
+     ]
+    },
+    "N17": {
+     "it": [
+      {
+       "for_value": "4",
+       "src": "digit",
+       "unit": "mmol",
+       "value": "1.4"
+      }
+     ]
+    },
+    "N18": {
+     "it": [
+      {
+       "for_value": "8",
+       "src": "word",
+       "unit": "settimane",
+       "value": "4"
+      }
+     ]
+    }
+   },
+   "on": {
+    "negation": false,
+    "number_word": false,
+    "operator": false
+   },
+   "rules_sha256": "2d5dcaaf3b7a8c53f8baae797f045708ac843efeef0db692aa383d3a64d8e1bc",
+   "worklist": {
+    "negation": {
+     "findings": 18,
+     "labelled": 18
+    },
+    "number_word": {
+     "findings": 9,
+     "labelled": 9
+    },
+    "operator": {
+     "findings": 4,
+     "labelled": 4
+    }
+   }
+  },
   "s1_census_reference": {
    "num": "3/15 = 20% strict",
    "precision": "3/50 = 6% (all categories)",

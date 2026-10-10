@@ -13,7 +13,8 @@ something different in each language is a condition nobody can apply consistentl
 - **The audit runs today, with no model.** It reads all 1,688 limitations in German, French and Italian and turns them
   into 27 findings; two blind annotators and a third on disagreements confirm 17 of them as real, among them the 10 divergences our own earlier numeric census of the register had
   listed (Nemluvio, Diaphin). In the register they become 18 issues, one decision each. On 1,000 divergences planted into clean texts it finds
-  93.0% of changed numbers, 73.0% of changed units and 75.0% of deleted clauses.
+  93.0% of changed numbers, 73.0% of changed units and 75.0% of deleted clauses. Flipped operators and negations remain
+  blind spots: pre-registered checks find 74.5% of planted operator flips but only 6 of 31 register findings are confirmed, so they ship off.
 - **Drafting is a review aid, air-gapped on a CPU** with Apertus 8B. When the German changes, Apertus pre-fills the French
   and Italian, code writes every number, and frozen checks say why a draft needs a look. On 166 held-out amendments
   (83 German changes) its drafts need 33.1% fewer word edits, about 670 a month at today's volume, and its 62 ready

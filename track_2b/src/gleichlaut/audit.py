@@ -791,7 +791,7 @@ def likely_equivalent(f, de, tgt):
 # COUNTERPART (display only, number findings): the value the aligned sentence of the other side states instead, with the
 # same unit class (Nemluvio: DE 'alle acht Wochen', IT 'ogni quattro settimane' -> IT 4).
 KINDS_R5 = ("operator", "negation", "number_word")
-R5_ON = {"operator": False, "negation": False, "number_word": False}     # set by the R15 outcome (PREREG results log)
+R5_ON = {"operator": False, "negation": False, "number_word": False}     # R15 outcome (PREREG results log): no kind passed; all off
 ALIGN_MAX, ALIGN_MAX_UNEVEN = 0.4, 0.2
 _ABBR = (r"(?:[A-Z]|z|d|u|s|v|o|ca|bzw|max|min|resp|vgl|Nr|inkl|exkl|evtl|ggf|sog|usw|etc|Abs|Art|Ziff|lit|al|cf|ex|env|p|"
          r"c|i|e|vs|Std|Kps|Inj|Fr|ev|ecc|es|ad|sig|Dr|Prof|Mio|Mrd|Lsg|Tbl|Amp|Fl|Tabl|ml|mg|kg|mind|év|ann|cap|n|ss|segg|"

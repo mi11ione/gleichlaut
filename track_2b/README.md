@@ -50,8 +50,9 @@ measured independently on 1,000 divergences planted into clean limitations: 77.2
 changed number, 94.0% for a field in the wrong language, 73.0% for a changed unit, 75.0% for a deleted clause and 51.0%
 for a typo next to a number. Those faults sit where the audit looks by design: a number bound to a unit (dose, interval,
 weight, percentage). Planted at any number token instead, recall is 55.5% (37.0% for number words), and flipped
-operators or dropped negations are not read at all (0 of 200 each): the next rules to add, listed in
-[docs/audit.md](docs/audit.md).
+operators or dropped negations are not read at all (0 of 200 each). Pre-registered checks for these blind spots (R15)
+find 74.5% of planted operator flips, 44.0% of dropped negations and 84.0% of changed number words, but only 6 of
+their 31 register findings are confirmed (real or minor), so they ship off and the blind spots stand ([docs/audit.md](docs/audit.md)).
 
 The two meet in the review register. Nemluvio's old Italian already says "every 4 weeks"; the 70B draft (the register's
 "fewer edits" lane) writes "every 8 weeks", matching the German, and the register shows it as a correction to check, not

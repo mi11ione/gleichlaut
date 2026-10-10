@@ -1,0 +1,32 @@
+id	fid	kind	cud	lang	half	A	B	T	final	note_A
+R00	G05	negation	ERBITUX5	fr	dev	not	not		not	nicht-mutiertem Wildtyp-Ras-Gen = "gène RAS de type sauvage"; wild type means non-mutated, same condition.
+R01	O01	operator	AMVUTTRA.01a	fr	dev	real	real		real	Stop criteria: DE "NIS-Zunahme > 10 Punkte" vs FR "augmentation du score NIS ≤ 10 points"; inverts discontinuation threshold.
+R02	G11	negation	LIORESAL	fr	held	not	not		not	Therapierefraktäre = "résistante au traitement"; no real negation, same meaning.
+R03	G02	negation	AMVUTTRA.02	fr	held	not	not		not	FR "ne peuvent se faire que par" = DE "kann nur durch"; restrictive ne...que, same condition.
+R04	G18	negation	ZAVICEFTA2	fr	held	minor	minor		minor	DE refund for "verfallenen Ampullen" of "angebrochene Packung"; FR "ampoules non utilisées"; expired vs unused, practically equivalent.
+R05	O04	operator	WYNZORA	it	held	not	not		not	IT "Non sono rimborsati più di 60 g ... e più di 120 g": negation covers both; still upper bound.
+R06	G12	negation	LIORESAL	it	held	not	not		not	Therapierefraktäre = "resistente al trattamento"; same meaning, no negation difference.
+R07	G13	negation	MABTHERA.02	fr	dev	not	not		not	nicht abgeschlossener Familienplanung = "souhaite encore avoir un ou des enfants"; same condition rephrased.
+R08	W02	number_word	IDEFIRIX	it	held	not	not		not	IT has "uno dei cinque ospedali universitari" and "I cinque ospedali universitari"; number present, checker artefact.
+R09	W01	number_word	HEMLIBRA.XXb	fr	held	minor	minor		minor	FR "Pour toutes les deux indications" vs DE "Für alle Indikationen"; adds count, conditions still apply to all.
+R10	G14	negation	RIXATHON.02	fr	held	not	not		not	nicht abgeschlossener Familienplanung = "souhaite encore avoir un ou des enfants"; same condition.
+R11	G17	negation	VYNDAQEL.01b	it	held	real	real		real	IT "VYNDAQEL on deve essere combinato" (typo for non) vs DE "darf nicht ... kombiniert werden"; prohibition literally lost.
+R12	G07	negation	HEMLIBRA.XXb	it	held	not	not		not	DE "praktisch kein Zwischenhandel" vs IT "praticamente assenti"; same meaning, pricing note.
+R13	W06	number_word	STELARAPP4	fr	dev	not	not		not	DE "folgenden drei systemischen Therapien" lists three; FR lists same three drugs without number word.
+R14	W03	number_word	LEQVIO.01	it	dev	not	not		not	DE "das Fünffache" = IT "cinque volte"; same threshold.
+R15	G09	negation	KEYTRUDA.03---Inj-L-s---1L-plattenepitheliales-NSCLC-KN407	fr	held	not	not		not	FR "non à petites cellules" is the NSCLC term name, not a negated condition.
+R16	W09	number_word	TEPKINLY.01b	fr	dev	not	not		not	FR "au moins deuxlignes" (spacing artefact) = DE "zwei oder mehr"; same.
+R17	G06	negation	GALAFOLD3	it	held	not	not		not	DE "bis dato nicht charakterisierte Mutation" = IT "mutazione finora sconosciuta"; same.
+R18	O02	operator	NPLATE4	it	held	not	not		not	DE "mindestens 20 ... nicht erreichen" = IT "ancora inferiore a 20"; same stop rule.
+R19	O03	operator	OPDIVO.03a	it	held	not	not		not	IT "fino al 31.08.2021" matches DE "bis zum 31.08.2021"; checker paired wrong date clause.
+R20	G08	negation	KEYTRUDA.03	fr	held	not	not		not	FR "non à petites cellules" is the NSCLC term name, not a negated condition.
+R21	G15	negation	RUXIENCE.02	fr	held	not	not		not	nicht abgeschlossener Familienplanung = "souhaite encore avoir un ou des enfants"; same condition.
+R22	G01	negation	AMVUTTRA.02	fr	held	not	not		not	DE "nicht eindeutigen Befundes"/"keines eindeutigen Ausschlusses" = FR "non manifeste"/"défaut d'une exclusion claire"; same.
+R23	G16	negation	TRUXIMA.02	fr	dev	not	not		not	nicht abgeschlossener Familienplanung = "souhaite encore avoir un ou des enfants"; same condition.
+R24	W04	number_word	PRALUENT.01a	it	dev	not	not		not	DE "das Fünffache" = IT "cinque volte"; same threshold.
+R25	W07	number_word	STELARAPP4	it	dev	not	not		not	DE "folgenden drei systemischen Therapien" lists three; IT lists same three without number word.
+R26	W05	number_word	REPATHA.01a	it	held	not	not		not	DE "das Fünffache" = IT "cinque volte"; same threshold.
+R27	W08	number_word	TEPKINLY.01a	fr	held	not	not		not	FR "au moins deuxlignes" (spacing artefact) = DE "zwei oder mehr"; same.
+R28	G04	negation	DECADURABOL2	it	held	minor	minor		minor	DE "Therapieoptionen ausgeschöpft" vs IT "si siano rivelate inefficaci"; exhausted vs proven ineffective, slightly narrower.
+R29	G03	negation	BEYONTTRA	it	dev	real	real		real	IT "BEYONTTRA on deve essere combinato" (typo for non) vs DE "darf nicht ... kombiniert werden"; prohibition literally lost.
+R30	G10	negation	KEYTRUDA.XX---Inf-Konz	it	held	not	not		not	IT "Non si può applicare l'IVA" matches DE "Mehrwertsteuer kann nicht ... zurückgefordert"; both negated, misalignment.

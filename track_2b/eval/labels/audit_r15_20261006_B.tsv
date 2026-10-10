@@ -1,0 +1,32 @@
+id	answer	note
+R30	not	IT 'Non si può applicare l'IVA' matches DE 'Mehrwertsteuer kann nicht zusätzlich'; both negated, misaligned pairing.
+R29	real	IT 'BEYONTTRA on deve essere combinato' (typo, negation lost) vs DE 'darf nicht ... kombiniert werden'.
+R28	minor	DE 'Therapieoptionen ausgeschöpft' vs IT 'si siano rivelate inefficaci'; exhausted vs proved ineffective, slight nuance.
+R27	not	DE 'nach zwei oder mehr' = FR 'au moins deuxlignes'; glued word is parser artefact.
+R26	not	DE 'mindestens das Fünffache' = IT 'almeno cinque volte'; same threshold.
+R25	not	DE 'eine der folgenden drei systemischen Therapien' vs IT 'uno dei seguenti trattamenti' listing same three drugs.
+R24	not	DE 'mindestens das Fünffache' = IT 'almeno cinque volte'; same threshold.
+R23	not	DE 'nicht abgeschlossener Familienplanung' = FR 'souhaite encore avoir un ou des enfants'; same meaning.
+R22	not	All DE 'nicht' sentences have FR negations ('ne doit pas', 'n'est pas remboursé', 'non manifeste'); alignment artefact.
+R21	not	DE 'nicht abgeschlossener Familienplanung' = FR 'souhaite encore avoir un ou des enfants'; same meaning.
+R20	not	FR 'non à petites cellules' just expands NSCLC; DE 'NSCLC' same condition.
+R19	not	DE 'bis zum 31.08.2021'/'ab dem 01.09.2021' = IT 'fino al 31.08.2021'/'a partire dal 01.09.2021'; misaligned dates.
+R18	not	DE 'mindestens 20 ... nicht erreichen' = IT 'ancora inferiore a 20'; logically identical.
+R17	not	DE 'bis dato nicht charakterisierte Mutation' = IT 'mutazione finora sconosciuta'; 'darf nicht' = 'non deve'.
+R16	not	DE 'nach zwei oder mehr' = FR 'au moins deuxlignes'; glued word is parser artefact.
+R15	not	FR 'non à petites cellules' just expands NSCLC; DE 'NSCLC' same condition.
+R14	not	DE 'mindestens das Fünffache' = IT 'almeno cinque volte'; same threshold.
+R13	not	DE 'eine der folgenden drei systemischen Therapien' vs FR 'l'un des traitements ... suivants' listing same three.
+R12	not	DE 'praktisch kein Zwischenhandel' = IT 'commissioni intermedie praticamente assenti'; descriptive, same.
+R11	real	IT 'VYNDAQEL on deve essere combinato' (typo, negation lost) vs DE 'darf nicht ... kombiniert werden'.
+R10	not	DE 'nicht abgeschlossener Familienplanung' = FR 'souhaite encore avoir un ou des enfants'; same meaning.
+R09	minor	FR 'Pour toutes les deux indications' vs DE 'Für alle Indikationen'; same conditions if two indications.
+R08	not	DE 'fünf Universitätsspitälern' = IT 'cinque ospedali universitari'; misaligned pairing.
+R07	not	DE 'nicht abgeschlossener Familienplanung' = FR 'souhaite encore avoir un ou des enfants'; same meaning.
+R06	not	DE 'Therapierefraktäre' = IT 'resistente al trattamento'; no negation, parser artefact.
+R05	not	DE 'nicht mehr als 120 g' = IT 'Non sono rimborsati ... più di 120 g'; same cap.
+R04	minor	DE refund for 'angebrochene Packung ... verfällt' vs FR 'n'ayant pas utilisé l'intégralité'; expiry requirement absent.
+R03	not	FR 'ne peuvent se faire que par' = DE 'kann nur ... erfolgen'; restrictive ne...que, same meaning.
+R02	not	DE 'Therapierefraktäre' = FR 'résistante au traitement'; no negation, parser artefact.
+R01	real	Stop criteria: DE 'NIS-Zunahme > 10 Punkte' vs FR 'augmentation du score NIS ≤ 10 points'; inverted.
+R00	not	DE 'nicht-mutiertem Wildtyp-Ras-Gen' = FR 'gène RAS de type sauvage'; same.

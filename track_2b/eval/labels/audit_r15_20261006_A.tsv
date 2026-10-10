@@ -1,0 +1,32 @@
+id	answer	note
+R00	not	"nicht-mutiertem Wildtyp-Ras-Gen" = "gène RAS de type sauvage"; wild type means non-mutated, same condition.
+R01	real	Stop criteria: DE "NIS-Zunahme > 10 Punkte" vs FR "augmentation du score NIS ≤ 10 points"; inverts discontinuation threshold.
+R02	not	"Therapierefraktäre" = "résistante au traitement"; no real negation, same meaning.
+R03	not	FR "ne peuvent se faire que par" = DE "kann nur durch"; restrictive ne...que, same condition.
+R04	minor	DE refund for "verfallenen Ampullen" of "angebrochene Packung"; FR "ampoules non utilisées"; expired vs unused, practically equivalent.
+R05	not	IT "Non sono rimborsati più di 60 g ... e più di 120 g": negation covers both; still upper bound.
+R06	not	"Therapierefraktäre" = "resistente al trattamento"; same meaning, no negation difference.
+R07	not	"nicht abgeschlossener Familienplanung" = "souhaite encore avoir un ou des enfants"; same condition rephrased.
+R08	not	IT has "uno dei cinque ospedali universitari" and "I cinque ospedali universitari"; number present, checker artefact.
+R09	minor	FR "Pour toutes les deux indications" vs DE "Für alle Indikationen"; adds count, conditions still apply to all.
+R10	not	"nicht abgeschlossener Familienplanung" = "souhaite encore avoir un ou des enfants"; same condition.
+R11	real	IT "VYNDAQEL on deve essere combinato" (typo for non) vs DE "darf nicht ... kombiniert werden"; prohibition literally lost.
+R12	not	DE "praktisch kein Zwischenhandel" vs IT "praticamente assenti"; same meaning, pricing note.
+R13	not	DE "folgenden drei systemischen Therapien" lists three; FR lists same three drugs without number word.
+R14	not	DE "das Fünffache" = IT "cinque volte"; same threshold.
+R15	not	FR "non à petites cellules" is the NSCLC term name, not a negated condition.
+R16	not	FR "au moins deuxlignes" (spacing artefact) = DE "zwei oder mehr"; same.
+R17	not	DE "bis dato nicht charakterisierte Mutation" = IT "mutazione finora sconosciuta"; same.
+R18	not	DE "mindestens 20 ... nicht erreichen" = IT "ancora inferiore a 20"; same stop rule.
+R19	not	IT "fino al 31.08.2021" matches DE "bis zum 31.08.2021"; checker paired wrong date clause.
+R20	not	FR "non à petites cellules" is the NSCLC term name, not a negated condition.
+R21	not	"nicht abgeschlossener Familienplanung" = "souhaite encore avoir un ou des enfants"; same condition.
+R22	not	DE "nicht eindeutigen Befundes"/"keines eindeutigen Ausschlusses" = FR "non manifeste"/"défaut d'une exclusion claire"; same.
+R23	not	"nicht abgeschlossener Familienplanung" = "souhaite encore avoir un ou des enfants"; same condition.
+R24	not	DE "das Fünffache" = IT "cinque volte"; same threshold.
+R25	not	DE "folgenden drei systemischen Therapien" lists three; IT lists same three without number word.
+R26	not	DE "das Fünffache" = IT "cinque volte"; same threshold.
+R27	not	FR "au moins deuxlignes" (spacing artefact) = DE "zwei oder mehr"; same.
+R28	minor	DE "Therapieoptionen ausgeschöpft" vs IT "si siano rivelate inefficaci"; exhausted vs proven ineffective, slightly narrower.
+R29	real	IT "BEYONTTRA on deve essere combinato" (typo for non) vs DE "darf nicht ... kombiniert werden"; prohibition literally lost.
+R30	not	IT "Non si può applicare l'IVA" matches DE "Mehrwertsteuer kann nicht ... zurückgefordert"; both negated, misalignment.

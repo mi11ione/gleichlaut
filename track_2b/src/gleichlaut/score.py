@@ -548,6 +548,58 @@ def audit_recall():
     return out
 
 
+def audit_r15():
+    """PREREG R15: audit round 5 (operator / negation / number_word). Held planted recall before and after
+    (eval/results/audit_injection_r15_held.json, tools/audit_inject.py --protocol r15 --half held), the dev design run
+    beside it (labelled dev), the new findings on the 6 Oct 2026 register (data/audit summary 'round5'), their precision
+    by two blind annotators + a third (eval/labels/audit_r15_20261006.tsv: final real/minor/not), and the pass rule per
+    kind as pre-registered."""
+    from . import audit as A
+    R = os.path.join(core.ROOT, "eval", "results")
+    pct = lambda v: None if v is None else round(100 * v, 1)
+    def rec(p):
+        d = json.load(open(p, encoding="utf-8"))
+        return {t: dict(n=v["n"], before=v["detected_before"], after=v["detected_after"], before_pct=pct(v["recall_before"]),
+                        after_pct=pct(v["recall_after"]), wilson95_after_pct=[pct(x) for x in v["wilson95_after"]],
+                        by_lang={L: dict(n=b["n"], before=b["before"], after=b["after"]) for L, b in v["by_lang"].items()})
+                for t, v in d["types"].items()}, d
+    held, H = rec(os.path.join(R, "audit_injection_r15_held.json"))
+    dp = os.path.join(R, "audit_injection_r15_dev.json")
+    dev = rec(dp)[0] if os.path.exists(dp) else None
+    S = json.load(open(os.path.join(DATA, "audit", "audit_20261006_summary.json"), encoding="utf-8"))["round5"]
+    lab = []
+    lp = os.path.join(LABELS, "audit_r15_20261006.tsv")
+    if os.path.exists(lp):
+        rows = [l.split("\t") for l in open(lp, encoding="utf-8").read().splitlines()]
+        hd = rows[0]; lab = [dict(zip(hd, r)) for r in rows[1:]]
+    prec = {}
+    for k in A.KINDS_R5:
+        L = [r for r in lab if r["kind"] == k]; y = [r for r in L if r["final"] in ("real", "minor")]; st = [r for r in L if r["final"] == "real"]
+        Lh = [r for r in L if r["half"] == "held"]; yh = [r for r in Lh if r["final"] in ("real", "minor")]
+        prec[k] = dict(findings=S["by_kind"][k], labelled=len(L), real_or_minor=len(y), real=len(st),
+                       precision_pct=round(100 * len(y) / len(L), 1) if L else None,
+                       wilson95_pct=[round(v, 1) for v in wilson(len(y), len(L))] if L else None,
+                       strict_pct=round(100 * len(st) / len(L), 1) if L else None,
+                       held_labelled=len(Lh), held_real_or_minor=len(yh))
+    agree = [r for r in lab if (r["A"] in ("real", "minor")) == (r["B"] in ("real", "minor"))]
+    po = len(agree) / len(lab) if lab else None
+    pa = sum(r["A"] in ("real", "minor") for r in lab) / len(lab) if lab else 0; pb = sum(r["B"] in ("real", "minor") for r in lab) / len(lab) if lab else 0
+    pe = pa * pb + (1 - pa) * (1 - pb); kappa = round((po - pe) / (1 - pe), 3) if lab and pe < 1 else None
+    rp = lambda t: held[t]["after"] / held[t]["n"] if held[t]["n"] else 0
+    pp = lambda k: prec[k]["precision_pct"] is None or prec[k]["precision_pct"] >= 50
+    crit = dict(operator=dict(recall=dict(operator=rp("operator") >= 0.6), precision=pp("operator")),
+                negation=dict(recall=dict(negation_drop=rp("negation_drop") >= 0.5, negation_add=rp("negation_add") >= 0.5), precision=pp("negation")),
+                number_word=dict(recall=dict(number_word=rp("number_word") >= 0.6), precision=pp("number_word")))
+    dec = {k: dict(pass_=all(v["recall"].values()) and v["precision"], **v) for k, v in crit.items()}
+    dec = {k: dict(**{x: y for x, y in v.items() if x != "pass_"}, **{"pass": v["pass_"], "on": A.R5_ON[k]}) for k, v in dec.items()}
+    return dict(prereg="R15", rules_sha256=S["rules_sha256"], seed=H["seed"], recall=held, recall_dev=dev,
+                register=dict(findings=S["findings"], by_kind=S["by_kind"], by_kind_half=S["by_kind_half"], limitations=S["limitations"],
+                              real_or_minor=sum(v["real_or_minor"] for v in prec.values()), real=sum(v["real"] for v in prec.values())),
+                precision=prec, labels=dict(records=len(lab), agreement=len(agree), kappa=kappa,
+                                            tie_break=sum(1 for r in lab if r.get("T"))),
+                decision=dec, verification=dict((k, v) for k, v in H["verification"].items() if k != "copies_list"))
+
+
 def audit_grouping():
     """How the register groups the audit for decision (ui.audit_view.issues): findings naming the same difference on the
     same text are one issue. Counts the number/unit/language/editorial findings, the terminology notices and the issues."""

@@ -26,7 +26,9 @@ files to `--out`:
 Every finding has a `kind`: `number`, `unit`, `language`, `editorial` or `terminology`, and a boolean `likely_equivalent`
 (with `equivalence`, the reason). Unless `--no-dating` is given, the run also checks the 9 usable 2026 snapshots (all
 three languages present) to date each finding. The whole run takes about 3 minutes. `--fail-on-findings` makes the exit
-code 1 when any finding is not marked `likely_equivalent` (the `gleichlaut audit` wrapper maps it to its own code).
+code 1 when any finding is not marked `likely_equivalent` (the `gleichlaut audit` wrapper maps it to its own code). Round 5
+(PREREG R15: `operator`, `negation`, `number_word`) is written apart, to `findings_r5` and `summary.round5`; it is off
+after its pre-registered test (section "Round 5"). `--worklist-r5 DIR` writes its blind worklist.
 
 From code, `audit.audit_item(x)` takes an item with `de_old`, `tgt_old` and `lang` and returns a list of dicts. Each dict
 has `kind`, `lang`, `detail` (one sentence in English), `values` and, where it applies, `odd_one_out`, plus `text` (one
@@ -296,6 +298,7 @@ is therefore expected and is not evidence about divergences of other kinds.
 | Recall, known divergent limitations (number) | **10 of 10**; 13 of 13 hand-verified values on the right side and in the right language (circular: see the next row) |
 | Recall, planted divergences (200 per type, FR+IT) | number **93.0%**, unit **73.0%**, clause deletion **75.0%**, wrong language **94.0%**, typo next to a number **51.0%** (section "Recall on planted divergences") |
 | Recall, planted v2 (sites drawn from all numbers; 200 per type) | any number **55.5%**, number word **37.0%**, flipped operator **0%**, dropped negation **0%** (subsection "v2: sites not chosen by the detector's own rule") |
+| Round 5, off (PREREG R15, held half, 200 per type) | with the round-5 checks: flipped operator 0 → **74.5%**, dropped negation 0 → **44.0%**, added negation 0 → **55.5%**, number word 30.5 → **84.0%**; 31 register findings, 6 real or minor (no kind reaches the 50% precision bar; section "Round 5") |
 | Keytruda KN045 | **found** (`L01`): the IT field is identical to the FR text (function words fr 39 / it 1, trigram margin 2.16 nat); first seen **1 Aug 2026**, present in 4 snapshots (Aug, Sep, 1 Oct, 6 Oct) |
 | Other language findings | none on 6 Oct, and none in any of the 9 snapshots (`language_any_snapshot`). On 6 Oct no other field passes even rule A alone |
 | Number findings explained by a typo | 4 of 21: LEQVIO FR+IT (`N16`, `N17` ← German `1 .4`), PREVYMIS FR (`N04` ← `de15`), FORSTEO IT (`N13` ← `se mesi`) |
@@ -578,6 +581,98 @@ generous, so a finding there would have been counted even if it was only near th
   only (nicht/kein against ne…pas/non). This is noisier: "kein" ↔ "aucun", and "ohne" ↔ "sans" ↔ "senza". It is the
   last one to try.
 
+## Round 5: operator direction, negation, number words (PREREG R15, measured, off)
+
+Two jurors called flipped operators, dropped negations and number words the legally dangerous blind spots of v2: a
+"congruence checked" stamp would give false assurance exactly there. Round 5 adds three checks for them. R15 fixed the
+evaluation, the pass rule per kind and the decision before any of the rules existed (commit `28fe22b`). The rules were
+then written on the dev half only, and frozen in commit `6a2c269`; the sha256 of the round-5 block is `2d5dcaaf…`
+(`summary.round5.rules_sha256`). They are stdlib only and call no model.
+
+- **`operator`.** Each value (digits or a number word) that has a comparison word right before it, or right after it
+  and its unit, gets a direction: a lower bound (mindestens, ab, über, mehr als, ≥ / au moins, plus de, dès / almeno,
+  più di, oltre …) or an upper bound (höchstens, bis zu, unter, weniger als, ≤ / au plus, moins de, jusqu'à / al
+  massimo, meno di, fino a …). A value both texts state with a direction, the same number of times, is a finding when
+  the directions differ. ≥ against > is the same direction and is not a finding. Three kinds of bound get no direction
+  or are left out: a range end (`15 bis 30 kg`), DE `über` before a duration (`über 6 Monate`), and a bound with a
+  negation earlier in its clause (`n'ont pas reçu plus de deux`), because the languages place negations differently.
+  One deviation from R15's wording: R15 said "a value bound to a unit". The check takes every value that carries an
+  operator, because the dev planted flips sat on scores without a unit (`SCORAD >50`, `FeNO ≥ 50 ppb`).
+- **`negation`.** German and target sentences are aligned by a monotone dynamic programme on length and shared digits.
+  Only pairs with a cost of at most 0.4 are judged, or at most 0.2 when the sentence counts differ. A pair is a finding
+  when one side has a clause negation (nicht, kein / ne, pas, aucun, non / non, nessuno) or a word negation from a
+  narrow list (ohne, unzureichend, inakzeptabel, refraktär, `non-…`), and the other side has no negation of any kind.
+  "No negation" also means no word negation (sans, insuffisant, absence, contre-indiqué), no exception or "below"
+  word (sauf, inférieur à, meno di), and no negation idiom. Some negations do not count: FR `ne … que` (= nur);
+  negations inside a bound (`nicht mehr als`, `n'excédant pas`, `non più di`, `non appena`); and expletive ones
+  (`avant que … ne`, `finché … non`).
+- **`number_word`.** Each aligned sentence pair is compared with the number check's own rules, with number words
+  counted as bound (a number word is never a code, a year or a table cell). A value is a finding when it is written as
+  a word on one side and the other sentence lacks it, or when it is the counterpart of such a word. Reconciled as before,
+  plus: an ordinal word of the value; `beide` / `les deux` / `entrambi` for 2; `-fach` compounds; the Q1–Q5 equivalences;
+  and values an existing number finding already names.
+- **`counterpart`** (display only, on number findings). For each one-sided value, it gives the value the aligned
+  sentence of the other side states in surplus with the same unit class. Nemluvio's `N18` now carries IT 4 for DE 8
+  ("ogni quattro settimane"), so the register can show "IT 4" instead of "IT —". It fills 7 of the 21 number findings
+  (`summary.round5.number_counterparts`). Nemluvio is a held-half case and was looked at for this field only.
+
+The new kinds are reported apart, in `findings_r5` of `audit_20261006.json` and `summary.round5`.
+`run_all(..., r5=False)` is the default. With it, the 38 existing findings, their ids, ranks and values are byte for
+byte what they were, apart from the added `counterpart` field (a test checks it). `audit_item(x, kinds=KINDS_ALL +
+KINDS_R5)` returns the new kinds on request.
+
+**Planted recall, held half** (`python3 tools/audit_inject.py --protocol r15 --half held`, seed 20261016, 100 copies
+per type and language, eligible: held-half text triples with no finding of any kind; `eval/results/audit_injection_r15_held.json`).
+Before = the same copies with the pre-round-5 kinds and the v2 rule; after = with round 5.
+
+| planted fault | n | before | after (Wilson 95%) | R15 bar | dev half (design) |
+|---|---|---|---|---|---|
+| operator flipped | 200 | 0.0% | **74.5%** [68.0, 80.0] | ≥ 60% | 73.5% |
+| negation dropped | 200 | 0.0% | **44.0%** [37.3, 50.9] | ≥ 50% | 48.0% |
+| negation added | 200 | 0.0% | **55.5%** [48.6, 62.2] | ≥ 50% | 51.0% |
+| number word changed | 200 | 30.5% | **84.0%** [78.3, 88.4] | ≥ 60% | 87.0% |
+
+The `negation_add` injector is new in R15. It turns a finite verb near a number into its negation (`est` → `n'est
+pas`, `è` → `non è`). The other three are the v2 injectors (number word v2: 37.0% on both halves). In 8 copies re-run
+as full-register audits, the findings were identical and nothing was new or lost elsewhere.
+
+**Register findings and precision.** On the 6 Oct 2026 register the frozen rules report 31 findings on 27 limitations:
+4 operator, 18 negation and 9 number_word. Two fresh blind Claude annotators labelled all 31 (`eval/labels/audit_r15_20261006.tsv`,
+the second in reverse order; the question was R15's). They gave the same answer on all 31, so no tie-break was needed.
+
+| kind | findings | real or minor (strict real) | precision [Wilson 95%] | R15 bar |
+|---|---|---|---|---|
+| operator | 4 | 1 (1) | 25.0% [4.6, 69.9] | ≥ 50% |
+| negation | 18 | 4 (2) | 22.2% [9.0, 45.2] | ≥ 50% |
+| number_word | 9 | 1 (0) | 11.1% [2.0, 43.5] | ≥ 50% |
+
+**Outcome: no kind passes, all three stay off** (`R5_ON`, `summary.round5.on`). They are computed and reported, but
+they are not in the default output and not in `--fail-on-findings`. Operator and number words meet the recall bar but
+not the precision bar. Negation misses both (dropped 44.0%).
+
+The real ones are new and worth a look:
+
+- **AMVUTTRA.01a, French (`O01`).** The stop criteria say "augmentation du score NIS ≤ 10 points" where German and
+  Italian say "> 10".
+- **BEYONTTRA, Italian (`G03`), and VYNDAQEL.01b, Italian (`G17`).** Both say "on deve essere combinato" where the
+  German has "darf nicht … kombiniert werden". The `non` lost its `n`, which turns a prohibition into an obligation.
+- **Two minor.** ZAVICEFTA2 (FR "ampoules non utilisées" vs DE "verfallene Ampullen") and DECADURABOL2 (IT "inefficaci"
+  vs DE "ausgeschöpft").
+
+The false positives are paraphrases the lexicons do not pair. Examples: "nicht abgeschlossene Familienplanung" vs
+"souhaite encore avoir des enfants" (×4); the NSCLC term "non à petites cellules"; FR "ne … que" written across a
+comma; "das Fünffache" vs "cinque volte" (×3, the same multiplier worded differently); a list announced as "drei Therapien" in German only.
+
+**What this means for the blind spots.** A "congruence checked" stamp still covers numbers bound to a unit, units,
+languages, typos next to numbers and BAG's own terminology corrections. It does not cover operators, negations or
+number words outside a unit: these checks exist and find planted faults, but on the real register three in four of
+what they flag is a paraphrase. Two cheap next steps:
+
+- A negation lexicon paired across the three languages, mined from the aligned register as round 4 mined terminology.
+- Pairing multiplier wordings (`das Fünffache` = `cinque volte`).
+
+Both would need their own pre-registered round.
+
 ## Second signal: term pairs (measured, off)
 
 `term_pairs()` derives DE→FR/IT term pairs mechanically. A German word or hyphen compound of at least 8 letters is paired
@@ -597,8 +692,9 @@ error. The signal is therefore off; the statistics are reported in the summary (
 
 ## Caveats
 
-- **What is still not checked.** A changed operator (≥ vs >), a dropped negation, and a German-only clause without
-  numbers. A wrong drug class is found only where BAG has corrected the same wording elsewhere (terminology, round 4).
+- **What is still not checked.** A changed operator, a dropped or added negation and a number word outside a unit
+  are checked by round 5 but off: it finds 44–84% of planted ones and 11–25% of its register findings are real
+  (section "Round 5"). A German-only clause without numbers is not checked. A wrong drug class is found only where BAG has corrected the same wording elsewhere (terminology, round 4).
   The co-occurrence term-pair signal stays off (above).
 - **Terminology.** It can only find wording that BAG has already corrected at least twice. The angiotensin case was the
   motivating example before the rule existed, and its pair comes from the item set (Jul 2025 → Feb 2026), not from the
@@ -626,7 +722,7 @@ error. The signal is therefore off; the statistics are reported in the summary (
 - **Recall of the number check is measured on cases a numeric method found.** It is optimistic for divergences in
   general. The planted-divergence measurement above is the independent estimate. It is still limited to fault shapes
   that we designed.
-- **Number words.** Only 2–12 (frozen `NUMW`). FR hyphenated numbers (`dix-huit`) are read as 10 and 8.
+- **Number words.** Only 2–12 (frozen `NUMW`); round 5 (off) also compares them outside a unit. FR hyphenated numbers (`dix-huit`) are read as 10 and 8.
 - **Duplicated boilerplate.** Three etanercept findings are one copied error, and so are E02/E03, T01–T04 and T05–T08.
   There are fewer independent errors than findings.
 - **MiGeL/AL** were run once on the 1 Jul 2026 versions, with no dating and no labels. The `term_pairs()` statistics

@@ -213,6 +213,12 @@ ar2_any	55.5	eval/results/audit_recall.json	v2.number_any.recall_pct	{:.1f}	PYTH
 ar2_word	37.0	eval/results/audit_recall.json	v2.number_word.recall_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 ar2_op_n	200	eval/results/audit_recall.json	v2.operator.n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 ar2_neg_n	200	eval/results/audit_recall.json	v2.negation.n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+r15_op	74.5	eval/results/audit_r15.json	recall.operator.after_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+r15_negdrop	44.0	eval/results/audit_r15.json	recall.negation_drop.after_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+r15_negadd	55.5	eval/results/audit_r15.json	recall.negation_add.after_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+r15_word	84.0	eval/results/audit_r15.json	recall.number_word.after_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+r15_findings	31	eval/results/audit_r15.json	register.findings	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+r15_real	6	eval/results/audit_r15.json	register.real_or_minor	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 m3_backend_vllm	202	eval/results/m3.json	serving_backends.vllm	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 m3_backend_fp1	81	eval/results/m3.json	serving_backends.fp1	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 ag_issues	18	eval/results/audit_grouping.json	issues	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes

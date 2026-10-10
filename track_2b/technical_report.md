@@ -42,7 +42,7 @@ measure: the rules were written around the census that found them), **5** new co
 numbers, one counted by two checks) and Keytruda's Italian field holding the French text (spotted by hand before the language check existed).
 On 1,000 divergences planted into clean limitations its recall is 77.2% [74.5, 79.7]: 93.0% for a changed number,
 94.0% for a field in the wrong language, 51.0% for a typo next to a number. Its scope is numbers bound to a unit: at any
-number token recall is 55.5%, and flipped operators or dropped negations are not read (0 of 200 each; next rules). A draft costs **CHF 0.0024** at a Swiss provider's
+number token recall is 55.5%, and flipped operators or dropped negations are not read (0 of 200 each). Pre-registered checks for them (R15) find 74.5% of planted operator flips and 44.0% of dropped negations, but only 6 of their 31 register findings are confirmed (real or minor), so they ship off. A draft costs **CHF 0.0024** at a Swiss provider's
 published price for Apertus 70B. `make run` re-executes the recorded runs offline and re-derives every number.
 
 ## 2. Architecture

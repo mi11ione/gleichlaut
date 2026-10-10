@@ -56,6 +56,7 @@ def compute():
     res["r12_terms"] = score.r12_terms()          # PREREG R12: house wording in the prompt (v3-terms) beside the frozen pipeline, both live months
     res["audit_recall"] = score.audit_recall()
     res["audit_grouping"] = score.audit_grouping()
+    res["audit_r15"] = score.audit_r15()             # PREREG R15: audit round 5 (operator, negation, number words)
     res["value"] = score.value()
     res["failure_modes_q8_0"] = score.failure_modes_q8_0()   # PREREG R8: failure-mode tests on the shipped Q8_0
     res["annotator_sensitivity"] = score.annotator_sensitivity(res)   # PREREG R11: planted meaning errors, reference shown / hidden

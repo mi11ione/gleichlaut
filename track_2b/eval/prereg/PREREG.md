@@ -33,7 +33,7 @@ human labels were used.
 | R12 | house wording in the prompt, both live months | more identical drafts, fewer flags; no pair meets R0; default unchanged |
 | R13 | fully blind relabel of the headline 70B run | 0 severe errors among ready drafts; κ 0.892 |
 | R14 | (A) audit findings relabelled by two blind annotators + a third; (B) annotator sensitivity to meaning errors inside the amended wording | (A) κ 1.000; register 17 of 27, terminology 11 of 11, lists 6 of 11 (first: 16, 8, 7); (B) 38 of 38 caught by both, 0 false alarms |
-| R15 | audit round 5: operator direction, negation, number words | pending |
+| R15 | audit round 5: operator direction, negation, number words | recall up (operator 74.5%, number word 84.0%; negation dropped 44.0%), precision 11–25%: no kind passes, all off |
 | R16 | memorisation probe: could the models have seen the held-out answers | no evidence beyond the negative control (70B, 8B); probe sensitivity not shown |
 
 ## R0. Pass rule for a drafting lane (frozen 9 Oct 2026, before the fresh 2025 run)
@@ -708,3 +708,20 @@ data the change was designed on is labelled "dev" in every table.
   0.32 / 0.38 / 0.23, chrF 14.2 / 15.5 / 12.8, no difference with a CI excluding 0. Where BAG's old text continues the
   same first half differently, the 70B continuation is closer to the new text in 15 of 45 T texts (old 22, tie 8) and
   11 of 31 N texts (old 15, tie 5): no pull toward the published answer (`eval/results/memorisation.json`).
+- **R15, 10 Oct 2026:** pre-registered at commit 28fe22b before the rules were written; rules written on the dev half
+  only and frozen at commit 6a2c269 (round-5 block sha256 `2d5dcaaf3b7a8c53…`). Disclosure: one full-register timing run
+  before the freeze printed the per-half finding counts (not the texts); no rule changed after it. One deviation from
+  the R15 wording: the operator check takes every value with an operator, not only unit-bound ones (dev planted flips
+  sat on scores without a unit). **Held planted recall** (seed 20261016, 100 copies per type and language, 784 eligible
+  held triples; 8 full-register verifications identical): operator 0 → **74.5%** [68.0, 80.0], negation dropped 0 →
+  **44.0%** [37.3, 50.9], negation added 0 → **55.5%** [48.6, 62.2], number word 30.5% → **84.0%** [78.3, 88.4]
+  (dev design run: 73.5 / 48.0 / 51.0 / 87.0). **Register** (6 Oct 2026): 31 new findings on 27 limitations (operator 4,
+  negation 18, number_word 9); the existing 38 findings (27 + 11 terminology) unchanged, number findings gain only the
+  display field `counterpart` (Nemluvio N18: IT 4). **Precision**: all 31 labelled by two fresh blind annotators (the
+  second in reverse order); they agree on all 31 (κ 1.000), so no tie-break. Real or minor: operator 1 of 4 (25.0%),
+  negation 4 of 18 (22.2%), number_word 1 of 9 (11.1%). **Outcome:** operator and number_word meet the recall bar but
+  not the precision bar; negation misses both. No kind passes, so all three are off (`R5_ON`). README and report keep
+  them as blind spots and state the measured recall. New real divergences among the findings: AMVUTTRA.01a FR
+  stop criterion "≤ 10" where DE/IT say "> 10"; BEYONTTRA and VYNDAQEL.01b IT "on deve essere combinato" (the "non" of
+  "darf nicht" lost its n) (`eval/results/audit_r15.json`, `audit_injection_r15_held.json`,
+  `eval/labels/audit_r15_20261006.tsv`).
