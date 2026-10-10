@@ -237,6 +237,70 @@ R11 measures how often the blind Claude annotators of `eval/labels/PROTOCOL.md` 
   bound on severe errors among ready drafts divided by the both-annotator severe recall of (a). No decision attached:
   R0 and R1 outcomes are not re-opened by this rule.
 
+## R12. House terminology in the drafting prompt (variant v3-terms) on both live months (frozen 10 Oct 2026, before any run)
+
+An Apertus-team juror: the prompt asks for "the established terminology" without supplying it; 22 of the 25 Q8_0 ready
+drafts needing a fix fail on one house term, and the new standard sentence sank both live months; that gap is in the
+pipeline, not in Apertus. R12 supplies BAG's own house wording in the prompt and re-runs both live months.
+
+- **Variant v3-terms** (`src/gleichlaut/v3terms.py`, outside `frozen/`; frozen code and hashes untouched, `freeze.json`
+  unchanged). The frozen pipeline exactly as shipped (whole-paragraph locked rewrite, lock check and retry, frozen guard
+  stack guards3, one re-ask kept only if every check passes, slot codes, routing) EXCEPT one added block in the drafting
+  prompt, inserted between the list of German changes and the old target text: the header "BAG's established {L}
+  wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published {L}
+  texts. Where the amended part contains them, use exactly this {L} wording:" and one line per entry. The lock retry and
+  the re-ask format the same template, so they carry the block too. An item whose new German has no house term and no
+  house sentence gets the frozen prompt byte for byte.
+- **Block entries** (rules in the module docstring): (T) every termbase entry of the item's language with a house
+  rendering whose German term (`termbase.HEAD_RX`) occurs in `de_new`, as "German term -> house rendering"; (S) every
+  sentence of `de_new` (`emit.segment.sentences`) whose normalised key has a house sentence (`gleichlaut.house`) in that
+  language, as «German sentence» -> «house wording», numbers filled in order from the German sentence (left out when the
+  counts differ). Both sides are written with the prompt's own slot codes (no digit reaches the model). Entries with no
+  dominant rendering are not used. Order: first occurrence in `de_new`.
+- **Mining source per month (no leakage).** The house wording is mined by the unchanged mining code (`gleichlaut
+  termbase --date D`, which also writes the house sentences) from the month's OLD snapshot only: **1 Aug -> 1 Sep 2026:
+  snapshot 20260801; 1 Sep -> 1 Oct 2026: snapshot 20260901** (the `gleichlaut.sl.ingest` output of BAG's public feeds of
+  those dates, in the research hist directory the shadow runs used), never from a snapshot that contains the month's
+  published FR/IT. Files: `data/termbase/r12/{termbase,house_sentences,shared_words}_<D>.json` and the TBX (64 house
+  terms and 60 house sentences per snapshot). Disclosed: the mining rules (`termbase.HEADS`, `REJECT`, `DROP_VARIANTS`,
+  the house-sentence thresholds) were fixed on the 6 Oct 2026 snapshot; they choose German terms and remove fragment
+  renderings, and no wording in a block comes from any snapshot but the month's old one. One review exclusion was added to
+  `termbase.REJECT` before any run, by the existing review rule (a fragment, not a rendering): it "Verlaufskontrolle" ->
+  «effettuati», a house entry only in the 20260901 snapshot; the shipped 6 Oct termbase is unchanged by it. The French
+  new standard sentence ("Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.") has no
+  dominant French rendering in either old snapshot (10 of 23 and 20 of 46 limitations), so French items get its terms,
+  not the sentence; Italian items get the sentence (house in both).
+- **Committed with this rule:** `eval/prereg/r12_blocks.json` (`tools/r12_terms.py blocks`; `--check` reproduces it byte
+  for byte): per month and drafted item, the block, its entries and the sha256 of the exact first prompt of the frozen
+  pipeline and of the variant. Aug: 22 drafted, 22 model calls, 19 prompts changed; Sep: 44 drafted, 40 model calls,
+  40 prompts changed.
+- **Runs** (same items `data/shadow/<from>-<to>/items.json`, same routing). (a) Apertus 8B GGUF Q8_0 through the shadow
+  workflow on GitHub Actions CPU runners (`gh workflow run shadow.yml -f from=<from> -f to=<to> -f build=q8_0 -f
+  variant=v3-terms -f shards=6`; offline image, `--network none`, build certificate gate; the committed items, no feed
+  re-mined) -> `data/shadow/<from>-<to>/v3_terms_q8_0/`. (b) Apertus 70B through the development gateway
+  (`tools/run_shadow70b.py <from>-<to> --variant v3-terms`: plain user messages, temperature 0, served model checked on
+  every call; responses only in the run's own `v3_terms_70b/responses/`, never `data/cache/responses`) ->
+  `data/shadow/<from>-<to>/v3_terms_70b/`. Nothing runs a model on a team machine. The variant is not certified, so its
+  records carry status "flagged" with a review reason; `guard_status` keeps the frozen guards' ready / flagged verdict, and
+  R12 scores that verdict (for the frozen runs status and guard_status are the same).
+- **Labels.** Every v3-terms draft that the guards mark ready and that differs from BAG's published text, both months and
+  both models, pooled, one record per distinct (item, draft), shuffled with seed 20261015, neutral ids, R1 protocol
+  (`eval/labels/PROTOCOL.md`: two fresh blind Claude annotators, the second in reverse order, the R11 operational note on
+  long lines; a third on every disagreement on needs_fix or class, or any REAL) -> `eval/labels/r12_terms_ready.tsv`.
+  The frozen runs keep their R7 / R10 labels; nothing is relabelled.
+- **Reported, per month and per model, frozen beside v3-terms:** items, compared n (drafts with BAG's published text,
+  status != human), identical, ready, flagged, ready classes, and the four R0 criteria with n = compared: unflagged REAL
+  <= 1%; unflagged stale + German <= 2%; identical minus rules-only identical >= +5 points on the same n; flagged <= 70%;
+  each holds / fails, "meets R0" only if all four hold. The frozen columns are computed by the same code from the R7 / R10
+  records and labels (R7 gave no R0 verdict; it is computed here only for the side-by-side). Also reported: prompts
+  changed; for unchanged prompts, whether the output equals the frozen run's; the number of v3 drafts identical to BAG's
+  text that the frozen run did not get, and the reverse.
+- **Decision, stated now.** If v3-terms meets R0 on a live month where the frozen variant failed, it is reported as a
+  candidate for the next held-out test; it does not replace the frozen default without a new held-out run. If it does
+  not, that is reported as failed, criterion by criterion. Either way the shipped default stays the frozen pipeline; the
+  variant is not changed after any output is seen. Scored by `score.r12_terms()` in `replay`
+  (`eval/results/r12_terms.json`).
+
 ## R13. Fully blind relabel of the headline 70B fresh-166 run (frozen 10 Oct 2026, before any annotation)
 
 A juror: the first labels of the headline run (`eval/labels/fresh166_unflagged.tsv`, `fresh166_flagged20.tsv`) are the

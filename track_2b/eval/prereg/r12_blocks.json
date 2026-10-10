@@ -1,0 +1,2519 @@
+{
+ "header": "BAG's established {L} wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published {L} texts. Where the amended part contains them, use exactly this {L} wording:",
+ "months": {
+  "20260801-20260901": {
+   "drafted": 22,
+   "house_sentences": "data/termbase/r12/house_sentences_20260801.json",
+   "house_sentences_sha256": "3891abe2e61d14c0a00f786ab2d4be9329c293e0eb4e24300b1fefcbfaa60717",
+   "items": {
+    "COTELLIC.01-d8b8b3-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- «Nur bis zur Progression der Krankheit.» -> «Seulement jusqu'à progression de la maladie.»\n- Kostengutsprache -> garantie de prise en charge\n- Krankenversicherer -> assureur-maladie\n- Vertrauensarzt -> médecin-conseil\n- Fabrikabgabepreis -> prix de fabrique\n- Mehrwertsteuer -> taxe sur la valeur ajoutée\n- Indikationscode -> code d'indication\n- Limitierung -> limitation",
+     "entries": [
+      {
+       "de": "Nur bis zur Progression der Krankheit.",
+       "kind": "sentence",
+       "tgt": "Seulement jusqu'à progression de la maladie."
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garantie de prise en charge"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "médecin-conseil"
+      },
+      {
+       "de": "Fabrikabgabepreis",
+       "kind": "term",
+       "tgt": "prix de fabrique"
+      },
+      {
+       "de": "Mehrwertsteuer",
+       "kind": "term",
+       "tgt": "taxe sur la valeur ajoutée"
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "2b37563b67aae2982a14375a7fa280e011d11b62f6b2a9e7a42b4b738fee6dc9",
+     "prompt_sha256_v3": "489ff4a42eede4b2a27f5e7109aad8e7f40f7a1055e5e55187f452a7666e31d2"
+    },
+    "COTELLIC.01-d8b8b3-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- «Nur bis zur Progression der Krankheit.» -> «Solo fino alla progressione della malattia.»\n- Kostengutsprache -> garanzia di assunzione dei costi\n- Krankenversicherer -> assicuratore\n- Vertrauensarzt -> medico di fiducia\n- Fabrikabgabepreis -> prezzo di fabbrica\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione",
+     "entries": [
+      {
+       "de": "Nur bis zur Progression der Krankheit.",
+       "kind": "sentence",
+       "tgt": "Solo fino alla progressione della malattia."
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garanzia di assunzione dei costi"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "medico di fiducia"
+      },
+      {
+       "de": "Fabrikabgabepreis",
+       "kind": "term",
+       "tgt": "prezzo di fabbrica"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "a4162b9aee596cb92e1183e4b3280abe709567333a0bc764ab788784f2a0ecdf",
+     "prompt_sha256_v3": "ac80e90852e596ec2189aeb4bcef4ea12adcac7de020318d1329afd479522c24"
+    },
+    "JARDIANCE-MET.01-b0cdbc-fr": {
+     "block": "",
+     "entries": [],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "b025af56d96160ec8a728d47d9107d79e33ff337959feab735b1417fe8a3dd9b",
+     "prompt_sha256_v3": "b025af56d96160ec8a728d47d9107d79e33ff337959feab735b1417fe8a3dd9b"
+    },
+    "JARDIANCE-MET.01-b0cdbc-it": {
+     "block": "",
+     "entries": [],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "3f3f918ee67c8d669da3895b9dcf5a69ac5543aef88662ead1bfcd1dba08aae9",
+     "prompt_sha256_v3": "3f3f918ee67c8d669da3895b9dcf5a69ac5543aef88662ead1bfcd1dba08aae9"
+    },
+    "JEMPERLI.01-Endometriumkarzinom-Mono-133762-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Monotherapie -> monothérapie\n- Kostengutsprache -> garantie de prise en charge\n- Krankenversicherer -> assureur-maladie\n- Vertrauensarzt -> médecin-conseil\n- Zulassungsinhaberin -> titulaire de l'autorisation\n- Mehrwertsteuer -> taxe sur la valeur ajoutée\n- Fabrikabgabepreis -> prix de fabrique\n- Rückerstattung -> remboursement\n- Indikationscode -> code d'indication\n- Limitierung -> limitation",
+     "entries": [
+      {
+       "de": "Monotherapie",
+       "kind": "term",
+       "tgt": "monothérapie"
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garantie de prise en charge"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "médecin-conseil"
+      },
+      {
+       "de": "Zulassungsinhaberin",
+       "kind": "term",
+       "tgt": "titulaire de l'autorisation"
+      },
+      {
+       "de": "Mehrwertsteuer",
+       "kind": "term",
+       "tgt": "taxe sur la valeur ajoutée"
+      },
+      {
+       "de": "Fabrikabgabepreis",
+       "kind": "term",
+       "tgt": "prix de fabrique"
+      },
+      {
+       "de": "Rückerstattung",
+       "kind": "term",
+       "tgt": "remboursement"
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "9597ac1dec137b2a20ee56b8ff728201a18c6b1b5c82df9a818faff81a40bef8",
+     "prompt_sha256_v3": "e399d6441cdc40da8d7380719657bf40912b1308d12dd3451502237e1c4b878f"
+    },
+    "JEMPERLI.01-Endometriumkarzinom-Mono-133762-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Monotherapie -> monoterapia\n- Kostengutsprache -> garanzia di assunzione dei costi\n- Krankenversicherer -> assicuratore\n- Vertrauensarzt -> medico di fiducia\n- Zulassungsinhaberin -> titolare dell'omologazione\n- Fabrikabgabepreis -> prezzo di fabbrica\n- Rückerstattung -> rimborso\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione",
+     "entries": [
+      {
+       "de": "Monotherapie",
+       "kind": "term",
+       "tgt": "monoterapia"
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garanzia di assunzione dei costi"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "medico di fiducia"
+      },
+      {
+       "de": "Zulassungsinhaberin",
+       "kind": "term",
+       "tgt": "titolare dell'omologazione"
+      },
+      {
+       "de": "Fabrikabgabepreis",
+       "kind": "term",
+       "tgt": "prezzo di fabbrica"
+      },
+      {
+       "de": "Rückerstattung",
+       "kind": "term",
+       "tgt": "rimborso"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "5771fd126c3678ca872670f5b3d874ac38dc257c87382131b2225f9659dbb052",
+     "prompt_sha256_v3": "3d6fdb73bd375879213d334da87d13914508e9a5a4acd0fe0517e9dbff6b3138"
+    },
+    "JEMPERLI.02-Endometriumkarzinom-Kombi-5e0615-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Zulassungsinhaberin -> titulaire de l'autorisation\n- Krankenversicherer -> assureur-maladie\n- Fabrikabgabepreis -> prix de fabrique\n- Rückerstattung -> remboursement\n- Mehrwertsteuer -> taxe sur la valeur ajoutée\n- Indikationscode -> code d'indication\n- Limitierung -> limitation",
+     "entries": [
+      {
+       "de": "Zulassungsinhaberin",
+       "kind": "term",
+       "tgt": "titulaire de l'autorisation"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      },
+      {
+       "de": "Fabrikabgabepreis",
+       "kind": "term",
+       "tgt": "prix de fabrique"
+      },
+      {
+       "de": "Rückerstattung",
+       "kind": "term",
+       "tgt": "remboursement"
+      },
+      {
+       "de": "Mehrwertsteuer",
+       "kind": "term",
+       "tgt": "taxe sur la valeur ajoutée"
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "13d22c6d298ecd5004c133b3270622e2c5f2a6f4b2565c69d0a40d82ffa99143",
+     "prompt_sha256_v3": "715621b9ad0c4ed5e55c2a148d3c884215d0173dc464cff57d8d3c2b28a0b8d8"
+    },
+    "JEMPERLI.02-Endometriumkarzinom-Kombi-5e0615-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Therapiedauer -> durata della terapia\n- Zulassungsinhaberin -> titolare dell'omologazione\n- Krankenversicherer -> assicuratore\n- Fabrikabgabepreis -> prezzo di fabbrica\n- Rückerstattung -> rimborso\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione",
+     "entries": [
+      {
+       "de": "Therapiedauer",
+       "kind": "term",
+       "tgt": "durata della terapia"
+      },
+      {
+       "de": "Zulassungsinhaberin",
+       "kind": "term",
+       "tgt": "titolare dell'omologazione"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      },
+      {
+       "de": "Fabrikabgabepreis",
+       "kind": "term",
+       "tgt": "prezzo di fabbrica"
+      },
+      {
+       "de": "Rückerstattung",
+       "kind": "term",
+       "tgt": "rimborso"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "d502d88142cc54a20cf0798a45fa2ee6bf0c74dade3c9ba3e5f0155d870dddda",
+     "prompt_sha256_v3": "698c7b5543b15a765f86642fee6afea8306f44a3d8228fa1df2e9373cf393ea1"
+    },
+    "MAVENCLAD.02-hochaktive-RRMS-805d6c-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Fachärztin / Facharzt -> spécialistes",
+     "entries": [
+      {
+       "de": "Fachärztin / Facharzt",
+       "kind": "term",
+       "tgt": "spécialistes"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "5234ec30c6e21f3eb2aedebea1f6b05d99d67eb9657f4d38195274e874c111b2",
+     "prompt_sha256_v3": "7bde99f4fe6827392b7ca8aba2f2bcb2634eaed66668ff4f90b323728176b5eb"
+    },
+    "MAVENCLAD.02-hochaktive-RRMS-805d6c-it": {
+     "block": "",
+     "entries": [],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "4c8d0acf960ee9a934f7313e8549bfa675b065ded7603c6e69a7d5f17698b75f",
+     "prompt_sha256_v3": "4c8d0acf960ee9a934f7313e8549bfa675b065ded7603c6e69a7d5f17698b75f"
+    },
+    "RYBELSUS.01-c588a2-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Monotherapie -> monothérapie\n- Kontraindikation -> contre-indication\n- Unverträglichkeit -> intolérance\n- Krankenversicherer -> assureur-maladie",
+     "entries": [
+      {
+       "de": "Monotherapie",
+       "kind": "term",
+       "tgt": "monothérapie"
+      },
+      {
+       "de": "Kontraindikation",
+       "kind": "term",
+       "tgt": "contre-indication"
+      },
+      {
+       "de": "Unverträglichkeit",
+       "kind": "term",
+       "tgt": "intolérance"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "a059134f3c324f3e8af359b7810470db89ca993a50fb79d6440321b67c0decc1",
+     "prompt_sha256_v3": "a2e75d66b0b075656f98dc2444a4440f0c0a82ac9146a3671128eed305d06561"
+    },
+    "RYBELSUS.01-c588a2-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Monotherapie -> monoterapia\n- Kontraindikation -> controindicazione\n- Unverträglichkeit -> intolleranza\n- Krankenversicherer -> assicuratore",
+     "entries": [
+      {
+       "de": "Monotherapie",
+       "kind": "term",
+       "tgt": "monoterapia"
+      },
+      {
+       "de": "Kontraindikation",
+       "kind": "term",
+       "tgt": "controindicazione"
+      },
+      {
+       "de": "Unverträglichkeit",
+       "kind": "term",
+       "tgt": "intolleranza"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "a9b7f3291c2a7f1b8de19770c01b0bb83eb23a5133ddb18c61362123b131291c",
+     "prompt_sha256_v3": "3275209f71de5e2e49ccb6c40d3ce8ca13c45ef185bb5620227e8b27e4a7fa7f"
+    },
+    "XEOMIN.01a-d4ed25-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Monotherapie -> monothérapie",
+     "entries": [
+      {
+       "de": "Monotherapie",
+       "kind": "term",
+       "tgt": "monothérapie"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "87d800d81e60434b12e7ff6dc14d1017e4de3895f3c2e55e19a435a8436c203e",
+     "prompt_sha256_v3": "ae5b9ae1abcfa15584ca0288330d24bc0065c519dd6fef4a9feba1172ff4fbae"
+    },
+    "XEOMIN.01a-d4ed25-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Monotherapie -> monoterapia",
+     "entries": [
+      {
+       "de": "Monotherapie",
+       "kind": "term",
+       "tgt": "monoterapia"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "a86046fdd471277cd0a23abc72b0b7fb714e1b079341fb620f6d60f709aca2fd",
+     "prompt_sha256_v3": "6356065ce7c0ae17b07e0ad7245b42051112ecd0a883e06227365d344d9f3a85"
+    },
+    "XTANDI.01-Kombination-LHRH-Antagonisten-b123a2-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Indikationscode -> code d'indication\n- Limitierung -> limitation\n- Krankenversicherer -> assureur-maladie",
+     "entries": [
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "7496f869d2a2b01975776bc6c8ee1061c0a5d75a9b4bab718f9f6c57f0bae34c",
+     "prompt_sha256_v3": "f1699c335450e29300c7e47b976ae339ca5887026e35d7941d155cd4d5b3138e"
+    },
+    "XTANDI.01-Kombination-LHRH-Antagonisten-b123a2-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione\n- Krankenversicherer -> assicuratore",
+     "entries": [
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "f8f945c3f3e7ff17fbe0ef45c365bd4b246df712f4666a38f70b9fc001ccd887",
+     "prompt_sha256_v3": "048240b86edcfc28e5d168749d8a18862c369b72ee51bb9017dbf1b53f5618a0"
+    },
+    "XTANDI.02-Kombi-LHRH-Antagonisten-409dc1-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Indikationscode -> code d'indication\n- Limitierung -> limitation\n- Krankenversicherer -> assureur-maladie",
+     "entries": [
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "90878900ec70213decf776d65fc2a3effa120772aba4f2b06c0f9f90cd3c4000",
+     "prompt_sha256_v3": "b0ae953a07fdeb7493e8dd1ef355d3321b2674e78242244d4e89b728e7de14c0"
+    },
+    "XTANDI.02-Kombi-LHRH-Antagonisten-409dc1-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione\n- Krankenversicherer -> assicuratore",
+     "entries": [
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "c0fcd08f2025e0df253074775d290c95845cd5ec535df74096715739ed76681a",
+     "prompt_sha256_v3": "4737b1ce5748f1f2d96958b0d945c110d63285a328955d69deca94ce35ad38b5"
+    },
+    "XTANDI.XX-KoGu-20771e-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Kostengutsprache -> garantie de prise en charge\n- Krankenversicherer -> assureur-maladie\n- Vertrauensarzt -> médecin-conseil\n- Indikationscode -> code d'indication\n- Limitierung -> limitation",
+     "entries": [
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garantie de prise en charge"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "médecin-conseil"
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "4baeb13fb14ae4b92c62ead85a5c21b290068af87b7338b4f36aa041d5f559cf",
+     "prompt_sha256_v3": "6c024273605a648ee1c48cf733510212c8270fe952dc45f6a9233a4413edd470"
+    },
+    "XTANDI.XX-KoGu-20771e-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Kostengutsprache -> garanzia di assunzione dei costi\n- Krankenversicherer -> assicuratore\n- Vertrauensarzt -> medico di fiducia\n- Therapieabbruch -> interruzione della terapia\n- Behandlungsbeginn -> inizio del trattamento\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione",
+     "entries": [
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garanzia di assunzione dei costi"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "medico di fiducia"
+      },
+      {
+       "de": "Therapieabbruch",
+       "kind": "term",
+       "tgt": "interruzione della terapia"
+      },
+      {
+       "de": "Behandlungsbeginn",
+       "kind": "term",
+       "tgt": "inizio del trattamento"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "b1d93c16ad8779a35d0121a7e9db3c765cd420d4030e6ed7112968014c6a40c2",
+     "prompt_sha256_v3": "38ababe987b272f60ad1a6775edaf5ff511d5020a34c98ab240336bf416ed359"
+    },
+    "ZELBORAF.02-Kombination-mit-COTELLIC-dfcab8-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- «Nur bis zur Progression der Krankheit.» -> «Seulement jusqu'à progression de la maladie.»\n- Kostengutsprache -> garantie de prise en charge\n- Krankenversicherer -> assureur-maladie\n- Vertrauensarzt -> médecin-conseil\n- Fabrikabgabepreis -> prix de fabrique\n- Mehrwertsteuer -> taxe sur la valeur ajoutée\n- Indikationscode -> code d'indication\n- Limitierung -> limitation",
+     "entries": [
+      {
+       "de": "Nur bis zur Progression der Krankheit.",
+       "kind": "sentence",
+       "tgt": "Seulement jusqu'à progression de la maladie."
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garantie de prise en charge"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "médecin-conseil"
+      },
+      {
+       "de": "Fabrikabgabepreis",
+       "kind": "term",
+       "tgt": "prix de fabrique"
+      },
+      {
+       "de": "Mehrwertsteuer",
+       "kind": "term",
+       "tgt": "taxe sur la valeur ajoutée"
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "dc358f21a8bfb9893280e8868f69e7158006efd8c3e6c5515e99645304d6c98c",
+     "prompt_sha256_v3": "159e2e172d5aad11d0d11c38739b7e6a4ffc1a98880383bcf8e8bcc9de4dd96f"
+    },
+    "ZELBORAF.02-Kombination-mit-COTELLIC-dfcab8-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- «Nur bis zur Progression der Krankheit.» -> «Solo fino alla progressione della malattia.»\n- Kostengutsprache -> garanzia di assunzione dei costi\n- Krankenversicherer -> assicuratore\n- Vertrauensarzt -> medico di fiducia\n- Fabrikabgabepreis -> prezzo di fabbrica\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione",
+     "entries": [
+      {
+       "de": "Nur bis zur Progression der Krankheit.",
+       "kind": "sentence",
+       "tgt": "Solo fino alla progressione della malattia."
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garanzia di assunzione dei costi"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "medico di fiducia"
+      },
+      {
+       "de": "Fabrikabgabepreis",
+       "kind": "term",
+       "tgt": "prezzo di fabbrica"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "1ffac49691860577bf7e6a1f33e8184eeebb274bf8499b7f9ba4bcd3ea34ecfe",
+     "prompt_sha256_v3": "84db2673489a5d410a81c8aeeb79504152e6f3ce9ab0e85134b3a40245639378"
+    }
+   },
+   "model_calls": 22,
+   "prompt_changed": 19,
+   "termbase": "data/termbase/r12/termbase_20260801.json",
+   "termbase_sha256": "2fcf70d011d54db657b568f37d489ab20868f43af6ae89e2baa62748a5a6535f",
+   "terms_date": "20260801",
+   "with_block": 19
+  },
+  "20260901-20261001": {
+   "drafted": 44,
+   "house_sentences": "data/termbase/r12/house_sentences_20260901.json",
+   "house_sentences_sha256": "31cb984f2d17205be2724bd0a3de42d076024d2a5c88037391267facedb2a3f9",
+   "items": {
+    "DUPIXENT.06-Pen-Chronische-Rhinosinusiti-beb635-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Diagnosestellung -> diagnostic\n- Verordnung -> prescription\n- Verlaufskontrolle -> suivi du traitement\n- Fachärztin / Facharzt -> spécialistes\n- Erstverschreibung -> première prescription\n- Kontraindikation -> contre-indication\n- Kostengutsprache -> garantie de prise en charge\n- Antikörper -> anticorps\n- Krankenversicherer -> assureur-maladie\n- Fabrikabgabepreis -> prix de fabrique\n- Mehrwertsteuer -> taxe sur la valeur ajoutée",
+     "entries": [
+      {
+       "de": "Diagnosestellung",
+       "kind": "term",
+       "tgt": "diagnostic"
+      },
+      {
+       "de": "Verordnung",
+       "kind": "term",
+       "tgt": "prescription"
+      },
+      {
+       "de": "Verlaufskontrolle",
+       "kind": "term",
+       "tgt": "suivi du traitement"
+      },
+      {
+       "de": "Fachärztin / Facharzt",
+       "kind": "term",
+       "tgt": "spécialistes"
+      },
+      {
+       "de": "Erstverschreibung",
+       "kind": "term",
+       "tgt": "première prescription"
+      },
+      {
+       "de": "Kontraindikation",
+       "kind": "term",
+       "tgt": "contre-indication"
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garantie de prise en charge"
+      },
+      {
+       "de": "Antikörper",
+       "kind": "term",
+       "tgt": "anticorps"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      },
+      {
+       "de": "Fabrikabgabepreis",
+       "kind": "term",
+       "tgt": "prix de fabrique"
+      },
+      {
+       "de": "Mehrwertsteuer",
+       "kind": "term",
+       "tgt": "taxe sur la valeur ajoutée"
+      }
+     ],
+     "lang": "fr",
+     "model_call": false,
+     "prompt_sha256_frozen": null,
+     "prompt_sha256_v3": null
+    },
+    "DUPIXENT.06-Pen-Chronische-Rhinosinusiti-beb635-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Diagnosestellung -> diagnosi\n- Kontraindikation -> controindicazione\n- «Die Fortsetzung der Therapie nach dieser Überprüfung bedarf einer weiteren Kostengutsprache bei bestätigtem Therapieerfolg.» -> «Per la prosecuzione della terapia dopo tale valutazione occorre un'ulteriore garanzia di assunzione dei costi, previa conferma dell'efficacia del trattamento.»\n- Kostengutsprache -> garanzia di assunzione dei costi\n- Behandlungsbeginn -> inizio del trattamento\n- Antikörper -> anticorpo\n- Verschreibung -> prescrizione\n- Krankenversicherer -> assicuratore\n- Fabrikabgabepreis -> prezzo di fabbrica",
+     "entries": [
+      {
+       "de": "Diagnosestellung",
+       "kind": "term",
+       "tgt": "diagnosi"
+      },
+      {
+       "de": "Kontraindikation",
+       "kind": "term",
+       "tgt": "controindicazione"
+      },
+      {
+       "de": "Die Fortsetzung der Therapie nach dieser Überprüfung bedarf einer weiteren Kostengutsprache bei bestätigtem Therapieerfolg.",
+       "kind": "sentence",
+       "tgt": "Per la prosecuzione della terapia dopo tale valutazione occorre un'ulteriore garanzia di assunzione dei costi, previa conferma dell'efficacia del trattamento."
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garanzia di assunzione dei costi"
+      },
+      {
+       "de": "Behandlungsbeginn",
+       "kind": "term",
+       "tgt": "inizio del trattamento"
+      },
+      {
+       "de": "Antikörper",
+       "kind": "term",
+       "tgt": "anticorpo"
+      },
+      {
+       "de": "Verschreibung",
+       "kind": "term",
+       "tgt": "prescrizione"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      },
+      {
+       "de": "Fabrikabgabepreis",
+       "kind": "term",
+       "tgt": "prezzo di fabbrica"
+      }
+     ],
+     "lang": "it",
+     "model_call": false,
+     "prompt_sha256_frozen": null,
+     "prompt_sha256_v3": null
+    },
+    "DUPIXENT.06-Pen-Chronische-Rhinosinusiti-d43e2e-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Diagnosestellung -> diagnostic\n- Verordnung -> prescription\n- Verlaufskontrolle -> suivi du traitement\n- Fachärztin / Facharzt -> spécialistes\n- Erstverschreibung -> première prescription\n- Kontraindikation -> contre-indication\n- Kostengutsprache -> garantie de prise en charge\n- Antikörper -> anticorps\n- Krankenversicherer -> assureur-maladie\n- Fabrikabgabepreis -> prix de fabrique\n- Mehrwertsteuer -> taxe sur la valeur ajoutée",
+     "entries": [
+      {
+       "de": "Diagnosestellung",
+       "kind": "term",
+       "tgt": "diagnostic"
+      },
+      {
+       "de": "Verordnung",
+       "kind": "term",
+       "tgt": "prescription"
+      },
+      {
+       "de": "Verlaufskontrolle",
+       "kind": "term",
+       "tgt": "suivi du traitement"
+      },
+      {
+       "de": "Fachärztin / Facharzt",
+       "kind": "term",
+       "tgt": "spécialistes"
+      },
+      {
+       "de": "Erstverschreibung",
+       "kind": "term",
+       "tgt": "première prescription"
+      },
+      {
+       "de": "Kontraindikation",
+       "kind": "term",
+       "tgt": "contre-indication"
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garantie de prise en charge"
+      },
+      {
+       "de": "Antikörper",
+       "kind": "term",
+       "tgt": "anticorps"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      },
+      {
+       "de": "Fabrikabgabepreis",
+       "kind": "term",
+       "tgt": "prix de fabrique"
+      },
+      {
+       "de": "Mehrwertsteuer",
+       "kind": "term",
+       "tgt": "taxe sur la valeur ajoutée"
+      }
+     ],
+     "lang": "fr",
+     "model_call": false,
+     "prompt_sha256_frozen": null,
+     "prompt_sha256_v3": null
+    },
+    "DUPIXENT.06-Pen-Chronische-Rhinosinusiti-d43e2e-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Diagnosestellung -> diagnosi\n- Kontraindikation -> controindicazione\n- «Die Fortsetzung der Therapie nach dieser Überprüfung bedarf einer weiteren Kostengutsprache bei bestätigtem Therapieerfolg.» -> «Per la prosecuzione della terapia dopo tale valutazione occorre un'ulteriore garanzia di assunzione dei costi, previa conferma dell'efficacia del trattamento.»\n- Kostengutsprache -> garanzia di assunzione dei costi\n- Behandlungsbeginn -> inizio del trattamento\n- Antikörper -> anticorpo\n- Verschreibung -> prescrizione\n- Krankenversicherer -> assicuratore\n- Fabrikabgabepreis -> prezzo di fabbrica",
+     "entries": [
+      {
+       "de": "Diagnosestellung",
+       "kind": "term",
+       "tgt": "diagnosi"
+      },
+      {
+       "de": "Kontraindikation",
+       "kind": "term",
+       "tgt": "controindicazione"
+      },
+      {
+       "de": "Die Fortsetzung der Therapie nach dieser Überprüfung bedarf einer weiteren Kostengutsprache bei bestätigtem Therapieerfolg.",
+       "kind": "sentence",
+       "tgt": "Per la prosecuzione della terapia dopo tale valutazione occorre un'ulteriore garanzia di assunzione dei costi, previa conferma dell'efficacia del trattamento."
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garanzia di assunzione dei costi"
+      },
+      {
+       "de": "Behandlungsbeginn",
+       "kind": "term",
+       "tgt": "inizio del trattamento"
+      },
+      {
+       "de": "Antikörper",
+       "kind": "term",
+       "tgt": "anticorpo"
+      },
+      {
+       "de": "Verschreibung",
+       "kind": "term",
+       "tgt": "prescrizione"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      },
+      {
+       "de": "Fabrikabgabepreis",
+       "kind": "term",
+       "tgt": "prezzo di fabbrica"
+      }
+     ],
+     "lang": "it",
+     "model_call": false,
+     "prompt_sha256_frozen": null,
+     "prompt_sha256_v3": null
+    },
+    "ELREXFIO.01-d10af4-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Kostengutsprache -> garantie de prise en charge\n- Krankenversicherer -> assureur-maladie\n- Vertrauensarzt -> médecin-conseil\n- Monotherapie -> monothérapie\n- Antikörper -> anticorps\n- Preismodell -> modèle de prix\n- Zulassungsinhaberin -> titulaire de l'autorisation\n- Fabrikabgabepreis -> prix de fabrique\n- Rückerstattung -> remboursement\n- Mehrwertsteuer -> taxe sur la valeur ajoutée\n- Indikationscode -> code d'indication\n- Limitierung -> limitation",
+     "entries": [
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garantie de prise en charge"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "médecin-conseil"
+      },
+      {
+       "de": "Monotherapie",
+       "kind": "term",
+       "tgt": "monothérapie"
+      },
+      {
+       "de": "Antikörper",
+       "kind": "term",
+       "tgt": "anticorps"
+      },
+      {
+       "de": "Preismodell",
+       "kind": "term",
+       "tgt": "modèle de prix"
+      },
+      {
+       "de": "Zulassungsinhaberin",
+       "kind": "term",
+       "tgt": "titulaire de l'autorisation"
+      },
+      {
+       "de": "Fabrikabgabepreis",
+       "kind": "term",
+       "tgt": "prix de fabrique"
+      },
+      {
+       "de": "Rückerstattung",
+       "kind": "term",
+       "tgt": "remboursement"
+      },
+      {
+       "de": "Mehrwertsteuer",
+       "kind": "term",
+       "tgt": "taxe sur la valeur ajoutée"
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "ed791e7a37d219241c5e49cdebaf8b082405eacd5c525a6ff628c16eba5228aa",
+     "prompt_sha256_v3": "7fba4e3858b1c9bc0fc56e830d80fe29818b9f8a26c6e68bf786bcdf488d6763"
+    },
+    "ELREXFIO.01-d10af4-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Kostengutsprache -> garanzia di assunzione dei costi\n- Krankenversicherer -> assicuratore\n- Vertrauensarzt -> medico di fiducia\n- Monotherapie -> monoterapia\n- Antikörper -> anticorpo\n- Preismodell -> modello di prezzo\n- Zulassungsinhaberin -> titolare dell'omologazione\n- Fabrikabgabepreis -> prezzo di fabbrica\n- Rückerstattung -> rimborso\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione",
+     "entries": [
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garanzia di assunzione dei costi"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "medico di fiducia"
+      },
+      {
+       "de": "Monotherapie",
+       "kind": "term",
+       "tgt": "monoterapia"
+      },
+      {
+       "de": "Antikörper",
+       "kind": "term",
+       "tgt": "anticorpo"
+      },
+      {
+       "de": "Preismodell",
+       "kind": "term",
+       "tgt": "modello di prezzo"
+      },
+      {
+       "de": "Zulassungsinhaberin",
+       "kind": "term",
+       "tgt": "titolare dell'omologazione"
+      },
+      {
+       "de": "Fabrikabgabepreis",
+       "kind": "term",
+       "tgt": "prezzo di fabbrica"
+      },
+      {
+       "de": "Rückerstattung",
+       "kind": "term",
+       "tgt": "rimborso"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "83e59b32e91e34e421b70d7d06b60e821e8f4e9ad12fe9fcf21007a1482bef79",
+     "prompt_sha256_v3": "37403ca3f1568b0552efb552a5e7d9f6e1b36c7420c3ec36d25a1c95fe03ef47"
+    },
+    "OPDIVO.10-RCC-Nierenzellkarzinom-b7cdf1-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Monotherapie -> monothérapie\n- Indikationscode -> code d'indication\n- Limitierung -> limitation\n- Krankenversicherer -> assureur-maladie",
+     "entries": [
+      {
+       "de": "Monotherapie",
+       "kind": "term",
+       "tgt": "monothérapie"
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "f4529c3819c8cd363719134248f75657c9377a3e8e2aa3ce6f80bac39906ca98",
+     "prompt_sha256_v3": "7f4571a425148622404909bb0fa3e08a8e1c3e667b20dd4edfcc8d7d6743714e"
+    },
+    "OPDIVO.10-RCC-Nierenzellkarzinom-b7cdf1-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Monotherapie -> monoterapia\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione\n- Krankenversicherer -> assicuratore",
+     "entries": [
+      {
+       "de": "Monotherapie",
+       "kind": "term",
+       "tgt": "monoterapia"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "1f04bac40759093e967af1c6c7c6f54669358dd02b1a323759bfcfca1f42a9fb",
+     "prompt_sha256_v3": "f048606339044f4ea2d6f2d5c4684783d4bce5036154b5bd33687a62f8703f3b"
+    },
+    "ROSUVASTAX-DROSSAPHARM.01-75fcfe-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- «Bei Erwachsenen ab ⟨A⟩ bis und mit ⟨B⟩ Jahren wird eine Behandlung mit Statinen vergütet im Rahmen der Sekundärprävention kardiovaskulärer Ereignisse sowie im Rahmen der Primärprävention bei Personen mit hohem oder sehr hohem Risiko nach AGLA-Risikokategorie sowie bei Personen mit einem Risiko von über ⟨C⟩% nach AGLA-Risikokategorie.» -> «Chez les adultes de ⟨A⟩ à ⟨B⟩ ans, le traitement par statines est remboursé en prévention secondaire d'événements cardiovasculaires ainsi qu'en prévention primaire chez les personnes à risque élevé ou très élevé, selon la catégorie de risque du GSLA, et chez les personnes présentant un risque supérieur à ⟨C⟩% selon la catégorie de risque du GSLA.»\n- Sekundärprävention -> prévention secondaire\n- Primärprävention -> prévention primaire\n- «Bei Personen über ⟨B⟩ Jahren wird eine neu beginnende Statin-Therapie nur vergütet im Rahmen der Sekundärprävention kardiovaskulärer Ereignisse sowie im Rahmen der Primärprävention bei Personen mit hohem oder sehr hohem Risiko nach AGLA-Risikokategorie.» -> «Un traitement par statine initié chez les personnes de plus de ⟨B⟩ ans, est remboursé uniquement en prévention secondaire d'événements cardiovasculaires et en prévention primaire chez les personnes présentant un risque élevé ou très élevé selon la catégorie de risque du GSLA.»",
+     "entries": [
+      {
+       "de": "Bei Erwachsenen ab 18 bis und mit 75 Jahren wird eine Behandlung mit Statinen vergütet im Rahmen der Sekundärprävention kardiovaskulärer Ereignisse sowie im Rahmen der Primärprävention bei Personen mit hohem oder sehr hohem Risiko nach AGLA-Risikokategorie sowie bei Personen mit einem Risiko von über 1% nach AGLA-Risikokategorie.",
+       "kind": "sentence",
+       "tgt": "Chez les adultes de 18 à 75 ans, le traitement par statines est remboursé en prévention secondaire d'événements cardiovasculaires ainsi qu'en prévention primaire chez les personnes à risque élevé ou très élevé, selon la catégorie de risque du GSLA, et chez les personnes présentant un risque supérieur à 1% selon la catégorie de risque du GSLA."
+      },
+      {
+       "de": "Sekundärprävention",
+       "kind": "term",
+       "tgt": "prévention secondaire"
+      },
+      {
+       "de": "Primärprävention",
+       "kind": "term",
+       "tgt": "prévention primaire"
+      },
+      {
+       "de": "Bei Personen über 75 Jahren wird eine neu beginnende Statin-Therapie nur vergütet im Rahmen der Sekundärprävention kardiovaskulärer Ereignisse sowie im Rahmen der Primärprävention bei Personen mit hohem oder sehr hohem Risiko nach AGLA-Risikokategorie.",
+       "kind": "sentence",
+       "tgt": "Un traitement par statine initié chez les personnes de plus de 75 ans, est remboursé uniquement en prévention secondaire d'événements cardiovasculaires et en prévention primaire chez les personnes présentant un risque élevé ou très élevé selon la catégorie de risque du GSLA."
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "ccd2320820b42747291ef61b231500b2fd2f72300d9a64d922c2fa47dc0b441f",
+     "prompt_sha256_v3": "643f2698beb8e19087f930b412b431f0eb200dc9266f777593e39ec71ce87ba0"
+    },
+    "ROSUVASTAX-DROSSAPHARM.01-75fcfe-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- «Bei Erwachsenen ab ⟨A⟩ bis und mit ⟨B⟩ Jahren wird eine Behandlung mit Statinen vergütet im Rahmen der Sekundärprävention kardiovaskulärer Ereignisse sowie im Rahmen der Primärprävention bei Personen mit hohem oder sehr hohem Risiko nach AGLA-Risikokategorie sowie bei Personen mit einem Risiko von über ⟨C⟩% nach AGLA-Risikokategorie.» -> «Per gli adulti di età compresa tra i ⟨A⟩ e i ⟨B⟩ anni, il trattamento con statine viene rimborsato nell'ambito della prevenzione secondaria di eventi cardiovascolari e della prevenzione primaria in persone a rischio elevato o molto elevato secondo la categoria di rischio del GSLA e in quelle con un rischio superiore all'⟨C⟩ % secondo la categoria di rischio del GSLA.»\n- Sekundärprävention -> prevenzione secondaria\n- Primärprävention -> prevenzione primaria",
+     "entries": [
+      {
+       "de": "Bei Erwachsenen ab 18 bis und mit 75 Jahren wird eine Behandlung mit Statinen vergütet im Rahmen der Sekundärprävention kardiovaskulärer Ereignisse sowie im Rahmen der Primärprävention bei Personen mit hohem oder sehr hohem Risiko nach AGLA-Risikokategorie sowie bei Personen mit einem Risiko von über 1% nach AGLA-Risikokategorie.",
+       "kind": "sentence",
+       "tgt": "Per gli adulti di età compresa tra i 18 e i 75 anni, il trattamento con statine viene rimborsato nell'ambito della prevenzione secondaria di eventi cardiovascolari e della prevenzione primaria in persone a rischio elevato o molto elevato secondo la categoria di rischio del GSLA e in quelle con un rischio superiore all'1 % secondo la categoria di rischio del GSLA."
+      },
+      {
+       "de": "Sekundärprävention",
+       "kind": "term",
+       "tgt": "prevenzione secondaria"
+      },
+      {
+       "de": "Primärprävention",
+       "kind": "term",
+       "tgt": "prevenzione primaria"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "c4bf91f1b1b58cc877d445e26ff26cc36994c49764b238360801408803528e92",
+     "prompt_sha256_v3": "76b5781884564da63233fde2af9320d6439ef3dec3bef1015cabb8bd1371ac8d"
+    },
+    "SKYRIZI.01-Schwere-Plaque-Psoriasis-nur-01ad7c-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Fachärztin / Facharzt -> spécialistes\n- Poliklinik -> policliniques\n- «Falls nach ⟨B⟩-wöchiger Behandlung kein therapeutischer Erfolg eingetreten ist, ist die Behandlung abzubrechen.» -> «Le traitement doit être interrompu si aucun succès thérapeutique n'est obtenu après ⟨B⟩ semaines de traitement.»\n- Indikationscode -> code d'indication\n- Limitierung -> limitation\n- Krankenversicherer -> assureur-maladie",
+     "entries": [
+      {
+       "de": "Fachärztin / Facharzt",
+       "kind": "term",
+       "tgt": "spécialistes"
+      },
+      {
+       "de": "Poliklinik",
+       "kind": "term",
+       "tgt": "policliniques"
+      },
+      {
+       "de": "Falls nach 16-wöchiger Behandlung kein therapeutischer Erfolg eingetreten ist, ist die Behandlung abzubrechen.",
+       "kind": "sentence",
+       "tgt": "Le traitement doit être interrompu si aucun succès thérapeutique n'est obtenu après 16 semaines de traitement."
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "20e801c5c9a6590256015cda5b78cb9c3f4382d733ae349996eb7d8552c4cfc0",
+     "prompt_sha256_v3": "1d89254b1a2f8348a5d52b30f223c492d10f44ca3cf685b3fc9c1f54ac2d0675"
+    },
+    "SKYRIZI.01-Schwere-Plaque-Psoriasis-nur-01ad7c-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Verschreibung -> prescrizione\n- Poliklinik -> policlinici\n- «Falls nach ⟨B⟩-wöchiger Behandlung kein therapeutischer Erfolg eingetreten ist, ist die Behandlung abzubrechen.» -> «Il trattamento deve essere interrotto qualora non si osservi alcun successo terapeutico dopo ⟨B⟩ settimane.»\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione\n- Krankenversicherer -> assicuratore",
+     "entries": [
+      {
+       "de": "Verschreibung",
+       "kind": "term",
+       "tgt": "prescrizione"
+      },
+      {
+       "de": "Poliklinik",
+       "kind": "term",
+       "tgt": "policlinici"
+      },
+      {
+       "de": "Falls nach 16-wöchiger Behandlung kein therapeutischer Erfolg eingetreten ist, ist die Behandlung abzubrechen.",
+       "kind": "sentence",
+       "tgt": "Il trattamento deve essere interrotto qualora non si osservi alcun successo terapeutico dopo 16 settimane."
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "c7d4fb259df6211d1d87037d96c1fecc8da2469e49cb21704550aece6497e9cb",
+     "prompt_sha256_v3": "f23429415a6543414c98d70ca1bd6c68fdb101f99c5bfff1b8f29984a3ef5c3b"
+    },
+    "SKYRIZI.01-Schwere-Plaque-Psoriasis-nur-23c257-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Fachärztin / Facharzt -> spécialistes\n- Poliklinik -> policliniques\n- «Falls nach ⟨B⟩-wöchiger Behandlung kein therapeutischer Erfolg eingetreten ist, ist die Behandlung abzubrechen.» -> «Le traitement doit être interrompu si aucun succès thérapeutique n'est obtenu après ⟨B⟩ semaines de traitement.»\n- Indikationscode -> code d'indication\n- Limitierung -> limitation\n- Krankenversicherer -> assureur-maladie",
+     "entries": [
+      {
+       "de": "Fachärztin / Facharzt",
+       "kind": "term",
+       "tgt": "spécialistes"
+      },
+      {
+       "de": "Poliklinik",
+       "kind": "term",
+       "tgt": "policliniques"
+      },
+      {
+       "de": "Falls nach 16-wöchiger Behandlung kein therapeutischer Erfolg eingetreten ist, ist die Behandlung abzubrechen.",
+       "kind": "sentence",
+       "tgt": "Le traitement doit être interrompu si aucun succès thérapeutique n'est obtenu après 16 semaines de traitement."
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "20e801c5c9a6590256015cda5b78cb9c3f4382d733ae349996eb7d8552c4cfc0",
+     "prompt_sha256_v3": "1d89254b1a2f8348a5d52b30f223c492d10f44ca3cf685b3fc9c1f54ac2d0675"
+    },
+    "SKYRIZI.01-Schwere-Plaque-Psoriasis-nur-23c257-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Verschreibung -> prescrizione\n- Poliklinik -> policlinici\n- «Falls nach ⟨B⟩-wöchiger Behandlung kein therapeutischer Erfolg eingetreten ist, ist die Behandlung abzubrechen.» -> «Il trattamento deve essere interrotto qualora non si osservi alcun successo terapeutico dopo ⟨B⟩ settimane.»\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione\n- Krankenversicherer -> assicuratore",
+     "entries": [
+      {
+       "de": "Verschreibung",
+       "kind": "term",
+       "tgt": "prescrizione"
+      },
+      {
+       "de": "Poliklinik",
+       "kind": "term",
+       "tgt": "policlinici"
+      },
+      {
+       "de": "Falls nach 16-wöchiger Behandlung kein therapeutischer Erfolg eingetreten ist, ist die Behandlung abzubrechen.",
+       "kind": "sentence",
+       "tgt": "Il trattamento deve essere interrotto qualora non si osservi alcun successo terapeutico dopo 16 settimane."
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "c7d4fb259df6211d1d87037d96c1fecc8da2469e49cb21704550aece6497e9cb",
+     "prompt_sha256_v3": "f23429415a6543414c98d70ca1bd6c68fdb101f99c5bfff1b8f29984a3ef5c3b"
+    },
+    "SKYRIZI.02-Psoriasis-Arthritis-nur-150-m-1fb678-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Fachärztin / Facharzt -> spécialistes\n- Poliklinik -> policliniques\n- Indikationscode -> code d'indication\n- Limitierung -> limitation\n- Krankenversicherer -> assureur-maladie",
+     "entries": [
+      {
+       "de": "Fachärztin / Facharzt",
+       "kind": "term",
+       "tgt": "spécialistes"
+      },
+      {
+       "de": "Poliklinik",
+       "kind": "term",
+       "tgt": "policliniques"
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "6e991fa758e860266dbf7c76fa2c4d4630533f0ca470d5da0542fb760d499709",
+     "prompt_sha256_v3": "1f2478d50e665b148335f7bfd60ba70ff352d4f91da6f5da3a5a1d54ae14e3ba"
+    },
+    "SKYRIZI.02-Psoriasis-Arthritis-nur-150-m-1fb678-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Verschreibung -> prescrizione\n- Poliklinik -> policlinici\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione\n- Krankenversicherer -> assicuratore",
+     "entries": [
+      {
+       "de": "Verschreibung",
+       "kind": "term",
+       "tgt": "prescrizione"
+      },
+      {
+       "de": "Poliklinik",
+       "kind": "term",
+       "tgt": "policlinici"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "6b4487a95944bb2bb88f1365d4013678397362ab0ddaddbf78b890d4a22d56f1",
+     "prompt_sha256_v3": "710aa230137fe5a0fc4b0334736d652cb9c7a8a369d481af50fee9c3a77e1cda"
+    },
+    "SKYRIZI.02-Psoriasis-Arthritis-nur-150-m-58a7e0-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Fachärztin / Facharzt -> spécialistes\n- Poliklinik -> policliniques\n- Indikationscode -> code d'indication\n- Limitierung -> limitation\n- Krankenversicherer -> assureur-maladie",
+     "entries": [
+      {
+       "de": "Fachärztin / Facharzt",
+       "kind": "term",
+       "tgt": "spécialistes"
+      },
+      {
+       "de": "Poliklinik",
+       "kind": "term",
+       "tgt": "policliniques"
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "6e991fa758e860266dbf7c76fa2c4d4630533f0ca470d5da0542fb760d499709",
+     "prompt_sha256_v3": "1f2478d50e665b148335f7bfd60ba70ff352d4f91da6f5da3a5a1d54ae14e3ba"
+    },
+    "SKYRIZI.02-Psoriasis-Arthritis-nur-150-m-58a7e0-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Verschreibung -> prescrizione\n- Poliklinik -> policlinici\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione\n- Krankenversicherer -> assicuratore",
+     "entries": [
+      {
+       "de": "Verschreibung",
+       "kind": "term",
+       "tgt": "prescrizione"
+      },
+      {
+       "de": "Poliklinik",
+       "kind": "term",
+       "tgt": "policlinici"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "6b4487a95944bb2bb88f1365d4013678397362ab0ddaddbf78b890d4a22d56f1",
+     "prompt_sha256_v3": "710aa230137fe5a0fc4b0334736d652cb9c7a8a369d481af50fee9c3a77e1cda"
+    },
+    "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-0e3431-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Fachärztin / Facharzt -> spécialistes\n- Poliklinik -> policliniques\n- Unverträglichkeit -> intolérance\n- Kostengutsprache -> garantie de prise en charge\n- Krankenversicherer -> assureur-maladie\n- Vertrauensarzt -> médecin-conseil\n- Indikationscode -> code d'indication\n- Limitierung -> limitation",
+     "entries": [
+      {
+       "de": "Fachärztin / Facharzt",
+       "kind": "term",
+       "tgt": "spécialistes"
+      },
+      {
+       "de": "Poliklinik",
+       "kind": "term",
+       "tgt": "policliniques"
+      },
+      {
+       "de": "Unverträglichkeit",
+       "kind": "term",
+       "tgt": "intolérance"
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garantie de prise en charge"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "médecin-conseil"
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "3ab41610fe33791b0e2da282a1f84dd22c6f348a41be443d4aa17c6b94405cff",
+     "prompt_sha256_v3": "cf3f07f9577d4bff91fb67f509b935f79ba133aac6535b74938e0def24e12745"
+    },
+    "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-0e3431-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Verschreibung -> prescrizione\n- Poliklinik -> policlinici\n- Unverträglichkeit -> intolleranza\n- Kostengutsprache -> garanzia di assunzione dei costi\n- Krankenversicherer -> assicuratore\n- Vertrauensarzt -> medico di fiducia\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione",
+     "entries": [
+      {
+       "de": "Verschreibung",
+       "kind": "term",
+       "tgt": "prescrizione"
+      },
+      {
+       "de": "Poliklinik",
+       "kind": "term",
+       "tgt": "policlinici"
+      },
+      {
+       "de": "Unverträglichkeit",
+       "kind": "term",
+       "tgt": "intolleranza"
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garanzia di assunzione dei costi"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "medico di fiducia"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "1123954f4df4eac98f371fab031c50902b3df6ac32d9323bedf9effe2100ef16",
+     "prompt_sha256_v3": "464030a46521ed9886f86a817f74ce8d1504e34e705e70fc16fd419691d782c7"
+    },
+    "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-f77c29-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Fachärztin / Facharzt -> spécialistes\n- Poliklinik -> policliniques\n- Unverträglichkeit -> intolérance\n- Kostengutsprache -> garantie de prise en charge\n- Krankenversicherer -> assureur-maladie\n- Vertrauensarzt -> médecin-conseil\n- Indikationscode -> code d'indication\n- Limitierung -> limitation",
+     "entries": [
+      {
+       "de": "Fachärztin / Facharzt",
+       "kind": "term",
+       "tgt": "spécialistes"
+      },
+      {
+       "de": "Poliklinik",
+       "kind": "term",
+       "tgt": "policliniques"
+      },
+      {
+       "de": "Unverträglichkeit",
+       "kind": "term",
+       "tgt": "intolérance"
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garantie de prise en charge"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "médecin-conseil"
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "3ab41610fe33791b0e2da282a1f84dd22c6f348a41be443d4aa17c6b94405cff",
+     "prompt_sha256_v3": "cf3f07f9577d4bff91fb67f509b935f79ba133aac6535b74938e0def24e12745"
+    },
+    "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-f77c29-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Verschreibung -> prescrizione\n- Poliklinik -> policlinici\n- Unverträglichkeit -> intolleranza\n- Kostengutsprache -> garanzia di assunzione dei costi\n- Krankenversicherer -> assicuratore\n- Vertrauensarzt -> medico di fiducia\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione",
+     "entries": [
+      {
+       "de": "Verschreibung",
+       "kind": "term",
+       "tgt": "prescrizione"
+      },
+      {
+       "de": "Poliklinik",
+       "kind": "term",
+       "tgt": "policlinici"
+      },
+      {
+       "de": "Unverträglichkeit",
+       "kind": "term",
+       "tgt": "intolleranza"
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garanzia di assunzione dei costi"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "medico di fiducia"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "1123954f4df4eac98f371fab031c50902b3df6ac32d9323bedf9effe2100ef16",
+     "prompt_sha256_v3": "464030a46521ed9886f86a817f74ce8d1504e34e705e70fc16fd419691d782c7"
+    },
+    "SKYRIZI.04-Colitis-Ulcerosa-nur-180-mg-3-4d0630-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Fachärztin / Facharzt -> spécialistes\n- Poliklinik -> policliniques\n- Erhaltungstherapie -> traitement d'entretien\n- Kostengutsprache -> garantie de prise en charge\n- Krankenversicherer -> assureur-maladie\n- Vertrauensarzt -> médecin-conseil\n- Indikationscode -> code d'indication\n- Limitierung -> limitation",
+     "entries": [
+      {
+       "de": "Fachärztin / Facharzt",
+       "kind": "term",
+       "tgt": "spécialistes"
+      },
+      {
+       "de": "Poliklinik",
+       "kind": "term",
+       "tgt": "policliniques"
+      },
+      {
+       "de": "Erhaltungstherapie",
+       "kind": "term",
+       "tgt": "traitement d'entretien"
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garantie de prise en charge"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "médecin-conseil"
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "904c7b51fd686398b82894363ce4054b592e2339ea2fe739bd1813263ab46657",
+     "prompt_sha256_v3": "3ccd6f3d377cab90a97c2e13246008a8498efc8215a7fb9968070d28825cb629"
+    },
+    "SKYRIZI.04-Colitis-Ulcerosa-nur-180-mg-3-4d0630-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Verschreibung -> prescrizione\n- Poliklinik -> policlinici\n- Erhaltungstherapie -> terapia di mantenimento\n- Kostengutsprache -> garanzia di assunzione dei costi\n- Krankenversicherer -> assicuratore\n- Vertrauensarzt -> medico di fiducia\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione",
+     "entries": [
+      {
+       "de": "Verschreibung",
+       "kind": "term",
+       "tgt": "prescrizione"
+      },
+      {
+       "de": "Poliklinik",
+       "kind": "term",
+       "tgt": "policlinici"
+      },
+      {
+       "de": "Erhaltungstherapie",
+       "kind": "term",
+       "tgt": "terapia di mantenimento"
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garanzia di assunzione dei costi"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "medico di fiducia"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "78acd18d214604e7973576d7e7b043aba7161586467a168f9a1d9bfa3bf5e242",
+     "prompt_sha256_v3": "4f9866f10b1d3fb35a0e618ed4d5bfc2fc0ccdbb6b1dbe6f5d34767a850e388c"
+    },
+    "SKYRIZI.04-Colitis-Ulcerosa-nur-180-mg-3-dbcc55-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Fachärztin / Facharzt -> spécialistes\n- Poliklinik -> policliniques\n- Erhaltungstherapie -> traitement d'entretien\n- Kostengutsprache -> garantie de prise en charge\n- Krankenversicherer -> assureur-maladie\n- Vertrauensarzt -> médecin-conseil\n- Indikationscode -> code d'indication\n- Limitierung -> limitation",
+     "entries": [
+      {
+       "de": "Fachärztin / Facharzt",
+       "kind": "term",
+       "tgt": "spécialistes"
+      },
+      {
+       "de": "Poliklinik",
+       "kind": "term",
+       "tgt": "policliniques"
+      },
+      {
+       "de": "Erhaltungstherapie",
+       "kind": "term",
+       "tgt": "traitement d'entretien"
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garantie de prise en charge"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "médecin-conseil"
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "904c7b51fd686398b82894363ce4054b592e2339ea2fe739bd1813263ab46657",
+     "prompt_sha256_v3": "3ccd6f3d377cab90a97c2e13246008a8498efc8215a7fb9968070d28825cb629"
+    },
+    "SKYRIZI.04-Colitis-Ulcerosa-nur-180-mg-3-dbcc55-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Verschreibung -> prescrizione\n- Poliklinik -> policlinici\n- Erhaltungstherapie -> terapia di mantenimento\n- Kostengutsprache -> garanzia di assunzione dei costi\n- Krankenversicherer -> assicuratore\n- Vertrauensarzt -> medico di fiducia\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione",
+     "entries": [
+      {
+       "de": "Verschreibung",
+       "kind": "term",
+       "tgt": "prescrizione"
+      },
+      {
+       "de": "Poliklinik",
+       "kind": "term",
+       "tgt": "policlinici"
+      },
+      {
+       "de": "Erhaltungstherapie",
+       "kind": "term",
+       "tgt": "terapia di mantenimento"
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garanzia di assunzione dei costi"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "medico di fiducia"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "78acd18d214604e7973576d7e7b043aba7161586467a168f9a1d9bfa3bf5e242",
+     "prompt_sha256_v3": "4f9866f10b1d3fb35a0e618ed4d5bfc2fc0ccdbb6b1dbe6f5d34767a850e388c"
+    },
+    "SKYRIZI.XX-EAP-cd0a2f-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- «Sind in spezifischen Fällen (z.B. Einzelfallvergütung) die wirtschaftlichen Preise in den jeweiligen Indikationen zu berücksichtigen, gibt die Zulassungsinhaberin auf Aufforderung der Krankenversicherung die Preise bekannt.» -> «Dans des cas spécifiques (ex. prise en charge de médicaments dans des cas particuliers), si des prix économiques doivent être considérés pour les indications respectives, le titulaire de l'autorisation annoncera les prix à la demande de l'assureur maladie.»\n- Zulassungsinhaberin -> titulaire de l'autorisation",
+     "entries": [
+      {
+       "de": "Sind in spezifischen Fällen (z.B. Einzelfallvergütung) die wirtschaftlichen Preise in den jeweiligen Indikationen zu berücksichtigen, gibt die Zulassungsinhaberin auf Aufforderung der Krankenversicherung die Preise bekannt.",
+       "kind": "sentence",
+       "tgt": "Dans des cas spécifiques (ex. prise en charge de médicaments dans des cas particuliers), si des prix économiques doivent être considérés pour les indications respectives, le titulaire de l'autorisation annoncera les prix à la demande de l'assureur maladie."
+      },
+      {
+       "de": "Zulassungsinhaberin",
+       "kind": "term",
+       "tgt": "titulaire de l'autorisation"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "94d809d8408bd5fde1930b80b73acc4a6a19303d8ac273b5069fc8c75a37e7ee",
+     "prompt_sha256_v3": "e72ee7f9f07593ce61f02a994aa6f57d1e2b143a43230cffd2dda3366f323634"
+    },
+    "SKYRIZI.XX-EAP-cd0a2f-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Zulassungsinhaberin -> titolare dell'omologazione",
+     "entries": [
+      {
+       "de": "Zulassungsinhaberin",
+       "kind": "term",
+       "tgt": "titolare dell'omologazione"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "7060146da8259125113b7bc0c34bfeda8d18ba19ea59f88ada349f2953f90c96",
+     "prompt_sha256_v3": "f9ac26880ab052670e5f701a8a96de5e79abc9159d9c7309457756ce1b51e44b"
+    },
+    "TALZENNA-03d4dc-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Verordnung -> prescription\n- Fachärztin / Facharzt -> spécialistes\n- Kostengutsprache -> garantie de prise en charge\n- Krankenversicherer -> assureur-maladie\n- Vertrauensarzt -> médecin-conseil\n- Monotherapie -> monothérapie\n- Kontraindikation -> contre-indication\n- Fabrikabgabepreis -> prix de fabrique\n- Rückerstattung -> remboursement\n- Mehrwertsteuer -> taxe sur la valeur ajoutée\n- Indikationscode -> code d'indication\n- Limitierung -> limitation",
+     "entries": [
+      {
+       "de": "Verordnung",
+       "kind": "term",
+       "tgt": "prescription"
+      },
+      {
+       "de": "Fachärztin / Facharzt",
+       "kind": "term",
+       "tgt": "spécialistes"
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garantie de prise en charge"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "médecin-conseil"
+      },
+      {
+       "de": "Monotherapie",
+       "kind": "term",
+       "tgt": "monothérapie"
+      },
+      {
+       "de": "Kontraindikation",
+       "kind": "term",
+       "tgt": "contre-indication"
+      },
+      {
+       "de": "Fabrikabgabepreis",
+       "kind": "term",
+       "tgt": "prix de fabrique"
+      },
+      {
+       "de": "Rückerstattung",
+       "kind": "term",
+       "tgt": "remboursement"
+      },
+      {
+       "de": "Mehrwertsteuer",
+       "kind": "term",
+       "tgt": "taxe sur la valeur ajoutée"
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "20efe18d2b75a772eee5b5e8a92c4797632e49ea497c4b064918e0c45126995e",
+     "prompt_sha256_v3": "852b7cbf7c84cc5e0e1e09f1d894f83e5ba9a21dcf2813e8bdd431aa6b082262"
+    },
+    "TALZENNA-03d4dc-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Kostengutsprache -> garanzia di assunzione dei costi\n- Krankenversicherer -> assicuratore\n- Vertrauensarzt -> medico di fiducia\n- Monotherapie -> monoterapia\n- Kontraindikation -> controindicazione\n- Fabrikabgabepreis -> prezzo di fabbrica\n- Rückerstattung -> rimborso\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione",
+     "entries": [
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garanzia di assunzione dei costi"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "medico di fiducia"
+      },
+      {
+       "de": "Monotherapie",
+       "kind": "term",
+       "tgt": "monoterapia"
+      },
+      {
+       "de": "Kontraindikation",
+       "kind": "term",
+       "tgt": "controindicazione"
+      },
+      {
+       "de": "Fabrikabgabepreis",
+       "kind": "term",
+       "tgt": "prezzo di fabbrica"
+      },
+      {
+       "de": "Rückerstattung",
+       "kind": "term",
+       "tgt": "rimborso"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "e60248d9072f03494149f1896753aca165e4d4f9de434dc2df8520a5528b0793",
+     "prompt_sha256_v3": "e53e4b489c5dc5d048eed08b15d759c16ee9b04b0c8b063d3c157c223cc976be"
+    },
+    "VERZENIO.01a-c8a78a-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Monotherapie -> monothérapie\n- Indikationscode -> code d'indication\n- Limitierung -> limitation\n- Krankenversicherer -> assureur-maladie",
+     "entries": [
+      {
+       "de": "Monotherapie",
+       "kind": "term",
+       "tgt": "monothérapie"
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "e6c9e6efae29c5a2d886d9fd016c098ba5dd1c4201979c129d1e1a9bb3557cc1",
+     "prompt_sha256_v3": "922c2bf8d93a61d2a774109d9c3f1fc2108ef9302ba53d4e7ef704fa3fa24459"
+    },
+    "VERZENIO.01a-c8a78a-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Erstlinientherapie -> terapia di prima linea\n- Monotherapie -> monoterapia\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione\n- Krankenversicherer -> assicuratore",
+     "entries": [
+      {
+       "de": "Erstlinientherapie",
+       "kind": "term",
+       "tgt": "terapia di prima linea"
+      },
+      {
+       "de": "Monotherapie",
+       "kind": "term",
+       "tgt": "monoterapia"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "d74c73e5c248e3f56ac3c0312d9f3025217c19853308535d40f16a234dc1c705",
+     "prompt_sha256_v3": "7327c3df18e357ebaf3a895079adf6ded610cf1689efa658b535cd2bd8c9d8d7"
+    },
+    "VERZENIO.02a-f05251-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Indikationscode -> code d'indication\n- Limitierung -> limitation\n- Krankenversicherer -> assureur-maladie",
+     "entries": [
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "103c4d6af8b37f80b31259575468486090a2bc56a715c04c8ab9089f2b4a4ec8",
+     "prompt_sha256_v3": "e94a9eddcd92fc77a537aa08557b4e62c4b6a6745235f8059871940bbfee8212"
+    },
+    "VERZENIO.02a-f05251-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Erstlinientherapie -> terapia di prima linea\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione\n- Krankenversicherer -> assicuratore",
+     "entries": [
+      {
+       "de": "Erstlinientherapie",
+       "kind": "term",
+       "tgt": "terapia di prima linea"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "f0041219a2a5d3447ee1ebadc272fb33c9d8bfad4ad5793e00740eb098a6081f",
+     "prompt_sha256_v3": "64e428bfdc213a03571ad29b46cdb12d0dc45c19b75ed4cd0e8a17ade26b3736"
+    },
+    "VERZENIO.03a-175825-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Indikationscode -> code d'indication\n- Limitierung -> limitation\n- Krankenversicherer -> assureur-maladie",
+     "entries": [
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "9ad31e1719deab62bfb3b60ddceb3c8d018c889233dd10cb4a8e314189729ac3",
+     "prompt_sha256_v3": "29c11daa75c799afd3901694632bb80ad8d278b8b0e5087fac277bcedfa88114"
+    },
+    "VERZENIO.03a-175825-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Zweitlinientherapie -> trattamento di seconda linea\n- Erstlinientherapie -> terapia di prima linea\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione\n- Krankenversicherer -> assicuratore",
+     "entries": [
+      {
+       "de": "Zweitlinientherapie",
+       "kind": "term",
+       "tgt": "trattamento di seconda linea"
+      },
+      {
+       "de": "Erstlinientherapie",
+       "kind": "term",
+       "tgt": "terapia di prima linea"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "2a7639d152c3719edc1c186bc6ea24bdaa8323cf62eabbdba20cd6fc35bdb58e",
+     "prompt_sha256_v3": "1f61a79c97af48d125babbc78a16f2aa35d68129caad2bcfac0a2fc83ab2d1dd"
+    },
+    "VERZENIO.04a-8bc91a-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Kostengutsprache -> garantie de prise en charge\n- Krankenversicherer -> assureur-maladie\n- Vertrauensarzt -> médecin-conseil\n- «Eine Kostengutsprache hat den entsprechenden Indikationscode (⟨A⟩) zu enthalten.» -> «Une garantie de prise en charge des frais doit contenir le code d'indication correspondant (⟨A⟩).»\n- Indikationscode -> code d'indication\n- Preismodell -> modèle de prix\n- Zulassungsinhaberin -> titulaire de l'autorisation\n- Limitierung -> limitation",
+     "entries": [
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garantie de prise en charge"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "médecin-conseil"
+      },
+      {
+       "de": "Eine Kostengutsprache hat den entsprechenden Indikationscode (20839.04) zu enthalten.",
+       "kind": "sentence",
+       "tgt": "Une garantie de prise en charge des frais doit contenir le code d'indication correspondant (20839.04)."
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Preismodell",
+       "kind": "term",
+       "tgt": "modèle de prix"
+      },
+      {
+       "de": "Zulassungsinhaberin",
+       "kind": "term",
+       "tgt": "titulaire de l'autorisation"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "7f63292dfd9852e4084f16346b7520a1c8e93204959d134bc5e819221fb701ad",
+     "prompt_sha256_v3": "edee5af413d8b649fa8d9c1bc1e697d67f7ceda85034f986c1916432102f3316"
+    },
+    "VERZENIO.04a-8bc91a-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Therapiebeginn -> inizio della terapia\n- Kostengutsprache -> garanzia di assunzione dei costi\n- Krankenversicherer -> assicuratore\n- Vertrauensarzt -> medico di fiducia\n- Preismodell -> modello di prezzo\n- Zulassungsinhaberin -> titolare dell'omologazione\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione",
+     "entries": [
+      {
+       "de": "Therapiebeginn",
+       "kind": "term",
+       "tgt": "inizio della terapia"
+      },
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garanzia di assunzione dei costi"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "medico di fiducia"
+      },
+      {
+       "de": "Preismodell",
+       "kind": "term",
+       "tgt": "modello di prezzo"
+      },
+      {
+       "de": "Zulassungsinhaberin",
+       "kind": "term",
+       "tgt": "titolare dell'omologazione"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "229c793af79735ad9d5fe114cd24d00d4681780d2c0a28affb758b61a6077c04",
+     "prompt_sha256_v3": "01bf4227bdb9661291d9e54b4052d2e93825ee891ae1eda0527f08131f678ba2"
+    },
+    "XTANDI.XX-KoGu-227abc-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Kostengutsprache -> garantie de prise en charge\n- Krankenversicherer -> assureur-maladie\n- Vertrauensarzt -> médecin-conseil",
+     "entries": [
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garantie de prise en charge"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "médecin-conseil"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "72e84500d0420e073ca3fe678c2be9428781c7a5f8be4b4dcc5c73488786e15b",
+     "prompt_sha256_v3": "4327f8a2662700a31c464766c6961710f63c8acd5aaa8a136b22275ef30b7e53"
+    },
+    "XTANDI.XX-KoGu-227abc-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Kostengutsprache -> garanzia di assunzione dei costi\n- Krankenversicherer -> assicuratore\n- Vertrauensarzt -> medico di fiducia\n- Therapieabbruch -> interruzione della terapia\n- Behandlungsbeginn -> inizio del trattamento",
+     "entries": [
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garanzia di assunzione dei costi"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "medico di fiducia"
+      },
+      {
+       "de": "Therapieabbruch",
+       "kind": "term",
+       "tgt": "interruzione della terapia"
+      },
+      {
+       "de": "Behandlungsbeginn",
+       "kind": "term",
+       "tgt": "inizio del trattamento"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "93eeca43188008c4d0a65d0df2bd7fdc8b24cc2b6b43f91032a140147398fd93",
+     "prompt_sha256_v3": "2d820c235b96da4b6a7679429cb3a8ba0f0b6ce473ad921ddb1a6f5f5cdc91a8"
+    },
+    "ZEPOSIA.01-80f645-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Erstverschreibung -> première prescription\n- Fachärztin / Facharzt -> spécialistes\n- Indikationscode -> code d'indication\n- Limitierung -> limitation\n- Krankenversicherer -> assureur-maladie",
+     "entries": [
+      {
+       "de": "Erstverschreibung",
+       "kind": "term",
+       "tgt": "première prescription"
+      },
+      {
+       "de": "Fachärztin / Facharzt",
+       "kind": "term",
+       "tgt": "spécialistes"
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "e140e870f01e3cc1950010998e9238019f5212fd2a5dbb59e2276c58f0c33f0c",
+     "prompt_sha256_v3": "431a880fd909d59928d0e0e70a279aa45082787ae29e1fc46b43a6c181bad99d"
+    },
+    "ZEPOSIA.01-80f645-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione\n- Krankenversicherer -> assicuratore",
+     "entries": [
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "542a372ed5a014edfdaf79ff0cf8e93a64734c538fe2cc163f81d9f30fca3c41",
+     "prompt_sha256_v3": "5fa6feb5668d9f60c15bab9bbcf8c6eb8fa67f2315be64bc4e4ae580dc5d7210"
+    },
+    "ZEPOSIA.02a-3a7aca-fr": {
+     "block": "BAG's established French wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published French texts. Where the amended part contains them, use exactly this French wording:\n- Kostengutsprache -> garantie de prise en charge\n- Krankenversicherer -> assureur-maladie\n- Vertrauensarzt -> médecin-conseil\n- Fabrikabgabepreis -> prix de fabrique\n- Rückerstattung -> remboursement\n- Mehrwertsteuer -> taxe sur la valeur ajoutée\n- Indikationscode -> code d'indication\n- Limitierung -> limitation",
+     "entries": [
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garantie de prise en charge"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assureur-maladie"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "médecin-conseil"
+      },
+      {
+       "de": "Fabrikabgabepreis",
+       "kind": "term",
+       "tgt": "prix de fabrique"
+      },
+      {
+       "de": "Rückerstattung",
+       "kind": "term",
+       "tgt": "remboursement"
+      },
+      {
+       "de": "Mehrwertsteuer",
+       "kind": "term",
+       "tgt": "taxe sur la valeur ajoutée"
+      },
+      {
+       "de": "Indikationscode",
+       "kind": "term",
+       "tgt": "code d'indication"
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitation"
+      }
+     ],
+     "lang": "fr",
+     "model_call": true,
+     "prompt_sha256_frozen": "3ddf3e74562706b22a9296b796ed5316e9ccb16dd0fc2f0b34d178cdb5322c4a",
+     "prompt_sha256_v3": "b5e575a330c1f1f7342bc65931281c923f91e05a0f3730d44123d96b21d14367"
+    },
+    "ZEPOSIA.02a-3a7aca-it": {
+     "block": "BAG's established Italian wording in the Spezialitätenliste for terms and sentences of the German (new) text, taken from BAG's published Italian texts. Where the amended part contains them, use exactly this Italian wording:\n- Kostengutsprache -> garanzia di assunzione dei costi\n- Krankenversicherer -> assicuratore\n- Vertrauensarzt -> medico di fiducia\n- Fabrikabgabepreis -> prezzo di fabbrica\n- Rückerstattung -> rimborso\n- «Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.» -> «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.»\n- Limitierung -> limitazione",
+     "entries": [
+      {
+       "de": "Kostengutsprache",
+       "kind": "term",
+       "tgt": "garanzia di assunzione dei costi"
+      },
+      {
+       "de": "Krankenversicherer",
+       "kind": "term",
+       "tgt": "assicuratore"
+      },
+      {
+       "de": "Vertrauensarzt",
+       "kind": "term",
+       "tgt": "medico di fiducia"
+      },
+      {
+       "de": "Fabrikabgabepreis",
+       "kind": "term",
+       "tgt": "prezzo di fabbrica"
+      },
+      {
+       "de": "Rückerstattung",
+       "kind": "term",
+       "tgt": "rimborso"
+      },
+      {
+       "de": "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+       "kind": "sentence",
+       "tgt": "Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie."
+      },
+      {
+       "de": "Limitierung",
+       "kind": "term",
+       "tgt": "limitazione"
+      }
+     ],
+     "lang": "it",
+     "model_call": true,
+     "prompt_sha256_frozen": "740ac62d348874ac19539b8684f94fe04711af7e29a9dcb3776adcb59efc1baf",
+     "prompt_sha256_v3": "aedcd0599104d033b2f685c112a6aed4b05b57d62b2454d7b62223410db0e2f9"
+    }
+   },
+   "model_calls": 40,
+   "prompt_changed": 40,
+   "termbase": "data/termbase/r12/termbase_20260901.json",
+   "termbase_sha256": "1f50e4fca3e711431b3bf36471ef8ec9ac2b785424fdd344e03cbde5b6a8b77e",
+   "terms_date": "20260901",
+   "with_block": 44
+  }
+ },
+ "rule": "PREREG R12",
+ "variant": "v3-terms"
+}

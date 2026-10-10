@@ -305,10 +305,20 @@ class _Captured(Exception):
 def _capture(prompt, tag, cap, max_tokens): raise _Captured(prompt, max_tokens)
 
 
-def dry_run(items, corpus, gate=None, out=None, domain=None):
+def _pipeline(ask, variant="frozen", terms_date=None):
+    """the SL pipeline: the frozen one (default), or the experimental v3-terms variant (PREREG R12, gleichlaut.v3terms)."""
+    if variant in (None, "frozen"): return core.Pipeline(ask, "g3")
+    if variant != "v3-terms": raise UsageError(f"unknown variant {variant!r}")
+    if not terms_date: raise UsageError("--variant v3-terms needs --terms-date YYYYMMDD (the snapshot the house wording is mined from)")
+    from . import v3terms
+    try: return v3terms.TermsPipeline(ask, terms_date)
+    except FileNotFoundError as e: raise UsageError(str(e))
+
+
+def dry_run(items, corpus, gate=None, out=None, domain=None, variant="frozen", terms_date=None):
     """print, per item, the routing, the slot map and the exact first prompt; no backend is constructed, nothing is sent."""
     out = out or sys.stdout
-    P = core.Pipeline(backends.DomainAsk(_capture, domain) if domain else _capture, "g3") if corpus == "sl" else None
+    P = _pipeline(backends.DomainAsk(_capture, domain) if domain else _capture, variant, terms_date) if corpus == "sl" else None
     n = Counter()
     if gate: print(gate, file=out)
     for x in items:
@@ -473,14 +483,14 @@ def _records(path):
     return out
 
 
-def draft_items(items, ask, out, corpus="sl", review=None, label=""):
+def draft_items(items, ask, out, corpus="sl", review=None, label="", variant="frozen", terms_date=None):
     """draft every item not yet in out/records.jsonl; one JSON line per item, flushed as it is written (resumable)."""
     os.makedirs(out, exist_ok=True)
     path = os.path.join(out, "records.jsonl")
     done = {r.get("key") for r in _records(path)}
     todo = [x for x in items if x["key"] not in done]
     if done: print(f"resuming: {len(items) - len(todo)} of {len(items)} items already in {path}", flush=True)
-    P = core.Pipeline(ask, "g3") if corpus == "sl" else None
+    P = _pipeline(ask, variant, terms_date) if corpus == "sl" else None
     with open(path, "a", encoding="utf-8") as f:
         for i, x in enumerate(todo):
             rt, why = route(x, corpus); t0 = time.time()
@@ -597,12 +607,20 @@ def _drafting(a, items, out, mode, extra=None):
         bak = os.path.join(out, f"records.{datetime.datetime.now().strftime('%Y%m%dT%H%M%S')}.jsonl")
         os.replace(os.path.join(out, "records.jsonl"), bak); print("previous records moved to", bak)
     resolve_backend(a)
-    if a.dry_run: return dry_run(items, a.corpus, _gate_text(a), domain=getattr(a, "prompt_domain", None))
+    variant, td = getattr(a, "variant", "frozen") or "frozen", getattr(a, "terms_date", None)
+    if variant != "frozen" and a.corpus != "sl": raise UsageError("--variant applies to the SL lane only")
+    if a.dry_run: return dry_run(items, a.corpus, _gate_text(a), domain=getattr(a, "prompt_domain", None), variant=variant, terms_date=td)
+    if variant != "frozen": _pipeline(None, variant, td)          # fail fast on a missing termbase, before any model loads
     ask, label, review = make_backend(a, out)
+    if variant != "frozen":
+        label += f" (variant {variant}, house wording mined from the {td} snapshot)"
+        review = review or (f"experimental prompt variant {variant} (PREREG R12), not the certified pipeline: every item is "
+                            "reviewed; guard_status keeps the frozen guards' verdict")
     print(f"drafting {len(items)} items through {label} -> {out}", flush=True)
-    draft_items(items, ask, out, a.corpus, review, label)
+    draft_items(items, ask, out, a.corpus, review, label, variant, td)
     if getattr(a, "_gate", None): extra = dict(extra or {}, gate=a._gate)
     extra = dict(extra or {}, backend=dict(name=a.backend, label=label, review_policy=review))
+    if variant != "frozen": extra["variant"] = dict(name=variant, terms_date=td)
     summarise(items, out, mode, extra)
     if getattr(a, "emit", False):
         rc = passthrough("emit", ["--records", os.path.join(out, "records.jsonl"), "--items", os.path.join(out, "items.json"), "--n", "0", "--out", os.path.join(out, "emit")])
@@ -624,6 +642,11 @@ def _common(ap, default_backend=None):
     ap.add_argument("--prompt-domain", metavar="TEXT", help="replace the first sentence of the SL prompt ('A Swiss reimbursement "
                     "limitation (Spezialitätenliste, BAG) was amended in German.') for another kind of text: a noun phrase "
                     "('paragraph of a cantonal ordinance') or a whole sentence. UNCERTIFIED: every draft goes to review")
+    ap.add_argument("--variant", choices=["frozen", "v3-terms"], default="frozen",
+                    help="SL pipeline: frozen (default, certified) or v3-terms (experimental, PREREG R12: the drafting prompt also "
+                         "lists BAG's house FR/IT wording of the terms and fixed sentences in the new German; every item reviewed)")
+    ap.add_argument("--terms-date", metavar="YYYYMMDD", help="v3-terms: the snapshot whose mined house wording is used "
+                    "(data/termbase/r12/termbase_<date>.json and house_sentences_<date>.json)")
     ap.add_argument("--dry-run", action="store_true", help="print routing, slot maps and the exact prompts; send nothing")
     ap.add_argument("--restart", action="store_true", help="set existing records aside and start over (default: resume)")
     ap.add_argument("--emit", action="store_true", help="afterwards run `emit` and `ui` on the records (where the build supports it)")

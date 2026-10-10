@@ -16,6 +16,11 @@
 #           the review register (gleichlaut ui --records --items) and XLIFF/FHIR (gleichlaut emit), and uploads everything
 #           as the artifact shadow-<from>-<to>.
 # The drafts are never shown the published FR/IT (tgt_new is used only to grade them).
+# variant=v3-terms (PREREG R12, experimental): the same pipeline with BAG's house FR/IT wording of the terms and fixed
+# sentences of the new German added to the drafting prompt, mined from the <from> snapshot only
+# (data/termbase/r12/*_<from>.json). It drafts the committed items of data/shadow/<from>-<to>/items.json (explicit dates
+# needed; no feed is fetched or mined again) and every item goes to review (guard_status keeps the guards' verdict):
+#   gh workflow run shadow.yml -R mi11ione/gleichlaut -f from=20260801 -f to=20260901 -f variant=v3-terms -f shards=6
 name: shadow
 on:
   schedule:
@@ -26,10 +31,12 @@ on:
       to: { description: "new feed date YYYYMMDD, or latest", required: true, default: "latest" }
       shards: { description: "parallel 4-core runners", required: true, default: "4" }
       build: { description: "certified 8B GGUF build: q8_0 (16 GiB, default) or q4_k_m (8 GiB)", required: true, default: "q8_0" }
+      variant: { description: "pipeline: frozen (default) or v3-terms (experimental, PREREG R12; committed items, explicit dates)", required: true, default: "frozen" }
 permissions: { contents: read }
-concurrency: { group: shadow, cancel-in-progress: false }
+concurrency: { group: "shadow-${{ inputs.from || 'scheduled' }}-${{ inputs.variant || 'frozen' }}", cancel-in-progress: false }
 env:
   BUILD: ${{ inputs.build || 'q8_0' }}
+  VARIANT: ${{ inputs.variant || 'frozen' }}
   GGUF_FILE: models/apertus-v1.5-8b-text-${{ inputs.build || 'q8_0' }}.gguf
   URL_q8_0: https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf
   SHA_q8_0: dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d
@@ -66,12 +73,23 @@ jobs:
           print(f"from={fr}"); print(f"to={to}")
           EOF
       - name: fetch both feeds and mine the month (no model)
+        if: env.VARIANT == 'frozen'
         run: |
           set -o pipefail
           mkdir -p out/plan
           PYTHONPATH=src python -m gleichlaut month --from ${{ steps.dates.outputs.from }} --to ${{ steps.dates.outputs.to }} \
             --fetch --dry-run --backend stub > out/plan/mine.log
           grep -E "^mined|^dry run" out/plan/mine.log
+      - name: committed items of the month (variant run, no feed fetched)
+        if: env.VARIANT != 'frozen'
+        run: |
+          a=${{ steps.dates.outputs.from }}; b=${{ steps.dates.outputs.to }}
+          test -f data/shadow/$a-$b/items.json && test -f data/termbase/r12/termbase_$a.json && test -f data/termbase/r12/house_sentences_$a.json
+          mkdir -p out/plan out/month/$a-$b
+          cp data/shadow/$a-$b/items.json data/shadow/$a-$b/unmatched.json out/month/$a-$b/
+          PYTHONPATH=src python -m gleichlaut month --items out/month/$a-$b/items.json --out out/plan/dry --dry-run --backend stub \
+            --variant $VARIANT --terms-date $a > out/plan/prompts.log
+          tail -1 out/plan/prompts.log
       - name: split into shards
         id: split
         env: { SHARDS: "${{ inputs.shards || '4' }}" }
@@ -81,8 +99,9 @@ jobs:
           from gleichlaut.sl import mine, hist_dir
           a, b = "${{ steps.dates.outputs.from }}", "${{ steps.dates.outputs.to }}"
           d = f"out/month/{a}-{b}"; items = json.load(open(f"{d}/items.json", encoding="utf-8"))
-          M = mine.month_items(mine.Hist(hist_dir()), a, b)
-          json.dump(M["stats"], open("out/plan/mining.json", "w"), indent=1)
+          if os.environ.get("VARIANT", "frozen") == "frozen": M = mine.month_items(mine.Hist(hist_dir()), a, b)["stats"]
+          else: M = dict(items_from=f"data/shadow/{a}-{b}/items.json (committed)", variant=os.environ.get("VARIANT", "frozen"), terms_date=a)
+          json.dump(M, open("out/plan/mining.json", "w"), indent=1)
           k = max(1, min(int(os.environ["SHARDS"]), len(items) or 1))
           for i in range(k):
               json.dump(items[i::k], open(f"out/plan/shard-{i}.json", "w", encoding="utf-8"), ensure_ascii=False)
@@ -124,7 +143,8 @@ jobs:
       - name: draft with the certified local 8B (make month, offline image, --network none)
         run: |
           set -o pipefail
-          timeout --signal=INT 330m make month BUILD=$BUILD ITEMS=out/plan/shard-${{ matrix.k }}.json 2>&1 | tee month-${{ matrix.k }}.log
+          VA=""; [ "$VARIANT" = frozen ] || VA="--variant $VARIANT --terms-date ${{ needs.plan.outputs.from }}"
+          timeout --signal=INT 330m make month BUILD=$BUILD ITEMS=out/plan/shard-${{ matrix.k }}.json MONTH_ARGS="$VA" 2>&1 | tee month-${{ matrix.k }}.log
       - name: save GGUF cache
         if: always() && matrix.k == 0 && steps.gguf.outputs.cache-hit != 'true' && hashFiles('track_2b/models/*.gguf') != ''
         uses: actions/cache/save@v6
@@ -170,7 +190,8 @@ jobs:
           extra = dict(mining=json.load(open("out/plan/mining.json")), gate=gates[0] if gates else None,
                        backend=backends[0] if backends else None, shards=len(gates),
                        gates_agree=len({json.dumps(g, sort_keys=True) for g in gates}) <= 1)
-          cli.summarise(items, run, "shadow (public feed), certified local 8B", extra)       # writes summary.json
+          if os.environ.get("VARIANT", "frozen") != "frozen": extra["variant"] = dict(name=os.environ.get("VARIANT", "frozen"), terms_date="${{ needs.plan.outputs.from }}")
+          cli.summarise(items, run, "shadow (public feed), certified local 8B" + ("" if os.environ.get("VARIANT", "frozen") == "frozen" else f", variant {os.environ.get('VARIANT', 'frozen')} (experimental)"), extra)       # writes summary.json
           EOF
       - name: review register (gleichlaut ui --records --items)
         if: always()
@@ -202,6 +223,6 @@ jobs:
       - uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: shadow-${{ needs.plan.outputs.from }}-${{ needs.plan.outputs.to }}-${{ inputs.build || 'q8_0' }}
+          name: shadow-${{ needs.plan.outputs.from }}-${{ needs.plan.outputs.to }}-${{ inputs.build || 'q8_0' }}${{ (inputs.variant || 'frozen') != 'frozen' && format('-{0}', inputs.variant) || '' }}
           path: track_2b/out/month/${{ needs.plan.outputs.from }}-${{ needs.plan.outputs.to }}
           retention-days: 90

@@ -391,7 +391,8 @@ REJECT = {("fr", "Universitätsklinik"): "fragment (« universitaires »)", ("fr
           ("fr", "Therapielinie"): "fragment (« lignes »)", ("it", "Therapielinie"): "fragment («linee»)",
           ("fr", "Zweitlinientherapie"): "fragment (« traitement de deuxième »)",
           ("fr", "Stammzelltransplantation"): "fragment (« cellules souches »)",
-          ("it", "Stammzelltransplantation"): "fragment («cellule staminali»)"}
+          ("it", "Stammzelltransplantation"): "fragment («cellule staminali»)",
+          ("it", "Verlaufskontrolle"): "fragment («effettuati»; house only in the 1 Sep 2026 snapshot, PREREG R12)"}
 DROP_VARIANTS = {("fr", "Mehrwertsteuer"): {"récupérée", "réclamée"}, ("fr", "Körpergewicht"): {"pesant"},
                  ("it", "Erstlinienbehandlung"): {"linea di pazienti adulti"}}
 
