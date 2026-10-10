@@ -336,12 +336,13 @@ returns a `language` finding with `odd_one_out: it`. The defect was corrected by
 new text. Since then the Italian `MYOVIEW2` has read "Prezzo di fatturazione…". The register check (2026 snapshots)
 therefore cannot show it; it appears only in the fresh set's old text (snapshot 1 Jul 2025).
 
-**Precision: round 2.** The 21 number findings were labelled blind: 10/21 real, all of them the known cases (see
+**Precision: round 2.** The 21 number findings were labelled blind: 10/21 real, all of them the known cases (relabelled under R14 by two blind
+Claude annotators and a tie-break: 11/21 confirmed, the 11th a minor typo, «se mesi») (see
 `eval/results/audit.json`). The 11 others include the three typos above, which the number check misread as divergences.
 They are now reported as editorial findings and linked through `explained_by`.
 
 **Precision: round 3, labelled.** The 6 round-3 findings (1 language, 5 editorial; no unit finding) were labelled blind
-(`eval/labels/audit2_20261006.tsv`): **6/6 real** (Wilson 95% 0.61–1.00): language 1/1 (Keytruda), editorial 5/5. Two
+(`eval/labels/audit2_20261006.tsv`): **6/6 real** (Wilson 95% 0.61–1.00; under the R14 relabel 6/6 confirmed, 2 change a condition and 4 are minor): language 1/1 (Keytruda), editorial 5/5. Two
 caveats: six findings give a wide interval, and Keytruda was known before the language rule existed. The rule was
 written to find exactly that case, so it does not count as an independent hit. The round-2 number findings stay at
 **10/21 real** (0.28–0.68).

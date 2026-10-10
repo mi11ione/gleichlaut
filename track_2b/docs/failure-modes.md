@@ -32,5 +32,7 @@ whatever Public AI served under that name.
   out-of-vocabulary guard flags ordinary words that are rare in the SL corpus ("glutine", "uniforme").
 - **Concentration**: one boilerplate family carries half of the ready drafts of the fresh set; without it the flag rate
   is above the 70% cap.
-- **0 errors in 166** is a point estimate: the 95% upper bound is 2.3% per item and 9.6% per German change, so 166 items
-  cannot show that the pre-registered 1% limit holds; they show it was not exceeded.
+- **0 unflagged errors in 166** (the pre-registered rule counts errors that pass the checks; flagged drafts go to review and
+  only a seeded 20 of them were read) is a point estimate: the 95% upper bound is 2.3% per item and 9.6% per German change, so 166 items
+  cannot show that the pre-registered 1% limit holds; they show it was not exceeded, and only as far as the Claude annotators see errors (R17: on real errors BAG corrected
+  they flagged 5 of 17 with BAG's text shown).

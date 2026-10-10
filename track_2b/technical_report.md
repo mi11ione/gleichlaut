@@ -26,8 +26,8 @@ of deterministic checks that marks the draft ready or flagged and explains why i
 compares the numbers of every limitation across the three languages and lists the conditions that disagree. The model
 never sees a number (it wrote 0 digits in 285 calls; 3 number words it wrote were all flagged) and never judges anything.
 
-**Results: the audit.** It reduces 1,688 limitations to **27** findings, **17** of them real (63.0%, two blind
-annotators and a third on disagreements), that contain **all 10** known divergent limitations (not a recall measure:
+**Results: the audit.** It reduces 1,688 limitations to **27** findings, **17** of them confirmed (63.0%, two blind
+Claude annotators and a third on disagreements; 12 change a condition, 5 are minor such as typos), that contain **all 10** known divergent limitations (not a recall measure:
 the rules were written around the census that found them), **5** new confirmed problems (typos next to numbers, one
 counted by two checks) and Keytruda's Italian field holding the French text (spotted by hand before the language check
 existed). On 1,000 divergences planted into clean limitations its recall is 77.2% [74.5, 79.7]: 93.0% for a changed
@@ -102,10 +102,10 @@ evaluation only.
 
 | Use | Model / build | Where it ran for the reported numbers |
 |---|---|---|
-| SL drafting | Apertus v1.5 70B | Public AI through a budget gateway; temperature 0; one user message, no system message of ours (the server's chat template may add its default system turn); served model logged |
+| SL drafting | Apertus v1.5 70B (as Public AI served it; identity inferred, below) | Public AI through a budget gateway; temperature 0; one user message, no system message of ours (the server's chat template may add its default system turn); served model logged |
 | SL and statute drafting (default) | Apertus v1.5 8B GGUF Q8_0, sha256-pinned | 4-core CPU GitHub runners via llama.cpp (R1/M2, 200.5 s per draft); greedy; digit and number-word logit mask |
 | SL and statute drafting (8 GiB option) | Apertus v1.5 8B GGUF Q4_K_M, sha256-pinned | the same runners and decoding (R1/M1, 153.4 s per draft) |
-| research arms (dev, statutes) | Apertus v1.5 8B, MLX 4-bit DWQ | a laptop; this build agreed with the bf16 reference checkpoint of our research runs on 548 of 648 decisions in our parity battery, the GGUF on 622 |
+| research arms (dev, statutes) | Apertus v1.5 8B, MLX 4-bit DWQ | a laptop; this build agreed with the bf16 reference checkpoint of our research runs on 548 of 648 decisions in our parity battery, the Q8_0 GGUF on 638 and the Q4_K_M on 622 |
 
 We do not control which weights Public AI serves. The 70B name is answered by two backends (`tp2` and `fp1-nes`,
 logged per call where the API reports it: 202 / 81 calls in the seeded rerun); `fp1-nes` also answers the

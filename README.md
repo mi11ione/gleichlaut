@@ -16,11 +16,12 @@ something different in each language is a condition nobody can apply consistentl
   kombiniert werden": a ban that reads as an obligation. (These two come from operator and negation checks that ship
   off by default, because only 6 of their 31 findings are confirmed.)
 - **Its main check** turns the register into 27 findings, 18 issues to decide. Two blind Claude annotators (a third on
-  disagreements) confirm 17 as real, among them the 10 divergences an earlier census had listed and its rules were built
+  disagreements) confirm 17: 12 that change a condition and 5 minor ones such as typos; among them are the 10 divergences an earlier census had listed and its rules were built
   around. On 1,000 divergences planted into clean texts it finds 93.0% of changed numbers.
 - **Drafting is a review aid, air-gapped on a CPU** with Apertus 8B: Apertus pre-fills the French and Italian when the
   German changes, code writes every number, and frozen checks say why a draft needs a look. On 166 held-out amendments
-  the drafts need **33.1% fewer edits**, and the drafts marked ready carry **0 meaning errors**. On two live months the
+  the drafts need **33.1% fewer edits**, and the drafts marked ready carry **0 meaning errors**, as read by blind Claude annotators (who catch every planted error but
+  miss subtler real ones, see the [project README](track_2b/README.md)). On two live months the
   checks flagged most drafts, so a translator still reviews nearly everything.
 - **The 70B where an endpoint you control is available:** 42.4% fewer edits, at CHF 0.0024 per draft.
 - **Every number is checkable:** `cd track_2b && make run` (Docker, CPU, about two minutes, no network) re-derives every

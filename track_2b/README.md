@@ -39,9 +39,9 @@ Keytruda's Italian field (which we had spotted by hand before), which has held t
 also learns from BAG's own corrections: where BAG replaced a term in some texts, it flags the texts that still use the
 old one. That finds four French texts naming the wrong drug class, four ungrammatical Italian ones and three French
 texts still saying «communiqué» where the register now says «transmis» (11 of 11 notices confirmed; 4 change the meaning).
-In all, blind annotators confirm 17 of the 27 findings as real (63.0%; the 17th is the number check's view of the
+In all, blind Claude annotators confirm 17 of the 27 findings (63.0%): 12 change a condition (44.4%) and 5 are minor, such as typos next to numbers (the 17th is the number check's view of the
 Italian typo «se mesi», which the editorial check also finds). In the review register the 27 findings and 11 terminology notices (38 in all) become 18 issues, one decision each,
-3 of them probably equivalent wording and shown collapsed: sibling products that share a divergence are one issue. On two lists it was never designed on, MiGeL and the Analysenliste, **6 of 11** findings are real; the
+3 of them probably equivalent wording and shown collapsed: sibling products that share a divergence are one issue. On two lists it was never designed on, MiGeL and the Analysenliste, **6 of 11** findings are confirmed (4 change a condition); the
 Analysenliste's Italian, for example, makes a test billable after 13 repetitions where German and French say 14. Each
 finding was read by two blind Claude annotators, the second in reverse order, and a third where their answers differed
 (pre-registered R14: they agree whether a finding is real on all 49, κ 1.000); the confirmed counts above are their majority. A single first
@@ -106,8 +106,8 @@ ten times. Every number here is in [claims.tsv](claims.tsv) with the file and co
 **Model size is measured, not assumed.** On SL conditions every build passes the same pre-registered safety rule, so
 the 8B on a CPU is sufficient and is the default: nothing leaves the building. The default build is Q8_0, which passes
 with no error among its ready drafts; Q4_K_M passes by one item (1.81% stale or German against the 2% limit). On
-identical drafts neither size nor quantisation makes a measurable difference (17.5% for the 70B and Q8_0, 16.9% for
-Q4_K_M). On edits saved, quantisation clearly matters: Q8_0 saves 12.2 points more than Q4_K_M
+identical drafts the rates are close (17.5% for the 70B and Q8_0, 16.9% for Q4_K_M; no equivalence test, and the 8B
+runs with a digit mask the 70B endpoint does not offer). On edits saved, quantisation clearly matters: Q8_0 saves 12.2 points more than Q4_K_M
 (paired 95% CI [6.0, 19.9]). The 70B saves 9.3 more than Q8_0; the aggregate interval [−1.3, 20.2] includes zero, but
 item by item the 70B needs fewer edits on 81 drafts and Q8_0 on 26. Q8_0's 62 ready drafts
 have no meaning error, stale change or German left; 25 still need a small fix, 22 of them one insurance term. The
