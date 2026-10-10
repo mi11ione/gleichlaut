@@ -24,6 +24,9 @@ RUNS = {
                    what="70B whole-paragraph + guards v2 + one re-ask, 120 dev items (guards designed on these: in-sample)"),
     "m3_seed1": dict(items="items/items_fresh.json", final="runs/certify_m3-seed1.jsonl", stack="g3", labels=None, flagged20=None,
                      seed=1, what="M3 (PREREG R2): the same frozen 70B pipeline on the fresh 166 again, seed=1"),
+    "q8_0_rerun": dict(items="items/items_fresh.json", final="runs/8b_q8_0_fresh166_g3_rerun.jsonl", stack="g3", labels=None,
+                       flagged20=None, cache="cache/responses_8b/q8_0", model="gguf:q8_0.gguf",
+                       what="R9: the certified 8B GGUF Q8_0 again on the fresh 166 (CPU, GitHub Actions), every call recorded"),
     "dev120_8b": dict(items="items/items_dev.json", final="runs/8b_dwq_dev120_s2b.jsonl", stack="g3", recorded_flag=False,
                       labels="dev120_8b_s2b_unflagged.tsv", flagged20=None,
                       what="8B (MLX 4-bit DWQ, local) whole-paragraph + guards3, NO re-ask, 120 dev items"),
@@ -584,6 +587,54 @@ def m1(build="q4_k_m"):
     pA = sum(r["A_fix"] == "yes" for r in L) / n; pB = sum(r["B_fix"] == "yes" for r in L) / n; pe = pA * pB + (1 - pA) * (1 - pB)
     s["annotators"] = dict(n=n, needs_fix_agree=ag, needs_fix_kappa=round((ag / n - pe) / (1 - pe), 3) if pe < 1 else None,
                            class_agree=sum(r["A_class"] == r["B_class"] for r in L), tiebreak=sum(bool(r["T_class"]) for r in L))
+    return s
+
+
+def m2_rerun(build="q8_0"):
+    """PREREG R9: a second CPU run of the certified build with every call recorded (data/cache/responses_8b/<build>), against
+    the certified run (runs/8b_<build>_fresh166_g3_final.jsonl). Labels: exact, else the label of an identical output
+    already labelled for this item (the certified run's labels, the other build's, the 70B reference run's), else the blind
+    labels of eval/labels/m2_rerun_<build>_fresh166.tsv (R1 protocol)."""
+    from .certify import reference_labels
+    rel = f"runs/8b_{build}_fresh166_g3_rerun.jsonl"
+    if not os.path.exists(os.path.join(DATA, rel)): return None
+    norm = core.lock.norm; I = load_items("items/items_fresh.json"); A = load_jsonl(f"runs/8b_{build}_fresh166_g3_final.jsonl")
+    B = load_jsonl(rel); chk = core.check_only("g3"); ref = reference_labels()
+    for b in ("q4_k_m", "q8_0"):                        # labelled outputs of both certified 8B runs
+        F = load_jsonl(f"runs/8b_{b}_fresh166_g3_final.jsonl")
+        for l in open(os.path.join(LABELS, f"m1_{b}_fresh166.tsv"), encoding="utf-8").read().splitlines()[1:]:
+            c = l.split("\t"); ref.setdefault(c[0], {})[norm(F[c[0]]["out"])] = c[8]
+    lp = os.path.join(LABELS, f"m2_rerun_{build}_fresh166.tsv"); new = {}
+    if os.path.exists(lp):
+        lines = open(lp, encoding="utf-8").read().splitlines(); hdr = lines[0].split("\t")
+        new = {c[0]: dict(zip(hdr, c)) for c in (l.split("\t") for l in lines[1:])}
+    rows1, rows2 = [], []
+    for x in I:
+        k = x["key"]; r = B[k]
+        a = S["score_one"](x, core.gl2.rules(x["de_old"], x["de_new"], x["tgt_old"], x["lang"])[0], "1"); b = S["score_one"](x, r["out"], "1")
+        flag = chk.check(x, r["out"])["flag"]; assert flag == r["guard_flag"], k
+        cls = "exact" if b["exact"] else ref.get(k, {}).get(norm(r["out"])) or (new[k]["final"] if k in new else "?")
+        b.update(flagged=flag, cls=cls, family=x["cluster"], reasked=r.get("reasked", False), replaced=bool(r.get("replaced")))
+        a.update(family=x["cluster"]); rows1.append(a); rows2.append(b)
+    s = summarise(rows1, rows2, labelled=True)
+    keys = [x["key"] for x in I]; n = len(keys)
+    fa = [A[k]["guard_flag"] for k in keys]; fb = [B[k]["guard_flag"] for k in keys]
+    agree = sum(p == q for p, q in zip(fa, fb)); pA, pB = sum(fa) / n, sum(fb) / n
+    pe = pA * pB + (1 - pA) * (1 - pB)
+    same = sum(A[k]["out"] == B[k]["out"] for k in keys)
+    U = [r for r in rows2 if not r["flagged"]]
+    s.update(build=build, identical_outputs=same, identical_pct=round(100 * same / n, 1), flag_agreement=agree,
+             flag_kappa=round((agree / n - pe) / (1 - pe), 3) if pe < 1 else 1.0,
+             flag_rate_certified=round(100 * pA, 1), flag_rate_rerun=round(100 * pB, 1),
+             identical_raw_calls=sum(A[k].get(f) == B[k].get(f) for k in keys for f in ("raw1", "raw2", "reask_raw") if B[k].get(f) is not None),
+             rerun_calls=sum(B[k].get(f) is not None for k in keys for f in ("raw1", "raw2", "reask_raw")),
+             ready_new_labels=sum(r["key"] in new and r["cls"] == new[r["key"]]["final"] for r in U),
+             ready_inherited_labels=sum(r["cls"] != "exact" and r["key"] not in new for r in U))
+    if new:
+        L = list(new.values()); m = len(L); ag = sum(r["A_fix"] == r["B_fix"] for r in L)
+        qA = sum(r["A_fix"] == "yes" for r in L) / m; qB = sum(r["B_fix"] == "yes" for r in L) / m; qe = qA * qB + (1 - qA) * (1 - qB)
+        s["annotators"] = dict(n=m, needs_fix_agree=ag, needs_fix_kappa=round((ag / m - qe) / (1 - qe), 3) if qe < 1 else None,
+                               class_agree=sum(r["A_class"] == r["B_class"] for r in L), tiebreak=sum(bool(r["T_class"]) for r in L))
     return s
 
 

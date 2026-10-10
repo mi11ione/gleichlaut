@@ -17,7 +17,10 @@ used (`frozen/run_v2.py`).
 
 Every model request is identified by the sha256 of its exact payload `{model, messages, max_tokens, temperature}`. The
 development gateway stored each response under that key. `data/cache/responses/` holds the responses of the recorded
-70B runs under the same keys, and the `cache` backend serves them. A request whose payload was not recorded raises an
+70B runs under the same keys, and the `cache` backend serves them. `data/cache/responses_8b/q8_0/` holds the 8B Q8_0
+CPU run of PREREG R9 under keys computed the same way from the request the local llama.cpp backend was sent (model
+`gguf:q8_0.gguf`); the digit / number-word mask acts on generation and is not part of the request. The certified 8B runs
+of R1 logged token counts but not their requests or responses, so they are re-scored, not re-executed. A request whose payload was not recorded raises an
 error; it never falls through to a live call.
 
 `make run` re-executes the whole pipeline (draft, lock check, retry, guards, re-ask) over the recorded item sets:
@@ -27,6 +30,7 @@ error; it never falls through to a live call.
 | fresh 2025 set, guards3 (the headline) | 166 | 285 / 285 | 166 / 166 |
 | dev set, guards v2 | 120 | 242 / 242 | 120 / 120 |
 | fresh set again, seed 1 (stability rerun, R2) | 166 | 283 / 283 | 166 / 166 |
+| fresh set, 8B GGUF Q8_0 on CPU (R9) | 166 | 294 / 294 | 166 / 166 |
 | out-of-sample 2026 set, guards v2 (failed run) | 242 | 431 / 431 (323 distinct) | 238 / 242, see §3 |
 
 A cache hit is a proof that the prompt was rebuilt byte-for-byte from the items by the frozen code.

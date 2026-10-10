@@ -218,9 +218,10 @@ At this volume a per-token Swiss endpoint costs CHF 0.14 a month; dedicated 70B 
 ## 7. Reproducibility
 
 `make run` (Docker, CPU, `--network none` unless `LLM_BASE_URL` is set; about a minute; `make local-run` without Docker) verifies the
-sha256 of the frozen code, check resources and items; re-executes the recorded 70B runs end-to-end from the recorded
-responses (every request rebuilt byte-for-byte and found by its payload hash: 285 of 285 for the headline run, 283 of
-283 for the rerun, 242 of 242 for dev); re-scores every recorded run against `eval/results/`; drafts 5 statute
+sha256 of the frozen code, check resources and items; re-executes the recorded 70B runs and the
+recorded 8B Q8_0 CPU run (R9) end-to-end from the recorded responses (every request rebuilt byte-for-byte and found by its
+payload hash: 285 of 285 for the headline run, 283 of 283 for the 70B rerun, 242 of 242 for dev, 294 of 294 for the 8B);
+re-scores every recorded run against `eval/results/`; drafts 5 statute
 paragraphs live if `LLM_BASE_URL` is set; writes and validates XLIFF and FHIR; builds the register. `claims.tsv` maps
 every number in this report to a results file; CI fails on drift. Pre-registrations: `eval/prereg/PREREG.md` (R0–R7)
 with run timestamps from the gateway ledger. The first out-of-sample run failed its rule; it is reported.

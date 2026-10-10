@@ -205,3 +205,9 @@ data the change was designed on is labelled "dev" in every table.
   with both builds passing R1, the default changed from Q4_K_M (chosen when only M1 existed) to Q8_0: 0 / 0 / 0 among
   its ready drafts against 0 / 1 / 2, and 12.2 more points of edits saved ([6.0, 19.9], `eval/results/size_compare.json`).
   This choice was made after seeing both results; Q4_K_M stays certified for an 8 GiB box.
+- **R9, 10 Oct 2026:** the certified Q8_0 build again on the fresh 166 (GitHub Actions CPU, 8 shards, run 38042349395),
+  every call recorded: 166 of 166 final outputs and 294 of 294 raw responses byte-identical to the certified run, flag
+  agreement 166 of 166 (κ 1.000); R0 holds on the rerun (the same numbers as R1 (M2); no new labels were needed, every
+  ready draft is exact or identical to an already-labelled output). `make run` re-executes it from
+  `data/cache/responses_8b/q8_0/`: 294 requests rebuilt and found, 0 misses, 0 records differing
+  (`eval/results/m2_rerun.json`).

@@ -91,6 +91,7 @@ C = [  # id, source, path, fmt, command
  ("m3_ci_lo", "eval/results/m3.json", "rerun.exact.ci95.0", "{:.1f}", RE), ("m3_ci_hi", "eval/results/m3.json", "rerun.exact.ci95.1", "{:.1f}", RE),
  ("m3_flag", "eval/results/m3.json", "rerun.flag_rate", "{:.1f}", RE), ("m3_ready", "eval/results/m3.json", "rerun.ready_rate", "{:.1f}", RE),
  ("m3_calls", "eval/results/m3.json", "calls", "{}", RE),
+ ("m2r_calls", "eval/results/m2_rerun.json", "rerun_calls", "{}", RE), ("m2r_identical", "eval/results/m2_rerun.json", "identical_outputs", "{}", RE),
  ("audit_limitations", "eval/results/audit.json", "summary.n_limitations", "{:,}", RE),
  ("audit_findings", "eval/results/audit.json", "findings", "{}", RE), ("audit_real", "eval/results/audit.json", "real", "{}", RE),
  ("audit_known", "eval/results/audit.json", "known_found", "{}", RE),

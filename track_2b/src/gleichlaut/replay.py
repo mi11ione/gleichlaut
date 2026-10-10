@@ -1,9 +1,12 @@
-"""`make run` steps 1-3: verify the freeze, re-execute the recorded 70B runs from their recorded responses, re-score
+"""`make run` steps 1-3: verify the freeze, re-execute the recorded 70B and 8B runs from their recorded responses, re-score
 every recorded run, and assert that everything equals the committed results (eval/results/*.json).
 
 Re-execution means the frozen pipeline (draft, lock check, retry, guards, re-ask) runs end-to-end with the `cache`
 backend. Every model request is rebuilt from the items and looked up by the sha256 of its payload, so a cache hit
-proves the prompt was rebuilt byte-for-byte; the final records must then equal the recorded ones."""
+proves the prompt was rebuilt byte-for-byte; the final records must then equal the recorded ones. The 8B entry is the
+PREREG R9 Q8_0 run (data/cache/responses_8b/q8_0, keyed on the request the local llama.cpp backend was sent; the digit
+mask acts on generation and is not part of the request). The certified 8B runs of R1 did not record their calls and are
+re-scored only."""
 import json, os, sys, time
 from . import core, score, backends
 
@@ -13,14 +16,15 @@ FIELDS = ("out", "guard_flag", "rule_only", "reasked", "replaced", "retried", "l
 # Runs that re-execute exactly. oos242 is re-scored and re-guarded but not re-executed: 4 of its 242 items were sent
 # the same masked prompt as another item concurrently and the API answered differently; the response cache kept one
 # answer per prompt (docs/provenance.md).
-REEXEC = ("fresh166", "dev120", "m3_seed1")
+REEXEC = ("fresh166", "dev120", "m3_seed1", "q8_0_rerun")
 SCORED = ("fresh166", "oos242", "dev120", "dev120_8b")
 
 
 def reexecute(run_id, workers=4):
     from concurrent.futures import ThreadPoolExecutor
     R = score.RUNS[run_id]; I = score.load_items(R["items"]); F = score.load_jsonl(R["final"])
-    ask = backends.Cache(CACHE, extra={"seed": R["seed"]} if "seed" in R else None)
+    ask = backends.Cache(os.path.join(score.DATA, R["cache"]) if "cache" in R else CACHE, model=R.get("model", core.M70),
+                         extra={"seed": R["seed"]} if "seed" in R else None)
     P = core.Pipeline(ask, R["stack"])
     with ThreadPoolExecutor(workers) as ex: out = list(ex.map(P.run, I))
     diff = [(x["key"], f) for x, r in zip(I, out) for f in FIELDS if r.get(f) != F[x["key"]].get(f)]
@@ -45,6 +49,7 @@ def compute():
     res["post_edit_8b_q4_k_m"] = score.post_edit("runs/8b_q4_k_m_fresh166_g3_final.jsonl")
     res["m1_q8_0"] = score.m1("q8_0")
     res["post_edit_8b_q8_0"] = score.post_edit("runs/8b_q8_0_fresh166_g3_final.jsonl")
+    res["m2_rerun"] = score.m2_rerun("q8_0")          # PREREG R9
     res["size_compare"] = score.size_compare()
     res["shadow_20260901_20261001"] = score.shadow_month()
     res["audit_recall"] = score.audit_recall()
@@ -107,13 +112,13 @@ def main(argv=None):
     t0 = time.time(); ok = True
     print("[1/3] freeze: verifying sha256 of frozen code, guard resources and items ...", end=" ", flush=True)
     core.verify_freeze(strict=True); print("OK", len(json.load(open(core.FREEZE))["files"]), "files")
-    print("[2/3] re-executing recorded 70B runs from recorded responses (no network) ...")
+    print("[2/3] re-executing recorded 70B and 8B runs from recorded responses (no network) ...")
     rep = {}
     for rid in REEXEC:
         r = reexecute(rid); rep[rid] = r
         good = r["cache_misses"] == 0 and r["differing_fields"] == 0
         ok &= good
-        print(f"      {rid:9s} items {r['items']:3d}  prompts rebuilt and found {r['cache_hits']:3d}  misses {r['cache_misses']}  "
+        print(f"      {rid:10s} items {r['items']:3d}  prompts rebuilt and found {r['cache_hits']:3d}  misses {r['cache_misses']}  "
               f"records differing {r['differing_fields']}  {'OK' if good else 'MISMATCH ' + str(r['diff'])}")
     print("[3/3] re-guarding every recorded output and re-scoring every run against eval/results ...")
     res = compute()

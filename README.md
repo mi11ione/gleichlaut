@@ -18,7 +18,7 @@ something different in each language is a condition nobody can apply consistentl
 - **The audit needs no model at all:** it reduces 1,688 limitations to 27 findings (18 issues to decide), including the 10 divergences an
   earlier census had listed; within its scope (numbers bound to a unit) it finds 93.0% of planted changes.
 - **Every number is checkable:** `cd track_2b && make run` (Docker, CPU, about a minute, no network) re-runs every
-  recorded 70B request, re-scores the 8B runs and re-derives every figure; `make local-run` does the same without Docker.
+  recorded 70B request and every recorded request of the 8B Q8_0 CPU run, re-scores the 8B runs and re-derives every figure; `make local-run` does the same without Docker.
 
 ![The review register: the German change, then the French and Italian drafts. Code writes the underlined numbers; the
 Italian note says the old Italian already said "every 4 weeks" and the draft follows the German's 8.](track_2b/docs/register-nemluvio.png)

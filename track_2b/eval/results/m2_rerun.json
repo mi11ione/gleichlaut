@@ -1,0 +1,97 @@
+{
+ "build": "q8_0",
+ "chrf": {
+  "ci95": [
+   4.0,
+   6.3
+  ],
+  "delta": 5.1,
+  "model": 91.1,
+  "rules": 86.0
+ },
+ "ef1": {
+  "ci95": [
+   38.1,
+   51.8
+  ],
+  "delta": 45.0,
+  "model": 53.0,
+  "rules": 7.9
+ },
+ "exact": {
+  "ci95": [
+   4.8,
+   18.7
+  ],
+  "delta": 11.4,
+  "model": 17.5,
+  "rules": 6.0
+ },
+ "exact_flagged": 12,
+ "exact_n": 29,
+ "families": 55,
+ "flag_agreement": 166,
+ "flag_kappa": 1.0,
+ "flag_rate": 62.7,
+ "flag_rate_certified": 62.7,
+ "flag_rate_rerun": 62.7,
+ "flagged": 104,
+ "identical_outputs": 166,
+ "identical_pct": 100.0,
+ "identical_raw_calls": 294,
+ "n": 166,
+ "pairs": 83,
+ "pass": true,
+ "pass_rule": {
+  "exact_gain": [
+   11.4,
+   true
+  ],
+  "flag_rate": [
+   62.7,
+   true
+  ],
+  "unflagged_real": [
+   0.0,
+   true
+  ],
+  "unflagged_stale_untranslated": [
+   0.0,
+   true
+  ]
+ },
+ "ready_inherited_labels": 45,
+ "ready_new_labels": 0,
+ "ready_rate": 37.3,
+ "reasked": 100,
+ "replaced": 1,
+ "rerun_calls": 294,
+ "rules_exact_n": 10,
+ "unflagged": 62,
+ "unflagged_REAL": 0,
+ "unflagged_REAL_per100": 0.0,
+ "unflagged_classes": {
+  "cosmetic": 2,
+  "equivalent": 19,
+  "exact": 17,
+  "minor": 23,
+  "preexisting": 1
+ },
+ "unflagged_german": 0,
+ "unflagged_german_per100": 0.0,
+ "unflagged_stale": 0,
+ "unflagged_stale_per100": 0.0,
+ "unflagged_unlabelled": 0,
+ "wilson95_severe_among_ready": [
+  0.0,
+  5.8
+ ],
+ "wilson95_unflagged_real": [
+  0.0,
+  2.3
+ ],
+ "wilson95_unflagged_stale_untranslated": [
+  0.0,
+  2.3
+ ]
+}

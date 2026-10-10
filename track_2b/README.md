@@ -122,7 +122,8 @@ make local-run      # the same without Docker: Python ≥ 3.9, lxml for the XSD 
 ```
 
 It verifies the sha256 of the frozen code, checks and test items; **re-executes the recorded Apertus runs end-to-end
-from the recorded responses** (all 285 model requests of the headline run rebuilt byte-for-byte and found by hash);
+from the recorded responses** (all 285 model requests of the headline 70B run and all 294 of the recorded 8B Q8_0
+CPU run rebuilt byte-for-byte and found by hash);
 re-scores every run against `eval/results/`; drafts 5 statute paragraphs live if `LLM_BASE_URL`, `LLM_API_KEY` and
 `LLM_NAME` point to an Apertus endpoint; writes and validates XLIFF 1.2/2.1 and FHIR; builds the review register
 (`out/ui/index.html`).
