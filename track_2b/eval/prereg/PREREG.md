@@ -237,6 +237,43 @@ R11 measures how often the blind Claude annotators of `eval/labels/PROTOCOL.md` 
   bound on severe errors among ready drafts divided by the both-annotator severe recall of (a). No decision attached:
   R0 and R1 outcomes are not re-opened by this rule.
 
+## R13. Fully blind relabel of the headline 70B fresh-166 run (frozen 10 Oct 2026, before any annotation)
+
+A juror: the first labels of the headline run (`eval/labels/fresh166_unflagged.tsv`, `fresh166_flagged20.tsv`) are the
+research labeller's, who knew each draft's guard verdict, while the 8B runs (R1) were labelled fully blind under
+`eval/labels/PROTOCOL.md`. R13 labels the same 70B drafts under that protocol.
+
+- **Items.** Every ready (unflagged) non-exact draft of the 70B fresh-166 run (`data/runs/70b_fresh166_g3_final.jsonl`,
+  flag re-computed with guards3, exact by the frozen scorer: 49 drafts) plus the same seeded 20 flagged drafts as R1
+  (`random.Random(20261009).sample` of the sorted flagged keys; the same 20 as `fresh166_flagged20.tsv`): 69 records.
+  The draft is the run's final output; nothing is re-run, no model is called.
+- **Worklist** (`tools/blind_relabel_70b.py`, deterministic, `--check` reproduces it byte for byte): neutral ids
+  `H00`…, order shuffled with `random.Random(20261013)`, fields only `id, lang, de_old, de_new, tgt_old, draft,
+  official_new` (`official_new` = BAG's published text). Ready and flagged drafts are mixed and not marked; the guard
+  verdicts, the model, the run and the research labels are not in it. The id -> key map (`fresh166_blind_key.json`) is
+  kept apart and never shown.
+- **Protocol** exactly `eval/labels/PROTOCOL.md`: two fresh general-purpose Claude subagents, each given only a copy of
+  the worklist in an otherwise empty directory, with the verbatim instructions plus the one operational note of R11 (long
+  lines: read the file so that every line is shown in full, still only this file); the second reads the records in
+  reverse order. A third fresh blind agent labels, in a new worklist (ids `T00`…, shuffled with
+  `random.Random(20261014)`, same fields), every record where the two disagree on `needs_fix`, disagree on the class of
+  a ready draft, or where either says `REAL`. No human labels, no model API calls.
+- **Merge** (`eval/labels/fresh166_blind.tsv`, the R1 layout `key, A_fix, A_class, B_fix, B_class, T_fix, T_class,
+  final_fix, final, note_A`; the raw annotator files by neutral id are committed beside it): `final_fix` = majority of
+  three on needs_fix (A's when A and B agree); `final` = the class shared by at least two of the three, otherwise the
+  third's; with no third label, the agreed class, or for a flagged draft whose two classes differ without a REAL, the
+  more severe of the two (REAL > stale > german > minor > cosmetic > preexisting > equivalent > exact).
+- **Outcomes** (no threshold; deterministic from the committed files by `score.blind_relabel_70b` ->
+  `eval/results/fresh166_blind.json`, re-derived by `replay`): (1) agreement on needs_fix and Cohen's κ between the two
+  blind annotators over the 69 records; (2) severe errors (REAL, stale, german) among the ready drafts by the blind
+  majority, as counts and keys with notes, and the resulting R0 rows for the 166 items; (3) agreement of the blind
+  majority with the existing research labels: needs_fix over 69 (research: equivalent / preexisting / good = no fix) with
+  κ, class over the 49 ready drafts, and the severe sets.
+- **Reporting rule, stated now.** The headline numbers (R0 pass on the fresh 166, 0 meaning / 0 stale / 0 German among
+  ready drafts by the research labels) are not replaced. If the blind majority finds any severe error among the ready
+  drafts, it is reported next to the headline 0 in the README and the technical report, with its key and class, whatever
+  it is; if it finds none, that is stated beside the headline as the blind confirmation.
+
 ## R4. Post-freeze changes
 
 No change to `frozen/` after this commit. Any guard change needs a new held-out run before a claim; anything measured on
