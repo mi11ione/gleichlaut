@@ -61,7 +61,7 @@ repository; `eval/prereg/PREREG.md` says what can and cannot be verified from he
 | Token edits still needed to reach BAG's text | 33.1% fewer [20.8, 43.9] | 20.9% fewer [7.6, 31.9] | **42.4% fewer** [31.0, 54.1] | baseline |
 | Drafts ready for acceptance | 37.3% | 36.1% | **39.8%** | |
 | Errors in ready drafts (meaning / stale / German left) | **0 / 0 / 0** | 0 / 1 / 2 | **0 / 0 / 0** | |
-| Ready drafts that still need any fix | 25 of 62 (22 named by the terminology note) | 33 of 60 (27 named by it) | **3 of 66** | |
+| Ready drafts that need a fix to the amendment | 25 of 62 (22 named by the terminology note) | 33 of 60 (27 named by it) | **3 of 66** | |
 | Pre-registered pass rule | **PASS** | **PASS** | **PASS** (and again on a rerun with a new seed) | |
 
 Against rules+, our strongest no-model baseline (it also copies changed names and deletes whole sentences, 10.8%
@@ -78,7 +78,7 @@ identical drafts neither size nor quantisation makes a measurable difference (17
 Q4_K_M). On edits saved both do: Q8_0 saves 12.2 points more than Q4_K_M
 (paired 95% CI [6.0, 19.9]), and the 70B 9.3 more than Q8_0 ([−1.3, 20.2], not significant). Q8_0's 62 ready drafts
 have no meaning error, stale change or German left; 25 still need a small fix, 22 of them one insurance term. The
-70B's ready drafts rarely need any fix (3 of 66). So: Q8_0 by default (16 GiB RAM), Q4_K_M
+70B's ready drafts rarely need a fix to the amendment (3 of 66). So: Q8_0 by default (16 GiB RAM), Q4_K_M
 on an 8 GiB box (`BUILD=q4_k_m`), the 70B where an endpoint you control is available and the extra edits are
 worth it. On 120 federal-statute amendments (Fedlex) the 70B is no better than the 8B (exact 48.3%, against 50.0% for the 8B
 MLX build and 45.8% / 47.5% for the shipped Q4_K_M / Q8_0 builds). No size passes the safety rule on statutes: the GGUF

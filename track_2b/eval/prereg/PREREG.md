@@ -144,3 +144,7 @@ data the change was designed on is labelled "dev" in every table.
   (`eval/labels/fedlex_r5_relabel_unflagged.tsv`). 8B MLX unchanged (0 real, 8 stale or German); 70B 2 real and 5 stale
   or German (was 6). Neither passes R0; the decision is unchanged. The first labels stay in the results as
   `first_annotation`.
+- **Default build, 10 Oct 2026:** R1 decides that the SL default is the local 8B; it does not name a build. After M2,
+  with both builds passing R1, the default changed from Q4_K_M (chosen when only M1 existed) to Q8_0: 0 / 0 / 0 among
+  its ready drafts against 0 / 1 / 2, and 12.2 more points of edits saved ([6.0, 19.9], `eval/results/size_compare.json`).
+  This choice was made after seeing both results; Q4_K_M stays certified for an 8 GiB box.

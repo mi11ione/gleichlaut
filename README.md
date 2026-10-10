@@ -10,16 +10,17 @@ something different in each language is a condition nobody can apply consistentl
 **[Open the review register](https://mi11ione.github.io/gleichlaut/)** · [project README](track_2b/README.md) ·
 [technical report](track_2b/technical_report.md) · Hack Apertus, Track 2B, team 444
 
-- **Translators need 42.4% fewer edits** starting from the Apertus 70B draft than from the old text with updated
-  numbers; drafts marked ready had **0 meaning errors** on 166 held-out amendments, with every rule fixed in advance.
-- **Runs air-gapped on an ordinary CPU** with Apertus 8B, which passes the same pre-registered rule; the 70B is an
-  option where an endpoint you control is available, at **CHF 0.0024 per draft**.
-- **The audit needs no model at all:** it reduces 1,688 limitations to 27 findings, including all 10 known divergences,
-  and finds 77.2% of 1,000 divergences planted into clean texts.
+- **Runs air-gapped on an ordinary CPU** with Apertus 8B: on 166 held-out amendments, with every rule fixed in advance,
+  its drafts need 33.1% fewer token edits to reach BAG's published text than the old text with updated numbers, and the
+  62 drafts it marks ready have **0 meaning errors**, stale changes or German left.
+- **The 70B where an endpoint you control is available:** 42.4% fewer token edits, ready drafts that rarely need a fix
+  to the amendment (3 of 66), at **CHF 0.0024 per draft**.
+- **The audit needs no model at all:** it reduces 1,688 limitations to 27 findings, including the 10 divergences an
+  earlier census had listed, and finds 77.2% of 1,000 divergences planted into clean texts.
 - **Every number is checkable:** `cd track_2b && make run` (Docker, CPU, about a minute, no network) re-runs every
   recorded Apertus request and re-derives every figure; `make local-run` does the same without Docker.
 
-![The review register: the German change, then the French and Italian drafts. Code writes the boxed numbers; the
+![The review register: the German change, then the French and Italian drafts. Code writes the underlined numbers; the
 Italian note says the old Italian already said "every 4 weeks" and the draft follows the German's 8.](track_2b/docs/register-nemluvio.png)
 
 How it works, in one line: numbers never reach the model (code writes them back), Apertus rewrites only the wording,
