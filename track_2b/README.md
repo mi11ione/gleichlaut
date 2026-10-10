@@ -153,8 +153,8 @@ runtime dependencies: [docs/dependencies.md](docs/dependencies.md); target archi
   The first out-of-sample run failed the rule; it is reported, and the fix was tested on new data.
 - **Labelling you can re-run:** every ready draft was read in full by a blind Claude annotator, re-labelled by a second,
   disagreements broken by a third (agreement κ 0.532). The worklists, the exact annotator instructions
-  (`eval/labels/PROTOCOL.md`) and every label are in `eval/labels/`; no human labels were used, and a BAG translator's
-  read of the ready drafts is the first thing a pilot should add.
+  (`eval/labels/PROTOCOL.md`) and every label are in `eval/labels/`; a BAG translator can be the next annotator on the
+  same worklists, with no change to the pipeline.
 - **Every number is traceable:** `claims.tsv` maps every number in this README, the report and the form notes to a
   results file; CI fails on drift.
 

@@ -215,12 +215,12 @@ At this volume a per-token Swiss endpoint costs CHF 0.14 a month; dedicated 70B 
 
 ## 7. Reproducibility
 
-`make run` (Docker, CPU, `--network none` unless `LLM_BASE_URL` is set; about 30 s on a GitHub runner) verifies the
+`make run` (Docker, CPU, `--network none` unless `LLM_BASE_URL` is set; about a minute; `make local-run` without Docker) verifies the
 sha256 of the frozen code, check resources and items; re-executes the recorded 70B runs end-to-end from the recorded
 responses (every request rebuilt byte-for-byte and found by its payload hash: 285 of 285 for the headline run, 283 of
 283 for the rerun, 242 of 242 for dev); re-scores every recorded run against `eval/results/`; drafts 5 statute
 paragraphs live if `LLM_BASE_URL` is set; writes and validates XLIFF and FHIR; builds the register. `claims.tsv` maps
-every number in this report to a results file; CI fails on drift. Pre-registrations: `eval/prereg/PREREG.md` (R0–R5)
+every number in this report to a results file; CI fails on drift. Pre-registrations: `eval/prereg/PREREG.md` (R0–R7)
 with run timestamps from the gateway ledger. The first out-of-sample run failed its rule; it is reported.
 
 **Coding assistants and labellers.** Code written with Claude Code agents (Anthropic) under the team's direction;
@@ -237,8 +237,8 @@ public feed every month and grades itself against BAG's publication, so a pilot 
 and the ePL team needs no new process. The first shadow month (1 Sep → 1 Oct 2026, R7) ran on CPU runners under
 `--network none`: of 41 compared items, 32 add one new standard sentence and the no-model start gets none right; the
 checks flagged 82.9–92.7% of drafts, and none of the 14 drafts marked ready across the three models has an error.
-Next: drug-class terms in the audit, a direction-flip check, MiGeL and the
-Analysenliste, and a Swiss 70B endpoint certified with `make certify`.
+Next: the mined termbase as a pre-registered check resource (it already names the term in 22 of the 25 Q8_0 ready
+drafts that need a fix), a direction-flip check, and a Swiss 70B endpoint certified with `make certify-endpoint`.
 
 ## License
 

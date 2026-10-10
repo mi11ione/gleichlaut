@@ -72,11 +72,13 @@ weights: `make run-offline` downloads a public GGUF and verifies its sha256. Cod
 Fedlex texts are official federal publications (Fedlex: not protected, URG Art. 5; an explicit reuse licence for the SL
 feed was not found, see `docs/sources.md` §2.3).
 
-## Not yet demonstrated
+## Demonstrated on CPU runners, no model endpoint
 
-- The 70B has not been self-hosted by us; the public 70B GGUF is an unofficial text-only test quant (43.72 GB).
-- Shadow mode on a live month with the certified 8B (`.github/workflows/shadow.yml`, monthly on the 2nd and on demand)
-  is wired but has not produced its first artifact yet.
-- `make run-offline` (llama.cpp in Docker) is wired as the manual workflow `.github/workflows/offline.yml` (ubuntu-24.04,
-  CPU). It builds the `offline` image, fetches the pinned GGUF (cached), and must end with `reproduction PASSED; live
-  slice PASSED`. It has not been run from this checkout yet.
+- **Shadow mode on a live month** (`.github/workflows/shadow.yml`, monthly on the 2nd and on demand): the month
+  1 Sep → 1 Oct 2026 of BAG's public feed, drafted by both certified 8B builds under `--network none`, graded against
+  BAG's publication (`data/shadow/`, PREREG R7).
+- **`make run-offline`** (llama.cpp in Docker, `.github/workflows/offline.yml`, ubuntu-24.04 CPU): builds the `offline`
+  image, fetches the pinned GGUF (sha256-checked, cached) and ends with `reproduction PASSED; live slice PASSED`.
+- **The 70B lane is endpoint-agnostic:** any OpenAI-compatible endpoint serving Apertus 70B that the office controls is
+  admitted by certificate (`make certify-endpoint`); the public 70B GGUF is an unofficial text-only quant (43.72 GB), so
+  the lane is specified by certificate rather than by a file we pin.

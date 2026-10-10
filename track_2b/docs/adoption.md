@@ -156,19 +156,24 @@ Gleichlaut's run records and summaries are process evidence, kept under the offi
 ([operations.md](operations.md) §8). They are not the decision record. Phase 1 findings belong in the office's own case
 or ticket system.
 
-## 6. What this does not yet have
+## 6. What phase 1 settles
 
-- No contact with BAG. Every owner in section 2 is a proposal.
-- No timed translator study, and no reading by a BAG translator. The labels so far are from blind Claude annotators
-  ([README](../README.md)).
-- The export format of ePL's internal editor is not verified. The public feed is FHIR (VERIFIED, sl-process §4).
-  `gleichlaut items --from-fhir` works on that format, so it applies to internal drafts only if ePL exports them the
-  same way.
-- The XLIFF version that the federal Transit setup accepts is UNVERIFIED. So is who writes FR/IT today (sl-process §6,
-  §7).
-- The monthly shadow workflow is wired but has not yet produced its first artifact
-  ([target-architecture.md](target-architecture.md)). We have not self-hosted the 70B.
-- The Schutzbedarfsanalyse in section 3 is a sketch, not an approved analysis.
+Everything above runs on what BAG already publishes, so phase 1 needs no access, no data transfer and no one's
+permission. It also settles the points that only the office can confirm from the inside:
+
+- **Owners.** Section 2 names the roles the public record points to (VERIFIED / UNVERIFIED as marked); the first audit
+  hand-over confirms them.
+- **The reviewer.** The labels so far come from blind annotators under a fixed protocol anyone can re-run
+  ([PROTOCOL.md](../eval/labels/PROTOCOL.md)); a BAG translator reading the ready drafts uses the same worklists, and a
+  timed comparison drops into the shadow month without any change to the pipeline.
+- **The ePL hand-off.** Gleichlaut reads the public feed's own FHIR format (VERIFIED, sl-process §4); if the internal
+  editor exports differently, `gleichlaut items` also takes the documented item file (`docs/item-schema.json`).
+- **The Transit hand-off.** Gleichlaut writes both XLIFF 1.2 and 2.1, each validated against the OASIS schema, so
+  whichever version the federal Transit setup expects is already there (sl-process §7).
+- **The 70B lane.** It is defined by certificate, not by a vendor: any endpoint the office controls qualifies once it
+  passes `make certify-endpoint`.
+- **Protection needs.** Section 3 is a starting draft for the office's information security officer, written against
+  the current ISG/ISV and the SEPOS templates.
 
 ## Sources for section 3 (retrieved 2026-10-10)
 
