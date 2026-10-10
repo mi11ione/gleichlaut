@@ -1,0 +1,11 @@
+model	key	A_fix	A_class	B_fix	B_class	T_fix	T_class	final_fix	final	note_A
+70b	OPDIVO.10-RCC-Nierenzellkarzinom-b7cdf1-fr	no	equivalent	no	equivalent			no	equivalent	German only closed parenthesis, already correct in French; official reworded last sentence as extra fix.
+70b	SKYRIZI.04-Colitis-Ulcerosa-nur-180-mg-3-4d0630-fr	no	equivalent	no	equivalent			no	equivalent	Code sentence correctly replaced; assureur-maladie vs official assurance maladie is harmless.
+70b	SKYRIZI.04-Colitis-Ulcerosa-nur-180-mg-3-dbcc55-fr	no	equivalent	no	equivalent			no	equivalent	Code sentence correctly replaced; assureur-maladie vs official assurance maladie is harmless.
+70b	VERZENIO.02a-f05251-it	yes	cosmetic	yes	cosmetic			yes	cosmetic	Change applied but dangling trailing colon left after removed code number.
+70b	VERZENIO.03a-175825-it	yes	cosmetic	yes	cosmetic			yes	cosmetic	Change applied but dangling trailing colon left after removed code number.
+q4_k_m	VERZENIO.01a-c8a78a-it	yes	cosmetic	yes	cosmetic			yes	cosmetic	Applied, but capitalised "Limitazione" and dangling trailing colon.
+q4_k_m	VERZENIO.02a-f05251-it	yes	cosmetic	yes	cosmetic			yes	cosmetic	Applied, but capitalised "Limitazione" and dangling trailing colon.
+q4_k_m	VERZENIO.03a-175825-it	yes	cosmetic	yes	cosmetic			yes	cosmetic	Applied, but lowercase sentence-initial "il", capitalised "Limitazione", dangling trailing colon.
+q8_0	OPDIVO.10-RCC-Nierenzellkarzinom-b7cdf1-fr	no	equivalent	no	equivalent			no	equivalent	German only closed parenthesis, already correct in French; official reworded last sentence as extra fix.
+q8_0	VERZENIO.02a-f05251-it	yes	cosmetic	yes	cosmetic			yes	cosmetic	Change applied but dangling trailing colon left after removed code number.

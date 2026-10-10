@@ -1,0 +1,94 @@
+{
+ "mode": "shadow (public feed), certified local 8B Q8_0",
+ "date": "2026-10-10T01:26:25+00:00",
+ "items": 52,
+ "records": 52,
+ "missing": 0,
+ "status": {
+  "flagged": 40,
+  "human": 8,
+  "ready": 4
+ },
+ "by_lang": {
+  "fr": {
+   "flagged": 21,
+   "human": 4,
+   "ready": 1
+  },
+  "it": {
+   "flagged": 19,
+   "human": 4,
+   "ready": 3
+  }
+ },
+ "rule_only": 4,
+ "reasked": 36,
+ "human_reasons": {
+  "German text longer than 2500 characters and the change needs the model (outside the evaluated range)": 4,
+  "German changed 73% of its tokens (> 60%): a rewrite, not an amendment": 2,
+  "German changed 74% of its tokens (> 60%): a rewrite, not an amendment": 2
+ },
+ "review_reasons": {},
+ "shadow": {
+  "compared": 41,
+  "exact": 3,
+  "ready": 3,
+  "ready_exact": 1,
+  "exact_rate": 7.3,
+  "ready_rate": 7.3,
+  "flag_rate": 92.7,
+  "ready_exact_rate": 33.3,
+  "rates_note": "percent of the drafted items with a published target (status human excluded)",
+  "ready_not_exact": [
+   "OPDIVO.10-RCC-Nierenzellkarzinom-b7cdf1-fr",
+   "VERZENIO.02a-f05251-it"
+  ],
+  "note": "tgt_new = the FR/IT text BAG already published; it was never shown to the model"
+ },
+ "calls": {
+  "n": 82,
+  "prompt_tokens": 93856,
+  "completion_tokens": 20462,
+  "models_served": [
+   "gguf:apertus-v1.5-8b-text-q8_0.gguf"
+  ],
+  "system_fingerprints": [],
+  "endpoints": [
+   "local llama.cpp (in process)"
+  ],
+  "chf_estimate": 0.1169,
+  "chf_basis": "Swiss provider's published price, CHF 0.70 / 2.50 per M input / output tokens"
+ },
+ "mining": {
+  "snap_old": "20260901",
+  "snap_new": "20261001",
+  "de_changes": 24,
+  "de_rewrites_over60": 2,
+  "items": 52,
+  "items_with_published_target": 49,
+  "unmatched": 0,
+  "unmatched_reasons": {},
+  "step": [
+   {
+    "a": "20260901",
+    "b": "20261001",
+    "matched": 60,
+    "over60": 4,
+    "new_distinct_pairs": 24
+   }
+  ]
+ },
+ "gate": {
+  "certificate": "8b-q8_0-fresh166",
+  "kind": "build",
+  "certification": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "llama_cpp_python": "0.3.35"
+ },
+ "shards": 4,
+ "gates_agree": true,
+ "next": [
+  "gleichlaut emit --records data/shadow/20260901-20261001/q8_0/records.jsonl --items data/shadow/20260901-20261001/q8_0/items.json --n 0 --out data/shadow/20260901-20261001/q8_0/emit",
+  "gleichlaut ui --records data/shadow/20260901-20261001/q8_0/records.jsonl --items data/shadow/20260901-20261001/q8_0/items.json --out data/shadow/20260901-20261001/q8_0/ui/index.html"
+ ]
+}

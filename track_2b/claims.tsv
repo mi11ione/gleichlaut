@@ -185,6 +185,13 @@ size_q8_hi	20.2	eval/results/size_compare.json	q8_0.saved_diff_ci95.1	{:.1f}	PYT
 size_q4_diff	21.5	eval/results/size_compare.json	q4_k_m.saved_diff_pts	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 size_q4_lo	8.7	eval/results/size_compare.json	q4_k_m.saved_diff_ci95.0	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 size_q4_hi	34.9	eval/results/size_compare.json	q4_k_m.saved_diff_ci95.1	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+sh_items	52	eval/results/shadow_20260901_20261001.json	q4_k_m.items	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+sh_compared	41	eval/results/shadow_20260901_20261001.json	compared	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+sh_boiler	32	eval/results/shadow_20260901_20261001.json	boilerplate_items	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+sh_ready_total	14	eval/results/shadow_20260901_20261001.json	ready_total	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+sh_flag_70b	82.9	eval/results/shadow_20260901_20261001.json	70b.flag_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+sh_flag_q8	92.7	eval/results/shadow_20260901_20261001.json	q8_0.flag_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+sh_flag_q4	90.2	eval/results/shadow_20260901_20261001.json	q4_k_m.flag_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 fed_q4_k_m_exact	45.8	eval/results/fedlex_compare.json	8b_gguf_q4_k_m.exact_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 fed_q4_k_m_flag	28.3	eval/results/fedlex_compare.json	8b_gguf_q4_k_m.flag_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 fed_q4_k_m_ready	71.7	eval/results/fedlex_compare.json	8b_gguf_q4_k_m.ready_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes

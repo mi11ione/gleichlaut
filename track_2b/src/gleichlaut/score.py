@@ -342,6 +342,49 @@ def post_edit(final=None):
     return out
 
 
+def shadow_month(run="20260901-20261001"):
+    """PREREG R7: the first shadow month on the public feed (items mined by the shadow workflow from BAG's feeds of the two
+    dates), drafted by Q4_K_M and Q8_0 (shadow workflow, CPU, --network none) and by the 70B (development gateway), same
+    items and routing. Labels: every ready draft that differs from BAG's published text, pooled, blind (R1 protocol)."""
+    import re
+    D = os.path.join(DATA, "shadow", run); I = {x["key"]: x for x in json.load(open(os.path.join(D, "items.json"), encoding="utf-8"))}
+    lines = open(os.path.join(LABELS, f"shadow_{run.replace('-', '_')}_ready.tsv"), encoding="utf-8").read().splitlines()
+    hdr = lines[0].split("\t"); lab = [dict(zip(hdr, l.split("\t"))) for l in lines[1:]]
+    norm = core.lock.norm; out = {}
+    cmp_ = [k for k, x in I.items() if x.get("tgt_new")]
+    for m in ("q4_k_m", "q8_0", "70b"):
+        R = {json.loads(l)["key"]: json.loads(l) for l in open(os.path.join(D, m, "records.jsonl"), encoding="utf-8")}
+        assert set(R) == set(I), m
+        dr = [k for k in cmp_ if R[k]["status"] != "human"]
+        rd = [k for k in dr if R[k]["status"] == "ready"]
+        L = Counter(r["final"] for r in lab if r["model"] == m)
+        S = json.load(open(os.path.join(D, m, "summary.json"), encoding="utf-8"))
+        out[m] = dict(items=len(I), human=sum(R[k]["status"] == "human" for k in I), compared=len(dr),
+                      exact=sum(norm(R[k]["out"]) == norm(I[k]["tgt_new"]) for k in dr), ready=len(rd),
+                      flagged=sum(R[k]["status"] == "flagged" for k in dr),
+                      ready_exact=sum(norm(R[k]["out"]) == norm(I[k]["tgt_new"]) for k in rd), ready_classes=dict(sorted(L.items())),
+                      ready_errors=sum(L.get(c, 0) for c in ("REAL", "stale", "german")),
+                      calls=S["calls"]["n"], served_by=S["calls"]["models_served"],
+                      gate=(S.get("gate") or {}).get("certificate"))
+        out[m]["flag_rate"] = round(100 * out[m]["flagged"] / len(dr), 1); out[m]["exact_rate"] = round(100 * out[m]["exact"] / len(dr), 1)
+    q4 = {json.loads(l)["key"]: json.loads(l) for l in open(os.path.join(D, "q4_k_m", "records.jsonl"), encoding="utf-8")}
+    dr = [k for k in cmp_ if q4[k]["status"] != "human"]
+    rules = sum(norm(core.gl2.rules(I[k]["de_old"], I[k]["de_new"], I[k]["tgt_old"], I[k]["lang"])[0]) == norm(I[k]["tgt_new"]) for k in dr)
+    new = "Indikationscode dieser Limitierung"
+    boiler = [k for k in dr if new in I[k]["de_new"] and new not in I[k]["de_old"]]
+    fr = Counter()
+    for k in cmp_:
+        x = I[k]
+        if x["lang"] == "fr" and new in x["de_new"]:
+            m_ = re.search(r"code d.indication de cette limitation[^.]*?transmis à l.(assureur-maladie|assurance maladie)", x["tgt_new"])
+            if m_: fr[m_.group(1)] += 1
+    return dict(run=run, mining=json.load(open(os.path.join(D, "q4_k_m", "summary.json"), encoding="utf-8"))["mining"],
+                rules_exact=rules, compared=len(dr), boilerplate_items=len(boiler), bag_fr_rendering_of_new_sentence=dict(fr),
+                labelled=len(lab), annotators_agree=sum((r["A_fix"], r["A_class"]) == (r["B_fix"], r["B_class"]) for r in lab),
+                ready_total=sum(v["ready"] for v in out.values()), ready_errors_total=sum(v["ready_errors"] for v in out.values()),
+                **out)
+
+
 def size_compare(builds=("q4_k_m", "q8_0")):
     """Model size, paired: the 70B (fresh 166) against each 8B GGUF build on the same items. Paired cluster bootstrap over
     German changes (4000 resamples, seed 7) of the difference in token edits saved against the rules-only start, and the

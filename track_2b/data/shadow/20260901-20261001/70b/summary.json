@@ -1,0 +1,67 @@
+{
+ "mode": "shadow (public feed), Apertus 70B through the development gateway (dev)",
+ "date": "2026-10-10T00:53:19+00:00",
+ "items": 52,
+ "records": 52,
+ "missing": 0,
+ "status": {
+  "flagged": 37,
+  "human": 8,
+  "ready": 7
+ },
+ "by_lang": {
+  "fr": {
+   "flagged": 18,
+   "human": 4,
+   "ready": 4
+  },
+  "it": {
+   "flagged": 19,
+   "human": 4,
+   "ready": 3
+  }
+ },
+ "rule_only": 4,
+ "reasked": 34,
+ "human_reasons": {
+  "German text longer than 2500 characters and the change needs the model (outside the evaluated range)": 4,
+  "German changed 73% of its tokens (> 60%): a rewrite, not an amendment": 2,
+  "German changed 74% of its tokens (> 60%): a rewrite, not an amendment": 2
+ },
+ "review_reasons": {},
+ "shadow": {
+  "compared": 41,
+  "exact": 4,
+  "ready": 7,
+  "ready_exact": 2,
+  "exact_rate": 9.8,
+  "ready_rate": 17.1,
+  "flag_rate": 82.9,
+  "ready_exact_rate": 28.6,
+  "rates_note": "percent of the drafted items with a published target (status human excluded)",
+  "ready_not_exact": [
+   "OPDIVO.10-RCC-Nierenzellkarzinom-b7cdf1-fr",
+   "SKYRIZI.04-Colitis-Ulcerosa-nur-180-mg-3-4d0630-fr",
+   "SKYRIZI.04-Colitis-Ulcerosa-nur-180-mg-3-dbcc55-fr",
+   "VERZENIO.02a-f05251-it",
+   "VERZENIO.03a-175825-it"
+  ],
+  "note": "tgt_new = the FR/IT text BAG already published; it was never shown to the model"
+ },
+ "calls": {
+  "n": 82,
+  "prompt_tokens": 94891,
+  "completion_tokens": 20189,
+  "models_served": [
+   "swiss-ai/apertus-v1.5-70b"
+  ],
+  "system_fingerprints": [],
+  "endpoints": [],
+  "chf_estimate": 0.1169,
+  "chf_basis": "Swiss provider's published price, CHF 0.70 / 2.50 per M input / output tokens"
+ },
+ "next": [
+  "gleichlaut emit --records /Users/mi11ion/Desktop/hackapertus/gleichlaut/track_2b/data/shadow/20260901-20261001/70b/records.jsonl --items /Users/mi11ion/Desktop/hackapertus/gleichlaut/track_2b/data/shadow/20260901-20261001/70b/items.json --n 0 --out /Users/mi11ion/Desktop/hackapertus/gleichlaut/track_2b/data/shadow/20260901-20261001/70b/emit",
+  "gleichlaut ui --records /Users/mi11ion/Desktop/hackapertus/gleichlaut/track_2b/data/shadow/20260901-20261001/70b/records.jsonl --items /Users/mi11ion/Desktop/hackapertus/gleichlaut/track_2b/data/shadow/20260901-20261001/70b/items.json --out /Users/mi11ion/Desktop/hackapertus/gleichlaut/track_2b/data/shadow/20260901-20261001/70b/ui/index.html"
+ ]
+}

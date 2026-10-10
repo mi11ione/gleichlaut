@@ -93,6 +93,14 @@ code: [docs/failure-modes.md](docs/failure-modes.md).
 **Shadow mode needs nobody's permission.** `gleichlaut month --from 20260901 --to 20261001 --fetch` mines the month's
 German changes from the public feed, drafts them, and grades itself against what BAG publishes. First user group: BAG's
 Sektion Arzneimittelaufnahmen and the ePL team. Operator runbook: [docs/operations.md](docs/operations.md).
+
+**The first shadow month has run** (1 Sep → 1 Oct 2026, pre-registered R7, `data/shadow/`): 52 FR/IT items; 8 went
+straight to a translator (rewrites, over-long texts). It was a hard month: 32 of the other 41 add a new standard
+sentence ("Der Indikationscode dieser Limitierung …"), and the no-model start got 0 of 41 right. Apertus drafted 3 (8B)
+to 4 (70B) identical to BAG's text, and the checks flagged 82.9–92.7% of drafts, mostly for German left in that
+sentence. The 14 drafts marked ready across the three models contain no error: the blind labels find only equivalent
+wording and cosmetic slips. BAG's own French for the new sentence is split (« l'assureur-maladie » 9 times,
+« l'assurance maladie » 8), the kind of drift the audit exists to catch.
 Phased pilot (audit first), owners, protection needs and monthly effort: [docs/adoption.md](docs/adoption.md).
 
 ## Run it

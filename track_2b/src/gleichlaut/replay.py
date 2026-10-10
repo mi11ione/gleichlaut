@@ -46,6 +46,7 @@ def compute():
     res["m1_q8_0"] = score.m1("q8_0")
     res["post_edit_8b_q8_0"] = score.post_edit("runs/8b_q8_0_fresh166_g3_final.jsonl")
     res["size_compare"] = score.size_compare()
+    res["shadow_20260901_20261001"] = score.shadow_month()
     return res
 
 

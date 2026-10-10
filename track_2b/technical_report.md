@@ -225,7 +225,10 @@ is STAR Transit (`docs/sl-process.md`).
 Gleichlaut maps onto each: Draft proposes the FR/IT fields when the DE field changes, Audit answers the congruence
 question for the whole register, and translators receive XLIFF 1.2/2.1. Shadow mode (`gleichlaut month`) runs on the
 public feed every month and grades itself against BAG's publication, so a pilot with the Sektion Arzneimittelaufnahmen
-and the ePL team needs no new process. Next: drug-class terms in the audit, a direction-flip check, MiGeL and the
+and the ePL team needs no new process. The first shadow month (1 Sep → 1 Oct 2026, R7) ran on CPU runners under
+`--network none`: of 41 compared items, 32 add one new standard sentence and the no-model start gets none right; the
+checks flagged 82.9–92.7% of drafts, and none of the 14 drafts marked ready across the three models has an error.
+Next: drug-class terms in the audit, a direction-flip check, MiGeL and the
 Analysenliste, and a Swiss 70B endpoint certified with `make certify`.
 
 ## License

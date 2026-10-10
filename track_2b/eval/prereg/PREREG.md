@@ -134,3 +134,8 @@ data the change was designed on is labelled "dev" in every table.
   drafts 4 real / 4 stale / 6 German (Q4_K_M) and 4 / 3 / 6 (Q8_0), by two blind annotators and a third on 6
   disagreements (`eval/labels/fedlex_gguf_unflagged.tsv`). Neither passes R0. Decision as pre-registered: statutes run
   the shipped 8B GGUF and every statute draft goes to review (`eval/results/fedlex_compare.json`).
+- **R7, 10 Oct 2026:** the first shadow month, 01.09 → 01.10.2026 (52 items, 41 compared with BAG's text, 8 routed to a
+  translator). Identical drafts 3 / 3 / 4 and flagged 90.2% / 92.7% / 82.9% (Q4_K_M / Q8_0 / 70B); no-model start 0 of
+  41. Ready drafts 4 / 3 / 7, none with an error (10 non-identical ready drafts, blind labels: 6 cosmetic, 4 equivalent;
+  the two annotators agreed on all 10). 32 of the 41 items add one new standard sentence
+  (`eval/results/shadow_20260901_20261001.json`).

@@ -1,0 +1,95 @@
+{
+ "70b": {
+  "calls": 82,
+  "compared": 41,
+  "exact": 4,
+  "exact_rate": 9.8,
+  "flag_rate": 82.9,
+  "flagged": 34,
+  "gate": null,
+  "human": 8,
+  "items": 52,
+  "ready": 7,
+  "ready_classes": {
+   "cosmetic": 2,
+   "equivalent": 3
+  },
+  "ready_errors": 0,
+  "ready_exact": 2,
+  "served_by": [
+   "swiss-ai/apertus-v1.5-70b"
+  ]
+ },
+ "annotators_agree": 10,
+ "bag_fr_rendering_of_new_sentence": {
+  "assurance maladie": 8,
+  "assureur-maladie": 9
+ },
+ "boilerplate_items": 32,
+ "compared": 41,
+ "labelled": 10,
+ "mining": {
+  "de_changes": 24,
+  "de_rewrites_over60": 2,
+  "items": 52,
+  "items_with_published_target": 49,
+  "snap_new": "20261001",
+  "snap_old": "20260901",
+  "step": [
+   {
+    "a": "20260901",
+    "b": "20261001",
+    "matched": 60,
+    "new_distinct_pairs": 24,
+    "over60": 4
+   }
+  ],
+  "unmatched": 0,
+  "unmatched_reasons": {}
+ },
+ "q4_k_m": {
+  "calls": 86,
+  "compared": 41,
+  "exact": 3,
+  "exact_rate": 7.3,
+  "flag_rate": 90.2,
+  "flagged": 37,
+  "gate": "8b-q4_k_m-fresh166",
+  "human": 8,
+  "items": 52,
+  "ready": 4,
+  "ready_classes": {
+   "cosmetic": 3
+  },
+  "ready_errors": 0,
+  "ready_exact": 1,
+  "served_by": [
+   "gguf:apertus-v1.5-8b-text-q4_k_m.gguf"
+  ]
+ },
+ "q8_0": {
+  "calls": 82,
+  "compared": 41,
+  "exact": 3,
+  "exact_rate": 7.3,
+  "flag_rate": 92.7,
+  "flagged": 38,
+  "gate": "8b-q8_0-fresh166",
+  "human": 8,
+  "items": 52,
+  "ready": 3,
+  "ready_classes": {
+   "cosmetic": 1,
+   "equivalent": 1
+  },
+  "ready_errors": 0,
+  "ready_exact": 1,
+  "served_by": [
+   "gguf:apertus-v1.5-8b-text-q8_0.gguf"
+  ]
+ },
+ "ready_errors_total": 0,
+ "ready_total": 14,
+ "rules_exact": 0,
+ "run": "20260901-20261001"
+}
