@@ -110,7 +110,8 @@ def _changed(o, n):
 def _block(S, old, new, a0, a1, b0, b1):
     """A changed block old[a0:a1] -> new[b0:b1]: whole-sentence when most of it changed, else phrase-level."""
     A = [(s, t) for s, t in _toks(old[a0:a1])]; B = [(s, t) for s, t in _toks(new[b0:b1])]
-    sm = difflib.SequenceMatcher(None, [t for _, t in A], [t for _, t in B], autojunk=False)
+    ap = lambda t: t.replace("\u2019", "'").replace("\u02bc", "'")      # a typographic vs straight apostrophe is not shown as a change
+    sm = difflib.SequenceMatcher(None, [ap(t) for _, t in A], [ap(t) for _, t in B], autojunk=False)
     ops = sm.get_opcodes()
     changed = sum(_words(B[j1:j2]) + _words(A[i1:i2]) for op, i1, i2, j1, j2 in ops if op != "equal")
     total = max(1, _words(A) + _words(B))
@@ -150,7 +151,7 @@ def diff(old, new, nums=()):
     more than WHOLE of their words changed. A 3-element d segment ["d", text, "s"] marks a whole struck sentence."""
     S = _Segs(new, nums)
     A, B = sentences(old), sentences(new)
-    key = lambda s, sp: re.sub(r"\s+", " ", s[sp[0]:sp[1]]).strip()
+    key = lambda s, sp: re.sub(r"\s+", " ", s[sp[0]:sp[1]]).strip().replace("\u2019", "'")
     sm = difflib.SequenceMatcher(None, [key(old, x) for x in A], [key(new, x) for x in B], autojunk=False)
     for op, i1, i2, j1, j2 in sm.get_opcodes():
         a0 = A[i1][0] if i1 < len(A) else len(old); a1 = A[i2 - 1][1] if i2 > i1 else a0
