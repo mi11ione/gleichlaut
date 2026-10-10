@@ -311,9 +311,10 @@ def file_sha256(path):
 class LlamaCpp:
     """Apertus 8B GGUF on CPU (llama-cpp-python), greedy, with the 8B digit ban of the research runs: every token that
     decodes to a digit, and every word-initial FR/IT number word 2-12 (gl2.BANWORDS), gets logit -inf.
+    record_to: a cache root; every call is written there as a hash-addressed entry (write_cache), replayable by Cache.
     gguf_sha256 / runtime: what a build certificate (certify.build_lookup) is matched against."""
 
-    def __init__(self, gguf_path, lang_of_prompt, n_ctx=8192, n_threads=None, log=None, gguf_sha256=None):
+    def __init__(self, gguf_path, lang_of_prompt, n_ctx=8192, n_threads=None, log=None, gguf_sha256=None, record_to=None):
         if not gguf_path or not os.path.isfile(gguf_path):
             raise ConfigError(f"GGUF file not found: {gguf_path!r} (gleichlaut fetch-gguf downloads the pinned build into "
                               f"GLEICHLAUT_MODELS)")
@@ -327,7 +328,7 @@ class LlamaCpp:
         self.n_threads = int(n_threads or os.environ.get("GLEICHLAUT_THREADS") or cpu_count())
         self.llm = Llama(model_path=gguf_path, n_ctx=n_ctx, n_threads=self.n_threads, n_threads_batch=self.n_threads,
                          logits_all=False, verbose=False)
-        self.LP, self.np, self.lang_of_prompt, self.log = LogitsProcessorList, np, lang_of_prompt, log
+        self.LP, self.np, self.lang_of_prompt, self.log, self.record_to = LogitsProcessorList, np, lang_of_prompt, log, record_to
         self.model = "gguf:" + os.path.basename(gguf_path)
         n = self.llm.n_vocab(); bad = {"fr": [], "it": []}
         for i in range(n):
@@ -351,8 +352,12 @@ class LlamaCpp:
         text = r["choices"][0]["message"]["content"]
         meta = dict(secs=round(time.time() - t0, 2), model_served=self.model, completion_tokens=r.get("usage", {}).get("completion_tokens"),
                     prompt_tokens=r.get("usage", {}).get("prompt_tokens"), cached=False)
-        _log(self.log, dict(meta, tag=tag, ts=_now(), endpoint=self.endpoint, model=self.model))
-        return strip_think(text), meta
+        # The key is the sha256 of the request sent above (model, the one user message, max_tokens, temperature), as for the
+        # 70B. The digit / number-word mask is not part of it: it acts on the logits during generation, not on the request.
+        key = payload_key(self.model, prompt, max_tokens, 0.0)
+        if self.record_to: write_cache(self.record_to, key, text, {k: meta[k] for k in ("prompt_tokens", "completion_tokens", "secs")})
+        _log(self.log, dict(meta, tag=tag, ts=_now(), endpoint=self.endpoint, model=self.model, key=key))
+        return strip_think(text), dict(meta, key=key)
 
     @property
     def gguf_sha256(self):

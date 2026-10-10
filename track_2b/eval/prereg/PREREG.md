@@ -106,6 +106,22 @@ The shadow workflow drafted the month's 52 FR/IT items from the public feed with
 - Use: descriptive. It does not change the defaults set under R1. Any ready draft labelled REAL, stale or German is named
   in the report next to the R1 result.
 
+## R9. Second CPU run of the certified Q8_0 build, with call recording (frozen 10 Oct 2026, before the run)
+
+The R1 (M2) Q8_0 run logged token counts and timings per call but not the requests or the response texts, so `make run`
+could re-score it but not re-execute it. This run records every call.
+
+- Run: the same 166 items, the same frozen pipeline (guards3, at most one re-ask), the same GGUF Q8_0 file (sha256 as in
+  R1), greedy, the digit / number-word mask on, on GitHub Actions CPU runners (`m1` workflow, `build=q8_0`, `suite=sl`,
+  `name=rerun`). Every call is written as a hash-addressed entry keyed on the request sent (model, message, max_tokens,
+  temperature; the mask acts on generation and is not part of the request) into `data/cache/responses_8b/q8_0/`; the
+  records go to `data/runs/8b_q8_0_fresh166_g3_rerun.jsonl`. The certified run is not overwritten.
+- Labels: every ready non-exact draft not identical to an already-labelled output, by the R1 protocol.
+- Reported (no new threshold): identical final outputs vs the certified run, flag agreement (κ), and whether R0 holds on
+  the rerun. `make run` re-executes the rerun from the recorded calls.
+- Use: descriptive. It does not change the R1 decision or the certificate; a rerun that fails R0 is reported next to the
+  R1 result, as R2 does for the 70B.
+
 ## R4. Post-freeze changes
 
 No change to `frozen/` after this commit. Any guard change needs a new held-out run before a claim; anything measured on

@@ -8,6 +8,7 @@ on:
       build: { description: "q4_k_m or q8_0", required: true, default: "q4_k_m" }
       shards: { description: "number of shards", required: true, default: "8" }
       suite: { description: "sl (fresh 166) or fed (Fedlex 120)", required: true, default: "sl" }
+      name: { description: "records file name for sl: final (certified run) or rerun (PREREG R9)", required: true, default: "final" }
 jobs:
   plan:
     runs-on: ubuntu-latest
@@ -53,13 +54,14 @@ jobs:
         with: { python-version: "3.12" }
       - uses: actions/download-artifact@v7
         with: { pattern: "m1-${{ inputs.suite }}-${{ inputs.build }}-*", path: track_2b/out/m1parts }
-      - run: PYTHONPATH=src python -m gleichlaut.m1 gather --build ${{ inputs.build }} --suite ${{ inputs.suite }} --in out/m1parts/*
+      - run: PYTHONPATH=src python -m gleichlaut.m1 gather --build ${{ inputs.build }} --suite ${{ inputs.suite }} --name ${{ inputs.name }} --in out/m1parts/*
       - uses: actions/upload-artifact@v7
         with:
           name: "m1-${{ inputs.suite }}-${{ inputs.build }}-merged"
           path: |
-            track_2b/data/runs/8b_${{ inputs.build }}_fresh166_g3_final.jsonl
-            track_2b/eval/labels/worklist_8b_${{ inputs.build }}_fresh166.json
+            track_2b/data/runs/8b_${{ inputs.build }}_fresh166_g3_${{ inputs.name }}.jsonl
+            track_2b/eval/labels/worklist_8b_${{ inputs.build }}_fresh166*.json
+            track_2b/data/cache/responses_8b/${{ inputs.build }}
             track_2b/data/runs/8b_${{ inputs.build }}_fedlex_shipped.jsonl
             track_2b/eval/labels/worklist_8b_${{ inputs.build }}_fedlex.json
 # After labelling (eval/labels/m1_<build>_fresh166.tsv), the run becomes a build certificate of that GGUF:

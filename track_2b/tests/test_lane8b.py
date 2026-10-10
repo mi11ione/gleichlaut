@@ -617,3 +617,33 @@ def test_shadow_workflow_plan_split_and_gather_code_runs():
         finally:
             os.chdir(old); cli.OUT = saved_out
             for k in ("SHARDS", "RUN"): os.environ.pop(k, None)
+
+
+def test_llamacpp_records_every_call_and_cache_replays_it():
+    """PREREG R9: the local 8B writes each call as a hash-addressed entry keyed on the request it sent (the digit mask is
+    generation-side and not in the key); m1.gather merges the shards' entries; Cache replays them byte-for-byte."""
+    from gleichlaut import m1
+    sent = []
+
+    class FakeLLM:
+        def create_chat_completion(self, messages, max_tokens, temperature, logits_processor):
+            sent.append((messages, max_tokens, temperature))
+            return {"choices": [{"message": {"content": "réponse " + str(max_tokens)}}], "usage": {"prompt_tokens": 7, "completion_tokens": 2}}
+
+    with tmpdir() as d:
+        L = backends.LlamaCpp.__new__(backends.LlamaCpp)
+        L.llm, L.LP, L.np, L.lang_of_prompt, L.bad = FakeLLM(), list, None, backends.lang_of_prompt, {"fr": [], "it": []}
+        L.model, L.endpoint, L.log = "gguf:q8_0.gguf", "local llama.cpp (in process)", os.path.join(d, "calls.jsonl")
+        L.record_to = os.path.join(d, "shard0", "cache")
+        text, meta = L("French (old): x", "t", 1.0, 40)
+        assert text == "réponse 40" and sent == [([{"role": "user", "content": "French (old): x"}], 40, 0.0)]
+        assert meta["key"] == backends.payload_key("gguf:q8_0.gguf", "French (old): x", 40, 0.0)
+        assert json.loads(open(L.log, encoding="utf-8").readline())["key"] == meta["key"]
+        e = json.load(open(os.path.join(L.record_to, meta["key"][:2], meta["key"] + ".json"), encoding="utf-8"))
+        assert e == {"text": "réponse 40", "meta": {"prompt_tokens": 7, "completion_tokens": 2, "secs": e["meta"]["secs"]}}
+        dest = os.path.join(d, "responses_8b", "q8_0")
+        assert m1.merge_cache([os.path.join(d, "shard0"), os.path.join(d, "nocache")], dest) == 1
+        C = backends.Cache(dest, model="gguf:q8_0.gguf")
+        assert C("French (old): x", "t", 1.0, 40)[0] == "réponse 40" and C.hits == 1
+        try: C("French (old): x", "t", 1.0, 41); raise AssertionError("a changed request must miss")
+        except KeyError: assert len(C.misses) == 1
