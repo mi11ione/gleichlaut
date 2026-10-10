@@ -815,9 +815,20 @@ def write_metrics(path, cmd, rc, secs, m=None):
     os.replace(tmp, path)
 
 
+NOARG_HELP = {
+    "run": "gleichlaut run: replay + re-score + emit + review page (no arguments; LLM_BASE_URL etc. from the environment)",
+    "live": "gleichlaut live: draft the 5 live statute paragraphs through LLM_BASE_URL (no arguments)",
+    "fetch-gguf": "gleichlaut fetch-gguf: download the certified 8B GGUF (GLEICHLAUT_BUILD=q4_k_m 5.1 GB | q8_0 8.6 GB) into "
+                  "GLEICHLAUT_MODELS and check its sha256; downloads nothing if a verified file is there (no arguments)",
+}
+
+
 def _dispatch(argv):
     if not argv or argv[0] in ("-h", "--help"): print(__doc__); return 0
     c, rest = argv[0], argv[1:]
+    if c in NOARG_HELP and rest:                    # these take no arguments: never start a run or a 5-9 GB download on --help
+        if rest[0] in ("-h", "--help"): print(NOARG_HELP[c]); return 0
+        raise UsageError(f"{c} takes no arguments (got {' '.join(rest)}); {NOARG_HELP[c]}")
     if c == "run": return cmd_run()
     if c == "replay":
         from . import replay; return replay.main(rest)

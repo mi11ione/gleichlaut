@@ -711,3 +711,21 @@ def test_items_from_fhir_exports_shadow_draft_bundle_and_translations():
         assert rc == 0, o + e
         rc, o, e = run_cli("items", "--from-fhir", os.path.join(d, "nope.ndjson"), new, "--out", out)
         assert rc == 2 and "not found" in e
+
+
+def test_help_on_no_argument_commands_never_runs_or_downloads():
+    called = []
+    orig = cli.fetch_gguf, cli.cmd_run, cli.cmd_live
+    cli.fetch_gguf = lambda *a, **k: called.append("fetch")
+    cli.cmd_run = lambda *a, **k: called.append("run")
+    cli.cmd_live = lambda *a, **k: called.append("live")
+    try:
+        for c in ("run", "live", "fetch-gguf"):
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out): assert cli._dispatch([c, "--help"]) == 0
+            assert c in out.getvalue()
+            try: cli._dispatch([c, "--bogus"]); raise AssertionError("unknown argument accepted")
+            except cli.UsageError: pass
+        assert called == []
+    finally:
+        cli.fetch_gguf, cli.cmd_run, cli.cmd_live = orig
