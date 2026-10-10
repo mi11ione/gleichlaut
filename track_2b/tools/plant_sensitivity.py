@@ -38,9 +38,10 @@ DESIGN (fixed in this file and in PREREG R11 before any annotation)
   Worklists  per protocol and set, seeded shuffle, neutral ids; fields as PROTOCOL.md: id, lang, de_old, de_new, tgt_old,
              draft, official_new ((b): no official_new). The key (id -> item, kind, type, edit) is written apart.
 
-usage: python3 tools/plant_sensitivity.py [--check]
+usage: python3 tools/plant_sensitivity.py [--check] | --merge DIR
 writes eval/labels/sensitivity_key.json and eval/labels/sensitivity_{a,b}_set{1,2}_worklist.json; --check verifies the
-committed files are reproduced byte for byte."""
+committed files are reproduced byte for byte. --merge DIR maps the annotators' TSVs (DIR/w_<protocol><set><A|B>/labels.tsv,
+neutral ids) back to items through the key and writes eval/labels/sensitivity_{a,b}.tsv (one row per item: A_*, B_*)."""
 import json, os, random, re, sys
 from collections import Counter
 
@@ -345,8 +346,42 @@ def build():
 def dumps(o): return json.dumps(o, ensure_ascii=False, indent=1) + "\n"
 
 
+CLASSES = ("exact", "equivalent", "preexisting", "cosmetic", "minor", "german", "stale", "REAL")
+
+
+def merge(d):
+    key = json.load(open(os.path.join(LABELS, "sensitivity_key.json"), encoding="utf-8"))
+    for pr in PROTOS:
+        ids = key["ids"][pr]; rows = {}
+        for st in (1, 2):
+            W = json.load(open(os.path.join(LABELS, f"sensitivity_{pr}_set{st}_worklist.json"), encoding="utf-8"))
+            want = {r["id"] for r in W}
+            for ann in "AB":
+                lines = open(os.path.join(d, f"w_{pr}{st}{ann}", "labels.tsv"), encoding="utf-8").read().splitlines()
+                assert lines[0].split("\t")[:3] == ["id", "needs_fix", "class"], lines[0]
+                got = {}
+                for l in lines[1:]:
+                    if not l.strip(): continue
+                    c = l.split("\t") + [""]
+                    fix, cls = c[1].strip().lower(), c[2].strip()
+                    cls = {x.lower(): x for x in CLASSES}.get(cls.lower(), cls)
+                    assert fix in ("yes", "no") and cls in CLASSES and c[0] in want and c[0] not in got, (pr, st, ann, l)
+                    got[c[0]] = (fix, cls, " ".join(c[3:]).strip())
+                assert set(got) == want, (pr, st, ann, sorted(want - set(got))[:5])
+                for i, (fix, cls, note) in got.items():
+                    rows.setdefault(ids[i], {}).update({f"{ann}_fix": fix, f"{ann}_class": cls, f"note_{ann}": note})
+        out = ["uid\tkind\ttype\tlang\tA_fix\tA_class\tB_fix\tB_class\tnote_A\tnote_B"]
+        for u in sorted(rows):
+            it = key["items"][u]; r = rows[u]
+            out.append("\t".join((u, it["kind"], it.get("type") or "", it["lang"], r["A_fix"], r["A_class"], r["B_fix"],
+                                  r["B_class"], r["note_A"], r["note_B"])))
+        open(os.path.join(LABELS, f"sensitivity_{pr}.tsv"), "w", encoding="utf-8").write("\n".join(out) + "\n")
+        print(f"sensitivity_{pr}.tsv", len(rows), "items")
+
+
 def main(argv=None):
     argv = argv if argv is not None else sys.argv[1:]
+    if "--merge" in argv: return merge(argv[argv.index("--merge") + 1]) or 0
     W, key = build(); files = dict(W, **{"sensitivity_key.json": key})
     bad = []
     for name, o in files.items():

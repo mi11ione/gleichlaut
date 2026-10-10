@@ -302,3 +302,9 @@ data the change was designed on is labelled "dev" in every table.
   8B numbers in `docs/failure-modes.md` and report §3.3 are now Q8_0 with MLX in parentheses; free translation is worse
   on the shipped build by this read, span obedience, operator typing and the S2b row are better, the yes/no answer is the
   same, and the log-probability ranking is weaker but no longer order-dependent.
+- **R11, 10 Oct 2026:** annotator sensitivity, 8 fresh blind Claude annotators (two per worklist, two worklists per
+  protocol). Of 66 planted meaning errors, both annotators labelled 66 REAL under (a) reference shown and 66 under (b)
+  reference hidden (Wilson 95% [94.5, 100] each; every type 7–13 of 7–13); false alarms on the 66 untouched drafts: 0
+  severe in either protocol, 1 needs-fix call (minor) under (a). Real items: stale 12 of 12 and German 14 of 15 severe by
+  both; of the 3 earlier REAL labels both agree on 1 (either: 2 under (a), 3 under (b)). The 95% bounds on severe errors
+  among ready drafts are unchanged by the recall (5.5% 70B, 5.8% Q8_0) (`eval/results/annotator_sensitivity.json`).

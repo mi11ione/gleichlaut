@@ -68,6 +68,8 @@ repository; `eval/prereg/PREREG.md` says what can and cannot be verified from he
 | Ready drafts that need a fix to the amendment | 25 of 62 (22 named by the terminology note) | 33 of 60 (27 named by it) | **3 of 66** | |
 | Pre-registered pass rule | **PASS** | **PASS** | **PASS** (and again on a rerun with a new seed) | |
 
+**Would the annotators have seen a meaning error?** Measured (pre-registered R11): one meaning error of 7 kinds (dropped condition, and/or, obligation, scope, direction, negation, number) planted into each of 66 ready drafts was labelled a meaning error by both blind annotators 66 of 66 times (95% CI lower bound 94.5%), with BAG's published text shown and with it hidden alike, and 0 of the same 66 drafts left untouched were; real errors are subtler: of 3 drafts labelled a meaning error earlier, both annotators agree on 1 ([eval/labels/PROTOCOL.md](eval/labels/PROTOCOL.md)).
+
 How much rests on one pattern: a single boilerplate family (one insurance-term change across many products) supplies
 half of the 70B's ready drafts. Without it, 75.8% of drafts are flagged, which would fail the 70% flag cap of our own
 rule, while the exact-match gain grows to +14.4 points (report §6).

@@ -339,3 +339,19 @@ efd_language_service_chf_per_page_min	252	eval/results/external_facts.json	efd_l
 efd_language_service_chf_per_page_max	267	eval/results/external_facts.json	efd_language_service_chf_per_page_max.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
 apertus_70b_bf16_gb	144.6	eval/results/external_facts.json	apertus_70b_bf16_gb.value	{:.1f}	hand-entered from the cited source (see note in file)	README/report/notes
 apertus_70b_gguf_q4_gb	43.72	eval/results/external_facts.json	apertus_70b_gguf_q4_gb.value	{:.2f}	hand-entered from the cited source (see note in file)	README/report/notes
+as_planted	66	eval/results/annotator_sensitivity.json	counts.planted	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+as_untouched	66	eval/results/annotator_sensitivity.json	counts.untouched	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+as_real	30	eval/results/annotator_sensitivity.json	counts.real	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+as_types	7	eval/results/annotator_sensitivity.json	len:types	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+as_a_both	66	eval/results/annotator_sensitivity.json	protocols.reference_shown.planted.severe.both.k	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+as_a_both_lo	94.5	eval/results/annotator_sensitivity.json	protocols.reference_shown.planted.severe.both.wilson95.0	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+as_a_either	66	eval/results/annotator_sensitivity.json	protocols.reference_shown.planted.severe.either.k	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+as_b_both	66	eval/results/annotator_sensitivity.json	protocols.reference_hidden.planted.severe.both.k	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+as_b_both_lo	94.5	eval/results/annotator_sensitivity.json	protocols.reference_hidden.planted.severe.both.wilson95.0	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+as_b_either	66	eval/results/annotator_sensitivity.json	protocols.reference_hidden.planted.severe.either.k	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+as_a_fa_sev	0	eval/results/annotator_sensitivity.json	protocols.reference_shown.untouched.severe.either.k	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+as_b_fa_sev	0	eval/results/annotator_sensitivity.json	protocols.reference_hidden.untouched.severe.either.k	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+as_a_fa_fix	1	eval/results/annotator_sensitivity.json	protocols.reference_shown.untouched.needs_fix.either.k	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+as_real_REAL	3	eval/results/annotator_sensitivity.json	protocols.reference_shown.real.existing.REAL	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+as_a_real_REAL_both	1	eval/results/annotator_sensitivity.json	protocols.reference_shown.real.severe_incl_german_by_existing.REAL.both.k	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+as_b_real_REAL_either	3	eval/results/annotator_sensitivity.json	protocols.reference_hidden.real.severe_incl_german_by_existing.REAL.either.k	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes

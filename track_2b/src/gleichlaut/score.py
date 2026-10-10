@@ -674,3 +674,66 @@ def failure_modes_q8_0():
     retry) on the shipped Q8_0 GGUF beside the recorded MLX 4-bit runs, each scored by its research scorer (fm/measure.py)."""
     from .fm import measure
     return measure.compute()
+
+
+def annotator_sensitivity(res=None):
+    """PREREG R11: how often the blind annotators of eval/labels/PROTOCOL.md catch a planted meaning error. One meaning
+    error of a pre-declared type was planted into copies of 66 ready fresh-166 drafts labelled exact or equivalent
+    (tools/plant_sensitivity.py, seed 20261012); the same drafts untouched and 30 real labelled drafts were mixed in, and
+    two blind annotators per set labelled them under (a) the protocol as used (official_new shown) and (b) with the
+    published reference hidden (eval/labels/sensitivity_{a,b}.tsv). Severe = REAL or stale. Wilson 95% over items.
+    res: the replay results (for the 95% bounds on severe errors among ready drafts); read from eval/results otherwise."""
+    K = json.load(open(os.path.join(LABELS, "sensitivity_key.json"), encoding="utf-8"))
+    I = {x["key"]: x for x in load_items("items/items_fresh.json")}
+    sev = ("REAL", "stale")
+
+    def rate(k, n):
+        return dict(k=k, n=n, pct=round(100 * k / n, 1) if n else None, wilson95=[round(v, 1) for v in wilson(k, n)])
+
+    def block(rows, hit):
+        a = [hit(r, "A") for r in rows]; b = [hit(r, "B") for r in rows]; n = len(rows)
+        return dict(A=rate(sum(a), n), B=rate(sum(b), n), both=rate(sum(x and y for x, y in zip(a, b)), n),
+                    either=rate(sum(x or y for x, y in zip(a, b)), n))
+    fix = lambda r, x: r[f"{x}_fix"] == "yes"
+    severe = lambda r, x: r[f"{x}_class"] in sev
+
+    def summary(rows):
+        return dict(n=len(rows), needs_fix=block(rows, fix), severe=block(rows, severe),
+                    classes=dict(sorted(Counter(r[f"{x}_class"] for r in rows for x in "AB").items())))
+    out = dict(prereg="R11", seed=K["seed"], types=K["types"], counts=K["counts"], protocols={})
+    for pr, name in sorted(K["protocols"].items()):
+        lines = open(os.path.join(LABELS, f"sensitivity_{pr}.tsv"), encoding="utf-8").read().splitlines()
+        hdr = lines[0].split("\t"); rows = [dict(zip(hdr, l.split("\t"))) for l in lines[1:]]
+        assert {r["uid"] for r in rows} == set(K["items"]), pr
+        for r in rows:
+            it = K["items"][r["uid"]]
+            r.update(base_class=it.get("base_class"), family="981f07a8" if I[it["key"]]["cluster"] == DOMINANT_FAMILY else "other")
+        P = [r for r in rows if r["kind"] == "planted"]; U = [r for r in rows if r["kind"] == "untouched"]
+        R = [r for r in rows if r["kind"] == "real"]
+        d = dict(planted=summary(P), untouched=summary(U),
+                 planted_by_type={t: summary([r for r in P if r["type"] == t]) for t in K["types"]},
+                 planted_by_lang={L: summary([r for r in P if r["lang"] == L]) for L in ("fr", "it")},
+                 planted_by_base_class={c: summary([r for r in P if r["base_class"] == c]) for c in ("exact", "equivalent")},
+                 planted_by_family={f: summary([r for r in P if r["family"] == f]) for f in ("981f07a8", "other")})
+        ex = {r["uid"]: K["items"][r["uid"]]["existing"] for r in R}
+        d["real"] = dict(summary(R), existing=dict(sorted(Counter(ex.values()).items())),
+                         severe_incl_german=block(R, lambda r, x: r[f"{x}_class"] in ("REAL", "stale", "german")),
+                         same_class=block(R, lambda r, x: r[f"{x}_class"] == ex[r["uid"]]),
+                         severe_incl_german_by_existing={c: block([r for r in R if ex[r["uid"]] == c],
+                                                                  lambda r, x: r[f"{x}_class"] in ("REAL", "stale", "german"))
+                                                         for c in ("REAL", "stale", "german")})
+        d["missed_planted"] = [dict(uid=r["uid"], type=r["type"], A=r["A_class"], B=r["B_class"]) for r in P
+                               if not (severe(r, "A") or severe(r, "B"))]
+        out["protocols"][name] = d
+    # what it means for the headline: an error the labelling misses is not counted, so the 95% bound on severe errors
+    # among ready drafts is divided by the recall of the protocol as used (descriptive, PREREG R11)
+    if res is None:
+        res = {k: json.load(open(os.path.join(core.ROOT, "eval", "results", f"{k}.json"), encoding="utf-8")) for k in ("fresh166", "m1_q8_0")}
+    a = out["protocols"]["reference_shown"]["planted"]["severe"]
+    out["ready_bound"] = {}
+    for name, s in (("70b", res["fresh166"]["summary"]["all"]), ("q8_0", res["m1_q8_0"])):
+        sv = s["unflagged_REAL"] + s["unflagged_stale"] + s["unflagged_german"]; hi = s["wilson95_severe_among_ready"][1]
+        out["ready_bound"][name] = dict(ready=s["unflagged"], severe=sv, bound95=hi,
+                                        adjusted_both=round(min(100.0, hi / (a["both"]["pct"] / 100)), 1) if a["both"]["k"] else None,
+                                        adjusted_either=round(min(100.0, hi / (a["either"]["pct"] / 100)), 1) if a["either"]["k"] else None)
+    return out

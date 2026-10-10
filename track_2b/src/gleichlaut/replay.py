@@ -56,6 +56,7 @@ def compute():
     res["audit_grouping"] = score.audit_grouping()
     res["value"] = score.value()
     res["failure_modes_q8_0"] = score.failure_modes_q8_0()   # PREREG R8: failure-mode tests on the shipped Q8_0
+    res["annotator_sensitivity"] = score.annotator_sensitivity(res)   # PREREG R11: planted meaning errors, reference shown / hidden
     from .emit import explain
     res["explain_v2"] = explain.measure_v2()       # translator-facing reasons, before/after the round-6 wording (display only)
     from . import termbase

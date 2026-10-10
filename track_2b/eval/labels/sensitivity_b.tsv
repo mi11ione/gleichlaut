@@ -1,0 +1,163 @@
+uid	kind	type	lang	A_fix	A_class	B_fix	B_class	note_A	note_B
+wb000-fr|planted	planted	number	fr	yes	REAL	yes	REAL	Exon 20 changed to exon 30	Product renamed but exon 20 changed to exon 30
+wb000-fr|untouched	untouched		fr	no	equivalent	no	equivalent	RYBREVANT replaced by Amivantamab.	Amivantamab substitution and code applied correctly
+wb000-it|planted	planted	scope	it	yes	REAL	yes	REAL	"prima o seconda linea" widens first-line-only indication.	'o seconda' linea added
+wb000-it|untouched	untouched		it	no	equivalent	no	equivalent	RYBREVANT replaced by Amivantamab correctly	RYBREVANT replaced by Amivantamab correctly
+wb002-fr|planted	planted	scope	fr	yes	REAL	yes	REAL	Adds adolescents not in German.	'et adolescents' added; population widened
+wb002-fr|untouched	untouched		fr	no	equivalent	no	equivalent	RYBREVANT replaced by Amivantamab correctly	RYBREVANT replaced by Amivantamab correctly
+wb002-it|planted	planted	scope	it	yes	REAL	yes	REAL	Added "e adolescenti"; Amivantamab change applied	Product renamed but 'e adolescenti' added to adult population
+wb002-it|untouched	untouched		it	no	equivalent	no	equivalent	RYBREVANT replaced by Amivantamab.	Amivantamab substitution applied correctly
+wb003-fr|planted	planted	scope	fr	yes	REAL	yes	REAL	Added "et adolescents" not in German; rrPMBCL change applied	Acronym updated but 'et adolescents' added to adult population
+wb003-fr|untouched	untouched		fr	no	equivalent	no	equivalent	Heading abbreviation updated to LMPGBrr.	abbreviation updated; missing period preexisting
+wb007-fr|planted	planted	operator	fr	yes	REAL	yes	REAL	"au moins" reversed to "au plus un traitement antérieur".	'au moins' changed to 'au plus'
+wb007-fr|untouched	untouched		fr	no	equivalent	no	equivalent	KG sentence removed, VENCLYXTO capitalised correctly	KoGu sentence removed and VENCLYXTO capitalised as in German
+wb007-it|planted	planted	obligation	it	yes	REAL	yes	REAL	Code "può essere inviato" (may) instead of mandatory "deve"	KoGu removal correct but code 'deve' changed to 'può'
+wb007-it|untouched	untouched		it	no	equivalent	no	equivalent	KG sentence removed and VENCLYXTO capitalised as in German.	removal of Kostengutsprache and name change applied
+wb010-fr|real	real		fr	yes	stale	yes	stale	Removed KG/dosage sentences kept, heading missing; German "Folgant Indikationscode" left.	removed sentences kept, heading missing, 'Folgant Indikationscode' German
+wb010-it|real	real		it	yes	stale	yes	stale	Removed KG and dose sentences kept; German header and "Folgore Indikationscode" left	Removed KoGu/dose sentences kept; inserted text left in German ('Folgore Indikationscode')
+wb011-fr|real	real		fr	yes	stale	yes	stale	Three added sentences (KG, until progression, code) missing; only typo fixed	New KoGu, progression and indication-code sentences not added
+wb011-it|real	real		it	yes	german	yes	german	Added sentences start with German "Nur dopo"; placed mid-text instead of start	New sentences inserted with 'Nur dopo', misplaced; 'codice indicativo' calque
+wb013-it|real	real		it	yes	german	yes	german	Added sentence and header left untranslated in German (Es wird ausschliesslich..., Inj Lös, Fertigpen); header misplaced	Packaging restriction and code sentences left entirely in German; heading 'Inj Lös'
+wb014-fr|real	real		fr	yes	stale	yes	stale	Header "Colite ulcéreuse" not added; code sentence has German "Folguer Indikationscode"	'Colitis ulcerosa' heading missing; code sentence in German 'Folguer Indikationscode'
+wb015-fr|planted	planted	negation	fr	yes	REAL	yes	REAL	Negation dropped: combination now reimbursed.	negation dropped: now says combination will be reimbursed
+wb015-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Change applied; ARB mistranslation preexisting in tgt_old	OKP applied; ARB mistranslation preexisting
+wb015-it|planted	planted	drop	it	yes	REAL	yes	REAL	Angiotensin II antagonist condition dropped.	angiotensin-II antagonist alternative dropped
+wb015-it|untouched	untouched		it	no	preexisting	no	preexisting	Change applied; "cosiddetti" grammar error preexisting	OKP term applied; 'cosiddetti' grammar error preexisting
+wb016-fr|planted	planted	and_or	fr	yes	REAL	yes	REAL	"et" changed to "ou" between product and calcium antagonist	'et' changed to 'ou' between product and calcium antagonist
+wb016-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Insurance updated; ARB mistranslation already in old text.	change applied; old ACE-II mistranslation untouched
+wb016-it|planted	planted	drop	it	yes	REAL	yes	REAL	Angiotensin-II antagonist item dropped from list	Angiotensin-II-antagonist alternative dropped from exclusion list
+wb016-it|untouched	untouched		it	no	equivalent	no	preexisting	Insurance term updated correctly.	change applied; preexisting grammar untouched
+wb017-fr|planted	planted	negation	fr	yes	REAL	yes	REAL	Negation dropped: combination now reimbursed.	negation dropped: combination now reimbursed
+wb017-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Change applied; ARB mistranslation preexisting in tgt_old	OKP applied; ARB mistranslation preexisting
+wb017-it|planted	planted	negation	it	yes	REAL	yes	REAL	Negation dropped: combination now reimbursed.	'non' dropped: combination now reimbursed
+wb017-it|untouched	untouched		it	no	preexisting	no	preexisting	Change applied; "cosiddetti" grammar error preexisting	OKP term applied; 'cosiddetti' grammar error preexisting
+wb018-fr|planted	planted	drop	fr	yes	REAL	yes	REAL	Angiotensin-II antagonist item dropped from list	ARB alternative (as rendered) dropped from exclusion list
+wb018-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Insurance updated; ARB mistranslated as ACE II inhibitor already in old text.	change applied; old ACE-II mistranslation untouched
+wb018-it|planted	planted	and_or	it	yes	REAL	yes	REAL	"e" changed to "o" between product and calcium antagonist: and/or logic altered.	'e' changed to 'o'; combination meaning altered
+wb018-it|untouched	untouched		it	no	preexisting	no	preexisting	Change applied; "un cosiddetti antagonisti" grammar error preexisting	OKP term applied; 'cosiddetti' grammar error preexisting
+wb019-fr|planted	planted	and_or	fr	yes	REAL	yes	REAL	"et" changed to "ou" between product and calcium antagonist	'et' changed to 'ou' between product and calcium antagonist
+wb019-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Insurance updated; ARB mistranslation already in old text.	change applied; old ACE-II mistranslation untouched
+wb019-it|planted	planted	negation	it	yes	REAL	yes	REAL	Negation dropped: "sarà rimborsata"	Negation 'non' dropped: combination now reimbursed
+wb019-it|untouched	untouched		it	no	equivalent	no	preexisting	Insurance term updated correctly.	change applied; preexisting grammar untouched
+wb020-fr|planted	planted	drop	fr	yes	REAL	yes	REAL	Angiotensin II antagonist item dropped from combination exclusion.	angiotensin-II antagonist alternative dropped
+wb020-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Change applied; spacing and ARB mistranslation preexisting	OKP applied; ARB rendered as ACE-inhibitor already in tgt_old
+wb020-it|planted	planted	and_or	it	yes	REAL	yes	REAL	"e" changed to "o" between product and calcium antagonist	'e' changed to 'o' between product and calcium antagonist
+wb020-it|untouched	untouched		it	no	equivalent	no	preexisting	Insurance term updated correctly.	change applied; preexisting grammar untouched
+wb021-fr|planted	planted	negation	fr	yes	REAL	yes	REAL	Negation dropped: "sera remboursé" instead of "ne sera pas remboursé"	Negation dropped: combination now 'sera remboursé'
+wb021-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Insurance updated; ARB mistranslation already in old text.	change applied; old ACE-II mistranslation untouched
+wb021-it|planted	planted	and_or	it	yes	REAL	yes	REAL	"e" changed to "o" between product and calcium antagonist.	'e' changed to 'o'; combination meaning altered
+wb021-it|untouched	untouched		it	no	preexisting	no	preexisting	Change applied; "cosiddetti" grammar error preexisting	OKP term applied; 'cosiddetti' grammar error preexisting
+wb022-fr|planted	planted	and_or	fr	yes	REAL	yes	REAL	"et" changed to "ou" between product and calcium antagonist.	'et' changed to 'ou'; combination meaning altered
+wb022-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Change applied; ARB mistranslation preexisting in tgt_old	OKP applied; ARB mistranslation preexisting
+wb022-it|planted	planted	and_or	it	yes	REAL	yes	REAL	"e" changed to "o" between product and calcium antagonist	'e' changed to 'o' between product and calcium antagonist
+wb022-it|untouched	untouched		it	no	equivalent	no	preexisting	Insurance term updated correctly.	change applied; preexisting grammar untouched
+wb023-fr|planted	planted	drop	fr	yes	REAL	yes	REAL	Angiotensin-II antagonist item dropped from list	ARB alternative (as rendered) dropped from exclusion list
+wb023-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Insurance updated; ARB mistranslation already in old text.	change applied; old ACE-II mistranslation untouched
+wb023-it|planted	planted	drop	it	yes	REAL	yes	REAL	Angiotensin II antagonist condition dropped.	angiotensin-II antagonist alternative dropped
+wb023-it|untouched	untouched		it	no	preexisting	no	preexisting	Change applied; "cosiddetti" grammar error preexisting	OKP term applied; 'cosiddetti' grammar error preexisting
+wb024-fr|planted	planted	negation	fr	yes	REAL	yes	REAL	Negation dropped: combination becomes reimbursed	Negation dropped: combination now 'sera remboursé'
+wb024-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Insurance updated; ARB mistranslation already in old text.	change applied; old ACE-II mistranslation untouched
+wb024-it|planted	planted	and_or	it	yes	REAL	yes	REAL	"e" changed to "o" between product and calcium antagonist	'e' changed to 'o' between product and calcium antagonist
+wb024-it|untouched	untouched		it	no	equivalent	no	preexisting	Basic insurance replaced by AOMS term.	change applied; preexisting grammar untouched
+wb025-fr|planted	planted	drop	fr	yes	REAL	yes	REAL	Angiotensin II antagonist item dropped.	angiotensin-II antagonist alternative dropped
+wb025-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Change applied; ARB mistranslation preexisting in tgt_old	OKP applied; ARB mistranslation preexisting
+wb025-it|planted	planted	negation	it	yes	REAL	yes	REAL	Negation dropped: combination now reimbursed.	negation dropped: combination now reimbursed
+wb025-it|untouched	untouched		it	no	preexisting	no	preexisting	Change applied; "cosiddetti" grammar error preexisting	OKP term applied; 'cosiddetti' grammar error preexisting
+wb026-fr|planted	planted	drop	fr	yes	REAL	yes	REAL	Angiotensin-II antagonist item dropped from list	ARB alternative (as rendered) dropped from exclusion list
+wb026-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Insurance updated; ARB mistranslation already in old text.	change applied; missing 'd'' and ACE-II error preexisting
+wb026-it|planted	planted	drop	it	yes	REAL	yes	REAL	Angiotensin-II antagonist item dropped from list	Angiotensin-II-antagonist alternative dropped from exclusion list
+wb026-it|untouched	untouched		it	no	equivalent	no	preexisting	Insurance term updated correctly.	change applied; preexisting grammar untouched
+wb027-fr|planted	planted	and_or	fr	yes	REAL	yes	REAL	"et" changed to "ou" between product and calcium antagonist.	'et' changed to 'ou'; combination meaning altered
+wb027-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Change applied; ARB mistranslated as ACE enzyme inhibitor already in tgt_old	OKP applied; ARB mistranslation preexisting
+wb027-it|planted	planted	negation	it	yes	REAL	yes	REAL	Negation dropped: "sarà rimborsata"	Negation 'non' dropped: now says combination is reimbursed
+wb027-it|untouched	untouched		it	no	equivalent	no	preexisting	Insurance term updated correctly.	change applied; preexisting grammar untouched
+wb028-fr|planted	planted	drop	fr	yes	REAL	yes	REAL	Angiotensin-II antagonist item dropped from list	Angiotensin-II-antagonist alternative dropped from exclusion list
+wb028-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Insurance updated; ARB mistranslation already in old text.	change applied; old ACE-II mistranslation untouched
+wb028-it|planted	planted	drop	it	yes	REAL	yes	REAL	Angiotensin-II antagonist item dropped from list	Angiotensin-II-antagonist alternative dropped from exclusion list
+wb028-it|untouched	untouched		it	no	equivalent	no	preexisting	Insurance term updated correctly.	change applied; preexisting 'di un cosiddetti antagonisti' grammar
+wb029-fr|planted	planted	negation	fr	yes	REAL	yes	REAL	Negation dropped: combination now reimbursed.	negation dropped: combination now reimbursed
+wb029-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Change applied; ARB mistranslation preexisting in tgt_old	OKP applied; ARB mistranslation preexisting
+wb029-it|planted	planted	drop	it	yes	REAL	yes	REAL	Angiotensin II antagonist condition dropped.	angiotensin-II antagonist alternative dropped
+wb029-it|untouched	untouched		it	no	preexisting	no	preexisting	Change applied; "cosiddetti" grammar error preexisting	OKP term applied; 'cosiddetti' grammar error preexisting
+wb030-fr|planted	planted	negation	fr	yes	REAL	yes	REAL	Negation dropped: combination now reimbursed.	negation dropped: combination now reimbursed
+wb030-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Change applied; "d’ VALSARTAN" spacing and ARB mistranslation preexisting	OKP applied; ARB mistranslation and d' spacing preexisting
+wb030-it|planted	planted	negation	it	yes	REAL	yes	REAL	Negation dropped: "sarà rimborsata"	Negation 'non' dropped: combination now reimbursed
+wb030-it|untouched	untouched		it	no	equivalent	no	preexisting	Insurance term updated correctly.	change applied; preexisting grammar untouched
+wb031-fr|planted	planted	negation	fr	yes	REAL	yes	REAL	Negation dropped: "est remboursé"	Negation dropped: combination now 'est remboursé'
+wb031-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Insurance updated; ARB mistranslation already in old text.	change applied; old ACE-II mistranslation untouched
+wb031-it|planted	planted	and_or	it	yes	REAL	yes	REAL	"e" changed to "o" between fixed combination and calcium antagonist.	'e' changed to 'o'; combination meaning altered
+wb031-it|untouched	untouched		it	no	preexisting	no	preexisting	Change applied; "cosiddetti" grammar error preexisting	OKP term applied; 'un cosiddetti antagonisti' grammar error preexisting
+wb032-fr|planted	planted	and_or	fr	yes	REAL	yes	REAL	"ou" changed to "et" between the two fixed combinations	OKP added but 'ou' between fixed combinations changed to 'et'
+wb032-fr|untouched	untouched		fr	no	preexisting	no	preexisting	OKP added correctly; ARB mistranslation already in old text.	change applied; old ACE-II mistranslation untouched
+wb033-fr|real	real		fr	yes	german	yes	german	New code sentence garbled German calque "Folgoureux code d'indication".	code sentence garbled 'Folgoureux'
+wb033-it|real	real		it	yes	german	yes	german	New code sentence left in German ("Folgore Indikationscode ... an den Krankenversicherer").	code sentence left in German 'Folgore Indikationscode è an den...'
+wb036-it|real	real		it	yes	stale	yes	stale	New KG requirement, code-in-KG and uniform price sentences missing; added sentence clumsy.	new opening paragraph not added; last sentence calqued
+wb039-fr|real	real		fr	yes	REAL	yes	minor	Brand RYBREVANT replaced by substance in price-model/rebate clauses German left unchanged; "L'amivantamab" artefacts.	RYBREVANT over-replaced; 'pour L'amivantamab' capitalised mid-sentence
+wb040-fr|planted	planted	scope	fr	yes	REAL	yes	REAL	"première ou deuxième ligne" added; 2 flacons applied	Pack change applied but 'ou deuxième ligne' added to first-line condition
+wb040-fr|untouched	untouched		fr	no	equivalent	no	preexisting	Pack size changed to 2 flacons as in German.	pack change applied; VAT sentence missing preexisting
+wb040-it|planted	planted	obligation	it	yes	REAL	yes	REAL	"devono continuare" (must) instead of "possono" (may); 2 flaconcini applied	Pack change applied but 'possono' changed to 'devono' (obligation)
+wb040-it|untouched	untouched		it	no	equivalent	no	equivalent	Pack size changed to 2 flaconcini as in German.	pack change applied correctly
+wb042-it|real	real		it	yes	minor	yes	REAL	Ophthalmic surgeons applied, but "medico" in b) also changed though German kept Arzt.	'medico' narrowed to 'oculochirurgo'; German keeps niedergelassene Arzt
+wb043-fr|real	real		fr	yes	REAL	yes	REAL	Centre "A" rendered "deux", placeholders ⟨B⟩ ⟨C⟩; treating doctor narrowed.	centres 'A' became 'deux'; 'médecin' narrowed to ophtalmochirurgien
+wb054-fr|real	real		fr	yes	german	yes	german	Added code sentence garbled with German: "Folguer Indikationscode"	Code sentence begins with German 'Folguer Indikationscode'
+wb054-it|real	real		it	yes	german	yes	german	Code sentence garbled with German: "Folgente codice indicativo"	Code sentence uses 'Folgente' and calque 'codice indicativo'
+wb056-it|real	real		it	yes	german	yes	german	Inserted diet sentence left almost entirely in German.	inserted elimination-diet sentence left in German
+wb057-fr|real	real		fr	yes	stale	yes	stale	Restructure partly applied: old KDd title/dosing-scheme sentence kept; KG code requirement missing	Global KoGu/code sentences missing; deleted KDd heading, schema sentence kept
+wb058-it|real	real		it	yes	stale	yes	stale	KG requirement and dosage/Kd sentence kept; German "Preismodell", "Folgore Code" left.	removed Kostengutsprache and Kd dosing kept; 'senza Preismodell', 'Folgore Code' German
+wb060-fr|planted	planted	obligation	fr	yes	REAL	yes	REAL	"können" rendered "doivent être traités" (may -> must); Vergütungsdauer change applied	Vergütungsdauer applied but 'peuvent' changed to 'doivent'
+wb060-fr|untouched	untouched		fr	no	equivalent	no	equivalent	"durée maximale de remboursement" applied correctly.	Vergütungsdauer change applied correctly
+wb060-it|planted	planted	operator	it	yes	REAL	yes	REAL	"Dosaggio massimo" changed to "minimo".	dose 'massimo' changed to 'minimo'
+wb060-it|untouched	untouched		it	no	equivalent	no	equivalent	"durata massima della rimunerazione" applied correctly	Therapiedauer->Vergütungsdauer applied as 'durata massima della rimunerazione'
+wb061-fr|planted	planted	number	fr	yes	REAL	yes	REAL	Amounts updated but strength 160mg changed to 159mg.	160mg changed to 159mg; wrong pack size
+wb061-fr|untouched	untouched		fr	no	equivalent	no	equivalent	Rebate amounts updated correctly	Both rebate amounts updated correctly
+wb063-fr|planted	planted	scope	fr	yes	REAL	yes	REAL	Adds adolescents not in German; otherwise change applied.	'et adolescents' added; population widened
+wb063-fr|untouched	untouched		fr	no	equivalent	no	equivalent	"ab der ersten Linie" applied and relapse indication removed correctly	'à partir de la première ligne' applied; relapse alternative removed correctly
+wb065-fr|real	real		fr	yes	stale	yes	stale	Combination exclusion added but "alle 6 Monate" not applied; stray ". .".	'alle 6 Monate' not applied (still 'après 6 mois'); stray '. .'
+wb067-fr|real	real		fr	yes	stale	yes	stale	Fixed amount added but "proportion fixe du prix de fabrique" kept; contradictory.	old fixed-share sentence kept alongside new Fr. 713.53; partial
+wb067-it|real	real		it	yes	stale	yes	stale	Fixed amount Fr. 713.53 not applied; old proportion and notification sentence kept.	fixed amount Fr. 713.53 not applied; old fixed-share text kept
+wb068-fr|real	real		fr	no	equivalent	no	equivalent	BCMA exclusion sentence added correctly; I-CANS copied	BCMA exclusion sentence added correctly; I-CANS mirrored
+wb069-fr|real	real		fr	yes	stale	yes	stale	New-diagnosis APL/ATRA indication missing, KG sentence kept; German "Retinoinsäurerezeptor" left	New indication and restructure not applied; old KoGu kept; German 'Retinoinsäurerezeptor' inserted
+wb069-it|real	real		it	yes	stale	yes	stale	KG requirement removed in German still present; "Arseni triossido", "APL nuova" calques.	removed Kostengutsprache sentence kept; new structure otherwise applied
+wb071-fr|planted	planted	obligation	fr	yes	REAL	yes	REAL	Amount updated but BRCA confirmation "doit" weakened to "peut".	'doit' changed to 'peut': BRCA confirmation made optional
+wb071-fr|untouched	untouched		fr	no	equivalent	no	equivalent	Rebate amount updated correctly	Amount updated to 595.16 correctly
+wb071-it|planted	planted	scope	it	yes	REAL	yes	REAL	Amount updated but "prima o seconda linea" widens indication.	'o seconda' linea added
+wb071-it|untouched	untouched		it	no	equivalent	no	equivalent	Rebate amount updated correctly	Amount updated to 595.16 correctly
+wb072-it|planted	planted	operator	it	yes	REAL	yes	REAL	"al massimo due" instead of "almeno due" prior lines	Product/code updated but 'almeno due' changed to 'al massimo due'
+wb072-it|untouched	untouched		it	no	equivalent	no	equivalent	Product name and code updated correctly.	name and code updated correctly
+wb074-it|planted	planted	scope	it	yes	REAL	yes	REAL	Added "e adolescenti"; rebate removal applied correctly	Rebate removed correctly but 'e adolescenti' added to population
+wb074-it|untouched	untouched		it	no	equivalent	no	equivalent	Rebate and VAT sentences removed as in German.	reimbursement paragraph removed correctly
+wb075-fr|planted	planted	obligation	fr	yes	REAL	yes	REAL	"peut être transmis" (may) instead of mandatory "doit"	Code updated but 'doit' changed to 'peut' (obligation weakened)
+wb075-fr|untouched	untouched		fr	no	equivalent	no	equivalent	Code updated to 17807.01 in both places.	code correction applied
+wb075-it|planted	planted	obligation	it	yes	REAL	yes	REAL	Code updated but "deve" changed to "può".	'deve' changed to 'può': code transmission optional
+wb075-it|untouched	untouched		it	no	equivalent	no	equivalent	Code 17807.1 -> 17807.01 updated	Code updated to 17807.01 in both places
+wb076-fr|real	real		fr	yes	german	yes	german	Germanised compound "un GLP-1-analogue" (should be analogue du GLP-1); otherwise change applied	Restructure correct but Germanised 'GLP-1-analogue' instead of 'analogue du GLP-1'
+wb079-fr|planted	planted	and_or	fr	yes	REAL	yes	REAL	Price updated but "et" changed to "ou" (par application ou patient).	'et' changed to 'ou' (per application or patient)
+wb079-fr|untouched	untouched		fr	no	equivalent	no	equivalent	Price updated correctly	Price updated to 222.41 correctly
+wb081-fr|planted	planted	operator	fr	yes	REAL	yes	REAL	Amount updated but "à partir de 12 ans" reversed to "jusqu'à 12 ans".	'à partir de 12 ans' reversed to 'jusqu'à 12 ans'
+wb081-fr|untouched	untouched		fr	no	equivalent	no	equivalent	Amount updated correctly	Amount updated to 13'148.57 correctly
+wb081-it|planted	planted	obligation	it	yes	REAL	yes	REAL	Amount updated but "deve" changed to "può": obligation weakened.	'deve' changed to 'può' for refund request
+wb081-it|untouched	untouched		it	no	equivalent	no	equivalent	Amount updated correctly	Amount updated to 13'148.57 correctly
+wb083-fr|real	real		fr	yes	german	yes	german	New bullet "In Combinaison avec un GLP-1-Analogue": German preposition and noun left.	'In Combinaison avec un GLP-1-Analogue' German words
+wb083-it|real	real		it	yes	german	yes	german	Germanised "un GLP-1-Analogo" (should be analogo del GLP-1)	New GLP-1 bullet uses Germanised 'GLP-1-Analogo' instead of 'analogo del GLP-1'
+wb084-fr|planted	planted	operator	fr	yes	REAL	yes	REAL	"Au plus BMI 28" reverses minimum BMI 28	SGLT-2 bullet added but 'Au moins BMI 28' changed to 'Au plus'
+wb084-fr|untouched	untouched		fr	no	equivalent	no	equivalent	SGLT-2 inhibitor bullet added correctly.	SGLT-2 line added correctly
+wb084-it|planted	planted	operator	it	yes	REAL	yes	REAL	SGLT-2 bullet added but "Almeno BMI 28" changed to "Al massimo".	BMI 'Almeno' changed to 'Al massimo'
+wb084-it|untouched	untouched		it	no	equivalent	no	equivalent	SGLT-2 inhibitor combination added correctly	SGLT-2 inhibitor bullet added correctly
+wb085-fr|real	real		fr	yes	german	yes	german	Germanised hyphenation "un SGLT - 2 - inhibiteur" in new bullet.	'un SGLT - 2 - inhibiteur' Germanised compound/hyphenation
+wb085-it|real	real		it	yes	german	yes	german	Germanised "un SGLT-2-inibitore"; also stray bullet before "Almeno BMI 28"	Germanised 'SGLT-2-inibitore' word order; stray dash before BMI line
+wb086-it|planted	planted	number	it	yes	REAL	yes	REAL	16 weeks changed to 26 weeks	Rebate sentence removed correctly but 16 weeks changed to 26
+wb086-it|untouched	untouched		it	no	equivalent	no	preexisting	Rebate sentence removed as in German.	deletion applied; old 'approvazione' wording untouched
+wb087-fr|real	real		fr	yes	german	yes	german	Added code sentence garbled with German: "Folguer Code"	Code sentence begins with German 'Folguer Code'
+wb088-fr|real	real		fr	yes	german	yes	german	Added code sentence garbled with German: "Folguer Code"	Code sentence begins with German 'Folguer Code'
+wb088-it|planted	planted	number	it	yes	REAL	yes	REAL	Age changed from 6 to 3 years	Code added but age threshold changed from 6 to 3 years
+wb088-it|untouched	untouched		it	no	equivalent	no	equivalent	Code sentence added; slightly elliptical but correct.	code sentence added correctly
+wb089-it|planted	planted	number	it	yes	REAL	yes	REAL	Rebate removed correctly but maximum duration changed 6 to 12 months.	max duration 6 months changed to 12 months
+wb089-it|untouched	untouched		it	no	equivalent	no	equivalent	Novartis rebate sentence removed correctly	Rebate sentence removed correctly
+wb090-fr|planted	planted	drop	fr	yes	REAL	yes	REAL	Maximum 12-month duration sentence dropped entirely.	maximum 12-month duration sentence dropped
+wb090-fr|untouched	untouched		fr	no	equivalent	no	equivalent	EFIENT replaced by Prasugrel correctly	EFIENT replaced by Prasugrel correctly
+wb090-it|planted	planted	number	it	yes	REAL	yes	REAL	Duration changed to 11 months instead of 12.	12 months changed to 11 months
+wb090-it|untouched	untouched		it	no	equivalent	no	equivalent	EFIENT replaced by Prasugrel correctly	EFIENT replaced by Prasugrel correctly
+wb091-fr|planted	planted	number	fr	yes	REAL	yes	REAL	Duration changed to 22 months instead of 12.	12 months changed to 22 months
+wb091-fr|untouched	untouched		fr	no	equivalent	no	equivalent	Product name replaced by Prasugrel correctly	PRASUGREL MEPHA replaced by Prasugrel correctly
+wb091-it|planted	planted	operator	it	yes	REAL	yes	REAL	"durata minima" instead of maximum duration	Product renamed but 'durata massima' changed to 'durata minima'
+wb091-it|untouched	untouched		it	no	equivalent	no	equivalent	PRASUGREL MEPHA replaced by Prasugrel.	Prasugrel substitution applied correctly

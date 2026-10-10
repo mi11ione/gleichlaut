@@ -237,6 +237,20 @@ for k, f in (("okp_insured_2025_millions", "{:.2f}"), ("main_language_fr_pct", "
              ("efd_language_service_chf_per_page_max", "{}"), ("apertus_70b_bf16_gb", "{:.1f}"), ("apertus_70b_gguf_q4_gb", "{:.2f}")):
     C.append((k, X, k + ".value", f, HAND))
 
+AS = "eval/results/annotator_sensitivity.json"; ASA, ASB = "protocols.reference_shown.", "protocols.reference_hidden."
+for cid, path, fmt in (("as_planted", "counts.planted", "{}"), ("as_untouched", "counts.untouched", "{}"), ("as_real", "counts.real", "{}"),
+                       ("as_types", "len:types", "{}"),
+                       ("as_a_both", ASA + "planted.severe.both.k", "{}"), ("as_a_both_lo", ASA + "planted.severe.both.wilson95.0", "{:.1f}"),
+                       ("as_a_either", ASA + "planted.severe.either.k", "{}"),
+                       ("as_b_both", ASB + "planted.severe.both.k", "{}"), ("as_b_both_lo", ASB + "planted.severe.both.wilson95.0", "{:.1f}"),
+                       ("as_b_either", ASB + "planted.severe.either.k", "{}"),
+                       ("as_a_fa_sev", ASA + "untouched.severe.either.k", "{}"), ("as_b_fa_sev", ASB + "untouched.severe.either.k", "{}"),
+                       ("as_a_fa_fix", ASA + "untouched.needs_fix.either.k", "{}"),
+                       ("as_real_REAL", ASA + "real.existing.REAL", "{}"),
+                       ("as_a_real_REAL_both", ASA + "real.severe_incl_german_by_existing.REAL.both.k", "{}"),
+                       ("as_b_real_REAL_either", ASB + "real.severe_incl_german_by_existing.REAL.either.k", "{}")):
+    C.append((cid, AS, path, fmt, RE))
+
 if __name__ == "__main__":
     rows = ["id\tvalue\tsource\tpath\tfmt\tcommand\twhere"]
     for cid, src, path, fmt, cmd in C:

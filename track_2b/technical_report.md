@@ -31,7 +31,7 @@ seen during design; checks and resources hashed before any output existed), Aper
 text **17.5%** of the time against **6.0%** for the no-model start (old text with numbers
 updated by code): **+11.4 points, 95% CI [4.8, 18.7]**; against rules+, our strongest no-model baseline, **+6.6 [1.8, 12.0]**. They cut the token edits still needed to reach BAG's text by **42.4%**
 [31.0, 54.1]. **39.8%** of drafts come out ready, with **0** meaning errors, stale changes or German left among them,
-and a rerun with a new seed passes the same rule (+12.0 points, 41.6% ready). **The shipped Apertus 8B, on a CPU,
+and a rerun with a new seed passes the same rule (+12.0 points, 41.6% ready). The annotators behind that 0 were tested (pre-registered R11): a meaning error planted into each of 66 ready drafts was labelled one by both of them 66 of 66 times (95% CI lower bound 94.5%), with BAG's text shown or hidden. **The shipped Apertus 8B, on a CPU,
 passes the same pre-registered rule** (Q8_0, the default build: +11.4 points [4.8, 18.7], 37.3% ready; Q4_K_M, for an
 8 GiB box: +10.8 points [4.8, 17.5], 36.1% ready; 0 meaning errors among ready drafts in both), so the default deployment
 is fully air-gapped. At Q8_0 the 8B matches the 70B on identical drafts (17.5%), with
