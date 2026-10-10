@@ -15,11 +15,13 @@ Inline annotations (<mrk>, Annotations module of the core):
           type="gleichlaut:model-number" and stays translatable (ids t1..).
 Unit <notes>, all in the target language (FR / IT), see unit_notes(): the verdict; at most three reasons, the most
 actionable first, in plain wording without internal codes (a pre-existing problem of the old text, guard findings,
-numbers written by the model; the ones a fixed rule marks as probably fine last, priority 3, see emit/triage.py); product,
-limitation code and the German change; the old German and old target text; when the draft departs from BAG's house
-rendering of a German term (data/termbase, gleichlaut.termbase), one advisory note (category gleichlaut:termbase,
-priority 9, not one of the three reasons); and one low-priority note (category gleichlaut:checks, priority 10) with the
-remaining reasons and the raw guard output with its codes. The raw guard output also stays in the FHIR Provenance.
+numbers written by the model; the ones a fixed rule marks as probably fine last, priority 3, see emit/triage.py; a count
+a triage rule calls probably fine never takes one of the three); product, limitation code and the German change; the old
+German and old target text; one low-priority note (category gleichlaut:note, priority 8, not one of the three reasons)
+with a deletion that mirrors the German's (worded as a question) and typography the draft introduced; when the draft
+departs from BAG's house rendering of a German term (data/termbase, gleichlaut.termbase), one advisory note (category
+gleichlaut:termbase, priority 9); and one low-priority note (category gleichlaut:checks, priority 10) with the remaining
+reasons and the raw guard output with its codes. The raw guard output also stays in the FHIR Provenance.
 write(..., decisions=...): the reviewer's decisions from the review page (JSON export) applied to the same units: accepted
 drafts (as is or edited) -> state="reviewed" (or "final" with final=True), subState gleichlaut:accepted |
 gleichlaut:accepted-edited, target = the accepted text; sent back -> state="initial" subState="gleichlaut:sent-back".
@@ -70,8 +72,17 @@ NOTE = {
         "T8": "mêmes valeurs ajoutées et retirées des deux côtés, seul le nombre d'occurrences diffère",
         "product_nodate": "{product} ; limitation {code}",
         "fine_plain": "probablement sans problème : {why}",
-        "del_de": "Suppression conforme à l'allemand ? L'allemand {verb} ici {u} ; le brouillon supprime {x}. À vérifier.",
+        "del_de": "Suppression conforme à l'allemand ? À vérifier : l'allemand {verb} ici {u} ; le brouillon supprime {x}.",
         "del_verb": ("retire", "remplace"),
+        "tally_only": "Signalé seulement pour {x} ; probablement sans problème, à vérifier.",
+        "only_tally": "des décomptes (nombres, négation, verbes modaux) qui suivent l'allemand une fois recomptés",
+        "only_mirror": "une suppression qui semble suivre celle de l'allemand (note ci-dessous)",
+        "only_and": " et ",
+        "tally_mirror": "la différence vient de phrases que l'allemand et le brouillon suppriment tous deux",
+        "typo": "Typographie (pas un contrôle) : le brouillon introduit {x}.",
+        "typo_open": "une espace après « ( »", "typo_close": "une espace avant « ) »", "typo_comma": "une espace avant la virgule",
+        "typo_stop": "une espace avant le point", "typo_slash": "des espaces autour de « / »",
+        "typo_double": "une ponctuation doublée", "typo_space": "une espace double",
         "checks": "Détail des contrôles (pour référence ; codes internes de Gleichlaut)",
         "checks_more": "{n} autre(s) point(s), non repris ci-dessus : {x}",
         "checks_codes": "Sortie brute des contrôles : {x}"},
@@ -110,8 +121,17 @@ NOTE = {
         "T8": "stessi valori aggiunti e tolti da entrambe le parti, cambia solo il numero di occorrenze",
         "product_nodate": "{product}; limitazione {code}",
         "fine_plain": "probabilmente in ordine: {why}",
-        "del_de": "Soppressione conforme al tedesco? Il tedesco qui {verb} {u}; la bozza sopprime {x}. Da verificare.",
+        "del_de": "Soppressione conforme al tedesco? Da verificare: il tedesco qui {verb} {u}; la bozza sopprime {x}.",
         "del_verb": ("toglie", "sostituisce"),
+        "tally_only": "Segnalata solo per {x}; probabilmente in ordine, da verificare.",
+        "only_tally": "conteggi (numeri, negazione, verbi modali) che, ricontati, seguono il tedesco",
+        "only_mirror": "una soppressione che sembra seguire quella del tedesco (nota qui sotto)",
+        "only_and": " e ",
+        "tally_mirror": "la differenza viene da frasi che il tedesco e la bozza sopprimono entrambi",
+        "typo": "Tipografia (non un controllo): la bozza introduce {x}.",
+        "typo_open": "uno spazio dopo «(»", "typo_close": "uno spazio prima di «)»", "typo_comma": "uno spazio prima della virgola",
+        "typo_stop": "uno spazio prima del punto", "typo_slash": "spazi attorno a «/»",
+        "typo_double": "una punteggiatura doppia", "typo_space": "uno spazio doppio",
         "checks": "Dettaglio dei controlli (per riferimento; codici interni di Gleichlaut)",
         "checks_more": "{n} altro/i punto/i, non ripreso/i sopra: {x}",
         "checks_codes": "Uscita grezza dei controlli: {x}"}}
@@ -179,50 +199,137 @@ def ordered_findings(v):
 
 # ------------------------------------------------------------------------------------------- translator-facing notes
 # A unit carries: the verdict; at most SHOW reasons, the most actionable first, in plain reviewer-language wording without
-# internal codes (rule ids, guard ids); the product and German change; the old German and old target text; and one
-# low-priority note (category gleichlaut:checks, priority 10) with the full machine detail: the reasons not shown above
-# and the raw guard output with its codes. Presentation only: every finding is still there, no verdict changes.
+# internal codes (rule ids, guard ids); the product and German change; the old German and old target text; low-priority
+# notes apart from the reasons (a deletion that mirrors the German's, typography the draft introduced: category
+# gleichlaut:note, priority 8; the termbase advisory: gleichlaut:termbase, priority 9); and one low-priority note
+# (category gleichlaut:checks, priority 10) with the full machine detail: the reasons not shown above and the raw guard
+# output with its codes. Presentation only: every finding is still there, no verdict changes.
+#
+# Every item of reasons() has a tier:
+#   "reason"  may take one of the SHOW slots: findings to check, numbers the model wrote, the pre-existing divergence and
+#             the correction notice, pipeline status, and findings a triage rule calls probably fine that are not tallies
+#             (those low, after the rest);
+#   "note"    never a reason: a 'removed more than the German' finding whose lost words all sit in sentences the German
+#             itself removes (explain.mirror), worded as a question, and the typography note;
+#   "detail"  only in the checks note: tallies (numbers / negation / modal-verb counts) a triage rule calls probably fine,
+#             negation / modal-verb counts that follow the German once sentences both remove whole are left out
+#             (explain.tally_mirrored), a reason repeated word for word, and a second deletion note on the same German
+#             passage.
+# Ranking among reasons: numbers first (a number is never the model's to change), then the change not applied, German
+# left or copied, content lost, edits outside the change, and only then negation / modal-verb counts still to check.
+# A flagged draft whose findings are all notes or details gets one plain reason saying so (never an empty explanation).
 SHOW = 3
 RANK = {"corr": 0, "slot": 1, "unknown": 1, "g2": 2, "g1": 3, "g5": 3, "g3": 4, "lock": 5, "g4": 6, "g6": 7, "g7": 8, "record": 9}
+RANK_COUNT = 5.5          # a negation / modal-verb count still to check: after the findings that name words
+TALLY = ("Slots: neg", "Slots: modal", "Slots: nums")
 
 
-def deleted_by_german(f, v):
-    """A 'removed more than the German' finding (G3c) next to German operations that each remove or replace at least three
-    words: -> (old German passage, replaced?) of the first one, else None. Wording only: such a finding is phrased as a
-    question ('deletion matching the German? check'), low priority; its triage status ('to check') and the verdict stay."""
+def tally(f):
+    """A slot finding that is a count (numbers, negation, modal verbs), as opposed to the words of the text."""
+    return f.get("gid") == "slot" and (f.get("detail") or "").startswith(TALLY)
+
+
+def _g3c_parts(f):
+    """-> (German ops, lost words) of a 'removed more than the German' finding, from its detail
+    ('G3c removed beyond the German change: near «a» -> «b»: bag | near …'), or None."""
     import re
     d = f.get("detail") or ""
     if f.get("gid") != "g3" or not d.startswith("G3c"): return None
-    ops = triage.PAIR.findall(d)
-    if not ops or not all(len(re.findall(r"\w+", u)) >= 3 for u, _ in ops): return None
+    P = re.findall(r"near («[^«»]*» -> «[^«»]*»): ([^|]*?)(?= \| near «|$)", d)
+    return ([k for k, _ in P], P[0][1].strip()) if P else None
+
+
+def deleted_by_german(f, v):
+    """A 'removed more than the German' finding (G3c) whose lost words all sit in sentences the German change itself
+    removes (explain.mirror: aligned sentence beads, position-based): -> (old German passage, replaced?), else None.
+    Wording only: such a finding is a low-priority note phrased as a question ('deletion matching the German? check');
+    its triage status ('to check') and the verdict stay."""
+    p = _g3c_parts(f)
+    if not p or not v.get("draft"): return None
     from . import explain
-    u, w = ops[0]
-    U, _ = explain._de_ops(v["de_old"], v["de_new"]).get(f"«{u}» -> «{w}»", (explain.detok(u), None))
-    return U, bool(w.strip())
+    m = explain.mirror(v, v["draft"], p[0], p[1])
+    return (m["de"], m["replaced"]) if m["lost"] and m["mirrored"] == m["lost"] and m["de"] else None
+
+
+def _typo_note(v):
+    from . import explain
+    L = v["lang"]
+    if L not in NOTE or not v.get("draft") or v.get("status") == "human": return None
+    T = explain.typography(v.get("tgt_old") or "", v["draft"])
+    if not T: return None
+    x = ", ".join(f"{NOTE[L]['typo_' + k]} ({explain.q(L, s)})" for k, s in T[:3])
+    return nt(L, "typo", x=x)
 
 
 def reasons(v, old=True):
-    """-> [dict(kind=divergence|finding|model-numbers, text, low, gid, rule)], most actionable first: a pre-existing
-    divergence of the old text and the correction notice (old=True; the review page shows those in its own notice),
-    findings to check, numbers the model wrote, then low-priority ones (a triage rule says probably fine, a deletion that
-    may match the German's, pipeline status). Text in the draft's language, no internal codes."""
+    """-> [dict(kind=divergence|finding|model-numbers|summary|typography, text, low, rank, gid, rule, tier[, tally])]: the items
+    of tier "reason" first (most actionable first, low ones last), then the notes, then the details (see the comment
+    above). old=True includes the pre-existing divergence and the correction notice (the review page shows those in its
+    own notice). Text in the draft's language, no internal codes. Every finding of the view is one item."""
     import re
     from . import explain
     L = v["lang"]; R = []
-    if old and v.get("banner"): R.append(dict(kind="divergence", text=v["banner"], low=False, rank=-1, gid="div", rule=None))
+    if old and v.get("banner"): R.append(dict(kind="divergence", text=v["banner"], low=False, rank=-1, gid="div", rule=None, tier="reason"))
     for f, r in zip(v.get("findings", []), triage.triage(v)):
         if f["gid"] == "corr" and not old: continue
         base = f["text"] + (f" ({explain.corr_note(L)})" if f["corrects"] and f["gid"] != "corr" else "")
         dl = None if r else deleted_by_german(f, v)
-        if r and L in NOTE: text, low = f"{base} ({nt(L, 'fine_plain', why=NOTE[L][r])})", True
+        rank, tier = RANK.get(f["gid"], 8), "reason"
+        if r and L in NOTE:
+            text, low = f"{base} ({nt(L, 'fine_plain', why=NOTE[L][r])})", True
+            if tally(f): tier = "detail"
+        elif L in NOTE and tally(f) and v.get("draft") and explain.tally_mirrored(v, v["draft"], f["detail"]):
+            text, low, tier = f"{base} ({nt(L, 'fine_plain', why=NOTE[L]['tally_mirror'])})", True, "detail"
         elif dl and L in NOTE:
             x = re.split(r"\s?:\s", f["text"], maxsplit=1)[-1]
-            text = nt(L, "del_de", verb=NOTE[L]["del_verb"][dl[1]], u=explain.q(L, explain.clip(dl[0], 90)), x=x); low = True
-        else: text, low = base, f["gid"] == "record"
-        R.append(dict(kind="finding", text=text, low=low, rank=RANK.get(f["gid"], 8), gid=f["gid"], rule=r))
+            text = nt(L, "del_de", verb=NOTE[L]["del_verb"][dl[1]], u=explain.q(L, explain.clip(dl[0], 90)), x=x); low, tier = True, "note"
+        else:
+            text, low = base, f["gid"] == "record"
+            if tally(f) and not f["detail"].startswith("Slots: nums"): rank = RANK_COUNT
+        R.append(dict(kind="finding", text=text, low=low, rank=rank, gid=f["gid"], rule=r, tier=tier, tally=tally(f),
+                      **({"de": dl[0]} if tier == "note" else {})))
     model = [t for _, _, t, who, _ in v.get("numbers", []) if who == "model"]
-    if model: R.append(dict(kind="model-numbers", text=nt(L, "model_nums", x=", ".join(model)), low=False, rank=1.5, gid="model", rule=None))
-    return sorted(R, key=lambda x: (x["low"], x["rank"]))
+    if model: R.append(dict(kind="model-numbers", text=nt(L, "model_nums", x=", ".join(model)), low=False, rank=1.5, gid="model", rule=None, tier="reason"))
+    seen = set()
+    for x in sorted(R, key=lambda x: (x["low"], x["rank"])):
+        k = x.get("de") or x["text"]                    # one note per German passage a deletion mirrors
+        if x["tier"] in ("reason", "note") and k in seen: x["tier"] = "detail"
+        seen.add(k)
+    t = _typo_note(v)
+    if t: R.append(dict(kind="typography", text=t, low=True, rank=10, gid="typo", rule=None, tier="note"))
+    if v.get("status") == "flagged" and L in NOTE and not any(x["tier"] == "reason" for x in R):
+        F = [x for x in R if x["kind"] == "finding"]
+        parts = ([NOTE[L]["only_tally"]] if any(x["tier"] == "detail" for x in F) else []) + \
+                ([NOTE[L]["only_mirror"]] if any(x["tier"] == "note" for x in F) else [])
+        if parts:
+            R.append(dict(kind="summary", text=nt(L, "tally_only", x=NOTE[L]["only_and"].join(parts)), low=True, rank=9.5,
+                          gid="summary", rule=None, tier="reason"))
+    order = {"reason": 0, "note": 1, "detail": 2}
+    return sorted(R, key=lambda x: (order[x["tier"]], x["low"], x["rank"]))
+
+
+def top(R):
+    """The reasons shown (at most SHOW, tier "reason")."""
+    return [x for x in R if x["tier"] == "reason"][:SHOW]
+
+
+def rest(R):
+    """The items left to the checks note: reasons beyond SHOW and the details (the notes have their own note)."""
+    T = top(R)
+    return [x for x in R if x["tier"] != "note" and not any(x is y for y in T)]
+
+
+def notes(R):
+    """The low-priority notes apart from the reasons (a deletion that mirrors the German's, typography)."""
+    return [x for x in R if x["tier"] == "note"]
+
+
+def explanation(v):
+    """-> dict(top=[[text, low]], more=n reasons in the checks detail, note=one line of low-priority notes and the termbase
+    advisory, or None): what the review page shows under a draft (the same as the XLIFF notes)."""
+    R = reasons(v, old=False)
+    line = " ".join([x["text"] for x in notes(R)] + [t for t in (termbase_note(v),) if t]) or None
+    return dict(top=[[x["text"], x["low"]] for x in top(R)], more=len(rest(R)), note=line)
 
 
 def checks_note(v, R=None):
@@ -230,9 +337,9 @@ def checks_note(v, R=None):
     from . import explain
     F = [(f, r) for f, r in zip(v.get("findings", []), triage.triage(v)) if f.get("detail")]
     if not F: return None
-    L = v["lang"]; R = reasons(v) if R is None else R; rest = R[SHOW:]
+    L = v["lang"]; R = reasons(v) if R is None else R; more = rest(R)
     parts = [nt(L, "checks")]
-    if rest: parts.append(nt(L, "checks_more", n=len(rest), x=" | ".join(x["text"] for x in rest)))
+    if more: parts.append(nt(L, "checks_more", n=len(more), x=" | ".join(x["text"] for x in more)))
     raw = " · ".join(explain.clip(f["detail"], 220) + (f" [{r}]" if r else "") for f, r in F)      # verbatim (no French spacing)
     parts.append(nt(L, "checks_codes", x="").rstrip() + " " + raw)
     return " — ".join(parts)
@@ -244,7 +351,7 @@ def unit_notes(v, prev=True):
     L = v["lang"]; R = reasons(v)
     N = [["verdict", "gleichlaut:verdict", "target", "1", nt(L, v["status"])]]
     k = 0
-    for x in R[:SHOW]:
+    for x in top(R):
         if x["kind"] == "finding": k += 1; nid, cat = f"finding-{k}", "gleichlaut:finding"
         else: nid, cat = x["kind"], f"gleichlaut:{x['kind']}"
         N.append([nid, cat, "target", "3" if x["low"] else "1", x["text"]])
@@ -252,6 +359,8 @@ def unit_notes(v, prev=True):
     if prev:
         N.append(["de-old", "context:previous-source", "source", "5", nt(L, "prev_de", t=v["de_old"])])
         N.append(["tgt-old", "context:previous-target", "target", "5", nt(L, "prev_tgt", t=v["tgt_old"])])
+    lo = notes(R)
+    if lo: N.append(["notes", "gleichlaut:note", "target", "8", " ".join(x["text"] for x in lo)])
     t = termbase_note(v)
     if t: N.append(["termbase", "gleichlaut:termbase", "target", "9", t])
     c = checks_note(v, R)
@@ -261,8 +370,9 @@ def unit_notes(v, prev=True):
 
 def termbase_note(v):
     """The termbase advisory (termbase.advice, in the view as v["termbase"]): BAG's house rendering of a German term of the
-    new text where the draft introduces a minority variant or falls short of the house rendering. Its own low-priority
-    note (priority 9), never one of the SHOW reasons and never a verdict. None when there is nothing to say."""
+    new text where the draft introduces a minority variant or falls short of the house rendering, or, softer, where the
+    draft keeps a non-standard rendering the old text already used. Its own low-priority note (priority 9), never one of
+    the SHOW reasons and never a verdict. None when there is nothing to say."""
     from .. import termbase
     return termbase.advisory_text(v.get("termbase") or [], v["lang"])
 

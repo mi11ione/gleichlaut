@@ -118,10 +118,45 @@ def test_advice_names_the_house_rendering_and_what_the_draft_wrote():
     assert T.advice(_v("fr", DE0, DE1, old, "Le traitement ne sera pas remboursé par l'assurance obligatoire des soins.")) == []
     de = "Die Behandlung bedarf der Kostengutsprache durch den Krankenversicherer."
     kept = "Le traitement nécessite une garantie de prise en charge par l'assurance maladie."
+    # a recorded variant (BAG's own practice) only carried over from the old text: no note at all
     assert T.advice(_v("fr", de, de + " Neu.", kept, kept + " Nouveau.")) == []
     intro = T.advice(_v("fr", de, de + " Neu.", kept.replace("l'assurance maladie", "l'assureur-maladie"), kept + " Nouveau."))
     assert [(a["kind"], a["wrote"]) for a in intro] == [("variant", "assurance maladie")]
     assert T.advice(_v("fr", DE0, DE1, old, "", status="human")) == [] and T.advice(_v("rm", DE0, DE1, old, "x")) == []
+
+
+def test_softer_note_when_the_old_text_already_used_a_non_standard_wording():
+    de = "Der Code ist an den Krankenversicherer zu übermitteln."
+    old = "Le code doit être transmis à l'assureur maladie."                       # unhyphenated, as BAG's old text
+    A = T.advice(_v("fr", de, de + " Neu.", old, old + " Nouveau."))
+    assert [(a["kind"], a["wrote"]) for a in A] == [("kept", "assureur maladie")]
+    it = T.advisory_text(A, "fr").replace("\u00a0", " ")
+    assert it.startswith("Terme maison pour « Krankenversicherer » : « assureur-maladie »") and it.endswith("« assureur maladie ».")
+    A = T.advice(_v("it", "Die Therapie bedarf der Konsultation des Vertrauensarztes.", "Die Therapie bedarf der Konsultation des Vertrauensarztes. Neu.",
+                    "La terapia richiede la consultazione del medico-di-fiducia.", "La terapia richiede la consultazione del medico-di-fiducia. Nuovo."))
+    assert "il testo (già prima) scrive «medico-di-fiducia»" in T.advisory_text(A, "it")
+    # BAG's own recorded variants (assurance maladie, assicurazione malattia) are its practice: no softer note
+    for L, t in (("fr", "Le code doit être transmis à l'assurance maladie."), ("it", "Il codice va trasmesso all'assicurazione malattia.")):
+        assert T.advice(_v(L, de, de + " Neu.", t, t + " Nouveau.")) == [], t
+    # a wording BAG does not record, in text the draft wrote: named ('caisse maladie', wb004)
+    d0 = "Nach 52 Wochen ist eine erneute Zustimmung durch den Krankenversicherer einzuholen."
+    old = "Après 52 semaines, un nouvel accord de la caisse maladie doit être obtenu."
+    A = T.advice(_v("fr", d0, de, old, "Le code est à transmettre à la caisse maladie."))
+    assert ("kept", "caisse maladie") in [(a["kind"], a["wrote"]) for a in A]
+    # the house rendering itself, a plural of it, or no wording that names the term: no note
+    for d in ("Le code doit être transmis aux assureurs-maladie.", "Le code doit être transmis à l'assureur-maladie.", "Le code doit être transmis."):
+        assert T.advice(_v("fr", de, de + " Neu.", d, d + " Nouveau.")) == [], d
+
+
+def test_house_rendering_present_but_too_few_times_is_not_called_absent():
+    de0 = "Die Rückforderung erfolgt gegenüber der Zulassungsinhaberin."
+    de1 = de0 + " Die Zulassungsinhaberin gibt den Betrag bekannt."
+    old = "Le remboursement est demandé auprès du titulaire de l’autorisation."     # typographic apostrophe
+    A = T.advice(_v("fr", de0, de1, old, old + " La société communique le montant."))
+    assert [(a["kind"], a["n_draft"], a["n_de"], a["wrote"]) for a in A] == [("missing", 1, 2, None)]
+    txt = T.advisory_text(A, "fr").replace("\u00a0", " ")
+    assert "le brouillon l'écrit 1 fois, l'allemand a le terme 2 fois" in txt and "absent" not in txt
+    assert T.advice(_v("fr", de0, de1, old, old + " Le titulaire de l’autorisation communique le montant.")) == []
 
 
 def test_advisory_is_its_own_low_priority_note_and_changes_no_verdict():

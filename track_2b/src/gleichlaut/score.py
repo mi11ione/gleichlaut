@@ -400,6 +400,11 @@ def audit_recall():
                wilson95_pct=[pct(v) for v in d["summary"]["wilson95"]], seed=d["seed"])
     out["types"] = {k: dict(n=v["n"], detected=v["detected"], recall_pct=pct(v["recall"]), wilson95_pct=[pct(x) for x in v["wilson95"]])
                     for k, v in d["types"].items()}
+    p2 = os.path.join(core.ROOT, "eval", "results", "audit_injection_v2.json")     # v2: sites not chosen by the detector's rule
+    if os.path.exists(p2):
+        d2 = json.load(open(p2, encoding="utf-8"))
+        out["v2"] = {k: dict(n=v["n"], detected=v["detected"], recall_pct=pct(v["recall"]), wilson95_pct=[pct(x) for x in v["wilson95"]])
+                     for k, v in d2["types"].items()}
     return out
 
 

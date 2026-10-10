@@ -8,7 +8,12 @@ this module rephrases them and never adds, drops or reweighs a finding. Two addi
     Findings caused by that change are annotated, not suppressed: the flag stands and a translator decides.
   - "divergence": pre-existing problems of the old target text (numbers / units on which it disagrees with the old
     German, a target text written in another language, editorial problems), from gleichlaut.audit.audit_item when that
-    module is importable (skipped silently otherwise). A display-level notice: it never changes a verdict."""
+    module is importable (skipped silently otherwise). A display-level notice: it never changes a verdict.
+Helpers for how the reasons are worded and ranked (emit/xliff.py), wording only: g2_text (a change-not-applied finding
+names a German old / new pair only when the two sides are recognisably the same words, else what the check looks for),
+mirror (a 'removed more than the German' finding whose lost words sit where the German itself removes text, by aligned
+sentence beads), tally_mirrored (a negation / modal-verb count explained by sentences both sides remove) and typography
+(spacing the draft introduces; a note, not a check). measure_v2() writes eval/results/explain_v2.json."""
 import difflib, re
 from collections import Counter
 from .. import core
@@ -134,6 +139,12 @@ T = {
     "g2_del": {"fr": "La suppression allemande de {u} ne semble pas reprise.",
                "it": "La soppressione tedesca di {u} non sembra ripresa.",
                "en": "The German removal of {u} does not seem to be carried over."},
+    "g2_add_s": {"fr": "L'allemand ajoute ou réécrit ici la phrase {v} : vérifier qu'elle est traduite dans le brouillon.",
+                 "it": "Il tedesco aggiunge o riscrive qui la frase {v}: verificare che sia tradotta nella bozza.",
+                 "en": "The German adds or rewrites the sentence {v} here: check that the draft translates it."},
+    "g2_del_s": {"fr": "L'allemand supprime ici la phrase {u} : vérifier que le brouillon la supprime aussi.",
+                 "it": "Il tedesco sopprime qui la frase {u}: verificare che la bozza la sopprima anche.",
+                 "en": "The German removes the sentence {u} here: check that the draft removes it too."},
     "g3c": {"fr": "Le brouillon supprime davantage que l'allemand : {x}", "it": "La bozza toglie più del tedesco: {x}",
             "en": "The draft removes more than the German does: {x}"},
     "g3a": {"fr": "Mots de l'ancien texte disparus hors de la partie modifiée : {x}",
@@ -258,17 +269,233 @@ def _quoted(lang, items, n=2):
     return s + (" " + tr(lang, "more", n=len(items) - n) if len(items) > n else "")
 
 
-def _de_ops(de_old, de_new):
-    """-> {guard de_txt: (old original substring, new original substring)} for every German op."""
+def _de_spans(de_old, de_new):
+    """-> {guard de_txt: (old original substring, new original substring, (a0, a1) in de_old, (b0, b1) in de_new)} for
+    every German op (a span is None when that side is empty)."""
     a, b, ops = lock.de_ops(de_old, de_new)
     sa, sb = lock.tok_spans(de_old), lock.tok_spans(de_new)
     res = {}
     for _, i1, i2, j1, j2 in ops:
         key = f"«{' '.join(a[i1:i2])}» -> «{' '.join(b[j1:j2])}»"
-        u = de_old[sa[i1][1]:sa[i2 - 1][2]] if i2 > i1 else ""
-        v = de_new[sb[j1][1]:sb[j2 - 1][2]] if j2 > j1 else ""
-        res[key] = (u, v)
+        A = (sa[i1][1], sa[i2 - 1][2]) if i2 > i1 else None
+        B = (sb[j1][1], sb[j2 - 1][2]) if j2 > j1 else None
+        res[key] = (de_old[A[0]:A[1]] if A else "", de_new[B[0]:B[1]] if B else "", A, B)
     return res
+
+
+def _de_ops(de_old, de_new):
+    """-> {guard de_txt: (old original substring, new original substring)} for every German op."""
+    return {k: (u, v) for k, (u, v, _, _) in _de_spans(de_old, de_new).items()}
+
+
+# ------------------------------------------------------------------------------------------- change applied (G2) wording
+# The guard pairs the German op's old and new side as difflib aligned them; across a rewritten passage that pairs
+# unrelated fragments ('Das Dosierungsschema' -> 'Eine Kostengutsprache hat den … Indikationscode'). The sentence names
+# the pair only when the two sides are recognisably the same words (an orthographic or inflectional change, a renamed
+# product); otherwise it names only what the check looks for: the German addition (kind 'add') or removal ('remove'),
+# as the whole sentence when the op covers most of one ('the German adds a sentence here; check it is translated').
+RELATED = 0.75        # character similarity (folded) from which the two sides of a German op are shown as a pair
+RELATED_PREFIX = 5    # ... or a shared start of this many letters with a similarity of at least 0.5 (Nemolizumab / NEMLUVIO
+                      # is not a pair; Monaten / Monate, Zeitpunkt / Zeit-punkt are)
+SENT_COVER = 0.6      # an op covering this share of a sentence's characters is shown as that sentence
+
+
+def _fold_txt(s):
+    return re.sub(r"[^\w]+", "", s.lower().replace("ß", "ss"))
+
+
+def related(u, w):
+    """True when the old and new side of a German op are recognisably the same words (Zeitpunkt / Zeit-punkt,
+    Nemolizumab / NEMLUVIO), so 'u → w' reads as a change and not as two unrelated fragments."""
+    a, b = _fold_txt(u), _fold_txt(w)
+    if not a or not b: return False
+    if a.isdigit() and b.isdigit(): return True
+    if all(re.search(r"\d", t) and len(t.split()) <= 4 for t in (u, w)): return True          # 48 Wochen -> 18 Monaten
+    r = difflib.SequenceMatcher(None, a, b, autojunk=False).ratio()
+    return r >= RELATED or (r >= 0.5 and len(a) >= RELATED_PREFIX and a[:RELATED_PREFIX] == b[:RELATED_PREFIX])
+
+
+def covered_sentences(text, span):
+    """The sentence(s) of text that span covers to at least SENT_COVER of their characters (stripped), as one passage,
+    or None. A 'sentence' of fewer than three words (a code number after 'zu übermitteln:') does not count."""
+    if not span: return None
+    from .segment import sentences
+    a, b = span; hit = []
+    for s0, s1 in sentences(text):
+        n = len(text[s0:s1].strip())
+        if len(re.findall(r"[^\W\d_]{2,}", text[s0:s1])) < 3: continue
+        if n and max(0, min(b, s1) - max(a, s0)) >= SENT_COVER * n: hit.append((s0, s1))
+    return text[hit[0][0]:hit[-1][1]].strip() if hit else None
+
+
+def _balance(s):
+    """'ohne Preismodell) NEMLUVIO' -> '(ohne Preismodell) NEMLUVIO': an unmatched bracket gets its partner."""
+    if s.count(")") > s.count("("): s = "(" + s
+    if s.count("(") > s.count(")"): s = s + ")"
+    return s
+
+
+def g2_text(lang, kind, x, u, w, sa, sb):
+    """The plain sentence of one change-not-applied finding (see the comment above)."""
+    U, W = (_balance(clip(strip_punct(t), 90)) for t in (u, w))
+    if U and W and related(u, w): return tr(lang, "g2_rep", u=q(lang, U), v=q(lang, W))
+    if kind == "remove" or not W:
+        s = covered_sentences(x["de_old"], sa)
+        if s: return tr(lang, "g2_del_s", u=q(lang, clip(s, 120)))
+        return tr(lang, "g2_del", u=q(lang, U or "∅"))
+    s = covered_sentences(x["de_new"], sb)
+    if s: return tr(lang, "g2_add_s", v=q(lang, clip(s, 120)))
+    return tr(lang, "g2_add", v=q(lang, W))
+
+
+# ------------------------------------------------------------------------------------------- deletions that mirror the German
+# A 'removed more than the German' finding (G3c) is the guard's net content loss in the target window of a German op.
+# When the German itself drops a sentence, the draft dropping the aligned French / Italian sentence is the expected
+# change. mirror() decides that by position: the old German and old target are cut into aligned sentence beads
+# (emit.segment.align, the XLIFF segmentation); a bead mirrors a German deletion when the German change removes at
+# least MIRROR_DE of the bead's German content words and the draft removes at most MIRROR_SLACK more of the bead's
+# target content words than that. The finding's lost words are looked up among the target words the draft removed inside
+# the target edits the guard counts for the finding's German ops (an edit touching one of their lock windows), occurrences
+# outside mirroring beads first.
+# Wording only: the finding, its triage status and the verdict are unchanged.
+MIRROR_DE, MIRROR_SLACK = 0.5, 0.25
+PHRASE_TOL, PHRASE_RATIO = 0.15, 2
+
+
+def _gone(a, b):
+    """-> (token spans of a, [token of a removed or replaced in b]) (lock tokens, difflib as the guards use it)."""
+    A = lock.tok_spans(a); B = lock.tok(b); out = [False] * len(A)
+    for op, i1, i2, _, _ in difflib.SequenceMatcher(None, [t for t, _, _ in A], B, autojunk=False).get_opcodes():
+        if op in ("replace", "delete"):
+            for i in range(i1, i2): out[i] = True
+    return A, out
+
+
+def _share(T, gone, lo, hi, lang):
+    idx = [i for i, (t, s, _) in enumerate(T) if lo <= s < hi and core.guards.content(t, lang)]
+    return sum(gone[i] for i in idx) / len(idx) if idx else 0.0
+
+
+def _runs(T, gone, lo, hi, lang):
+    """-> [[start, end, content words]] of the runs of removed tokens of T inside [lo, hi)."""
+    out, cur = [], None
+    for i, (t, s, e) in enumerate(T):
+        if not (lo <= s < hi): continue
+        if gone[i]:
+            if cur is None: cur = [s, e, 0]; out.append(cur)
+            cur[1] = e; cur[2] += core.guards.content(t, lang)
+        else: cur = None
+    return [r for r in out if r[2]]
+
+
+def mirror(x, out, des, bag):
+    """-> dict(lost=n words of the bag, mirrored=n of them where the draft mirrors a German deletion, de=the German
+    passage removed there, replaced=whether the German wrote something in its place) for one G3c finding (des: its German
+    ops as the guard writes them, bag: its lost content words). A lost word mirrors a German deletion when its sentence
+    bead does (MIRROR_DE, MIRROR_SLACK), or, for a phrase, when the German removes a passage of the same bead at the same
+    relative place (within PHRASE_TOL of the bead's length) and the draft's lost words there are at most PHRASE_RATIO
+    times the passage's content words plus one ('nicht-kleinzelligem Lungenkarzinom (NSCLC)' -> 'NSCLC', 'carcinoma
+    polmonare non a piccole cellule (NSCLC)' -> 'NSCLC')."""
+    L = x["lang"]
+    do, dn, to, tn = lock.norm(x["de_old"]), lock.norm(x["de_new"]), lock.norm(x["tgt_old"]), lock.norm(out)
+    DA, dgone = _gone(do, dn); TA, tgone = _gone(to, tn)
+    beads = segment_align(do, to)
+    mir = [_share(DA, dgone, a0, a1, "de") >= MIRROR_DE and
+           _share(TA, tgone, b0, b1, L) <= _share(DA, dgone, a0, a1, "de") + MIRROR_SLACK for a0, a1, b0, b1 in beads]
+    druns = [_runs(DA, dgone, a0, a1, "de") for a0, a1, _, _ in beads]
+    budget = {(k, j): PHRASE_RATIO * r[2] + 1 for k, R in enumerate(druns) for j, r in enumerate(R)}
+    a, b, dops = lock.de_ops(x["de_old"], x["de_new"]); W, _ = lock.windows(x["de_old"], x["de_new"], to)     # as the guard
+    keys = [f"«{' '.join(a[i1:i2])}» -> «{' '.join(b[j1:j2])}»" for _, i1, i2, j1, j2 in dops]
+    win = [W[k] for k, key in enumerate(keys) if key in set(des)]
+    _, _, E = core.guards.tgt_ops(to, tn)                       # the guard's target edits, kept when they touch a window
+    near = {i for e in E if any(core.guards.in_win(e, lo, hi) for lo, hi in win) for i in range(e[1], e[2])}
+    bead_of = lambda s: next((k for k, (_, _, b0, b1) in enumerate(beads) if b0 <= s < b1), None)
+
+    def phrase(k, s):
+        """the German run of bead k at the relative place of target offset s, with budget left, or None"""
+        a0, a1, b0, b1 = beads[k]; rt = (s - b0) / max(1, b1 - b0)
+        for j, (rs, re_, _) in enumerate(druns[k]):
+            if budget[(k, j)] >= 1 and (rs - a0) / max(1, a1 - a0) - PHRASE_TOL <= rt <= (re_ - a0) / max(1, a1 - a0) + PHRASE_TOL:
+                return j
+        return None
+    cand = [(i, bead_of(s)) for i, (t, s, _) in enumerate(TA) if tgone[i] and i in near]
+    cand.sort(key=lambda c: (c[1] is not None and mir[c[1]], c[0]))                 # non-mirroring occurrences first
+    need = Counter(bag.split()); used = Counter()
+    for i, k in cand:
+        w = TA[i][0].lower()
+        if need[w] <= 0: continue
+        need[w] -= 1
+        if k is None: continue
+        if mir[k]: used[(k, None)] += 1; continue
+        j = phrase(k, TA[i][1])
+        if j is not None: budget[(k, j)] -= 1; used[(k, j)] += 1
+    lost, hit = sum(Counter(bag.split()).values()), sum(used.values())
+    de, replaced = "", False
+    if used:                                  # the German passage removed where most of the lost words are
+        k, j = used.most_common(1)[0][0]
+        R = druns[k]
+        if R:
+            r = R[j] if j is not None else max(R, key=lambda r: r[1] - r[0]); de = do[r[0]:r[1]]
+            sm = difflib.SequenceMatcher(None, [t for t, _, _ in DA], lock.tok(dn), autojunk=False)
+            first = next(i for i, (_, s, _) in enumerate(DA) if s == r[0])
+            replaced = any(op == "replace" and i1 <= first < i2 for op, i1, i2, _, _ in sm.get_opcodes())
+    return dict(lost=lost, mirrored=hit, de=de, replaced=replaced)
+
+
+WHOLE = 0.8           # a sentence both sides remove (nearly) whole: this share of its content words on each side
+
+
+def tally_mirrored(x, out, detail):
+    """A negation / modal-verb count finding ('Slots: neg …', 'Slots: modal:K …') that is only the effect of sentences
+    the German and the draft both remove: with every aligned sentence bead that both remove (>= WHOLE of its
+    content words on each side) left out of the old texts, the German and the draft change the count alike. Wording only
+    (the review page and the XLIFF notes rank it like a count a triage rule calls probably fine); the finding stays."""
+    m = re.match(r"Slots: (neg|modal:(\w+)) ", detail or "")
+    if not m: return False
+    key = (lambda c: c["neg"]) if m.group(1) == "neg" else (lambda c, k=m.group(2): c["modal"][k])
+    L = x["lang"]; cnt = lambda s, lang: key(lock.slots(s, lang))
+    do, dn, to, tn = lock.norm(x["de_old"]), lock.norm(x["de_new"]), lock.norm(x["tgt_old"]), lock.norm(out)
+    DA, dgone = _gone(do, dn); TA, tgone = _gone(to, tn)
+    gone = [(a0, a1, b0, b1) for a0, a1, b0, b1 in segment_align(do, to)
+            if _share(DA, dgone, a0, a1, "de") >= WHOLE and _share(TA, tgone, b0, b1, L) >= WHOLE]
+    if not gone: return False
+    dd = cnt(x["de_new"], "de") - cnt(x["de_old"], "de") + sum(cnt(do[a0:a1], "de") for a0, a1, _, _ in gone)
+    dt = cnt(out, L) - cnt(x["tgt_old"], L) + sum(cnt(to[b0:b1], L) for _, _, b0, b1 in gone)
+    return dd == dt
+
+
+def segment_align(src, tgt):
+    from .segment import align
+    return align(src, tgt)
+
+
+# ------------------------------------------------------------------------------------------- typography (not a check)
+# Spacing artefacts the draft introduces around text it inserted ('( sans modèle de prix )', 'et / ou', 'maladie ,'):
+# counted in the draft and in the old text; a pattern the draft has more often than the old text is named in one
+# low-priority note. Display only, never a check, never a verdict. French spaces before ; : ! ? » are correct and
+# are not counted.
+SP = r"[   ]"
+TYPO = [("open", re.compile(r"\(" + SP + r"+(?=\S)")), ("close", re.compile(r"(?<=\S)" + SP + r"+\)")),
+        ("comma", re.compile(r"(?<=\w)" + SP + r"+,")), ("stop", re.compile(r"(?<=\w)" + SP + r"+\.(?!\d)")),
+        ("slash", re.compile(r"(?<=\w)" + SP + r"+/" + SP + r"*(?=\w)|(?<=\w)/" + SP + r"+(?=\w)")),
+        ("double", re.compile(r"[.,;:]" + SP + r"*[.,;:](?!\.)")), ("space", re.compile(r"(?<=\S)" + SP + r"{2,}(?=\S)"))]
+
+
+def typography(old, draft):
+    """-> [(pattern id, snippet of the draft around its first new occurrence)] for every pattern of TYPO the draft has
+    more often than the old text (a number like 1.5 or an ellipsis '...' is not a pattern)."""
+    out = []
+    for k, rx in TYPO:
+        if len(rx.findall(draft)) <= len(rx.findall(old or "")): continue
+        olds = {re.sub(r"\s+", " ", old[max(0, m.start() - 12):m.end() + 12]) for m in rx.finditer(old or "")}
+        for m in rx.finditer(draft):
+            a = max(0, m.start() - 18); b = min(len(draft), m.end() + 18)
+            snip = draft[a:b]
+            if re.sub(r"\s+", " ", draft[max(0, m.start() - 12):m.end() + 12]) in olds: continue
+            snip = (snip.split(" ", 1)[1] if a > 0 and " " in snip[:10] else snip)
+            snip = (snip.rsplit(" ", 1)[0] if b < len(draft) and " " in snip[-10:] else snip)
+            out.append((k, snip.strip())); break
+    return out
 
 
 def _delta(lang, d, fem=False):
@@ -582,13 +809,10 @@ def findings(x, out, fc, g14):
         add("unknown", tr(L, "unknown", n=fc["unknown"]), f"Slots: {fc['unknown']} unknown slot code(s)")
 
     g = fc["g"]
-    ops = _de_ops(x["de_old"], x["de_new"]) if g["g2"] or g["g3"] else {}
+    ops = _de_spans(x["de_old"], x["de_new"]) if g["g2"] or g["g3"] else {}
     for kind, de in g["g2"]:
-        u, v = ops.get(de, ("", ""))
-        U, V = clip(strip_punct(u), 90), clip(strip_punct(v), 90)
-        if not U and not V: U, V = u or "∅", v or "∅"
-        txt = (tr(L, "g2_rep", u=q(L, U), v=q(L, V)) if U and V else tr(L, "g2_add", v=q(L, V)) if V else tr(L, "g2_del", u=q(L, U)))
-        add("g2", txt, f"G2 ({kind}): {de}")
+        u, v, sa, sb = ops.get(de, ("", "", None, None))
+        add("g2", g2_text(L, kind, x, u, v, sa, sb), f"G2 ({kind}): {de}")
 
     g1 = sorted(set(g14["g1"])) if g14 else []
     if g1: add("g1", tr(L, "g1", x=words_list(L, g1)), "G1: " + ", ".join(g1))
@@ -644,3 +868,102 @@ def findings(x, out, fc, g14):
 
 def corr_note(lang): return T["corr_note"][rl(lang)]
 def name(gid, lang): return NAMES.get(gid, {}).get(rl(lang), GID.get(gid, gid))
+
+
+# ------------------------------------------------------------------------------------------- measurement (explain v2)
+RESULT_V2 = ("eval", "results", "explain_v2.json")
+
+
+def _v1_top(v):
+    """The reasons the page showed before explain v2 (commit d6671fa): every finding and the model-number note sorted by
+    (low, rank), the first three; low = a triage rule applies, a G3c finding whose German ops each remove >= 3 words, or
+    pipeline status. Restated here only to measure the change; -> [(finding or None, rule)]."""
+    from . import triage, xliff
+    R = []
+    for f, r in zip(v.get("findings", []), triage.triage(v)):
+        if f["gid"] == "corr": continue
+        d = f.get("detail") or ""; ops = triage.PAIR.findall(d)
+        dl = not r and f["gid"] == "g3" and d.startswith("G3c") and ops and all(len(re.findall(r"\w+", u)) >= 3 for u, _ in ops)
+        R.append(((bool(r) or bool(dl) or f["gid"] == "record"), xliff.RANK.get(f["gid"], 8), f, r))
+    if any(who == "model" for _, _, _, who, _ in v.get("numbers", [])): R.append((False, 1.5, None, None))
+    return [(f, r) for _, _, f, r in sorted(R, key=lambda x: (x[0], x[1]))[:3]]
+
+
+def _labels(run):
+    from .. import termbase
+    return termbase._labels_70b() if run == "70b" else termbase._labels_8b(run.split("_", 1)[1])
+
+
+def measure_v2():
+    """eval/results/explain_v2.json: the per-draft explanation before (v1, restated in _v1_top) and after this change, on
+    the fresh-166 drafts of the 70B and both 8B builds. Per run and per language: reasons shown per flagged draft, the
+    share of the shown reasons that are counts (numbers / negation / modal verbs; tallies) and of those a triage rule calls
+    probably fine, the low-priority notes (deletion mirroring the German's, typography), the termbase notes on ready drafts
+    (v1 kinds: introduced variant, new gap; v2 adds 'kept'; how many of those drafts the labels call 'no fix needed'; for
+    'kept', how often BAG's own published text of the amendment has the house rendering: evaluation data, never shown),
+    and how many ready drafts the blind labels call 'minor' (needs a small fix) get any named reason or note. Display
+    only: verdicts come from the frozen guards, unchanged."""
+    import os
+    from .. import core, score, termbase
+    from . import load, load_records, xliff
+    out = dict(note="explain v2 (presentation only): verdicts, drafts and scores unchanged; 'before' = the page before "
+                    "this change (top three of every finding by (low, rank)); 'after' = xliff.reasons / xliff.explanation. "
+                    "tally = a count finding (numbers, negation, modal verbs); probably fine = a triage rule applies.",
+               runs={})
+    I = {x["key"]: x for x in score.load_items("items/items_fresh.json")}
+    for run, rel in termbase.RUNS:
+        views = load("fresh166")[1] if run == "70b" else \
+            load_records(os.path.join(score.DATA, rel), os.path.join(score.DATA, "items/items_fresh.json"))[1]
+        lab = _labels(run); row = {}
+        for L in ("all", "fr", "it"):
+            V = [v for v in views if L == "all" or v["lang"] == L]
+            b = dict(drafts=len(V), flagged=0, shown=0, tally=0, tally_fine=0, ready_tb=0, ready_tb_notes=0, ready_tb_no_fix=0)
+            a = dict(b, mirrored_note=0, typography_note=0, summary_only=0, kept_tb=0, kept_tb_bag_house=0)
+            minor = dict(ready_minor=0, named_before=0, named_after=0, unnamed_after=[])
+            for v in V:
+                fl = v["status"] == "flagged"
+                tb1 = [x for x in v.get("termbase") or [] if x["kind"] != "kept"]
+                if fl:
+                    b["flagged"] += 1; a["flagged"] += 1
+                    T1 = _v1_top(v); b["shown"] += len(T1)
+                    b["tally"] += sum(1 for f, _ in T1 if f and xliff.tally(f)); b["tally_fine"] += sum(1 for f, r in T1 if f and r and xliff.tally(f))
+                    R = xliff.reasons(v, old=False); T2 = xliff.top(R); a["shown"] += len(T2)
+                    a["tally"] += sum(1 for x in T2 if x.get("tally")); a["tally_fine"] += sum(1 for x in T2 if x.get("tally") and x["rule"])
+                    a["summary_only"] += any(x["kind"] == "summary" for x in T2)
+                    a["mirrored_note"] += any(x["kind"] == "finding" and x["tier"] == "note" for x in R)
+                    a["typography_note"] += any(x["kind"] == "typography" for x in R)
+                elif v["status"] == "ready":
+                    R = xliff.reasons(v, old=False)
+                    a["typography_note"] += any(x["kind"] == "typography" for x in R)
+                    b["ready_tb"] += bool(tb1); b["ready_tb_notes"] += len(tb1)
+                    a["ready_tb"] += bool(v.get("termbase")); a["ready_tb_notes"] += len(v.get("termbase") or [])
+                    a["kept_tb"] += sum(1 for x in v.get("termbase") or [] if x["kind"] == "kept")
+                    k = v["key"]; x = I[k]
+                    lb = lab.get(k) or (dict(fix="no", cls="exact") if core.lock.norm(v["draft"]) == core.lock.norm(x["tgt_new"]) else None)
+                    nofix = bool(lb and lb["fix"] == "no")
+                    b["ready_tb_no_fix"] += bool(tb1) and nofix; a["ready_tb_no_fix"] += bool(v.get("termbase")) and nofix
+                    for t in v.get("termbase") or []:          # BAG's published text of the amendment has the house rendering
+                        if t["kind"] == "kept":
+                            e = next(e for (l2, h), e in termbase.load().items() if l2 == v["lang"] and h.split(" / ")[-1] == t["term"])
+                            a["kept_tb_bag_house"] += bool(termbase._loose(e.get("preferred_tokens") or " ".join(termbase.toks(e["preferred"])))
+                                                           .search(termbase._nrm(x["tgt_new"])))
+                    if lb and lb["fix"] == "yes" and lb["cls"] == "minor":
+                        E = xliff.explanation(v); minor["ready_minor"] += 1
+                        minor["named_before"] += bool(tb1)
+                        named = bool(E["top"] or E["note"]); minor["named_after"] += named
+                        if not named: minor["unnamed_after"].append(k)
+            for d in (b, a):
+                d["reasons_per_flagged"] = round(d["shown"] / d["flagged"], 3) if d["flagged"] else 0.0
+                d["tally_share"] = round(d["tally"] / d["shown"], 3) if d["shown"] else 0.0
+            row[L] = dict(before=b, after=a, minor=minor)
+        out["runs"][run] = row
+    return out
+
+
+def write_v2(path=None):
+    """Write measure_v2() to eval/results/explain_v2.json (the layout replay.write uses) -> path."""
+    import json, os
+    from .. import core
+    path = path or os.path.join(core.ROOT, *RESULT_V2)
+    with open(path, "w", encoding="utf-8") as fh: json.dump(measure_v2(), fh, ensure_ascii=False, indent=1, sort_keys=True)
+    return path

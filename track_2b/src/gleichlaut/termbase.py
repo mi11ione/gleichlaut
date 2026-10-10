@@ -32,8 +32,12 @@ style) for terminology tools (gleichlaut_sl_termbase_<date>.tbx). Rules, fixed b
 Advisory (presentation only; emit/xliff.py and the review page): for a draft whose new German contains a term with a
 house rendering, a low-priority note in the reviewer's language when the draft introduces a recorded minority variant
 (more occurrences than the old target text), or writes the house rendering fewer times than the German has the term
-while the old text did not fall short in the same way (the gap is the draft's, not the old text's). It never changes a
-verdict, a draft, or a score; measured in eval/results/termbase.json (measure())."""
+while the old text did not fall short in the same way (the gap is the draft's, not the old text's; the note says how
+often the draft writes it when it does, never 'absent'). Softer ("kept"): the draft falls short, the old text already
+did, and the draft keeps a non-standard wording the old text used (a spelling variant such as 'assureur maladie', or,
+in text the draft wrote, a similar wording such as 'caisse maladie'; never one of BAG's own recorded variants, which are
+BAG's practice): 'le texte (déjà avant) écrit …'. It never changes a verdict, a draft, or a score; the first two kinds are measured in
+eval/results/termbase.json (measure()), all three in eval/results/explain_v2.json (emit.explain.measure_v2())."""
 import argparse, difflib, hashlib, json, os, re, sys
 from collections import Counter, defaultdict
 from . import core
@@ -530,10 +534,14 @@ def load(path=JSON):
 
 
 NOTE = {"fr": dict(head="Terme maison pour {de} : {pref} ({n} limitations)", wrote="le brouillon écrit {x}",
-                   absent="absent du brouillon", carried=""),
+                   absent="absent du brouillon", carried="", kept="le texte (déjà avant) écrit {x}",
+                   fewer="le brouillon l'écrit {k} fois, l'allemand a le terme {n} fois"),
         "it": dict(head="Termine in uso all'UFSP per {de}: {pref} ({n} limitazioni)", wrote="la bozza scrive {x}",
-                   absent="assente dalla bozza", carried="")}
+                   absent="assente dalla bozza", carried="", kept="il testo (già prima) scrive {x}",
+                   fewer="la bozza lo scrive {k} volta/e, il tedesco ha il termine {n} volte")}
 FUZZY = 0.6
+KEPT_FUZZY = 0.7       # "kept", a wording found by similarity: at least this similar, two words or more, no word of the house rendering
+NEAR = 4              # "kept": tokens around the draft's own insertions count as inserted ('à transmettre à la caisse maladie')
 
 
 def _q(L, s): return f"« {s} »" if L == "fr" else f"«{s}»"
@@ -550,29 +558,39 @@ def _surface_in(text, g):
     return m.group(0) if m else None
 
 
-def _fuzzy(pref, draft_ws, old_pad, L):
+def _fuzzy(pref, draft_ws, old_pad, L, in_old=False, within=None, ratio=None):
     """the draft's n-gram (one token shorter to one longer than the house rendering) most similar to it (ratio >= FUZZY),
-    not in the old text and not containing the house rendering itself, or None."""
+    not in the old text (in_old=True: only one the old text has too) and not containing the house rendering itself, or
+    None. within: draft token positions the n-gram must touch (None: anywhere)."""
     n = len(pref.split()); best = None; rx = _loose(pref)
     for k in range(max(1, n - 1), n + 2):
         for i in range(len(draft_ws) - k + 1):
+            if within is not None and not any(j in within for j in range(i, i + k)): continue
             g = draft_ws[i:i + k]
             if not _okgram(g, L): continue
             s = " ".join(g)
-            if s == pref or count(s, old_pad) or rx.search(surface(s)): continue
+            if s == pref or bool(count(s, old_pad)) != in_old or rx.search(surface(s)): continue
             r = difflib.SequenceMatcher(None, s, pref).ratio()
-            if r >= FUZZY and (best is None or r > best[0]): best = (r, s)
+            if r >= (ratio or FUZZY) and (best is None or r > best[0]): best = (r, s)
     return best[1] if best else None
 
 
 def advice(v, tb=None):
-    """-> [dict(term, preferred, support, wrote, kind)] for one draft view (lang, de_old, de_new, tgt_old, draft)."""
-    L = v.get("lang"); draft = v.get("draft") or ""
+    """-> [dict(term, preferred, support, wrote, kind, n_de, n_draft)] for one draft view (lang, de_old, de_new, tgt_old,
+    draft). kind: "variant" (the draft introduces a recorded minority variant), "missing" (the draft falls short of the
+    house rendering where the old text did not), or "kept" (softer: the draft falls short, the old text already did, and
+    the draft keeps a non-standard wording the old text already used that is not one of BAG's recorded variants: a
+    spelling variant of the house rendering, or the wording most similar to it in text the draft wrote; _kept). n_de / n_draft: how often the new German has the term and the draft the house rendering.
+    eval/results/termbase.json measures the first two kinds (measure()); "kept" is measured in explain_v2.json."""
+    L = v.get("lang"); draft = (v.get("draft") or "").replace("\u02bc", "'")
     if L not in LANGS or not draft or v.get("status") == "human": return []
     tb = load() if tb is None else tb
     if not tb: return []
-    ws = toks(draft); pd, po = _pad(ws), _pad(toks(v.get("tgt_old") or ""))
-    dn, on = _nrm(draft), _nrm(v.get("tgt_old") or "")
+    old = (v.get("tgt_old") or "").replace("\u02bc", "'")
+    ws = toks(draft); wo = toks(old); pd, po = _pad(ws), _pad(wo)
+    dn, on = _nrm(draft), _nrm(old)
+    new_idx = {j for op, _, _, j1, j2 in difflib.SequenceMatcher(None, wo, ws, autojunk=False).get_opcodes()
+               if op in ("insert", "replace") for j in range(j1 - NEAR, j2 + NEAR)}   # draft text the draft inserted / rewrote
     out = []
     for term, _ in HEADS:
         e = tb.get((L, term))
@@ -584,23 +602,64 @@ def advice(v, tb=None):
         rx = _loose(p); p_new, p_old = len(rx.findall(dn)), len(rx.findall(on))
         intro = [w for w in e["variants"] if count(w["tokens"], pd) > count(w["tokens"], po)]
         gap = max(0, n_new - p_new) > max(0, n_old - p_old)
-        if not intro and not gap: continue
+        a = dict(term=term.split(" / ")[-1], preferred=e["preferred"], support=e["support"], n_de=n_new, n_draft=p_new)
         if intro:
-            w = intro[0]; wrote = _surface_in(draft, w["tokens"]) or w["text"]; kind = "variant"
-        else:
-            f = _fuzzy(p, ws, po, L); wrote = (_surface_in(draft, f) or surface(f)) if f else None; kind = "missing"
-        out.append(dict(term=term.split(" / ")[-1], preferred=e["preferred"], support=e["support"], wrote=wrote, kind=kind))
+            w = intro[0]; out.append(dict(a, wrote=_surface_in(draft, w["tokens"]) or w["text"], kind="variant"))
+        elif gap:
+            f = None if p_new else _fuzzy(p, ws, po, L)          # the house rendering is there, only too few times
+            out.append(dict(a, wrote=(_surface_in(draft, f) or surface(f)) if f else None, kind="missing"))
+        elif p_new < n_new:
+            f = _kept(e, p, ws, pd, po, L, new_idx)
+            if f: out.append(dict(a, wrote=_surface_in(draft, f) or surface(f), kind="kept"))
     return out
 
 
+def _ortho(g):
+    """an n-gram folded for spelling: lower case, no accents, hyphens and apostrophes as spaces, no plural -s / -x
+    ('assureur maladie', 'assureurs-maladie' and 'assureur-maladie' fold alike)."""
+    import unicodedata
+    g = "".join(c for c in unicodedata.normalize("NFD", g.lower()) if unicodedata.category(c) != "Mn")
+    g = re.sub(r"[-'’\s]+", " ", g).strip()
+    return " ".join(re.sub(r"(?<=\w{4})[sx]$", "", w) for w in g.split())
+
+
+def _kept(e, p, ws, pd, po, L, new_idx):
+    """the non-standard wording of a term that the draft keeps from the old text (advice, kind "kept"), or None: a
+    spelling variant of the house rendering both have ('assureur maladie', 'médecin conseil'); else, in text the draft
+    inserted or rewrote (within NEAR tokens), the wording most similar to the house rendering (as _fuzzy) that the old
+    text also uses ('caisse maladie'). Never one of BAG's own recorded minority variants ('assurance maladie', 266
+    limitations: BAG's practice, not the draft's), nor a plural or other inflection of the house rendering itself."""
+    V = [_ortho(surface(w["tokens"])) for w in e["variants"]]
+    def recorded(g):
+        o = _ortho(surface(g))
+        return any(o == v or _contains(o, v) or _contains(v, o) for v in V)
+    n, fp = len(p.split()), _ortho(surface(p))
+    for k in range(1, n + 3):
+        for i in range(len(ws) - k + 1):
+            g = " ".join(ws[i:i + k])
+            if BR not in g and g != p and _ortho(surface(g)) == fp and count(g, po) and not _inflection(g, p) and not recorded(g):
+                return g
+    if not new_idx: return None
+    f = _fuzzy(p, ws, po, L, in_old=True, within=new_idx, ratio=KEPT_FUZZY)
+    if f is None or _inflection(f, p) or _ortho(surface(f)) == fp or recorded(f): return None
+    if len(f.split()) < 2 and "-" not in f: return None                     # one plain word ('maladie') names no term
+    if set(f.split()) & {w for w in p.split() if len(w) >= 5}: return None   # a fragment around the house rendering itself
+    return f
+
+
 def advisory_text(A, L):
-    """one low-priority note in the reviewer's language, or None."""
+    """one low-priority note in the reviewer's language, or None: per term (the softer "kept" ones last), the house
+    rendering and what the draft writes instead ("kept": what the text already wrote before), or how often it writes the
+    house rendering against how often the German has the term, or that the draft does not write it at all."""
     if not A or L not in NOTE: return None
     N = NOTE[L]; parts = []
-    for a in A[:3]:
+    for a in sorted(A, key=lambda a: a["kind"] == "kept")[:3]:
         s = N["head"].format(de=_q(L, a["term"]), pref=_q(L, a["preferred"]), n=a["support"])
         s += " ; " if L == "fr" else "; "
-        s += N["wrote"].format(x=_q(L, a["wrote"])) if a["wrote"] else N["absent"]
+        if a["kind"] == "kept": s += N["kept"].format(x=_q(L, a["wrote"]))
+        elif a["wrote"]: s += N["wrote"].format(x=_q(L, a["wrote"]))
+        elif a.get("n_draft"): s += N["fewer"].format(k=a["n_draft"], n=a["n_de"])
+        else: s += N["absent"]
         parts.append(s + ".")
     return " ".join(parts)
 
@@ -668,7 +727,7 @@ as the advisory matches it)."""
         for x in I:
             k = x["key"]; r = R[k]
             v = dict(lang=x["lang"], de_old=x["de_old"], de_new=x["de_new"], tgt_old=x["tgt_old"], draft=r["out"], status="draft")
-            A = advice(v, tb); ready = not r["guard_flag"]
+            A = [a for a in advice(v, tb) if a["kind"] != "kept"]; ready = not r["guard_flag"]      # the v1 kinds (advice)
             if not ready:
                 row["flagged"] += 1; row["flagged_with_advisory"] += bool(A); continue
             row["ready"] += 1

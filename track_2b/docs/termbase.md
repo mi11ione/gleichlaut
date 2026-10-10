@@ -112,6 +112,13 @@ termbase makes that split visible with counts and does not pretend to a uniformi
 Twenty-two of the 108 term-by-language entries have no candidate that passes the exclusive-evidence test (Vergütung,
 Verschreibung, Kombinationstherapie, Kostenübernahme, …). Ten more fall short of a majority. Neither group is exported.
 
+Two terms a translator asked for are not heads, and the mining cannot support them: "Leistungserbringer" is in 14
+German limitation texts and "Kostengutsprachegesuch" in 12, below the 20 of the head list. Mined anyway with the same
+rules (10 Oct 2026, 6 Oct snapshot), neither yields a house rendering: no French candidate passes M2–M4 for either, nor
+an Italian one for "Kostengutsprachegesuch"; Italian "fornitore di prestazioni" covers 8 of the 14 "Leistungserbringer"
+limitations, under the minimum support of 10. Adding them leaves every other entry unchanged. They are not in the
+termbase.
+
 ## The advisory
 
 When a draft's new German contains a term with a house rendering, the reviewer gets one note in their own language if
@@ -127,9 +134,24 @@ either of these holds:
 > medico-sanitarie» (34 limitazioni); la bozza scrive «assicurazione obbligatoria di malattia».
 
 When the note does not name a variant, it shows the draft's closest wording that is new in the draft (character
-similarity ≥ 0.6), or says "absent du brouillon" / "assente dalla bozza". In XLIFF 2.1 it is its own `<note
+similarity ≥ 0.6). When the draft does write the house rendering, only fewer times than the German has the term, it says
+so ("le brouillon l'écrit 1 fois, l'allemand a le terme 2 fois"); only a draft without it gets "absent du brouillon" /
+"assente dalla bozza".
+
+A softer note covers the case the two rules above hold back on: the old text already fell short of the house rendering
+and the draft keeps the old text's non-standard wording. It names that wording if it is a spelling variant of the house
+rendering ("assureur maladie", "médecin conseil"), or, in text the draft wrote, a wording at least 0.7 similar to it
+("caisse maladie"; two words or more, no word of the house rendering itself). It never names one of the register's
+recorded variants ("assurance maladie", 266 limitations): that is BAG's own practice, not the draft's, and the
+translator who reviewed the drafts called notes about it noise.
+
+> FR: Terme maison pour « Krankenversicherer » : « assureur-maladie » (505 limitations) ; le texte (déjà avant) écrit
+> « caisse maladie ».
+
+The measurement below covers the first two kinds only (`termbase.measure()`); the softer note is counted in
+`eval/results/explain_v2.json` (`emit.explain.measure_v2()`). In XLIFF 2.1 the advisory is its own `<note
 category="gleichlaut:termbase" priority="9">`; XLIFF 1.2 carries the same note with priority 9. On the review page it
-is a grey line under the explanation. It is never one of the three reasons, never changes ready or flagged, the draft
+is part of the grey line under the explanation. It is never one of the three reasons, never changes ready or flagged, the draft
 or any score. A draft with no house-rendering issue gets no note. The guards and every committed result are unchanged.
 
 ## Measured on the fresh 166 (`eval/results/termbase.json`)

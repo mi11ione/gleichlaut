@@ -50,6 +50,44 @@
    ]
   }
  },
+ "v2": {
+  "negation": {
+   "detected": 0,
+   "n": 200,
+   "recall_pct": 0.0,
+   "wilson95_pct": [
+    0.0,
+    1.9
+   ]
+  },
+  "number_any": {
+   "detected": 111,
+   "n": 200,
+   "recall_pct": 55.5,
+   "wilson95_pct": [
+    48.6,
+    62.2
+   ]
+  },
+  "number_word": {
+   "detected": 74,
+   "n": 200,
+   "recall_pct": 37.0,
+   "wilson95_pct": [
+    30.6,
+    43.9
+   ]
+  },
+  "operator": {
+   "detected": 0,
+   "n": 200,
+   "recall_pct": 0.0,
+   "wilson95_pct": [
+    0.0,
+    1.9
+   ]
+  }
+ },
  "wilson95_pct": [
   74.5,
   79.7

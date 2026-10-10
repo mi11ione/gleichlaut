@@ -1,0 +1,355 @@
+{
+ "note": "explain v2 (presentation only): verdicts, drafts and scores unchanged; 'before' = the page before this change (top three of every finding by (low, rank)); 'after' = xliff.reasons / xliff.explanation. tally = a count finding (numbers, negation, modal verbs); probably fine = a triage rule applies.",
+ "runs": {
+  "70b": {
+   "all": {
+    "after": {
+     "drafts": 166,
+     "flagged": 100,
+     "kept_tb": 3,
+     "kept_tb_bag_house": 1,
+     "mirrored_note": 14,
+     "ready_tb": 4,
+     "ready_tb_no_fix": 3,
+     "ready_tb_notes": 4,
+     "reasons_per_flagged": 1.8,
+     "shown": 180,
+     "summary_only": 17,
+     "tally": 18,
+     "tally_fine": 0,
+     "tally_share": 0.1,
+     "typography_note": 8
+    },
+    "before": {
+     "drafts": 166,
+     "flagged": 100,
+     "ready_tb": 1,
+     "ready_tb_no_fix": 0,
+     "ready_tb_notes": 1,
+     "reasons_per_flagged": 2.05,
+     "shown": 205,
+     "tally": 67,
+     "tally_fine": 17,
+     "tally_share": 0.327
+    },
+    "minor": {
+     "named_after": 1,
+     "named_before": 1,
+     "ready_minor": 1,
+     "unnamed_after": []
+    }
+   },
+   "fr": {
+    "after": {
+     "drafts": 83,
+     "flagged": 51,
+     "kept_tb": 3,
+     "kept_tb_bag_house": 1,
+     "mirrored_note": 6,
+     "ready_tb": 3,
+     "ready_tb_no_fix": 3,
+     "ready_tb_notes": 3,
+     "reasons_per_flagged": 1.863,
+     "shown": 95,
+     "summary_only": 10,
+     "tally": 11,
+     "tally_fine": 0,
+     "tally_share": 0.116,
+     "typography_note": 5
+    },
+    "before": {
+     "drafts": 83,
+     "flagged": 51,
+     "ready_tb": 0,
+     "ready_tb_no_fix": 0,
+     "ready_tb_notes": 0,
+     "reasons_per_flagged": 2.118,
+     "shown": 108,
+     "tally": 40,
+     "tally_fine": 10,
+     "tally_share": 0.37
+    },
+    "minor": {
+     "named_after": 0,
+     "named_before": 0,
+     "ready_minor": 0,
+     "unnamed_after": []
+    }
+   },
+   "it": {
+    "after": {
+     "drafts": 83,
+     "flagged": 49,
+     "kept_tb": 0,
+     "kept_tb_bag_house": 0,
+     "mirrored_note": 8,
+     "ready_tb": 1,
+     "ready_tb_no_fix": 0,
+     "ready_tb_notes": 1,
+     "reasons_per_flagged": 1.735,
+     "shown": 85,
+     "summary_only": 7,
+     "tally": 7,
+     "tally_fine": 0,
+     "tally_share": 0.082,
+     "typography_note": 3
+    },
+    "before": {
+     "drafts": 83,
+     "flagged": 49,
+     "ready_tb": 1,
+     "ready_tb_no_fix": 0,
+     "ready_tb_notes": 1,
+     "reasons_per_flagged": 1.98,
+     "shown": 97,
+     "tally": 27,
+     "tally_fine": 7,
+     "tally_share": 0.278
+    },
+    "minor": {
+     "named_after": 1,
+     "named_before": 1,
+     "ready_minor": 1,
+     "unnamed_after": []
+    }
+   }
+  },
+  "8b_q4_k_m": {
+   "all": {
+    "after": {
+     "drafts": 166,
+     "flagged": 106,
+     "kept_tb": 3,
+     "kept_tb_bag_house": 1,
+     "mirrored_note": 13,
+     "ready_tb": 32,
+     "ready_tb_no_fix": 5,
+     "ready_tb_notes": 32,
+     "reasons_per_flagged": 2.179,
+     "shown": 231,
+     "summary_only": 5,
+     "tally": 24,
+     "tally_fine": 0,
+     "tally_share": 0.104,
+     "typography_note": 7
+    },
+    "before": {
+     "drafts": 166,
+     "flagged": 106,
+     "ready_tb": 29,
+     "ready_tb_no_fix": 2,
+     "ready_tb_notes": 29,
+     "reasons_per_flagged": 2.368,
+     "shown": 251,
+     "tally": 57,
+     "tally_fine": 8,
+     "tally_share": 0.227
+    },
+    "minor": {
+     "named_after": 27,
+     "named_before": 27,
+     "ready_minor": 29,
+     "unnamed_after": [
+      "wb084-fr",
+      "wb084-it"
+     ]
+    }
+   },
+   "fr": {
+    "after": {
+     "drafts": 83,
+     "flagged": 54,
+     "kept_tb": 3,
+     "kept_tb_bag_house": 1,
+     "mirrored_note": 7,
+     "ready_tb": 17,
+     "ready_tb_no_fix": 4,
+     "ready_tb_notes": 17,
+     "reasons_per_flagged": 2.148,
+     "shown": 116,
+     "summary_only": 3,
+     "tally": 11,
+     "tally_fine": 0,
+     "tally_share": 0.095,
+     "typography_note": 6
+    },
+    "before": {
+     "drafts": 83,
+     "flagged": 54,
+     "ready_tb": 14,
+     "ready_tb_no_fix": 1,
+     "ready_tb_notes": 14,
+     "reasons_per_flagged": 2.333,
+     "shown": 126,
+     "tally": 33,
+     "tally_fine": 5,
+     "tally_share": 0.262
+    },
+    "minor": {
+     "named_after": 13,
+     "named_before": 13,
+     "ready_minor": 14,
+     "unnamed_after": [
+      "wb084-fr"
+     ]
+    }
+   },
+   "it": {
+    "after": {
+     "drafts": 83,
+     "flagged": 52,
+     "kept_tb": 0,
+     "kept_tb_bag_house": 0,
+     "mirrored_note": 6,
+     "ready_tb": 15,
+     "ready_tb_no_fix": 1,
+     "ready_tb_notes": 15,
+     "reasons_per_flagged": 2.212,
+     "shown": 115,
+     "summary_only": 2,
+     "tally": 13,
+     "tally_fine": 0,
+     "tally_share": 0.113,
+     "typography_note": 1
+    },
+    "before": {
+     "drafts": 83,
+     "flagged": 52,
+     "ready_tb": 15,
+     "ready_tb_no_fix": 1,
+     "ready_tb_notes": 15,
+     "reasons_per_flagged": 2.404,
+     "shown": 125,
+     "tally": 24,
+     "tally_fine": 3,
+     "tally_share": 0.192
+    },
+    "minor": {
+     "named_after": 14,
+     "named_before": 14,
+     "ready_minor": 15,
+     "unnamed_after": [
+      "wb084-it"
+     ]
+    }
+   }
+  },
+  "8b_q8_0": {
+   "all": {
+    "after": {
+     "drafts": 166,
+     "flagged": 104,
+     "kept_tb": 3,
+     "kept_tb_bag_house": 1,
+     "mirrored_note": 18,
+     "ready_tb": 25,
+     "ready_tb_no_fix": 3,
+     "ready_tb_notes": 25,
+     "reasons_per_flagged": 2.077,
+     "shown": 216,
+     "summary_only": 7,
+     "tally": 19,
+     "tally_fine": 0,
+     "tally_share": 0.088,
+     "typography_note": 12
+    },
+    "before": {
+     "drafts": 166,
+     "flagged": 104,
+     "ready_tb": 22,
+     "ready_tb_no_fix": 0,
+     "ready_tb_notes": 22,
+     "reasons_per_flagged": 2.288,
+     "shown": 238,
+     "tally": 54,
+     "tally_fine": 8,
+     "tally_share": 0.227
+    },
+    "minor": {
+     "named_after": 22,
+     "named_before": 22,
+     "ready_minor": 23,
+     "unnamed_after": [
+      "wb087-it"
+     ]
+    }
+   },
+   "fr": {
+    "after": {
+     "drafts": 83,
+     "flagged": 56,
+     "kept_tb": 3,
+     "kept_tb_bag_house": 1,
+     "mirrored_note": 9,
+     "ready_tb": 7,
+     "ready_tb_no_fix": 3,
+     "ready_tb_notes": 7,
+     "reasons_per_flagged": 2.089,
+     "shown": 117,
+     "summary_only": 3,
+     "tally": 13,
+     "tally_fine": 0,
+     "tally_share": 0.111,
+     "typography_note": 6
+    },
+    "before": {
+     "drafts": 83,
+     "flagged": 56,
+     "ready_tb": 4,
+     "ready_tb_no_fix": 0,
+     "ready_tb_notes": 4,
+     "reasons_per_flagged": 2.286,
+     "shown": 128,
+     "tally": 34,
+     "tally_fine": 5,
+     "tally_share": 0.266
+    },
+    "minor": {
+     "named_after": 4,
+     "named_before": 4,
+     "ready_minor": 4,
+     "unnamed_after": []
+    }
+   },
+   "it": {
+    "after": {
+     "drafts": 83,
+     "flagged": 48,
+     "kept_tb": 0,
+     "kept_tb_bag_house": 0,
+     "mirrored_note": 9,
+     "ready_tb": 18,
+     "ready_tb_no_fix": 0,
+     "ready_tb_notes": 18,
+     "reasons_per_flagged": 2.062,
+     "shown": 99,
+     "summary_only": 4,
+     "tally": 6,
+     "tally_fine": 0,
+     "tally_share": 0.061,
+     "typography_note": 6
+    },
+    "before": {
+     "drafts": 83,
+     "flagged": 48,
+     "ready_tb": 18,
+     "ready_tb_no_fix": 0,
+     "ready_tb_notes": 18,
+     "reasons_per_flagged": 2.292,
+     "shown": 110,
+     "tally": 20,
+     "tally_fine": 3,
+     "tally_share": 0.182
+    },
+    "minor": {
+     "named_after": 18,
+     "named_before": 18,
+     "ready_minor": 19,
+     "unnamed_after": [
+      "wb087-it"
+     ]
+    }
+   }
+  }
+ }
+}

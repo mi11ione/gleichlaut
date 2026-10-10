@@ -49,6 +49,8 @@ def compute():
     res["shadow_20260901_20261001"] = score.shadow_month()
     res["audit_recall"] = score.audit_recall()
     res["audit_grouping"] = score.audit_grouping()
+    from .emit import explain
+    res["explain_v2"] = explain.measure_v2()       # translator-facing reasons, before/after the round-6 wording (display only)
     from . import termbase
     res["termbase"] = termbase.measure()          # display-only advisory: how often it fires on ready drafts, what it explains
     return res

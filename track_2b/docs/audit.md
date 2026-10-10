@@ -294,6 +294,7 @@ is therefore expected and is not evidence about divergences of other kinds.
 | Likely equivalent (number) | 9 of 21 (round 4, triage only) |
 | Recall, known divergent limitations (number) | **10 of 10**; 13 of 13 hand-verified values on the right side and in the right language (circular: see the next row) |
 | Recall, planted divergences (200 per type, FR+IT) | number **93.0%**, unit **73.0%**, clause deletion **75.0%**, wrong language **94.0%**, typo next to a number **51.0%** (section "Recall on planted divergences") |
+| Recall, planted v2 (sites drawn from all numbers; 200 per type) | any number **55.5%**, number word **37.0%**, flipped operator **0%**, dropped negation **0%** (subsection "v2: sites not chosen by the detector's own rule") |
 | Keytruda KN045 | **found** (`L01`): the IT field is identical to the FR text (function words fr 39 / it 1, trigram margin 2.16 nat); first seen **1 Aug 2026**, present in 4 snapshots (Aug, Sep, 1 Oct, 6 Oct) |
 | Other language findings | none on 6 Oct, and none in any of the 9 snapshots (`language_any_snapshot`). On 6 Oct no other field passes even rule A alone |
 | Number findings explained by a typo | 4 of 21: LEQVIO FR+IT (`N16`, `N17` ← German `1 .4`), PREVYMIS FR (`N04` ← `de15`), FORSTEO IT (`N13` ← `se mesi`) |
@@ -454,7 +455,8 @@ showed this as 3 "new + lost" pairs, so the comparison now ignores the margin.
 
 - We designed the faults ourselves. The site pattern and the audit share the common unit words, so number, unit and
   deletion recall hold only for faults next to a unit word.
-- Paraphrase-level divergences, partial translations, changed operators and dropped negations are not planted.
+- Paraphrase-level divergences and partial translations are not planted. Changed operators and dropped negations are
+  planted in v2 (below).
 - The typo model is ours, not an observed error distribution.
 - The result answers "if a fault of this shape were there, would the audit see it?" It does not say how many real
   divergences the register holds.
@@ -466,6 +468,114 @@ showed this as 3 "new + lost" pairs, so the comparison now ignores the margin.
 - report `unit_one_sided` (51 unit misses).
 
 Each of these would need its own precision check before it ships.
+
+### v2: sites not chosen by the detector's own rule
+
+A juror pointed out a flaw in v1. Its number, unit and deletion sites are "a number followed by a unit word", and that
+is the same binding rule (R2) the number check relies on. So 93% number recall is close to true by construction. v1 also
+planted no operator flips. v2 answers both points. Command: `python3 tools/audit_inject.py --protocol v2` (seed
+20261011, stdlib, no model, no network). Output: `eval/results/audit_injection_v2.json`. It took 885 s on 8 cores.
+v1 and its output file are unchanged.
+
+**Protocol.** It was written into the script's docstring ("PROTOCOL v2") before the first v2 run. The audit's rules were
+not touched. The register, the eligible pool (1,597 finding-free limitations), the one-fault-per-copy rule and the
+execution are as in v1. Sites come from the script's own number pattern.
+
+- **Sites.** Every number token in the target text is a site: digits, thousands such as `1'000` or `150 000`,
+  decimals, dates, and the number words 2–12. Unit words, list numbers, counts, years, prices, scores and table cells
+  all count. Three kinds of token are excluded, and only these. All three are identifiers copied verbatim, and the
+  audit's documented R2 scope does not report them:
+  - BAG indication codes (`19989.01`, and the `19989` of `19989.XX`): 615 FR / 616 IT tokens in the pool;
+  - Index Therapeuticus group codes (`I.T. 02.06`): 25 / 25;
+  - multi-separator references (`RS 832.112.31`): 7 / 7.
+
+  Digits glued to a preceding letter (`FEV1`, `HER2`) are names to the audit and are not tokens here either. In the
+  eligible pool, 52% of the FR sites and 54% of the IT sites are also v1 sites.
+- **Types.**
+  - `number_any`: one token is drawn uniformly from all the sites in the text. It is changed by the v1 rule. A year
+    moves by ±1. A date changes its day or its year.
+  - `number_word`: one number word, anywhere in the text, becomes another one.
+  - `operator`: one comparison operator within 25 characters of a number, in the same sentence, is flipped. The pairs
+    are: au moins ↔ au plus, au minimum ↔ au maximum, maximum ↔ minimum, plus de ↔ moins de, supérieur ↔ inférieur,
+    almeno ↔ al massimo, massimo ↔ minimo, più di ↔ meno di, superiore ↔ inferiore, oltre ↔ sotto, ≥ ↔ ≤ and > ↔ <.
+  - `negation`: one negation within 60 characters of a number is dropped: FR `ne/n' … pas` and `non`, IT `non`.
+- **Detection.** For the two number types the rule is the same as for v1 numbers. The audit has no operator or
+  negation kind. For those two types, a finding of any kind counts if it points to the place: a number or unit
+  finding on a value within 60 characters of the edit, or an editorial or terminology surface within 30 characters.
+
+| type | n (FR+IT) | detected | recall | Wilson 95% | any finding |
+|---|---|---|---|---|---|
+| number_any | 200 | 111 | **55.5%** | 48.6–62.2 | 55.5% |
+| number_word | 200 | 74 | **37.0%** | 30.6–43.9 | 37.5% |
+| operator | 200 | 0 | **0.0%** | 0.0–1.9 | 0.0% |
+| negation | 200 | 0 | **0.0%** | 0.0–1.9 | 0.0% |
+
+FR and IT differ by at most 3 points. In 40 full-register re-runs, the statistics and the findings were identical, with
+no finding new or lost elsewhere.
+
+**Reading.** The v1 figure holds only where v1 measured it. Off the unit rule, the number check is close to blind:
+
+| number_any, by site | n | detected | recall (Wilson 95%) |
+|---|---|---|---|
+| a v1 site (number + unit word) | 111 | 104 | 93.7% (87.6–96.9), matching v1's 93.0% |
+| any other digit | 76 | 7 | 9.2% (4.5–17.8) |
+| a number word not before a unit word | 11 | 0 | 0% (0–25.9) |
+| a list number, a date | 1 + 1 | 0 | |
+
+Split by the audit's own parse of the original text, the result is the same. Recall is 109/119 (91.6%) where R2 binds
+the planted token to a unit, and **2/80 (2.5%)** where it does not. For `number_word` the split is 73/102 at a unit
+word and **1/98** elsewhere.
+
+That gap is the main finding. It is the documented price of R2: the high precision of number findings is bought with
+unbound values, and v2 puts a number on that price. Operator flips and dropped negations are not seen at all. The
+audit never claimed to see them (S1's operator and negation flags had 0 real hits), but before v2 that was a
+statement, not a measurement.
+
+**What the misses are** (counts from the output file):
+
+- **number_any (89 misses).** 61 are unbound values (R2), 15 are masked by repetition (R5), 12 are a value 1 hidden
+  by R3, and 1 is a list number (R1). We read the 76 contexts of the other-digit sites without labelling them. About a
+  third are parts of names or designations: `exon 19`, `6-mercaptopurine`, `HIV-1`, `t(11;14)`, `diabète de type 2`,
+  `article 12b`. Changing one of those is still wrong, but it is rarely a translation error. The rest are content, and
+  the audit misses them (R2 unless noted):
+  - pack and dose counts: `4 gruppi di rischio`, `1 goutte` (R3), `3 emballages de TREMFYA` (masked, R5);
+  - lines of therapy: `2L+`, `1L`;
+  - ECOG, stage and grade: `ECOG 0-1`, `stade 3 à 4`;
+  - score cut-offs: `CIRS > 6`, `SCORAD 50`, `BMI 28`;
+  - prices: `Fr. 0.44 par mg`, `CHF 132.71`;
+  - `35` cycles at most;
+  - units missing from the lexicon: `300 pg/ml`, `0,345 mm²`.
+- **number_word (126 misses).** 77 are unbound: `au moins deux lignes de traitement` → `quatre lignes` is invisible,
+  because "lignes" is not a quantity noun. 39 are masked by R5, and in 10 the German writes the value differently
+  (`deux yeux` / "beide Augen").
+- **operator (200 misses).** Examples: `pesant au moins 40 kg` → `au plus 40 kg`, `plus de 75 ans` → `moins de 75 ans`,
+  `FeNO ≥ 50 ppb` → `≤ 50 ppb`, `un massimo di 24 mesi` → `un minimo di 24 mesi`. Six planted flips are not comparison
+  operators in context: `au plus tôt` ×2, `au plus tard`, and `limite supérieure` / `superiore` ×3. Each still changes
+  the meaning. The result is 0 either way.
+- **negation (200 misses).** Examples: `n'est pas suffisamment contrôlée avec 1 mg` → `est suffisamment contrôlée`;
+  `non è rimborsata` → `è rimborsata`; `NSCLC non squamoso` → `NSCLC squamoso`.
+
+**Limits of v2.** One site per limitation means texts with many numbers are under-weighted per token, as in v1. The
+operator and negation lexicons are ours, and FR has more pairs than IT. The detection window for those types is
+generous, so a finding there would have been counted even if it was only near the edit. None occurred.
+
+**Cheap rule changes the misses point to** (reported, not applied; each needs its own precision check):
+
+- **Report a one-for-one swap of unbound values.** Report one when DE and the target each have exactly one value the
+  other lacks, and both value sequences otherwise align in order. This does not grow the unit lexicon. It targets the
+  61 + 77 R2 misses. The 148 unbound value differences of 6 Oct are the precision sample.
+- **Add the count nouns and units the misses show to R2's lexicon**: lignes/linee, traitements/terapie,
+  goutte/goccia, flacon(e), pièce/pezzo, tube/tubo, critères/criteri, `pg`, `mm²`. This is cheaper but whack-a-mole.
+- **Restrict R3** to a `1` that no unit symbol follows (already listed under v1; it hid 12 of the 89 here).
+- **Add an operator-direction check.** For a value both texts state once, compare the direction of the operator next
+  to it. Lower bounds: mindestens/ab/über/mehr als/≥, au moins/plus de/supérieur/≥, almeno/oltre/superiore/≥. Upper
+  bounds: höchstens/bis/unter/weniger als/≤, au plus/au maximum/moins de/inférieur/≤, al massimo/massimo/sotto/
+  inferiore/≤. Report only opposite directions, not ≥ against >: "ab 12 Jahren" against "plus de 12 ans" is a known
+  style difference. `audit.py` already has the DE lists (`EQ_INCL`, `EQ_STRICT`). S1's operator flags were 0 real, so
+  precision must be measured before this ships.
+- **Add a negation check per aligned value.** Flag a clause that holds a shared value and has a negation on one side
+  only (nicht/kein against ne…pas/non). This is noisier: "kein" ↔ "aucun", and "ohne" ↔ "sans" ↔ "senza". It is the
+  last one to try.
 
 ## Second signal: term pairs (measured, off)
 

@@ -55,7 +55,8 @@ button,select,input,textarea{font:inherit;color:inherit}
 .fl .k{color:var(--ink2)}
 .fl:has(input){flex:1 1 100%}
 .fl select,.fl input{background:none;border:0;border-bottom:1px solid var(--hair);padding:3px 0;min-width:0;font:400 13px/1.3 var(--sans)}
-.fl input{flex:1 1 140px}.fl select{flex:0 1 auto;max-width:100%}
+.fl input{flex:1 1 140px}.fl select{flex:0 1 auto;max-width:100%;min-width:0}
+#f-fam{flex:1 1 100%;width:100%;max-width:100%;text-overflow:ellipsis}.register .filters{min-width:0;max-width:100%}
 .tbl{overflow-x:auto;min-width:0}
 .reg-wrap{overflow:auto;flex:1 1 auto;min-height:120px;border-top:1px solid var(--rule)}
 table{border-collapse:collapse;width:100%}
@@ -700,16 +701,16 @@ it:{aLead:"Ogni riga è un caso: un punto in cui i testi tedesco, francese e ita
 Object.keys(TX4).forEach(function(L){Object.keys(TX4[L]).forEach(function(k){TX[L][k]=TX4[L][k]})});
 // redesign (10 Oct 2026): one bar, a context line, list + case in both views, statistics in the footer
 var TX5={
-de:{ctxA:"Der Code vergleicht alle {n} Limitationen auf DE/FR/IT, ohne Modell. Zu entscheiden ist, welche Fassung dem Entscheid des BAG entspricht.",export:"Export",ctxD:"Vergangene Änderungen, vom BAG bereits publiziert; die Entwürfe sind für die Übersetzung.",whereS:"Entscheide bleiben in diesem Browser, bis sie exportiert werden.",backList:"Liste",slotsT:"Platzhalter zeigen",famChange1:"1 Änderung",aThen:"Weiter",aOr:"Oder",aboutH:"Über dieses Register",aBind:"Massgebend ist die Fassung, die dem Entscheid des BAG entspricht; welche das ist, weiss die Prüfung nicht.",
+de:{ctxAud:"Der Code vergleicht alle {n} Limitationen auf DE/FR/IT, ohne Modell. Zu entscheiden ist, welche Fassung dem Entscheid des BAG entspricht.",export:"Export",ctxD:"Vergangene Änderungen, vom BAG bereits publiziert; die Entwürfe sind für die Übersetzung.",whereS:"Entscheide bleiben in diesem Browser, bis sie exportiert werden.",backList:"Liste",slotsT:"Platzhalter zeigen",famChange1:"1 Änderung",aThen:"Weiter",aOr:"Oder",aboutH:"Über dieses Register",aBind:"Massgebend ist die Fassung, die dem Entscheid des BAG entspricht; welche das ist, weiss die Prüfung nicht.",
  aKnownHeadS:"Von unserer früheren Erhebung erfasst · {k} von {n} gefunden",aTermHeadS:"Terminologie · {n}",aWhat:"Was abweicht",aDating:"Seit wann",aNote2:"Hinweis",aTermL:"Begriff",
  aTexts:"Die Texte",aActL:"Massnahmen und Notiz",saveNextI:"Speichern, nächster Fall",keysA:"j/k oder ↑/↓ wechseln · Ctrl/Cmd+Enter speichern und weiter",lane:"Spur",laneM:"Methode",comparedW:"Verglichen mit"},
-en:{ctxA:"Code compares all {n} limitations in DE/FR/IT, no model. Each issue needs one decision: which version matches BAG's decision.",export:"Export",ctxD:"Past changes, already published by BAG; the drafts are for translators.",whereS:"Decisions stay in this browser until exported.",backList:"List",slotsT:"Show number slots",famChange1:"1 change",aThen:"Then",aOr:"Or",aboutH:"About this register",aBind:"What counts is the version that matches BAG's decision; which one that is, the audit cannot know.",
+en:{ctxAud:"Code compares all {n} limitations in DE/FR/IT, no model. Each issue needs one decision: which version matches BAG's decision.",export:"Export",ctxD:"Past changes, already published by BAG; the drafts are for translators.",whereS:"Decisions stay in this browser until exported.",backList:"List",slotsT:"Show number slots",famChange1:"1 change",aThen:"Then",aOr:"Or",aboutH:"About this register",aBind:"What counts is the version that matches BAG's decision; which one that is, the audit cannot know.",
  aKnownHeadS:"Listed by our earlier census · {k} of {n} found",aTermHeadS:"Terminology · {n}",aWhat:"What differs",aDating:"Since when",aNote2:"Note",aTermL:"Term",
  aTexts:"The texts",aActL:"Actions and note",saveNextI:"Save, next issue",keysA:"j/k or ↑/↓ move · Ctrl/Cmd+Enter save and next",lane:"Lane",laneM:"Method",comparedW:"Compared with"},
-fr:{ctxA:"Le code compare les {n} limitations en DE/FR/IT, sans modèle. Chaque cas demande une décision : quelle version correspond à la décision de l'OFSP.",export:"Exporter",ctxD:"Modifications passées, déjà publiées par l'OFSP ; les brouillons sont destinés aux traducteurs.",whereS:"Les décisions restent dans ce navigateur jusqu'à leur exportation.",backList:"Liste",slotsT:"Afficher les emplacements",famChange1:"1 modification",aThen:"Ensuite",aOr:"Ou",aboutH:"À propos de ce registre",aBind:"Ce qui compte est la version conforme à la décision de l'OFSP ; laquelle, l'audit ne peut pas le savoir.",
+fr:{ctxAud:"Le code compare les {n} limitations en DE/FR/IT, sans modèle. Chaque cas demande une décision : quelle version correspond à la décision de l'OFSP.",export:"Exporter",ctxD:"Modifications passées, déjà publiées par l'OFSP ; les brouillons sont destinés aux traducteurs.",whereS:"Les décisions restent dans ce navigateur jusqu'à leur exportation.",backList:"Liste",slotsT:"Afficher les emplacements",famChange1:"1 modification",aThen:"Ensuite",aOr:"Ou",aboutH:"À propos de ce registre",aBind:"Ce qui compte est la version conforme à la décision de l'OFSP ; laquelle, l'audit ne peut pas le savoir.",
  aKnownHeadS:"Recensés par notre inventaire antérieur · {k} sur {n} trouvés",aTermHeadS:"Terminologie · {n}",aWhat:"Ce qui diverge",aDating:"Depuis quand",aNote2:"Remarque",aTermL:"Terme",
  aTexts:"Les textes",aActL:"Mesures et remarque",saveNextI:"Enregistrer, cas suivant",keysA:"j/k ou ↑/↓ naviguer · Ctrl/Cmd+Entrée enregistrer et continuer",lane:"Voie",laneM:"Méthode",comparedW:"Comparé avec"},
-it:{ctxA:"Il codice confronta tutte le {n} limitazioni in DE/FR/IT, senza modello. Ogni caso chiede una decisione: quale versione è conforme alla decisione dell'UFSP.",export:"Esporta",ctxD:"Modifiche passate, già pubblicate dall'UFSP; le bozze sono per i traduttori.",whereS:"Le decisioni restano in questo browser finché non vengono esportate.",backList:"Elenco",slotsT:"Mostra i segnaposto",famChange1:"1 modifica",aThen:"Poi",aOr:"Oppure",aboutH:"Informazioni su questo registro",aBind:"Conta la versione conforme alla decisione dell'UFSP; quale sia, la verifica non può saperlo.",
+it:{ctxAud:"Il codice confronta tutte le {n} limitazioni in DE/FR/IT, senza modello. Ogni caso chiede una decisione: quale versione è conforme alla decisione dell'UFSP.",export:"Esporta",ctxD:"Modifiche passate, già pubblicate dall'UFSP; le bozze sono per i traduttori.",whereS:"Le decisioni restano in questo browser finché non vengono esportate.",backList:"Elenco",slotsT:"Mostra i segnaposto",famChange1:"1 modifica",aThen:"Poi",aOr:"Oppure",aboutH:"Informazioni su questo registro",aBind:"Conta la versione conforme alla decisione dell'UFSP; quale sia, la verifica non può saperlo.",
  aKnownHeadS:"Censiti dal nostro inventario precedente · {k} su {n} trovati",aTermHeadS:"Terminologia · {n}",aWhat:"Che cosa diverge",aDating:"Da quando",aNote2:"Nota",aTermL:"Termine",
  aTexts:"I testi",aActL:"Misure e nota",saveNextI:"Salva, caso successivo",keysA:"j/k o ↑/↓ spostarsi · Ctrl/Cmd+Invio salva e continua",lane:"Corsia",laneM:"Metodo",comparedW:"Confrontato con"}};
 Object.keys(TX5).forEach(function(L){Object.keys(TX5[L]).forEach(function(k){TX[L][k]=TX5[L][k]})});
@@ -791,7 +792,8 @@ function chrome(){
  selF("f-status",t("status"),[["open",t("open")],["ready",t("ready")],["check",t("fCheck")],["fine",t("fFine")],["flagged",t("flagged")],["divergent",t("divF")],["decided",t("decidedF")],["all",t("all")]],F.status,function(v){F.status=v;renderReg()});
  selF("f-lang",t("language"),[["all","FR+IT"],["fr","FR"],["it","IT"]],F.lang,function(v){F.lang=v;if(v!=="all")focusL=v;famBar();renderReg();renderCase()});
  var fs=$("f-fam");fs.innerHTML="";fs.appendChild(new Option(t("allFam")+" ("+D.families.length+")",""));
- D.families.forEach(function(f){var o=new Option(f[2]+" · "+f[1],f[0]);o.title=t("family")+" "+f[0];fs.appendChild(o)});fs.value=F.fam;$("f-q").placeholder=t("search");famBar();
+ D.families.forEach(function(f){var nm=String(f[2]).split(/,| \+\d/)[0],more=String(f[2]).indexOf(",")>=0||/\+\d/.test(f[2]);
+  var o=new Option(short(nm,32)+(more?" …":"")+" · "+f[1],f[0]);o.title=f[2];fs.appendChild(o)});fs.value=F.fam;$("f-q").placeholder=t("search");famBar();
  $("h-prod").textContent=t("product");$("h-chg").textContent=t("change");
  $("x-xlf").textContent=t("xlf");$("x-xlf12").textContent=t("xlf12");$("x-copy").textContent=t("copy");$("x-imp").textContent=t("imp");
  $("reg-key").innerHTML=keyHTML(t("keyReg").filter(function(k){return ["✓","▲","~","≠"].indexOf(k[0])>=0}).map(function(k){return [k[0],k[1].split(",")[0]]}));
@@ -842,7 +844,7 @@ function aStatus(d){if(!d||!d.at)return t("openSt");var day=ddate(d.at.slice(0,1
 function dating(x){if(!x)return "";if(x.earliest&&x.n===x.m)return fmt(t("dA"),{n:x.n,d:ddate(x.first)});
  if(x.prev&&x.n===x.m)return fmt(t("dB"),{p:ddate(x.prev),d:ddate(x.first),n:x.n});return fmt(t("dC"),{d:ddate(x.first),n:x.n,m:x.m==null?"?":x.m})}
 function chromeAudit(){var m=AU.meta,nf=AU.rows.length;
- $("ctxline").innerHTML="<b>"+esc(fmt(t("drawA"),{d:ddate(m.date)}))+".</b> "+esc(fmt(t("ctxA"),{n:grp(m.n_limitations)}));
+ $("ctxline").innerHTML="<b>"+esc(fmt(t("drawA"),{d:ddate(m.date)}))+".</b> "+esc(fmt(t("ctxAud"),{n:grp(m.n_limitations)}));
  var bk=m.by_kind?Object.keys(m.by_kind).filter(function(k){return k!=="terminology"}).map(function(k){return m.by_kind[k]+" "+(t("kinds")[k]||k)}).join(", "):"";
  kv("kv-l",[[t("aSnap"),ddate(m.date)],[t("aChecked"),m.n_limitations!=null?grp(m.n_limitations):"—"],
   [t("aFindings"),fmt(t("aFindingsV"),{a:m.main,b:bk,t:m.term,n:IS.length}).replace(" ()","")],[t("laneM"),t("laneA")]]);
@@ -1208,7 +1210,7 @@ function xliff(L){var trg=L==="fr"?"fr-CH":"it-CH",u=[],X=D.xn[L],nd=0,colon=L==
   // the unit notes of emit/xliff.py (verdict, at most three plain reasons, change), the old texts, then the one low-priority checks note
   var prev=note("de-old","context:previous-source","source",5,fmt(X.prev_de,{t:g.deOld}).replace(" : ",colon))+
    note("tgt-old","context:previous-target","target",5,fmt(X.prev_tgt,{t:plain(it.segs,true)}).replace(" : ",colon)),notes="";
-  it.xn.forEach(function(n){if(n[0]==="checks"||n[0]==="termbase"){notes+=prev;prev=""}notes+=note(n[0],n[1],n[2],n[3],n[4])});notes+=prev;
+  it.xn.forEach(function(n){if(n[0]==="checks"||n[0]==="termbase"||n[0]==="notes"){notes+=prev;prev=""}notes+=note(n[0],n[1],n[2],n[3],n[4])});notes+=prev;
   if(d){var why=[d.reason,d.note].filter(Boolean).join("; ");notes+=note("review","gleichlaut:review","target",1,fmt(X.review,{d:X.dec[d.decision]||d.decision}).replace(" : ",colon)+" ("+d.at+")"+(why?colon+why:""))}
   var src=g.deNew,beads=text==null?it.bd.map(function(b){return [b[0],b[1],0,0]}):edited?[[0,src.length,0,text.length]]:it.bd,nums=edited?[]:it.nm,c=0,n=0,sx="";
   beads.forEach(function(b,k){sx+='<segment id="s'+(k+1)+'" state="'+st[0]+'" subState="'+st[1]+'"><source>'+inl(src,b[0],b[1],g.ch,function(){c++;return '<mrk id="c'+c+'" type="gleichlaut:changed">'})+"</source>"+
@@ -1236,7 +1238,7 @@ function xliff12(L){var trg=L==="fr"?"fr-CH":"it-CH",u=[],X=D.xn[L],nd=0,colon=L
    '<seg-source xml:lang="de-CH">'+beads.map(function(b,k){return '<mrk mtype="seg" mid="'+(k+1)+'">'+sm(b[0],b[1])+"</mrk>"}).join("")+"</seg-source>";
   if(text!=null)h+='<target state="'+state+'" xml:lang="'+trg+'">'+beads.map(function(b,k){return '<mrk mtype="seg" mid="'+(k+1)+'">'+inl(text,b[2],b[3],code,prot)+"</mrk>"}).join("")+"</target>";
   var prev12=note12("source",5,fmt(X.prev_de,{t:g.deOld}).replace(" : ",colon))+note12("target",5,fmt(X.prev_tgt,{t:plain(it.segs,true)}).replace(" : ",colon));
-  it.xn.forEach(function(n){if(n[0]==="checks"||n[0]==="termbase"){h+=prev12;prev12=""}h+=note12(n[2],n[3],n[4],n[0]==="checks"?"gleichlaut-checks":"gleichlaut")});h+=prev12;
+  it.xn.forEach(function(n){if(n[0]==="checks"||n[0]==="termbase"||n[0]==="notes"){h+=prev12;prev12=""}h+=note12(n[2],n[3],n[4],n[0]==="checks"?"gleichlaut-checks":"gleichlaut")});h+=prev12;
   if(d){var why=[d.reason,d.note].filter(Boolean).join("; ");h+=note12("target",1,fmt(X.review,{d:X.dec[d.decision]||d.decision}).replace(" : ",colon)+" ("+d.at+(d.by?", "+d.by:"")+")"+(why?colon+why:""))}
   h+='<alt-trans alttranstype="previous-version" origin="SL previous version" tool-id="gleichlaut"><source xml:lang="de-CH">'+x(g.deOld)+'</source><target xml:lang="'+trg+'">'+x(plain(it.segs,true))+"</target></alt-trans></trans-unit>";
   u.push(h)});

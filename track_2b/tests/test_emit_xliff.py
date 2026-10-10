@@ -52,7 +52,8 @@ def test_units_carry_verdict_draft_and_context():
 
 def test_at_most_three_plain_reasons_and_one_checks_note():
     """Translator-facing notes: at most three reasons without internal codes; every finding is still in the unit (the
-    rest, and the raw guard output with its codes, in one note category gleichlaut:checks, priority 10)."""
+    low-priority notes in one note category gleichlaut:note, priority 8; the rest, and the raw guard output with its
+    codes, in one note category gleichlaut:checks, priority 10)."""
     meta, views = load("fresh166"); d = tempfile.mkdtemp(prefix="gl-xlf-all-"); V = {v["key"]: v for v in views}
     code = re.compile(r"\b(?:r[èe]gle|regola) T\d|\bT[1-8]\b|\bG\d[a-z]?\b|\b(?:Lock|Slots):")
     n_notes = []
@@ -61,28 +62,57 @@ def test_at_most_three_plain_reasons_and_one_checks_note():
             v = V[u.get("id")]; N = list(u.find(X + "notes"))
             tb = [n for n in N if n.get("category") == "gleichlaut:termbase"]      # termbase advisory: its own note
             assert len(tb) <= 1 and all(n.get("priority") == "9" for n in tb); n_notes.append(len(N) - len(tb))
-            reasons = [n for n in N if n.get("category") in ("gleichlaut:finding", "gleichlaut:divergence", "gleichlaut:model-numbers")]
+            reasons = [n for n in N if n.get("category") in ("gleichlaut:finding", "gleichlaut:divergence", "gleichlaut:model-numbers",
+                                                             "gleichlaut:summary")]
             checks = [n for n in N if n.get("category") == "gleichlaut:checks"]
+            low = [n for n in N if n.get("category") == "gleichlaut:note"]
             assert len(reasons) <= 3 and len(checks) == (1 if any(f.get("detail") for f in v["findings"]) else 0)
             assert all(not code.search(n.text) for n in N if n.get("category") != "gleichlaut:checks"), u.get("id")
             R = xliff.reasons(v)
             assert len([x for x in R if x["kind"] == "finding"]) == len(v["findings"])          # reworded, never dropped
-            assert [n.text for n in reasons] == [x["text"] for x in R[:3]]
+            assert [n.text for n in reasons] == [x["text"] for x in xliff.top(R)]
+            assert len(low) <= 1 and all(n.get("priority") == "8" and x["text"] in n.text for n in low for x in xliff.notes(R))
+            assert bool(low) == bool(xliff.notes(R))
             if checks:
-                assert checks[0].get("priority") == "10" and all(x["text"] in checks[0].text for x in R[3:])
+                assert checks[0].get("priority") == "10" and all(x["text"] in checks[0].text for x in xliff.rest(R))
                 assert all(explain.clip(f["detail"], 220)[:60] in checks[0].text for f in v["findings"] if f.get("detail"))
-            assert [n.get("priority") for n in reasons] == ["3" if x["low"] else "1" for x in R[:3]]
-    assert max(n_notes) <= 8 and len(n_notes) == len(views)
+            assert [n.get("priority") for n in reasons] == ["3" if x["low"] else "1" for x in xliff.top(R)]
+            assert not any(x.get("tally") and x["rule"] for x in xliff.top(R))      # a probably-fine count never takes a slot
+            if v["status"] == "flagged": assert reasons, u.get("id")              # a flagged draft always says why
+    assert max(n_notes) <= 9 and len(n_notes) == len(views)
 
 
 def test_deletion_matching_the_german_is_a_low_priority_question():
     V = {v["key"]: v for v in load("fresh166")[1]}
-    v = V["wb004-fr"]; R = xliff.reasons(v)                  # German replaced "Nach 52 Wochen …"; the draft drops its French
-    x = next(r for r in R if r["gid"] == "g3")
-    assert x["low"] and x["text"].startswith("Suppression conforme à l'allemand\u00a0?") and "Nach 52 Wochen" in x["text"]
-    assert v["status"] == "flagged"                                                    # the verdict is untouched
-    v = V["wb008-fr"]                                        # German only inserts a sentence: a real loss stays an error
-    assert any(r["gid"] == "g3" and not r["low"] and r["text"].startswith("Le brouillon supprime davantage") for r in xliff.reasons(v))
+    for k, de in (("wb004-fr", "Nach 52 Wochen"), ("wb008-fr", "Dosierungsschema"), ("wb076-fr", "glykämische Kontrolle")):
+        v = V[k]; R = xliff.reasons(v)                     # the German drops a sentence; the draft drops its French
+        G = [r for r in R if r["gid"] == "g3"]
+        assert G and all(r["tier"] != "reason" and r["low"] for r in G), k
+        x = next(r for r in G if r["tier"] == "note")
+        assert x["text"].startswith("Suppression conforme à l'allemand\u00a0? À vérifier") and de in x["text"], (k, x["text"])
+        assert not any(r["gid"] == "g3" for r in xliff.top(R)) and x in xliff.notes(R)
+        assert v["status"] == "flagged"                                                # the verdict is untouched
+    v = V["wb067-fr"]                         # lost words outside what the German removes: still a reason to check
+    assert any(r["gid"] == "g3" and r["tier"] == "reason" and r["text"].startswith("Le brouillon supprime davantage") for r in xliff.reasons(v))
+    E = xliff.explanation(V["wb004-fr"])
+    assert "Suppression conforme" in E["note"] and "plus ( sans modèle de" in E["note"] and "caisse maladie" in E["note"]
+
+
+def test_mirror_is_decided_by_aligned_position_not_by_word_counts():
+    de0 = "Die Therapie wird vergütet. Dosierungsschema und Dosierung sollen nach Angaben der Fachinformation erfolgen. Nur bis zur Progression."
+    de1 = "Die Therapie wird vergütet. Nur bis zur Progression. Der Indikationscode ist zu übermitteln."
+    fr0 = "Le traitement est remboursé. Le schéma posologique et la posologie doivent suivre l'information professionnelle. Seulement jusqu'à progression."
+    x = dict(lang="fr", de_old=de0, de_new=de1, tgt_old=fr0)
+    from gleichlaut import core
+    ops = list(explain._de_ops(de0, de1))
+    out = "Le traitement est remboursé. Seulement jusqu'à progression. Le code d'indication doit être transmis."
+    bag = "schéma posologique posologie suivre information professionnelle"
+    m = explain.mirror(x, out, ops, bag)
+    assert m["mirrored"] == m["lost"] == 6 and m["de"].startswith("Dosierungsschema")       # same sentence: mirrored
+    out2 = "Le schéma posologique et la posologie doivent suivre l'information professionnelle. Seulement jusqu'à progression. Le code d'indication doit être transmis."
+    m2 = explain.mirror(x, out2, ops, "traitement remboursé")
+    assert m2["mirrored"] == 0                          # the draft drops a sentence the German keeps: not mirrored
+    assert core.lock.norm(out) != core.lock.norm(out2)
 
 
 def test_sentence_segments_and_changed_marks():

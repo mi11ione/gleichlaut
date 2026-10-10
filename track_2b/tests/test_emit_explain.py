@@ -84,6 +84,37 @@ def test_decimal_separator_hint():
     assert t and "separatore decimale" in t[0]
 
 
+
+def test_change_applied_names_what_is_checked_not_unrelated_pairs():
+    V = _views()
+    g2 = [f["text"] for f in V["wb057-fr"]["findings"] if f["gid"] == "g2"]
+    assert g2 and not any("Das Dosierungsschema" in t and "Kostengutsprache" in t for t in g2)
+    assert any(t.startswith("L'allemand ajoute ou réécrit ici la phrase") and "Indikationscode (20481.XX) zu enthalten" in t for t in g2)
+    g2 = [f["text"] for f in V["wb080-fr"]["findings"] if f["gid"] == "g2"]
+    assert any("Neurogenic Detrusor Overactivity" in t for t in g2) and not any("Spina bifida" in t for t in g2)
+    assert explain.related("Zeitpunkt", "Zeit-punkt") and explain.related("Monaten", "Monate") and explain.related("48 Wochen", "18 Monaten")
+    assert not explain.related("Kombination", "Indikationen") and not explain.related("Das Dosierungsschema", "Eine Kostengutsprache")
+    x = dict(lang="fr", de_old="Die Therapie wird vergütet.", de_new="Die Therapie wird vergütet. Folgender Code ist an den Krankenversicherer zu übermitteln: 21242.01")
+    t = explain.g2_text("fr", "add", x, "", "Folgender Code ist an den Krankenversicherer zu übermitteln: 21242.01", None, (28, len(x["de_new"])))
+    assert t.startswith("L'allemand ajoute ou réécrit ici la phrase") and "Krankenversicherer zu übermitteln" in t, t
+    assert explain.g2_text("it", "remove", dict(x, de_old="a b"), "nicht adäquat", "", (0, 3), None).startswith("La soppressione tedesca di «nicht adäquat»")
+
+
+def test_typography_the_draft_introduces_is_named_once():
+    old = "Dermatite atopique – adultes et adolescents (sans modèle de prix) et/ou enfants."
+    T = explain.typography(old, "Dermatite atopique – adultes et adolescents ( sans modèle de prix ) et / ou enfants , dès 12 ans. . Fin.")
+    assert [k for k, _ in T] == ["open", "close", "comma", "slash", "double"] and "( sans modèle" in T[0][1]
+    assert explain.typography(old, old) == [] and explain.typography("a ( b )", "a ( b ) c") == []      # already in the old text
+    assert explain.typography("Prix 1.5 mg… voir p. 3", "Prix 1.5 mg… voir p. 3 ; « ici » : là ! oui ?") == []     # French spacing is correct
+
+
+def test_counts_explained_by_sentences_both_remove():
+    V = _views()
+    v = V["wb004-fr"]                        # German drops 'Nemolizumab wird nicht …' and two more sentences, the draft too
+    f = next(f for f in v["findings"] if f["detail"].startswith("Slots: neg"))
+    assert explain.tally_mirrored(v, v["draft"], f["detail"])
+    assert not explain.tally_mirrored(v, v["draft"], "Slots: nums DE +{} -{}, target +{} -{}")
+
 if __name__ == "__main__":
     fs = [(n, f) for n, f in sorted(globals().items()) if n.startswith("test_") and callable(f)]
     for n, f in fs: f(); print("ok", n)

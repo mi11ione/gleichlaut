@@ -16,7 +16,7 @@ something different in each language is a condition nobody can apply consistentl
 - **The 70B where an endpoint you control is available:** 42.4% fewer token edits, ready drafts that rarely need a fix
   to the amendment (3 of 66), at **CHF 0.0024 per draft**.
 - **The audit needs no model at all:** it reduces 1,688 limitations to 27 findings, including the 10 divergences an
-  earlier census had listed, and finds 77.2% of 1,000 divergences planted into clean texts.
+  earlier census had listed; within its scope (numbers bound to a unit) it finds 93.0% of planted changes.
 - **Every number is checkable:** `cd track_2b && make run` (Docker, CPU, about a minute, no network) re-runs every
   recorded Apertus request and re-derives every figure; `make local-run` does the same without Docker.
 

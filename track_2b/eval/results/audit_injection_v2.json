@@ -1,0 +1,4886 @@
+{
+ "generated_by": "python3 tools/audit_inject.py --protocol v2",
+ "model_calls": 0,
+ "network": false,
+ "date": "20261006",
+ "seed": 20261011,
+ "protocol": {
+  "written": "PROTOCOL v2 in the tools/audit_inject.py docstring, before the first v2 run; v1 and the audit's rules unchanged",
+  "why": "v1 sites are 'a number followed by a unit word' (the audit's own R2 binding) and v1 planted no operator flips",
+  "register": "public SL feed 20261006: 1688 limitations, 1624 distinct DE/FR/IT text triples",
+  "eligible": "one representative per distinct triple, no baseline finding of any kind: 1597 limitations (27 triples with a baseline finding excluded)",
+  "sampling": "per type and target language (fr, it): random.Random('20261011:<type>:<lang>') shuffle, first 100 with a site; one fault per copy",
+  "number_tokens": "this file's NUM2/NUMW2 patterns: digit tokens not glued to a preceding letter, dates, number words 2..12 (not hyphen-joined); excluded only: BAG indication codes (ddddd.dd, ddddd.XX), Index Therapeuticus group codes (after 'I.T.', or zero-padded dd.dd), other multi-separator references (RS 832.112.31)",
+  "number_tokens_in_eligible_pool": {
+   "fr": {
+    "excluded: IT group code": 25,
+    "excluded: indication code": 615,
+    "excluded: multi-separator reference": 7,
+    "site: date": 19,
+    "site: digit": 2563,
+    "site: list": 86,
+    "site: v1_site": 3205,
+    "site: word": 266
+   },
+   "it": {
+    "excluded: IT group code": 25,
+    "excluded: indication code": 616,
+    "excluded: multi-separator reference": 7,
+    "site: date": 19,
+    "site: digit": 2461,
+    "site: list": 97,
+    "site: v1_site": 3271,
+    "site: word": 228
+   }
+  },
+  "types": {
+   "number_any": "one number token drawn uniformly from all included tokens of the target, changed as v1 (years +/-1; dates: day or year +/-1)",
+   "number_word": "one number word 2..12 anywhere in the target changed to another (v1 rule)",
+   "operator": "one comparison operator within 25 characters of a number (same sentence) flipped: fr: <, >, au maximum, au minimum, au moins, au plus, inférieur, maximum, minimum, moins, plus, supérieur, ≤, ≥; it: <, >, al massimo, almeno, inferior, massim, meno, minim, oltre, più, sotto, superior, ≤, ≥",
+   "negation": "one negation within 60 characters of a number (same sentence) dropped: fr 'ne/n' ... pas', 'non'; it 'non'"
+  },
+  "detection": {
+   "number_any": "as v1 number: number finding with the new value on the target side or the old value on the German side",
+   "number_word": "as number_any",
+   "operator": "a target-language finding pointing to the place: a number/unit finding naming a value of a number token within 60 characters of the edit, or an editorial/terminology surface within 30 characters",
+   "negation": "as operator",
+   "any": "the limitation has any finding (all were finding-free before the injection)"
+  },
+  "execution": "as v1: register statistics rebuilt from each modified register, shipped terminology pairs, audit.run_all on the copy's limitation; equivalence to a full-register run checked on the 'verification' copies"
+ },
+ "summary": {
+  "injections": 800,
+  "detected": 185,
+  "recall": 0.231,
+  "wilson95": [
+   0.203,
+   0.262
+  ],
+  "note": "pooled over types with equal n per type: a summary of this protocol's mix, not of real error frequencies"
+ },
+ "types": {
+  "number_any": {
+   "n": 200,
+   "detected": 111,
+   "recall": 0.555,
+   "wilson95": [
+    0.486,
+    0.622
+   ],
+   "any_finding": 111,
+   "any_recall": 0.555,
+   "any_wilson95": [
+    0.486,
+    0.622
+   ],
+   "eligible_limitations": {
+    "fr": 1070,
+    "it": 1072
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "detected": 54,
+     "recall": 0.54
+    },
+    "it": {
+     "n": 100,
+     "detected": 57,
+     "recall": 0.57
+    }
+   },
+   "by_subtype": {
+    "date": {
+     "n": 1,
+     "detected": 0
+    },
+    "digit": {
+     "n": 76,
+     "detected": 7
+    },
+    "list": {
+     "n": 1,
+     "detected": 0
+    },
+    "v1_site": {
+     "n": 111,
+     "detected": 104
+    },
+    "word": {
+     "n": 11,
+     "detected": 0
+    }
+   },
+   "also_found_as": {
+    "number": 111
+   },
+   "miss_reasons": {
+    "value not bound to a unit in the audit's parse (R2)": 61,
+    "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)": 15,
+    "reconciled by one": 12,
+    "list numbering: dropped on both sides (R1)": 1
+   },
+   "miss_examples": [
+    {
+     "id": "IMBRUVICA.07",
+     "lang": "fr",
+     "sub": "digit",
+     "before": "eau caractérisé par une translocation t(11;14) et/ou une expression de la cycline ",
+     "after": "eau caractérisé par une translocation t(22;14) et/ou une expression de la cycline ",
+     "reason": "value not bound to a unit in the audit's parse (R2)",
+     "findings": []
+    },
+    {
+     "id": "BIMZELX.01",
+     "lang": "fr",
+     "sub": "digit",
+     "before": "riasis en plaques (uniquement 160 mg/ml 1 seringue/stylo 2 ml prêts à l’emploi ou",
+     "after": "riasis en plaques (uniquement 160 mg/ml 2 seringue/stylo 2 ml prêts à l’emploi ou",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)",
+     "findings": []
+    },
+    {
+     "id": "THYROGEN2",
+     "lang": "fr",
+     "sub": "digit",
+     "before": "Pour le dosage de la Tg à 2 reprises chez les patients porteurs d'u",
+     "after": "Pour le dosage de la Tg à 1 reprises chez les patients porteurs d'u",
+     "reason": "reconciled by one",
+     "findings": []
+    },
+    {
+     "id": "NOXAFIL3",
+     "lang": "fr",
+     "sub": "list",
+     "before": "ase (maladie du greffon contre l'hôte). 2. Fusariose chez des patients adultes ré",
+     "after": "ase (maladie du greffon contre l'hôte). 1. Fusariose chez des patients adultes ré",
+     "reason": "list numbering: dropped on both sides (R1)",
+     "findings": []
+    },
+    {
+     "id": "XELJANZ.02",
+     "lang": "fr",
+     "sub": "digit",
+     "before": "ticostéroïdes, l’azathioprine (AZA), la 6-mercaptopurine (6-MP) ou un antagoniste",
+     "after": "ticostéroïdes, l’azathioprine (AZA), la 7-mercaptopurine (6-MP) ou un antagoniste",
+     "reason": "value not bound to a unit in the audit's parse (R2)",
+     "findings": []
+    },
+    {
+     "id": "IMNOVID.04",
+     "lang": "fr",
+     "sub": "word",
+     "before": "t réfractaire, ayant déjà reçu au moins deux lignes de traitements antérieurs, dont ",
+     "after": "t réfractaire, ayant déjà reçu au moins trois lignes de traitements antérieurs, dont ",
+     "reason": "value not bound to a unit in the audit's parse (R2)",
+     "findings": []
+    },
+    {
+     "id": "POMALI.Sa.03",
+     "lang": "fr",
+     "sub": "word",
+     "before": "nier traitement, ou - ont reçu au moins deux lignes de traitement antérieures inclua",
+     "after": "nier traitement, ou - ont reçu au moins quatre lignes de traitement antérieures inclua",
+     "reason": "value not bound to a unit in the audit's parse (R2)",
+     "findings": []
+    },
+    {
+     "id": "REMSIMA4",
+     "lang": "fr",
+     "sub": "v1_site",
+     "before": " La durée maximale du traitement est de 1 an. Arthrite psoriasique Traitement de ",
+     "after": " La durée maximale du traitement est de 2 an. Arthrite psoriasique Traitement de ",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)",
+     "findings": []
+    }
+   ],
+   "misses": [
+    {
+     "id": "IMBRUVICA.07",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "XELJANZ.02",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "IMNOVID.04",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "BIMZELX.01",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "POMALI.Sa.03",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "REMSIMA4",
+     "lang": "fr",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "BIMZELX.05a",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "AVASTIN3.03a",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "LENALITE.11a",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "TREMFYASP.03",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "VERZENIO.04a",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "DARZALEX.02b",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "PEMETRSA.Kom",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "POMALI.TE.04",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "LENALISA.11a",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "ALYFTREK.01",
+     "lang": "fr",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "KEYTRUDA.10",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "PEMETRTE.03",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "THYROGEN2",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "reconciled by one"
+    },
+    {
+     "id": "LENALIVI.12a",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "SYMDEKO-01",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "MOVENTIG",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "RYBREVANT.04",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "DARZALEX.02c",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "reconciled by one"
+    },
+    {
+     "id": "AMVUTTRA.01a",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "MINJUVI.01a",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "JAYPIRCA.01",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "SPRAVATO.01",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "reconciled by one"
+    },
+    {
+     "id": "ACCOFIL",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "KEYTRUDA.08",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "TECENTR.ein3",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "FLUDARA",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "ZYDELIG2",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "Vi-De-3.L-s",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "reconciled by one"
+    },
+    {
+     "id": "LENALIDOMDEV",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "TEVIMBRA.02",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "RIVA.VIA.vas",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "TRELEGY",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "RIVA.vas.NOB",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "EMT.TEN.M-02",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "ZEMPLAR3",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "Pomali.Sp.03",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "NOXAFIL3",
+     "lang": "fr",
+     "sub": "list",
+     "reason": "list numbering: dropped on both sides (R1)"
+    },
+    {
+     "id": "VYEPTI.01",
+     "lang": "fr",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "KEYTRUDA.18---Inj-L-s---1L-fortgeschrittenes-RCC-KN581",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "IMNOVID.03",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "VITD3SPIRIGK",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "BIMZELX.04b",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "IMJUDO-HCC",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "SUNLENCA.01a",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "Impfung.TP",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "OLUMIANT.02",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "IMFINZI.04a",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "reconciled by one"
+    },
+    {
+     "id": "DARZALEX.01c",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "MIMPARA2",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "IMNOVID.04",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "POMALI.TE.01",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "REMSIMA4",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "BEVACIZU3.03",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "FASENRA.02",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "HAVRIX720",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "IBRANCE.03b",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "WYNZORA",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "BRUKINSA.01",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "TECENTR.03",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "OPDIVO.16---GC-GEJC-OC",
+     "lang": "it",
+     "sub": "date",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "EVRYSDI.01a",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "LENALIDOMID1",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "KEYTRUDA.XX---Inf-Konz",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "DARZALEX.10",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "RIVA.VIA.vas",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "reconciled by one"
+    },
+    {
+     "id": "RYBREVAN.02b",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "PIQRAY",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "reconciled by one"
+    },
+    {
+     "id": "JENTADUETO3",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "ENSTILAR1",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "reconciled by one"
+    },
+    {
+     "id": "KEYTRUDA.08",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "DUPIXENT.10P",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "SYNAGIS5",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "PROLIA3",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "ALYFTREK.01",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "REVLIMID10",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "reconciled by one"
+    },
+    {
+     "id": "AIMOVIG.01",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "GLYXAMBI",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "VICTOZA",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "LONSURF.03",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "reconciled by one"
+    },
+    {
+     "id": "LENALIBM.13",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "reconciled by one"
+    },
+    {
+     "id": "TEPKINLY.01a",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "BESPONSA",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "DARZALEX.08a",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "reconciled by one"
+    }
+   ],
+   "by_category": {
+    "date": {
+     "n": 1,
+     "detected": 0,
+     "recall": 0.0,
+     "wilson95": [
+      0.0,
+      0.793
+     ]
+    },
+    "digit": {
+     "n": 76,
+     "detected": 7,
+     "recall": 0.092,
+     "wilson95": [
+      0.045,
+      0.178
+     ]
+    },
+    "list": {
+     "n": 1,
+     "detected": 0,
+     "recall": 0.0,
+     "wilson95": [
+      0.0,
+      0.793
+     ]
+    },
+    "v1_site": {
+     "n": 111,
+     "detected": 104,
+     "recall": 0.937,
+     "wilson95": [
+      0.876,
+      0.969
+     ]
+    },
+    "word": {
+     "n": 11,
+     "detected": 0,
+     "recall": 0.0,
+     "wilson95": [
+      0.0,
+      0.259
+     ]
+    }
+   },
+   "by_audit_parse": {
+    "bound to a unit (R2)": {
+     "n": 119,
+     "detected": 109,
+     "recall": 0.916,
+     "wilson95": [
+      0.852,
+      0.954
+     ]
+    },
+    "not read as a value": {
+     "n": 1,
+     "detected": 0,
+     "recall": 0.0,
+     "wilson95": [
+      0.0,
+      0.793
+     ]
+    },
+    "unbound (R2: counted, not reported)": {
+     "n": 80,
+     "detected": 2,
+     "recall": 0.025,
+     "wilson95": [
+      0.007,
+      0.087
+     ]
+    }
+   },
+   "note_by_audit_parse": "whether the audit's own parse of the original target binds the planted token to a unit (diagnostic, after the run)"
+  },
+  "number_word": {
+   "n": 200,
+   "detected": 74,
+   "recall": 0.37,
+   "wilson95": [
+    0.306,
+    0.439
+   ],
+   "any_finding": 75,
+   "any_recall": 0.375,
+   "any_wilson95": [
+    0.311,
+    0.444
+   ],
+   "eligible_limitations": {
+    "fr": 277,
+    "it": 279
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "detected": 38,
+     "recall": 0.38
+    },
+    "it": {
+     "n": 100,
+     "detected": 36,
+     "recall": 0.36
+    }
+   },
+   "by_subtype": {
+    "v1_site": {
+     "n": 102,
+     "detected": 73
+    },
+    "word": {
+     "n": 98,
+     "detected": 1
+    }
+   },
+   "also_found_as": {
+    "number": 74,
+    "unit": 1
+   },
+   "miss_reasons": {
+    "value not bound to a unit in the audit's parse (R2)": 77,
+    "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)": 39,
+    "the German does not state the old value either (written differently, e.g. a word or a conversion)": 10
+   },
+   "miss_examples": [
+    {
+     "id": "Pomali.Sp.03",
+     "lang": "fr",
+     "sub": "word",
+     "before": "nier traitement, ou - ont reçu au moins deux lignes de traitement antérieures inclua",
+     "after": "nier traitement, ou - ont reçu au moins quatre lignes de traitement antérieures inclua",
+     "reason": "value not bound to a unit in the audit's parse (R2)",
+     "findings": []
+    },
+    {
+     "id": "ULTOMIR.aHU2",
+     "lang": "fr",
+     "sub": "v1_site",
+     "before": "ation contre les méningocoques au moins deux semaines avant le début du traitement p",
+     "after": "ation contre les méningocoques au moins quatre semaines avant le début du traitement p",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)",
+     "findings": []
+    },
+    {
+     "id": "XIMLUCI.02",
+     "lang": "fr",
+     "sub": "word",
+     "before": "du patient. Le traitement simultané des deux yeux chez un patient nécessite l’autori",
+     "after": "du patient. Le traitement simultané des trois yeux chez un patient nécessite l’autori",
+     "reason": "the German does not state the old value either (written differently, e.g. a word or a conversion)",
+     "findings": []
+    },
+    {
+     "id": "POMALI.De.04",
+     "lang": "fr",
+     "sub": "word",
+     "before": "t réfractaire, ayant déjà reçu au moins deux lignes de traitements antérieurs, dont ",
+     "after": "t réfractaire, ayant déjà reçu au moins quatre lignes de traitements antérieurs, dont ",
+     "reason": "value not bound to a unit in the audit's parse (R2)",
+     "findings": []
+    },
+    {
+     "id": "RIVA.vas.Mep",
+     "lang": "fr",
+     "sub": "word",
+     "before": "ins deux lits vasculaires ou • au moins deux facteurs de risques cardiovasculaires s",
+     "after": "ins deux lits vasculaires ou • au moins trois facteurs de risques cardiovasculaires s",
+     "reason": "value not bound to a unit in the audit's parse (R2)",
+     "findings": []
+    },
+    {
+     "id": "BEOVU.01a",
+     "lang": "fr",
+     "sub": "word",
+     "before": "ule sur une base consensuelle entre les deux partenaires et respecte les conditions ",
+     "after": "ule sur une base consensuelle entre les quatre partenaires et respecte les conditions ",
+     "reason": "the German does not state the old value either (written differently, e.g. a word or a conversion)",
+     "findings": []
+    },
+    {
+     "id": "DUPIXENT.10",
+     "lang": "fr",
+     "sub": "word",
+     "before": "(high-power field, hpf, 0,345 mm²) dans deux biopsies provenant de régions différent",
+     "after": "(high-power field, hpf, 0,345 mm²) dans quatre biopsies provenant de régions différent",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)",
+     "findings": []
+    },
+    {
+     "id": "SARCLISA.01",
+     "lang": "fr",
+     "sub": "word",
+     "before": "t réfractaire, ayant déjà reçu au moins deux lignes de traitements antérieurs, dont ",
+     "after": "t réfractaire, ayant déjà reçu au moins trois lignes de traitements antérieurs, dont ",
+     "reason": "value not bound to a unit in the audit's parse (R2)",
+     "findings": []
+    }
+   ],
+   "misses": [
+    {
+     "id": "Pomali.Sp.03",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "ULTOMIR.aHU2",
+     "lang": "fr",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "POMALI.De.04",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "RIVA.vas.Mep",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "XIMLUCI.02",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "the German does not state the old value either (written differently, e.g. a word or a conversion)"
+    },
+    {
+     "id": "BEOVU.01a",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "the German does not state the old value either (written differently, e.g. a word or a conversion)"
+    },
+    {
+     "id": "DUPIXENT.10",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "SARCLISA.01",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "OMVOHDst.01b",
+     "lang": "fr",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "ELAHERE",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "DUPIXENT.03P",
+     "lang": "fr",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "POMALI.Ac.04",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "REVLIMID.09",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "POMALI.Sa.03",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "OPFOLDA2",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "RIVA.vas.NOB",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "HYMPAVZI.XX",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "the German does not state the old value either (written differently, e.g. a word or a conversion)"
+    },
+    {
+     "id": "IMNOVID.03",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "REPATHA.01a",
+     "lang": "fr",
+     "sub": "v1_site",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "EMPLICITI.02",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "BALVERSA",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "JINARC.01",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "MYNZEPLI.01",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "the German does not state the old value either (written differently, e.g. a word or a conversion)"
+    },
+    {
+     "id": "AIMOVIG.01",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "HEMLIBRA.XXb",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "PAVBLU.01",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "the German does not state the old value either (written differently, e.g. a word or a conversion)"
+    },
+    {
+     "id": "IMNOVID",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "KEYTRUDA.26a---Inj-L-s---KN091",
+     "lang": "fr",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "KEYTRUDA.26",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "RIVASavas.01",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "ONTOZRY.01",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "POMALI.Zent2",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "ALYFTREK.01",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "HALAVEN3",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "NEMLUVIO.03a",
+     "lang": "fr",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "MYOZYME4",
+     "lang": "fr",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "ODOMZO2",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "MOUNJARO.02",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "BEVACIZUM.05",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "DUPIXENT.09P",
+     "lang": "fr",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "LENALI.SP.09",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "POMALI.AcAUS",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "ZIRABEV.05",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "IDEFIRIX",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "NINLARO-01",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "NEXVIADYME2",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "VISUDYNE",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "TRODELVY.02",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "PEMAZYRE",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "TRIKAFTA-75",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "LENALI.SA.09",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "JORVEZA.End",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "the German does not state the old value either (written differently, e.g. a word or a conversion)"
+    },
+    {
+     "id": "VEGZELMA.05",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "RIVA.vas.Spi",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "LUCENTIS3",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "the German does not state the old value either (written differently, e.g. a word or a conversion)"
+    },
+    {
+     "id": "ORKAMBI.tabl",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "CAELYX3",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "TRODELVY.01",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "MOUNJARO.02K",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "LENALI.DE.09",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "VEBLOCEMA",
+     "lang": "fr",
+     "sub": "v1_site",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "RIVA.VIA.vas",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "POMALI.TeAUS",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "BALVERSA",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "ALYFTREK.01",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "GIVLAARI.01",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "REPATHA.01a",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "LONSURF.02",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "BESPONSA",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "ORKAMBI.02",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "CAMZYOS.01",
+     "lang": "it",
+     "sub": "word",
+     "reason": "the German does not state the old value either (written differently, e.g. a word or a conversion)"
+    },
+    {
+     "id": "FAMPYRA",
+     "lang": "it",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "KEYTRUDA.26",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "DUPIXENT.10P",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "ORKAMBI.tabl",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "ZARZIO",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "AVASTIN.05",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "POMALI.TE.03",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "DUPIXENT.09P",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "VYEPTI.01",
+     "lang": "it",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "POMALI.Zent2",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "RIVA.vas.Spi",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "GLASSIA",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "NEXVIADYME2",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "ZOLGENSMA.03",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "NILEMDO.01",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "LENALI.AC.09",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "DUPIXENT.03P",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "EBGLYSS.01",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "POMALI.Ac.03",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "KEYTRUDA.10---Inj-L-s---Klassisches-Hodgkin-Lymphom--Monotherapi",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "JAYPIRCA.02",
+     "lang": "it",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "MOUNJARO.02",
+     "lang": "it",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "RANIVISIO2",
+     "lang": "it",
+     "sub": "word",
+     "reason": "the German does not state the old value either (written differently, e.g. a word or a conversion)"
+    },
+    {
+     "id": "FASENRA.01",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "Pomali.Sp.04",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "DOXORACLI.01",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "POMALI.TE.01",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "TECVAYLI.01",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "KEYTRUDA.26a---Inj-L-s---KN091",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "PROLASTINliq",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "LONSURF.03",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "KEYTRUDA.10",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "VEGZELMA.09",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "POMALI.AcAUS",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "ERIVEDGE2",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "XARELTOVASCU",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "ADCETRIS.02",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "VEBLOCEMA",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "SYMDEKO-01",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "TYSABRI4",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "POMALI.De.03",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "EYLEA.XX",
+     "lang": "it",
+     "sub": "word",
+     "reason": "the German does not state the old value either (written differently, e.g. a word or a conversion)"
+    },
+    {
+     "id": "OPFOLDA2",
+     "lang": "it",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "POMALI.Sa.01",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "KEYTRUDA.XXa---Inj-L-s",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "TALZENNA",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "IMNOVID.01",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "POMALI.TE.04",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "ZIRABEVlynp2",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "DUPIXENT.10",
+     "lang": "it",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "PROLASTIN",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "TRODELVY.01",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "ORKAMBI.gran",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "LENALI.DE.09",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "WINREVAIR.01",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    }
+   ],
+   "by_category": {
+    "v1_site": {
+     "n": 102,
+     "detected": 73,
+     "recall": 0.716,
+     "wilson95": [
+      0.622,
+      0.794
+     ]
+    },
+    "word": {
+     "n": 98,
+     "detected": 1,
+     "recall": 0.01,
+     "wilson95": [
+      0.002,
+      0.056
+     ]
+    }
+   },
+   "by_audit_parse": {
+    "bound to a unit (R2)": {
+     "n": 104,
+     "detected": 73,
+     "recall": 0.702,
+     "wilson95": [
+      0.608,
+      0.781
+     ]
+    },
+    "unbound (R2: counted, not reported)": {
+     "n": 96,
+     "detected": 1,
+     "recall": 0.01,
+     "wilson95": [
+      0.002,
+      0.057
+     ]
+    }
+   },
+   "note_by_audit_parse": "whether the audit's own parse of the original target binds the planted token to a unit (diagnostic, after the run)"
+  },
+  "operator": {
+   "n": 200,
+   "detected": 0,
+   "recall": 0.0,
+   "wilson95": [
+    0.0,
+    0.019
+   ],
+   "any_finding": 0,
+   "any_recall": 0.0,
+   "any_wilson95": [
+    0.0,
+    0.019
+   ],
+   "eligible_limitations": {
+    "fr": 579,
+    "it": 636
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "detected": 0,
+     "recall": 0.0
+    },
+    "it": {
+     "n": 100,
+     "detected": 0,
+     "recall": 0.0
+    }
+   },
+   "by_subtype": {
+    "<->>": {
+     "n": 14,
+     "detected": 0
+    },
+    ">-><": {
+     "n": 13,
+     "detected": 0
+    },
+    "al massimo->almeno": {
+     "n": 7,
+     "detected": 0
+    },
+    "almeno->al massimo": {
+     "n": 28,
+     "detected": 0
+    },
+    "au maximum->au minimum": {
+     "n": 7,
+     "detected": 0
+    },
+    "au minimum->au maximum": {
+     "n": 1,
+     "detected": 0
+    },
+    "au moins->au plus": {
+     "n": 30,
+     "detected": 0
+    },
+    "au plus->au moins": {
+     "n": 4,
+     "detected": 0
+    },
+    "inferior->superior": {
+     "n": 2,
+     "detected": 0
+    },
+    "inférieur->supérieur": {
+     "n": 3,
+     "detected": 0
+    },
+    "massim->minim": {
+     "n": 16,
+     "detected": 0
+    },
+    "maximum->minimum": {
+     "n": 9,
+     "detected": 0
+    },
+    "minim->massim": {
+     "n": 1,
+     "detected": 0
+    },
+    "oltre->sotto": {
+     "n": 2,
+     "detected": 0
+    },
+    "più->meno": {
+     "n": 3,
+     "detected": 0
+    },
+    "plus->moins": {
+     "n": 7,
+     "detected": 0
+    },
+    "superior->inferior": {
+     "n": 10,
+     "detected": 0
+    },
+    "supérieur->inférieur": {
+     "n": 4,
+     "detected": 0
+    },
+    "≤->≥": {
+     "n": 6,
+     "detected": 0
+    },
+    "≥->≤": {
+     "n": 33,
+     "detected": 0
+    }
+   },
+   "also_found_as": {},
+   "miss_reasons": {
+    "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged": 200
+   },
+   "miss_examples": [
+    {
+     "id": "AMVUTTRA.01a",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "before": "ation du score PND et • détérioration d’au moins 2 des critères suivants - Score composi",
+     "after": "ation du score PND et • détérioration d’au plus 2 des critères suivants - Score composi",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged",
+     "findings": []
+    },
+    {
+     "id": "CRESTASTATIN",
+     "lang": "fr",
+     "sub": "supérieur->inférieur",
+     "before": "chez les personnes présentant un risque supérieur à 1% selon la catégorie de risque du GS",
+     "after": "chez les personnes présentant un risque inférieur à 1% selon la catégorie de risque du GS",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged",
+     "findings": []
+    },
+    {
+     "id": "KIMMTRAK.01",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "before": "plications graves de manière intensive. Au moins les trois premières perfusions de KIMMT",
+     "after": "plications graves de manière intensive. Au plus les trois premières perfusions de KIMMT",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged",
+     "findings": []
+    },
+    {
+     "id": "RESPREEZA",
+     "lang": "fr",
+     "sub": "au plus->au moins",
+     "before": "e peut avoir lieu qu’après 18 à 24 mois au plus tôt. Le renouvellement annuel de la gar",
+     "after": "e peut avoir lieu qu’après 18 à 24 mois au moins tôt. Le renouvellement annuel de la gar",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged",
+     "findings": []
+    },
+    {
+     "id": "REMSIMA4",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "before": " avec le méthotrexate, en cas d'échec d'au moins deux DMARD de fond, dont le méthotrexat",
+     "after": " avec le méthotrexate, en cas d'échec d'au plus deux DMARD de fond, dont le méthotrexat",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged",
+     "findings": []
+    },
+    {
+     "id": "CABOMETYX.02",
+     "lang": "fr",
+     "sub": "au maximum->au minimum",
+     "before": "celui du nivolumab est limité à 24 mois au maximum. Le code suivant doit être transmis à l",
+     "after": "celui du nivolumab est limité à 24 mois au minimum. Le code suivant doit être transmis à l",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged",
+     "findings": []
+    },
+    {
+     "id": "DUPIXENT.04P",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "before": "plus de 16 ans ayant une valeur de FeNO ≥ 50 ppb et respectivement chez les patie",
+     "after": "plus de 16 ans ayant une valeur de FeNO ≤ 50 ppb et respectivement chez les patie",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged",
+     "findings": []
+    },
+    {
+     "id": "FLUVASTMEPHA",
+     "lang": "fr",
+     "sub": "plus->moins",
+     "before": "ar statine initié chez les personnes de plus de 75 ans, est remboursé uniquement en p",
+     "after": "ar statine initié chez les personnes de moins de 75 ans, est remboursé uniquement en p",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged",
+     "findings": []
+    }
+   ],
+   "misses": [
+    {
+     "id": "AMVUTTRA.01a",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "CRESTASTATIN",
+     "lang": "fr",
+     "sub": "supérieur->inférieur",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KIMMTRAK.01",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "RESPREEZA",
+     "lang": "fr",
+     "sub": "au plus->au moins",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "REMSIMA4",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "CABOMETYX.02",
+     "lang": "fr",
+     "sub": "au maximum->au minimum",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "DUPIXENT.04P",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "FLUVASTMEPHA",
+     "lang": "fr",
+     "sub": "plus->moins",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TEVIMBRA.02",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "EVENITY.01a",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "FABHALTA.01",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.16---Inj-L-s---1L-Persistierendes--rezidivierendes-oder",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "DUPIXENT.08P",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "DOXORACLI.01",
+     "lang": "fr",
+     "sub": "<->>",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "MOVENTIG",
+     "lang": "fr",
+     "sub": "plus->moins",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KISQALI.01",
+     "lang": "fr",
+     "sub": ">-><",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "DIBASE01",
+     "lang": "fr",
+     "sub": "<->>",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "XEOMIN.01a",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "NPLATE4",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KAPRUVIA.01",
+     "lang": "fr",
+     "sub": ">-><",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "YERVOY.02",
+     "lang": "fr",
+     "sub": "maximum->minimum",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ENSPRYNG",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ADCETRIS.01",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "VEKLURY.01a",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ORLISTATSAND",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.03---Inj-L-s---1L-plattenepitheliales-NSCLC-KN407",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "BLINCYTO.04a",
+     "lang": "fr",
+     "sub": "maximum->minimum",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KYPROLIS.06",
+     "lang": "fr",
+     "sub": "maximum->minimum",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "MOUNJARO.01K",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ABEVMY.05a---Ovarialkarzinom",
+     "lang": "fr",
+     "sub": "plus->moins",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "IMBRUVICA.01",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "RIBOMUSTIN2",
+     "lang": "fr",
+     "sub": "au plus->au moins",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ODOMZO2",
+     "lang": "fr",
+     "sub": ">-><",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "RIVASUR.01",
+     "lang": "fr",
+     "sub": "inférieur->supérieur",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.12",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TECENTR.ein3",
+     "lang": "fr",
+     "sub": "au maximum->au minimum",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.26a---Inj-L-s---KN091",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "DUPIXENT.10",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "YERVOY.03",
+     "lang": "fr",
+     "sub": "maximum->minimum",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "RINVOQ.04a",
+     "lang": "fr",
+     "sub": ">-><",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "GAZYVARO.FLr",
+     "lang": "fr",
+     "sub": "maximum->minimum",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "NEMLUVIO.03a",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "LIVTENCIT.01",
+     "lang": "fr",
+     "sub": "maximum->minimum",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ZOLGENSMA.03",
+     "lang": "fr",
+     "sub": ">-><",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "PITAVASTSPIR",
+     "lang": "fr",
+     "sub": "supérieur->inférieur",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "DACEPTON.01a",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "L-POLAMIDON1",
+     "lang": "fr",
+     "sub": ">-><",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "VITAFEDIOL",
+     "lang": "fr",
+     "sub": "<->>",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "AMVUTTRA.02",
+     "lang": "fr",
+     "sub": "au minimum->au maximum",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OPDUALAG.01a",
+     "lang": "fr",
+     "sub": "<->>",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ZUTECTRA2",
+     "lang": "fr",
+     "sub": "au plus->au moins",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TRULICITY2",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "HYMPAVZI.02",
+     "lang": "fr",
+     "sub": "<->>",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "HEMLIBRA.04",
+     "lang": "fr",
+     "sub": "≤->≥",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TECENTR.02",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.01",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "MIMPARA2",
+     "lang": "fr",
+     "sub": "plus->moins",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "VOCABRIAinj",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "JINARC.01",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "BIMZELX.04b",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.02",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "XOLAIR4",
+     "lang": "fr",
+     "sub": "<->>",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TYRUKO.01",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "HYMPAVZI.XX",
+     "lang": "fr",
+     "sub": "au maximum->au minimum",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "120PISL",
+     "lang": "fr",
+     "sub": "au maximum->au minimum",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "POMALI.De.03",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TECENT.L--04",
+     "lang": "fr",
+     "sub": "au maximum->au minimum",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.12---Inj-L-s---3L-rrPMBCL--Monotherapie--KN170",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "POMALI.TE.01",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TECENT.L-.06",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "JORVEZA.Erh2",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TEZSPIREPa.02---CRSwNP",
+     "lang": "fr",
+     "sub": "≤->≥",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "GENOTROPIN-2",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "EZE-ATOR-SPI",
+     "lang": "fr",
+     "sub": "supérieur->inférieur",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "LYNPARZA.04a",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "AVASTIN.05",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "SIMVASTATspr",
+     "lang": "fr",
+     "sub": "plus->moins",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "EzetSimvSpir",
+     "lang": "fr",
+     "sub": "<->>",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ZYDELIG2",
+     "lang": "fr",
+     "sub": "maximum->minimum",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ENTRESTO4",
+     "lang": "fr",
+     "sub": "≤->≥",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "EZE-ATOR-MEP",
+     "lang": "fr",
+     "sub": "supérieur->inférieur",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ALITRETINOIN",
+     "lang": "fr",
+     "sub": "plus->moins",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "REMICADE2",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "IMLYGIC2",
+     "lang": "fr",
+     "sub": "au plus->au moins",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "YERVOY.04",
+     "lang": "fr",
+     "sub": "maximum->minimum",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KALYDECO-150",
+     "lang": "fr",
+     "sub": "inférieur->supérieur",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "MICTONET",
+     "lang": "fr",
+     "sub": "inférieur->supérieur",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ROSUVASTAX",
+     "lang": "fr",
+     "sub": "plus->moins",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "POMALI.AcAUS",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KYPROLIS.02a",
+     "lang": "fr",
+     "sub": "au maximum->au minimum",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "FILGRASTIM",
+     "lang": "fr",
+     "sub": "<->>",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.17",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "STRENSIQ.01",
+     "lang": "fr",
+     "sub": "≤->≥",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "LONSURF.02",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KYPROLIS.03a",
+     "lang": "fr",
+     "sub": "au maximum->au minimum",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "VOCABRIA02",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "RIVA.vas.NOB",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "NAUSEMETCHEM",
+     "lang": "fr",
+     "sub": "maximum->minimum",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "CAELYX3",
+     "lang": "fr",
+     "sub": "<->>",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "Pomali.Sp.01",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OPDIVO.14",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TECENTR.ein3",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ENTRESTO4",
+     "lang": "it",
+     "sub": "≤->≥",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "JAYPIRCA.01",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "DUPIXENT.04P",
+     "lang": "it",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OPDIVO.07---Melanom-adjuvant",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "LENALI.SP.09",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TENKASI.01",
+     "lang": "it",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ORKAMBI.02",
+     "lang": "it",
+     "sub": "superior->inferior",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "FASENRA.01",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "WINREVAIR.01",
+     "lang": "it",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ARANESP5",
+     "lang": "it",
+     "sub": "inferior->superior",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "CIBINQO",
+     "lang": "it",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "SUNLENCA.01",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TRODELVY.02",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "HEMLIBRA.01",
+     "lang": "it",
+     "sub": ">-><",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "POMALI.Sa.03",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.02---Inj-L-s---1L-nicht-plattenepitheliales-NSCLC-KN189",
+     "lang": "it",
+     "sub": "superior->inferior",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "DARZALEX.01b",
+     "lang": "it",
+     "sub": ">-><",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OZEMPIC.01",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.21a---Inj-L-s---KN859",
+     "lang": "it",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.01---Inj-L-s---1L-NSCLC--Monotherapie--KN024",
+     "lang": "it",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.XX---Inf-Konz",
+     "lang": "it",
+     "sub": "al massimo->almeno",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "Eltrombopag-Generika.04a",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TECENTR.06",
+     "lang": "it",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "XOLAIR4",
+     "lang": "it",
+     "sub": "<->>",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "MABTHERA.01",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "HEMLIBRA.04",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "DENOSUME.01",
+     "lang": "it",
+     "sub": "oltre->sotto",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "CAMZYOS.01",
+     "lang": "it",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "MYOZYME4",
+     "lang": "it",
+     "sub": "al massimo->almeno",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "INTELENCE2",
+     "lang": "it",
+     "sub": "superior->inferior",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TRELEGY",
+     "lang": "it",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TECENT.L--04",
+     "lang": "it",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "MAVENCLAD.02---hochaktive-RRMS",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "NUSTENDI.01",
+     "lang": "it",
+     "sub": "superior->inferior",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OMVOHPen.01b",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TEZSPIREF.01",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "LENALI.VI.09",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ZYTIGA4",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "SYMDEKO-01",
+     "lang": "it",
+     "sub": "<->>",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "GIVLAARI.01",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ILARIS.04a",
+     "lang": "it",
+     "sub": "più->meno",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "VERZENIO.01a",
+     "lang": "it",
+     "sub": "superior->inferior",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "SPEVIGO.01",
+     "lang": "it",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "REMINYL",
+     "lang": "it",
+     "sub": "inferior->superior",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "JARDIANCE-MET.01",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "SOGROYA.01",
+     "lang": "it",
+     "sub": "superior->inferior",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "D3VITACAPS",
+     "lang": "it",
+     "sub": "<->>",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "XARELTO98-3",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "GAZYVARO.FLr",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "QARZIBA.01",
+     "lang": "it",
+     "sub": "superior->inferior",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ADENURIC",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ZYDELIG2",
+     "lang": "it",
+     "sub": "al massimo->almeno",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TRUQAP",
+     "lang": "it",
+     "sub": "più->meno",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "PRAVASTMepha",
+     "lang": "it",
+     "sub": "superior->inferior",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KYPROLIS.02a",
+     "lang": "it",
+     "sub": "al massimo->almeno",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ZIRABEV.05",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "POMALI.TE.04",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "FORXIGA.HFPM",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "MABTHERA.03a",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ALYFTREK.01",
+     "lang": "it",
+     "sub": "<->>",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "HEMLIBRA.03",
+     "lang": "it",
+     "sub": "≤->≥",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "EUTHYROX",
+     "lang": "it",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "IMNOVID.04",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OPDIVO.12",
+     "lang": "it",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "EVFRAXY.01",
+     "lang": "it",
+     "sub": "oltre->sotto",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "SELINCRO",
+     "lang": "it",
+     "sub": ">-><",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "L-POLAMIDON2",
+     "lang": "it",
+     "sub": ">-><",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "VISUDYNE",
+     "lang": "it",
+     "sub": "al massimo->almeno",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ANDEMBRY",
+     "lang": "it",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "DARZALEX.06",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ABEVMY.09a---Ovarialkarzinom-2L",
+     "lang": "it",
+     "sub": "minim->massim",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ZOLGENSMA.03",
+     "lang": "it",
+     "sub": ">-><",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "BLINCYTO.01a",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TAFINLAR.02",
+     "lang": "it",
+     "sub": ">-><",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OPDIVO.18",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TECENT.L-.02",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "REPATHA.01a",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "LONSURF.03",
+     "lang": "it",
+     "sub": "al massimo->almeno",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "MOUNJARO.02K",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "VEGZELMA.05",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "MOUNJARO.02",
+     "lang": "it",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "RIVA.VIA.vas",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "DOPTELET",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.02",
+     "lang": "it",
+     "sub": ">-><",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ORLISTATSPIR",
+     "lang": "it",
+     "sub": "al massimo->almeno",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OMVOHDst.01b",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ROSUVASTSand",
+     "lang": "it",
+     "sub": "superior->inferior",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.24",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "COLPERMIN",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "QUTENZA6",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "JORVEZA.Ind2",
+     "lang": "it",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ILARIS.05a",
+     "lang": "it",
+     "sub": "più->meno",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "EZETSIMVZent",
+     "lang": "it",
+     "sub": "<->>",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "COSENTYX.04",
+     "lang": "it",
+     "sub": "superior->inferior",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "MOVENTIG",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "IMBRUVICA.01",
+     "lang": "it",
+     "sub": "≥->≤",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ATRIANCE",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no rule looks at a comparison operator: numbers, units, language, typos and terms are unchanged"
+    }
+   ]
+  },
+  "negation": {
+   "n": 200,
+   "detected": 0,
+   "recall": 0.0,
+   "wilson95": [
+    0.0,
+    0.019
+   ],
+   "any_finding": 0,
+   "any_recall": 0.0,
+   "any_wilson95": [
+    0.0,
+    0.019
+   ],
+   "eligible_limitations": {
+    "fr": 244,
+    "it": 311
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "detected": 0,
+     "recall": 0.0
+    },
+    "it": {
+     "n": 100,
+     "detected": 0,
+     "recall": 0.0
+    }
+   },
+   "by_subtype": {
+    "ne_pas": {
+     "n": 68,
+     "detected": 0
+    },
+    "non": {
+     "n": 132,
+     "detected": 0
+    }
+   },
+   "also_found_as": {},
+   "miss_reasons": {
+    "no rule looks at a negation: numbers, units, language, typos and terms are unchanged": 200
+   },
+   "miss_examples": [
+    {
+     "id": "OZEMPIC.01",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "before": "ont remboursés seulement si la glycémie n'est pas suffisamment contrôlée avec 1 mg de sém",
+     "after": "ont remboursés seulement si la glycémie est suffisamment contrôlée avec 1 mg de sém",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged",
+     "findings": []
+    },
+    {
+     "id": "EPIDYOLEX.03",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "before": " si la fréquence des crises convulsives n'a pas diminué d'au moins 30% par rapport aux ",
+     "after": " si la fréquence des crises convulsives a diminué d'au moins 30% par rapport aux ",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged",
+     "findings": []
+    },
+    {
+     "id": "ALITRETINOIN",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "before": "s 12 premières semaines, c) si l'eczéma n'est pas amélioré significativement au bout de 2",
+     "after": "s 12 premières semaines, c) si l'eczéma est amélioré significativement au bout de 2",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged",
+     "findings": []
+    },
+    {
+     "id": "PROLASTINliq",
+     "lang": "fr",
+     "sub": "non",
+     "before": " période sans exacerbation. • Status de non-fumeur depuis au moins six mois avant le",
+     "after": " période sans exacerbation. • Status de fumeur depuis au moins six mois avant le",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged",
+     "findings": []
+    },
+    {
+     "id": "WEGOVY.01---Erwachsene",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "before": "5%, resp. 7%, du poids corporel initial n’avait pas été obtenue lors d’un premier traitemen",
+     "after": "5%, resp. 7%, du poids corporel initial avait été obtenue lors d’un premier traitemen",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged",
+     "findings": []
+    },
+    {
+     "id": "PEMETRVI.02",
+     "lang": "fr",
+     "sub": "non",
+     "before": "NPC) localement avancé ou métastatique, non épidermoïde avec délétions de l’exon 19 ",
+     "after": "NPC) localement avancé ou métastatique, épidermoïde avec délétions de l’exon 19 ",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged",
+     "findings": []
+    },
+    {
+     "id": "XARELTOVASCU",
+     "lang": "fr",
+     "sub": "non",
+     "before": "Accident vasculaire cérébral ischémique non lacunaire ≥1 mois - Tabagisme La prolong",
+     "after": "Accident vasculaire cérébral ischémique lacunaire ≥1 mois - Tabagisme La prolong",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged",
+     "findings": []
+    },
+    {
+     "id": "OLUMIANT.02",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "before": "0 ou score EASI ≥ 21.1) si ces patients ne répondent pas de façon adéquate à un traitement local",
+     "after": "0 ou score EASI ≥ 21.1) si ces patients répondent de façon adéquate à un traitement local",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged",
+     "findings": []
+    }
+   ],
+   "misses": [
+    {
+     "id": "OZEMPIC.01",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "EPIDYOLEX.03",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ALITRETINOIN",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "PROLASTINliq",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "WEGOVY.01---Erwachsene",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "PEMETRVI.02",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "XARELTOVASCU",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OLUMIANT.02",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "DUPIXENT.01",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "SPEVIGO.01",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TRODELVY.02",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "EzetSimvSpir",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TECENT.L--05",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "LENALIDOMbms",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ZENON.01",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "SYNAGIS5",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "DUPIXENT.08",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "EZETIMIB",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TOCILIZSP.03",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OPDIVO.13--",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "LYNPARZA.02",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "LENALIDOMTEV",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.02---Inj-L-s---1L-nicht-plattenepitheliales-NSCLC-KN189",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "BESPONSA",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "WEZENLA.01",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "AMVUTTRA.01a",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OYAVAS.02",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TAGRISSO.03",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "VEKLURY.01a",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "PEMETRSA.02",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "HUMIRA6",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ORLISTATSPIR",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OPDIVO.16---GC-GEJC-OC",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "YERVOY.05",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "EZE-ATOR-SAN",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "XENICAL",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "RESOLOR3",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ZYDELIG2",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "CARMENTHIN",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "VEGZELMA.05",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "MOUNJARO.02",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "HEMGENIX.01---H-mophilie-B-bei-M-nner",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "LENALIDOMVIA",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.14a",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "MVASI.05",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "0808-NEU",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "VEGZELMA.09",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ADTRALZA.01b",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "EZETROL",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "AGIOLAXGRAND",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "CUPRIOR",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "CIBINQO",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OPDIVO.14",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "STRATTERA2",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.14---Inj-L-s---2L-CRC-mit-hoher-MSI-H--Monotherapie--KN",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TECENTR.ein3",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "HULIO4",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "SPINRAZA.01",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ONPATTRO-1",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "IXIFI.04",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ENSTILAR1",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "AMGEVITA-5",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OYAVAS.05a",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "HUKYNDRA2",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "REVOLADE.01a---SAA-1L",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "BRILIQU60.01",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.02",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "AVTOZMA.03",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "PERJETA.03",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "REVOLADE.03a---ITP",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "NEMLUVIO.02a",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ZIRABEVlynp2",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TAKHZYRO.01b",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "BIMZELX.04b",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TECENTRIQ.04",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "WAINZUA.01a",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OSPOLOTSusp",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "LIBTAYO.01a",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "VERZENIO.01a",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "SKYRIZI.03---Morbus-Crohn--nur-360-mg-und-600-mg-",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TECENT.L-.06",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "SKYRIZI.04---Colitis-Ulcerosa--nur-180-mg--360-mg--600-mg--2-Stk",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "Eltrombopag-Generika.03a",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "RIVA.vas.Mep",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "IMBRUVICA.03",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ALYFTREK.01",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "BIMZELX.04c",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.17",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "LENALIDOMID1",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "RIBOMUSTIN2",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "HEMLIBRA.04",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TECENTR.ein2",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "QTERN",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OPDIVO.07a",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "JANUMET3",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TOMUDEX",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ABEVMY.05a---Ovarialkarzinom",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "HYRIMOZ4",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "REVLIMID10",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "SUNLENCA.01",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TECENT.L-.06",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "QARZIBA.02",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "GAZYVARO.03",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TRELEGY",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "AGOMELATIN",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "BIMZELX.02",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "BEVACIZUM.09",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "CALQUEtab.02",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "BEVACIZUM.05",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "WEGOVY.Jugen",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TALZENNA",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TALTZ.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ATOZET3",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "VOTUBIA2",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TOMUDEX",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "PEMETRTE.02",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "RINVOQ.04a",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.14---Inj-L-s---2L-CRC-mit-hoher-MSI-H--Monotherapie--KN",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "NEMLUVIO.03a",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "XENICAL",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ATOR-EZE-ZEN",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "AVASTIN.02",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TOFAC.SA.02",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "EMT.TEN.M-01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "REVOLADE.02---SAA-2L-",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OPDIVO.14",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "VYNDAQEL.01b",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TECENTR.06",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ZOLGENSMA.03",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "EPIDYOLEX.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TRUVADA",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "JANUVIA5",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ABIRATSand02",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TRUQAP",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "RINVOQ.06",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "WEZENLA.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "REPATHA.01a",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "DUPIXENT.08P",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TECENTRIQ.04",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "BEVACIZUM.02",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ABEVMY.09a---Ovarialkarzinom-2L",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "FLUVASTMEPHA",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ADARTREL",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TREMFYA-PEN",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "VEGZELMA.02",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.26",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TOFAC.DE.02",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "EDURANT",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TALTZ.01a",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "LIBTAYO.03",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "BESPONSA",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "STELARAPP4",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "BIMZELX.05",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "PEMETRACC.02",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "GIOTRIF",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "SKYCLARYS.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "AMGEVITA-5",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OZEMPIC.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "LYNPARZA.05",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ZIRABEV.05",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "AJOVY.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "HUKYNDRA2",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "DUPHALACGRAN",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "DUPIXENT.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "SPINRAZA.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KISPLYX.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ADTRALZA.01b",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "KEYTRUDA.XXa---Inj-L-s",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "CALQUEtab.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OYAVAS.05a",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "DUPIXENT.03P",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "MOUNJARO.02",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "BENLYSTA.Ein",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "EBGLYSS.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "STELARACU2",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "EZE-ATOR-SPI",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ATRIANCE",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "XARELTOVASCU",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "PRALUENT.01a",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "MOUNJARO.02K",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ENSPRYNG",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TECENT.L-.03",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "CORTIMENTMMX",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "ANZUPGO",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "LIBTAYO.01a",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "MOVENTIG",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TECENT.L--05",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TAKHZYRO.01b",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TRIUMEQ.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OYAVAS.09",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "VYDURA3.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "Eltrombopag-Generika.03a",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TEVIMBRA.03",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "OYAVAS.02",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "RYBELSUS.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "RESOLOR3",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "TALOXA2",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "YERVOY.05",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "EVRYSDI.01a",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    },
+    {
+     "id": "VEGZELMA.05",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no rule looks at a negation: numbers, units, language, typos and terms are unchanged"
+    }
+   ]
+  }
+ },
+ "verification": {
+  "copies": 40,
+  "stats_identical": 40,
+  "limitation_identical": 40,
+  "findings_new_elsewhere": 0,
+  "findings_lost_elsewhere": 0,
+  "statistic_only_changes_elsewhere": 0,
+  "copies_list": [
+   {
+    "type": "number_any",
+    "id": "IMBRUVICA.07",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_any",
+    "id": "DARZALEX.02b",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_any",
+    "id": "SIMVASTATspr",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_any",
+    "id": "ROSUVASNobel",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_any",
+    "id": "GATINARGP",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_any",
+    "id": "VITD3SPIRIGK",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_any",
+    "id": "BIMZELX.03b",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_any",
+    "id": "TECENTR.03",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_any",
+    "id": "L-POLAMIDON2",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_any",
+    "id": "TAFINLAR.03",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_word",
+    "id": "Pomali.Sp.03",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_word",
+    "id": "DUPIXENT.01P",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_word",
+    "id": "NAUSEMETCHEM",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_word",
+    "id": "OPDIVO.03---Melanom-Kombitherapie",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_word",
+    "id": "XENICAL",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_word",
+    "id": "POMALI.TeAUS",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_word",
+    "id": "AVASTIN.05",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_word",
+    "id": "LYNPARZA.03a",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_word",
+    "id": "KEYTRUDA.26a---Inj-L-s---KN091",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number_word",
+    "id": "POMALI.Sa.01",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "operator",
+    "id": "AMVUTTRA.01a",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "operator",
+    "id": "YERVOY.02",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "operator",
+    "id": "GAZYVARO.FLr",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "operator",
+    "id": "KEYTRUDA.02",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "operator",
+    "id": "EZE-ATOR-MEP",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "operator",
+    "id": "OPDIVO.14",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "operator",
+    "id": "KEYTRUDA.21a---Inj-L-s---KN859",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "operator",
+    "id": "SYMDEKO-01",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "operator",
+    "id": "FORXIGA.HFPM",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "operator",
+    "id": "LONSURF.03",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "negation",
+    "id": "OZEMPIC.01",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "negation",
+    "id": "LYNPARZA.02",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "negation",
+    "id": "MOUNJARO.02",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "negation",
+    "id": "ENSTILAR1",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "negation",
+    "id": "TECENT.L-.06",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "negation",
+    "id": "TECENT.L-.06",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "negation",
+    "id": "ATOR-EZE-ZEN",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "negation",
+    "id": "ABEVMY.09a---Ovarialkarzinom-2L",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "negation",
+    "id": "AJOVY.01",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "negation",
+    "id": "ENSPRYNG",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   }
+  ],
+  "note": "full-register run_all on these copies: false positives elsewhere = findings on other limitations (by identity) that the baseline does not have; statistic-only = the same finding with a different trigram margin (the language profile moved by the copy's one changed text)"
+ },
+ "baseline": {
+  "findings": 38,
+  "by_kind": {
+   "number": 21,
+   "language": 1,
+   "editorial": 5,
+   "terminology": 11
+  },
+  "limitations": 27
+ },
+ "inputs": {
+  "audit_py_sha256": "88bd90c3809e9a0c9b2e546390dcaf0538997c9cea1e64516074ab999a2147a3",
+  "snapshot_sha256": {
+   "de": "fe5e60f1931a6b345ae4687f9affbf1b05efa14263d20c16f410d3260228cc68",
+   "fr": "4d10dd047bdfd65a3bff5aca361706f2d3901c7872c6c9179948ede2f9477a54",
+   "it": "bcd86c674898d32f52b034674f54c67c2dac7cb893afc941e86da0642e1cd577"
+  },
+  "term_pairs": "data/audit/term_pairs_20261006.json"
+ },
+ "runtime": {
+  "seconds_total": 884.9,
+  "seconds_baseline": 18.1,
+  "seconds_copies": 844.5,
+  "jobs": 8,
+  "seconds_per_copy_core": 8.44
+ }
+}

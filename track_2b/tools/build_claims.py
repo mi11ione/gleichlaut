@@ -157,6 +157,8 @@ C = [  # id, source, path, fmt, command
  ("ar_number", "eval/results/audit_recall.json", "types.number.recall_pct", "{:.1f}", RE), ("ar_language", "eval/results/audit_recall.json", "types.language.recall_pct", "{:.1f}", RE),
  ("ar_unit", "eval/results/audit_recall.json", "types.unit.recall_pct", "{:.1f}", RE), ("ar_deletion", "eval/results/audit_recall.json", "types.deletion.recall_pct", "{:.1f}", RE),
  ("ar_typo", "eval/results/audit_recall.json", "types.typo.recall_pct", "{:.1f}", RE),
+ ("ar2_any", "eval/results/audit_recall.json", "v2.number_any.recall_pct", "{:.1f}", RE), ("ar2_word", "eval/results/audit_recall.json", "v2.number_word.recall_pct", "{:.1f}", RE),
+ ("ar2_op_n", "eval/results/audit_recall.json", "v2.operator.n", "{}", RE), ("ar2_neg_n", "eval/results/audit_recall.json", "v2.negation.n", "{}", RE),
  ("m3_backend_vllm", "eval/results/m3.json", "serving_backends.vllm", "{}", RE), ("m3_backend_fp1", "eval/results/m3.json", "serving_backends.fp1", "{}", RE),
  ("ag_issues", "eval/results/audit_grouping.json", "issues", "{}", RE), ("ag_findings", "eval/results/audit_grouping.json", "findings", "{}", RE), ("ag_term", "eval/results/audit_grouping.json", "terminology", "{}", RE),
  ("sh_items", "eval/results/shadow_20260901_20261001.json", "q4_k_m.items", "{}", RE), ("sh_compared", "eval/results/shadow_20260901_20261001.json", "compared", "{}", RE),

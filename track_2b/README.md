@@ -43,7 +43,10 @@ Analysenliste's Italian, for example, makes a test billable after 13 repetitions
 count here was confirmed by blind Claude annotators (`eval/labels/`); the audit itself calls no model. Its recall,
 measured independently on 1,000 divergences planted into clean limitations: 77.2% [74.5, 79.7] overall, 93.0% for a
 changed number, 94.0% for a field in the wrong language, 73.0% for a changed unit, 75.0% for a deleted clause and 51.0%
-for a typo next to a number ([docs/audit.md](docs/audit.md)).
+for a typo next to a number. Those faults sit where the audit looks by design: a number bound to a unit (dose, interval,
+weight, percentage). Planted at any number token instead, recall is 55.5% (37.0% for number words), and flipped
+operators or dropped negations are not read at all (0 of 200 each): the next rules to add, listed in
+[docs/audit.md](docs/audit.md).
 
 The two meet in the review register. Nemluvio's old Italian already says "every 4 weeks"; Apertus' draft writes "every
 8 weeks", matching the German. BAG's own update kept the 4. The register shows the draft as a correction to check, not

@@ -45,8 +45,56 @@ PROTOCOL (fixed in this file before the first run; also written into the output 
   (a bug against the declared rule): 'a value of the deleted clause' was computed from the clause's unit sites only;
   it now takes every number of the clause (deletion 147 -> 150 of 200; the other types are unchanged).
 
-usage: python3 tools/audit_inject.py [--hist DIR] [--n 100] [--seed 20261010] [--jobs J] [--verify K|all] [--out FILE]
-writes eval/results/audit_injection.json"""
+PROTOCOL v2 (--protocol v2; written into this docstring on 10 Oct 2026 before the first v2 run; v1 above, its output
+eval/results/audit_injection.json and the audit's rules are unchanged)
+  Why        a juror's objection to v1: v1 sites are 'a number followed by a unit word', which is the audit's own unit-binding
+             rule R2, so v1 number recall is close to true by construction; and operator flips were not planted at all.
+  Register, eligibility, execution, one fault per copy, n per type and language: as v1. Seed 20261011
+             (random.Random('20261011:<type>:<lang>')). --verify default 40 (runtime budget).
+  Number tokens (this file's own pattern NUM2, not the audit's parser): every digit token not glued to a preceding
+             letter or digit (thousands written 1'000 / 1’000 / 150 000 are one token; decimals 0,5 / 7.5), every date
+             dd.mm.yyyy, and every number word 2..12 of the language that is not hyphen-joined to another word
+             ('dix-huit' is excluded). Excluded, and only these, because the audit deliberately does not treat them as
+             quantities (docs/audit.md R2: 'codes, SR numbers ... are counted but not reported'; canon() reads a number
+             with several separators as a code) and because they are identifiers copied verbatim, not translated:
+               (x1) BAG indication codes: five digits, '.', one or two digits ('19989.01', the code the insurer receives),
+                    and the five digits of the placeholder '19989.XX';
+               (x2) Index Therapeuticus group codes: a token right after 'I.T.' / 'IT', or a zero-padded 'dd.dd' ('02.06');
+               (x3) other multi-separator references that are not dates ('RS 832.112.31').
+             Digits glued to a preceding letter ('FEV1', 'HER2', 'NCT00358943') are not tokens: the audit documents them
+             as names. List numbers ('1) ', '2. '), counts, years, prices, scores and table cells ARE sites.
+  Types
+    number_any   one number token drawn uniformly from all tokens of the target text, changed as in v1 (n -> 2n, n+1, n-1,
+                 n/2, n+10; a decimal x -> 2x or x/2; a number word -> another number word 2..12), except: a 4-digit
+                 integer 1900..2099 without separator (a year) -> n+1 or n-1; a date -> its day +/-1 (kept in 1..28 when
+                 it moves) or its year +/-1 (50/50). The site's category is recorded: v1_site (the v1 pattern matches at
+                 this number), list (list numbering, R1 shape), date, word, digit.
+    number_word  one number word 2..12 (anywhere, unit word or not) changed to another number word (v1 rule).
+    operator     one comparison operator within 25 characters of a number token in the same sentence (no [.;:!?] +
+                 space between) flipped in the target only:
+                   fr  au moins <-> au plus; au minimum <-> au maximum; minimum <-> maximum; plus de/d'/des/du <-> moins
+                       de/...; supérieur(e)(s) <-> inférieur(e)(s); ≥ <-> ≤; > <-> < (not part of '->', '>=', '<<')
+                   it  almeno <-> al massimo; al minimo -> al massimo; massimo/a/i/e <-> minimo/...; più di/del/... <->
+                       meno di/...; superiore/i <-> inferiore/i; oltre <-> sotto (only when a number follows, optionally
+                       after an article: 'oltre i 65 anni'); ≥ <-> ≤; > <-> <
+                 Longer phrases win over overlapping shorter ones (pattern order). Case of the first letter is kept.
+    negation     one negation within 60 characters of a number token in the same sentence dropped from the target:
+                   fr  'ne/n' ... pas' with at most 3 words between (both parts removed: 'ne doit pas dépasser' -> 'doit
+                       dépasser', 'n'est pas' -> 'est'); 'non' before a word ('non traités' -> 'traités', 'non-' too)
+                   it  'non' before a word ('non superiore a 2 volte' -> 'superiore a 2 volte')
+  Detection (strict, pre-declared)
+    number_any, number_word   as v1 'number': a number finding in the target language with the new value on the target
+                 side or the old value on the German side.
+    operator, negation        the audit has no operator or negation kind, so any kind counts if it points to the place:
+                 a finding in the target language that is (a) a number or unit finding naming the value of a number token
+                 within 60 characters of the edit (in the copy), or (b) an editorial or terminology finding whose surface
+                 occurs in the copy within 30 characters of the edit.
+    'any' as v1. Per-type miss reasons (number types: the v1 diagnostics plus 'list numbering (R1)'; operator/negation:
+    'no rule'), per-category recall for number_any, and recall split by whether the audit's own parse binds the planted
+    token to a unit (R2) on the target side.
+
+usage: python3 tools/audit_inject.py [--protocol v1|v2] [--hist DIR] [--n 100] [--seed S] [--jobs J] [--verify K|all] [--out FILE]
+writes eval/results/audit_injection.json (v1) or eval/results/audit_injection_v2.json (v2)"""
 import argparse, hashlib, json, math, os, random, re, sys, time
 from collections import Counter, defaultdict
 from concurrent.futures import ProcessPoolExecutor
@@ -226,6 +274,181 @@ def inj_typo(t, L, rng):
 INJ = {"number": inj_number, "unit": inj_unit, "deletion": inj_deletion, "language": inj_language, "typo": inj_typo}
 
 
+# ================================================================== protocol v2 (docstring 'PROTOCOL v2')
+SEED2 = 20261011
+TYPES2 = ("number_any", "number_word", "operator", "negation")
+OUT2 = os.path.join(ROOT, "eval", "results", "audit_injection_v2.json")
+NUM2 = re.compile(r"(?<![^\W_])(?<![.,'’])(?:(?P<date>\d{1,2}\.\d{1,2}\.\d{4})(?![\d])"
+                  r"|(?P<th>\d{1,3}(?:(?:['’]|[  ](?=\d{3}(?!\d)))\d{3})+(?:[.,]\d+)?)(?![\d])"
+                  r"|(?P<dig>\d+(?:[.,]\d+)*))")
+NUMW2 = {L: re.compile(r"(?i)(?<![\w-])(?:" + "|".join(NUMWORD[L]) + r")(?![\w-])") for L in LANGS_T}
+LIST2 = re.compile(r"(?:^|[.:;!?•]\s|\s[•\-–]\s)\s*\(?(\d{1,2})[.)](?=\s+\S)")        # list numbering (the R1 shape)
+_ART_IT = r"(?:(?:i|gli|le|il|la|l['’]|ai|agli|alle|al|allo|alla|dei|degli|delle)\s*)?"
+_D_FR = r"(?=d(?:e|es|u)\b|d['’])"
+_D_IT = r"(?=d(?:i|el|ella|ello|ei|egli|elle|ell['’]|al)\b)"
+OPS = {"fr": [(r"\bau moins\b", "au plus"), (r"\bau plus\b", "au moins"), (r"\bau minimum\b", "au maximum"),
+              (r"\bau maximum\b", "au minimum"), (r"\bmaximum\b", "minimum"), (r"\bminimum\b", "maximum"),
+              (r"\bplus " + _D_FR, "moins "), (r"\bmoins " + _D_FR, "plus "),
+              (r"\bsupérieur(?=e?s?\b)", "inférieur"), (r"\binférieur(?=e?s?\b)", "supérieur"),
+              (r"≥", "≤"), (r"≤", "≥"), (r"(?<![-=<>])>(?![=<>])", "<"), (r"(?<![-=<>])<(?![=<>-])", ">")],
+       "it": [(r"\balmeno\b", "al massimo"), (r"\bal massimo\b", "almeno"), (r"\bal minimo\b", "al massimo"),
+              (r"\bmassim(?=[oaie]\b)", "minim"), (r"\bminim(?=[oaie]\b)", "massim"),
+              (r"\bpiù " + _D_IT, "meno "), (r"\bmeno " + _D_IT, "più "),
+              (r"\bsuperior(?=[ei]\b)", "inferior"), (r"\binferior(?=[ei]\b)", "superior"),
+              (r"\boltre(?=\s+" + _ART_IT + r"(?:\d|(?i:" + "|".join(NUMWORD["it"]) + r")\b))", "sotto"),
+              (r"\bsotto(?=\s+" + _ART_IT + r"(?:\d|(?i:" + "|".join(NUMWORD["it"]) + r")\b))", "oltre"),
+              (r"≥", "≤"), (r"≤", "≥"), (r"(?<![-=<>])>(?![=<>])", "<"), (r"(?<![-=<>])<(?![=<>-])", ">")]}
+OPS_RX = {L: [(re.compile(p, re.I), r) for p, r in v] for L, v in OPS.items()}
+NEG = {"fr": [("ne_pas", re.compile(r"(?i)\b(?:ne\s+|n['’])((?:[^\W\d_][\w'’-]*\s+){0,3}?)pas\b")),
+              ("non", re.compile(r"(?i)\bnon(?:\s+|-)(?=[^\W\d_])"))],
+       "it": [("non", re.compile(r"(?i)\bnon\s+(?=[^\W\d_])"))]}
+_SENT = re.compile(r"[.;:!?](?:\s|$)")
+
+
+def ntoks(t, L):
+    """v2 number tokens of a target text -> list of dict(s, e, surf, kind, value(s), excluded reason or None, cat)."""
+    out = []
+    lists = set(m.start(1) for m in LIST2.finditer(t))
+    v1 = set(m.start("num") for m in sites(t, L))
+    for m in NUM2.finditer(t):
+        s, e, sf = m.start(), m.end(), m.group(0); ex = None
+        if m.group("date"): kind = "date"
+        else:
+            kind = "digit"
+            if re.fullmatch(r"\d{5}\.\d{1,2}", sf) or (re.fullmatch(r"\d{5}", sf) and re.match(r"\.XX\b", t[e:e + 3], re.I)):
+                ex = "indication code"
+            elif re.search(r"(?:\bI\.\s?T\.|\bIT)\s*$", t[max(0, s - 6):s]) or re.fullmatch(r"0\d\.\d\d(?:\.\d\d)?", sf):
+                ex = "IT group code"
+            elif m.group("dig") and len(re.findall(r"[.,]", sf)) >= 2:
+                ex = "multi-separator reference"
+        cat = ("v1_site" if s in v1 else "list" if s in lists else "date" if kind == "date" else "digit")
+        out.append(dict(s=s, e=e, surf=sf, kind=kind, excluded=ex, cat=cat))
+    for m in NUMW2[L].finditer(t):
+        out.append(dict(s=m.start(), e=m.end(), surf=m.group(0), kind="word", excluded=None,
+                        cat="v1_site" if m.start() in v1 else "word"))
+    return sorted(out, key=lambda x: x["s"])
+
+
+def _tokval(sf):
+    """digit surface -> float (thousands separators removed, decimal comma read)."""
+    s = re.sub(r"['’  ]", "", sf)
+    return float(s.replace(",", "."))
+
+
+def fmt2(x, like):
+    """float -> surface in the style of `like`: its thousands separator and decimal mark."""
+    ts = re.search(r"\d(['’  ])\d{3}", like); ts = ts.group(1) if ts else None
+    dec = "," if re.search(r",\d{1,2}$|,\d{4,}$", like) or ("," in like and not ts and "." not in like) else "."
+    s = str(int(x)) if x == int(x) else ("%.4f" % x).rstrip("0").rstrip(".")
+    ip, _, fp = s.partition(".")
+    if ts and len(ip) > 3: ip = "{:,}".format(int(ip)).replace(",", ts)
+    return ip + (dec + fp if fp else "")
+
+
+def _change(tok, L, rng):
+    """one plausible new value for a v2 token -> (old_value, new_value, new_surface)."""
+    sf = tok["surf"]
+    if tok["kind"] == "word":
+        n = NUMWORD[L].index(sf.lower()) + 2
+        opts = sorted({k for k in (n - 1, n + 1, 2 * n, n // 2 if n % 2 == 0 else 0) if 2 <= k <= 12 and k != n})
+        k = rng.choice(opts); w = NUMWORD[L][k - 2]
+        return float(n), float(k), (w.capitalize() if sf[0].isupper() else w)
+    if tok["kind"] == "date":
+        d, mo, y = sf.split(".")
+        if rng.random() < 0.5:
+            dv = int(d); nd = dv + 1 if dv < 28 else dv - 1
+            return float(dv), float(nd), str(nd).zfill(len(d)) + "." + mo + "." + y
+        yv = int(y); ny = yv + rng.choice((1, -1))
+        return float(yv), float(ny), d + "." + mo + "." + str(ny)
+    v = _tokval(sf)
+    if v == int(v) and re.fullmatch(r"\d{4}", sf) and 1900 <= v <= 2099:
+        nv = v + rng.choice((1, -1))
+    elif v == int(v):
+        n = int(v); opts = sorted({k for k in (2 * n, n + 1, n - 1 if n > 1 else 0, n // 2 if n % 2 == 0 and n >= 4 else 0,
+                                             n + 10 if n >= 10 else 0) if k > 0 and k != n})
+        nv = float(rng.choice(opts))
+    else:
+        nv = rng.choice(sorted({v * 2, v / 2}))
+    return v, nv, fmt2(nv, sf)
+
+
+def _plant_number(t, L, rng, S):
+    tok = rng.choice(S); ov, nv, ns = _change(tok, L, rng)
+    if ns == tok["surf"]: return None
+    s, e = tok["s"], tok["e"]; new = t[:s] + ns + t[e:]
+    a, b = max(0, s - 40), min(len(t), e + 40)
+    return dict(new=new, pos=s, end=s + len(ns), old_value=ov, new_value=nv, token=tok["surf"], new_token=ns,
+                cat=tok["cat"], kind=tok["kind"], before=t[a:b], after=new[a:b - len(tok["surf"]) + len(ns)], sub=tok["cat"])
+
+
+def inj_number_any(t, L, rng):
+    S = [x for x in ntoks(t, L) if not x["excluded"]]
+    return _plant_number(t, L, rng, S) if S else None
+
+
+def inj_number_word(t, L, rng):
+    S = [x for x in ntoks(t, L) if x["kind"] == "word"]
+    return _plant_number(t, L, rng, S) if S else None
+
+
+def _near_number(t, L, s, e, w):
+    """a v2 number token within w characters of t[s:e], with no sentence end in between."""
+    for x in ntoks(t, L):
+        if x["excluded"]: continue
+        gap = t[e:x["s"]] if x["s"] >= e else t[x["e"]:s] if x["e"] <= s else ""
+        if len(gap) <= w and not _SENT.search(gap): return True
+    return False
+
+
+def op_sites(t, L):
+    taken, out = [], []
+    for rx, rep in OPS_RX[L]:
+        for m in rx.finditer(t):
+            if any(m.start() < b and a < m.end() for a, b in taken): continue
+            taken.append(m.span())
+            if _near_number(t, L, m.start(), m.end(), 25): out.append((m.start(), m.end(), rep))
+    return sorted(out)
+
+
+def inj_operator(t, L, rng):
+    S = op_sites(t, L)
+    if not S: return None
+    s, e, rep = rng.choice(S); old = t[s:e]
+    if old[:1].isupper(): rep = rep[:1].upper() + rep[1:]
+    new = t[:s] + rep + t[e:]
+    a, b = max(0, s - 40), min(len(t), e + 40)
+    return dict(new=new, pos=s, end=s + len(rep), old_op=old, new_op=rep, sub=f"{old.lower().strip()}->{rep.lower().strip()}",
+                before=t[a:b], after=new[a:b - len(old) + len(rep)])
+
+
+def neg_sites(t, L):
+    out = []
+    for name, rx in NEG[L]:
+        for m in rx.finditer(t):
+            if _near_number(t, L, m.start(), m.end(), 60): out.append((m.start(), m.end(), name, m.group(1) if m.groups() else ""))
+    return sorted(out)
+
+
+def inj_negation(t, L, rng):
+    S = neg_sites(t, L)
+    if not S: return None
+    s, e, name, keep = rng.choice(S); old = t[s:e]
+    rep = keep.rstrip() if name == "ne_pas" else ""
+    head, tail = t[:s], t[e:]
+    if not rep and head.endswith(" ") and tail.startswith(" "): tail = tail[1:]
+    if rep and not tail[:1].isspace() and tail[:1].isalnum(): rep += " "
+    if old[:1].isupper():
+        if rep: rep = rep[:1].upper() + rep[1:]
+        elif tail: tail = tail[:1].upper() + tail[1:]
+    new = head + rep + tail
+    if new == t: return None
+    a, b = max(0, s - 40), min(len(t), e + 40)
+    return dict(new=new, pos=s, end=s + len(rep), removed=old, sub=name, before=t[a:b], after=new[a:max(a, b - (len(t) - len(new)))])
+
+
+INJ2 = {"number_any": inj_number_any, "number_word": inj_number_word, "operator": inj_operator, "negation": inj_negation}
+
+
 # ------------------------------------------------------------------ the audit on a copy
 G = {}
 
@@ -376,6 +599,58 @@ def reason(job, F, st):
     return "other"
 
 
+def _tokvals(x):
+    if x["kind"] == "word": return {float(NUMWORD_ALL.index(x["surf"].lower()) % 11 + 2)}
+    if x["kind"] == "date": d, _, y = x["surf"].split("."); return {float(int(d)), float(int(y))}
+    return {_tokval(x["surf"])}
+
+
+NUMWORD_ALL = NUMWORD["fr"] + NUMWORD["it"]
+
+
+def near_values(t, L, s, e, w=60):
+    """values of the v2 number tokens within w characters of t[s:e] (any side)."""
+    out = set()
+    for x in ntoks(t, L):
+        if x["excluded"]: continue
+        if x["s"] <= e + w and x["e"] >= s - w: out |= _tokvals(x)
+    return out
+
+
+def detected2(job, F):
+    t, L, inj = job["type"], job["lang"], job["inj"]
+    if t in ("number_any", "number_word"): return detected(dict(job, type="number"), F)
+    near = near_values(job["new"], L, inj["pos"], inj["end"])
+    for f in F:
+        if f["lang"] != L: continue
+        if f["kind"] == "number" and any(_f(x["value"]) in near for x in f["tgt_only"] + f["de_only"]): return True
+        if f["kind"] == "unit" and _f(f["value"]) in near: return True
+        if f["kind"] in ("editorial", "terminology"):
+            for m in re.finditer(re.escape(f.get("surface") or f.get("old") or "\0"), job["new"], re.I):
+                if m.start() <= inj["end"] + 30 and m.end() >= inj["pos"] - 30: return True
+    return False
+
+
+def reason2(job, F, st):
+    t, L, inj = job["type"], job["lang"], job["inj"]
+    if t in ("number_any", "number_word"):
+        if inj["cat"] == "list" and any(m.start(1) == inj["pos"] for m in A.ENUM.finditer(job["new"])):
+            return "list numbering: dropped on both sides (R1)"
+        r = reason(dict(job, type="number"), F, st)
+        if r == "other" and F: return "a finding on another value (does not point to the planted one)"
+        return r
+    what = "comparison operator" if t == "operator" else "negation"
+    if F: return f"a finding appeared, but not at the planted {what}"
+    return f"no rule looks at a {what}: numbers, units, language, typos and terms are unchanged"
+
+
+def bound_at(t, L, pos):
+    """does the audit's own parse (R2) bind the value that starts at pos to a unit? None if it reads no value there."""
+    for x in A.values(t, L):
+        if x["s"] <= pos < max(x["e"], x["s"] + 1): return bool(x["unit"])
+    return None
+
+
 def wilson(k, n, z=1.959964):
     if not n: return [None, None]
     p = k / n; d = 1 + z * z / n; c = p + z * z / (2 * n); h = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n))
@@ -405,11 +680,17 @@ def main(argv=None):
     ap.add_argument("--hist", default=os.environ.get("GLEICHLAUT_HIST") or os.path.expanduser("~/Desktop/hackapertus/spikes/gleichlaut/data/hist"))
     ap.add_argument("--date", default=DATE)
     ap.add_argument("--n", type=int, default=100, help="injections per type and target language (default 100)")
-    ap.add_argument("--seed", type=int, default=SEED)
+    ap.add_argument("--protocol", choices=("v1", "v2"), default="v1", help="v1 (default, the published run) or v2 (docstring)")
+    ap.add_argument("--seed", type=int, default=None, help="default 20261010 (v1) / 20261011 (v2)")
     ap.add_argument("--jobs", type=int, default=min(8, os.cpu_count() or 1))
-    ap.add_argument("--verify", default="100", help="copies re-run as a full-register audit (a number, or 'all')")
-    ap.add_argument("--out", default=OUT)
+    ap.add_argument("--verify", default=None, help="copies re-run as a full-register audit (a number, or 'all'; default 100 v1 / 40 v2)")
+    ap.add_argument("--out", default=None)
     a = ap.parse_args(argv)
+    v2 = a.protocol == "v2"
+    if a.seed is None: a.seed = SEED2 if v2 else SEED
+    if a.verify is None: a.verify = "40" if v2 else "100"
+    if a.out is None: a.out = OUT2 if v2 else OUT
+    TYPES_, INJ_, det_, reason_ = (TYPES2, INJ2, detected2, reason2) if v2 else (TYPES, INJ, detected, reason)
     if not os.path.exists(os.path.join(a.hist, f"{a.date}-de.json")): sys.exit(f"no snapshot {a.date} in {a.hist} (--hist DIR)")
     t0 = time.time()
     _init(a.hist, a.date); J, P = G["J"], G["P"]
@@ -426,13 +707,13 @@ def main(argv=None):
     flagged_triples = sum(1 for k, i in rep.items() if i in flagged)
     pool = sorted(i for i in rep.values() if i not in flagged)
     jobs, pools = [], {}
-    for ti, t in enumerate(TYPES):
+    for ti, t in enumerate(TYPES_):
         for L in LANGS_T:
             rng = random.Random(f"{a.seed}:{t}:{L}"); ids = list(pool); rng.shuffle(ids); n = 0; elig = 0
             for i in ids:
                 old = nrm(J[L]["lim"][i])
                 if t == "language": inj = INJ[t](old, L, rng, {X: J[X]["lim"][i] for X in A.LANGS if X != L})
-                else: inj = INJ[t](old, L, rng)
+                else: inj = INJ_[t](old, L, rng)
                 if inj is None: continue
                 elig += 1
                 if n >= a.n: continue
@@ -446,9 +727,9 @@ def main(argv=None):
         k = int(a.verify); per = defaultdict(list)
         for j in jobs: per[j["type"]].append(j["k"])
         ver = set()
-        for t in TYPES:                                            # spread over types and both languages, deterministic
-            xs = per[t]; step = max(1, len(xs) // max(1, k // len(TYPES)))
-            ver |= set(xs[::step][:max(1, k // len(TYPES))]) if k else set()
+        for t in TYPES_:                                           # spread over types and both languages, deterministic
+            xs = per[t]; step = max(1, len(xs) // max(1, k // len(TYPES_)))
+            ver |= set(xs[::step][:max(1, k // len(TYPES_))]) if k else set()
     for j in jobs: j["verify"] = j["k"] in ver
     t1 = time.time()
     res = {}
@@ -461,15 +742,15 @@ def main(argv=None):
     t_runs = time.time() - t1
     # ---------------------------------------------------------------- score
     per_type = {}; misses = defaultdict(list); V = []
-    for t in TYPES:
+    for t in TYPES_:
         J_t = [j for j in jobs if j["type"] == t]
         rows = []
         for j in J_t:
-            F = res[j["k"]]["findings"]; hit = detected(j, F)
+            F = res[j["k"]]["findings"]; hit = det_(j, F)
             st_j = None
             if not hit:
                 st_j = A._prep(stats_for(copy_of(j["id"], j["lang"], j["new"]), j["lang"])) if t in ("language", "typo") else None
-                rs = reason(j, F, st_j)
+                rs = reason_(j, F, st_j)
                 misses[t].append(dict(id=j["id"], lang=j["lang"], sub=j["inj"]["sub"], before=snip(j["inj"]["before"]),
                                       after=snip(j["inj"]["after"]), reason=rs,
                                       findings=[f"{f['kind']}: " + snip(f.get("description") or "", 120) for f in F]))
@@ -498,6 +779,15 @@ def main(argv=None):
                                           recall=round(sum(r["hit"] for r in jd) / len(jd), 3) if jd else None,
                                           wilson95=wilson(sum(r["hit"] for r in jd), len(jd)),
                                           note="copies whose planted text has >= 3 function words (the check's own judging floor)")
+        if t in ("number_any", "number_word"):
+            def split(key):
+                d = defaultdict(lambda: [0, 0])
+                for r in rows: d[key(r)][0] += 1; d[key(r)][1] += r["hit"]
+                return {c: dict(n=v[0], detected=v[1], recall=round(v[1] / v[0], 3), wilson95=wilson(v[1], v[0])) for c, v in sorted(d.items())}
+            extra["by_category"] = split(lambda r: r["j"]["inj"]["cat"])
+            extra["by_audit_parse"] = split(lambda r: {True: "bound to a unit (R2)", False: "unbound (R2: counted, not reported)",
+                                                       None: "not read as a value"}[bound_at(r["j"]["old"], r["j"]["lang"], r["j"]["inj"]["pos"])])
+            extra["note_by_audit_parse"] = "whether the audit's own parse of the original target binds the planted token to a unit (diagnostic, after the run)"
         per_type[t] = dict(n=n, detected=k, recall=round(k / n, 3) if n else None, wilson95=wilson(k, n),
                            any_finding=ka, any_recall=round(ka / n, 3) if n else None, any_wilson95=wilson(ka, n),
                            eligible_limitations=dict((L, pools[f"{t}:{L}"]) for L in LANGS_T), by_lang=by_lang,
@@ -507,10 +797,40 @@ def main(argv=None):
                            miss_examples=examples(misses[t]),
                            misses=[dict(id=m["id"], lang=m["lang"], sub=m["sub"], reason=m["reason"]) for m in misses[t]], **extra)
     tot_n = sum(v["n"] for v in per_type.values()); tot_k = sum(v["detected"] for v in per_type.values())
-    out = dict(
-        generated_by="python3 tools/audit_inject.py" + ("" if a.n == 100 else f" --n {a.n}") + ("" if a.verify == "100" else f" --verify {a.verify}"),
-        model_calls=0, network=False, date=a.date, seed=a.seed,
-        protocol=dict(
+    common = dict(register=f"public SL feed {a.date}: {len(J['de']['lim'])} limitations, {len(rep)} distinct DE/FR/IT text triples",
+                  eligible=f"one representative per distinct triple, no baseline finding of any kind: {len(pool)} limitations "
+                           f"({flagged_triples} triples with a baseline finding excluded)",
+                  sampling=f"per type and target language (fr, it): random.Random('{a.seed}:<type>:<lang>') shuffle, first {a.n} with a site; one fault per copy")
+    if v2:
+        tokstat = {}
+        for L in LANGS_T:
+            c = Counter()
+            for i in pool:
+                for x in ntoks(nrm(J[L]["lim"][i]), L): c[("excluded: " + x["excluded"]) if x["excluded"] else ("site: " + x["cat"])] += 1
+            tokstat[L] = dict(sorted(c.items()))
+        protocol = dict(
+            written="PROTOCOL v2 in the tools/audit_inject.py docstring, before the first v2 run; v1 and the audit's rules unchanged",
+            why="v1 sites are 'a number followed by a unit word' (the audit's own R2 binding) and v1 planted no operator flips",
+            **common,
+            number_tokens="this file's NUM2/NUMW2 patterns: digit tokens not glued to a preceding letter, dates, number words 2..12 "
+                          "(not hyphen-joined); excluded only: BAG indication codes (ddddd.dd, ddddd.XX), Index Therapeuticus "
+                          "group codes (after 'I.T.', or zero-padded dd.dd), other multi-separator references (RS 832.112.31)",
+            number_tokens_in_eligible_pool=tokstat,
+            types=dict(number_any="one number token drawn uniformly from all included tokens of the target, changed as v1 (years +/-1; dates: day or year +/-1)",
+                       number_word="one number word 2..12 anywhere in the target changed to another (v1 rule)",
+                       operator="one comparison operator within 25 characters of a number (same sentence) flipped: " +
+                                "; ".join(f"{L}: " + ", ".join(sorted(set(r.strip() for _, r in OPS[L]))) for L in LANGS_T),
+                       negation="one negation within 60 characters of a number (same sentence) dropped: fr 'ne/n' ... pas', 'non'; it 'non'"),
+            detection=dict(number_any="as v1 number: number finding with the new value on the target side or the old value on the German side",
+                           number_word="as number_any",
+                           operator="a target-language finding pointing to the place: a number/unit finding naming a value of a number "
+                                    "token within 60 characters of the edit, or an editorial/terminology surface within 30 characters",
+                           negation="as operator",
+                           any="the limitation has any finding (all were finding-free before the injection)"),
+            execution="as v1: register statistics rebuilt from each modified register, shipped terminology pairs, audit.run_all "
+                      "on the copy's limitation; equivalence to a full-register run checked on the 'verification' copies")
+    else:
+        protocol = dict(
             written="before the first run (tools/audit_inject.py docstring); the audit's rules were not changed",
             register=f"public SL feed {a.date}: {len(J['de']['lim'])} limitations, {len(rep)} distinct DE/FR/IT text triples",
             eligible=f"one representative per distinct triple, no baseline finding of any kind: {len(pool)} limitations "
@@ -529,7 +849,12 @@ def main(argv=None):
                            any="the limitation has any finding (all were finding-free before the injection)"),
             execution="register statistics rebuilt from each modified register (audit.build_stats on the modified language), "
                       "shipped terminology pairs (as --terms), audit.run_all on the copy's limitation; equivalence to a "
-                      "full-register run checked on the 'verification' copies"),
+                      "full-register run checked on the 'verification' copies")
+    out = dict(
+        generated_by=("python3 tools/audit_inject.py --protocol v2" + ("" if a.n == 100 else f" --n {a.n}") + ("" if a.verify == "40" else f" --verify {a.verify}"))
+                     if v2 else
+                     ("python3 tools/audit_inject.py" + ("" if a.n == 100 else f" --n {a.n}") + ("" if a.verify == "100" else f" --verify {a.verify}")),
+        model_calls=0, network=False, date=a.date, seed=a.seed, protocol=protocol,
         summary=dict(injections=tot_n, detected=tot_k, recall=round(tot_k / tot_n, 3) if tot_n else None, wilson95=wilson(tot_k, tot_n),
                      note="pooled over types with equal n per type: a summary of this protocol's mix, not of real error frequencies"),
         types=per_type,
