@@ -26,24 +26,37 @@ of deterministic checks that marks the draft ready or flagged and explains why i
 compares the numbers of every limitation across the three languages and lists the conditions that disagree. The model
 never sees a number (it wrote 0 digits in 285 calls; 3 number words it wrote were all flagged) and never judges anything.
 
-**Results.** On a pre-registered held-out set of 166 French/Italian amendments from SL changes between Jun 2025 and Feb 2026 (154 in edit patterns never
-seen during design; checks and resources hashed before any output existed), Apertus 70B drafts equal BAG's published
-text **17.5%** of the time against **6.0%** for the no-model start (old text with numbers
-updated by code): **+11.4 points, 95% CI [4.8, 18.7]**; against rules+, our strongest no-model baseline, **+6.6 [1.8, 12.0]**. They cut the token edits still needed to reach BAG's text by **42.4%**
-[31.0, 54.1]. **39.8%** of drafts come out ready, with **0** meaning errors, stale changes or German left among them,
-and a repeat run (seed changed; at temperature 0 the differences come from the serving side, §4) passes the same rule (+12.0 points, 41.6% ready). The annotators behind that 0 were tested (pre-registered R11): a meaning error planted into each of 66 ready drafts was labelled one by both of them 66 of 66 times (95% CI lower bound 94.5%), with BAG's text shown or hidden; written inside the amended sentence so that it reads like part of the amendment (R14), 38 of 38 were labelled REAL or stale by both (lower bound 90.8%), with 0 false alarms on the 38 drafts untouched. **The shipped Apertus 8B, on a CPU,
-passes the same pre-registered rule** (Q8_0, the default build: +11.4 points [4.8, 18.7], 37.3% ready; Q4_K_M, for an
-8 GiB box: +10.8 points [4.8, 17.5], 36.1% ready; 0 meaning errors among ready drafts in both), so the default deployment
-is fully air-gapped. At Q8_0 the 8B has the same identical-draft rate as the 70B (17.5% each; no equivalence test), with
-0 errors of any severe kind among its 62 ready drafts; the 70B still saves more edits (42.4% vs 33.1% for Q8_0, paired
-difference 9.3 points [−1.3, 20.2]; vs 20.9% for Q4_K_M) and its ready drafts rarely need a fix to the amendment (3 of 66). The audit reduces 1,688 limitations to
-**27** findings, **17** of them real (63.0%), that contain **all 10** known divergent limitations (not a recall
-measure: the rules were written around the census that found them), **5** new confirmed problems (typos next to
-numbers, one counted by two checks) and Keytruda's Italian field holding the French text (spotted by hand before the language check existed).
-On 1,000 divergences planted into clean limitations its recall is 77.2% [74.5, 79.7]: 93.0% for a changed number,
-94.0% for a field in the wrong language, 51.0% for a typo next to a number. Its scope is numbers bound to a unit: at any
-number token recall is 55.5%, and flipped operators or dropped negations are not read (0 of 200 each). Pre-registered checks for them (R15) find 74.5% of planted operator flips and 44.0% of dropped negations, but only 6 of their 31 register findings are confirmed (real or minor), so they ship off. A draft costs **CHF 0.0024** at a Swiss provider's
-published price for Apertus 70B. `make run` re-executes the recorded runs offline and re-derives every number.
+**Results: the audit.** It reduces 1,688 limitations to **27** findings, **17** of them real (63.0%, two blind
+annotators and a third on disagreements), that contain **all 10** known divergent limitations (not a recall measure:
+the rules were written around the census that found them), **5** new confirmed problems (typos next to numbers, one
+counted by two checks) and Keytruda's Italian field holding the French text (spotted by hand before the language check
+existed). On 1,000 divergences planted into clean limitations its recall is 77.2% [74.5, 79.7]: 93.0% for a changed
+number, 94.0% for a field in the wrong language, 51.0% for a typo next to a number. Its scope is numbers bound to a unit:
+at any number token recall is 55.5%, and flipped operators or dropped negations are not read (0 of 200 each).
+Pre-registered checks for them (R15) find 74.5% of planted operator flips and 44.0% of dropped negations, but only 6 of
+their 31 register findings are confirmed (real or minor), so they ship off. Among those 6 are three divergences nobody
+had listed: Amvuttra's French stop rule says an NIS increase "≤ 10" points where German and Italian say "> 10", and the
+Italian of Beyonttra and Vyndaqel says "on deve" (for "non deve"), so a ban on combining reads as an obligation.
+
+**Results: drafting.** On a pre-registered held-out set of 166 French/Italian amendments from SL changes between Jun
+2025 and Feb 2026 (154 in edit patterns never seen during design; checks and resources hashed before any output
+existed), **the shipped Apertus 8B, on a CPU, passes the pre-registered rule** (Q8_0, the default build: drafts equal
+BAG's published text 17.5% of the time against 6.0% for the no-model start, +11.4 points [4.8, 18.7]; 37.3% ready;
+33.1% fewer token edits; 0 errors of any severe kind among its 62 ready drafts; Q4_K_M, for an 8 GiB box: +10.8 points
+[4.8, 17.5], 36.1% ready), so the default deployment is fully air-gapped. Apertus 70B, as Public AI served it, has the
+same identical-draft rate (**17.5%**; no equivalence test): **+11.4 points, 95% CI [4.8, 18.7]**; against rules+, our
+strongest no-model baseline, **+6.6 [1.8, 12.0]**. It cuts the token edits still needed to reach BAG's text by
+**42.4%** [31.0, 54.1] (vs 33.1% for Q8_0, paired difference 9.3 points [−1.3, 20.2]; vs 20.9% for Q4_K_M); **39.8%**
+of its drafts come out ready, with **0** meaning errors, stale changes or German left among them, and its ready drafts
+rarely need a fix to the amendment (3 of 66); a repeat run (seed changed; at temperature 0 the differences come from the
+serving side, §4) passes the same rule (+12.0 points, 41.6% ready). The annotators behind those zeros were tested
+(pre-registered R11): a meaning error planted into each of 66 ready drafts was labelled one by both of them 66 of 66
+times (95% CI lower bound 94.5%), with BAG's text shown or hidden; written inside the amended sentence so that it reads
+like part of the amendment (R14), 38 of 38 were labelled REAL or stale by both (lower bound 90.8%), with 0 false alarms
+on the 38 drafts untouched. On two live months (R7, R10) no ready draft changed a meaning, but neither month met the
+rule: the checks flagged 81.8–92.7% of drafts, so on live data the drafting is a review aid and the audit is what an
+office runs first. A 70B draft costs **CHF 0.0024** at a Swiss provider's published price. `make run` re-executes the
+recorded runs offline and re-derives every number.
 
 ## 2. Architecture
 
