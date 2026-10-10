@@ -137,6 +137,13 @@ flagged 81.8%, above the 70% cap (fails); among its 4 ready drafts no meaning er
 1 stale and 2 with German left, 13.6% (fails). The German left is BAG's own typo "GLP1-1-Analogon", carried over by
 the number lock instead of being read as "GLP-1"; 14 of the 22 add the same new standard sentence as in September.
 Both annotators agreed on all 7 labels.
+
+**What the two live months say.** On new material the frozen checks send most drafts to review (81.8–92.7% flagged,
+above our own 70% cap), and across both months no draft marked ready changes a condition's meaning. So on live data
+today the drafting is a review aid that pre-fills French and Italian and says why each draft needs a look; the audit is
+the part ready to run, as phase 1 of [docs/adoption.md](docs/adoption.md). The commonest cause in both months is one new
+standard sentence that BAG itself renders two ways; checking drafts against BAG's own house formula (an advisory note
+today) is the next step to pre-register.
 Phased pilot (audit first), owners, protection needs and monthly effort: [docs/adoption.md](docs/adoption.md).
 
 ## Run it
