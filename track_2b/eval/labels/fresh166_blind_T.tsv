@@ -1,0 +1,7 @@
+id	needs_fix	class	note
+T00	yes	REAL	Also changed untouched refund clause: treatment duration became reimbursement duration, altering refund basis.
+T01	yes	REAL	Keeps deleted cost-approval/dosing sentences; drops second-line and post-platinum progression conditions; garbled header.
+T02	yes	REAL	Keeps removed KDd header and dosing-schema obligation; omits all-indications scope and indication-code requirement.
+T03	yes	stale	Three new sentences (cost approval, until progression, indication code) not added at all.
+T04	no	cosmetic	Amounts correctly updated; German spacing fix 100 mg/160 mg not applied.
+T05	no	cosmetic	Amounts updated; 100 mg spacing not applied; KADCLYA typo preexisting.

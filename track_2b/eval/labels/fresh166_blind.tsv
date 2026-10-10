@@ -1,0 +1,70 @@
+key	A_fix	A_class	B_fix	B_class	T_fix	T_class	final_fix	final	note_A
+wb004-fr	yes	minor	yes	minor			yes	minor	Changes applied; new code line non-standard ('Suivant code a transmettre a la caisse maladie'), spacing in parentheses.
+wb007-fr	no	equivalent	no	equivalent			no	equivalent	Approval sentence removed; official additionally changed 'indique' to 'rembourse'.
+wb007-it	no	equivalent	no	equivalent			no	equivalent	Approval sentence removed, VENCLYXTO capitalised; official also rephrased unrelated part.
+wb010-fr	yes	REAL	yes	REAL	yes	REAL	yes	REAL	Keeps deleted approval and dose sentences; drops second-line/post-platinum condition; garbled heading.
+wb011-fr	yes	REAL	yes	stale	yes	stale	yes	stale	Three new conditions (prior approval, until progression, code in approval) not added.
+wb013-it	yes	german	yes	german			yes	german	New heading and two new sentences left largely in German (Inj Lös, Fertigpen, Es wird...).
+wb015-fr	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing ARA mistranslation left.
+wb015-it	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing grammar error left untouched.
+wb016-fr	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing ARA mistranslation left.
+wb016-it	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing grammar error left untouched.
+wb017-fr	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing ARA mistranslation left.
+wb017-it	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing grammar error left untouched.
+wb018-fr	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing ARA mistranslation left.
+wb018-it	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing grammar error left untouched.
+wb019-fr	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing ARA mistranslation left.
+wb019-it	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing grammar error left untouched.
+wb020-fr	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing ARA mistranslation (enzyme inhibitor) left as in tgt_old.
+wb020-it	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing grammar error left untouched.
+wb021-fr	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing ARA mistranslation left.
+wb021-it	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing 'un cosiddetti antagonisti' grammar left untouched.
+wb022-fr	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing ARA mistranslation left.
+wb022-it	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing grammar error left untouched.
+wb023-fr	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing ARA mistranslation left.
+wb023-it	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing grammar error left untouched.
+wb024-fr	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing ARA mistranslation left.
+wb024-it	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing grammar error left untouched.
+wb025-fr	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing ARA mistranslation left.
+wb025-it	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing grammar error left untouched.
+wb026-fr	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing missing 'd'' and ARA mistranslation.
+wb026-it	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing grammar error left untouched.
+wb027-fr	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing ARA mistranslation left as in tgt_old.
+wb027-it	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing grammar error left untouched.
+wb028-fr	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing ARA mistranslation left.
+wb028-it	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing grammar error left untouched.
+wb029-fr	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing ARA mistranslation left.
+wb029-it	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing grammar error left untouched.
+wb030-fr	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing 'd'' VALSARTAN and ARA mistranslation.
+wb030-it	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing grammar error left untouched.
+wb031-fr	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing ARA mistranslation left.
+wb031-it	no	preexisting	no	preexisting			no	preexisting	Insurance term updated; pre-existing grammar error left untouched.
+wb032-fr	no	preexisting	no	preexisting			no	preexisting	Payer added correctly; pre-existing ARA mistranslation; official also changed tense.
+wb032-it	yes	minor	yes	minor			yes	minor	Payer added as non-standard 'assicurazione malattia obbligatoria' instead of AOMS term.
+wb036-fr	no	equivalent	no	equivalent			no	equivalent	New sentences added with correct meaning; wording differs from official.
+wb036-it	no	equivalent	no	equivalent			no	equivalent	All three new sentences added correctly; wording differs from official only.
+wb038-it	no	exact	no	exact			no	exact	Rebate sentences removed exactly as official.
+wb042-it	no	equivalent	no	equivalent			no	equivalent	Oftalmochirurghi applied twice; official uses 'chirurghi oftalmologi'.
+wb045-fr	no	equivalent	no	equivalent			no	equivalent	Ophtalmochirurgiens applied; extra harmless fixes (ou, parenthesis, mNVC).
+wb047-fr	no	equivalent	no	equivalent			no	equivalent	Ophtalmochirurgiens applied twice; also et->ou matching German; harmless.
+wb047-it	no	equivalent	no	equivalent			no	equivalent	Oftalmochirurghi applied twice; official uses 'chirurghi oftalmologi'.
+wb050-it	no	exact	no	exact			no	exact	Amount updated exactly as official.
+wb056-it	no	preexisting	no	preexisting			no	preexisting	Diet sentence added correctly; pre-existing omission of cost-approval wording remains.
+wb057-fr	yes	REAL	yes	stale	yes	REAL	yes	REAL	Keeps removed KDd scope/dosing-scheme sentence; omits 'all indications' scope and code-in-approval requirement.
+wb060-it	yes	REAL	yes	REAL	yes	REAL	yes	REAL	Also changed unchanged rebate clause: 'durata massima del trattamento' became 'della rimunerazione'.
+wb061-fr	no	exact	yes	cosmetic	no	cosmetic	no	cosmetic	Amounts updated; only '100mg' spacing differs.
+wb061-it	no	preexisting	yes	cosmetic	no	cosmetic	no	cosmetic	Amounts updated correctly; pre-existing KADCLYA typo and 100mg spacing.
+wb063-fr	no	equivalent	no	equivalent			no	equivalent	Second option removed, 'a partir de la premiere ligne' applied correctly.
+wb072-fr	no	exact	no	exact			no	exact	Product name and code updated exactly as official.
+wb073-fr	no	exact	no	exact			no	exact	Factor VIII changed to IX exactly as official.
+wb074-fr	no	equivalent	no	equivalent			no	equivalent	Rebate sentences removed; only trailing period differs.
+wb074-it	no	equivalent	no	equivalent			no	equivalent	Rebate sentences removed; only trailing period differs.
+wb076-fr	yes	german	yes	german			yes	german	Changes applied but 'un GLP-1-analogue' is a Germanised compound (analogue du GLP-1).
+wb079-it	no	preexisting	no	preexisting			no	preexisting	Amount updated; tgt_old for Italian was already French text.
+wb081-it	no	equivalent	no	equivalent			no	equivalent	Amount updated; official additionally changed 'cassa malati' wording.
+wb084-fr	no	equivalent	no	equivalent			no	equivalent	SGLT-2 line added; 'inhibiteur SGLT-2' vs 'inhibiteur du SGLT-2'.
+wb084-it	no	equivalent	no	equivalent			no	equivalent	SGLT-2 line added; 'inibitore SGLT-2' vs 'inibitore del SGLT-2'.
+wb085-fr	yes	cosmetic	yes	cosmetic			yes	cosmetic	SGLT-2 line added correctly but spaced as 'SGLT - 2'.
+wb085-it	yes	cosmetic	yes	cosmetic			yes	cosmetic	SGLT-2 line added correctly but spaced as 'SGLT - 2'.
+wb086-it	no	equivalent	no	equivalent			no	equivalent	Rebate sentence removed correctly; only trailing period differs.
+wb089-it	no	equivalent	no	equivalent			no	equivalent	Rebate sentence removed correctly; only trailing period differs.

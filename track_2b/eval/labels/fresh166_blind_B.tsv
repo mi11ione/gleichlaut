@@ -1,0 +1,70 @@
+id	needs_fix	class	note
+H00	no	preexisting	OKP term applied; d' spacing and AT-II mistranslation preexisting.
+H01	no	preexisting	AOMS applied; 'cosiddetti antagonisti' error preexisting.
+H02	no	preexisting	OKP term applied; AT-II antagonist mistranslation preexisting.
+H03	no	exact	Matches official.
+H04	no	preexisting	OKP added correctly; AT-II antagonist mistranslation preexisting.
+H05	no	equivalent	Ophtalmochirurgiens applied; et->ou change matches German oder.
+H06	yes	german	Two new sentences and 'Inj Lös, Fertigpen 2 Stk.' left in German; heading misplaced.
+H07	no	preexisting	AOMS applied; 'cosiddetti antagonisti' error preexisting.
+H08	no	preexisting	AOMS applied; 'cosiddetti antagonisti' error preexisting.
+H09	yes	stale	Old KDd heading and dosing-schema sentence kept; 'all indications' and code-in-approval not added.
+H10	no	equivalent	Revolade rebate sentence removed; only trailing period kept.
+H11	yes	cosmetic	SGLT-2 line added but written 'SGLT - 2' with stray spaces.
+H12	no	preexisting	OKP term applied; AT-II antagonist mistranslation preexisting.
+H13	yes	cosmetic	Amounts updated; '100mg/160mg' spacing not applied; KADCLYA typo preexisting.
+H14	no	preexisting	AOMS applied; 'cosiddetti antagonisti' error preexisting.
+H15	yes	minor	Removals correct; 'Suivant code à transmettre' calque, caisse maladie, spaced parentheses.
+H16	no	equivalent	All new sentences added with correct meaning; wording differs from official.
+H17	no	preexisting	AOMS applied; 'cosiddetti antagonisti' error preexisting.
+H18	yes	cosmetic	SGLT-2 line added but written 'SGLT - 2' with stray spaces.
+H19	no	equivalent	'oftalmochirurghi' acceptable; official uses 'chirurghi oftalmologi'.
+H20	no	preexisting	AOMS applied; 'cosiddetti antagonisti' error preexisting.
+H21	no	preexisting	Price updated; tgt_old was French text in Italian slot.
+H22	no	preexisting	OKP term applied; AT-II antagonist mistranslation preexisting.
+H23	no	preexisting	AOMS applied; 'cosiddetti antagonisti' error preexisting.
+H24	no	preexisting	OKP term applied; AT-II antagonist mistranslation preexisting.
+H25	no	exact	Matches official.
+H26	no	preexisting	OKP term applied; AT-II antagonist mistranslation preexisting.
+H27	no	preexisting	AOMS applied; 'cosiddetti antagonisti' error preexisting.
+H28	no	preexisting	OKP term applied; AT-II antagonist mistranslation preexisting.
+H29	no	preexisting	AOMS applied; 'cosiddetti antagonisti' error preexisting.
+H30	no	equivalent	Revolade rebate sentence removed; only trailing period kept.
+H31	no	preexisting	OKP term applied; AT-II antagonist mistranslation preexisting.
+H32	no	preexisting	AOMS applied; 'cosiddetti antagonisti' error preexisting.
+H33	no	preexisting	OKP term applied; AT-II antagonist mistranslation preexisting.
+H34	no	preexisting	AOMS applied; 'cosiddetti antagonisti' error preexisting.
+H35	no	preexisting	Diet sentence added correctly; missing cost-approval in tgt_old fixed only by official.
+H36	no	equivalent	All new sentences added with correct meaning; wording differs from official.
+H37	no	equivalent	Cost-approval sentence removed, VENCLYXTO capitalised; minor wording differs.
+H38	no	preexisting	AOMS applied; 'cosiddetti antagonisti' error preexisting.
+H39	no	preexisting	AOMS applied; 'cosiddetti antagonisti' error preexisting.
+H40	no	preexisting	OKP term applied; missing d' and AT-II mistranslation preexisting.
+H41	no	equivalent	SGLT-2 line added correctly; 'inibitore SGLT-2' vs 'del SGLT-2' harmless.
+H42	no	preexisting	OKP term applied; AT-II antagonist mistranslation preexisting.
+H43	no	equivalent	Rebate sentences removed correctly; only trailing period after code kept.
+H44	no	equivalent	Ab der ersten Linie and removed relapse alternative applied correctly.
+H45	no	preexisting	OKP term applied; AT-II antagonist mistranslation preexisting.
+H46	no	preexisting	AOMS applied; 'cosiddetti antagonisti' error preexisting.
+H47	no	preexisting	OKP term applied; AT-II antagonist mistranslation and d' spacing preexisting.
+H48	no	exact	Matches official.
+H49	no	exact	Matches official.
+H50	no	preexisting	OKP term applied; AT-II antagonist mistranslation preexisting.
+H51	no	equivalent	Cost-approval sentence removed, VENCLYXTO capitalised; differs only in indiqué/remboursé.
+H52	yes	stale	New cost-approval, progression and code sentences not added.
+H53	no	preexisting	AOMS applied; 'cosiddetti antagonisti' error preexisting.
+H54	no	equivalent	SGLT-2 line added correctly; 'inhibiteur SGLT-2' vs 'du SGLT-2' harmless.
+H55	no	preexisting	AOMS applied; 'cosiddetti antagonisti' error preexisting.
+H56	no	equivalent	Ophtalmochirurgiens applied; also correctly fixed et->ou and abbreviation.
+H57	yes	REAL	Changed first 'durata massima del trattamento' too, though German changed only second occurrence.
+H58	yes	REAL	Old cost-approval and dose sentences kept; second-line/post-platinum condition dropped; ESCC left.
+H59	no	preexisting	OKP term applied; AT-II antagonist mistranslation preexisting.
+H60	no	equivalent	'oftalmochirurghi' acceptable for Ophthalmochirurgen; official uses 'chirurghi oftalmologi'.
+H61	no	equivalent	Amount updated; official also changed 'cassa malati' (extra fix).
+H62	no	preexisting	AOMS applied; 'cosiddetti antagonisti' error preexisting.
+H63	yes	cosmetic	Amounts updated; '100mg/160mg' spacing change from German not applied.
+H64	no	preexisting	OKP term applied; AT-II antagonist mistranslation preexisting.
+H65	yes	german	List restructured correctly but 'GLP-1-analogue' is a Germanised compound.
+H66	yes	minor	OKP rendered as non-standard 'assicurazione malattia obbligatoria' instead of official AOMS term.
+H67	no	preexisting	OKP term applied; ACE-inhibitor mistranslation of AT-II antagonist already in tgt_old.
+H68	no	equivalent	Rebate sentences removed correctly; only trailing period after code kept.

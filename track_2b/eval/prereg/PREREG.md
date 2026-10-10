@@ -423,3 +423,12 @@ data the change was designed on is labelled "dev" in every table.
   cosmetic, 1 equivalent; 70B 2 german, 1 stale, 1 equivalent. The German left is BAG's typo "GLP1-1-Analogon" carried
   through by the number lock. 14 of the 22 add the new standard sentence also seen in September
   (`eval/results/shadow_20260801_20260901.json`). Nothing in the pipeline or the defaults changes.
+- **R13, 10 Oct 2026:** the headline 70B fresh-166 run relabelled fully blind under `eval/labels/PROTOCOL.md`
+  (pre-registered in commit 7551fd6 before any annotation): 69 records (49 ready non-exact + the R1-seeded 20 flagged),
+  two fresh blind annotators (the second in reverse order), a third on 6 records. Needs-fix agreement 67 of 69, κ 0.892.
+  Severe errors (REAL / stale / German) among the ready drafts by the blind majority: **0** (R0 holds with the blind labels:
+  0 / 0 of 166; 95% upper bound 5.5% of the 66 ready drafts). Ready drafts needing a fix: 3 (one non-standard insurer term,
+  "SGLT - 2" spacing twice). Agreement with the research labels on needs-fix 62 of 69 (ready 46 of 49, flagged sample 16
+  of 20: 13 of the 20 flagged need no fix by each, 2 different each way); 35 of the 49 ready drafts are "preexisting" by
+  the blind majority where the research labels say "equivalent" (both: no fix). The headline is unchanged
+  (`eval/results/fresh166_blind.json`, `eval/labels/fresh166_blind.tsv`).

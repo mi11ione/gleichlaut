@@ -58,6 +58,7 @@ def compute():
     res["value"] = score.value()
     res["failure_modes_q8_0"] = score.failure_modes_q8_0()   # PREREG R8: failure-mode tests on the shipped Q8_0
     res["annotator_sensitivity"] = score.annotator_sensitivity(res)   # PREREG R11: planted meaning errors, reference shown / hidden
+    res["fresh166_blind"] = score.blind_relabel_70b(res)   # PREREG R13: the headline 70B run relabelled fully blind (PROTOCOL.md)
     from .emit import explain
     res["explain_v2"] = explain.measure_v2()       # translator-facing reasons, before/after the round-6 wording (display only)
     res["explain_v3"] = explain.measure_v3()       # house sentences, termbase in rewritten text, noise, hedging, codes (display only)

@@ -1,0 +1,140 @@
+{
+ "annotators": {
+  "agree": 67,
+  "agree_pct": 97.1,
+  "class_agree": 65,
+  "class_agree_ready": 48,
+  "flagged_sample": {
+   "agree": 19,
+   "agree_pct": 95.0,
+   "kappa": 0.894,
+   "n": 20
+  },
+  "kappa": 0.892,
+  "n": 69,
+  "ready": {
+   "agree": 48,
+   "agree_pct": 98.0,
+   "kappa": 0.846,
+   "n": 49
+  },
+  "tiebreak": 6
+ },
+ "flagged_sample": 20,
+ "flagged_sample_classes": {
+  "REAL": 3,
+  "cosmetic": 1,
+  "equivalent": 7,
+  "exact": 4,
+  "german": 2,
+  "minor": 1,
+  "preexisting": 1,
+  "stale": 1
+ },
+ "flagged_sample_no_fix": 13,
+ "flagged_sample_research_good": 13,
+ "items": 69,
+ "prereg": "R13",
+ "r0_with_blind_labels": {
+  "exact_gain": [
+   11.4,
+   true
+  ],
+  "flag_rate": [
+   60.2,
+   true
+  ],
+  "n": 166,
+  "pass": true,
+  "ready": 66,
+  "ready_exact": 17,
+  "ready_labelled": 49,
+  "unflagged_real": [
+   0.0,
+   true
+  ],
+  "unflagged_stale_untranslated": [
+   0.0,
+   true
+  ],
+  "wilson95_severe_among_ready": [
+   0.0,
+   5.5
+  ]
+ },
+ "ready_classes": {
+  "cosmetic": 3,
+  "equivalent": 9,
+  "minor": 1,
+  "preexisting": 36
+ },
+ "ready_needs_fix": 3,
+ "ready_non_exact": 49,
+ "severe_among_ready": 0,
+ "severe_among_ready_items": [],
+ "vs_research": {
+  "agree": 62,
+  "agree_pct": 89.9,
+  "blind_severe_ready": [],
+  "class_agree_ready": 10,
+  "disagreements": [
+   {
+    "blind": "yes minor",
+    "key": "wb004-fr",
+    "research": "good",
+    "set": "flagged20"
+   },
+   {
+    "blind": "yes minor",
+    "key": "wb032-it",
+    "research": "equivalent",
+    "set": "ready"
+   },
+   {
+    "blind": "no equivalent",
+    "key": "wb045-fr",
+    "research": "bad",
+    "set": "flagged20"
+   },
+   {
+    "blind": "no equivalent",
+    "key": "wb047-fr",
+    "research": "bad",
+    "set": "flagged20"
+   },
+   {
+    "blind": "yes german",
+    "key": "wb076-fr",
+    "research": "good",
+    "set": "flagged20"
+   },
+   {
+    "blind": "yes cosmetic",
+    "key": "wb085-fr",
+    "research": "equivalent",
+    "set": "ready"
+   },
+   {
+    "blind": "yes cosmetic",
+    "key": "wb085-it",
+    "research": "equivalent",
+    "set": "ready"
+   }
+  ],
+  "flagged_sample": {
+   "agree": 16,
+   "agree_pct": 80.0,
+   "kappa": 0.56,
+   "n": 20
+  },
+  "kappa": 0.532,
+  "n": 69,
+  "ready": {
+   "agree": 46,
+   "agree_pct": 93.9,
+   "kappa": 0.0,
+   "n": 49
+  },
+  "research_severe_ready": []
+ }
+}

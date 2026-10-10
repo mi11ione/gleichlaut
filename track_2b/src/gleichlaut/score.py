@@ -780,3 +780,91 @@ def annotator_sensitivity(res=None):
                                         adjusted_both=round(min(100.0, hi / (a["both"]["pct"] / 100)), 1) if a["both"]["k"] else None,
                                         adjusted_either=round(min(100.0, hi / (a["either"]["pct"] / 100)), 1) if a["either"]["k"] else None)
     return out
+
+
+BLIND_CLASSES = ("exact", "equivalent", "preexisting", "cosmetic", "minor", "german", "stale", "REAL")   # least -> most severe
+
+
+def blind_needs_tiebreak(a, b, ready):
+    """PROTOCOL.md step 3: a third annotator when the two disagree on needs_fix, on the class of a ready draft, or either
+    says REAL. a, b = (needs_fix, class)."""
+    return a[0] != b[0] or (ready and a[1] != b[1]) or "REAL" in (a[1], b[1])
+
+
+def blind_relabel_70b_merge():
+    """PREREG R13 merge -> rows in the R1 layout (key, A/B/T, final_fix, final, note_A), sorted by key: final_fix is the
+    majority of three on needs_fix; final is the class at least two of three share, else the third's; without a third
+    label the agreed class, or the more severe of two differing classes (a flagged draft without a REAL)."""
+    def ann(name):
+        lines = open(os.path.join(LABELS, name), encoding="utf-8").read().splitlines()[1:]
+        return {c[0]: dict(fix=c[1], cls=c[2], note=c[3] if len(c) > 3 else "") for c in (l.split("\t") for l in lines if l)}
+    ids = json.load(open(os.path.join(LABELS, "fresh166_blind_key.json"), encoding="utf-8"))["ids"]
+    tids = {k: i for i, k in json.load(open(os.path.join(LABELS, "fresh166_blind_tiebreak_key.json"), encoding="utf-8"))["ids"].items()}
+    A, B, T = ann("fresh166_blind_A.tsv"), ann("fresh166_blind_B.tsv"), ann("fresh166_blind_T.tsv")
+    rank = {c: i for i, c in enumerate(BLIND_CLASSES)}; out = []
+    for i, k in sorted(ids.items(), key=lambda t: t[1]):
+        a, b = A[i], B[i]; t = T[tids[k]] if k in tids else None
+        if t:
+            fix = max(("yes", "no"), key=[a["fix"], b["fix"], t["fix"]].count)
+            cs = [a["cls"], b["cls"], t["cls"]]; cls = next((c for c in cs if cs.count(c) >= 2), t["cls"])
+        else:
+            fix = a["fix"]; cls = max(a["cls"], b["cls"], key=rank.get)
+        out.append(dict(key=k, A_fix=a["fix"], A_class=a["cls"], B_fix=b["fix"], B_class=b["cls"], T_fix=t["fix"] if t else "",
+                        T_class=t["cls"] if t else "", final_fix=fix, final=cls, note_A=a["note"],
+                        note_B=b["note"], note_T=t["note"] if t else ""))
+    return out
+
+
+def blind_relabel_70b(res=None):
+    """PREREG R13: the headline 70B fresh-166 run relabelled fully blind under eval/labels/PROTOCOL.md (49 ready non-exact
+    drafts + the seeded 20 flagged; two blind annotators, the second in reverse order, a third on every disagreement or
+    REAL). Re-derived from the raw annotator files and keys; the committed merged file eval/labels/fresh166_blind.tsv must
+    equal the merge. Reports annotator agreement and kappa, severe errors among ready drafts by the blind majority, R0's
+    two label-dependent criteria with those labels, and agreement with the research labels (fresh166_*.tsv)."""
+    if not os.path.exists(os.path.join(LABELS, "fresh166_blind_T.tsv")): return None
+    K = json.load(open(os.path.join(LABELS, "fresh166_blind_key.json"), encoding="utf-8"))
+    rows = blind_relabel_70b_merge(); M = {r["key"]: r for r in rows}
+    hdr = ("key", "A_fix", "A_class", "B_fix", "B_class", "T_fix", "T_class", "final_fix", "final", "note_A")
+    lines = open(os.path.join(LABELS, "fresh166_blind.tsv"), encoding="utf-8").read().splitlines()
+    assert lines == ["\t".join(hdr)] + ["\t".join(r[h] for h in hdr) for r in rows], "fresh166_blind.tsv is not the merge of the raw labels"
+    ready, fl = K["ready"], K["flagged_sample"]
+
+    def kappa(x, y):
+        n = len(x); ag = sum(p == q for p, q in zip(x, y)); pA = x.count("yes") / n; pB = y.count("yes") / n
+        pe = pA * pB + (1 - pA) * (1 - pB)
+        return dict(n=n, agree=ag, agree_pct=round(100 * ag / n, 1), kappa=round((ag / n - pe) / (1 - pe), 3) if pe < 1 else None)
+    ks = sorted(M)
+    ann = dict(kappa([M[k]["A_fix"] for k in ks], [M[k]["B_fix"] for k in ks]),
+               ready=kappa([M[k]["A_fix"] for k in ready], [M[k]["B_fix"] for k in ready]),
+               flagged_sample=kappa([M[k]["A_fix"] for k in fl], [M[k]["B_fix"] for k in fl]),
+               class_agree=sum(M[k]["A_class"] == M[k]["B_class"] for k in ks), class_agree_ready=sum(M[k]["A_class"] == M[k]["B_class"] for k in ready),
+               tiebreak=sum(bool(M[k]["T_class"]) for k in ks))
+    sev = ("REAL", "stale", "german")
+    severe = [dict(key=k, final=M[k]["final"], A=M[k]["A_class"], B=M[k]["B_class"], T=M[k]["T_class"] or None,
+                   notes=[M[k][f"note_{x}"] for x in "ABT" if M[k][f"note_{x}"]]) for k in ready if M[k]["final"] in sev]
+    if res is None: res = {"fresh166": json.load(open(os.path.join(core.ROOT, "eval", "results", "fresh166.json"), encoding="utf-8"))}
+    s = res["fresh166"]["summary"]["all"]; n = s["n"]
+    real = sum(M[k]["final"] == "REAL" for k in ready); su = sum(M[k]["final"] in ("stale", "german") for k in ready)
+    r0 = dict(n=n, ready=s["unflagged"], ready_exact=s["unflagged"] - len(ready), ready_labelled=len(ready),
+              unflagged_real=[round(100 * real / n, 2), 100 * real / n <= PASS_RULE["unflagged_real_max_pct"]],
+              unflagged_stale_untranslated=[round(100 * su / n, 2), 100 * su / n <= PASS_RULE["unflagged_stale_untranslated_max_pct"]],
+              exact_gain=s["pass_rule"]["exact_gain"], flag_rate=s["pass_rule"]["flag_rate"],
+              wilson95_severe_among_ready=[round(v, 1) for v in wilson(real + su, s["unflagged"])])
+    r0["pass"] = all(r0[c][1] for c in ("unflagged_real", "unflagged_stale_untranslated", "exact_gain", "flag_rate"))
+    U = load_labels(RUNS["fresh166"]["labels"]); F = load_labels(RUNS["fresh166"]["flagged20"])
+    rfix = {k: ("no" if U[k] in ("equivalent", "preexisting", "exact") else "yes") for k in U}
+    rfix.update({k: ("no" if v == "good" else "yes") for k, v in F.items()})
+    assert set(rfix) == set(M) and set(U) == set(ready), "R13 items differ from the research-labelled items"
+    vs = dict(kappa([rfix[k] for k in ks], [M[k]["final_fix"] for k in ks]),
+              ready=kappa([rfix[k] for k in ready], [M[k]["final_fix"] for k in ready]),
+              flagged_sample=kappa([rfix[k] for k in fl], [M[k]["final_fix"] for k in fl]),
+              class_agree_ready=sum(U[k] == M[k]["final"] for k in ready),
+              research_severe_ready=sorted(k for k in ready if U[k] in sev), blind_severe_ready=[d["key"] for d in severe],
+              disagreements=[dict(key=k, set="ready" if k in U else "flagged20", research=U.get(k) or F[k],
+                                  blind=f"{M[k]['final_fix']} {M[k]['final']}") for k in ks if rfix[k] != M[k]["final_fix"]])
+    return dict(prereg="R13", items=len(ks), ready_non_exact=len(ready), flagged_sample=len(fl), annotators=ann,
+                ready_classes=dict(sorted(Counter(M[k]["final"] for k in ready).items())),
+                ready_needs_fix=sum(M[k]["final_fix"] == "yes" for k in ready),
+                flagged_sample_no_fix=sum(M[k]["final_fix"] == "no" for k in fl), flagged_sample_research_good=sum(v == "good" for v in F.values()),
+                flagged_sample_classes=dict(sorted(Counter(M[k]["final"] for k in fl).items())),
+                severe_among_ready=len(severe), severe_among_ready_items=severe, r0_with_blind_labels=r0, vs_research=vs)
