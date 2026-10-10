@@ -1,0 +1,85 @@
+{
+ "mode": "shadow (public feed), certified local 8B, variant v3-terms (experimental)",
+ "date": "2026-10-10T14:36:13+00:00",
+ "items": 38,
+ "records": 38,
+ "missing": 0,
+ "status": {
+  "flagged": 22,
+  "human": 16
+ },
+ "by_lang": {
+  "fr": {
+   "flagged": 11,
+   "human": 8
+  },
+  "it": {
+   "flagged": 11,
+   "human": 8
+  }
+ },
+ "rule_only": 0,
+ "reasked": 14,
+ "human_reasons": {
+  "German text longer than 2500 characters and the change needs the model (outside the evaluated range)": 6,
+  "German changed 63% of its tokens (> 60%): a rewrite, not an amendment": 8,
+  "German changed 62% of its tokens (> 60%): a rewrite, not an amendment": 2
+ },
+ "review_reasons": {
+  "experimental prompt variant v3-terms (PREREG R12), not the certified pipeline: every item is reviewed; guard_status keeps the frozen guards' verdict": 22
+ },
+ "shadow": {
+  "compared": 22,
+  "exact": 3,
+  "ready": 0,
+  "ready_exact": 0,
+  "exact_rate": 13.6,
+  "ready_rate": 0.0,
+  "flag_rate": 100.0,
+  "ready_exact_rate": null,
+  "rates_note": "percent of the drafted items with a published target (status human excluded)",
+  "ready_not_exact": [],
+  "note": "tgt_new = the FR/IT text BAG already published; it was never shown to the model"
+ },
+ "calls": {
+  "n": 45,
+  "prompt_tokens": 51338,
+  "completion_tokens": 9498,
+  "models_served": [
+   "gguf:apertus-v1.5-8b-text-q8_0.gguf"
+  ],
+  "system_fingerprints": [],
+  "endpoints": [
+   "local llama.cpp (in process)"
+  ],
+  "chf_estimate": 0.0597,
+  "chf_basis": "Swiss provider's published price, CHF 0.70 / 2.50 per M input / output tokens"
+ },
+ "mining": {
+  "items_from": "data/shadow/20260801-20260901/items.json (committed)",
+  "variant": "v3-terms",
+  "terms_date": "20260801"
+ },
+ "gate": {
+  "certificate": "8b-q8_0-fresh166",
+  "kind": "build",
+  "certification": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "llama_cpp_python": "0.3.35"
+ },
+ "backend": {
+  "name": "llamacpp",
+  "label": "llamacpp gguf:apertus-v1.5-8b-text-q8_0.gguf (variant v3-terms, house wording mined from the 20260801 snapshot)",
+  "review_policy": "experimental prompt variant v3-terms (PREREG R12), not the certified pipeline: every item is reviewed; guard_status keeps the frozen guards' verdict"
+ },
+ "shards": 6,
+ "gates_agree": true,
+ "variant": {
+  "name": "v3-terms",
+  "terms_date": "20260801"
+ },
+ "next": [
+  "gleichlaut emit --records out/month/20260801-20260901/records.jsonl --items out/month/20260801-20260901/items.json --n 0 --out out/month/20260801-20260901/emit",
+  "gleichlaut ui --records out/month/20260801-20260901/records.jsonl --items out/month/20260801-20260901/items.json --out out/month/20260801-20260901/ui/index.html"
+ ]
+}

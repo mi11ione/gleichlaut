@@ -1,0 +1,501 @@
+{
+ "annotators_agree": 19,
+ "candidate": [],
+ "final_classes": {
+  "REAL": 1,
+  "cosmetic": 2,
+  "equivalent": 13,
+  "german": 3,
+  "stale": 2
+ },
+ "labelled": 19,
+ "months": {
+  "20260801-20260901": {
+   "70b": {
+    "frozen": {
+     "calls": 48,
+     "criteria": {
+      "exact_gain": [
+       0.0,
+       false
+      ],
+      "flag_rate": [
+       81.8,
+       false
+      ],
+      "unflagged_real": [
+       0.0,
+       true
+      ],
+      "unflagged_stale_untranslated": [
+       13.64,
+       false
+      ]
+     },
+     "exact": 0,
+     "first_prompts_in_call_log": null,
+     "flagged": 18,
+     "gate": null,
+     "meets_r0": false,
+     "n": 22,
+     "new_sentence_exact": 0,
+     "new_sentence_items": 14,
+     "ready": 4,
+     "ready_classes": {
+      "equivalent": 1,
+      "german": 2,
+      "stale": 1
+     },
+     "ready_exact": 0,
+     "ready_not_exact": 4,
+     "reexecuted_from_responses": null,
+     "rules_exact": 0,
+     "served_by": [
+      "swiss-ai/apertus-v1.5-70b"
+     ],
+     "unflagged_real_n": 0,
+     "unflagged_stale_german_n": 3,
+     "unlabelled": 0,
+     "wilson95_unflagged_stale_german": [
+      4.7,
+      33.3
+     ]
+    },
+    "paired": {
+     "exact_gained": [],
+     "exact_lost": [],
+     "flag_to_ready": 3,
+     "prompt_changed": 19,
+     "prompt_unchanged": 3,
+     "prompt_unchanged_same_output": 3,
+     "ready_to_flag": 0
+    },
+    "v3_terms": {
+     "calls": 51,
+     "criteria": {
+      "exact_gain": [
+       0.0,
+       false
+      ],
+      "flag_rate": [
+       68.2,
+       true
+      ],
+      "unflagged_real": [
+       4.55,
+       false
+      ],
+      "unflagged_stale_untranslated": [
+       18.18,
+       false
+      ]
+     },
+     "exact": 0,
+     "first_prompts_in_call_log": [
+      22,
+      22
+     ],
+     "flagged": 15,
+     "gate": null,
+     "meets_r0": false,
+     "n": 22,
+     "new_sentence_exact": 0,
+     "new_sentence_items": 14,
+     "ready": 7,
+     "ready_classes": {
+      "REAL": 1,
+      "equivalent": 2,
+      "german": 2,
+      "stale": 2
+     },
+     "ready_exact": 0,
+     "ready_not_exact": 7,
+     "reexecuted_from_responses": [
+      22,
+      22
+     ],
+     "rules_exact": 0,
+     "served_by": [
+      "swiss-ai/apertus-v1.5-70b"
+     ],
+     "unflagged_real_n": 1,
+     "unflagged_stale_german_n": 4,
+     "unlabelled": 0,
+     "wilson95_unflagged_stale_german": [
+      7.3,
+      38.5
+     ]
+    }
+   },
+   "drafted": 22,
+   "model_calls": 22,
+   "prompts_changed": 19,
+   "q8_0": {
+    "frozen": {
+     "calls": 44,
+     "criteria": {
+      "exact_gain": [
+       4.5,
+       false
+      ],
+      "flag_rate": [
+       81.8,
+       false
+      ],
+      "unflagged_real": [
+       0.0,
+       true
+      ],
+      "unflagged_stale_untranslated": [
+       4.55,
+       false
+      ]
+     },
+     "exact": 1,
+     "first_prompts_in_call_log": null,
+     "flagged": 18,
+     "gate": "8b-q8_0-fresh166",
+     "meets_r0": false,
+     "n": 22,
+     "new_sentence_exact": 0,
+     "new_sentence_items": 14,
+     "ready": 4,
+     "ready_classes": {
+      "cosmetic": 1,
+      "equivalent": 1,
+      "german": 1
+     },
+     "ready_exact": 1,
+     "ready_not_exact": 3,
+     "reexecuted_from_responses": null,
+     "rules_exact": 0,
+     "served_by": [
+      "gguf:apertus-v1.5-8b-text-q8_0.gguf"
+     ],
+     "unflagged_real_n": 0,
+     "unflagged_stale_german_n": 1,
+     "unlabelled": 0,
+     "wilson95_unflagged_stale_german": [
+      0.8,
+      21.8
+     ]
+    },
+    "paired": {
+     "exact_gained": [
+      "XTANDI.02-Kombi-LHRH-Antagonisten-409dc1-fr",
+      "ZELBORAF.02-Kombination-mit-COTELLIC-dfcab8-fr"
+     ],
+     "exact_lost": [],
+     "flag_to_ready": 4,
+     "prompt_changed": 19,
+     "prompt_unchanged": 3,
+     "prompt_unchanged_same_output": 3,
+     "ready_to_flag": 0
+    },
+    "v3_terms": {
+     "calls": 45,
+     "criteria": {
+      "exact_gain": [
+       13.6,
+       true
+      ],
+      "flag_rate": [
+       63.6,
+       true
+      ],
+      "unflagged_real": [
+       0.0,
+       true
+      ],
+      "unflagged_stale_untranslated": [
+       4.55,
+       false
+      ]
+     },
+     "exact": 3,
+     "first_prompts_in_call_log": [
+      22,
+      22
+     ],
+     "flagged": 14,
+     "gate": "8b-q8_0-fresh166",
+     "meets_r0": false,
+     "n": 22,
+     "new_sentence_exact": 2,
+     "new_sentence_items": 14,
+     "ready": 8,
+     "ready_classes": {
+      "equivalent": 4,
+      "german": 1
+     },
+     "ready_exact": 3,
+     "ready_not_exact": 5,
+     "reexecuted_from_responses": null,
+     "rules_exact": 0,
+     "served_by": [
+      "gguf:apertus-v1.5-8b-text-q8_0.gguf"
+     ],
+     "unflagged_real_n": 0,
+     "unflagged_stale_german_n": 1,
+     "unlabelled": 0,
+     "wilson95_unflagged_stale_german": [
+      0.8,
+      21.8
+     ]
+    }
+   },
+   "terms_date": "20260801"
+  },
+  "20260901-20261001": {
+   "70b": {
+    "frozen": {
+     "calls": 82,
+     "criteria": {
+      "exact_gain": [
+       9.8,
+       true
+      ],
+      "flag_rate": [
+       82.9,
+       false
+      ],
+      "unflagged_real": [
+       0.0,
+       true
+      ],
+      "unflagged_stale_untranslated": [
+       0.0,
+       true
+      ]
+     },
+     "exact": 4,
+     "first_prompts_in_call_log": null,
+     "flagged": 34,
+     "gate": null,
+     "meets_r0": false,
+     "n": 41,
+     "new_sentence_exact": 0,
+     "new_sentence_items": 32,
+     "ready": 7,
+     "ready_classes": {
+      "cosmetic": 2,
+      "equivalent": 3
+     },
+     "ready_exact": 2,
+     "ready_not_exact": 5,
+     "reexecuted_from_responses": null,
+     "rules_exact": 0,
+     "served_by": [
+      "swiss-ai/apertus-v1.5-70b"
+     ],
+     "unflagged_real_n": 0,
+     "unflagged_stale_german_n": 0,
+     "unlabelled": 0,
+     "wilson95_unflagged_stale_german": [
+      0.0,
+      8.6
+     ]
+    },
+    "paired": {
+     "exact_gained": [
+      "SKYRIZI.04-Colitis-Ulcerosa-nur-180-mg-3-4d0630-it",
+      "SKYRIZI.04-Colitis-Ulcerosa-nur-180-mg-3-dbcc55-it",
+      "VERZENIO.02a-f05251-fr",
+      "VERZENIO.02a-f05251-it",
+      "VERZENIO.03a-175825-fr"
+     ],
+     "exact_lost": [],
+     "flag_to_ready": 6,
+     "prompt_changed": 37,
+     "prompt_unchanged": 0,
+     "prompt_unchanged_same_output": 0,
+     "ready_to_flag": 5
+    },
+    "v3_terms": {
+     "calls": 91,
+     "criteria": {
+      "exact_gain": [
+       22.0,
+       true
+      ],
+      "flag_rate": [
+       80.5,
+       false
+      ],
+      "unflagged_real": [
+       0.0,
+       true
+      ],
+      "unflagged_stale_untranslated": [
+       0.0,
+       true
+      ]
+     },
+     "exact": 9,
+     "first_prompts_in_call_log": [
+      40,
+      40
+     ],
+     "flagged": 33,
+     "gate": null,
+     "meets_r0": false,
+     "n": 41,
+     "new_sentence_exact": 5,
+     "new_sentence_items": 32,
+     "ready": 8,
+     "ready_classes": {
+      "equivalent": 2
+     },
+     "ready_exact": 6,
+     "ready_not_exact": 2,
+     "reexecuted_from_responses": [
+      44,
+      44
+     ],
+     "rules_exact": 0,
+     "served_by": [
+      "swiss-ai/apertus-v1.5-70b"
+     ],
+     "unflagged_real_n": 0,
+     "unflagged_stale_german_n": 0,
+     "unlabelled": 0,
+     "wilson95_unflagged_stale_german": [
+      0.0,
+      8.6
+     ]
+    }
+   },
+   "drafted": 44,
+   "model_calls": 40,
+   "prompts_changed": 40,
+   "q8_0": {
+    "frozen": {
+     "calls": 82,
+     "criteria": {
+      "exact_gain": [
+       7.3,
+       true
+      ],
+      "flag_rate": [
+       92.7,
+       false
+      ],
+      "unflagged_real": [
+       0.0,
+       true
+      ],
+      "unflagged_stale_untranslated": [
+       0.0,
+       true
+      ]
+     },
+     "exact": 3,
+     "first_prompts_in_call_log": null,
+     "flagged": 38,
+     "gate": "8b-q8_0-fresh166",
+     "meets_r0": false,
+     "n": 41,
+     "new_sentence_exact": 0,
+     "new_sentence_items": 32,
+     "ready": 3,
+     "ready_classes": {
+      "cosmetic": 1,
+      "equivalent": 1
+     },
+     "ready_exact": 1,
+     "ready_not_exact": 2,
+     "reexecuted_from_responses": null,
+     "rules_exact": 0,
+     "served_by": [
+      "gguf:apertus-v1.5-8b-text-q8_0.gguf"
+     ],
+     "unflagged_real_n": 0,
+     "unflagged_stale_german_n": 0,
+     "unlabelled": 0,
+     "wilson95_unflagged_stale_german": [
+      0.0,
+      8.6
+     ]
+    },
+    "paired": {
+     "exact_gained": [
+      "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-0e3431-it",
+      "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-f77c29-it",
+      "TALZENNA-03d4dc-it",
+      "VERZENIO.01a-c8a78a-it",
+      "VERZENIO.02a-f05251-it",
+      "VERZENIO.03a-175825-fr"
+     ],
+     "exact_lost": [
+      "XTANDI.XX-KoGu-227abc-it"
+     ],
+     "flag_to_ready": 9,
+     "prompt_changed": 37,
+     "prompt_unchanged": 0,
+     "prompt_unchanged_same_output": 0,
+     "ready_to_flag": 1
+    },
+    "v3_terms": {
+     "calls": 81,
+     "criteria": {
+      "exact_gain": [
+       19.5,
+       true
+      ],
+      "flag_rate": [
+       73.2,
+       false
+      ],
+      "unflagged_real": [
+       0.0,
+       true
+      ],
+      "unflagged_stale_untranslated": [
+       0.0,
+       true
+      ]
+     },
+     "exact": 8,
+     "first_prompts_in_call_log": [
+      40,
+      40
+     ],
+     "flagged": 30,
+     "gate": "8b-q8_0-fresh166",
+     "meets_r0": false,
+     "n": 41,
+     "new_sentence_exact": 6,
+     "new_sentence_items": 32,
+     "ready": 11,
+     "ready_classes": {
+      "cosmetic": 2,
+      "equivalent": 5
+     },
+     "ready_exact": 4,
+     "ready_not_exact": 7,
+     "reexecuted_from_responses": null,
+     "rules_exact": 0,
+     "served_by": [
+      "gguf:apertus-v1.5-8b-text-q8_0.gguf"
+     ],
+     "unflagged_real_n": 0,
+     "unflagged_stale_german_n": 0,
+     "unlabelled": 0,
+     "wilson95_unflagged_stale_german": [
+      0.0,
+      8.6
+     ]
+    }
+   },
+   "terms_date": "20260901"
+  }
+ },
+ "pass_rule": {
+  "exact_gain_min_pts": 5.0,
+  "flag_rate_max_pct": 70.0,
+  "unflagged_real_max_pct": 1.0,
+  "unflagged_stale_untranslated_max_pct": 2.0
+ },
+ "rule": "PREREG R12",
+ "tiebreak": 1
+}

@@ -53,6 +53,7 @@ def compute():
     res["size_compare"] = score.size_compare()
     res["shadow_20260901_20261001"] = score.shadow_month()
     res["shadow_20260801_20260901"] = score.shadow_month("20260801-20260901", r0=True)   # PREREG R10: second, prospective month, R0 criteria
+    res["r12_terms"] = score.r12_terms()          # PREREG R12: house wording in the prompt (v3-terms) beside the frozen pipeline, both live months
     res["audit_recall"] = score.audit_recall()
     res["audit_grouping"] = score.audit_grouping()
     res["value"] = score.value()
@@ -114,6 +115,11 @@ def headline(res):
                f"{r['month']['criteria']['flag_rate'][0]:.1f}% > 70%, meaning errors among ready {r['month']['unflagged_real_n']})"
                for m, r in res[k]["r0"].items())
            for k, lbl in (("shadow_20260801_20260901", "Aug 2026 (R10, prospective)"),) if res.get(k, {}).get("r0")],
+         *[f"  house wording in the prompt (R12, v3-terms, not shipped): " + "; ".join(
+               f"{run[4:6]}/{m} {'PASS' if v['v3_terms']['meets_r0'] else 'FAIL'} (identical {v['frozen']['exact']} -> {v['v3_terms']['exact']}"
+               f"/{v['v3_terms']['n']}, flagged {v['v3_terms']['criteria']['flag_rate'][0]:.1f}%)"
+               for run, mo in res[k]["months"].items() for m, v in mo.items() if isinstance(v, dict) and "v3_terms" in v)
+           for k in ("r12_terms",) if res.get(k)],
          *[f"  live month Sep 2026 (R7): flagged " + ", ".join(f"{m} {res[k][m]['flag_rate']:.1f}%" for m in ("q8_0", "q4_k_m", "70b") if m in res[k])
            + f"; {res[k]['ready_errors_total']} errors among {res[k]['ready_total']} ready"
            for k in ("shadow_20260901_20261001",) if res.get(k)],

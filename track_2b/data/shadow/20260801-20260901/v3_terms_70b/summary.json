@@ -1,0 +1,64 @@
+{
+ "mode": "shadow (public feed), Apertus 70B through the development gateway (dev), variant v3-terms (experimental)",
+ "date": "2026-10-10T14:11:27+00:00",
+ "items": 38,
+ "records": 38,
+ "missing": 0,
+ "status": {
+  "flagged": 22,
+  "human": 16
+ },
+ "by_lang": {
+  "fr": {
+   "flagged": 11,
+   "human": 8
+  },
+  "it": {
+   "flagged": 11,
+   "human": 8
+  }
+ },
+ "rule_only": 0,
+ "reasked": 17,
+ "human_reasons": {
+  "German text longer than 2500 characters and the change needs the model (outside the evaluated range)": 6,
+  "German changed 63% of its tokens (> 60%): a rewrite, not an amendment": 8,
+  "German changed 62% of its tokens (> 60%): a rewrite, not an amendment": 2
+ },
+ "review_reasons": {
+  "experimental prompt variant v3-terms (PREREG R12), not the certified pipeline: every item is reviewed; guard_status keeps the frozen guards' verdict": 22
+ },
+ "shadow": {
+  "compared": 22,
+  "exact": 0,
+  "ready": 0,
+  "ready_exact": 0,
+  "exact_rate": 0.0,
+  "ready_rate": 0.0,
+  "flag_rate": 100.0,
+  "ready_exact_rate": null,
+  "rates_note": "percent of the drafted items with a published target (status human excluded)",
+  "ready_not_exact": [],
+  "note": "tgt_new = the FR/IT text BAG already published; it was never shown to the model"
+ },
+ "calls": {
+  "n": 51,
+  "prompt_tokens": 59709,
+  "completion_tokens": 10573,
+  "models_served": [
+   "swiss-ai/apertus-v1.5-70b"
+  ],
+  "system_fingerprints": [],
+  "endpoints": [],
+  "chf_estimate": 0.0682,
+  "chf_basis": "Swiss provider's published price, CHF 0.70 / 2.50 per M input / output tokens"
+ },
+ "variant": {
+  "name": "v3-terms",
+  "terms_date": "20260801"
+ },
+ "next": [
+  "gleichlaut emit --records /Users/mi11ion/Desktop/hackapertus/gleichlaut/track_2b/data/shadow/20260801-20260901/v3_terms_70b/records.jsonl --items /Users/mi11ion/Desktop/hackapertus/gleichlaut/track_2b/data/shadow/20260801-20260901/v3_terms_70b/items.json --n 0 --out /Users/mi11ion/Desktop/hackapertus/gleichlaut/track_2b/data/shadow/20260801-20260901/v3_terms_70b/emit",
+  "gleichlaut ui --records /Users/mi11ion/Desktop/hackapertus/gleichlaut/track_2b/data/shadow/20260801-20260901/v3_terms_70b/records.jsonl --items /Users/mi11ion/Desktop/hackapertus/gleichlaut/track_2b/data/shadow/20260801-20260901/v3_terms_70b/items.json --out /Users/mi11ion/Desktop/hackapertus/gleichlaut/track_2b/data/shadow/20260801-20260901/v3_terms_70b/ui/index.html"
+ ]
+}

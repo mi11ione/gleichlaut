@@ -265,6 +265,24 @@ for cid, path, fmt in (("as_planted", "counts.planted", "{}"), ("as_untouched", 
                        ("as_b_real_REAL_either", ASB + "real.severe_incl_german_by_existing.REAL.either.k", "{}")):
     C.append((cid, AS, path, fmt, RE))
 
+# PREREG R12: house wording in the drafting prompt (variant v3-terms) beside the frozen pipeline on both live months
+R12 = "eval/results/r12_terms.json"
+for mk, mon in (("aug", "20260801-20260901"), ("sep", "20260901-20261001")):
+    C.append((f"r12_{mk}_drafted", R12, f"months.{mon}.drafted", "{}", RE))
+    C.append((f"r12_{mk}_changed", R12, f"months.{mon}.prompts_changed", "{}", RE))
+    C.append((f"r12_{mk}_calls", R12, f"months.{mon}.model_calls", "{}", RE))
+    for m in ("q8_0", "70b"):
+        for a, ak in (("frozen", "f"), ("v3_terms", "v")):
+            b = f"months.{mon}.{m}.{a}."
+            for cid, path, fmt in (("n", "n", "{}"), ("exact", "exact", "{}"), ("ready", "ready", "{}"), ("flagged", "flagged", "{}"),
+                                   ("flag", "criteria.flag_rate.0", "{:.1f}"), ("gain", "criteria.exact_gain.0", "{:+.1f}"),
+                                   ("sg", "criteria.unflagged_stale_untranslated.0", "{:.1f}"), ("real", "criteria.unflagged_real.0", "{:.1f}"),
+                                   ("sg_n", "unflagged_stale_german_n", "{}"), ("real_n", "unflagged_real_n", "{}"),
+                                   ("newsent", "new_sentence_exact", "{}"), ("newsent_n", "new_sentence_items", "{}")):
+                C.append((f"r12_{mk}_{m}_{ak}_{cid}", R12, b + path, fmt, RE))
+for cid, path in (("r12_labelled", "labelled"), ("r12_agree", "annotators_agree"), ("r12_tiebreak", "tiebreak")):
+    C.append((cid, R12, path, "{}", RE))
+
 if __name__ == "__main__":
     rows = ["id\tvalue\tsource\tpath\tfmt\tcommand\twhere"]
     for cid, src, path, fmt, cmd in C:

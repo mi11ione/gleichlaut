@@ -1,0 +1,22 @@
+month	model	key	A_fix	A_class	B_fix	B_class	T_fix	T_class	final_fix	final	note_A
+20260801-20260901	q8_0	COTELLIC.01-d8b8b3-it	no	equivalent	no	equivalent			no	equivalent	Percentage 35.03% and code sentence correctly updated; official differs only in insurer term.
+20260801-20260901	70b	JARDIANCE-MET.01-b0cdbc-fr	yes	german	yes	german			yes	german	New indent "GLP1 - 1 - analogue" keeps German compound/hyphenation artefact instead of analogue du GLP-1.
+20260801-20260901	q8_0	JARDIANCE-MET.01-b0cdbc-it	yes	german	yes	german			yes	german	New GLP-1 indent rendered as "GLP1 - 1 - Analogo": German compound/hyphenation artefact, capitalised calque.
+20260801-20260901	70b	JARDIANCE-MET.01-b0cdbc-it	yes	german	yes	german			yes	german	New indent "GLP1 - 1 - analogo" keeps German compound/hyphenation artefact instead of analogo del GLP-1.
+20260801-20260901	70b	XEOMIN.01a-d4ed25-fr	yes	REAL	yes	REAL	yes	german	yes	REAL	German "Maximal" left; also drops "médicamenteuse" from drug-monotherapy condition, changing scope.
+20260801-20260901	q8_0	XEOMIN.01a-d4ed25-it	no	equivalent	no	equivalent			no	equivalent	"arto superiore e/o inferiore" applied, bullets removed; official uses plural arti, harmless.
+20260801-20260901	70b	XEOMIN.01a-d4ed25-it	no	equivalent	no	equivalent			no	equivalent	"arto superiore e/o inferiore" applied, bullets removed; official uses plural arti, harmless.
+20260801-20260901	70b	XTANDI.01-Kombination-LHRH-Antagonisten-b123a2-fr	yes	stale	yes	stale			yes	stale	Deleted guarantee sentence leaves fragment "Après" before XTANDI; deletion only partly applied.
+20260801-20260901	70b	XTANDI.01-Kombination-LHRH-Antagonisten-b123a2-it	yes	stale	yes	stale			yes	stale	KoGu sentence deletion only partial: fragment "In seguito a" left before XTANDI; code sentence fine.
+20260801-20260901	q8_0	XTANDI.02-Kombi-LHRH-Antagonisten-409dc1-it	no	equivalent	no	equivalent			no	equivalent	Code sentence correctly replaced; official additionally writes assicuratore malattie.
+20260801-20260901	70b	XTANDI.02-Kombi-LHRH-Antagonisten-409dc1-it	no	equivalent	no	equivalent			no	equivalent	Code sentence correctly replaced; official additionally writes assicuratore malattie.
+20260801-20260901	q8_0	ZELBORAF.02-Kombination-mit-COTELLIC-dfcab8-it	no	equivalent	no	equivalent			no	equivalent	Percentage 35.03% and code sentence correctly updated; official differs only in insurer term.
+20260901-20261001	q8_0	OPDIVO.10-RCC-Nierenzellkarzinom-b7cdf1-fr	no	equivalent	no	equivalent			no	equivalent	Only German change was closing parenthesis, already present in tgt_old; draft unchanged is correct.
+20260901-20261001	q8_0	SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-0e3431-fr	no	equivalent	no	equivalent			no	equivalent	Code sentence correctly replaced; official only changes assureur-maladie to assurance maladie.
+20260901-20261001	70b	SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-0e3431-it	no	equivalent	no	equivalent			no	equivalent	Code sentence correctly replaced; official additionally writes assicuratore malattie.
+20260901-20261001	q8_0	SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-f77c29-fr	no	equivalent	no	equivalent			no	equivalent	Code sentence correctly replaced; official only changes assureur-maladie to assurance maladie.
+20260901-20261001	70b	SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-f77c29-it	no	equivalent	no	equivalent			no	equivalent	Code sentence correctly replaced; official additionally writes assicuratore malattie.
+20260901-20261001	q8_0	SKYRIZI.04-Colitis-Ulcerosa-nur-180-mg-3-4d0630-it	no	equivalent	no	equivalent			no	equivalent	Code sentence correctly replaced; official additionally writes assicuratore malattie.
+20260901-20261001	q8_0	SKYRIZI.04-Colitis-Ulcerosa-nur-180-mg-3-dbcc55-it	no	equivalent	no	equivalent			no	equivalent	Code sentence correctly replaced; official additionally writes assicuratore malattie.
+20260901-20261001	q8_0	VERZENIO.01a-c8a78a-fr	yes	cosmetic	yes	cosmetic			yes	cosmetic	Code sentence correctly replaced but ends with stray colon instead of full stop.
+20260901-20261001	q8_0	VERZENIO.02a-f05251-fr	yes	cosmetic	yes	cosmetic			yes	cosmetic	Code sentence correctly replaced but ends with stray colon instead of full stop.

@@ -1,0 +1,20 @@
+id	needs_fix	class	note
+V00	yes	german	New GLP-1 indent rendered as "GLP1 - 1 - Analogo": German compound/hyphenation artefact, capitalised calque.
+V01	no	equivalent	Code sentence correctly replaced; official only changes assureur-maladie to assurance maladie.
+V02	no	equivalent	"arto superiore e/o inferiore" applied, bullets removed; official uses plural arti, harmless.
+V03	yes	german	New indent "GLP1 - 1 - analogue" keeps German compound/hyphenation artefact instead of analogue du GLP-1.
+V04	yes	stale	KoGu sentence deletion only partial: fragment "In seguito a" left before XTANDI; code sentence fine.
+V05	yes	REAL	German "Maximal" left; also drops "médicamenteuse" from drug-monotherapy condition, changing scope.
+V06	no	equivalent	Only German change was closing parenthesis, already present in tgt_old; draft unchanged is correct.
+V07	yes	cosmetic	Code sentence correctly replaced but ends with stray colon instead of full stop.
+V08	no	equivalent	Code sentence correctly replaced; official additionally writes assicuratore malattie.
+V09	yes	german	New indent "GLP1 - 1 - analogo" keeps German compound/hyphenation artefact instead of analogo del GLP-1.
+V10	no	equivalent	Percentage 35.03% and code sentence correctly updated; official differs only in insurer term.
+V11	no	equivalent	Code sentence correctly replaced; official additionally writes assicuratore malattie.
+V12	no	equivalent	Code sentence correctly replaced; official additionally writes assicuratore malattie.
+V13	no	equivalent	Code sentence correctly replaced; official only changes assureur-maladie to assurance maladie.
+V14	no	equivalent	Percentage 35.03% and code sentence correctly updated; official differs only in insurer term.
+V15	no	equivalent	Code sentence correctly replaced; official additionally writes assicuratore malattie.
+V16	no	equivalent	Code sentence correctly replaced; official additionally writes assicuratore malattie.
+V17	yes	cosmetic	Code sentence correctly replaced but ends with stray colon instead of full stop.
+V18	yes	stale	Deleted guarantee sentence leaves fragment "Après" before XTANDI; deletion only partly applied.

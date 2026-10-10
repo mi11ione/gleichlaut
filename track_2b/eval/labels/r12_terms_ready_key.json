@@ -1,0 +1,137 @@
+{
+ "V00": {
+  "month": "20260801-20260901",
+  "key": "JARDIANCE-MET.01-b0cdbc-it",
+  "models": [
+   "q8_0"
+  ]
+ },
+ "V01": {
+  "month": "20260901-20261001",
+  "key": "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-0e3431-fr",
+  "models": [
+   "q8_0"
+  ]
+ },
+ "V02": {
+  "month": "20260801-20260901",
+  "key": "XEOMIN.01a-d4ed25-it",
+  "models": [
+   "q8_0",
+   "70b"
+  ]
+ },
+ "V03": {
+  "month": "20260801-20260901",
+  "key": "JARDIANCE-MET.01-b0cdbc-fr",
+  "models": [
+   "70b"
+  ]
+ },
+ "V04": {
+  "month": "20260801-20260901",
+  "key": "XTANDI.01-Kombination-LHRH-Antagonisten-b123a2-it",
+  "models": [
+   "70b"
+  ]
+ },
+ "V05": {
+  "month": "20260801-20260901",
+  "key": "XEOMIN.01a-d4ed25-fr",
+  "models": [
+   "70b"
+  ]
+ },
+ "V06": {
+  "month": "20260901-20261001",
+  "key": "OPDIVO.10-RCC-Nierenzellkarzinom-b7cdf1-fr",
+  "models": [
+   "q8_0"
+  ]
+ },
+ "V07": {
+  "month": "20260901-20261001",
+  "key": "VERZENIO.01a-c8a78a-fr",
+  "models": [
+   "q8_0"
+  ]
+ },
+ "V08": {
+  "month": "20260801-20260901",
+  "key": "XTANDI.02-Kombi-LHRH-Antagonisten-409dc1-it",
+  "models": [
+   "q8_0",
+   "70b"
+  ]
+ },
+ "V09": {
+  "month": "20260801-20260901",
+  "key": "JARDIANCE-MET.01-b0cdbc-it",
+  "models": [
+   "70b"
+  ]
+ },
+ "V10": {
+  "month": "20260801-20260901",
+  "key": "ZELBORAF.02-Kombination-mit-COTELLIC-dfcab8-it",
+  "models": [
+   "q8_0"
+  ]
+ },
+ "V11": {
+  "month": "20260901-20261001",
+  "key": "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-0e3431-it",
+  "models": [
+   "70b"
+  ]
+ },
+ "V12": {
+  "month": "20260901-20261001",
+  "key": "SKYRIZI.04-Colitis-Ulcerosa-nur-180-mg-3-dbcc55-it",
+  "models": [
+   "q8_0"
+  ]
+ },
+ "V13": {
+  "month": "20260901-20261001",
+  "key": "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-f77c29-fr",
+  "models": [
+   "q8_0"
+  ]
+ },
+ "V14": {
+  "month": "20260801-20260901",
+  "key": "COTELLIC.01-d8b8b3-it",
+  "models": [
+   "q8_0"
+  ]
+ },
+ "V15": {
+  "month": "20260901-20261001",
+  "key": "SKYRIZI.04-Colitis-Ulcerosa-nur-180-mg-3-4d0630-it",
+  "models": [
+   "q8_0"
+  ]
+ },
+ "V16": {
+  "month": "20260901-20261001",
+  "key": "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-f77c29-it",
+  "models": [
+   "70b"
+  ]
+ },
+ "V17": {
+  "month": "20260901-20261001",
+  "key": "VERZENIO.02a-f05251-fr",
+  "models": [
+   "q8_0"
+  ]
+ },
+ "V18": {
+  "month": "20260801-20260901",
+  "key": "XTANDI.01-Kombination-LHRH-Antagonisten-b123a2-fr",
+  "models": [
+   "70b"
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+id	needs_fix	class	note
+V18	yes	stale	Deleted prior-approval sentence leaves dangling "Après" before XTANDI; deletion only partly applied.
+V17	yes	cosmetic	Code sentence correct but ends with colon instead of full stop.
+V16	no	equivalent	Code sentence correctly updated; official only adds "malattie".
+V15	no	equivalent	Code sentence correctly updated; official only adds "malattie".
+V14	no	equivalent	Percentage 35.03% and code sentence applied; official changes insurer wording only.
+V13	no	equivalent	Code sentence correctly updated; official changes assureur-maladie to assurance maladie.
+V12	no	equivalent	Code sentence correctly updated; official only adds "malattie".
+V11	no	equivalent	Code sentence correctly updated; official only adds "malattie".
+V10	no	equivalent	Percentage 35.03% and code sentence applied; official changes insurer wording only.
+V09	yes	german	"GLP1 - 1 - analogo" keeps German compound/hyphenation artefact; should be analogo del GLP-1.
+V08	no	equivalent	Code sentence correctly updated; official only adds "malattie".
+V07	yes	cosmetic	Code sentence correct but ends with colon instead of full stop.
+V06	no	equivalent	German change (closing parenthesis) already present in target; official reworded code sentence additionally.
+V05	yes	REAL	Drops "médicamenteuse" (monotherapy scope changes); also German "Maximal" left before "4 traitements au maximum".
+V04	yes	stale	Deleted prior-approval sentence leaves dangling "In seguito a" before XTANDI.
+V03	yes	german	"GLP1 - 1 - analogue" keeps German compound/hyphenation artefact; should be analogue du GLP-1.
+V02	no	equivalent	Lower limbs and bullet removal applied; official uses plural "degli arti".
+V01	no	equivalent	Code sentence correctly updated; official changes assureur-maladie to assurance maladie.
+V00	yes	german	"GLP1 - 1 - Analogo" keeps German compound, capitalisation and hyphenation artefacts.

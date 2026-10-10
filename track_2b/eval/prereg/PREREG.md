@@ -432,3 +432,25 @@ data the change was designed on is labelled "dev" in every table.
   of 20: 13 of the 20 flagged need no fix by each, 2 different each way); 35 of the 49 ready drafts are "preexisting" by
   the blind majority where the research labels say "equivalent" (both: no fix). The headline is unchanged
   (`eval/results/fresh166_blind.json`, `eval/labels/fresh166_blind.tsv`).
+- **R12, 10 Oct 2026:** house wording in the drafting prompt (variant v3-terms), pre-registered at commit 152825a
+  (14:06 UTC) before any run; house wording mined from 20260801 (August) and 20260901 (September) only. Q8_0: shadow runs
+  38058301756 (August) and 38058337474 (September; a first dispatch with 8 shards, 38058304511, was cancelled before any
+  drafting and re-dispatched with the pre-registered 6), 6 CPU shards each, all succeeded, build certificate
+  8b-q8_0-fresh166 verified on every shard, 45 and 81 calls. 70B: development gateway, 51 and 91 calls, all served by
+  swiss-ai/apertus-v1.5-70b, re-executed from its own recorded responses (22 of 22 and 44 of 44 drafted records equal).
+  The variant's first prompt of every model-call item is in each run's call log (22 of 22, 40 of 40 per model). Prompts
+  unchanged by the block (3 in August) gave the frozen run's output with both models. Frozen -> v3-terms, n = 22
+  (August) and 41 (September), no-model start 0 identical: **August Q8_0** identical 1 -> 3 (+4.5 -> +13.6 points, now
+  holds), flagged 81.8% -> 63.6% (now holds), REAL 0 -> 0 (holds), stale + German 1 -> 1 = 4.5% (fails): **does not
+  meet R0**. **August 70B** identical 0 -> 0 (+0.0, fails), flagged 81.8% -> 68.2% (now holds), REAL 0 -> 1 = 4.5%
+  (fails), stale + German 3 -> 4 = 18.2% (fails): **does not meet R0**. **September Q8_0** identical 3 -> 8 (+7.3 ->
+  +19.5, holds), flagged 92.7% -> 73.2% (fails), REAL 0, stale + German 0 (hold): **does not meet R0**. **September
+  70B** identical 4 -> 9 (+9.8 -> +22.0, holds), flagged 82.9% -> 80.5% (fails), REAL 0, stale + German 0 (hold):
+  **does not meet R0**. The frozen pipeline meets R0 in none of the four either, so no pair qualifies as a candidate under
+  the decision rule; the frozen default is unchanged. Labels: 19 distinct ready non-identical drafts (21 model rows), two
+  blind annotators agreed on all 19; one REAL went to a third (German), majority REAL. Final, per model row: 13 equivalent, 2 cosmetic,
+  3 German (BAG's typo "GLP1-1-Analogon" carried through by the number lock, as in R10), 2 stale (a fragment of a deleted
+  sentence left), 1 REAL (French draft keeps "Maximal" and drops "médicamenteuse"). Most remaining differences among
+  acceptable drafts are one insurer word: the Italian termbase head «assicuratore» where BAG writes «assicuratore
+  malattie», and BAG's own minority French « assurance maladie » (`eval/results/r12_terms.json`,
+  `eval/labels/r12_terms_ready.tsv`).

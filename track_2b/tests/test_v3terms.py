@@ -81,6 +81,20 @@ def test_cli_variant_dry_run_and_usage():
         except cli.UsageError: pass
 
 
+def test_r12_scorer_frozen_arm_matches_r10():
+    """the R12 scorer's frozen columns are the R10 numbers for August (same records, labels and criteria)."""
+    import unittest
+    from gleichlaut import score
+    if not all(os.path.exists(os.path.join(core.ROOT, "data", "shadow", m, f"v3_terms_{mo}", "records.jsonl"))
+               for m in MONTHS for mo in ("q8_0", "70b")):
+        raise unittest.SkipTest("R12 runs not recorded")
+    r = score.r12_terms(); s = score.shadow_month("20260801-20260901", r0=True)
+    for m in ("q8_0", "70b"):
+        f, ref = r["months"]["20260801-20260901"][m]["frozen"], s["r0"][m]["month"]
+        assert f["criteria"] == ref["criteria"] and f["meets_r0"] == ref["meets_r0"] and f["n"] == ref["n"] and f["exact"] == ref["exact"]
+        assert r["months"]["20260801-20260901"][m]["paired"]["prompt_unchanged"] >= 1
+
+
 if __name__ == "__main__":
     for n, f in sorted(globals().items()):
         if n.startswith("test_"): f(); print("ok", n)

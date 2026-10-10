@@ -437,6 +437,100 @@ def shadow_month(run="20260901-20261001", r0=False):
     return res
 
 
+def r12_terms():
+    """PREREG R12: the v3-terms variant (BAG's house wording, mined from each month's OLD snapshot, as one block in the
+    drafting prompt; gleichlaut.v3terms) beside the frozen pipeline on both live months, per model (Q8_0, 70B). The four R0
+    criteria on the drafts compared with BAG's text (status != human), scored on the frozen guards' verdict (guard_status;
+    the variant's records are all marked for review because it is not certified, and for the frozen runs status and
+    guard_status agree). Frozen: the R7 / R10 records and labels. v3-terms: data/shadow/<month>/v3_terms_<model>/ and
+    eval/labels/r12_terms_ready.tsv (blind, R1 protocol)."""
+    norm = core.lock.norm
+    def tsv(p):
+        if not os.path.exists(p): return []
+        L = open(p, encoding="utf-8").read().splitlines(); h = L[0].split("\t")
+        return [dict(zip(h, l.split("\t"))) for l in L[1:] if l.strip()]
+    lab12 = tsv(os.path.join(LABELS, "r12_terms_ready.tsv"))
+    B = json.load(open(os.path.join(core.ROOT, "eval", "prereg", "r12_blocks.json"), encoding="utf-8"))["months"]
+    st = lambda r: r["status"] if r["status"] == "human" else r.get("guard_status", r["status"])
+    new = "Indikationscode dieser Limitierung"
+    raw = {a: {r["id"]: r for r in tsv(os.path.join(LABELS, f"r12_terms_ready_{a}.tsv"))} for a in "ABT"}
+    res = dict(rule="PREREG R12", pass_rule=PASS_RULE, months={}, labelled=len(raw["A"]),
+               annotators_agree=sum((r["needs_fix"], r["class"]) == (raw["B"][i]["needs_fix"], raw["B"][i]["class"]) for i, r in raw["A"].items()),
+               tiebreak=len(raw["T"]), final_classes=dict(sorted(Counter(r["final"] for r in lab12).items())))
+    for run in ("20260801-20260901", "20260901-20261001"):
+        D = os.path.join(DATA, "shadow", run)
+        I = {x["key"]: x for x in json.load(open(os.path.join(D, "items.json"), encoding="utf-8"))}
+        labf = {(r["model"], r["key"]): r["final"] for r in tsv(os.path.join(LABELS, f"shadow_{run.replace('-', '_')}_ready.tsv"))}
+        labv = {(r["model"], r["key"]): r["final"] for r in lab12 if r["month"] == run}
+        cmp_ = [k for k, x in I.items() if x.get("tgt_new")]
+        rule_ok = {k: norm(core.gl2.rules(I[k]["de_old"], I[k]["de_new"], I[k]["tgt_old"], I[k]["lang"])[0]) == norm(I[k]["tgt_new"]) for k in cmp_}
+        blk = B[run]["items"]
+        mo = dict(terms_date=B[run]["terms_date"], drafted=B[run]["drafted"], model_calls=B[run]["model_calls"],
+                  prompts_changed=B[run]["prompt_changed"])
+        for m in ("q8_0", "70b"):
+            arms = {}
+            for arm, folder, lab in (("frozen", m, labf), ("v3_terms", f"v3_terms_{m}", labv)):
+                p = os.path.join(D, folder, "records.jsonl")
+                if not os.path.exists(p): continue
+                R = {json.loads(l)["key"]: json.loads(l) for l in open(p, encoding="utf-8")}
+                assert set(R) == set(I), (run, folder)
+                if arm == "frozen": assert all(r["status"] == r.get("guard_status", r["status"]) for r in R.values() if r["status"] != "human")
+                d = [k for k in cmp_ if st(R[k]) != "human"]; n = len(d)
+                ex = [k for k in d if norm(R[k]["out"]) == norm(I[k]["tgt_new"])]; ru = sum(rule_ok[k] for k in d)
+                rd = [k for k in d if st(R[k]) == "ready"]; ne = [k for k in rd if k not in ex]
+                cls = Counter(lab.get((m, k), "?") for k in ne)
+                real = cls.get("REAL", 0); su = cls.get("stale", 0) + cls.get("german", 0); fl = sum(st(R[k]) == "flagged" for k in d)
+                boil = [k for k in d if new in I[k]["de_new"] and new not in I[k]["de_old"]]
+                S = json.load(open(os.path.join(D, folder, "summary.json"), encoding="utf-8"))
+                sent = rex = None
+                if arm == "v3_terms":                    # the variant's first prompt of every model-call item is in the call log
+                    from . import cli, backends, v3terms
+                    calls = [json.loads(l) for l in open(os.path.join(D, folder, "calls.jsonl"), encoding="utf-8")]
+                    keys, model = {c_["key"] for c_ in calls}, calls[0]["model"]
+                    P = v3terms.TermsPipeline(cli._capture, B[run]["terms_date"]); hit = tot = 0
+                    for k in I:
+                        if st(R[k]) == "human": continue
+                        try: P.draft(I[k]); continue
+                        except cli._Captured as e: tot += 1; hit += backends.payload_key(model, e.prompt, e.max_tokens, 0.0) in keys
+                    sent = [hit, tot]
+                    rp = os.path.join(D, folder, "responses")
+                    if os.path.isdir(rp):                # 70B: re-execute the variant end-to-end from its own recorded responses
+                        Pc = v3terms.TermsPipeline(backends.Cache(rp, model=model), B[run]["terms_date"])
+                        dk = [k for k in I if st(R[k]) != "human"]
+                        reexec = sum(all(Pc.run(I[k]).get(f) == R[k].get(f) for f in ("out", "guard_flag", "reasked", "replaced", "retried"))
+                                     for k in dk)
+                        rex = [reexec, len(dk)]
+                c = dict(unflagged_real=[round(100 * real / n, 2), 100 * real / n <= PASS_RULE["unflagged_real_max_pct"]],
+                         unflagged_stale_untranslated=[round(100 * su / n, 2), 100 * su / n <= PASS_RULE["unflagged_stale_untranslated_max_pct"]],
+                         exact_gain=[round(100 * (len(ex) - ru) / n, 1), 100 * (len(ex) - ru) / n >= PASS_RULE["exact_gain_min_pts"]],
+                         flag_rate=[round(100 * fl / n, 1), 100 * fl / n <= PASS_RULE["flag_rate_max_pct"]])
+                arms[arm] = dict(n=n, exact=len(ex), rules_exact=ru, ready=len(rd), ready_exact=len(rd) - len(ne), ready_not_exact=len(ne),
+                                 ready_classes=dict(sorted(cls.items())), unlabelled=cls.get("?", 0), flagged=fl,
+                                 unflagged_real_n=real, unflagged_stale_german_n=su,
+                                 wilson95_unflagged_stale_german=[round(v, 1) for v in wilson(su, n)],
+                                 new_sentence_items=len(boil), new_sentence_exact=sum(k in ex for k in boil),
+                                 criteria=c, meets_r0=all(v[1] for v in c.values()) and not cls.get("?", 0),
+                                 calls=S["calls"]["n"], served_by=S["calls"]["models_served"], first_prompts_in_call_log=sent, reexecuted_from_responses=rex,
+                                 gate=(S.get("gate") or {}).get("certificate"), _R=R, _ex=set(ex))
+            if "frozen" in arms and "v3_terms" in arms:
+                F, V = arms["frozen"]["_R"], arms["v3_terms"]["_R"]
+                d = [k for k in cmp_ if st(F[k]) != "human"]
+                same = [k for k in d if blk.get(k, {}).get("model_call") and blk[k]["prompt_sha256_frozen"] == blk[k]["prompt_sha256_v3"]]
+                arms["paired"] = dict(prompt_unchanged=len(same), prompt_unchanged_same_output=sum(F[k]["out"] == V[k]["out"] for k in same),
+                                      prompt_changed=sum(blk.get(k, {}).get("prompt_sha256_frozen") != blk.get(k, {}).get("prompt_sha256_v3") for k in d),
+                                      exact_gained=sorted(arms["v3_terms"]["_ex"] - arms["frozen"]["_ex"]),
+                                      exact_lost=sorted(arms["frozen"]["_ex"] - arms["v3_terms"]["_ex"]),
+                                      flag_to_ready=sum(st(F[k]) == "flagged" and st(V[k]) == "ready" for k in d),
+                                      ready_to_flag=sum(st(F[k]) == "ready" and st(V[k]) == "flagged" for k in d))
+            for a in ("frozen", "v3_terms"):
+                if a in arms: arms[a].pop("_R"); arms[a].pop("_ex")
+            mo[m] = arms
+        res["months"][run] = mo
+    res["candidate"] = sorted(f"{run} {m}" for run, mo in res["months"].items() for m in ("q8_0", "70b")
+                              if mo[m].get("v3_terms", {}).get("meets_r0") and not mo[m].get("frozen", {}).get("meets_r0", True))
+    return res
+
+
 def audit_recall():
     """Audit recall on planted divergences (tools/audit_inject.py -> eval/results/audit_injection.json; it needs the 6 Oct
     snapshot, so replay reads its committed output): per fault type, detected / n, recall and Wilson 95% in percent."""

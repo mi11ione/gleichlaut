@@ -148,6 +148,30 @@ today the drafting is a review aid that pre-fills French and Italian and says wh
 the part ready to run, as phase 1 of [docs/adoption.md](docs/adoption.md). The commonest cause in both months is one new
 standard sentence that BAG itself renders two ways; checking drafts against BAG's own house formula (an advisory note
 today) is the next step to pre-register.
+
+**House wording in the prompt, on both live months (R12, pre-registered before any run).** The drafting prompt asks for
+"the established terminology" without supplying it. The variant v3-terms adds one block to it: BAG's own French/Italian
+wording of the terms and fixed sentences in the new German, mined only from each month's old snapshot (1 Aug, 1 Sep), so
+never from the month's published text. Guards, re-ask, routing and the frozen code are unchanged; the block changed 19 of
+22 August and 40 of 40 September prompts. Q8_0 on CPU runners (shadow runs `38058301756`, `38058337474`), the 70B through
+the gateway, frozen → v3-terms:
+
+| Month, model | Identical to BAG | Points over no-model start | Flagged | Ready drafts with an error | R0 |
+|---|---|---|---|---|---|
+| Aug, Q8_0 (n 22) | 1 → 3 | +4.5 → +13.6 | 81.8% → 63.6% | 1 German → 1 German | fails → fails (German left 4.5%) |
+| Aug, 70B (n 22) | 0 → 0 | +0.0 → +0.0 | 81.8% → 68.2% | 3 → 5 (1 REAL, 2 stale, 2 German) | fails → fails |
+| Sep, Q8_0 (n 41) | 3 → 8 | +7.3 → +19.5 | 92.7% → 73.2% | 0 → 0 | fails → fails (flagged) |
+| Sep, 70B (n 41) | 4 → 9 | +9.8 → +22.0 | 82.9% → 80.5% | 0 → 0 | fails → fails (flagged) |
+
+What holds: BAG's wording in the prompt gives more drafts identical to BAG's text in three of the four month-model pairs
+and fewer flags in all four, and the September ready drafts still contain no error. What fails: no month and model meets
+R0, so under the pre-registered decision v3-terms is not a candidate for the next held-out test and the frozen default
+stays. September misses only the 70% flag cap; August Q8_0 misses only the German-left cap, on BAG's own typo
+"GLP1-1-Analogon" as in the frozen run; the August 70B gets worse (a French draft left "Maximal" and dropped
+"médicamenteuse", REAL for both annotators; two kept a fragment of a deleted sentence). Most other differences from BAG's
+text are one insurer word: mostly the Italian termbase entry, the bare head «assicuratore», where BAG writes
+«assicuratore malattie»; in French BAG itself published its minority « assurance maladie ». The two blind annotators agreed on all
+19 labelled drafts (`eval/results/r12_terms.json`).
 Phased pilot (audit first), owners, protection needs and monthly effort: [docs/adoption.md](docs/adoption.md).
 
 ## Run it

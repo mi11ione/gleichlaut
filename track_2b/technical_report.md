@@ -249,6 +249,13 @@ A second month (1 Aug → 1 Sep 2026, R10) was pre-registered before drafting wi
 all 22 already in our dev or out-of-sample sets. Neither model meets R0: Q8_0 +4.5 points over the no-model start
 (fails the +5 bar), flagged 81.8% (fails the 70% cap), no ready draft with a meaning error (holds), 1 with German left
 (4.5%, fails); 70B 0 of 22 identical, flagged 81.8%, no meaning error, 3 stale or German (13.6%): the same three fail.
+House wording in the prompt (R12, pre-registered before any run): the variant v3-terms adds one block listing BAG's
+FR/IT wording of the terms and fixed sentences in the new German, mined only from each month's old snapshot; guards,
+re-ask and frozen code unchanged. Frozen → v3-terms, identical drafts: Q8_0 1 → 3 of 22 (Aug) and 3 → 8 of 41 (Sep),
+70B 0 → 0 and 4 → 9; flagged: Q8_0 81.8% → 63.6% and 92.7% → 73.2%, 70B 81.8% → 68.2% and 82.9% → 80.5%. No month and
+model meets R0: September fails the flag cap, August Q8_0 the German-left cap (BAG's typo "GLP1-1-Analogon"), and the
+August 70B gets worse (1 REAL, 2 stale, 2 German among 7 ready). As pre-registered, it is not a candidate for a held-out
+test; the frozen default stays.
 Next: the mined termbase as a pre-registered check resource (it already names the term in 22 of the 25 Q8_0 ready
 drafts that need a fix), a direction-flip check, and a Swiss 70B endpoint certified with `make certify-endpoint`.
 
