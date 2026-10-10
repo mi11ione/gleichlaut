@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 9, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 159, "secs": 8.72}, "text": "emissione della decisione di rimborsabilità"}

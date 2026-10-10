@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 14, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 151, "secs": 1.9, "seed": null, "usd": 0.0001647}, "text": "• in associazione con un inibitore dell’aromatasi"}

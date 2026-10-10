@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 33, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 242, "secs": 1.3, "seed": null, "usd": 0.0002948}, "text": "un importo fisso di CHF 1'500 per ogni ciclo di trattamento, fino ad un massimo di 24 cicli."}

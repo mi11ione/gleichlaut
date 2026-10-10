@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 28, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 200, "secs": 2.6, "seed": null, "usd": 0.00024576}, "text": "un trattamento chirurgico o radioterapico a causa di controindicazioni o di un rischio elevato di complicazioni."}

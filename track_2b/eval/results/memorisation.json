@@ -1,0 +1,376 @@
+{
+ "instruction": "Continue this Swiss drug-reimbursement limitation text word for word, exactly as published by the BAG. Output only the continuation.\n\n",
+ "langs": {
+  "N": {
+   "fr": 32,
+   "it": 30
+  },
+  "P": {
+   "fr": 60,
+   "it": 60
+  },
+  "T": {
+   "fr": 80,
+   "it": 80
+  }
+ },
+ "max_tokens": 300,
+ "models": {
+  "70b": {
+   "compare": {
+    "P-N": {
+     "chrf": {
+      "ci95": [
+       -2.929,
+       4.049
+      ],
+      "diff": 0.571,
+      "mannwhitney": {
+       "p": 0.714991,
+       "u": 3843.0
+      }
+     },
+     "lcp": {
+      "ci95": [
+       0.177,
+       1.156
+      ],
+      "diff": 0.624,
+      "mannwhitney": {
+       "p": 0.055059,
+       "u": 4191.5
+      }
+     },
+     "meets_criterion": false,
+     "next10": {
+      "ci95": [
+       0.0,
+       5.833
+      ],
+      "diff": 2.5
+     }
+    },
+    "T-N": {
+     "chrf": {
+      "ci95": [
+       -5.177,
+       1.083
+      ],
+      "diff": -1.969,
+      "mannwhitney": {
+       "p": 0.324526,
+       "u": 4537.0
+      }
+     },
+     "lcp": {
+      "ci95": [
+       0.079,
+       0.536
+      ],
+      "diff": 0.305,
+      "mannwhitney": {
+       "p": 0.040603,
+       "u": 5611.5
+      }
+     },
+     "meets_criterion": false,
+     "next10": {
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "diff": 0.0
+     }
+    }
+   },
+   "memorisation_flagged": false,
+   "model": "swiss-ai/apertus-v1.5-70b",
+   "probe_detects_long_standing": false,
+   "requests": 333,
+   "served": {
+    "swiss-ai/apertus-v1.5-70b": 342
+   },
+   "sets": {
+    "N": {
+     "chrf_mean": 17.266,
+     "closer": {
+      "new": 11,
+      "old": 15,
+      "tie": 5
+     },
+     "echo": 0,
+     "lcp_max": 3,
+     "lcp_mean": 0.226,
+     "n": 62,
+     "next10": 0.0,
+     "next10_count": 0
+    },
+    "P": {
+     "chrf_mean": 17.838,
+     "closer": {},
+     "echo": 0,
+     "lcp_max": 16,
+     "lcp_mean": 0.85,
+     "n": 120,
+     "next10": 2.5,
+     "next10_count": 3
+    },
+    "T": {
+     "chrf_mean": 15.297,
+     "closer": {
+      "new": 15,
+      "old": 22,
+      "tie": 8
+     },
+     "echo": 3,
+     "lcp_max": 6,
+     "lcp_mean": 0.531,
+     "n": 160,
+     "next10": 0.0,
+     "next10_count": 0
+    }
+   },
+   "texts": 342,
+   "top_lcp": [
+    {
+     "chrf": 18.4338,
+     "key": "P-fr-025",
+     "lang": "fr",
+     "lcp": 16,
+     "set": "P"
+    },
+    {
+     "chrf": 33.1039,
+     "key": "P-it-029",
+     "lang": "it",
+     "lcp": 16,
+     "set": "P"
+    },
+    {
+     "chrf": 24.6712,
+     "key": "P-it-030",
+     "lang": "it",
+     "lcp": 15,
+     "set": "P"
+    },
+    {
+     "chrf": 49.8715,
+     "key": "P-it-005",
+     "lang": "it",
+     "lcp": 7,
+     "set": "P"
+    },
+    {
+     "chrf": 24.3561,
+     "key": "wb001-fr",
+     "lang": "fr",
+     "lcp": 6,
+     "set": "T"
+    },
+    {
+     "chrf": 29.4525,
+     "key": "P-fr-054",
+     "lang": "fr",
+     "lcp": 5,
+     "set": "P"
+    },
+    {
+     "chrf": 24.7094,
+     "key": "P-it-026",
+     "lang": "it",
+     "lcp": 5,
+     "set": "P"
+    },
+    {
+     "chrf": 8.7084,
+     "key": "wb071-fr",
+     "lang": "fr",
+     "lcp": 5,
+     "set": "T"
+    }
+   ],
+   "verdict": "no evidence of memorisation beyond the negative control"
+  },
+  "8b_q8_0": {
+   "compare": {
+    "P-N": {
+     "chrf": {
+      "ci95": [
+       -0.664,
+       6.12
+      ],
+      "diff": 2.704,
+      "mannwhitney": {
+       "p": 0.190406,
+       "u": 4161.0
+      }
+     },
+     "lcp": {
+      "ci95": [
+       -0.095,
+       0.388
+      ],
+      "diff": 0.149,
+      "mannwhitney": {
+       "p": 0.229872,
+       "u": 3997.5
+      }
+     },
+     "meets_criterion": false,
+     "next10": {
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "diff": 0.0
+     }
+    },
+    "T-N": {
+     "chrf": {
+      "ci95": [
+       -1.712,
+       4.494
+      ],
+      "diff": 1.423,
+      "mannwhitney": {
+       "p": 0.379257,
+       "u": 5337.5
+      }
+     },
+     "lcp": {
+      "ci95": [
+       -0.119,
+       0.285
+      ],
+      "diff": 0.093,
+      "mannwhitney": {
+       "p": 0.281169,
+       "u": 5275.5
+      }
+     },
+     "meets_criterion": false,
+     "next10": {
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "diff": 0.0
+     }
+    }
+   },
+   "memorisation_flagged": false,
+   "model": "gguf:q8_0.gguf",
+   "probe_detects_long_standing": false,
+   "requests": 333,
+   "served": {
+    "gguf:q8_0.gguf": 342
+   },
+   "sets": {
+    "N": {
+     "chrf_mean": 12.761,
+     "closer": {
+      "new": 10,
+      "old": 14,
+      "tie": 7
+     },
+     "echo": 9,
+     "lcp_max": 4,
+     "lcp_mean": 0.226,
+     "n": 62,
+     "next10": 0.0,
+     "next10_count": 0
+    },
+    "P": {
+     "chrf_mean": 15.464,
+     "closer": {},
+     "echo": 8,
+     "lcp_max": 6,
+     "lcp_mean": 0.375,
+     "n": 120,
+     "next10": 0.0,
+     "next10_count": 0
+    },
+    "T": {
+     "chrf_mean": 14.184,
+     "closer": {
+      "new": 11,
+      "old": 21,
+      "tie": 13
+     },
+     "echo": 5,
+     "lcp_max": 5,
+     "lcp_mean": 0.319,
+     "n": 160,
+     "next10": 0.0,
+     "next10_count": 0
+    }
+   },
+   "texts": 342,
+   "top_lcp": [
+    {
+     "chrf": 26.6029,
+     "key": "P-it-005",
+     "lang": "it",
+     "lcp": 6,
+     "set": "P"
+    },
+    {
+     "chrf": 25.0984,
+     "key": "P-it-026",
+     "lang": "it",
+     "lcp": 5,
+     "set": "P"
+    },
+    {
+     "chrf": 5.4158,
+     "key": "wb071-fr",
+     "lang": "fr",
+     "lcp": 5,
+     "set": "T"
+    },
+    {
+     "chrf": 32.4559,
+     "key": "JARDIANCE-MET.01-b0cdbc-fr",
+     "lang": "fr",
+     "lcp": 4,
+     "set": "N"
+    },
+    {
+     "chrf": 32.299,
+     "key": "P-it-029",
+     "lang": "it",
+     "lcp": 4,
+     "set": "P"
+    },
+    {
+     "chrf": 21.7766,
+     "key": "JARDIANCE-MET.01-b0cdbc-it",
+     "lang": "it",
+     "lcp": 3,
+     "set": "N"
+    },
+    {
+     "chrf": 10.4852,
+     "key": "P-fr-039",
+     "lang": "fr",
+     "lcp": 3,
+     "set": "P"
+    },
+    {
+     "chrf": 6.1781,
+     "key": "wb040-it",
+     "lang": "it",
+     "lcp": 3,
+     "set": "T"
+    }
+   ],
+   "verdict": "no evidence of memorisation beyond the negative control"
+  }
+ },
+ "prereg": "R16",
+ "sizes": {
+  "N": 62,
+  "P": 120,
+  "T": 160
+ }
+}

@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 25, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 229, "secs": 1.1, "seed": null, "usd": 0.00026077999999999995}, "text": "Il rimborso sarà effettuato entro 30 giorni dalla ricezione della richiesta dell'assicuratore malattie."}

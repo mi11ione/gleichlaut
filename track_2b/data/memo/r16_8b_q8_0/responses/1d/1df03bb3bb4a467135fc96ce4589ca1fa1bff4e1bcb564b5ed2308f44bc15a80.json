@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 51, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 394, "secs": 42.71}, "text": "che i pazienti che hanno ricevuto una chemioterapia al platino nel contesto adiuvante o neoadiuvante non abbiano avuto ricadute durante i 6 mesi successivi all'ultima somministrazione della terapia al platino."}

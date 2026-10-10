@@ -96,7 +96,7 @@ logged per call where the API reports it: 202 / 81 calls in the seeded rerun); `
 `apertus-v1.5-8b` name with byte-identical greedy outputs in 760 of 792 cells. We infer that it serves the 70B from MMLU
 (84.4% on 250 questions, against 70.8% for the v1 8B route; that comparison mixes model version and size), which is evidence, not proof. So every 8B number here comes
 from local runs, and the 70B rows describe "the 70B as Public AI served it"; the 8B rows carry a digit and number-word
-logit mask that the API cannot offer the 70B (the 70B's 3 number-word drafts were all flagged). The 8B GGUF builds come from a third-party text-only extraction of `swiss-ai/Apertus-v1.5-8B` (`docs/dependencies.md`); llama.cpp applies the chat template embedded in the GGUF, which we did not compare with the official Apertus template.
+logit mask that the API cannot offer the 70B (the 70B's 3 number-word drafts were all flagged). The 8B GGUF builds come from a third-party text-only extraction of `swiss-ai/Apertus-v1.5-8B` (`docs/dependencies.md`); llama.cpp applies the chat template embedded in the GGUF, which we did not compare with the official Apertus template. Asked to continue each held-out answer word for word from its first half (PREREG R16), neither the 70B nor the 8B reproduced the next ten words of any of the 160 (0 of 62 for texts published after any plausible cutoff, 3 of 120 for the 70B on texts unchanged since before 2023): no evidence of memorisation, from a probe that recalls little even of long-standing texts.
 
 ### 3.2 How the model is used, and which size
 

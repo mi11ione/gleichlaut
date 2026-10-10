@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 33, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 174, "secs": 1.2, "seed": null, "usd": 0.00023903999999999996}, "text": "est également remboursé chez les personnes atteintes d’une maladie rénale chronique de stade 3 ou plus, indépendamment du risque cardiovasculaire."}

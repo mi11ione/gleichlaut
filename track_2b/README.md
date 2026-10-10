@@ -62,7 +62,10 @@ the 4.
 
 Test set: 166 French/Italian amendments from SL changes between Jun 2025 and Feb 2026, 154 in edit patterns never seen
 during design. The checks and all their resources were hashed before any output existed (the freeze predates this
-repository; `eval/prereg/PREREG.md` says what can and cannot be verified from here).
+repository; `eval/prereg/PREREG.md` says what can and cannot be verified from here). Could Apertus have seen BAG's answers? Asked to
+continue each from its first half (PREREG R16), neither the 70B nor the 8B reproduced the next ten words of any of the
+160 (nor of 62 texts published after any plausible cutoff; 3 of 120 for the 70B on texts unchanged since before 2023,
+so the probe recalls little even of those).
 
 | | Apertus 8B Q8_0, CPU, 16 GiB (default) | Apertus 8B Q4_K_M, CPU, 8 GiB | Apertus 70B, Public AI endpoint (recorded) | No-model start |
 |---|---|---|---|---|

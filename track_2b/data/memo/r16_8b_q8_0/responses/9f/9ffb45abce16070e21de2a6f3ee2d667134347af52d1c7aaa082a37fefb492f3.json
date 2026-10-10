@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 31, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 190, "secs": 16.33}, "text": "ET qui ont reçu au moins 2 traitements antérieurs, dont au moins un par le rituximab, ET qui ont une espérance de vie limitée"}

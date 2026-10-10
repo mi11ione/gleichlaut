@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 45, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 182, "secs": 21.24}, "text": "Per i pazienti nel caso in cui le terapie orali (metformina e/o sulfonilurea) non permettano un controllo sufficiente della glicemia o che non tollerano questi trattamenti."}

@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 11, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 124, "secs": 0.8, "seed": null, "usd": 0.00013379999999999997}, "text": "un beta-bloccante del gruppo C07"}

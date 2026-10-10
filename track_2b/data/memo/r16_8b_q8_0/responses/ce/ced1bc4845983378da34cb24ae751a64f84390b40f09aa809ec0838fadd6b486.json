@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 36, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 182, "secs": 19.41}, "text": "Pour le traitement de patients adultes atteints de maladie de Crohn modérée à sévère ayant présenté une réponse insuffisante à un traitement conventionnel ou à un médicament biologique,"}

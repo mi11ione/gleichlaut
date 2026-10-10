@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 3, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 124, "secs": 3.01}, "text": "homme."}

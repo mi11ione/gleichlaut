@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 46, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 164, "secs": 1.4, "seed": null, "usd": 0.0002688}, "text": "une mutation de BRAF V600E – le médicament [nom du médicament] est remboursé dans le cadre d'une monothérapie, sous réserve d'un modèle de prix convenu."}

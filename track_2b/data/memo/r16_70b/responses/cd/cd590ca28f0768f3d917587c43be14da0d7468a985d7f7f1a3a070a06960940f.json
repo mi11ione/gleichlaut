@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 10, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 159, "secs": 1.0, "seed": null, "usd": 0.00015958}, "text": "un controllo glicemico adeguato"}

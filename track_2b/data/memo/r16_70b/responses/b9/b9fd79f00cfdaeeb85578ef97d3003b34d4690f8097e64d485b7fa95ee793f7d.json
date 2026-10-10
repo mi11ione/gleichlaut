@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 29, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 189, "secs": 1.5, "seed": null, "usd": 0.00023965999999999997}, "text": "médecin spécialiste en pédiatrie ou en psychiatrie et psychothérapie d’enfants et d’adolescents."}

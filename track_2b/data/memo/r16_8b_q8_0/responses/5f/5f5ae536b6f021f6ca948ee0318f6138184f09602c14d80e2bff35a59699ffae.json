@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 16, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 665, "secs": 69.51}, "text": "L'efficacia terapeutica corrisponde a (3 di 5)"}

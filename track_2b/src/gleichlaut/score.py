@@ -1124,3 +1124,85 @@ def annotator_sensitivity_inspan(res=None):
                                         adjusted_both=round(min(100.0, hi / (a["both"]["pct"] / 100)), 1) if a["both"]["k"] else None,
                                         adjusted_either=round(min(100.0, hi / (a["either"]["pct"] / 100)), 1) if a["either"]["k"] else None)
     return out
+
+
+def _memo_norm(s):
+    import re, unicodedata
+    from .sl.ingest import nrm
+    s = unicodedata.normalize("NFC", nrm(s)).replace("\u2019", "'").replace("\u2018", "'")
+    return re.sub(r"^(\.\.\.|\u2026)\s*", "", s)
+
+
+def memo_score_text(r, resp):
+    """PREREG R16 per text: r = an item of data/memo/r16_items.json, resp = the model's continuation of r["prefix"]."""
+    pre, truth, o = _memo_norm(r["prefix"]), _memo_norm(r["truth"]).split(" "), _memo_norm(resp)
+    echo = o.startswith(pre)
+    if echo: o = o[len(pre):].strip()
+    w = o.split(" ") if o else []
+    lcp = next((i for i, (a, b) in enumerate(zip(w, truth)) if a != b), min(len(w), len(truth)))
+    k = min(100, len(truth)); hyp = " ".join(w[:k])
+    d = dict(set=r["set"], key=r["key"], lang=r["lang"], next10=w[:10] == truth[:10], lcp=lcp,
+             chrf=round(S["chrf"](hyp, " ".join(truth[:k])), 4), echo=echo)
+    if r.get("old_cont"):
+        old = _memo_norm(r["old_cont"]).split(" "); a, b = S["chrf"](hyp, " ".join(truth[:k])), S["chrf"](hyp, " ".join(old[:k]))
+        d["closer"] = "new" if a > b else "old" if b > a else "tie"
+    return d
+
+
+def memorisation():
+    """PREREG R16: memorisation probe. Each text of data/memo/r16_items.json (T: the fresh-166 answers, P: texts unchanged
+    since before 2023, N: new texts of the Aug/Sep 2026 live months) was cut after half its words and the model asked to
+    continue it word for word. Re-derived from the recorded responses (looked up by the sha256 of the rebuilt request, as
+    replay does): next-10 exact (primary), leading words equal, chrF of the first k <= 100 words; T - N and P - N with a
+    percentile bootstrap (10,000, seed 20261016) and Mann-Whitney; the pre-registered decision per model."""
+    import random
+    from . import backends
+    D = json.load(open(os.path.join(DATA, "memo", "r16_items.json"), encoding="utf-8"))
+    instr, mt = D["instruction"], D["max_tokens"]
+    per_text = memo_score_text
+    def boot(x, y, B=10000):
+        rng = random.Random(20261016); n, m = len(x), len(y); out = []
+        for _ in range(B): out.append(sum(rng.choices(x, k=n)) / n - sum(rng.choices(y, k=m)) / m)
+        out.sort(); return [out[int(0.025 * B)], out[int(0.975 * B) - 1]]
+    def mwu(x, y):
+        allv = sorted((v, g) for g, L in ((0, x), (1, y)) for v in L); ranks = {}; i = 0; ties = 0
+        while i < len(allv):
+            j = i
+            while j < len(allv) and allv[j][0] == allv[i][0]: j += 1
+            ranks[allv[i][0]] = (i + j + 1) / 2; t = j - i; ties += t ** 3 - t; i = j
+        n1, n2 = len(x), len(y); N = n1 + n2
+        u = sum(ranks[v] for v in x) - n1 * (n1 + 1) / 2
+        sd = math.sqrt(n1 * n2 / 12 * ((N + 1) - ties / (N * (N - 1))))
+        z = 0.0 if sd == 0 else (u - n1 * n2 / 2) / sd
+        return dict(u=u, p=round(math.erfc(abs(z) / math.sqrt(2)), 6))
+    res = dict(prereg="R16", sizes=D["sizes"], langs=D["langs"], instruction=instr, max_tokens=mt, models={})
+    for name, folder, model in (("70b", "r16_70b", D["model"]), ("8b_q8_0", "r16_8b_q8_0", "gguf:q8_0.gguf")):
+        root = os.path.join(DATA, "memo", folder, "responses")
+        if not os.path.isdir(root): continue
+        ask = backends.Cache(root, model=model); rows, served = [], Counter()
+        for r in D["items"]:
+            text, meta = ask(instr + r["prefix"], "r16", 0, mt)
+            served[meta.get("model_served")] += 1; rows.append(per_text(r, text))
+        G = {s: [d for d in rows if d["set"] == s] for s in "TPN"}
+        sets = {s: dict(n=len(L), next10=round(100 * sum(d["next10"] for d in L) / len(L), 2), next10_count=sum(d["next10"] for d in L),
+                        lcp_mean=round(sum(d["lcp"] for d in L) / len(L), 3), lcp_max=max(d["lcp"] for d in L),
+                        chrf_mean=round(sum(d["chrf"] for d in L) / len(L), 3), echo=sum(d["echo"] for d in L),
+                        closer=dict(sorted(Counter(d["closer"] for d in L if "closer" in d).items())))
+                for s, L in G.items()}
+        cmp_ = {}
+        for a in ("T", "P"):
+            c = {}
+            for f, sc in (("next10", 100), ("lcp", 1), ("chrf", 1)):
+                x = [sc * float(d[f]) for d in G[a]]; y = [sc * float(d[f]) for d in G["N"]]
+                c[f] = dict(diff=round(sum(x) / len(x) - sum(y) / len(y), 3), ci95=[round(v, 3) for v in boot(x, y)])
+                if f != "next10": c[f]["mannwhitney"] = mwu(x, y)
+            c["meets_criterion"] = c["next10"]["diff"] > 10 and c["next10"]["ci95"][0] > 0
+            cmp_[f"{a}-N"] = c
+        flagged = cmp_["T-N"]["meets_criterion"]
+        res["models"][name] = dict(model=model, texts=len(rows), requests=len({r["payload_key"] for r in D["items"]}), served=dict(served), sets=sets, compare=cmp_,
+                                   memorisation_flagged=flagged, probe_detects_long_standing=cmp_["P-N"]["meets_criterion"],
+                                   verdict=("memorisation of the test answers flagged" if flagged else
+                                            "no evidence of memorisation beyond the negative control"),
+                                   top_lcp=[{k: d[k] for k in ("set", "key", "lang", "lcp", "chrf")} for d in
+                                            sorted(rows, key=lambda d: (-d["lcp"], d["key"]))[:8]])
+    return res

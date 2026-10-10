@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 4, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 124, "secs": 0.7, "seed": null, "usd": 0.00011335999999999999}, "text": "hommes adultes"}

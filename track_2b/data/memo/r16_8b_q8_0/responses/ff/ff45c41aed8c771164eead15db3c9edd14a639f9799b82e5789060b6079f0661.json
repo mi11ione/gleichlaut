@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 5, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 164, "secs": 5.74}, "text": "de progression sous ADT"}

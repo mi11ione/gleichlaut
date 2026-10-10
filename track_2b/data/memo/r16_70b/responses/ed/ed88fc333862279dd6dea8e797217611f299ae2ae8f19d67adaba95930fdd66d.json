@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 30, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 169, "secs": 1.2, "seed": null, "usd": 0.00022617999999999998}, "text": "un risque de progression selon l’évaluation de l’International Metastatic RCC Database Consortium (IMDC) ≥ 0,15."}

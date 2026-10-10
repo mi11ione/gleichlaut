@@ -62,6 +62,7 @@ def compute():
     res["fresh166_blind"] = score.blind_relabel_70b(res)   # PREREG R13: the headline 70B run relabelled fully blind (PROTOCOL.md)
     res["audit_relabel"] = score.audit_relabel()   # PREREG R14 (A): every labelled audit finding, two blind annotators + a third
     res["annotator_sensitivity_inspan"] = score.annotator_sensitivity_inspan(res)   # PREREG R14 (B): errors inside the amended wording
+    res["memorisation"] = score.memorisation()     # PREREG R16: memorisation probe of the held-out answers (T) against P and N controls
     from .emit import explain
     res["explain_v2"] = explain.measure_v2()       # translator-facing reasons, before/after the round-6 wording (display only)
     res["explain_v3"] = explain.measure_v3()       # house sentences, termbase in rewritten text, noise, hedging, codes (display only)

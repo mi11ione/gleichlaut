@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 32, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 268, "secs": 1.1, "seed": null, "usd": 0.00031319999999999997}, "text": "• ≥ 1 ganglion lymphatique atteint; • taille de la tumeur primaire ≥ 2 cm; • grade tumoral 2 ou 3"}

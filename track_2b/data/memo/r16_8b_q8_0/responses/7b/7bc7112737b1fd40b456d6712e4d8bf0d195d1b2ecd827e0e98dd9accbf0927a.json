@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 14, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 149, "secs": 10.45}, "text": "un DMARD (disease-modifying antirheumatic drug)"}

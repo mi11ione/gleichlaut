@@ -506,3 +506,13 @@ r12_sep_70b_v_newsent_n	32	eval/results/r12_terms.json	months.20260901-20261001.
 r12_labelled	19	eval/results/r12_terms.json	labelled	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 r12_agree	19	eval/results/r12_terms.json	annotators_agree	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 r12_tiebreak	1	eval/results/r12_terms.json	tiebreak	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+mem_T_n	160	eval/results/memorisation.json	sizes.T	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+mem_70b_T_next10	0	eval/results/memorisation.json	models.70b.sets.T.next10_count	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+mem_8b_T_next10	0	eval/results/memorisation.json	models.8b_q8_0.sets.T.next10_count	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+mem_P_n	120	eval/results/memorisation.json	sizes.P	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+mem_70b_P_next10	3	eval/results/memorisation.json	models.70b.sets.P.next10_count	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+mem_8b_P_next10	0	eval/results/memorisation.json	models.8b_q8_0.sets.P.next10_count	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+mem_N_n	62	eval/results/memorisation.json	sizes.N	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+mem_70b_N_next10	0	eval/results/memorisation.json	models.70b.sets.N.next10_count	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+mem_8b_N_next10	0	eval/results/memorisation.json	models.8b_q8_0.sets.N.next10_count	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+mem_70b_requests	333	eval/results/memorisation.json	models.70b.requests	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes

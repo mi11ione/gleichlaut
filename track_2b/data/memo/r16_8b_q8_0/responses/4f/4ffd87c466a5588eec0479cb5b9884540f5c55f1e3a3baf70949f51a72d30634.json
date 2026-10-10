@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 19, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 122, "secs": 8.61}, "text": "vomissements induits par la chimiothérapie ou la radiothérapie"}

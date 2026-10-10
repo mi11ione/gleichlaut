@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 60, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 148, "secs": 16.83}, "text": "Patients atteints d’hémophilie B avec inhibiteurs Pour la prophylaxie des épisodes hémorragiques chez les patients dès 12 ans atteints d’hémophilie B congénitale et présentant des inhibiteurs du facteur IX > 0,6 UB"}

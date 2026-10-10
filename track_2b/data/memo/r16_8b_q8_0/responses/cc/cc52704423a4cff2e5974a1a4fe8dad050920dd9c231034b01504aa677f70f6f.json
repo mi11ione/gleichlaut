@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 7, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 170, "secs": 10.92}, "text": "en combinaison avec d'autres traitements"}

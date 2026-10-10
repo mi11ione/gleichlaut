@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 17, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 199, "secs": 16.72}, "text": "SARL peut fournir des informations complémentaires sur les conditions de prise en charge."}

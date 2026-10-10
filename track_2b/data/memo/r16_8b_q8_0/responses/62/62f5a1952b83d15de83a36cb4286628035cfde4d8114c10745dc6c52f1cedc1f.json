@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 1, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 221, "secs": 15.23}, "text": "patient"}

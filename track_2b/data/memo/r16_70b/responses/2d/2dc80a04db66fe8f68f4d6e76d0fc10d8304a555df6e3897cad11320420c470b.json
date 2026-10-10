@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 15, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 117, "secs": 0.9, "seed": null, "usd": 0.00013974000000000001}, "text": "plus une marge fixe de 40 francs par préparation sanguine"}

@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 52, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 288, "secs": 33.21}, "text": "di istologia (grado 1, 2 o 3) e/o • presenza di ≥1 linfonodo ascellare coinvolto e/o • dimensioni del tumore primario ≥1 cm e/o • grado tumorale 2 o 3"}

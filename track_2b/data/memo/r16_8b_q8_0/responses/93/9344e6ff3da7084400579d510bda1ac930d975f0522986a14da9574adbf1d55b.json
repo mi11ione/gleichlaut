@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 29, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 117, "secs": 8.45}, "text": "Calcul des prix des préparations sanguines sur la base du prix « ex factory », plus une marge fixe de 40 francs"}

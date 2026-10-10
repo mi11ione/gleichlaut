@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 40, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 149, "secs": 17.64}, "text": "Amivantamab est remboursé en combinaison avec le carboplatine et le pémétrexed pour le traitement de première ligne des patients adultes atteints d’un CBNPC"}

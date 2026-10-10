@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 24, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 146, "secs": 1.0, "seed": null, "usd": 0.0001898}, "text": "un comprimé par jour de metformine ne permet pas d’obtenir un contrôle glycémique suffisant"}

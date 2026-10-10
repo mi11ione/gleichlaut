@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 23, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 250, "secs": 1.0, "seed": null, "usd": 0.00027215999999999997}, "text": "conditions de remboursement sont fixés dans l’annexe 1 de la liste des spécialités."}

@@ -303,6 +303,14 @@ for mk, mon in (("aug", "20260801-20260901"), ("sep", "20260901-20261001")):
 for cid, path in (("r12_labelled", "labelled"), ("r12_agree", "annotators_agree"), ("r12_tiebreak", "tiebreak")):
     C.append((cid, R12, path, "{}", RE))
 
+# PREREG R16: memorisation probe (continue the first half of each text word for word)
+MEM = "eval/results/memorisation.json"
+for s_ in "TPN":
+    C.append((f"mem_{s_}_n", MEM, f"sizes.{s_}", "{}", RE))
+    for m, mk in (("70b", "70b"), ("8b_q8_0", "8b")):
+        C.append((f"mem_{mk}_{s_}_next10", MEM, f"models.{m}.sets.{s_}.next10_count", "{}", RE))
+C.append(("mem_70b_requests", MEM, "models.70b.requests", "{}", RE))
+
 if __name__ == "__main__":
     rows = ["id\tvalue\tsource\tpath\tfmt\tcommand\twhere"]
     for cid, src, path, fmt, cmd in C:

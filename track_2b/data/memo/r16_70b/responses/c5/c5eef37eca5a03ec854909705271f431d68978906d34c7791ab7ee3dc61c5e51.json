@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 25, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 243, "secs": 1.2, "seed": null, "usd": 0.00027225999999999997}, "text": "de la date de début de traitement et du code correspondant à l’indication (21390.XX)."}

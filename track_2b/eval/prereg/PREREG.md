@@ -34,7 +34,7 @@ human labels were used.
 | R13 | fully blind relabel of the headline 70B run | 0 severe errors among ready drafts; κ 0.892 |
 | R14 | (A) audit findings relabelled by two blind annotators + a third; (B) annotator sensitivity to meaning errors inside the amended wording | (A) κ 1.000; register 17 of 27, terminology 11 of 11, lists 6 of 11 (first: 16, 8, 7); (B) 38 of 38 caught by both, 0 false alarms |
 | R15 | audit round 5: operator direction, negation, number words | pending |
-| R16 | memorisation probe: could the models have seen the held-out answers | pending |
+| R16 | memorisation probe: could the models have seen the held-out answers | no evidence beyond the negative control (70B, 8B); probe sensitivity not shown |
 
 ## R0. Pass rule for a drafting lane (frozen 9 Oct 2026, before the fresh 2025 run)
 
@@ -696,3 +696,15 @@ data the change was designed on is labelled "dev" in every table.
   12 of 12 and German 14 of 15 severe by both; of the 3 earlier REAL labels both agree on 1 (either 3), as in R11. The 95%
   bounds on severe errors among ready drafts are unchanged by the recall (5.5% 70B, 5.8% Q8_0)
   (`eval/results/annotator_sensitivity_inspan.json`, `eval/labels/inspan_sensitivity.tsv`).
+- **R16, 10 Oct 2026:** memorisation probe, pre-registered at commit d9dee44 before any model call. 70B: development
+  gateway, tag `gleichlaut-r16-70b`, 333 requests for 342 texts (9 texts share a first half with another, so the same
+  request), all served by `swiss-ai/apertus-v1.5-70b`, USD 0.09; 8B Q8_0: workflow `r16-8b`, run 38063684596 (12 CPU
+  shards, all succeeded), no logit mask. Next 10 words exact: **70B** T 0 of 160, P 3 of 120 (2.5%), N 0 of 62;
+  **8B** 0 / 0 / 0. T − N = 0.0 points [0.0, 0.0] for both: **no evidence of memorisation beyond the negative
+  control**. P − N = 2.5 [0.0, 5.8] (70B) and 0.0 (8B): neither meets the criterion, so the probe did not detect
+  memorisation even of texts unchanged since before 2023, and the null result on T is weak evidence. Secondary: mean
+  leading words equal, 70B T 0.53, P 0.85, N 0.23 (T − N 0.31 [0.08, 0.54], Mann–Whitney p 0.041; longest run in T 6
+  words, in P 16); chrF of the first ≤ 100 words T 15.3, P 17.8, N 17.3 (T − N −2.0 [−5.2, 1.1]); 8B leading words
+  0.32 / 0.38 / 0.23, chrF 14.2 / 15.5 / 12.8, no difference with a CI excluding 0. Where BAG's old text continues the
+  same first half differently, the 70B continuation is closer to the new text in 15 of 45 T texts (old 22, tie 8) and
+  11 of 31 N texts (old 15, tie 5): no pull toward the published answer (`eval/results/memorisation.json`).

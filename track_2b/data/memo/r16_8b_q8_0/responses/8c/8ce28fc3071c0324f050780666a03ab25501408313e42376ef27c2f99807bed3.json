@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 8, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 165, "secs": 6.56}, "text": "patients adultes atteints de psoriasis en plaques"}

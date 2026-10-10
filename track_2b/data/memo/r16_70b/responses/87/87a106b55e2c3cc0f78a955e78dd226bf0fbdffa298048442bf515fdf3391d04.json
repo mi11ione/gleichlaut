@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 19, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 199, "secs": 1.0, "seed": null, "usd": 0.00021865999999999997}, "text": "SA fournira les informations nécessaires à l’évaluation du droit à la prise en charge."}

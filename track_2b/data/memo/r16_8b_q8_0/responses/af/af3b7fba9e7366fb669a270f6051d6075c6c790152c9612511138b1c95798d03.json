@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 21, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 209, "secs": 12.11}, "text": "En cas de progression de la maladie ou d'une toxicité inacceptable, il faut arrêter le traitement."}

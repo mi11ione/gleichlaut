@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 21, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 168, "secs": 1.0, "seed": null, "usd": 0.00019907999999999997}, "text": "un traitement oral lorsque celui-ci ne permet pas d’obtenir un contrôle glycémique adéquat"}

@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 22, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 226, "secs": 1.0, "seed": null, "usd": 0.00024956}, "text": "dopo 12 settimane di trattamento, la prescrizione non può più essere rinnovata."}

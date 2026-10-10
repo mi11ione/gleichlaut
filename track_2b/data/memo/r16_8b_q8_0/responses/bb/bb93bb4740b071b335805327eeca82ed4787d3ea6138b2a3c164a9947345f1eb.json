@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 5, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 113, "secs": 2.95}, "text": "aux dispositions légales en vigueur"}

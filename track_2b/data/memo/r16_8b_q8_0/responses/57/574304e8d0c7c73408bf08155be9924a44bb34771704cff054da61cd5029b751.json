@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 24, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 131, "secs": 10.99}, "text": "patients qui sont déjà à un stade avancé de la maladie et qui n'ont pas répondu à un traitement antérieur."}

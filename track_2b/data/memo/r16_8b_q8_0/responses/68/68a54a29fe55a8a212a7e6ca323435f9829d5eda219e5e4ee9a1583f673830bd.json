@@ -1,0 +1,1 @@
+{"meta": {"backend": "llama-cpp-python 0.3.35", "completion_tokens": 20, "model_served": "gguf:q8_0.gguf", "prompt_tokens": 176, "secs": 14.82}, "text": "Traitement des patients adultes atteints de leucémie myéloïde aiguë (LMA)"}
