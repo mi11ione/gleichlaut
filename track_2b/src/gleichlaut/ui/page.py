@@ -17,7 +17,8 @@ __FONTS__
    2 work area: register (left, 5fr: filters, legend of the marks, sticky-head table with column letters, numbered by the
    change's address wbNNN, export row) | case (right, 7fr, a decorative tick ruler along its left edge: §1 German change,
    §2 Drafts FR|IT with a legend of the number marks, §3 Checks: at most three plain reasons per draft in the reviewer's
-   language, labelled "explanation (FR/IT)", the full checks ledger collapsed below, §4 Decision). Below 900px the
+   language, labelled "explanation (FR/IT)", then the termbase advisory on its own low-priority line when there is one,
+   the full checks ledger collapsed below, §4 Decision). Below 900px the
    register sits above the case and the band stacks; no horizontal page scroll from 320px up. 3 footer: provenance +
    legend of the marks and keys. Print: A4, register hidden, one case per page.
    Type: Public Sans (texts), Archivo condensed (headings, big figures), Fragment Mono (metadata, labels, tables,
@@ -198,6 +199,7 @@ del{margin-right:.2em}
 .reasons{margin:4px 0 6px;padding-left:1.6em;font:400 15px/1.45 var(--sans)}
 .reasons li{padding-left:2px}.reasons li+li{margin-top:4px}
 .reasons li.low{color:var(--ink2)}
+.why p.tb{margin:2px 0 6px;color:var(--ink2);font:400 13px/1.45 var(--sans)}
 .reasons li::marker{font:400 12px var(--mono);color:var(--ink2)}
 .why .ok{font:400 15px/1.45 var(--sans);margin:4px 0 6px}
 .why .more{color:var(--ink2);margin:0 0 4px;font-size:12px}
@@ -938,6 +940,7 @@ function caseHTML(g,live){var Ls=langs(g),one=Ls.length<2?" one":"",h="";
   if(sh.length)h+='<ol class="reasons" lang="'+L+'">'+sh.map(function(x){return "<li"+(x[1]?' class="low"':"")+">"+esc(x[0])+"</li>"}).join("")+"</ol>";
   else h+='<p class="ok">'+esc(t("allPass"))+(it.status==="ready"?" "+esc(t("codeOnly")):"")+"</p>";
   if(W[1]>sh.length)h+='<p class="more">'+esc(fmt(t("moreN"),{n:W[1]-sh.length}))+"</p>";
+  if(it.tb)h+='<p class="tb" lang="'+L+'">'+esc(it.tb)+"</p>";   // termbase advisory: its own low-priority line, not one of the three
   h+='<details class="chk"><summary>'+esc(fmt(t("chkDetail"),{n:it.ledger.length}))+'</summary><div class="tbl"><table class="ledger">';
   h+="<thead><tr><th>"+esc(t("check"))+" ("+LL+")</th><th>"+esc(t("result"))+"</th><th>"+esc(t("finding"))+" ("+LL+")</th></tr></thead><tbody>";
   it.ledger.forEach(function(r){var st=r[2],res=st==="pass"?t("pass"):st==="fail"?t("fail"):t("na"),cls=st==="fail"?"FAIL":st==="pass"?"":"na";
@@ -1030,7 +1033,7 @@ function xliff(L){var trg=L==="fr"?"fr-CH":"it-CH",u=[],X=D.xn[L],nd=0,colon=L==
   // the unit notes of emit/xliff.py (verdict, at most three plain reasons, change), the old texts, then the one low-priority checks note
   var prev=note("de-old","context:previous-source","source",5,fmt(X.prev_de,{t:g.deOld}).replace(" : ",colon))+
    note("tgt-old","context:previous-target","target",5,fmt(X.prev_tgt,{t:plain(it.segs,true)}).replace(" : ",colon)),notes="";
-  it.xn.forEach(function(n){if(n[0]==="checks"){notes+=prev;prev=""}notes+=note(n[0],n[1],n[2],n[3],n[4])});notes+=prev;
+  it.xn.forEach(function(n){if(n[0]==="checks"||n[0]==="termbase"){notes+=prev;prev=""}notes+=note(n[0],n[1],n[2],n[3],n[4])});notes+=prev;
   if(d){var why=[d.reason,d.note].filter(Boolean).join("; ");notes+=note("review","gleichlaut:review","target",1,fmt(X.review,{d:X.dec[d.decision]||d.decision}).replace(" : ",colon)+" ("+d.at+")"+(why?colon+why:""))}
   var src=g.deNew,beads=text==null?it.bd.map(function(b){return [b[0],b[1],0,0]}):edited?[[0,src.length,0,text.length]]:it.bd,nums=edited?[]:it.nm,c=0,n=0,sx="";
   beads.forEach(function(b,k){sx+='<segment id="s'+(k+1)+'" state="'+st[0]+'" subState="'+st[1]+'"><source>'+inl(src,b[0],b[1],g.ch,function(){c++;return '<mrk id="c'+c+'" type="gleichlaut:changed">'})+"</source>"+
@@ -1058,7 +1061,7 @@ function xliff12(L){var trg=L==="fr"?"fr-CH":"it-CH",u=[],X=D.xn[L],nd=0,colon=L
    '<seg-source xml:lang="de-CH">'+beads.map(function(b,k){return '<mrk mtype="seg" mid="'+(k+1)+'">'+sm(b[0],b[1])+"</mrk>"}).join("")+"</seg-source>";
   if(text!=null)h+='<target state="'+state+'" xml:lang="'+trg+'">'+beads.map(function(b,k){return '<mrk mtype="seg" mid="'+(k+1)+'">'+inl(text,b[2],b[3],code,prot)+"</mrk>"}).join("")+"</target>";
   var prev12=note12("source",5,fmt(X.prev_de,{t:g.deOld}).replace(" : ",colon))+note12("target",5,fmt(X.prev_tgt,{t:plain(it.segs,true)}).replace(" : ",colon));
-  it.xn.forEach(function(n){if(n[0]==="checks"){h+=prev12;prev12=""}h+=note12(n[2],n[3],n[4],n[0]==="checks"?"gleichlaut-checks":"gleichlaut")});h+=prev12;
+  it.xn.forEach(function(n){if(n[0]==="checks"||n[0]==="termbase"){h+=prev12;prev12=""}h+=note12(n[2],n[3],n[4],n[0]==="checks"?"gleichlaut-checks":"gleichlaut")});h+=prev12;
   if(d){var why=[d.reason,d.note].filter(Boolean).join("; ");h+=note12("target",1,fmt(X.review,{d:X.dec[d.decision]||d.decision}).replace(" : ",colon)+" ("+d.at+(d.by?", "+d.by:"")+")"+(why?colon+why:""))}
   h+='<alt-trans alttranstype="previous-version" origin="SL previous version" tool-id="gleichlaut"><source xml:lang="de-CH">'+x(g.deOld)+'</source><target xml:lang="'+trg+'">'+x(plain(it.segs,true))+"</target></alt-trans></trans-unit>";
   u.push(h)});

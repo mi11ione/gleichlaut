@@ -58,7 +58,7 @@ repository; `eval/prereg/PREREG.md` says what can and cannot be verified from he
 | Token edits still needed to reach BAG's text | 20.9% fewer [7.6, 31.9] | 33.1% fewer [20.8, 43.9] | **42.4% fewer** [31.0, 54.1] | baseline |
 | Drafts ready for acceptance | 36.1% | 37.3% | **39.8%** | |
 | Errors in ready drafts (meaning / stale / German left) | 0 / 1 / 2 | **0 / 0 / 0** | **0 / 0 / 0** | |
-| Ready drafts that still need any fix | 33 of 60 (mostly one insurance term) | 25 of 62 (mostly the same term) | **3 of 66** | |
+| Ready drafts that still need any fix | 33 of 60 (27 named by the terminology note) | 25 of 62 (22 named by it) | **3 of 66** | |
 | Pre-registered pass rule | **PASS** | **PASS** | **PASS** (and again on a rerun with a new seed) | |
 
 Against rules+, our strongest no-model baseline (it also copies changed names and deletes whole sentences, 10.8%
@@ -88,6 +88,7 @@ code: [docs/failure-modes.md](docs/failure-modes.md).
 | ePL editor: "Limitierungstext DE / FR / IT" fields per limitation | **Draft** proposes the FR and IT fields when the DE field changes |
 | Triennial review: applicants declare "…und die Übersetzungen sind kongruent?" | **Audit** gives BAG its own check of that declaration, for the whole register in seconds |
 | Federal translation tool STAR Transit | XLIFF 1.2 and 2.1, numbers protected, checks as notes |
+| Terminology (TermStar) | BAG's house renderings mined from the register itself: 65 entries as TBX, plus a terminology note on any draft that departs from them ([docs/termbase.md](docs/termbase.md)) |
 | Monthly FHIR R5 publication (CH EPL profile) | drafts emitted as ClinicalUseDefinition in the feed's own shape |
 
 **Shadow mode needs nobody's permission.** `gleichlaut month --from 20260901 --to 20261001 --fetch` mines the month's

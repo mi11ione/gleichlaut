@@ -388,7 +388,7 @@ def test_shadow_workflow_plan_split_and_gather_code_runs():
     """the shadow workflow's own Python (split into shards, merge and grade) on fixture snapshots, with the stub backend."""
     wf = open(os.path.join(ROOT, "..", ".github", "workflows", "shadow.yml"), encoding="utf-8").read()
     assert '- cron: "0 6 2 * *"' in wf and "workflow_dispatch" in wf and "name: shadow-${{ needs.plan.outputs.from }}-${{ needs.plan.outputs.to }}" in wf
-    assert "make month ITEMS=out/plan/shard-${{ matrix.k }}.json" in wf and "gleichlaut ui --records" in wf
+    assert "make month BUILD=$BUILD ITEMS=out/plan/shard-${{ matrix.k }}.json" in wf and "gleichlaut ui --records" in wf
     blocks = re.findall(r"<<'EOF'.*?\n(.*?)\n\s*EOF", wf, re.S)
     split = next(b for b in blocks if "shard-{i}.json" in b); gather = next(b for b in blocks if "cli.summarise" in b)
     ded = lambda b: "\n".join(l[10:] if l.startswith(" " * 10) else l for l in b.splitlines())

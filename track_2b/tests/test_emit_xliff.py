@@ -58,7 +58,9 @@ def test_at_most_three_plain_reasons_and_one_checks_note():
     n_notes = []
     for p in xliff.write(views, meta, d):
         for u in ET.parse(p).getroot().iter(X + "unit"):
-            v = V[u.get("id")]; N = list(u.find(X + "notes")); n_notes.append(len(N))
+            v = V[u.get("id")]; N = list(u.find(X + "notes"))
+            tb = [n for n in N if n.get("category") == "gleichlaut:termbase"]      # termbase advisory: its own note
+            assert len(tb) <= 1 and all(n.get("priority") == "9" for n in tb); n_notes.append(len(N) - len(tb))
             reasons = [n for n in N if n.get("category") in ("gleichlaut:finding", "gleichlaut:divergence", "gleichlaut:model-numbers")]
             checks = [n for n in N if n.get("category") == "gleichlaut:checks"]
             assert len(reasons) <= 3 and len(checks) == (1 if any(f.get("detail") for f in v["findings"]) else 0)

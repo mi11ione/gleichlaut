@@ -185,6 +185,11 @@ size_q8_hi	20.2	eval/results/size_compare.json	q8_0.saved_diff_ci95.1	{:.1f}	PYT
 size_q4_diff	21.5	eval/results/size_compare.json	q4_k_m.saved_diff_pts	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 size_q4_lo	8.7	eval/results/size_compare.json	q4_k_m.saved_diff_ci95.0	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 size_q4_hi	34.9	eval/results/size_compare.json	q4_k_m.saved_diff_ci95.1	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+tb_house	65	eval/results/termbase.json	termbase.house_total	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+tb_house_fr	32	eval/results/termbase.json	termbase.house.fr	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+tb_house_it	33	eval/results/termbase.json	termbase.house.it	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+tb_q4_explained	27	eval/results/termbase.json	runs.8b_q4_k_m.ready_needs_fix_with_advisory	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+tb_q8_explained	22	eval/results/termbase.json	runs.8b_q8_0.ready_needs_fix_with_advisory	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 sh_items	52	eval/results/shadow_20260901_20261001.json	q4_k_m.items	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 sh_compared	41	eval/results/shadow_20260901_20261001.json	compared	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 sh_boiler	32	eval/results/shadow_20260901_20261001.json	boilerplate_items	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes

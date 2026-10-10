@@ -108,6 +108,7 @@ def _view(x, f, P, stack, check_recorded=True, any_raw=False):
     with status "flagged" (air-gapped mode, statute lane, uncertified local model, ...) stays flagged and its
     review_reason is shown as a finding; status "human" (or no draft) = routed to a translator."""
     from . import explain
+    from .. import termbase           # house renderings mined from the register: a display-only advisory (never a verdict)
     base = dict(key=x["key"], pair=x["pair"], lang=x["lang"], product=x.get("product") or "(product not recorded)",
                 cud_id=cud_id(x), old_id=_old_id(x), snap_old=x.get("snap_old", "?"), snap_new=x.get("snap_new", "?"), family=x.get("cluster", "-"),
                 de_old=x["de_old"], de_new=x["de_new"], tgt_old=x["tgt_old"], change_ratio=x.get("change_ratio", x.get("de_ratio")),
@@ -115,7 +116,7 @@ def _view(x, f, P, stack, check_recorded=True, any_raw=False):
     base["banner"] = explain.banner(x, base["divergence"], None if f is None else f.get("out"))
     if f is None or f.get("status") == "human" or f.get("out") is None:
         return dict(base, draft="", status="human", lights=[], complaint="", findings=[], rule_only=False, reasked=False,
-                    replaced=False, slots={}, numbers=[], reason=(f or {}).get("reason") or "")
+                    replaced=False, slots={}, numbers=[], reason=(f or {}).get("reason") or "", termbase=[])
     f = dict(f); f.setdefault("rule_only", False); out = f["out"]; fc = P.check(x, out)
     rs = f.get("status")
     if rs not in (None, "ready", "flagged"): raise AssertionError(f"{x['key']}: unknown record status {rs!r}")
@@ -134,7 +135,8 @@ def _view(x, f, P, stack, check_recorded=True, any_raw=False):
     if rec_flag: complaint = "\n".join(c for c in (f"- {explain.review_text(f.get('review_reason'), 'en', f['rule_only'])}", complaint) if c)
     return dict(base, draft=out, status="flagged" if flagged else "ready", lights=L, complaint=complaint, findings=fs,
                 rule_only=f["rule_only"], reasked=bool(f.get("reasked")), replaced=bool(f.get("replaced")),
-                slots=f.get("slots") or {}, numbers=numbers(out, _source_raw_any(f) if any_raw else _source_raw(f), x["lang"], f.get("slots")))
+                slots=f.get("slots") or {}, numbers=numbers(out, _source_raw_any(f) if any_raw else _source_raw(f), x["lang"], f.get("slots")),
+                termbase=termbase.advice(dict(lang=x["lang"], de_old=x["de_old"], de_new=x["de_new"], tgt_old=x["tgt_old"], draft=out)))
 
 
 def load(run="fresh166", records=None, items=None):

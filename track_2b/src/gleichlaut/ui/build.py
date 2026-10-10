@@ -14,7 +14,9 @@ README (27 findings + 11 terminology notices, from eval/results/audit.json and a
 German changes on the left, numbered by their address (wbNNN), and the case under review on the right (German change,
 FR/IT drafts editable in place, the per-draft explanation, decision). The explanation shows at most three reasons, most
 actionable first, in plain wording in the reviewer's language without internal codes (xliff.reasons, the same as the
-XLIFF notes), labelled "explanation (FR/IT)"; the full checks ledger with its codes is collapsed below. Compact legends
+XLIFF notes), labelled "explanation (FR/IT)", then, apart from those three, the termbase advisory when the draft departs
+from BAG's house rendering of a German term (xliff.termbase_note, low priority); the full checks ledger with its codes is
+collapsed below. Compact legends
 sit next to the marks they explain. Diffs, number provenance and the plain-language guard findings are computed
 here in Python from the same per-item views the emitters use (gleichlaut.emit.load); the header figures come from
 score.score_run(run)["summary"]["all"] (counts only for --records) and, for the audit, eval/results/audit.json.
@@ -264,7 +266,7 @@ def data(run="fresh166", records=None, items=None, audit=audit_view.AUDIT, hist=
         rules = triage.triage(v)
         it = dict(key=v["key"], lang=v["lang"], status=v["status"], lvl=triage.level(v), rule_only=v["rule_only"], cud=v["cud_id"],
                   banner=v.get("banner"), corr=corr["text"] if corr else None, corr_note=explain.corr_note(v["lang"]) if corr else None,
-                  old=_old_text(v), xn=_xliff_notes(v, rules), why=_why(v),
+                  old=_old_text(v), xn=_xliff_notes(v, rules), why=_why(v), tb=xliff.termbase_note(v),
                   findings=[[f["gname"], f["text"], f["corrects"], r] for f, r in zip(v["findings"], rules) if f["gid"] != "corr"])
         guard = [r for f, r in zip(v["findings"], rules) if f["gid"] != "corr"]
         it["tri"] = [sum(1 for r in guard if not r), sum(1 for r in guard if r)] if v["status"] == "flagged" else [0, 0]

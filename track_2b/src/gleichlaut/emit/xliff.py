@@ -16,9 +16,10 @@ Inline annotations (<mrk>, Annotations module of the core):
 Unit <notes>, all in the target language (FR / IT), see unit_notes(): the verdict; at most three reasons, the most
 actionable first, in plain wording without internal codes (a pre-existing problem of the old text, guard findings,
 numbers written by the model; the ones a fixed rule marks as probably fine last, priority 3, see emit/triage.py); product,
-limitation code and the German change; the old German and old target text; and one low-priority note (category
-gleichlaut:checks, priority 10) with the remaining reasons and the raw guard output with its codes. The raw guard output
-also stays in the FHIR Provenance.
+limitation code and the German change; the old German and old target text; when the draft departs from BAG's house
+rendering of a German term (data/termbase, gleichlaut.termbase), one advisory note (category gleichlaut:termbase,
+priority 9, not one of the three reasons); and one low-priority note (category gleichlaut:checks, priority 10) with the
+remaining reasons and the raw guard output with its codes. The raw guard output also stays in the FHIR Provenance.
 write(..., decisions=...): the reviewer's decisions from the review page (JSON export) applied to the same units: accepted
 drafts (as is or edited) -> state="reviewed" (or "final" with final=True), subState gleichlaut:accepted |
 gleichlaut:accepted-edited, target = the accepted text; sent back -> state="initial" subState="gleichlaut:sent-back".
@@ -251,9 +252,19 @@ def unit_notes(v, prev=True):
     if prev:
         N.append(["de-old", "context:previous-source", "source", "5", nt(L, "prev_de", t=v["de_old"])])
         N.append(["tgt-old", "context:previous-target", "target", "5", nt(L, "prev_tgt", t=v["tgt_old"])])
+    t = termbase_note(v)
+    if t: N.append(["termbase", "gleichlaut:termbase", "target", "9", t])
     c = checks_note(v, R)
     if c: N.append(["checks", "gleichlaut:checks", None, "10", c])
     return N
+
+
+def termbase_note(v):
+    """The termbase advisory (termbase.advice, in the view as v["termbase"]): BAG's house rendering of a German term of the
+    new text where the draft introduces a minority variant or falls short of the house rendering. Its own low-priority
+    note (priority 9), never one of the SHOW reasons and never a verdict. None when there is nothing to say."""
+    from .. import termbase
+    return termbase.advisory_text(v.get("termbase") or [], v["lang"])
 
 
 def change_summary(v, n=320):
