@@ -93,8 +93,27 @@ eval/results/audit_injection.json and the audit's rules are unchanged)
     'no rule'), per-category recall for number_any, and recall split by whether the audit's own parse binds the planted
     token to a unit (R2) on the target side.
 
-usage: python3 tools/audit_inject.py [--protocol v1|v2] [--hist DIR] [--n 100] [--seed S] [--jobs J] [--verify K|all] [--out FILE]
-writes eval/results/audit_injection.json (v1) or eval/results/audit_injection_v2.json (v2)"""
+PROTOCOL r15 (--protocol r15 --half dev|held; PREREG R15, committed 28fe22b before the round-5 rules were written)
+  Register and execution as v2, with the audit's round-5 kinds on (run_all(..., r5=True)). Eligible: one representative
+             per distinct text triple, of the given half (audit.half), with no finding of any kind, round-5 kinds included.
+             100 copies per type and target language (all eligible if fewer). Seed: --half dev 20261015 (design only),
+             --half held 20261016 (the pre-registered measurement); random.Random('<seed>:<type>:<lang>').
+  Types      operator (v2 injector), negation_drop (v2 'negation' injector), number_word (v2 injector), and
+    negation_add  one finite verb within 60 characters of a number token, same sentence, not already negated, negated in
+                 the target: FR est, sont, doit, doivent, peut, peuvent, a, ont -> 'n'est pas', 'ne doit pas', 'n'a pas'
+                 ('il y a' -> 'il n'y a pas'); IT è, sono, deve, devono, può, possono, viene, vengono, ha, hanno -> 'non è' ...
+                 Not already negated: no ne/n'/non/pas/mai/né among the 3 words before, no pas/plus/jamais/point among the 2
+                 words after (FR).
+  Detection  before: the v2 rule with the pre-round-5 kinds only (number types: a number finding with the new value on the
+             target side or the old on the German side). after: the v2 rule plus: operator, an operator finding in the target
+             language whose target span (operator and value) lies within 30 characters of the edit; negation_*, a negation
+             finding in the target language whose target sentence contains the edit position; number_word, a number or
+             number_word finding with the new value on the target side or the old value on the German side.
+
+usage: python3 tools/audit_inject.py [--protocol v1|v2|r15] [--half dev|held] [--hist DIR] [--n 100] [--seed S] [--jobs J]
+                                     [--verify K|all] [--out FILE]
+writes eval/results/audit_injection.json (v1), eval/results/audit_injection_v2.json (v2) or
+       eval/results/audit_injection_r15_<half>.json (r15)"""
 import argparse, hashlib, json, math, os, random, re, sys, time
 from collections import Counter, defaultdict
 from concurrent.futures import ProcessPoolExecutor
@@ -448,6 +467,39 @@ def inj_negation(t, L, rng):
 
 INJ2 = {"number_any": inj_number_any, "number_word": inj_number_word, "operator": inj_operator, "negation": inj_negation}
 
+# ================================================================== protocol r15 (docstring 'PROTOCOL r15')
+SEED_R15 = {"dev": 20261015, "held": 20261016}
+TYPES_R15 = ("operator", "negation_drop", "negation_add", "number_word")
+VERB = {"fr": re.compile(r"(?<![\w'’-])(?P<y>y\s)?(?P<v>est|sont|doit|doivent|peut|peuvent|a|ont)(?![\w'’-])"),
+        "it": re.compile(r"(?<![\w'’-])(?P<v>è|È|sono|deve|devono|può|possono|viene|vengono|ha|hanno)(?![\w'’-])")}
+
+
+def negadd_sites(t, L):
+    out = []
+    for m in VERB[L].finditer(t):
+        s, e = m.span()
+        before = re.findall(r"\S+", t[max(0, s - 40):s])[-3:]; after = re.findall(r"\S+", t[e:e + 30])[:2]
+        if any(re.fullmatch(r"(?i)(?:ne|n['’]\S*|non|pas|mai|né|\S*n['’]y)", w) for w in before): continue
+        if L == "fr" and any(re.fullmatch(r"(?i)(?:pas|plus|jamais|point)\W*", w) for w in after): continue
+        if _near_number(t, L, s, e, 60): out.append((s, e, m.group("v"), bool(m.groupdict().get("y"))))
+    return out
+
+
+def inj_negation_add(t, L, rng):
+    S = negadd_sites(t, L)
+    if not S: return None
+    s, e, v, y = rng.choice(S)
+    if L == "fr":
+        rep = ("n'y " + v if y else ("n'" + v if v[0] in "aeo" else "ne " + v)) + " pas"
+    else:
+        rep = ("Non è" if v == "È" else "non " + v)
+    new = t[:s] + rep + t[e:]
+    a, b = max(0, s - 40), min(len(t), e + 40)
+    return dict(new=new, pos=s, end=s + len(rep), added=rep, sub=f"{L}:{v.lower()}", before=t[a:b], after=new[a:b + len(rep) - (e - s)])
+
+
+INJ_R15 = {"operator": inj_operator, "negation_drop": inj_negation, "negation_add": inj_negation_add, "number_word": inj_number_word}
+
 
 # ------------------------------------------------------------------ the audit on a copy
 G = {}
@@ -491,12 +543,12 @@ def run_copy(job):
     i, L, new, verify = job["id"], job["lang"], job["new"], job["verify"]
     J2 = copy_of(i, L, new); st = A._prep(stats_for(J2, L))
     sub = {X: {"lim": {i: J2[X]["lim"][i]}} for X in A.LANGS}
-    F, _, _ = A.run_all(None, G["date"], sub, {i: G["names"].get(i, [])}, st, pairs=G["P"])
+    F, _, _ = A.run_all(None, G["date"], sub, {i: G["names"].get(i, [])}, st, pairs=G["P"], r5=G.get("r5", False))
     out = dict(k=job["k"], findings=F)
     if verify:
         st_full = A.build_stats(J2)
         same_stats = {k: v for k, v in st_full.items() if k != "_vocab"} == {k: v for k, v in st.items() if k != "_vocab"}
-        FF, _, _ = A.run_all(None, G["date"], J2, G["names"], A._prep(st_full), pairs=G["P"])
+        FF, _, _ = A.run_all(None, G["date"], J2, G["names"], A._prep(st_full), pairs=G["P"], r5=G.get("r5", False))
         mine = sorted(proj(f) for f in FF if f["id"] == i); here = sorted(proj(f) for f in F)
         other = Counter(proj(f) for f in FF if f["id"] != i); oid = Counter(ident(f) for f in FF if f["id"] != i)
         bid = G["baseline_id"]
@@ -631,6 +683,41 @@ def detected2(job, F):
     return False
 
 
+OLD_KINDS = ("number", "unit", "language", "editorial", "terminology")
+
+
+def _num_hit(job, F, kinds):
+    L, inj = job["lang"], job["inj"]
+    return any(f["kind"] in kinds and f["lang"] == L and (any(_f(x["value"]) == inj["new_value"] for x in f.get("tgt_only") or []) or
+                                                           any(_f(x["value"]) == inj["old_value"] for x in f.get("de_only") or [])) for f in F)
+
+
+def detected_r15(job, F, after=True):
+    """PROTOCOL r15: before (after=False) = the v2 rule on the pre-round-5 kinds; after = that plus the round-5 kinds."""
+    t, L, inj = job["type"], job["lang"], job["inj"]
+    old = [f for f in F if f["kind"] in OLD_KINDS]
+    if t == "number_word": return _num_hit(job, F, ("number", "number_word") if after else ("number",))
+    if detected2(dict(job, type="operator"), old): return True
+    if not after: return False
+    for f in F:
+        if f["lang"] != L: continue
+        if t == "operator" and f["kind"] == "operator":
+            if any(a <= inj["end"] + 30 and b >= inj["pos"] - 30 for a, b in f["tgt_spans"]): return True
+        if t.startswith("negation") and f["kind"] == "negation":
+            a, b = f["tgt_span"]
+            if a <= inj["pos"] <= b: return True
+    return False
+
+
+def reason_r15(job, F, st):
+    if job["type"] == "number_word":
+        r = reason2(job, F, st)
+        return r
+    what = {"operator": "comparison operator", "negation_drop": "negation", "negation_add": "negation"}[job["type"]]
+    if F: return f"a finding appeared, but not at the planted {what}"
+    return f"no finding at the planted {what}"
+
+
 def reason2(job, F, st):
     t, L, inj = job["type"], job["lang"], job["inj"]
     if t in ("number_any", "number_word"):
@@ -680,12 +767,14 @@ def main(argv=None):
     ap.add_argument("--hist", default=os.environ.get("GLEICHLAUT_HIST") or os.path.expanduser("~/Desktop/hackapertus/spikes/gleichlaut/data/hist"))
     ap.add_argument("--date", default=DATE)
     ap.add_argument("--n", type=int, default=100, help="injections per type and target language (default 100)")
-    ap.add_argument("--protocol", choices=("v1", "v2"), default="v1", help="v1 (default, the published run) or v2 (docstring)")
+    ap.add_argument("--protocol", choices=("v1", "v2", "r15"), default="v1", help="v1 (default, the published run), v2 or r15 (docstring)")
+    ap.add_argument("--half", choices=("dev", "held"), default=None, help="r15: the half of the register to plant into")
     ap.add_argument("--seed", type=int, default=None, help="default 20261010 (v1) / 20261011 (v2)")
     ap.add_argument("--jobs", type=int, default=min(8, os.cpu_count() or 1))
     ap.add_argument("--verify", default=None, help="copies re-run as a full-register audit (a number, or 'all'; default 100 v1 / 40 v2)")
     ap.add_argument("--out", default=None)
     a = ap.parse_args(argv)
+    if a.protocol == "r15": return main_r15(a)
     v2 = a.protocol == "v2"
     if a.seed is None: a.seed = SEED2 if v2 else SEED
     if a.verify is None: a.verify = "40" if v2 else "100"
@@ -882,6 +971,104 @@ def main(argv=None):
           f"{vv['limitation_identical']}, new findings elsewhere {vv['findings_new_elsewhere']}, lost {vv['findings_lost_elsewhere']}, "
           f"statistic-only changes {vv['statistic_only_changes_elsewhere']}")
     print(f"{out['runtime']['seconds_total']} s; wrote {os.path.relpath(a.out, ROOT)}")
+
+
+def main_r15(a):
+    """PROTOCOL r15 (docstring): planted operator flips, negations dropped and added, number words changed, on one half."""
+    if not a.half: sys.exit("--protocol r15 needs --half dev|held")
+    seed = a.seed if a.seed is not None else SEED_R15[a.half]
+    verify = int(a.verify) if a.verify not in (None, "all") else (0 if a.verify is None else 10 ** 9)
+    out_p = a.out or os.path.join(ROOT, "eval", "results", f"audit_injection_r15_{a.half}.json")
+    if not os.path.exists(os.path.join(a.hist, f"{a.date}-de.json")): sys.exit(f"no snapshot {a.date} in {a.hist} (--hist DIR)")
+    t0 = time.time()
+    _init(a.hist, a.date); J, P = G["J"], G["P"]; G["r5"] = True
+    B, _, _ = A.run_all(None, a.date, J, G["names"], A._prep(dict(G["base"])), pairs=P, r5=True)
+    flagged = set(f["id"] for f in B); G["baseline"] = Counter(proj(f) for f in B); G["baseline_id"] = Counter(ident(f) for f in B)
+    rep = {}
+    for i in sorted(J["de"]["lim"]):
+        k = tuple(nrm(J[X]["lim"].get(i) or "") for X in A.LANGS)
+        if all(k) and k not in rep: rep[k] = i
+    inhalf = [i for i in rep.values() if A.half(i) == a.half]
+    pool = sorted(i for i in inhalf if i not in flagged)
+    jobs, pools = [], {}
+    for t in TYPES_R15:
+        for L in LANGS_T:
+            rng = random.Random(f"{seed}:{t}:{L}"); ids = list(pool); rng.shuffle(ids); n = elig = 0
+            for i in ids:
+                old = nrm(J[L]["lim"][i]); inj = INJ_R15[t](old, L, rng)
+                if inj is None: continue
+                elig += 1
+                if n >= a.n: continue
+                assert inj["new"] != old
+                jobs.append(dict(k=len(jobs), type=t, lang=L, id=i, old=old, new=inj["new"], inj={k: v for k, v in inj.items() if k != "new"},
+                                 de=nrm(J["de"]["lim"][i]), texts={X: J[X]["lim"][i] for X in A.LANGS}, verify=False))
+                n += 1
+            pools[f"{t}:{L}"] = elig
+    if verify:
+        per = defaultdict(list)
+        for j in jobs: per[j["type"]].append(j["k"])
+        q = max(1, verify // len(TYPES_R15))
+        for t in TYPES_R15:
+            for k in per[t][::max(1, len(per[t]) // q)][:q]: jobs[k]["verify"] = True
+    t1 = time.time(); res = {}
+    with ProcessPoolExecutor(max_workers=a.jobs, mp_context=multiprocessing.get_context("fork")) as ex:
+        light = [dict(k=j["k"], id=j["id"], lang=j["lang"], new=j["new"], verify=j["verify"]) for j in jobs]
+        for r in ex.map(run_copy, light, chunksize=4): res[r["k"]] = r
+    t_runs = time.time() - t1
+    per_type, V = {}, []
+    for t in TYPES_R15:
+        rows = []
+        for j in (j for j in jobs if j["type"] == t):
+            F = res[j["k"]]["findings"]; hb, ha = detected_r15(j, F, after=False), detected_r15(j, F, after=True)
+            rows.append(dict(j=j, before=hb, after=ha, kinds=sorted(set(f["kind"] for f in F)),
+                             reason=None if ha else reason_r15(j, F, None),
+                             findings=[f"{f['kind']}: " + snip(f.get("description") or "", 140) for f in F]))
+            if "verify" in res[j["k"]]: V.append(dict(type=t, id=j["id"], lang=j["lang"], **res[j["k"]]["verify"]))
+        n = len(rows); kb = sum(r["before"] for r in rows); ka = sum(r["after"] for r in rows)
+        bl = {L: dict(n=sum(r["j"]["lang"] == L for r in rows), before=sum(r["before"] for r in rows if r["j"]["lang"] == L),
+                      after=sum(r["after"] for r in rows if r["j"]["lang"] == L)) for L in LANGS_T}
+        for L in LANGS_T:
+            m = bl[L]["n"]; bl[L].update(recall_before=round(bl[L]["before"] / m, 3) if m else None, recall_after=round(bl[L]["after"] / m, 3) if m else None,
+                                         wilson95_after=wilson(bl[L]["after"], m))
+        sub = defaultdict(lambda: [0, 0])
+        for r in rows: sub[r["j"]["inj"]["sub"]][0] += 1; sub[r["j"]["inj"]["sub"]][1] += r["after"]
+        ms = [dict(id=r["j"]["id"], lang=r["j"]["lang"], sub=r["j"]["inj"]["sub"], before=snip(r["j"]["inj"]["before"]),
+                   after=snip(r["j"]["inj"]["after"]), reason=r["reason"], findings=r["findings"]) for r in rows if not r["after"]]
+        per_type[t] = dict(n=n, detected_before=kb, recall_before=round(kb / n, 3) if n else None, wilson95_before=wilson(kb, n),
+                           detected_after=ka, recall_after=round(ka / n, 3) if n else None, wilson95_after=wilson(ka, n),
+                           eligible_limitations={L: pools[f"{t}:{L}"] for L in LANGS_T}, by_lang=bl,
+                           by_subtype={k: dict(n=v[0], detected_after=v[1]) for k, v in sorted(sub.items())},
+                           also_found_as=dict(sorted(Counter(kd for r in rows for kd in r["kinds"]).items())),
+                           miss_reasons=dict(Counter(m["reason"] for m in ms).most_common()), miss_examples=examples(ms),
+                           misses=[dict(id=m["id"], lang=m["lang"], sub=m["sub"], reason=m["reason"]) for m in ms])
+    out = dict(generated_by=f"python3 tools/audit_inject.py --protocol r15 --half {a.half}" + ("" if a.n == 100 else f" --n {a.n}")
+                            + (f" --verify {a.verify}" if a.verify else ""),
+               model_calls=0, network=False, date=a.date, half=a.half, seed=seed,
+               status="design (dev half): not a measurement" if a.half == "dev" else "pre-registered measurement (PREREG R15)",
+               protocol=dict(written="PROTOCOL r15 in the tools/audit_inject.py docstring; PREREG R15 (commit 28fe22b)",
+                             register=f"public SL feed {a.date}: {len(J['de']['lim'])} limitations, {len(rep)} distinct DE/FR/IT text triples",
+                             eligible=f"half {a.half}: {len(inhalf)} triples, {len(pool)} with no finding of any kind (round-5 kinds included)",
+                             sampling=f"per type and target language: random.Random('{seed}:<type>:<lang>') shuffle, first {a.n} with a site; one fault per copy",
+                             types=dict(operator="v2 operator flip", negation_drop="v2 negation drop", negation_add="docstring 'negation_add'",
+                                        number_word="v2 number word change"),
+                             detection="docstring 'PROTOCOL r15': before = v2 rule on the pre-round-5 kinds; after = plus the round-5 kinds"),
+               summary={t: dict(n=v["n"], recall_before=v["recall_before"], recall_after=v["recall_after"], wilson95_after=v["wilson95_after"])
+                        for t, v in per_type.items()},
+               types=per_type,
+               verification=dict(copies=len(V), stats_identical=sum(v["stats_identical"] for v in V),
+                                 limitation_identical=sum(v["limitation_identical"] for v in V),
+                                 findings_new_elsewhere=sum(v["elsewhere_new"] for v in V), findings_lost_elsewhere=sum(v["elsewhere_lost"] for v in V),
+                                 copies_list=V),
+               baseline=dict(findings=len(B), by_kind=dict(Counter(f["kind"] for f in B)), limitations=len(flagged)),
+               inputs=dict(audit_py_sha256=sha(os.path.join(ROOT, "src", "gleichlaut", "audit.py")),
+                           snapshot_sha256={X: sha(os.path.join(a.hist, f"{a.date}-{X}.json")) for X in A.LANGS}),
+               runtime=dict(seconds_total=round(time.time() - t0, 1), seconds_copies=round(t_runs, 1), jobs=a.jobs))
+    os.makedirs(os.path.dirname(out_p), exist_ok=True)
+    json.dump(out, open(out_p, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print(f"{'type':14} {'n':>4} {'before':>7} {'after':>7}  wilson95(after)")
+    for t, v in per_type.items():
+        print(f"{t:14} {v['n']:4d} {v['recall_before']:7.3f} {v['recall_after']:7.3f}  {v['wilson95_after'][0]:.3f}-{v['wilson95_after'][1]:.3f}")
+    print(f"{out['runtime']['seconds_total']} s; wrote {os.path.relpath(out_p, ROOT)}")
 
 
 if __name__ == "__main__":

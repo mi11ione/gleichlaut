@@ -142,8 +142,9 @@ def _num(v):
     except ValueError: return None
 
 
-def compare(de, tgt, lang):
-    """DE text vs one target text -> dict(de_only=[...], tgt_only=[...], count=[...], unbound=n, suppressed={rule: n})."""
+def compare(de, tgt, lang, bind_words=False):
+    """DE text vs one target text -> dict(de_only=[...], tgt_only=[...], count=[...], unbound=n, suppressed={rule: n}).
+    bind_words (round 5, number_word only): a value written as a number word counts as bound (R2) and carries its offsets."""
     de, tgt = nrm(de), nrm(tgt)
     A, B = values(de, "de"), values(tgt, lang)
     ca, cb = Counter(x["v"] for x in A), Counter(x["v"] for x in B)
@@ -201,9 +202,10 @@ def compare(de, tgt, lang):
         for x in lst: g[x["v"]].append(x)
         res, unb = [], 0
         for v, xs in g.items():
-            b = [x for x in xs if x["unit"]]
+            b = [x for x in xs if x["unit"] or (bind_words and x["src"] == "word")]
             if not b: unb += 1; continue
-            res.append(dict(value=v, n=len(xs), unit=b[0]["unit"], src=b[0]["src"], context=[ctx(text, x) for x in xs[:3]]))
+            res.append(dict(value=v, n=len(xs), unit=b[0]["unit"] or ("word" if bind_words else None), src=b[0]["src"], context=[ctx(text, x) for x in xs[:3]]))
+            if bind_words: res[-1]["spans"] = [(x["s"], x["e"]) for x in xs]
         return res, unb
     fa, ua = group(onlyA, de); fb, ub = group(onlyB, tgt)
     cnt = [dict(value=v, de=ca[v], tgt=cb[v]) for v in sorted(va & vb) if ca[v] != cb[v]]
@@ -761,6 +763,409 @@ def likely_equivalent(f, de, tgt):
 # ------------------------------------------------------------------ END OF ROUND-4 RULES
 
 
+# ================================================================== round 5: operator, negation, number_word (PREREG R15)
+# Written after PREREG R15 was committed (28fe22b), on the dev half only (half() == 'dev': register texts and planted
+# copies of dev limitations, tools/audit_inject.py --protocol r15 --half dev). Reported apart from the kinds above: the
+# number/unit/language/editorial/terminology findings are unchanged (run_all(..., r5=False) is the default).
+#
+# ALIGNMENT. Each text is cut into sentences ([.;!?] or ':' + capital, not after an abbreviation or an ordinal '12.').
+# German and target sentences are aligned by a monotone dynamic programme (1-1, 1-2, 2-1, skips) whose cost is the
+# length ratio (scaled by the whole texts' ratio) plus the mismatch of the digit values the sentences contain. A pair is
+# judged only when its cost is <= ALIGN_MAX and, if the two texts have different sentence counts, <= ALIGN_MAX_UNEVEN.
+# OPERATOR (O). Every value (digits or number word) with a comparison word right before it (only articles,
+# prepositions or 'insgesamt/total' between) or right after it and its unit gets a direction: 'min' (lower bound:
+# mindestens, ab, über, mehr als, ≥, > ...) or 'max' (upper bound: höchstens, bis (zu), unter, weniger als, ≤, < ...).
+# A value is compared when both texts state it with a direction (same count of directed occurrences); a finding when
+# the directions differ ('min' against 'max'; ≥ against > is the same direction). A range end ('15 bis 30 kg') has no
+# direction. Values need not be bound to a unit (R15 said 'bound to a unit'; see docs/audit.md, round 5).
+# NEGATION (G). Per aligned sentence pair, strong negation (nicht, kein / ne, pas, aucun, non / non, nessuno ...) on one
+# side and no negation at all on the other: neither strong nor weak (lexical or morphological negation: ohne, sans,
+# senza, un-/in- adjectives, ausser, absence, refraktär, nur / ne ... que ...). Negations inside a bound idiom ('nicht
+# mehr als', 'n'excédant pas', 'non più di', 'non appena') and expletive ones ('avant que ... ne', 'finché ... non')
+# do not count as negation.
+# NUMBER_WORD (W). Per aligned sentence pair, compare() with number words bound (bind_words): a value that one sentence
+# writes as a number word (2-12; not a '-fach' compound) and the other sentence lacks, or a value on one side whose
+# missing counterpart on the other side is such a word. Reconciled as compare() does, plus: an ordinal word of the value
+# on the other side; DE 'beide' / FR 'les deux', 'tous deux' / IT 'entrambi', 'ambedue' for 2; equivalence() Q1-Q5. A
+# value an existing number finding already names (same limitation, language, side) is not repeated.
+# COUNTERPART (display only, number findings): the value the aligned sentence of the other side states instead, with the
+# same unit class (Nemluvio: DE 'alle acht Wochen', IT 'ogni quattro settimane' -> IT 4).
+KINDS_R5 = ("operator", "negation", "number_word")
+R5_ON = {"operator": False, "negation": False, "number_word": False}     # set by the R15 outcome (PREREG results log)
+ALIGN_MAX, ALIGN_MAX_UNEVEN = 0.4, 0.2
+_ABBR = (r"(?:[A-Z]|z|d|u|s|v|o|ca|bzw|max|min|resp|vgl|Nr|inkl|exkl|evtl|ggf|sog|usw|etc|Abs|Art|Ziff|lit|al|cf|ex|env|p|"
+         r"c|i|e|vs|Std|Kps|Inj|Fr|ev|ecc|es|ad|sig|Dr|Prof|Mio|Mrd|Lsg|Tbl|Amp|Fl|Tabl|ml|mg|kg|mind|év|ann|cap|n|ss|segg|"
+         r"Mo|Mt|Wo|J|Jh|Tab|Kap|Pat|Hrsg|bspw|zB|sq|cit|op|pag|pp|Bd|Nos?)\.")
+_SENT_END = re.compile(r"(?<=[.;!?])\s+(?=[^\s a-zäöüàâéèêîôûç])|(?<=:)\s+(?=[A-ZÄÖÜÀÂÉÈÊÎÔÛÇ«\"(•–-])")
+
+
+def sentences(t):
+    """-> [(start, end)] of the sentences of t (see ALIGNMENT)."""
+    out, s = [], 0
+    for m in _SENT_END.finditer(t):
+        pre = t[s:m.start()]
+        if (re.search(r"(?:^|[\s(/])" + _ABBR + r"$", pre) or re.search(r"(?:[A-Za-z]\.){2,}$", pre)
+                or (re.search(r"(?:^|\s)\d{1,3}\.$", pre) and not re.search(r"\d\.\d", pre[-6:]))):
+            continue
+        if pre.strip(): out.append((s, m.start()))
+        s = m.end()
+    if t[s:].strip(): out.append((s, len(t)))
+    return out
+
+
+def _anchors(seg, L): return set(x["v"] for x in values(seg, L) if x["src"] != "word")
+
+
+def align(de, tgt, lang):
+    """monotone sentence alignment -> (pairs [(de_span, tgt_span, cost)], n_de, n_tgt). Spans of merged sentences
+    (1-2, 2-1) run from the first start to the last end. Skipped sentences are in no pair."""
+    import math
+    S, T = sentences(de), sentences(tgt); n, m = len(S), len(T)
+    ad = [_anchors(de[a:b], "de") for a, b in S]; at = [_anchors(tgt[a:b], lang) for a, b in T]
+    ld = [b - a for a, b in S]; lt = [b - a for a, b in T]; rat = sum(lt) / max(1, sum(ld))
+
+    def cost(i0, i1, j0, j1):
+        if i0 == i1 or j0 == j1: return 3.0
+        A_, B_ = set().union(*ad[i0:i1]), set().union(*at[j0:j1])
+        c = abs(math.log((sum(lt[j0:j1]) + 10) / (sum(ld[i0:i1]) * rat + 10)))
+        if A_ or B_: c += 2 * (1 - len(A_ & B_) / len(A_ | B_))
+        return c + (0.5 if (i1 - i0) + (j1 - j0) > 2 else 0)
+    INF = float("inf"); D = [[INF] * (m + 1) for _ in range(n + 1)]; P = {}; D[0][0] = 0.0
+    for i in range(n + 1):
+        for j in range(m + 1):
+            if D[i][j] == INF: continue
+            for di, dj in ((1, 1), (1, 2), (2, 1), (1, 0), (0, 1)):
+                a, b = i + di, j + dj
+                if a > n or b > m: continue
+                c = D[i][j] + cost(i, a, j, b)
+                if c < D[a][b]: D[a][b] = c; P[(a, b)] = (i, j)
+    out, a, b = [], n, m
+    while (a, b) != (0, 0):
+        i, j = P[(a, b)]
+        if i < a and j < b: out.append(((S[i][0], S[a - 1][1]), (T[j][0], T[b - 1][1]), round(cost(i, a, j, b), 3)))
+        a, b = i, j
+    return out[::-1], n, m
+
+
+def aligned(de, tgt, lang):
+    """the aligned sentence pairs that are judged (ALIGN_MAX, ALIGN_MAX_UNEVEN) -> [(de_span, tgt_span, cost)]."""
+    P, n, m = align(de, tgt, lang)
+    return [p for p in P if p[2] <= ALIGN_MAX and (n == m or p[2] <= ALIGN_MAX_UNEVEN)]
+
+
+# ---- operator direction
+_GLUE = {"de": r"(?:von|vom|dem|den|der|des|zu|einer?|einem|eines|insgesamt|total|ca\.|circa|je|pro)",
+         "fr": r"(?:à|a|de|d['’]|des|du|le|la|les|l['’]|un|une|total|au total|environ|env\.|par)",
+         "it": r"(?:a|ad|al|ai|agli|alla|alle|da|di|del|dei|degli|della|delle|i|gli|il|la|le|l['’]|un|uno|una|totale|in totale|circa|per)"}
+OP_PRE = {"de": [("min", r"≥|>=|>|mindestens|minimal|minimum|min\.|ab|über|mehr als|grösser als|größer als|frühestens|wenigstens|oberhalb von|nicht weniger als|nicht unter|"
+                         r"minimale[nrms]?\s+[A-ZÄÖÜ]\w+|Mindest\w+|grösser oder gleich|größer oder gleich"),
+                 ("max", r"≤|<=|<|höchstens|maximal|maximum|max\.|bis maximal|bis zu|bis|unter|weniger als|kleiner als|spätestens|unterhalb von|längstens|nicht mehr als|nicht über|nicht länger als|"
+                         r"maximale[nrms]?\s+[A-ZÄÖÜ]\w+|Maximal\w+|Höchst\w+|kleiner oder gleich")],
+          "fr": [("min", r"≥|>=|>|au moins|au minimum|minimum|minimale?s? de|plus de|plus d['’]|supérieure?s? ou égale?s? à|égale?s? ou supérieure?s? à|supérieure?s? à|dès|à partir de|au-delà de|au-dessus de|pas moins de|d['’]au moins"),
+                 ("max", r"≤|<=|<|au plus|au maximum|maximum|maximale?s? de|moins de|moins d['’]|inférieure?s? ou égale?s? à|égale?s? ou inférieure?s? à|inférieure?s? à|jusqu['’]à|en dessous de|au-dessous de|pas plus de|n['’]excédant pas|ne dépassant pas|d['’]au plus|d['’]au maximum")],
+          "it": [("min", r"≥|>=|>|almeno|al minimo|minimo|minima|più di|più del|superiore o uguale a|superiori o uguali a|pari o superiore a|pari o superiori a|superiore a|superiori a|oltre|a partire da|a partire dai|a partire dal|sopra|non meno di"),
+                 ("max", r"≤|<=|<|al massimo|al più|massimo|massima|meno di|meno del|inferiore o uguale a|inferiori o uguali a|pari o inferiore a|pari o inferiori a|inferiore a|inferiori a|fino a|fino al|fino ai|sotto|non più di|non oltre")]}
+OP_POST = {"de": [("min", r"oder mehr|und mehr|oder älter|oder höher|oder länger|und darüber|oder darüber|mindestens"), ("max", r"oder weniger|und weniger|oder jünger|oder kürzer|und darunter|oder darunter|höchstens|maximal")],
+           "fr": [("min", r"ou plus|et plus|au moins|au minimum|minimum|ou davantage"), ("max", r"ou moins|au plus|au maximum|maximum")],
+           "it": [("min", r"o più|e più|almeno|al minimo|o oltre"), ("max", r"o meno|al massimo|al più|massimo")]}
+_OPRE = {L: re.compile(r"(?:^|(?<=[\s(\[/,;:]))(?:" + "|".join(f"(?P<{d}>{p})" for d, p in v) + r")\s*(?:" + _GLUE[L] + r"\s*){0,2}$", re.I)
+         for L, v in OP_PRE.items()}
+_OPOST = {L: re.compile(r"^\s*(?:" + "|".join(f"(?P<{d}>{p})" for d, p in v) + r")(?![\w])", re.I) for L, v in OP_POST.items()}
+_RANGE_BIS = {"de": r"\d\s*(?:\S+\s+)?(?:bis|-|–)\s*$", "fr": r"\d\s*(?:\S+\s+)?(?:à|-|–)\s*$", "it": r"\d\s*(?:\S+\s+)?(?:a|-|–)\s*$"}
+
+
+_ADJ_SFX = r"\w*(?:bil[ei]s?|ic[oaie]|iques?|ique|ar[ei]s?|air[es]?|os[oaie]|euse?s?|eux|al[ei]s?|aux|iv[oaie]|ifs?|ives?|ent[ei]s?|ant[ei]s?|at[oaie]|é[es]?|ée?s|it[oaie])"
+
+
+def _negated(text, at, lang):
+    """a clause negation earlier in the same clause, at most 12 words before position at ('n'ont pas reçu plus de
+    deux', 'non inferiore a 4', 'kein Ansprechen von mindestens 50%'). The languages place a negation differently, so a
+    negated bound is left out of the comparison (on both sides). FR/IT 'non' right before an adjective or participle
+    ('non lacunaire', 'non resecabile') negates that word, not the clause."""
+    pre = re.split(r"[,.;:()•]|\s[-–]\s", text[max(0, at - 160):at])[-1]
+    ws = re.findall(r"\S+", pre)[-12:]
+    if not ws: return False
+    j = " ".join(ws)
+    hits = [h for h in neg_strong(j, lang) if not (lang in ("fr", "it") and h[2].lower() == "non"
+                                                    and re.match(r"\s+" + _ADJ_SFX + r"\b", j[h[1]:], re.I))]
+    return bool(hits)
+
+
+def directions(text, lang):
+    """-> [dict(v, dir 'min'|'max', s, e, op, os, oe)] for the values of text that carry a comparison word."""
+    out = []
+    for x in values(text, lang):
+        pre = text[max(0, x["s"] - 40):x["s"]]
+        m = _OPRE[lang].search(pre); d = None
+        if m:
+            m0 = _OPRE[lang].search(pre[:m.start()].rstrip() + " ")
+            if m0 and m.start() - m0.end() <= 1 and m.group(m.lastgroup).lower() == "über": m = m0   # 'maximal über 12 Monate'
+            d = "min" if m.group("min") else "max"; op = m.group(m.lastgroup).strip(); os_ = x["s"] - len(pre) + m.start()
+            if d == "max" and re.fullmatch(r"bis|-|à|a", op.lower()) and re.search(_RANGE_BIS[lang], text[max(0, x["s"] - 30):x["s"]]): d = None
+            if op.lower() == "über" and _ucls(x.get("unit"), lang) in ("d", "w", "m", "h"): d = None    # 'über 6 Monate': a duration
+        if d is None:
+            e = x["e"]
+            if x.get("unit"):
+                um = UNIT_RX[lang].match(text, e)
+                if um: e = um.end()
+            m2 = _OPOST[lang].match(text[e:e + 30])
+            if m2: d = "min" if m2.group("min") else "max"; op = m2.group(m2.lastgroup); os_ = e + m2.start(m2.lastgroup)
+        neg = bool(d) and _negated(text, min(os_, x["s"]), lang)
+        if d: out.append(dict(v=x["v"], alt=x["alt"], dir=d, neg=neg, s=x["s"], e=x["e"], op=op, os=os_, oe=os_ + len(op), unit=x.get("unit")))
+    return out
+
+
+def operator_diff(de, tgt, lang):
+    """R15 (1): values both texts state with a direction (the same number of times), whose directions differ ->
+    [dict(value, de_dirs, tgt_dirs, de_op, tgt_op, de_dir, tgt_dir, unit, context_de, context_tgt, tgt_spans)];
+    tgt_spans: every target occurrence with the direction the German lacks."""
+    de, tgt = nrm(de), nrm(tgt)
+    A_, B_ = directions(de, "de"), directions(tgt, lang); out = []
+    for v in sorted(set(x["v"] for x in A_) & set(x["v"] for x in B_)):
+        xa = [x for x in A_ if x["v"] == v]; xb = [x for x in B_ if x["v"] == v]
+        xa = [x for x in xa if not x["neg"]]; xb = [x for x in xb if not x["neg"]]    # negated bounds are left out
+        ca, cb = Counter(x["dir"] for x in xa), Counter(x["dir"] for x in xb)
+        if not ca or sum(ca.values()) != sum(cb.values()) or ca == cb: continue
+        dd = (ca - cb) or ca; dt = (cb - ca) or cb
+        ea = next(x for x in xa if x["dir"] in dd); EB = [x for x in xb if x["dir"] in dt]; eb = EB[0]
+        sp = lambda x: (min(x["s"], x["os"]), max(x["e"], x["oe"]))
+        out.append(dict(value=v, de_dirs=dict(ca), tgt_dirs=dict(cb), de_op=ea["op"], tgt_op=eb["op"],
+                        de_dir=ea["dir"], tgt_dir=eb["dir"], unit=ea["unit"] or eb["unit"],
+                        context_de=ctx(de, dict(zip(("s", "e"), sp(ea)))), context_tgt=ctx(tgt, dict(zip(("s", "e"), sp(eb)))),
+                        tgt_spans=[sp(x) for x in EB]))
+    return out
+
+
+# ---- negation
+NEG_STRONG = {"de": r"\bnicht\b(?!-)|\bkein(?:e|er|en|em|es)?\b|\bnie\b|\bniemals\b|\bweder\b|\bnichts\b",
+              "fr": r"\bne\b|\bn['’](?=\w)|\bpas\b|\baucune?s?\b|\bnon\b(?!-)|\bjamais\b|\bni\b|\bnulle?s?\b|\brien\b",
+              "it": r"\bnon\b(?!-)|\bnessun[oa]?\b|\bnessun['’]|\bmai\b|\bné\b|\bniente\b|\bnulla\b"}
+# companions: counted only without their clause negator before them (FR 'n'a pas', 'n'a aucun'; IT 'non ... nessun')
+NEG_COMPANION = {"de": r"(?!)", "fr": r"pas|aucune?s?|jamais|rien|nulle?s?|ni", "it": r"nessun[oa']?|mai|né|niente|nulla"}
+# negations inside a bound or time idiom, and expletive ones, are not a negated condition (they count as SUPP below)
+NEG_IDIOM = {"de": r"\bnicht\s+(?:mehr|weniger|länger|kürzer|früher|später)\s+als\b|\bnicht\s+(?:über|unter)\b|\bnicht\s+\w*(?:überschreit|übersteig)\w*|"
+                   r"\bes sei denn\b",
+             "fr": r"\b(?:ne|n['’])\s*(?:\S+\s+){0,2}?(?:pas|plus)\s+(?:plus|moins)\s+(?:de|d['’]|que)|\bpas\s+(?:plus|moins)\s+(?:de|d['’]|que)|"
+                   r"\b(?:ne\s+|n['’])(?:\S+\s+){0,3}?(?:dépass|excéd)\w*(?:\s+pas)?|\bpas\s+avant\b|"
+                   r"\b(?:avant|moins|crainte|peur)\s+qu(?:e\s+|['’])(?:\S+\s+){0,5}?(?:ne\b|n['’])",
+             "it": r"\bnon\s+(?:più|meno|oltre|prima|dopo|appena|superiore|inferiore)\b|\bnon\s+(?:\S+\s+){0,2}?(?:superar|eccede)\w*|"
+                   r"\bnon\s+(?:\S+\s+){0,6}?se non\b|"
+                   r"\b(?:a meno che|finché|finche|fino a quando|fintanto che|prima che)\s+(?:\S+\s+){0,5}?non\b"}
+# lexical negation: the negation lives in a word (ohne, sans, unzureichend, insuffisant, nicht-kleinzellig, absence ...)
+NEG_LEX = {"de": r"\bohne\b|\bausgenommen\b|\bausgeschlossen\b|\bausnahme\w*|\bfehlen\w*|\babwesenheit\b|\bversagen\b|"
+                 r"\w{3,}los(?:e[nmrs]?)?\b|\w{3,}frei(?:e[nmrs]?)?\b|\bun(?!d\b|ter|ten\b|s\b|ser|gefähr|iver|ion|fall)\w{4,}|"
+                 r"\bin(?:akzep|operab|effektiv|kompat|tolera|suffizient|adäquat)\w*|\w*intoleranz\w*|\bnicht-\w+|\bnicht\w{3,}|\w+-nicht\w*|"
+                 r"\bnegativ\w*|\bnon\b|\bnon-\w+|\ba(?:traumat|symptomat|typisch)\w*|\w*refrakt\w*|\bkontraindiz\w*|"
+                 r"\bversäum\w*|\bverpass\w*|\bverzicht\w*|\bunterlass\w*|\bfehlschlag\w*|\bverweiger\w*",
+           "fr": r"\bsans\b|\bexclu\w*|\babsence\b|\bhors\b|\bdéfaut\b|\bmanque\b|\béchec\b|"
+                 r"\bin(?:suffisant|suffisamment|adéqu|toléra|efficac|contrôl|satisf|appropri|accept|compatib|complet|opérab|éligib|évitab|capac)\w*|\bintoléran\w*|"
+                 r"\bimpossib\w*|\bnon-\w+|\bnégati\w*|\bréfractaire\w*|\bcontre-indiqu\w*|\bomi[st]\w*|\bomett\w*|\brenonc\w*|\brefus\w*",
+           "it": r"\bsenza\b|\bescl[ua]\w*|\bassenza\b|\bmancat\w*|\bmancanza\b|\bfallimento\b|"
+                 r"\bin(?:sufficient[ei]\b|sufficientemente|adegua|tollera|efficac|controlla|soddisfa|appropria|accettab|compatib|complet|operab|eleggib|evitab|capac)\w*|"
+                 r"\bintolleran\w*|\bimpossib\w*|\bnon-\w+|\bnegativ\w*|\brefrattari\w*|\bcontroindica\w*|\bomess\w*|\bomett\w*|\brinunc\w*|\brifiut\w*"}
+# restriction, exception and 'below' words: a language may say with them what the other says with a negation
+NEG_SUPP = {"de": r"\baus?ser\b|\baußer\b|\bansonsten\b|\bandernfalls\b|\bsonst\b|\babweich\w*|\bunter\b|\bweniger als\b|\bkleiner\b",
+            "fr": r"\bsauf\b|\bhormis\b|\bexcept\w*|\bexception\b|\bà moins\b|\binférieur\w*|\bmoins de\b|\ben dessous\b",
+            "it": r"\bsalvo\b|\btranne\b|\beccezione\b|\ba meno che\b|\binferior\w*|\bmeno di\b|\bsotto\b|\bse non\b"}
+_NS = {L: re.compile(v, re.I) for L, v in NEG_STRONG.items()}
+_NC = {L: re.compile(r"(?:" + v + r")", re.I) for L, v in NEG_COMPANION.items()}
+_NI = {L: re.compile(v, re.I) for L, v in NEG_IDIOM.items()}
+_NL = {L: re.compile(v, re.I) for L, v in NEG_LEX.items()}
+_NP = {L: re.compile(v, re.I) for L, v in NEG_SUPP.items()}
+
+
+def _ne_que(s, at):
+    """FR 'ne ... que' (= only): a 'que/qu'' later in the sentence before any pas/plus/jamais/aucun/rien/guère/point."""
+    q = re.search(r"\bqu(?:e\b|['’])", s[at:]); n = re.search(r"\b(?:pas|plus|jamais|aucune?s?|rien|guère|point|ni)\b", s[at:])
+    return q is not None and (n is None or q.start() < n.start())
+
+
+def neg_strong(s, L):
+    """clause negations of one sentence -> [(start, end, surface)], counted per clause (split at , ; : and brackets):
+    FR the 'ne/n'' of the clause (each), or, without one, its first pas/aucun/jamais/rien/ni/non word ('Pas de ...');
+    IT each 'non', or, without one, the first nessuno/mai/né; DE each nicht/kein/nie/weder. Idioms, expletives and FR
+    'ne ... que' (= only) are left out."""
+    skip = [m.span() for m in _NI[L].finditer(s)]; out = []
+    bounds = [0] + [m.end() for m in re.finditer(r"[,;:()\[\]]", s)] + [len(s)]
+    for c0, c1 in zip(bounds, bounds[1:]):
+        heads, comps = [], []
+        for m in _NS[L].finditer(s, c0, c1):
+            if any(a <= m.start() < b for a, b in skip): continue
+            w = m.group(0).lower()
+            if L == "fr" and (w == "ne" or w[:2] in ("n'", "n’")) and _ne_que(s, m.end()): continue      # ne ... que = only
+            (comps if _NC[L].fullmatch(w) else heads).append((m.start(), m.end(), m.group(0)))
+        if not heads:                                                                  # 'aucune A ou aucune B'; 'ni A ni B' once
+            ni = [h for h in comps if h[2].lower() in ("ni", "né")]; heads = [h for h in comps if h not in ni] + ni[:1]
+        out += heads
+    return sorted(out)
+
+
+def neg_lex(s, L): return [m.group(0) for m in _NL[L].finditer(s)]
+
+
+def neg_supp(s, L):
+    return [m.group(0) for m in _NP[L].finditer(s)] + [m.group(0) for m in _NI[L].finditer(s)] + \
+           (["ne … que"] if L == "fr" and any(_ne_que(s, m.end()) for m in re.finditer(r"\b(?:ne\b|n['’])", s, re.I)) else [])
+
+
+def neg_weak(s, L): return neg_lex(s, L) + neg_supp(s, L)
+
+
+NEG_LEXT = {"de": r"\bohne\b|\bnon-\w+|\bnicht-?\w{4,}|\bun(?:zureichend|genügend|befriedigend|wirksam|kontrolliert|behandelt|verträglich|angemessen|geeignet)\w*|"
+                  r"\bin(?:akzep|operab|suffizient|adäquat)\w*|\b(?:erfolg|wirkung|ergebnis)\w*los\w*|\w*refrakt\w*",
+            "fr": r"\bsans\b|\bnon-\w+|\bin(?:suffisant|adéquat|efficace|acceptable|opérable|éligible)\w*|\bréfractaire\w*",
+            "it": r"\bsenza\b|\bnon-\w+|\bin(?:sufficient|adeguat|efficac|accettabil|operabil|eleggibil|idone)\w*|\brefrattari\w*"}
+_NT = {L: re.compile(v, re.I) for L, v in NEG_LEXT.items()}
+
+
+def _adj_non(s, L, h):
+    """FR/IT 'non' right before an adjective or participle ('non lacunaire', 'non resecabile'): a word negation."""
+    return L in ("fr", "it") and h[2].lower() == "non" and re.match(r"\s+" + _ADJ_SFX + r"\b", s[h[1]:], re.I) is not None
+
+
+def _neg_profile(t, k):
+    hs = neg_strong(t, k)
+    adj = [t[h[0]:h[1] + 1 + len(re.match(r"\s*\S*", t[h[1]:]).group(0).strip())] for h in hs if _adj_non(t, k, h)]
+    return dict(S=[h[2] for h in hs if not _adj_non(t, k, h)], X=neg_lex(t, k) + adj, P=neg_supp(t, k),
+                T=[m.group(0) for m in _NT[k].finditer(t)] + adj)
+
+
+def _neg_one_sided(A_, B_):
+    """side 'a' or 'b' whose negation the other lacks entirely, or None (presence rule)."""
+    for x, y, side in ((A_, B_, "a"), (B_, A_, "b")):
+        if (x["S"] or x["T"]) and not (y["S"] or y["X"] or y["P"]): return side
+    return None
+
+
+def negation_diff(de, tgt, lang):
+    """R15 (2), per aligned sentence pair: one side has a clause negation, or (narrow list NEG_LEXT) a word negation
+    such as 'ohne', 'unzureichend', 'non résécable', and the other side has none at all: no clause negation, no word
+    negation (NEG_LEX), no restriction / exception / 'below' word and no negation idiom (NEG_SUPP, NEG_IDIOM).
+    -> [dict(side, negations, de_sentence, tgt_sentence, de_span, tgt_span, cost, unit)]."""
+    de, tgt = nrm(de), nrm(tgt); out = []
+    for d, g, c in aligned(de, tgt, lang):
+        sd, sg = de[d[0]:d[1]], tgt[g[0]:g[1]]
+        side = _neg_one_sided(_neg_profile(sd, "de"), _neg_profile(sg, lang))
+        if side is None: continue
+        k = "de" if side == "a" else lang; pr = _neg_profile(sd if side == "a" else sg, k)
+        out.append(dict(side=k, negations=pr["S"] or pr["T"], de_sentence=sd, tgt_sentence=sg, de_span=d, tgt_span=g, cost=c,
+                        unit="sentence"))
+    return out
+
+
+# ---- number words
+_BOTH = {"de": r"\bbeide\w*", "fr": r"\b(?:les|tous|toutes|ces)\s+deux\b|\bl['’]un et l['’]autre\b", "it": r"\bentramb\w*|\bambedue\b|\bambo\b|\btutti e due\b|\btutte e due\b"}
+
+
+def number_word_diff(de, tgt, lang, reported=None):
+    """R15 (3): per aligned sentence pair, values involving a number word that one side lacks -> [dict(side, value,
+    unit, src, context, span)]. reported: {(side, value)} already named by a number finding (skipped)."""
+    de, tgt = nrm(de), nrm(tgt); out = []; reported = reported or set()
+    for d, g, c in aligned(de, tgt, lang):
+        sd, sg = de[d[0]:d[1]], tgt[g[0]:g[1]]
+        r = compare(sd, sg, lang, bind_words=True)
+        def word(x, text): return x["src"] == "word" and not any(re.search(r"fach", text[a:b], re.I) for a, b in x["spans"])
+        wa = [x for x in r["de_only"] if word(x, sd)]; wb = [x for x in r["tgt_only"] if word(x, sg)]
+        if not (wa or wb): continue
+        cand = [("de", x, sd, d[0]) for x in r["de_only"] if x in wa or (wb and x["unit"] != "word")] + \
+               [(lang, x, sg, g[0]) for x in r["tgt_only"] if x in wb or (wa and x["unit"] != "word")]
+        for side, x, text, off in cand:
+            other, ol = (sg, lang) if side == "de" else (sd, "de")
+            n = _num(x["value"])
+            if n is not None and n == int(n) and 2 <= n <= 12 and re.search(r"\b(?:" + ORD[ol][int(n)] + r")", other, re.I): continue
+            if x["value"] == "2" and re.search(_BOTH[ol], other, re.I): continue
+            if equivalence(x["value"], side, text, other, ol): continue
+            if (side, x["value"]) in reported: continue
+            out.append(dict(side=side, value=x["value"], unit=None if x["unit"] == "word" else x["unit"], src=x["src"],
+                            context=x["context"][:1], span=(off + x["spans"][0][0], off + x["spans"][0][1]),
+                            de_sentence=sd, tgt_sentence=sg))
+    return out
+
+
+def counterpart(f, de, tgt):
+    """display field of a number finding: per one-sided value, the values the aligned sentence of the other side states
+    in surplus with the same unit class -> {side: [dict(value, unit, src, for_value)]}."""
+    L = f["lang"]; de, tgt = nrm(de), nrm(tgt); res = {}
+    pairs = align(de, tgt, L)[0]
+    for side, lst in (("de", f.get("de_only") or []), (L, f.get("tgt_only") or [])):
+        for y in lst:
+            for d, g, c in pairs:
+                own, oth, ol, ow = (de[d[0]:d[1]], tgt[g[0]:g[1]], L, "de") if side == "de" else (tgt[g[0]:g[1]], de[d[0]:d[1]], "de", L)
+                X = values(own, ow)
+                if not any(x["v"] == y["value"] for x in X): continue
+                uc = _ucls(y["unit"], ow) or (y["unit"] or "").lower()
+                same = lambda x, l: bool(x["unit"]) and (_ucls(x["unit"], l) or x["unit"].lower()) == uc
+                co = Counter(x["v"] for x in X if same(x, ow)); cx = [x for x in values(oth, ol) if same(x, ol)]
+                cy = Counter(x["v"] for x in cx)
+                for x in cx:
+                    if cy[x["v"]] > co.get(x["v"], 0) and x["v"] != y["value"]:
+                        o = ol if side == "de" else "de"
+                        e = dict(value=x["v"], unit=x["unit"], src=x["src"], for_value=y["value"])
+                        if e not in res.setdefault(o, []): res[o].append(e)
+                break
+    return res
+
+
+def r5_findings(i, de, tgt, lang, number_f=None, kinds=KINDS_R5):
+    """the round-5 findings of one limitation and language (without fid/rank). number_f: the existing number finding of
+    (i, lang), if any (its values are not repeated as number_word findings)."""
+    out = []
+    if "operator" in kinds:
+        for o in operator_diff(de, tgt, lang):
+            W = {"min": "a lower bound", "max": "an upper bound"}
+            out.append(dict(id=i, lang=lang, kind="operator", languages=["de", lang], value=o["value"], unit=o["unit"],
+                            de_op=o["de_op"], tgt_op=o["tgt_op"], de_dir=o["de_dir"], tgt_dir=o["tgt_dir"],
+                            context=[o["context_de"], o["context_tgt"]], tgt_spans=[list(x) for x in o["tgt_spans"]],
+                            description=f"DE makes {o['value']} {W[o['de_dir']]} ('{o['de_op']}'), {lang.upper()} "
+                                        f"{W[o['tgt_dir']]} ('{o['tgt_op']}')."))
+    if "negation" in kinds:
+        for g in negation_diff(de, tgt, lang):
+            S = NAME[g["side"]]; O = NAME[lang] if g["side"] == "de" else "German"
+            out.append(dict(id=i, lang=lang, kind="negation", languages=["de", lang], side=g["side"], negations=g["negations"],
+                            unit=g["unit"], context=[_clip(g["de_sentence"]), _clip(g["tgt_sentence"])],
+                            tgt_span=list(g["tgt_span"]),
+                            description=f"The {S} {g['unit']} is negated ({', '.join(g['negations'])}); the aligned {O} {g['unit']} "
+                                        f"has no negation."))
+    if "number_word" in kinds:
+        rep = set()
+        if number_f:
+            rep = {("de", x["value"]) for x in number_f.get("de_only") or []} | {(lang, x["value"]) for x in number_f.get("tgt_only") or []}
+        ws = number_word_diff(de, tgt, lang, rep)
+        if ws:
+            da = [w for w in ws if w["side"] == "de"]; ta = [w for w in ws if w["side"] != "de"]
+            p = [f"DE has {w['value']} ({w['unit'] or 'number word'}), {lang.upper()} does not" for w in da] + \
+                [f"{lang.upper()} has {w['value']} ({w['unit'] or 'number word'}), DE does not" for w in ta]
+            out.append(dict(id=i, lang=lang, kind="number_word", languages=["de", lang],
+                            de_only=[dict(value=w["value"], unit=w["unit"], src=w["src"], context=w["context"]) for w in da],
+                            tgt_only=[dict(value=w["value"], unit=w["unit"], src=w["src"], context=w["context"], span=list(w["span"])) for w in ta],
+                            context=[c for w in ws for c in w["context"][:1]], description="; ".join(p) + " (in the aligned sentence)."))
+    return out
+
+
+def _clip(s, n=300): return s if len(s) <= n else s[:n] + "…"
+
+
+def run_r5(J, names, F=None, kinds=KINDS_R5):
+    """round-5 findings on a register (J as load()); F: the number findings of run() (for number_word dedup)."""
+    by = {(f["id"], f["lang"]): f for f in F or [] if f["kind"] == "number"}
+    pname = lambda i: sorted(set(n.split(" ")[0] for n in names.get(i, [])))[:3]
+    R = []
+    for i in sorted(J["de"]["lim"]):
+        de = J["de"]["lim"][i]
+        for L in ("fr", "it"):
+            t = J[L]["lim"].get(i)
+            if not t: continue
+            for f in r5_findings(i, de, t, L, by.get((i, L)), kinds):
+                f.update(product=pname(i), half=half(i), odd_one_out=None, suggested_action=None, likely_equivalent=False, equivalence=None)
+                R.append(f)
+    order = {k: n for n, k in enumerate(KINDS_R5)}
+    R.sort(key=lambda f: (order[f["kind"]], f["id"], f["lang"], str(f.get("value") or f.get("tgt_span"))))
+    pre = {"operator": "O", "negation": "G", "number_word": "W"}; c = Counter()
+    for f in R: c[f["kind"]] += 1; f["rank"] = c[f["kind"]]; f["fid"] = f"{pre[f['kind']]}{c[f['kind']]:02d}"
+    return R
+# ------------------------------------------------------------------ END OF ROUND-5 RULES
+
+
 LOC = {"lang": {"fr": "l'ancien texte français est en {x}", "it": "il vecchio testo italiano è in {x}",
                 "de": "der alte deutsche Text ist auf {x}"},
        "lname": {"fr": {"de": "allemand", "fr": "français", "it": "italien", "en": "anglais"},
@@ -911,9 +1316,11 @@ def odd_number(f, J):
     return (votes.pop() if len(votes) == 1 else None), M
 
 
-def run_all(hist, date, J=None, names=None, st=None, pairs=None):
+def run_all(hist, date, J=None, names=None, st=None, pairs=None, r5=False):
     """every kind on one snapshot -> (findings, number stats, extra stats). Number findings are exactly run()'s.
-    pairs: terminology pairs (default: the shipped data/audit/term_pairs_20261006.json; [] = no terminology check)."""
+    pairs: terminology pairs (default: the shipped data/audit/term_pairs_20261006.json; [] = no terminology check).
+    r5: also append the round-5 findings (operator, negation, number_word; PREREG R15), after all the others; the
+    findings of the other kinds are the same either way."""
     if J is None: J, names = load(hist, date)
     if pairs is None: pairs = load_terms()
     F, S = run(hist, date, J, names)
@@ -989,6 +1396,7 @@ def run_all(hist, date, J=None, names=None, st=None, pairs=None):
         f["likely_equivalent"], f["equivalence"] = likely_equivalent(f, J["de"]["lim"][f["id"]], J[f["lang"]]["lim"][f["id"]])
     for f in U + Lg + E + Tm: f["likely_equivalent"], f["equivalence"] = False, None     # assessed for number findings only
     X = dict(language_fields_judged=dict(judged), language_fields_too_short=dict(short), unit_one_sided=one)
+    if r5: return F + U + Lg + E + Tm + run_r5(J, names, F), S, X
     return F + U + Lg + E + Tm, S, X
 
 
