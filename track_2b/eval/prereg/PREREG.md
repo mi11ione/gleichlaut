@@ -35,6 +35,7 @@ human labels were used.
 | R14 | (A) audit findings relabelled by two blind annotators + a third; (B) annotator sensitivity to meaning errors inside the amended wording | (A) κ 1.000; register 17 of 27, terminology 11 of 11, lists 6 of 11 (first: 16, 8, 7); (B) 38 of 38 caught by both, 0 false alarms |
 | R15 | audit round 5: operator direction, negation, number words | recall up (operator 74.5%, number word 84.0%; negation dropped 44.0%), precision 11–25%: no kind passes, all off |
 | R16 | memorisation probe: could the models have seen the held-out answers | no evidence beyond the negative control (70B, 8B); probe sensitivity not shown |
+| R17 | real errors BAG fixed without a German change (Claude annotators); Apertus 70B as a non-Claude annotator | pending |
 
 ## R0. Pass rule for a drafting lane (frozen 9 Oct 2026, before the fresh 2025 run)
 
@@ -561,6 +562,84 @@ word for word and compares them with texts the models have almost certainly seen
   memorisation of long-standing texts; if it does not, the report says that the probe found none even for texts unchanged
   for years, so a null result on T is weak evidence. If memorisation is flagged, README and report say so next to the
   fresh-166 headline, with the numbers. Whatever comes out is reported as is.
+
+## R17. Real errors and a non-Claude annotator (frozen 10 Oct 2026, before any annotation or model call)
+
+A juror: "Claude wrote the planted errors and Claude caught them; κ 1.000 is two copies of one model family agreeing."
+R17 answers both halves: (A) errors that people made and BAG itself later fixed, labelled by fresh blind Claude
+annotators; (B) Apertus 70B, a different model family, as a second annotator. Tool `tools/r17_real_errors.py` (design in
+its docstring); its output is committed with this rule (`build --check` rebuilds it byte for byte from the snapshots).
+
+### Part A: real errors BAG corrected without a German change
+
+- **Mining.** Every step of the SL snapshot series the backtest uses (2026: `sl.mine.SNAPS`, 19 Feb → 6 Oct, 4 May
+  excluded; 2025: the two Wayback XML captures 11 Jun → 31 Jul; the 2025 → 2026 step is not used: the formats share no
+  limitation key). Per product, every German limitation text present byte-identical in both snapshots (34,272 + 1,318
+  such pairs) whose French or Italian text (same key; old-format positional keys as `sl.mine.tkey`) differs after
+  `nrm()`; old-format pairs with `<` dropped as in `sl.mine`. Result: **29 changes**.
+- **Mechanical classification** (docstring `CLASSIFY`): punctuation / spacing / typography only (word lists equal after
+  NFC, casefold, apostrophe, quote and dash folding; 12: Vegzelma → VEGZELMA case changes 11, one spacing change in
+  2025) are dropped. Content changes, typed number > negation/operator > words: **17**, all kept (**fewer than 30
+  exist, so all are used**): number 0, negation/operator 2 (a stray French «n'» in «n'est destiné»; a sentence with «ne
+  peut pas» added), words 15 (12 replaced, 3 removed). 10 of the 17 are one house-wording sweep of Opdivo's French code
+  sentence («correspondant à» → «de», «communiqué» → «transmis»); results are also reported by edit family. 14 French,
+  3 Italian.
+- **Direction, declared now.** Normally the old text is the error and BAG's new text the fix. In 2 changes (Opdivo .01
+  and .04, French) BAG's new text drops the indication-code sentence that the unchanged German still carries, leaving
+  «chimiothérapie. .»: there the new text is the error and the old one the correct version (`REVERSED` in the tool;
+  decided by reading the 17 against the German, before any annotation). Results are reported over all 17 and over the 15
+  BAG fixes.
+- **Records** (PROTOCOL.md worklist shape): `de_old` = `de_new` = the unchanged German; error record `draft` = `tgt_old`
+  = the erroneous text; control record `draft` = `tgt_old` = the correct text (so every record looks alike: German
+  unchanged, draft equal to tgt_old); protocol (a) `official_new` = the correct text, protocol (b) no `official_new`.
+  Two worklists per protocol (17 records each): a change's error and control are never in the same worklist; changes that
+  share an edit family or the same German go together (their errors in one worklist, controls in the other; largest
+  group first, seed 20261019): set 1 holds 10 errors + 7 controls, set 2 7 + 10. Seeded shuffle per protocol and set,
+  neutral ids `X…`/`Y…` (a), `J…`/`K…` (b). Key `eval/labels/r17_key.json` kept apart, never shown.
+- **Instructions.** PROTOCOL.md verbatim with R11's operational note on long lines, except the context paragraph, which
+  must change for the task to be coherent: its sentences "The German text was amended (de_old -> de_new). A system drafted
+  the matching amendment of the French or Italian text (lang) starting from the old target text (tgt_old) -> draft." and
+  "Official translators sometimes also fixed things the German change did not touch; a draft is NOT expected to make those
+  extra fixes." are replaced by: "Here the German text was not amended (de_old = de_new). The French or Italian text
+  (lang) under review is draft (tgt_old is the same text); judge it against the German as if it were a new draft: a
+  problem already in tgt_old counts against the draft, and "the German change" in the definitions below means "the
+  German text"." (b) also replaces "official_new is what the authorities published." by R11's "No published version is
+  available for these records: there is no official_new field." Everything else (needs_fix, the classes, the severity
+  order, the output format) is unchanged.
+- **Annotators.** Per protocol and worklist two fresh general-purpose Claude subagents (8 in all), each given only a copy
+  of its worklist in an otherwise empty directory; the second labels in reverse order; no annotator sees both worklists
+  or both protocols. No tie-break (as R11/R14).
+- **Metrics** (no threshold; `score.annotator_real_errors` → `eval/results/annotator_real_errors.json`, re-derived by
+  `replay` from `eval/labels/r17_real_errors_{a,b}.tsv` and the key). Recall on the 17 error records: needs_fix = yes and
+  severe (REAL, stale or german) by A, B, both and either, Wilson 95%; by correction type, by edit family (the sweep vs
+  the rest), by language, for the 15 BAG fixes; false alarms on the 17 controls (needs_fix = yes; severe); class
+  counts; every error record missed by both, with its edit and notes.
+
+### Part B: Apertus 70B as a second, non-Claude annotator
+
+- **Items.** (i) The 49 audit findings of R14 (`audit_relabel_worklist.json`, neutral ids, each record's own
+  `question`); the audit uses no model, so no model judges its own output. (ii) The 34 part-A records under (a) and under
+  (b). Never an Apertus-drafted text. 117 requests in `data/r17/r17_70b_prompts.json` (prompts frozen here).
+- **Calls.** `swiss-ai/apertus-v1.5-70b` through the development gateway (`backends.Gateway`, run tag
+  `gleichlaut-r17-70b`), one plain user message per record, no system message, no prefill, temperature 0, `max_tokens`
+  300, sequential with a 1 s pause; the served `model` is checked on every call and any other model is refused; every
+  response recorded in its own folder `data/r17/apertus70b/responses/`, call log `calls.jsonl`.
+- **Prompts.** Audit: the R14 instructions with "each record" → "the record", the record as JSON, and "Answer in exactly
+  this format, two lines, nothing else: `answer: <real, minor or not>` / `note: <at most 20 words>`". Part A: the
+  part-A instructions of the protocol ("For each record" → "For the record below"), the record as JSON, and three lines
+  `needs_fix: <yes or no>` / `class: <one class>` / `note: …`. Parsers (`score.r17_parse_*`): first line-initial
+  `answer:` / `needs_fix:` / `class:` (case-insensitive, `*` and backticks ignored) with a valid value; otherwise
+  **unparsed** (counted, never re-asked; not caught in recall, left out of agreement and κ).
+- **Metrics** (`score.annotator_crossfamily` → `eval/results/annotator_crossfamily.json`, re-derived by `replay` from the
+  recorded responses, looked up by the request's sha256). (i) Agreement and Cohen's κ with the R14 Claude majority on
+  confirmed (real or minor vs not), overall and per set; three-way answer agreement; the findings where they differ.
+  (ii) Apertus's own recall on the 17 errors (needs_fix = yes; severe) and false alarms on the 17 controls, per protocol,
+  Wilson 95%; agreement and κ on needs_fix with each Claude annotator and with the records where the two Claude
+  annotators agree.
+- **Reporting rule, stated now.** README (where R11/R14 sensitivity is described) and the technical report (drafting
+  results, after the R14 sentence) state the real-error recall by both / either under (a) and (b) and the Apertus
+  agreement / κ on the audit and its recall on part A, whatever they are. No decision attached; no earlier outcome is
+  re-opened. Whatever comes out is reported as is.
 
 ## R4. Post-freeze changes
 

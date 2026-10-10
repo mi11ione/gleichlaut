@@ -1,0 +1,1257 @@
+{
+ "prereg": "eval/prereg/PREREG.md R17 (part A)",
+ "seed": 20261019,
+ "snapshots": [
+  "20260219",
+  "20260304",
+  "20260401",
+  "20260601",
+  "20260701",
+  "20260801",
+  "20260901",
+  "20261001",
+  "20261006"
+ ],
+ "wb2025_step": [
+  "20250611",
+  "20250731"
+ ],
+ "mining": {
+  "de_unchanged_pairs": 34272,
+  "de_unchanged_pairs_2025": 1318,
+  "changes": 29
+ },
+ "counts": {
+  "changes_mined": 29,
+  "by_type": {
+   "punctuation": 12,
+   "words": 15,
+   "negation_operator": 2
+  },
+  "content": 17,
+  "content_by_type": {
+   "words": 15,
+   "negation_operator": 2
+  },
+  "content_by_type_subtype": {
+   "words/removed": 3,
+   "negation_operator/replaced": 2,
+   "words/replaced": 12
+  },
+  "content_by_lang": {
+   "it": 3,
+   "fr": 14
+  },
+  "content_by_step": {
+   "20260304>20260401": 1,
+   "20260401>20260601": 2,
+   "20260801>20260901": 1,
+   "20260901>20261001": 13
+  },
+  "families": {
+   "cdc23968": 1,
+   "c2c0c3f8": 1,
+   "2e3e0cb5": 1,
+   "1c614957": 1,
+   "4ccba973": 2,
+   "36d94228": 10,
+   "cf83d1c3": 1
+  },
+  "reversed": 2,
+  "per_set": {
+   "1": {
+    "control": 7,
+    "error": 10
+   },
+   "2": {
+    "error": 7,
+    "control": 10
+   }
+  }
+ },
+ "reversed": {
+  "fr:OPDIVO.01---NSCLC-Mono:20260901>20261001": "the German's indication-code sentence dropped, leaving '. .'",
+  "fr:OPDIVO.04---Nierenzellkarzinom--RCC-:20260901>20261001": "the German's indication-code sentence dropped, leaving '. .'"
+ },
+ "changes": [
+  {
+   "uid": "fr:LENALIZE.11a:20250611>20250731",
+   "lang": "fr",
+   "step": "20250611>20250731",
+   "key": "LENALIZE.11a",
+   "product": "Lenalidomid Zentiva Kaps 2.5 mg",
+   "n_occ": 1,
+   "de": "Kombination LENALIDOMID ZENTIVA und Tafasitamab Nach Kostengutsprache durch den Krankenversicherer nach vorheriger Konsultation des Vertrauensarztes. LENALIDOMID ZENTIVA wird in Kombination mit Tafasitamab (MINJUVI) zur Behandlung von erwachsenen Patienten mit rezidiviertem oder refraktärem diffusem grosszelligem B-Zell-Lymphom (diffuse large B-cell lymphoma, DLBCL), nach mindestens einer vorherigen systemischen Behandlungslinie, einschliesslich eines CD20-gerichteten Antikörpers, für die eine autologe Stammzelltransplantation (ASZT) nicht infrage kommt, vergütet. Die maximale Anzahl an erstattbaren Packungen LENALIDOMID ZENTIVA in dieser Indikation beträgt 12. Folgender Code ist an den Krankenversicherer zu übermitteln: 21381.11",
+   "old": "Association de LENALIDOMID ZENTIVA avec tafasitamab Après accord de la prise en charge des coûts par l’assurance-maladie après consultation préalable du médecin-conseil. LENALIDOMID ZENTIVA est remboursé en association avec le tafasitamab (MINJUVI) pour le traitement des patients adultes atteints d'un lymphome diffus à grandes cellules B (DLBCL) en rechute ou réfractaire après au moins une ligne de traitement systémique à base d’anticorps ciblant le CD20, qui ne sont pas éligibles à une autogreffe de cellules souches (AGCS). Le nombre maximal d’emballages de LENALIDOMID ZENTIVA remboursables dans cette indication s’élève à 12. Le code suivant doit être transmis à l'assurance-maladie : 21381.11",
+   "new": "Association de LENALIDOMID ZENTIVA avec tafasitamab Après accord de la prise en charge des coûts par l’assurance-maladie après consultation préalable du médecin-conseil. LENALIDOMID ZENTIVA est remboursé en association avec le tafasitamab (MINJUVI) pour le traitement des patients adultes atteints d'un lymphome diffus à grandes cellules B (DLBCL) en rechute ou réfractaire après au moins une ligne de traitement systémique à base d’anticorps ciblant le CD20, qui ne sont pas éligibles à une autogreffe de cellules souches (AGCS). Le nombre maximal d’emballages de LENALIDOMID ZENTIVA remboursables dans cette indication s’élève à 12. Le code suivant doit être transmis à l'assurance-maladie: 21381.11",
+   "type": "punctuation",
+   "subtype": null,
+   "word_diff": [],
+   "family": "bcd8b0c2"
+  },
+  {
+   "uid": "it:RA:213c9b7d-a450-40f6-b8ad-16e06e49236d#1:20260304>20260401",
+   "lang": "it",
+   "step": "20260304>20260401",
+   "key": "RA:213c9b7d-a450-40f6-b8ad-16e06e49236d#1",
+   "product": "Jemperli Inf Konz 500 mg/10 ml",
+   "n_occ": 1,
+   "de": "Endometriumkarzinom mit fehlerhafter DNA-Mismatch-Reparatur (dMMR)/ hoher Mikrosatelliteninstabilität (MSI-H) (Kombination mit Platin- Chemotherapie) JEMPERLI in Kombination mit Carboplatin und Paclitaxel wird vergütet für die Behandlung erwachsener Patientinnen mit primär fortgeschrittenem oder rezidivierendem Endometriumkarzinom (EC) mit fehlerhafter DNA-Mismatch-Reparatur (dMMR)/hoher Mikrosatelliteninstabilität (MSI-H), ohne vorherige Anti-PD-1/Anti-PD-L1 Therapie, mit hohem Rezidivrisiko und max. einem vorherigen Rezidiv, die für eine systemische Therapie in Frage kommen. Die maximale Therapiedauer beträgt 3 Jahre. Die Zulassungsinhaberin GlaxoSmithKline AG erstattet dem Krankenversicherer, bei dem die versicherte Person zum Zeitpunkt des Bezugs versichert war, auf dessen Aufforderung hin für jede für die Kombinationstherapie bezogene Packung JEMPERLI einen festgelegten Anteil des Fabrikabgabepreises zurück. Die Zulassungsinhaberin gibt dem Krankenversicherer die jeweilige Höhe der Rückerstattungen bekannt. Die Mehrwertsteuer kann nicht zusätzlich zu diesem Anteil des Fabrikabgabepreises zurückgefordert werden. Die Aufforderung zur Rückerstattung soll ab dem Zeitpunkt der Verabreichung erfolgen. Folgender Code ist an den Krankenversicherer zu übermitteln: 21373.02",
+   "old": "Carcinoma endometriale con deficit del sistema di mismatch repair del DNA (dMMR) / elevata instabilità dei microsatelliti (MSI-H) (in associazione con chemioterapia a base di platino) JEMPERLI in associazione a carboplatino e paclitaxel è rimborsato per il trattamento di prima linea di pazienti adulte affette da carcinoma endometriale primario avanzato o recidivante, con deficit del sistema di mismatch repair del DNA (dMMR) / elevata instabilità dei microsatelliti (MSI-H), che non abbiano ricevuto precedente terapia con anti-PD-1/anti-PD-L1, con elevato rischio di recidiva e al massimo una recidiva precedente, che siano eleggibili per la terapia sistemica. La durata massima della terapia è di 3 anni. Il titolare dell’autorizzazione, GlaxoSmithKline AG, rimborsa all'assicuratore sanitario presso il quale l'assicurato era affiliato al momento dell'acquisto, su richiesta della stessa, per ogni confezione di JEMPERLI utilizzata nella terapia di combinazione, una quota prestabilita del prezzo di fabbrica. Il titolare dell’autorizzazione comunica all'assicuratore sanitario l’importo specifico dei rimborsi. L'IVA non può essere richiesta in aggiunta a questa parte del prezzo di fabbrica. La richiesta di rimborso deve essere effettuata a partire dal momento della somministrazione. Il seguente codice deve essere trasmesso all’assicuratore malattia: 21373.02",
+   "new": "Carcinoma endometriale con deficit del sistema di mismatch repair del DNA (dMMR) / elevata instabilità dei microsatelliti (MSI-H) (in associazione con chemioterapia a base di platino) JEMPERLI in associazione a carboplatino e paclitaxel è rimborsato per il trattamento di pazienti adulte affette da carcinoma endometriale primario avanzato o recidivante, con deficit del sistema di mismatch repair del DNA (dMMR) / elevata instabilità dei microsatelliti (MSI-H), che non abbiano ricevuto precedente terapia con anti-PD-1/anti-PD-L1, con elevato rischio di recidiva e al massimo una recidiva precedente, che siano eleggibili per la terapia sistemica. La durata massima della terapia è di 3 anni. Il titolare dell’autorizzazione, GlaxoSmithKline AG, rimborsa all'assicuratore sanitario presso il quale l'assicurato era affiliato al momento dell'acquisto, su richiesta della stessa, per ogni confezione di JEMPERLI utilizzata nella terapia di combinazione, una quota prestabilita del prezzo di fabbrica. Il titolare dell’autorizzazione comunica all'assicuratore sanitario l’importo specifico dei rimborsi. L'IVA non può essere richiesta in aggiunta a questa parte del prezzo di fabbrica. La richiesta di rimborso deve essere effettuata a partire dal momento della somministrazione. Il seguente codice deve essere trasmesso all’assicuratore malattia: 21373.02",
+   "type": "words",
+   "subtype": "removed",
+   "number": false,
+   "negation_operator": false,
+   "word_diff": [
+    [
+     "delete",
+     "di prima linea",
+     ""
+    ]
+   ],
+   "family": "cdc23968"
+  },
+  {
+   "uid": "fr:RESOLOR3:20260401>20260601",
+   "lang": "fr",
+   "step": "20260401>20260601",
+   "key": "RESOLOR3",
+   "product": "Resolor Filmtabl 1 mg",
+   "n_occ": 2,
+   "de": "Die Therapie mit RESOLOR ist für Erwachsene (>18 Jahre) vorgesehen, welche auf eine Vorbehandlung mit mindestens 2 Laxantien verschiedener Klassen über einen Zeitraum von mindestens 9 Monaten nicht angesprochen haben. Falls die Behandlung nach 4 Wochen nicht erfolgreich war (Zunahme der Stuhlfrequenz um mindestens 1 spontane Darmentleerung pro Woche), so muss das Präparat abgesetzt werden. Die maximale Therapiedauer beträgt 12 Wochen. Die Therapie mit RESOLOR >12 Wochen bedarf der Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation des Vertrauensarztes.",
+   "old": "Le traitement par RESOLOR n’est destiné aux adultes (âgées de >18 ans) qui n’ont pas répondu à un traitement antérieur avec au moins 2 laxatifs de classes différentes pendant une période de 9 mois au minimum. Si le traitement n’est pas efficace (augmentation de la fréquence des selles d’au moins 1 vidange intestinale spontanée par semaine) au bout de 4 semaines, l’administration du médicament doit être arrêtée. La durée maximale du traitement est de 12 semaines. Le traitement de > 12 semaines par RESOLOR nécessite une demande de prise en charge des coûts auprès de l’assurance, après consultation du médecin-conseil.",
+   "new": "Le traitement par RESOLOR est destiné aux adultes (âgées de >18 ans) qui n’ont pas répondu à un traitement antérieur avec au moins 2 laxatifs de classes différentes pendant une période de 9 mois au minimum. Si le traitement n’est pas efficace (augmentation de la fréquence des selles d’au moins 1 vidange intestinale spontanée par semaine) au bout de 4 semaines, l’administration du médicament doit être arrêtée. La durée maximale du traitement est de 12 semaines. Le traitement de > 12 semaines par RESOLOR nécessite une demande de prise en charge des coûts auprès de l’assureur maladie, après consultation du médecin-conseil.",
+   "type": "negation_operator",
+   "subtype": "replaced",
+   "number": false,
+   "negation_operator": true,
+   "word_diff": [
+    [
+     "delete",
+     "n",
+     ""
+    ],
+    [
+     "replace",
+     "assurance",
+     "assureur maladie"
+    ]
+   ],
+   "family": "c2c0c3f8"
+  },
+  {
+   "uid": "it:RESOLOR3:20260401>20260601",
+   "lang": "it",
+   "step": "20260401>20260601",
+   "key": "RESOLOR3",
+   "product": "Resolor Filmtabl 1 mg",
+   "n_occ": 2,
+   "de": "Die Therapie mit RESOLOR ist für Erwachsene (>18 Jahre) vorgesehen, welche auf eine Vorbehandlung mit mindestens 2 Laxantien verschiedener Klassen über einen Zeitraum von mindestens 9 Monaten nicht angesprochen haben. Falls die Behandlung nach 4 Wochen nicht erfolgreich war (Zunahme der Stuhlfrequenz um mindestens 1 spontane Darmentleerung pro Woche), so muss das Präparat abgesetzt werden. Die maximale Therapiedauer beträgt 12 Wochen. Die Therapie mit RESOLOR >12 Wochen bedarf der Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation des Vertrauensarztes.",
+   "old": "La terapia con RESOLOR è indicata per adulti (>18 anni di età) che non hanno risposto a un precedente trattamento con almeno 2 lassativi di classi differenti condotto per un periodo di almeno 9 mesi. Nel caso in cui dopo 4 settimane il trattamento non sia stato efficace (aumento della frequenza delle defecazioni di almeno 1 evacuazione intestinale spontanea alla settimana), si deve interrompere l’assunzione del preparato. La durata massima della terapia è pari a 12 settimane. La terapia con RESOLOR per più di 12 settimane richiede una garanzia di assunzione dei costi da parte dell’assicurazione malattie previa consultazione del medico di fiducia.",
+   "new": "La terapia con RESOLOR è indicata per adulti (>18 anni di età) che non hanno risposto a un precedente trattamento con almeno 2 lassativi di classi differenti condotto per un periodo di almeno 9 mesi. Nel caso in cui dopo 4 settimane il trattamento non sia stato efficace (aumento della frequenza delle defecazioni di almeno 1 evacuazione intestinale spontanea alla settimana), si deve interrompere l’assunzione del preparato. La durata massima della terapia è pari a 12 settimane. La terapia con RESOLOR per più di 12 settimane richiede una garanzia di assunzione dei costi da parte dell’assicuratore malattia previa consultazione del medico di fiducia.",
+   "type": "words",
+   "subtype": "replaced",
+   "number": false,
+   "negation_operator": false,
+   "word_diff": [
+    [
+     "replace",
+     "assicurazione malattie",
+     "assicuratore malattia"
+    ]
+   ],
+   "family": "2e3e0cb5"
+  },
+  {
+   "uid": "fr:VEGZELMA.01:20260601>20260701",
+   "lang": "fr",
+   "step": "20260601>20260701",
+   "key": "VEGZELMA.01",
+   "product": "Vegzelma Inf Konz 100 mg/4 ml",
+   "n_occ": 2,
+   "de": "Kolorektalkarzinom Nach Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation und Genehmigung des Vertrauensarztes zur Erstlinientherapie bei Patienten mit metastasiertem Karzinom des Kolons oder Rektums in Kombination mit 5-Fluorouracil/Folinsäure, 5-Fluorouracil/Folinsäure/Irinotecan oder Capecitabine/Oxaliplatin (XELOX). VEGZELMA wird bei entsprechender ärztlicher Verordnung bis zur Progression der Krankheit vergütet. Nach Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation und Genehmigung des Vertrauensarztes zur Zweitlinientherapie in Kombination mit einem Irinotecan- oder Oxaliplatin-haltigen Chemotherapieschema bei Patienten mit metastasiertem Kolon- oder Rektumkarzinom mit vorheriger Oxaliplatin- oder Irinotecan-basierter Chemotherapie mit oder ohne Bevacizumab. VEGZELMA wird bei entsprechender ärztlicher Verordnung bis zur Progression der Krankheit vergütet. Folgender Indikationscode ist an den Krankenversicherer zu übermitteln: 21617.01",
+   "old": "Carcinome colorectal Après accord sur la prise en charge des frais par l’assureur-maladie après consultation préalable et accord du médecin-conseil, pour le traitement de première ligne des patients atteints d’un carcinome colorectal métastatique, en association avec 5-fluorouracile/acide folinique, 5-fluorouracile/acide folinique/irinotécan ou capécitabine/oxaliplatine (XELOX). En cas de prescription médicale appropriée, Vegzelma est remboursé jusqu’à progression de la maladie. Après accord sur la prise en charge des frais par l’assureur-maladie après consultation préalable et accord du médecin-conseil, pour le traitement de deuxième ligne des patients atteints d’un carcinome colorectal métastatique en association à un schéma de chimiothérapie à base d’irinotécan ou d’oxaliplatine et qui ont été traités antérieurement par une chimiothérapie à base d’oxaliplatine ou d’irinotécan avec ou sans bévacizumab. En cas de prescription médicale appropriée, Vegzelma est remboursé jusqu’à progression de la maladie. Le code d'indication suivant doit être transmis à l’assureur-maladie: 21617.01",
+   "new": "Carcinome colorectal Après accord sur la prise en charge des frais par l’assureur-maladie après consultation préalable et accord du médecin-conseil, pour le traitement de première ligne des patients atteints d’un carcinome colorectal métastatique, en association avec 5-fluorouracile/acide folinique, 5-fluorouracile/acide folinique/irinotécan ou capécitabine/oxaliplatine (XELOX). En cas de prescription médicale appropriée, VEGZELMA est remboursé jusqu’à progression de la maladie. Après accord sur la prise en charge des frais par l’assureur-maladie après consultation préalable et accord du médecin-conseil, pour le traitement de deuxième ligne des patients atteints d’un carcinome colorectal métastatique en association à un schéma de chimiothérapie à base d’irinotécan ou d’oxaliplatine et qui ont été traités antérieurement par une chimiothérapie à base d’oxaliplatine ou d’irinotécan avec ou sans bévacizumab. En cas de prescription médicale appropriée, VEGZELMA est remboursé jusqu’à progression de la maladie. Le code d'indication suivant doit être transmis à l’assureur-maladie: 21617.01",
+   "type": "punctuation",
+   "subtype": null,
+   "word_diff": [],
+   "family": "fbeabc32"
+  },
+  {
+   "uid": "fr:VEGZELMA.02:20260601>20260701",
+   "lang": "fr",
+   "step": "20260601>20260701",
+   "key": "VEGZELMA.02",
+   "product": "Vegzelma Inf Konz 100 mg/4 ml",
+   "n_occ": 2,
+   "de": "Lungenkarzinom Nach Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation und Genehmigung des Vertrauensarztes zur Erstlinientherapie von Patienten bei nicht-resezierbarem, fortgeschrittenem, metastasiertem oder rezidivierendem, nicht-plattenepithelartigem, nicht-kleinzelligem Lungenkarzinom (NSCLC). Die Dosierung von VEGZELMA beträgt 7.5 mg/kg Körpergewicht (KGW) alle 3 Wochen. Die Dosierung von 15 mg/ kg KGW alle 3 Wochen ist nicht kassenzulässig. Nach bis zu 6 Behandlungszyklen in Kombination mit einer Cisplatin- und Gemcitabin-haltigen Chemotherapie wird VEGZELMA bis zur Progression der Krankheit vergütet. Folgender Indikationscode ist an den Krankenversicherer zu übermitteln: 21617.02",
+   "old": "Carcinome pulmonaire Après accord sur la prise en charge des frais par l’assureur-maladie après consultation préalable et accord du médecin-conseil, pour le traitement de première ligne des patients atteints d’un carcinome pulmonaire non à petites cellules (NSCLC), non épithélioïde, non opérable, avancé, métastatique ou récidivant. La dose Vegzelma est de 7,5 mg/kg de poids corporel (PC) toutes les 3 semaines. La dose de 15 mg/ kg de PC toutes les 3 semaines n’est pas admise par les caisses-maladie. Après jusqu’à 6 cycles de traitement en association avec une chimiothérapie à base de cisplatine et de gemcitabine, Vegzelma est remboursé jusqu’à progression de la maladie. Le code d'indication suivant doit être transmis à l’assureur-maladie: 21617.02",
+   "new": "Carcinome pulmonaire Après accord sur la prise en charge des frais par l’assureur-maladie après consultation préalable et accord du médecin-conseil, pour le traitement de première ligne des patients atteints d’un carcinome pulmonaire non à petites cellules (NSCLC), non épithélioïde, non opérable, avancé, métastatique ou récidivant. La dose VEGZELMA est de 7,5 mg/kg de poids corporel (PC) toutes les 3 semaines. La dose de 15 mg/ kg de PC toutes les 3 semaines n’est pas admise par les caisses-maladie. Après jusqu’à 6 cycles de traitement en association avec une chimiothérapie à base de cisplatine et de gemcitabine, VEGZELMA est remboursé jusqu’à progression de la maladie. Le code d'indication suivant doit être transmis à l’assureur-maladie: 21617.02",
+   "type": "punctuation",
+   "subtype": null,
+   "word_diff": [],
+   "family": "fbeabc32"
+  },
+  {
+   "uid": "fr:VEGZELMA.05:20260601>20260701",
+   "lang": "fr",
+   "step": "20260601>20260701",
+   "key": "VEGZELMA.05",
+   "product": "Vegzelma Inf Konz 100 mg/4 ml",
+   "n_occ": 2,
+   "de": "Ovarialkarzinom Nach Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation und Genehmigung des Vertrauensarztes für die Therapie nicht vorbehandelter Patienten mit Ovarialkarzinom (FIGO Stadium III und IV), bei welchen der Tumor nicht vollständig reseziert werden konnte und welche von einer im Anschluss an die Chemotherapie durchzuführenden weiteren Operation (Second look mit interval debulking) nicht potenziell profitieren. VEGZELMA wird nach 6 Zyklen in Kombination mit Carboplatin und Paclitaxel während 15 Monaten oder, falls diese eher eintritt, bis zur Progression der Krankheit vergütet. Nach Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation und Genehmigung des Vertrauensarztes in Kombination mit Carboplatin und Gemcitabin oder in Kombination mit Carboplatin und Paclitaxel zur Behandlung von Patienten mit rezidivierendem, platinsensitivem epithelialem Ovarialkarzinom, Eileiterkarzinom oder primärem Peritonealkarzinom (mit einem platinfreien Intervall von mindestens 6 Monaten). Nach 6 bis 10 Zyklen in Kombination mit Carboplatin und Gemcitabin oder in Kombination mit Carboplatin und Paclitaxel über eine Dauer von 6-8 Behandlungszyklen wird VEGZELMA bis zur Progression der Krankheit vergütet. VEGZELMA ist indiziert in Kombination mit Paclitaxel, Topotecan oder pegyliertem liposomalem Doxorubicin zur Behandlung von Patienten mit rezidivierendem, platin-resistentem epithelialem Ovarialkarzinom, Eileiterkarzinom oder primärem Peritonealkarzinom, die mit bis zu zwei vorgängigen Chemotherapieregimen behandelt wurden, und nicht vorbehandelt wurden mit Bevacizumab oder anderen VEGF-Inhibitoren. Nach ca. 6 Zyklen in Kombination mit Paclitaxel, Topotecan oder pegyliertem liposomalen Doxorubicin wird VEGZELMA bei entsprechender ärztlicher Verordnung bis zur Progression der Krankheit vergütet. Folgender Indikationscode ist an den Krankenversicherer zu übermitteln: 21617.05",
+   "old": "Carcinome Ovarien Après accord sur la prise en charge des frais par l’assureur-maladie après consultation préalable et accord du médecin-conseil, pour le traitement des patientes atteintes d’un carcinome ovarien (stades FIGO III et IV) non prétraitées, chez lesquelles la tumeur n’a pas pu être complètement réséquée et qui seraient susceptibles de ne pas profiter d’une nouvelle opération après la chimiothérapie (second look avec interval debulking). Après 6 cycles en association avec le carboplatine et le paclitaxel, Vegzelma est remboursé pendant 15 mois, ou jusqu’à progression de la maladie selon ce qui survient en premier. Après accord sur la prise en charge des frais par l’assureur-maladie après consultation préalable et accord du médecin-conseil, pour le traitement des patientes atteintes d’un carcinome ovarien épithélial, d’un carcinome de la trompe ou d’un carcinome péritonéal primaire, récidivant, sensible au platine (avec un intervalle libre sans platine d’au moins 6 mois), en association avec le carboplatine et la gemcitabine ou en association avec le carboplatine et le paclitaxel. Après 6 à 10 cycles en association avec le carboplatine et la gemcitabine ou en association avec le carboplatine et le paclitaxel pendant 6 à 8 cycles de traitement, Vegzelma est remboursé jusqu’à progression de la maladie. Vegzelma est indiqué en combinaison avec le paclitaxel, le topotécan ou la doxorubicine liposomale pégylée dans le traitement des patientes atteintes d’un carcinome ovarien épithélial, d’un carcinome de la trompe ou d’un carcinome péritonéal primaire, récidivant et résistant au platine, qui n’ont pas reçu plus de deux schémas chimiothérapeutiques antérieurs et qui n’ont pas été préalablement traitées par le bévacizumab ou d’autres anti-VEGF. En cas de prescription médicale appropriée, après environ 6 cycles en combinaison avec le paclitaxel, le topotécan ou la doxorubicine liposomale pégylée, Vegzelma est remboursé jusqu’à progression de la maladie. Le code d'indication suivant doit être transmis à l’assureur-maladie: 21617.05",
+   "new": "Carcinome Ovarien Après accord sur la prise en charge des frais par l’assureur-maladie après consultation préalable et accord du médecin-conseil, pour le traitement des patientes atteintes d’un carcinome ovarien (stades FIGO III et IV) non prétraitées, chez lesquelles la tumeur n’a pas pu être complètement réséquée et qui seraient susceptibles de ne pas profiter d’une nouvelle opération après la chimiothérapie (second look avec interval debulking). Après 6 cycles en association avec le carboplatine et le paclitaxel, VEGZELMA est remboursé pendant 15 mois, ou jusqu’à progression de la maladie selon ce qui survient en premier. Après accord sur la prise en charge des frais par l’assureur-maladie après consultation préalable et accord du médecin-conseil, pour le traitement des patientes atteintes d’un carcinome ovarien épithélial, d’un carcinome de la trompe ou d’un carcinome péritonéal primaire, récidivant, sensible au platine (avec un intervalle libre sans platine d’au moins 6 mois), en association avec le carboplatine et la gemcitabine ou en association avec le carboplatine et le paclitaxel. Après 6 à 10 cycles en association avec le carboplatine et la gemcitabine ou en association avec le carboplatine et le paclitaxel pendant 6 à 8 cycles de traitement, VEGZELMA est remboursé jusqu’à progression de la maladie. VEGZELMA est indiqué en combinaison avec le paclitaxel, le topotécan ou la doxorubicine liposomale pégylée dans le traitement des patientes atteintes d’un carcinome ovarien épithélial, d’un carcinome de la trompe ou d’un carcinome péritonéal primaire, récidivant et résistant au platine, qui n’ont pas reçu plus de deux schémas chimiothérapeutiques antérieurs et qui n’ont pas été préalablement traitées par le bévacizumab ou d’autres anti-VEGF. En cas de prescription médicale appropriée, après environ 6 cycles en combinaison avec le paclitaxel, le topotécan ou la doxorubicine liposomale pégylée, VEGZELMA est remboursé jusqu’à progression de la maladie. Le code d'indication suivant doit être transmis à l’assureur-maladie: 21617.05",
+   "type": "punctuation",
+   "subtype": null,
+   "word_diff": [],
+   "family": "00e07e65"
+  },
+  {
+   "uid": "fr:VEGZELMA.06:20260601>20260701",
+   "lang": "fr",
+   "step": "20260601>20260701",
+   "key": "VEGZELMA.06",
+   "product": "Vegzelma Inf Konz 100 mg/4 ml",
+   "n_occ": 2,
+   "de": "Zervixkarzinom VEGZELMA ist in Kombination mit Chemotherapie für die Behandlung von Patienten mit persistierendem, rezidivierendem oder metastasiertem Zervixkarzinom indiziert. Nach ca. 7 Zyklen in Kombination mit Chemotherapie wird VEGZELMA bei entsprechender ärztlicher Verordnung bis zur Progression der Krankheit vergütet. Folgender Indikationscode ist an den Krankenversicherer zu übermitteln: 21617.06",
+   "old": "Cancer du col utérin Vegzelma est indiqué en combinaison avec la chimiothérapie dans le traitement des patientes atteintes d’un cancer du col utérin persistant, récidivant ou métastatique. En cas de prescription médicale appropriée, après environ 7 cycles en combinaison avec la chimiothérapie, Vegzelma est remboursé jusqu’à progression de la maladie. Le code d'indication suivant doit être transmis à l’assureur-maladie: 21617.06",
+   "new": "Cancer du col utérin VEGZELMA est indiqué en combinaison avec la chimiothérapie dans le traitement des patientes atteintes d’un cancer du col utérin persistant, récidivant ou métastatique. En cas de prescription médicale appropriée, après environ 7 cycles en combinaison avec la chimiothérapie, VEGZELMA est remboursé jusqu’à progression de la maladie. Le code d'indication suivant doit être transmis à l’assureur-maladie: 21617.06",
+   "type": "punctuation",
+   "subtype": null,
+   "word_diff": [],
+   "family": "fbeabc32"
+  },
+  {
+   "uid": "fr:VEGZELMA.07:20260601>20260701",
+   "lang": "fr",
+   "step": "20260601>20260701",
+   "key": "VEGZELMA.07",
+   "product": "Vegzelma Inf Konz 100 mg/4 ml",
+   "n_occ": 2,
+   "de": "Glioblastom Nach Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation und Genehmigung des Vertrauensarztes zur Zweitlinien-Monotherapie bei Patienten mit rezidivierendem Glioblastom (WHO Grad IV) nach Vortherapie mit Temozolimid. VEGZELMA wird bei entsprechender ärztlicher Verordnung bis zur Progression der Krankheit vergütet. Folgender Indikationscode ist an den Krankenversicherer zu übermitteln: 21617.07",
+   "old": "Glioblastome Après accord sur la prise en charge des frais par l’assureur-maladie après consultation préalable et accord du médecin-conseil, en monothérapie pour le traitement de deuxième ligne des patients avec récidive de glioblastome (grade IV selon l’OMS) après un traitement préalable par le témozolimide. En cas de prescription médicale appropriée, Vegzelma est remboursé jusqu’à progression de la maladie. Le code d'indication suivant doit être transmis à l’assureur-maladie: 21617.07",
+   "new": "Glioblastome Après accord sur la prise en charge des frais par l’assureur-maladie après consultation préalable et accord du médecin-conseil, en monothérapie pour le traitement de deuxième ligne des patients avec récidive de glioblastome (grade IV selon l’OMS) après un traitement préalable par le témozolimide. En cas de prescription médicale appropriée, VEGZELMA est remboursé jusqu’à progression de la maladie. Le code d'indication suivant doit être transmis à l’assureur-maladie: 21617.07",
+   "type": "punctuation",
+   "subtype": null,
+   "word_diff": [],
+   "family": "effe302e"
+  },
+  {
+   "uid": "fr:VEGZELMA.08:20260601>20260701",
+   "lang": "fr",
+   "step": "20260601>20260701",
+   "key": "VEGZELMA.08",
+   "product": "Vegzelma Inf Konz 100 mg/4 ml",
+   "n_occ": 2,
+   "de": "VEGZELMA in Kombination mit Atezolizumab (TECENTRIQ) zur Behandlung des inoperablen oder metastasierten hepatozellulären Karzinoms (HCC) Es gelten die entsprechenden Vergütungskriterien gemäss der Limitation für Atezolizumab (siehe Limitation TECENTRIQ) und bezüglich der Rückerstattung für VEGZELMA in dieser Indikation gilt zusätzlich folgende Limitation: Die Zulassungsinhaberin erstattet dem Krankenversicherer, bei dem die versicherte Person zum Zeitpunkt des Bezugs versichert war, auf dessen erste Aufforderung hin, für jede für die Indikation HCC Behandlung bezogene Packung VEGZELMA in Kombination mit Atezolizumab (TECENTRIQ) einen festgelegten Anteil des Fabrikabgabepreises zurück. iQone Healthcare Switzerland SA gibt dem Krankenversicherer die wirtschaftlichen Preise für Bevacizumab bekannt. Die Anteile der Rückerstattung entsprechen der Differenz der publizierten und der wirtschaftlichen Preise. Die Mehrwertsteuer kann nicht zusätzlich zu diesem Anteil des Fabrikabgabepreises zurückgefordert werden. Die Aufforderung zur Rückerstattung soll ab dem Zeitpunkt der Verabreichung erfolgen. Folgender Indikationscode ist an den Krankenversicherer zu übermitteln: 21617.08",
+   "old": "VEGZELMA en association avec l’atezolizumab (TECENTRIQ) pour le traitement du carcinome hépatocellulaire inopérable ou métastatique (CHC) Les critères de remboursement correspondants s’appliquent conformément à la limitation de l'atézolizumab (voir limitation TECENTRIQ). En ce qui concerne le remboursement Vegzelma dans cette indication respecter également la limitation suivante: Le titulaire de l’autorisation rembourse à l’assureur-maladie auprès duquel était assurée la personne au moment de l’achat, et sur première demande de celui-ci, une part définie du prix départ usine pour chaque boîte Vegzelma en association avec de l'atézolizumab (TECENTRIQ) acquise pour l’indication du traitement du CHC. IQone Healthcare Switzerland indique à l’assureur-maladie les prix économiques du bévacizumab. Les parts de remboursement correspondent à la différence entre les prix publiés et les prix économiques. La taxe sur la valeur ajoutée ne peut pas être exigée en plus de cette part du prix départ usine. La demande de remboursement doit intervenir à compter de la date d’administration du traitement. Le code d'indication suivant doit être transmis à l’assureur-maladie: 21617.08",
+   "new": "VEGZELMA en association avec l’atezolizumab (TECENTRIQ) pour le traitement du carcinome hépatocellulaire inopérable ou métastatique (CHC) Les critères de remboursement correspondants s’appliquent conformément à la limitation de l'atézolizumab (voir limitation TECENTRIQ). En ce qui concerne le remboursement VEGZELMA dans cette indication respecter également la limitation suivante: Le titulaire de l’autorisation rembourse à l’assureur-maladie auprès duquel était assurée la personne au moment de l’achat, et sur première demande de celui-ci, une part définie du prix départ usine pour chaque boîte VEGZELMA en association avec de l'atézolizumab (TECENTRIQ) acquise pour l’indication du traitement du CHC. IQone Healthcare Switzerland indique à l’assureur-maladie les prix économiques du bévacizumab. Les parts de remboursement correspondent à la différence entre les prix publiés et les prix économiques. La taxe sur la valeur ajoutée ne peut pas être exigée en plus de cette part du prix départ usine. La demande de remboursement doit intervenir à compter de la date d’administration du traitement. Le code d'indication suivant doit être transmis à l’assureur-maladie: 21617.08",
+   "type": "punctuation",
+   "subtype": null,
+   "word_diff": [],
+   "family": "fbeabc32"
+  },
+  {
+   "uid": "it:VEGZELMA.01:20260601>20260701",
+   "lang": "it",
+   "step": "20260601>20260701",
+   "key": "VEGZELMA.01",
+   "product": "Vegzelma Inf Konz 100 mg/4 ml",
+   "n_occ": 2,
+   "de": "Kolorektalkarzinom Nach Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation und Genehmigung des Vertrauensarztes zur Erstlinientherapie bei Patienten mit metastasiertem Karzinom des Kolons oder Rektums in Kombination mit 5-Fluorouracil/Folinsäure, 5-Fluorouracil/Folinsäure/Irinotecan oder Capecitabine/Oxaliplatin (XELOX). VEGZELMA wird bei entsprechender ärztlicher Verordnung bis zur Progression der Krankheit vergütet. Nach Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation und Genehmigung des Vertrauensarztes zur Zweitlinientherapie in Kombination mit einem Irinotecan- oder Oxaliplatin-haltigen Chemotherapieschema bei Patienten mit metastasiertem Kolon- oder Rektumkarzinom mit vorheriger Oxaliplatin- oder Irinotecan-basierter Chemotherapie mit oder ohne Bevacizumab. VEGZELMA wird bei entsprechender ärztlicher Verordnung bis zur Progression der Krankheit vergütet. Folgender Indikationscode ist an den Krankenversicherer zu übermitteln: 21617.01",
+   "old": "Carcinoma del colon-retto Dopo la garanzia di rimborso dei costi da parte dell’assicurazione malattia, previa consultazione ed approvazione da parte del medico di fiducia per il trattamento di prima linea di pazienti con carcinoma metastatico del colon-retto, in associazione a 5-fluorouracile/acido folinico, 5-fluorouracile/acido folinico/irinotecan o capecitabina/oxaliplatino (XELOX). Vegzelma viene rimborsato su corrispondente prescrizione medica fino alla progressione della malattia. Dopo la garanzia di rimborso dei costi da parte dell’assicurazione malattia, previa consultazione ed approvazione da parte del medico di fiducia per il trattamento di seconda linea in combinazione con uno schema chemioterapico contenente irinotecan o oxaliplatino di pazienti con carcinoma metastatico del colon-retto precedentemente trattati con una chemioterapia a base di oxaliplatino o irinotecan con o senza bevacizumab. Vegzelma viene rimborsato su corrispondente prescrizione medica fino alla progressione della malattia. Il seguente codice d’indicazione deve essere comunicato all’assicurazione malattia: 21617.01",
+   "new": "Carcinoma del colon-retto Dopo la garanzia di rimborso dei costi da parte dell’assicurazione malattia, previa consultazione ed approvazione da parte del medico di fiducia per il trattamento di prima linea di pazienti con carcinoma metastatico del colon-retto, in associazione a 5-fluorouracile/acido folinico, 5-fluorouracile/acido folinico/irinotecan o capecitabina/oxaliplatino (XELOX). VEGZELMA viene rimborsato su corrispondente prescrizione medica fino alla progressione della malattia. Dopo la garanzia di rimborso dei costi da parte dell’assicurazione malattia, previa consultazione ed approvazione da parte del medico di fiducia per il trattamento di seconda linea in combinazione con uno schema chemioterapico contenente irinotecan o oxaliplatino di pazienti con carcinoma metastatico del colon-retto precedentemente trattati con una chemioterapia a base di oxaliplatino o irinotecan con o senza bevacizumab. VEGZELMA viene rimborsato su corrispondente prescrizione medica fino alla progressione della malattia. Il seguente codice d’indicazione deve essere comunicato all’assicurazione malattia: 21617.01",
+   "type": "punctuation",
+   "subtype": null,
+   "word_diff": [],
+   "family": "fbeabc32"
+  },
+  {
+   "uid": "it:VEGZELMA.02:20260601>20260701",
+   "lang": "it",
+   "step": "20260601>20260701",
+   "key": "VEGZELMA.02",
+   "product": "Vegzelma Inf Konz 100 mg/4 ml",
+   "n_occ": 2,
+   "de": "Lungenkarzinom Nach Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation und Genehmigung des Vertrauensarztes zur Erstlinientherapie von Patienten bei nicht-resezierbarem, fortgeschrittenem, metastasiertem oder rezidivierendem, nicht-plattenepithelartigem, nicht-kleinzelligem Lungenkarzinom (NSCLC). Die Dosierung von VEGZELMA beträgt 7.5 mg/kg Körpergewicht (KGW) alle 3 Wochen. Die Dosierung von 15 mg/ kg KGW alle 3 Wochen ist nicht kassenzulässig. Nach bis zu 6 Behandlungszyklen in Kombination mit einer Cisplatin- und Gemcitabin-haltigen Chemotherapie wird VEGZELMA bis zur Progression der Krankheit vergütet. Folgender Indikationscode ist an den Krankenversicherer zu übermitteln: 21617.02",
+   "old": "Carcinoma polmonare Dopo la garanzia di rimborso dei costi da parte dell’assicurazione malattia, previa consultazione ed approvazione da parte del medico di fiducia per il trattamento di prima linea di pazienti affetti da carcinoma polmonare non squamocellulare non a piccole cellule (NSCLC) non operabile, in stadio avanzato, metastatico o recidivante. La posologia di Vegzelma è di 7.5mg/kg di peso corporeo ogni 3 settimane. La posologia di 15 mg/kg di peso corporeo ogni 3 settimane non è rimborsata dalle casse malati. Dopo fino a 6 cicli di trattamento in combinazione con una chemioterapia contenente cisplatino e gemcitabina, Vegzelma viene rimborsato fino alla progressione della malattia. Il seguente codice d’indicazione deve essere comunicato all’assicurazione malattia: 21617.02",
+   "new": "Carcinoma polmonare Dopo la garanzia di rimborso dei costi da parte dell’assicurazione malattia, previa consultazione ed approvazione da parte del medico di fiducia per il trattamento di prima linea di pazienti affetti da carcinoma polmonare non squamocellulare non a piccole cellule (NSCLC) non operabile, in stadio avanzato, metastatico o recidivante. La posologia di VEGZELMA è di 7.5mg/kg di peso corporeo ogni 3 settimane. La posologia di 15 mg/kg di peso corporeo ogni 3 settimane non è rimborsata dalle casse malati. Dopo fino a 6 cicli di trattamento in combinazione con una chemioterapia contenente cisplatino e gemcitabina, VEGZELMA viene rimborsato fino alla progressione della malattia. Il seguente codice d’indicazione deve essere comunicato all’assicurazione malattia: 21617.02",
+   "type": "punctuation",
+   "subtype": null,
+   "word_diff": [],
+   "family": "fbeabc32"
+  },
+  {
+   "uid": "it:VEGZELMA.05:20260601>20260701",
+   "lang": "it",
+   "step": "20260601>20260701",
+   "key": "VEGZELMA.05",
+   "product": "Vegzelma Inf Konz 100 mg/4 ml",
+   "n_occ": 2,
+   "de": "Ovarialkarzinom Nach Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation und Genehmigung des Vertrauensarztes für die Therapie nicht vorbehandelter Patienten mit Ovarialkarzinom (FIGO Stadium III und IV), bei welchen der Tumor nicht vollständig reseziert werden konnte und welche von einer im Anschluss an die Chemotherapie durchzuführenden weiteren Operation (Second look mit interval debulking) nicht potenziell profitieren. VEGZELMA wird nach 6 Zyklen in Kombination mit Carboplatin und Paclitaxel während 15 Monaten oder, falls diese eher eintritt, bis zur Progression der Krankheit vergütet. Nach Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation und Genehmigung des Vertrauensarztes in Kombination mit Carboplatin und Gemcitabin oder in Kombination mit Carboplatin und Paclitaxel zur Behandlung von Patienten mit rezidivierendem, platinsensitivem epithelialem Ovarialkarzinom, Eileiterkarzinom oder primärem Peritonealkarzinom (mit einem platinfreien Intervall von mindestens 6 Monaten). Nach 6 bis 10 Zyklen in Kombination mit Carboplatin und Gemcitabin oder in Kombination mit Carboplatin und Paclitaxel über eine Dauer von 6-8 Behandlungszyklen wird VEGZELMA bis zur Progression der Krankheit vergütet. VEGZELMA ist indiziert in Kombination mit Paclitaxel, Topotecan oder pegyliertem liposomalem Doxorubicin zur Behandlung von Patienten mit rezidivierendem, platin-resistentem epithelialem Ovarialkarzinom, Eileiterkarzinom oder primärem Peritonealkarzinom, die mit bis zu zwei vorgängigen Chemotherapieregimen behandelt wurden, und nicht vorbehandelt wurden mit Bevacizumab oder anderen VEGF-Inhibitoren. Nach ca. 6 Zyklen in Kombination mit Paclitaxel, Topotecan oder pegyliertem liposomalen Doxorubicin wird VEGZELMA bei entsprechender ärztlicher Verordnung bis zur Progression der Krankheit vergütet. Folgender Indikationscode ist an den Krankenversicherer zu übermitteln: 21617.05",
+   "old": "Carcinoma ovarico Dopo la garanzia di rimborso dei costi da parte dell’assicurazione malattia, previa consultazione ed approvazione da parte del medico di fiducia per la terapia di pazienti con carcinoma ovarico (stadio FIGO III e IV) non precedentemente trattate, in cui il tumore non ha potuto essere sottoposto a resezione completa e che potenzialmente non beneficerebbero di un’ulteriore operazione eseguita subito dopo la chemioterapia (second look con interval debulking). Dopo 6 cicli in combinazione con carboplatino e paclitaxel, Vegzelma viene rimborsato per un periodo di 15 mesi o, se dovesse subentrare prima, fino alla progressione della malattia. Dopo la garanzia di rimborso dei costi da parte dell’assicurazione malattia, previa consultazione ed approvazione da parte del medico di fiducia, in combinazione con carboplatino e gemcitabina o in combinazione con carboplatino e paclitaxel per il trattamento di pazienti con carcinoma epiteliale recidivante, sensibile al platino, sia esso ovarico, tubarico o peritoneale primario (con un intervallo senza platino di almeno 6 mesi). Dopo 6 fino a 10 cicli di trattamento in combinazione con carboplatino e gemcitabina, o in combinazione con carboplatino e paclitaxel, per una durata di 6-8 cicli di trattamento, Vegzelma viene rimborsato fino alla progressione della malattia. Vegzelma trova indicazione, in associazione con paclitaxel, topotecan o doxorubicina liposomiale pegilato, nella terapia delle pazienti affette da carcinoma ovarico epiteliale, carcinoma delle tube o carcinoma peritoneale primario, resistenti al platino, recidivanti, trattati precedentemente con un massimo di due schemi chemioterapici ma non pretrattati con bevacizumab o altri inibitori del VEGF. Dopo circa 6 cicli in associazione con paclitaxel, topotecan o doxorubicina liposomiale pegilato, e con relativa prescrizione medica, Vegzelma sarà rimborsato fino alla progressione della malattia. Il seguente codice d’indicazione deve essere comunicato all’assicurazione malattia: 21617.05",
+   "new": "Carcinoma ovarico Dopo la garanzia di rimborso dei costi da parte dell’assicurazione malattia, previa consultazione ed approvazione da parte del medico di fiducia per la terapia di pazienti con carcinoma ovarico (stadio FIGO III e IV) non precedentemente trattate, in cui il tumore non ha potuto essere sottoposto a resezione completa e che potenzialmente non beneficerebbero di un’ulteriore operazione eseguita subito dopo la chemioterapia (second look con interval debulking). Dopo 6 cicli in combinazione con carboplatino e paclitaxel, VEGZELMA viene rimborsato per un periodo di 15 mesi o, se dovesse subentrare prima, fino alla progressione della malattia. Dopo la garanzia di rimborso dei costi da parte dell’assicurazione malattia, previa consultazione ed approvazione da parte del medico di fiducia, in combinazione con carboplatino e gemcitabina o in combinazione con carboplatino e paclitaxel per il trattamento di pazienti con carcinoma epiteliale recidivante, sensibile al platino, sia esso ovarico, tubarico o peritoneale primario (con un intervallo senza platino di almeno 6 mesi). Dopo 6 fino a 10 cicli di trattamento in combinazione con carboplatino e gemcitabina, o in combinazione con carboplatino e paclitaxel, per una durata di 6-8 cicli di trattamento, VEGZELMA viene rimborsato fino alla progressione della malattia. VEGZELMA trova indicazione, in associazione con paclitaxel, topotecan o doxorubicina liposomiale pegilato, nella terapia delle pazienti affette da carcinoma ovarico epiteliale, carcinoma delle tube o carcinoma peritoneale primario, resistenti al platino, recidivanti, trattati precedentemente con un massimo di due schemi chemioterapici ma non pretrattati con bevacizumab o altri inibitori del VEGF. Dopo circa 6 cicli in associazione con paclitaxel, topotecan o doxorubicina liposomiale pegilato, e con relativa prescrizione medica, VEGZELMA sarà rimborsato fino alla progressione della malattia. Il seguente codice d’indicazione deve essere comunicato all’assicurazione malattia: 21617.05",
+   "type": "punctuation",
+   "subtype": null,
+   "word_diff": [],
+   "family": "00e07e65"
+  },
+  {
+   "uid": "it:VEGZELMA.06:20260601>20260701",
+   "lang": "it",
+   "step": "20260601>20260701",
+   "key": "VEGZELMA.06",
+   "product": "Vegzelma Inf Konz 100 mg/4 ml",
+   "n_occ": 2,
+   "de": "Zervixkarzinom VEGZELMA ist in Kombination mit Chemotherapie für die Behandlung von Patienten mit persistierendem, rezidivierendem oder metastasiertem Zervixkarzinom indiziert. Nach ca. 7 Zyklen in Kombination mit Chemotherapie wird VEGZELMA bei entsprechender ärztlicher Verordnung bis zur Progression der Krankheit vergütet. Folgender Indikationscode ist an den Krankenversicherer zu übermitteln: 21617.06",
+   "old": "Carcinoma della cervice uterina Vegzelma trova indicazione, in associazione con chemioterapia, nella terapia delle pazienti affette da carcinoma della cervice uterina persistente, recidivante o metastatico. Dopo circa 7 cicli in associazione di chemioterapia, e con relativa prescrizione medica, Vegzelma sarà rimborsato fino alla progressione della malattia. Il seguente codice d’indicazione deve essere comunicato all’assicurazione malattia: 21617.06",
+   "new": "Carcinoma della cervice uterina VEGZELMA trova indicazione, in associazione con chemioterapia, nella terapia delle pazienti affette da carcinoma della cervice uterina persistente, recidivante o metastatico. Dopo circa 7 cicli in associazione di chemioterapia, e con relativa prescrizione medica, VEGZELMA sarà rimborsato fino alla progressione della malattia. Il seguente codice d’indicazione deve essere comunicato all’assicurazione malattia: 21617.06",
+   "type": "punctuation",
+   "subtype": null,
+   "word_diff": [],
+   "family": "fbeabc32"
+  },
+  {
+   "uid": "it:VEGZELMA.07:20260601>20260701",
+   "lang": "it",
+   "step": "20260601>20260701",
+   "key": "VEGZELMA.07",
+   "product": "Vegzelma Inf Konz 100 mg/4 ml",
+   "n_occ": 2,
+   "de": "Glioblastom Nach Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation und Genehmigung des Vertrauensarztes zur Zweitlinien-Monotherapie bei Patienten mit rezidivierendem Glioblastom (WHO Grad IV) nach Vortherapie mit Temozolimid. VEGZELMA wird bei entsprechender ärztlicher Verordnung bis zur Progression der Krankheit vergütet. Folgender Indikationscode ist an den Krankenversicherer zu übermitteln: 21617.07",
+   "old": "Glioblastoma Dopo la garanzia di rimborso dei costi da parte dell’assicurazione malattia, previa consultazione ed approvazione da parte del medico di fiducia per il trattamento in monoterapia di seconda linea di pazienti con glioblastoma recidivo (OMS grado IV) in seguito a terapia preliminare con temozolomide. Vegzelma viene rimborsato su corrispondente prescrizione medica fino alla progressione della malattia. Il seguente codice d’indicazione deve essere comunicato all’assicurazione malattia: 21617.07",
+   "new": "Glioblastoma Dopo la garanzia di rimborso dei costi da parte dell’assicurazione malattia, previa consultazione ed approvazione da parte del medico di fiducia per il trattamento in monoterapia di seconda linea di pazienti con glioblastoma recidivo (OMS grado IV) in seguito a terapia preliminare con temozolomide. VEGZELMA viene rimborsato su corrispondente prescrizione medica fino alla progressione della malattia. Il seguente codice d’indicazione deve essere comunicato all’assicurazione malattia: 21617.07",
+   "type": "punctuation",
+   "subtype": null,
+   "word_diff": [],
+   "family": "effe302e"
+  },
+  {
+   "uid": "fr:KEYTRUDA.XX---Inf-Konz:20260801>20260901",
+   "lang": "fr",
+   "step": "20260801>20260901",
+   "key": "KEYTRUDA.XX---Inf-Konz",
+   "product": "Keytruda Inf Konz 100 mg/4ml Durchstf",
+   "n_occ": 1,
+   "de": "Für alle vergütungspflichtigen Indikationen gilt: Vor Therapiebeginn muss für alle vergütungspflichtigen Indikationen eine Kostengutsprache des Krankenversicherers nach vorgängiger Konsultation des Vertrauensarztes eingeholt werden. Eine Kostengutsprache hat den entsprechenden Indikationscode (20416.XX) zu enthalten. Die Dosierung beträgt maximal 200 mg alle drei Wochen sofern nicht anders festgelegt. Die maximale Anzahl Behandlungen bzw. Zyklen beträgt 35 sofern nicht anders festgelegt. Klinisch stabile Patienten mit initialem Befund einer Progression können bis zur Bestätigung der Progression der Erkrankung weiter behandelt werden. Falls KEYTRUDA in einer bestimmten Indikation in erster Linie vergütet wurde und es unter KEYTRUDA-Therapie nach kurzzeitigem Ansprechen zu einer Progression kam, soll KEYTRUDA in derselben Indikation in nachfolgenden Therapielinien nicht mehr vergütet werden. MSD Merck Sharp & Dohme AG erstattet nach Aufforderung durch denjenigen Krankenversicherer, bei dem die versicherte Person zum Zeitpunkt des Bezugs versichert war, für alle Indikationen einen festgelegten Betrag pro nachweislich verabreichter Packung KEYTRUDA (2 Durchstf) zurück. Es gelten die zum Verabreichungszeitpunkt aktuellen Preise und Prozentsätze. Die Mehrwertsteuer kann nicht zusätzlich zu diesem Anteil des Fabrikabgabepreises zurückgefordert werden. Die Aufforderung zur Rückerstattung soll zeitnah zur Verabreichung erfolgen. Für die Rückforderung von Rückerstattungen gegenüber der Zulassungsinhaberin hat der Krankenversicherer jeweils den hinter der jeweiligen Indikation angegebenen Indikationscode zwingend bekanntzugeben. Der Indikationscode ist vom Leistungserbringer an die Krankenversicherer zu übermitteln.",
+   "old": "Valable pour toutes les indications remboursées : Avant le début du traitement une garantie de prise en charge des coûts par l’assurance maladie doit être obtenue après consultation du médecin conseil pour toutes les indications remboursées. Une garantie de prise en charge doit contenir le code correspondant à l’indication (20416.XX). Sauf indication contraire, la posologie maximale s’élève à 200 mg toutes les trois semaines. Le nombre maximal de traitements/cycles est de 35, sauf indication contraire. Chez les patients cliniquement stables dont la maladie était initialement en progression, le traitement peut être poursuivi jusqu’à confirmation de la progression de la maladie. Si un traitement de première ligne par KEYTRUDA a été remboursé dans une indication définie et que la maladie a progressé après une brève réponse au traitement, KEYTRUDA ne doit plus être remboursé pour les lignes de traitement ultérieures dans la même indication. MSD Merck Sharp & Dohme AG rembourse, sur demande, à l’assurance maladie auprès de laquelle la personne était assurée au moment de la remise, une partie du prix de fabrique par emballage de KEYTRUDA (2 flacons) administré de manière prouvée. Les prix et pourcentages à prendre en compte sont ceux en vigueur au moment de la remise. La demande de remboursement doit être faite dans un délai rapproché après l'administration. Pour le recouvrement des remboursements auprès du titulaire de l'autorisation, l'assurance-maladie doit impérativement communiquer le code d'indication indiqué derrière chaque indication. Le code d'indication doit être transmis aux assurances-maladie par le prestataire de services.",
+   "new": "Valable pour toutes les indications remboursées : Avant le début du traitement une garantie de prise en charge des coûts par l’assurance maladie doit être obtenue après consultation du médecin conseil pour toutes les indications remboursées. Une garantie de prise en charge doit contenir le code correspondant à l’indication (20416.XX). Sauf indication contraire, la posologie maximale s’élève à 200 mg toutes les trois semaines. Le nombre maximal de traitements/cycles est de 35, sauf indication contraire. Chez les patients cliniquement stables dont la maladie était initialement en progression, le traitement peut être poursuivi jusqu’à confirmation de la progression de la maladie. Si un traitement de première ligne par KEYTRUDA a été remboursé dans une indication définie et que la maladie a progressé après une brève réponse au traitement, KEYTRUDA ne doit plus être remboursé pour les lignes de traitement ultérieures dans la même indication. MSD Merck Sharp & Dohme AG rembourse, sur demande à l’assurance maladie auprès de laquelle la personne était assurée au moment de la remise, une partie du prix de fabrique par emballage de KEYTRUDA (2 flacons) administré de manière prouvée. Les prix et pourcentages à prendre en compte sont ceux en vigueur au moment de l’administration. La TVA ne peut pas être réclamée en plus de cette part du prix de fabrique. La demande de remboursement doit être faite dans un délai rapproché après l'administration. Pour le recouvrement des remboursements auprès du titulaire de l'autorisation, l'assurance-maladie doit impérativement communiquer le code d'indication indiqué derrière chaque indication. Le code d'indication doit être transmis aux assurances-maladie par le prestataire de services.",
+   "type": "negation_operator",
+   "subtype": "replaced",
+   "number": false,
+   "negation_operator": true,
+   "word_diff": [
+    [
+     "insert",
+     "",
+     "l administration"
+    ],
+    [
+     "replace",
+     "remise",
+     "tva ne peut pas être réclamée en plus de cette part du prix de fabrique"
+    ]
+   ],
+   "family": "1c614957"
+  },
+  {
+   "uid": "fr:OPDIVO.01---NSCLC-Mono:20260901>20261001",
+   "lang": "fr",
+   "step": "20260901>20261001",
+   "key": "OPDIVO.01---NSCLC-Mono",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "n_occ": 1,
+   "de": "Nicht-kleinzelliges Lungenkarzinom (NSCLC) Als Monotherapie zur Behandlung von lokal fortgeschrittenem oder metastasiertem nicht-kleinzelligem Lungenkarzinom nach vorangegangener Chemotherapie. Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+   "old": "Cancer bronchique non à petites cellules (CBNPC) En monothérapie dans le traitement du cancer bronchique non à petites cellules (CBNPC) localement avancé ou métastatique après une chimiothérapie. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "new": "Cancer bronchique non à petites cellules (CBNPC) En monothérapie dans le traitement du cancer bronchique non à petites cellules (CBNPC) localement avancé ou métastatique après une chimiothérapie. .",
+   "type": "words",
+   "subtype": "removed",
+   "number": false,
+   "negation_operator": false,
+   "word_diff": [
+    [
+     "delete",
+     "le code d indication de cette limitation doit être transmis à l assureur maladie",
+     ""
+    ]
+   ],
+   "family": "4ccba973"
+  },
+  {
+   "uid": "fr:OPDIVO.02---Melanom-Monotherapie:20260901>20261001",
+   "lang": "fr",
+   "step": "20260901>20261001",
+   "key": "OPDIVO.02---Melanom-Monotherapie",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "n_occ": 1,
+   "de": "Melanom Als Monotherapie bei Erwachsenen für die Behandlung des fortgeschrittenen (nicht resezierbaren oder metastasierten) Melanoms. OPDIVO subkutan ist in einer Dosierung von maximal 600 mg alle zwei Wochen oder 1200 mg alle vier Wochen zu verabreichen. Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+   "old": "Mélanome En monothérapie dans le traitement du mélanome avancé (non résécable ou métastatique) chez l’adulte. OPDIVO sous-cutané doit être administré à la dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "new": "Mélanome En monothérapie dans le traitement du mélanome avancé (non résécable ou métastatique) chez l’adulte. OPDIVO sous-cutané doit être administré à la dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "type": "words",
+   "subtype": "replaced",
+   "number": false,
+   "negation_operator": false,
+   "word_diff": [
+    [
+     "replace",
+     "correspondant à",
+     "de"
+    ],
+    [
+     "replace",
+     "communiqué",
+     "transmis"
+    ]
+   ],
+   "family": "36d94228"
+  },
+  {
+   "uid": "fr:OPDIVO.03---Melanom-Kombitherapie:20260901>20261001",
+   "lang": "fr",
+   "step": "20260901>20261001",
+   "key": "OPDIVO.03---Melanom-Kombitherapie",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "n_occ": 1,
+   "de": "Melanom OPDIVO subkutan wird vergütet für die Monotherapiephase nach der Kombination von intravenösem Nivolumab und Ipilimumab für die Behandlung des fortgeschrittenen (nicht resezierbaren oder metastasierten) Melanoms bei Erwachsenen. In einer an die Kombinationsphase anschliessenden Monotherapie ist OPDIVO subkutan in einer Dosierung von maximal 600 mg alle zwei Wochen oder 1200 mg alle vier Wochen zu verabreichen. Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+   "old": "Mélanome OPDIVO sous-cutané est remboursé pour la phase de monothérapie après la combinaison de nivolumab intraveineux et ipilimumab dans le traitement du mélanome avancé (non résécable ou métastatique) chez l’adulte. Dans la monothérapie consécutive à la phase du traitement combiné, OPDIVO sous-cutané doit être administré à la dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "new": "Mélanome OPDIVO sous-cutané est remboursé pour la phase de monothérapie après la combinaison de nivolumab intraveineux et ipilimumab dans le traitement du mélanome avancé (non résécable ou métastatique) chez l’adulte. Dans la monothérapie consécutive à la phase du traitement combiné, OPDIVO sous-cutané doit être administré à la dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "type": "words",
+   "subtype": "replaced",
+   "number": false,
+   "negation_operator": false,
+   "word_diff": [
+    [
+     "replace",
+     "correspondant à",
+     "de"
+    ],
+    [
+     "replace",
+     "communiqué",
+     "transmis"
+    ]
+   ],
+   "family": "36d94228"
+  },
+  {
+   "uid": "fr:OPDIVO.04---Nierenzellkarzinom--RCC-:20260901>20261001",
+   "lang": "fr",
+   "step": "20260901>20261001",
+   "key": "OPDIVO.04---Nierenzellkarzinom--RCC-",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "n_occ": 1,
+   "de": "Nierenzellkarzinom (RCC) Als Monotherapie zur Behandlung von erwachsenen Patienten mit fortgeschrittenem Nierenzellkarzinom nach vorangegangener antiangiogener Therapie. Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+   "old": "Carcinome à cellules rénales (CCR) En monothérapie dans le traitement des patients adultes atteints d’un carcinome à cellules rénales ayant suivi un traitement anti-angiogénique. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "new": "Carcinome à cellules rénales (CCR) En monothérapie dans le traitement des patients adultes atteints d’un carcinome à cellules rénales ayant suivi un traitement anti-angiogénique. .",
+   "type": "words",
+   "subtype": "removed",
+   "number": false,
+   "negation_operator": false,
+   "word_diff": [
+    [
+     "delete",
+     "le code d indication de cette limitation doit être transmis à l assureur maladie",
+     ""
+    ]
+   ],
+   "family": "4ccba973"
+  },
+  {
+   "uid": "fr:OPDIVO.07---Melanom-adjuvant:20260901>20261001",
+   "lang": "fr",
+   "step": "20260901>20261001",
+   "key": "OPDIVO.07---Melanom-adjuvant",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "n_occ": 1,
+   "de": "Melanom adjuvant Als Monotherapie für die adjuvante Behandlung des Melanoms mit regionaler Lymphknotenbeteiligung oder Fernmetastasen (Stadium IIIB, IIIC oder IV nach AJCC 7th edition) nach vollständiger Resektion bei Patienten ohne vorangegangene systemische Therapie zur Behandlung des Melanoms. Die adjuvante Therapie mit Nivolumab soll innerhalb von 15 Wochen nach Resektion gestartet werden. OPDIVO subkutan ist in einer Dosierung von maximal 600 mg alle zwei Wochen oder 1200 mg alle vier Wochen zu verabreichen. Die Patienten können bis zu maximal 12 Monaten oder bis zu einem vorher auftretenden Rezidiv der Erkrankung behandelt werden. Die Bristol-Myers Squibb SA erstattet zusätzlich einen festgelegten Anteil der maximalen Therapiedauer von OPDIVO auf Aufforderung desjenigen Krankenversicherers, bei dem die versicherte Person zum Zeitpunkt des Bezugs versichert war, zurück. Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+   "old": "Mélanome En monothérapie pour le traitement adjuvant du mélanome avec atteinte ganglionnaire régionale ou métastases distantes (stade IIIB, IIIC ou IV selon la 7e édition de l'AJCC) après résection complète chez des patients sans thérapie systémique antérieure pour le traitement du mélanome. Le traitement adjuvant par nivolumab doit être commencé dans les 15 semaines à compter de la résection. OPDIVO sous-cutané doit être administré à la dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Les patients peuvent être traités jusqu'à un maximum de 12 mois ou jusqu'à une récidive de la maladie. Bristol-Myers Squibb SA rembourse en outre une partie définie de la durée maximale du traitement par OPDIVO sur demande de l’assureur maladie auprès duquel la personne en question était assurée au moment de l’achat. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "new": "Mélanome En monothérapie pour le traitement adjuvant du mélanome avec atteinte ganglionnaire régionale ou métastases distantes (stade IIIB, IIIC ou IV selon la 7e édition de l'AJCC) après résection complète chez des patients sans thérapie systémique antérieure pour le traitement du mélanome. Le traitement adjuvant par nivolumab doit être commencé dans les 15 semaines à compter de la résection. OPDIVO sous-cutané doit être administré à la dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Les patients peuvent être traités jusqu'à un maximum de 12 mois ou jusqu'à une récidive de la maladie. Bristol-Myers Squibb SA rembourse en outre une partie définie de la durée maximale du traitement par OPDIVO sur demande de l’assureur maladie auprès duquel la personne en question était assurée au moment de l’achat. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "type": "words",
+   "subtype": "replaced",
+   "number": false,
+   "negation_operator": false,
+   "word_diff": [
+    [
+     "replace",
+     "correspondant à",
+     "de"
+    ],
+    [
+     "replace",
+     "communiqué",
+     "transmis"
+    ]
+   ],
+   "family": "36d94228"
+  },
+  {
+   "uid": "fr:OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001",
+   "lang": "fr",
+   "step": "20260901>20261001",
+   "key": "OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "n_occ": 1,
+   "de": "Kolorektales Karzinom (CRC) mit dMMR/MSI-H Als Monotherapie für die Behandlung von erwachsenen Patienten mit metastasiertem kolorektalem Karzinom mit fehlerhafter DNA Mismatch-Reparatur (dMMR) oder hoher Mikrosatelliteninstabilität (MSI-H) nach vorangegangener Fluoropyrimidin-basierter Therapie in Kombination mit Irinotecan oder Oxaliplatin. Die fehlerhafte DNA Mismatch-Reparatur (dMMR) oder hohe Mikrosatelliteninstabilität (MSI-H) müssen mit einem validierten Test nachgewiesen werden. Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+   "old": "Cancer colorectal (CRC) avec dMMR/MSI-H En monothérapie dans le traitement des patients adultes atteints d’un cancer colorectal métastatique avec déficience du système de réparation des mésappariements de l’ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) après traitement préalable à base de fluoropyrimidine en association avec l’irinotécan ou l’oxaliplatine. La déficience du système de réparation des mésappariements de l'ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) doivent être confirmée par une méthode validée. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "new": "Cancer colorectal (CRC) avec dMMR/MSI-H En monothérapie dans le traitement des patients adultes atteints d’un cancer colorectal métastatique avec déficience du système de réparation des mésappariements de l’ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) après traitement préalable à base de fluoropyrimidine en association avec l’irinotécan ou l’oxaliplatine. La déficience du système de réparation des mésappariements de l'ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) doivent être confirmée par une méthode validée. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "type": "words",
+   "subtype": "replaced",
+   "number": false,
+   "negation_operator": false,
+   "word_diff": [
+    [
+     "replace",
+     "correspondant à",
+     "de"
+    ],
+    [
+     "replace",
+     "communiqué",
+     "transmis"
+    ]
+   ],
+   "family": "36d94228"
+  },
+  {
+   "uid": "fr:OPDIVO.09---OC-oder-GEJC-adjuvant:20260901>20261001",
+   "lang": "fr",
+   "step": "20260901>20261001",
+   "key": "OPDIVO.09---OC-oder-GEJC-adjuvant",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "n_occ": 1,
+   "de": "Ösophaguskarzinom oder Karzinom des gastroösophagealen Übergangs (OC oder GEJC) adjuvant Als Monotherapie für die adjuvante Behandlung von erwachsenen Patienten mit vollständig reseziertem Ösophaguskarzinom oder Karzinom des gastroösophagealen Übergangs mit pathologischer Resterkrankung nach vorangegangener neoadjuvanter Radiochemotherapie. Die empfohlene Dosierung ist 600 mg alle 2 Wochen oder 1200 mg alle 4 Wochen. Die Patienten können bis zu maximal 12 Monaten oder bis zu einem vorher auftretenden Rezidiv der Erkrankung behandelt werden. Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+   "old": "Traitement adjuvant du cancer de l'œsophage ou de la jonction œsogastrique (CO ou CJOG) En monothérapie pour le traitement adjuvant de patients adultes atteints d'un cancer de l'œsophage ou de la jonction œsogastrique entièrement réséqué présentant une maladie résiduelle pathologique après une précédente radiochimiothérapie néoadjuvante. La dose recommandée d'OPDIVO sous-cutané est de 600 mg toutes les 2 semaines ou 1200 mg toutes les 4 semaines. Les patients peuvent être traités jusqu'à un maximum de 12 mois ou jusqu'à une récidive de la maladie. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "new": "Traitement adjuvant du cancer de l'œsophage ou de la jonction œsogastrique (CO ou CJOG) En monothérapie pour le traitement adjuvant de patients adultes atteints d'un cancer de l'œsophage ou de la jonction œsogastrique entièrement réséqué présentant une maladie résiduelle pathologique après une précédente radiochimiothérapie néoadjuvante. La dose recommandée d'OPDIVO sous-cutané est de 600 mg toutes les 2 semaines ou 1200 mg toutes les 4 semaines. Les patients peuvent être traités jusqu'à un maximum de 12 mois ou jusqu'à une récidive de la maladie. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "type": "words",
+   "subtype": "replaced",
+   "number": false,
+   "negation_operator": false,
+   "word_diff": [
+    [
+     "replace",
+     "correspondant à",
+     "de"
+    ],
+    [
+     "replace",
+     "communiqué",
+     "transmis"
+    ]
+   ],
+   "family": "36d94228"
+  },
+  {
+   "uid": "fr:OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001",
+   "lang": "fr",
+   "step": "20260901>20261001",
+   "key": "OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "n_occ": 1,
+   "de": "Kolorektales Karzinom (CRC) mit dMMR/MSI-H OPDIVO subkutan wird vergütet für die Monotherapiephase nach der Kombination von intravenösem Nivolumab und Ipilimumab für die Behandlung von erwachsenen Patienten mit metastasiertem kolorektalem Karzinom mit fehlerhafter DNA Mismatch-Reparatur (dMMR) oder hoher Mikrosatelliteninstabilität (MSI-H) nach vorangegangener Fluoropyrimidin-basierter Therapie in Kombination mit Irinotecan oder Oxaliplatin. Die fehlerhafte DNA Mismatch-Reparatur (dMMR) oder hohe Mikrosatelliteninstabilität (MSI-H) müssen mit einem validierten Test nachgewiesen werden. In einer an die Kombinationsphase anschliessenden Monotherapie ist OPDIVO subkutan in einer Dosierung von maximal 600 mg alle zwei Wochen oder 1200 mg alle vier Wochen zu verabreichen. Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+   "old": "Cancer colorectal (CRC) avec dMMR/MSI-H OPDIVO sous-cutané est remboursé pour la phase de monothérapie après la combinaison de nivolumab intraveineux et ipilimumab dans le traitement du cancer colorectal métastatique chez des patients adultes avec déficience du système de réparation des mésappariements de l'ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) après traitement préalable à base de fluoropyrimidine en association avec l'irinotécan ou l'oxaliplatine. La déficience du système de réparation des mésappariements de l'ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) doivent être confirmée par une méthode validée. Dans la monothérapie faisant suite à la phase d'association, OPDIVO sous-cutané doit être administré à une dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "new": "Cancer colorectal (CRC) avec dMMR/MSI-H OPDIVO sous-cutané est remboursé pour la phase de monothérapie après la combinaison de nivolumab intraveineux et ipilimumab dans le traitement du cancer colorectal métastatique chez des patients adultes avec déficience du système de réparation des mésappariements de l'ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) après traitement préalable à base de fluoropyrimidine en association avec l'irinotécan ou l'oxaliplatine. La déficience du système de réparation des mésappariements de l'ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) doivent être confirmée par une méthode validée. Dans la monothérapie faisant suite à la phase d'association, OPDIVO sous-cutané doit être administré à une dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "type": "words",
+   "subtype": "replaced",
+   "number": false,
+   "negation_operator": false,
+   "word_diff": [
+    [
+     "replace",
+     "correspondant à",
+     "de"
+    ],
+    [
+     "replace",
+     "communiqué",
+     "transmis"
+    ]
+   ],
+   "family": "36d94228"
+  },
+  {
+   "uid": "fr:OPDIVO.12---MIUC-adjuvant:20260901>20261001",
+   "lang": "fr",
+   "step": "20260901>20261001",
+   "key": "OPDIVO.12---MIUC-adjuvant",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "n_occ": 1,
+   "de": "Muskel-invasives Urothelkarzinom (MIUC) adjuvant Als Monotherapie für die adjuvante Behandlung von erwachsenen Patienten mit muskel-invasivem Urothelkarzinom (MIUC) mit PD-L1 Expression ≥1% nach erfolgter vollständiger (R0) radikaler Resektion des MIUC und einem hohen Rezidivrisiko basierend auf pathologischer Evidenz und die • eine neoadjuvante Cisplatin-Chemotherapie erhalten haben (Stadien ypT2 bis ypT4a oder ypN+) oder • keine neoadjuvante Cisplatin-Chemotherapie erhalten haben und für eine adjuvante Cisplatin-Chemotherapie nicht in Frage kommen oder diese ablehnen (Stadien pT3, pT4a oder pN+). Die Patienten können bis zu maximal 12 Monaten oder bis zu einem vorher auftretenden Rezidiv der Erkrankung behandelt werden. Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+   "old": "Traitement adjuvant du carcinome urothélial invasif musculaire (CUIM) En monothérapie pour le traitement adjuvant des patients adultes atteints de carcinome urothélial invasif musculaire (CUIM) avec une expression de PD-L1 ≥ 1%, après une résection radicale complète (R0) du CUIM et un risque élevé de récidive basé sur des preuves pathologiques et • ayant bénéficié d’une chimiothérapie néoadjuvante au cisplatine (stades ypT2 à ypT4a ou ypN+) ou • n’ayant pas bénéficié d’une chimiothérapie néoadjuvante à base de cisplatine et non éligibles ou rejetant une chimiothérapie adjuvante à base de cisplatine (stades pT3, pT4a ou pN+) Les patients peuvent être traités jusqu'à un maximum de 12 mois ou jusqu'à une récidive de la maladie. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "new": "Traitement adjuvant du carcinome urothélial invasif musculaire (CUIM) En monothérapie pour le traitement adjuvant des patients adultes atteints de carcinome urothélial invasif musculaire (CUIM) avec une expression de PD-L1 ≥ 1%, après une résection radicale complète (R0) du CUIM et un risque élevé de récidive basé sur des preuves pathologiques et • ayant bénéficié d’une chimiothérapie néoadjuvante au cisplatine (stades ypT2 à ypT4a ou ypN+) ou • n’ayant pas bénéficié d’une chimiothérapie néoadjuvante à base de cisplatine et non éligibles ou rejetant une chimiothérapie adjuvante à base de cisplatine (stades pT3, pT4a ou pN+) Les patients peuvent être traités jusqu'à un maximum de 12 mois ou jusqu'à une récidive de la maladie. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "type": "words",
+   "subtype": "replaced",
+   "number": false,
+   "negation_operator": false,
+   "word_diff": [
+    [
+     "replace",
+     "correspondant à",
+     "de"
+    ],
+    [
+     "replace",
+     "communiqué",
+     "transmis"
+    ]
+   ],
+   "family": "36d94228"
+  },
+  {
+   "uid": "fr:OPDIVO.13--:20260901>20261001",
+   "lang": "fr",
+   "step": "20260901>20261001",
+   "key": "OPDIVO.13--",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "n_occ": 1,
+   "de": "Ösophageales Plattenepithelkarzinom (OSCC) In Kombination mit Fluoropyrimidin- und Cisplatin-basierter Chemotherapie für die Erstlinienbehandlung von erwachsenen Patienten mit fortgeschrittenem oder metastasiertem ösophagealem Plattenepithelkarzinom mit einer PD-L1 Expression ≥1%, für die eine kurative Therapie nicht möglich ist. OPDIVO subkutan wird in einer Dosierung von 600 mg alle 2 Wochen oder 1200 mg alle 4 Wochen mit Fluoropyrimidin- und Cisplatin-basierter Chemotherapie kombiniert. Die Patienten können bis zu maximal 24 Monaten behandelt werden. Wenn unter vorangegangener Therapie mit einem Anti-PD-1-, Anti-PD-L1-, Anti-PD-L2-, Anti-CD137-oder Anti-CTLA-4-Antikörper oder einem anderen Antikörper oder Arzneimittel, der/das spezifisch auf die Co-Stimulation von T-Zellen oder Checkpoint-Signalwege abzielt eine Tumorprogression beobachtet wurde, ist eine weitere Vergütung von Nivolumab ausgeschlossen. Für Patienten, deren Behandlung vor dem 01.02.2025 begonnen wurde, gilt die zusätzliche Einschränkung in Bezug auf die Tumorprogression nicht. Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+   "old": "Carcinome épidermoïde de l'œsophage (CEO) En association avec une chimiothérapie à base de fluoropyrimidine et de cisplatine pour le traitement de première ligne de patients adultes atteints de carcinome épidermoïde de l'œsophage avancé ou métastatique avec une expression de PD-L1 ≥1% et pour lesquels un traitement curatif n'est pas possible. OPDIVO sous-cutané est associé à une chimiothérapie à base de fluoropyrimidine et de cisplatine à une dose de 600 mg toutes les 2 semaines ou 1200 mg toutes les 4 semaines. Les patients peuvent être traités jusqu'à un maximum de 24 mois. Un remboursement supplémentaire du nivolumab est exclu si une progression tumorale avait été observée lors d’un traitement antérieur avec un anticorps anti-PD-1, anti-PD-L1, anti-PD-L2, anti-CD137 ou anti-CTLA-4, ou avec un autre anticorps ou médicament ciblant spécifiquement la co-stimulation des cellules T ou des voies de signalisation des points de contrôle. La restriction supplémentaire relative à la progression tumorale ne s’applique pas chez des patients dont le traitement a débuté avant le 01.02.2025. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "new": "Carcinome épidermoïde de l'œsophage (CEO) En association avec une chimiothérapie à base de fluoropyrimidine et de cisplatine pour le traitement de première ligne de patients adultes atteints de carcinome épidermoïde de l'œsophage avancé ou métastatique avec une expression de PD-L1 ≥1% et pour lesquels un traitement curatif n'est pas possible. OPDIVO sous-cutané est associé à une chimiothérapie à base de fluoropyrimidine et de cisplatine à une dose de 600 mg toutes les 2 semaines ou 1200 mg toutes les 4 semaines. Les patients peuvent être traités jusqu'à un maximum de 24 mois. Un remboursement supplémentaire du nivolumab est exclu si une progression tumorale avait été observée lors d’un traitement antérieur avec un anticorps anti-PD-1, anti-PD-L1, anti-PD-L2, anti-CD137 ou anti-CTLA-4, ou avec un autre anticorps ou médicament ciblant spécifiquement la co-stimulation des cellules T ou des voies de signalisation des points de contrôle. La restriction supplémentaire relative à la progression tumorale ne s’applique pas chez des patients dont le traitement a débuté avant le 01.02.2025. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "type": "words",
+   "subtype": "replaced",
+   "number": false,
+   "negation_operator": false,
+   "word_diff": [
+    [
+     "replace",
+     "correspondant à",
+     "de"
+    ],
+    [
+     "replace",
+     "communiqué",
+     "transmis"
+    ]
+   ],
+   "family": "36d94228"
+  },
+  {
+   "uid": "fr:OPDIVO.16---GC-GEJC-OC:20260901>20261001",
+   "lang": "fr",
+   "step": "20260901>20261001",
+   "key": "OPDIVO.16---GC-GEJC-OC",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "n_occ": 1,
+   "de": "Adenokarzinom des Magens, des gastroösophagealen Übergangs oder des distalen Ösophagus (GC/GEJC/OC) In Kombination mit Oxaliplatin- und Fluoropyrimidin-basierter Chemotherapie für die Erstlinienbehandlung von erwachsenen Patienten mit inoperablem, lokal fortgeschrittenem oder metastasiertem Adenokarzinom des Magens, des gastroösophagealen Übergangs oder des distalen Ösophagus mit einer PD-L1 Combined Positive Score (CPS) ≥ 10 Expression. OPDIVO subkutan wird in einer Dosierung von 600 mg alle 2 Wochen mit Fluoropyrimidin- und Oxaliplatin-basierter Chemotherapie kombiniert. Wenn unter vorangegangener Therapie mit einem Anti-PD-1-, Anti-PD-L1-, Anti-PD-L2-, Anti-CD137-oder Anti-CTLA-4-Antikörper oder einem anderen Antikörper oder Arzneimittel, der/das spezifisch auf die Co-Stimulation von T-Zellen oder Checkpoint-Signalwege abzielt eine Tumorprogression beobachtet wurde, ist eine weitere Vergütung von Nivolumab ausgeschlossen. Für Patienten, deren Behandlung vor dem 01.02.2025 begonnen wurde, gilt die zusätzliche Einschränkung in Bezug auf die Tumorprogression nicht. Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+   "old": "Adénocarcinome gastrique, de la jonction œsogastrique ou de l'œsophage distal (CG/CJOG/COD) En association avec une chimiothérapie à base d’oxaliplatine et de fluoropyrimidine dans le traitement de première ligne des patients adultes atteints d’un adénocarcinome gastrique, de la jonction œsogastrique ou de l'œsophage distal non résécable, localement avancé ou métastatique, exprimant PD-L1 avec un score combiné positif (CPS) ≥ 10. OPDIVO sous-cutané est associé à une chimiothérapie à base de fluoropyrimidine et d’oxaliplatine à une dose de 600 mg toutes les 2 semaines. Un remboursement supplémentaire du nivolumab est exclu si une progression tumorale avait été observée lors d’un traitement antérieur avec un anticorps anti-PD-1, anti-PD-L1, anti-PD-L2, anti-CD137 ou anti-CTLA-4, ou avec un autre anticorps ou médicament ciblant spécifiquement la co-stimulation des cellules T ou des voies de signalisation des points de contrôle. La restriction supplémentaire relative à la progression tumorale ne s’applique pas chez des patients dont le traitement a débuté avant le 01.02.2025. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "new": "Adénocarcinome gastrique, de la jonction œsogastrique ou de l'œsophage distal (CG/CJOG/COD) En association avec une chimiothérapie à base d’oxaliplatine et de fluoropyrimidine dans le traitement de première ligne des patients adultes atteints d’un adénocarcinome gastrique, de la jonction œsogastrique ou de l'œsophage distal non résécable, localement avancé ou métastatique, exprimant PD-L1 avec un score combiné positif (CPS) ≥ 10. OPDIVO sous-cutané est associé à une chimiothérapie à base de fluoropyrimidine et d’oxaliplatine à une dose de 600 mg toutes les 2 semaines. Un remboursement supplémentaire du nivolumab est exclu si une progression tumorale avait été observée lors d’un traitement antérieur avec un anticorps anti-PD-1, anti-PD-L1, anti-PD-L2, anti-CD137 ou anti-CTLA-4, ou avec un autre anticorps ou médicament ciblant spécifiquement la co-stimulation des cellules T ou des voies de signalisation des points de contrôle. La restriction supplémentaire relative à la progression tumorale ne s’applique pas chez des patients dont le traitement a débuté avant le 01.02.2025. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "type": "words",
+   "subtype": "replaced",
+   "number": false,
+   "negation_operator": false,
+   "word_diff": [
+    [
+     "replace",
+     "correspondant à",
+     "de"
+    ],
+    [
+     "replace",
+     "communiqué",
+     "transmis"
+    ]
+   ],
+   "family": "36d94228"
+  },
+  {
+   "uid": "fr:OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib:20260901>20261001",
+   "lang": "fr",
+   "step": "20260901>20261001",
+   "key": "OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "n_occ": 1,
+   "de": "1L RCC in Kombination mit Cabozantinib (nicht Teil des einheitlichen Abrechnungspreises) In Kombination mit Cabozantinib für die Erstlinienbehandlung des fortgeschrittenen (nicht resezierbaren oder metastasierenden) Nierenzellkarzinoms bei Erwachsenen mit intermediärem/ungünstigem Risikoprofil. OPDIVO subkutan ist in einer Dosierung von maximal 600 mg alle zwei Wochen oder 1200 mg alle vier Wochen zu verabreichen. Die Patienten können bis zu maximal 24 Monate mit OPDIVO behandelt werden. Bristol-Myers Squibb SA erstattet dem Krankenversicherer, bei dem die versicherte Person zum Zeitpunkt des Bezugs versichert war, auf dessen erste Aufforderung hin für jede bezogene Packung OPDIVO subkutan eingesetzt in Kombination mit Cabozantinib einen festgelegten Anteil des Fabrikabgabepreises zurück; dieser weicht ab von den Rückerstattungen im Rahmen des einheitlichen Abrechnungspreises. Die Zulassungsinhaberin gibt dem Krankenversicherer die Höhe der Rückerstattung bekannt. Die Mehrwertsteuer kann nicht zusätzlich zu diesem Anteil des Fabrikabgabepreises zurückgefordert werden. Die Aufforderung zur Rückerstattung soll ab dem Zeitpunkt der Verabreichung erfolgen. Eine Vergütung von OPDIVO kann nur mit dem Kombinationspartner Cabozantinib erfolgen, dessen Limitation die Kombinationstherapie (OPDIVO + Cabozantinib) in der Indikation 1L fortgeschrittenes RCC explizit aufführt. Die Bedingungen für eine Vergütung des Kombinationspartners Cabozantinib sind in dessen Limitierung festgehalten. Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+   "old": "1L carcinome à cellules rénales (RCC) en association avec le cabozantinib (Non inclus dans le prix de facturation unique) En association avec le cabozantinib pour le traitement de première ligne du carcinome à cellules rénales avancé (non résécable ou métastatique) chez les patients adultes présentant un profil de risque intermédiaire/défavorable. OPDIVO sous-cutané doit être administré à une dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Les patients peuvent être traités jusqu'à un maximum de 24 mois. Bristol-Myers Squibb SA rembourse à l’assurance maladie auprès de laquelle la personne était assurée au moment de la remise, sur première demande, une partie du prix de fabrique par emballage d’OPDIVO sous-cutané administré en association avec le cabozantinib; cette partie diffère des remboursements prévus dans le cadre du prix de facturation unique. Le titulaire de l’autorisation communique à l’assureur le montant du remboursement. La taxe sur la valeur ajoutée ne peut pas être remboursée en plus de ce montant. La demande de remboursement doit être faite à partir du moment de l'administration. Le remboursement d’OPDIVO n’est possible qu’en association avec le partenaire de combinaison cabozantinib dont la limitation précise explicitement l’association (OPDIVO + cabozantinib) dans l’indication 1L du CCR avancé. Les conditions de remboursement du partenaire de combinaison cabozantinib sont définies dans sa limitation. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "new": "1L carcinome à cellules rénales (RCC) en association avec le cabozantinib (Non inclus dans le prix de facturation unique) En association avec le cabozantinib pour le traitement de première ligne du carcinome à cellules rénales avancé (non résécable ou métastatique) chez les patients adultes présentant un profil de risque intermédiaire/défavorable. OPDIVO sous-cutané doit être administré à une dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Les patients peuvent être traités jusqu'à un maximum de 24 mois. Bristol-Myers Squibb SA rembourse à l’assurance maladie auprès de laquelle la personne était assurée au moment de la remise, sur première demande, une partie du prix de fabrique par emballage d’OPDIVO sous-cutané administré en association avec le cabozantinib; cette partie diffère des remboursements prévus dans le cadre du prix de facturation unique. Le titulaire de l’autorisation communique à l’assureur le montant du remboursement. La taxe sur la valeur ajoutée ne peut pas être remboursée en plus de ce montant. La demande de remboursement doit être faite à partir du moment de l'administration. Le remboursement d’OPDIVO n’est possible qu’en association avec le partenaire de combinaison cabozantinib dont la limitation précise explicitement l’association (OPDIVO + cabozantinib) dans l’indication 1L du CCR avancé. Les conditions de remboursement du partenaire de combinaison cabozantinib sont définies dans sa limitation. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "type": "words",
+   "subtype": "replaced",
+   "number": false,
+   "negation_operator": false,
+   "word_diff": [
+    [
+     "replace",
+     "correspondant à",
+     "de"
+    ],
+    [
+     "replace",
+     "communiqué",
+     "transmis"
+    ]
+   ],
+   "family": "36d94228"
+  },
+  {
+   "uid": "it:OPDIVO.01---NSCLC-Mono:20260901>20261001",
+   "lang": "it",
+   "step": "20260901>20261001",
+   "key": "OPDIVO.01---NSCLC-Mono",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "n_occ": 1,
+   "de": "Nicht-kleinzelliges Lungenkarzinom (NSCLC) Als Monotherapie zur Behandlung von lokal fortgeschrittenem oder metastasiertem nicht-kleinzelligem Lungenkarzinom nach vorangegangener Chemotherapie. Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+   "old": "Carcinoma polmonare non a piccole cellule (NSCLC) Come monoterapia per il trattamento del carcinoma polmonare non a piccole cellule locale avanzato o metastatico a seguito di precedente chemioterapia. Il codice dell'indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.",
+   "new": "Carcinoma polmonare non a piccole cellule (NSCLC) Come monoterapia per il trattamento del carcinoma polmonare non a piccole cellule locale avanzato o metastatico a seguito di precedente chemioterapia. Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.",
+   "type": "words",
+   "subtype": "replaced",
+   "number": false,
+   "negation_operator": false,
+   "word_diff": [
+    [
+     "replace",
+     "dell",
+     "di"
+    ]
+   ],
+   "family": "cf83d1c3"
+  }
+ ],
+ "items": {
+  "fr:KEYTRUDA.XX---Inf-Konz:20260801>20260901|control": {
+   "lang": "fr",
+   "type": "negation_operator",
+   "subtype": "replaced",
+   "family": "1c614957",
+   "step": "20260801>20260901",
+   "product": "Keytruda Inf Konz 100 mg/4ml Durchstf",
+   "reversed": false,
+   "error_text": "Valable pour toutes les indications remboursées : Avant le début du traitement une garantie de prise en charge des coûts par l’assurance maladie doit être obtenue après consultation du médecin conseil pour toutes les indications remboursées. Une garantie de prise en charge doit contenir le code correspondant à l’indication (20416.XX). Sauf indication contraire, la posologie maximale s’élève à 200 mg toutes les trois semaines. Le nombre maximal de traitements/cycles est de 35, sauf indication contraire. Chez les patients cliniquement stables dont la maladie était initialement en progression, le traitement peut être poursuivi jusqu’à confirmation de la progression de la maladie. Si un traitement de première ligne par KEYTRUDA a été remboursé dans une indication définie et que la maladie a progressé après une brève réponse au traitement, KEYTRUDA ne doit plus être remboursé pour les lignes de traitement ultérieures dans la même indication. MSD Merck Sharp & Dohme AG rembourse, sur demande, à l’assurance maladie auprès de laquelle la personne était assurée au moment de la remise, une partie du prix de fabrique par emballage de KEYTRUDA (2 flacons) administré de manière prouvée. Les prix et pourcentages à prendre en compte sont ceux en vigueur au moment de la remise. La demande de remboursement doit être faite dans un délai rapproché après l'administration. Pour le recouvrement des remboursements auprès du titulaire de l'autorisation, l'assurance-maladie doit impérativement communiquer le code d'indication indiqué derrière chaque indication. Le code d'indication doit être transmis aux assurances-maladie par le prestataire de services.",
+   "correct_text": "Valable pour toutes les indications remboursées : Avant le début du traitement une garantie de prise en charge des coûts par l’assurance maladie doit être obtenue après consultation du médecin conseil pour toutes les indications remboursées. Une garantie de prise en charge doit contenir le code correspondant à l’indication (20416.XX). Sauf indication contraire, la posologie maximale s’élève à 200 mg toutes les trois semaines. Le nombre maximal de traitements/cycles est de 35, sauf indication contraire. Chez les patients cliniquement stables dont la maladie était initialement en progression, le traitement peut être poursuivi jusqu’à confirmation de la progression de la maladie. Si un traitement de première ligne par KEYTRUDA a été remboursé dans une indication définie et que la maladie a progressé après une brève réponse au traitement, KEYTRUDA ne doit plus être remboursé pour les lignes de traitement ultérieures dans la même indication. MSD Merck Sharp & Dohme AG rembourse, sur demande à l’assurance maladie auprès de laquelle la personne était assurée au moment de la remise, une partie du prix de fabrique par emballage de KEYTRUDA (2 flacons) administré de manière prouvée. Les prix et pourcentages à prendre en compte sont ceux en vigueur au moment de l’administration. La TVA ne peut pas être réclamée en plus de cette part du prix de fabrique. La demande de remboursement doit être faite dans un délai rapproché après l'administration. Pour le recouvrement des remboursements auprès du titulaire de l'autorisation, l'assurance-maladie doit impérativement communiquer le code d'indication indiqué derrière chaque indication. Le code d'indication doit être transmis aux assurances-maladie par le prestataire de services.",
+   "uid": "fr:KEYTRUDA.XX---Inf-Konz:20260801>20260901",
+   "kind": "control",
+   "set": 1
+  },
+  "fr:KEYTRUDA.XX---Inf-Konz:20260801>20260901|error": {
+   "lang": "fr",
+   "type": "negation_operator",
+   "subtype": "replaced",
+   "family": "1c614957",
+   "step": "20260801>20260901",
+   "product": "Keytruda Inf Konz 100 mg/4ml Durchstf",
+   "reversed": false,
+   "error_text": "Valable pour toutes les indications remboursées : Avant le début du traitement une garantie de prise en charge des coûts par l’assurance maladie doit être obtenue après consultation du médecin conseil pour toutes les indications remboursées. Une garantie de prise en charge doit contenir le code correspondant à l’indication (20416.XX). Sauf indication contraire, la posologie maximale s’élève à 200 mg toutes les trois semaines. Le nombre maximal de traitements/cycles est de 35, sauf indication contraire. Chez les patients cliniquement stables dont la maladie était initialement en progression, le traitement peut être poursuivi jusqu’à confirmation de la progression de la maladie. Si un traitement de première ligne par KEYTRUDA a été remboursé dans une indication définie et que la maladie a progressé après une brève réponse au traitement, KEYTRUDA ne doit plus être remboursé pour les lignes de traitement ultérieures dans la même indication. MSD Merck Sharp & Dohme AG rembourse, sur demande, à l’assurance maladie auprès de laquelle la personne était assurée au moment de la remise, une partie du prix de fabrique par emballage de KEYTRUDA (2 flacons) administré de manière prouvée. Les prix et pourcentages à prendre en compte sont ceux en vigueur au moment de la remise. La demande de remboursement doit être faite dans un délai rapproché après l'administration. Pour le recouvrement des remboursements auprès du titulaire de l'autorisation, l'assurance-maladie doit impérativement communiquer le code d'indication indiqué derrière chaque indication. Le code d'indication doit être transmis aux assurances-maladie par le prestataire de services.",
+   "correct_text": "Valable pour toutes les indications remboursées : Avant le début du traitement une garantie de prise en charge des coûts par l’assurance maladie doit être obtenue après consultation du médecin conseil pour toutes les indications remboursées. Une garantie de prise en charge doit contenir le code correspondant à l’indication (20416.XX). Sauf indication contraire, la posologie maximale s’élève à 200 mg toutes les trois semaines. Le nombre maximal de traitements/cycles est de 35, sauf indication contraire. Chez les patients cliniquement stables dont la maladie était initialement en progression, le traitement peut être poursuivi jusqu’à confirmation de la progression de la maladie. Si un traitement de première ligne par KEYTRUDA a été remboursé dans une indication définie et que la maladie a progressé après une brève réponse au traitement, KEYTRUDA ne doit plus être remboursé pour les lignes de traitement ultérieures dans la même indication. MSD Merck Sharp & Dohme AG rembourse, sur demande à l’assurance maladie auprès de laquelle la personne était assurée au moment de la remise, une partie du prix de fabrique par emballage de KEYTRUDA (2 flacons) administré de manière prouvée. Les prix et pourcentages à prendre en compte sont ceux en vigueur au moment de l’administration. La TVA ne peut pas être réclamée en plus de cette part du prix de fabrique. La demande de remboursement doit être faite dans un délai rapproché après l'administration. Pour le recouvrement des remboursements auprès du titulaire de l'autorisation, l'assurance-maladie doit impérativement communiquer le code d'indication indiqué derrière chaque indication. Le code d'indication doit être transmis aux assurances-maladie par le prestataire de services.",
+   "uid": "fr:KEYTRUDA.XX---Inf-Konz:20260801>20260901",
+   "kind": "error",
+   "set": 2
+  },
+  "fr:OPDIVO.01---NSCLC-Mono:20260901>20261001|control": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "removed",
+   "family": "4ccba973",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": true,
+   "error_text": "Cancer bronchique non à petites cellules (CBNPC) En monothérapie dans le traitement du cancer bronchique non à petites cellules (CBNPC) localement avancé ou métastatique après une chimiothérapie. .",
+   "correct_text": "Cancer bronchique non à petites cellules (CBNPC) En monothérapie dans le traitement du cancer bronchique non à petites cellules (CBNPC) localement avancé ou métastatique après une chimiothérapie. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.01---NSCLC-Mono:20260901>20261001",
+   "kind": "control",
+   "set": 1
+  },
+  "fr:OPDIVO.01---NSCLC-Mono:20260901>20261001|error": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "removed",
+   "family": "4ccba973",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": true,
+   "error_text": "Cancer bronchique non à petites cellules (CBNPC) En monothérapie dans le traitement du cancer bronchique non à petites cellules (CBNPC) localement avancé ou métastatique après une chimiothérapie. .",
+   "correct_text": "Cancer bronchique non à petites cellules (CBNPC) En monothérapie dans le traitement du cancer bronchique non à petites cellules (CBNPC) localement avancé ou métastatique après une chimiothérapie. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.01---NSCLC-Mono:20260901>20261001",
+   "kind": "error",
+   "set": 2
+  },
+  "fr:OPDIVO.02---Melanom-Monotherapie:20260901>20261001|control": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Mélanome En monothérapie dans le traitement du mélanome avancé (non résécable ou métastatique) chez l’adulte. OPDIVO sous-cutané doit être administré à la dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "Mélanome En monothérapie dans le traitement du mélanome avancé (non résécable ou métastatique) chez l’adulte. OPDIVO sous-cutané doit être administré à la dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.02---Melanom-Monotherapie:20260901>20261001",
+   "kind": "control",
+   "set": 2
+  },
+  "fr:OPDIVO.02---Melanom-Monotherapie:20260901>20261001|error": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Mélanome En monothérapie dans le traitement du mélanome avancé (non résécable ou métastatique) chez l’adulte. OPDIVO sous-cutané doit être administré à la dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "Mélanome En monothérapie dans le traitement du mélanome avancé (non résécable ou métastatique) chez l’adulte. OPDIVO sous-cutané doit être administré à la dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.02---Melanom-Monotherapie:20260901>20261001",
+   "kind": "error",
+   "set": 1
+  },
+  "fr:OPDIVO.03---Melanom-Kombitherapie:20260901>20261001|control": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Mélanome OPDIVO sous-cutané est remboursé pour la phase de monothérapie après la combinaison de nivolumab intraveineux et ipilimumab dans le traitement du mélanome avancé (non résécable ou métastatique) chez l’adulte. Dans la monothérapie consécutive à la phase du traitement combiné, OPDIVO sous-cutané doit être administré à la dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "Mélanome OPDIVO sous-cutané est remboursé pour la phase de monothérapie après la combinaison de nivolumab intraveineux et ipilimumab dans le traitement du mélanome avancé (non résécable ou métastatique) chez l’adulte. Dans la monothérapie consécutive à la phase du traitement combiné, OPDIVO sous-cutané doit être administré à la dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.03---Melanom-Kombitherapie:20260901>20261001",
+   "kind": "control",
+   "set": 2
+  },
+  "fr:OPDIVO.03---Melanom-Kombitherapie:20260901>20261001|error": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Mélanome OPDIVO sous-cutané est remboursé pour la phase de monothérapie après la combinaison de nivolumab intraveineux et ipilimumab dans le traitement du mélanome avancé (non résécable ou métastatique) chez l’adulte. Dans la monothérapie consécutive à la phase du traitement combiné, OPDIVO sous-cutané doit être administré à la dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "Mélanome OPDIVO sous-cutané est remboursé pour la phase de monothérapie après la combinaison de nivolumab intraveineux et ipilimumab dans le traitement du mélanome avancé (non résécable ou métastatique) chez l’adulte. Dans la monothérapie consécutive à la phase du traitement combiné, OPDIVO sous-cutané doit être administré à la dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.03---Melanom-Kombitherapie:20260901>20261001",
+   "kind": "error",
+   "set": 1
+  },
+  "fr:OPDIVO.04---Nierenzellkarzinom--RCC-:20260901>20261001|control": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "removed",
+   "family": "4ccba973",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": true,
+   "error_text": "Carcinome à cellules rénales (CCR) En monothérapie dans le traitement des patients adultes atteints d’un carcinome à cellules rénales ayant suivi un traitement anti-angiogénique. .",
+   "correct_text": "Carcinome à cellules rénales (CCR) En monothérapie dans le traitement des patients adultes atteints d’un carcinome à cellules rénales ayant suivi un traitement anti-angiogénique. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.04---Nierenzellkarzinom--RCC-:20260901>20261001",
+   "kind": "control",
+   "set": 1
+  },
+  "fr:OPDIVO.04---Nierenzellkarzinom--RCC-:20260901>20261001|error": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "removed",
+   "family": "4ccba973",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": true,
+   "error_text": "Carcinome à cellules rénales (CCR) En monothérapie dans le traitement des patients adultes atteints d’un carcinome à cellules rénales ayant suivi un traitement anti-angiogénique. .",
+   "correct_text": "Carcinome à cellules rénales (CCR) En monothérapie dans le traitement des patients adultes atteints d’un carcinome à cellules rénales ayant suivi un traitement anti-angiogénique. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.04---Nierenzellkarzinom--RCC-:20260901>20261001",
+   "kind": "error",
+   "set": 2
+  },
+  "fr:OPDIVO.07---Melanom-adjuvant:20260901>20261001|control": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Mélanome En monothérapie pour le traitement adjuvant du mélanome avec atteinte ganglionnaire régionale ou métastases distantes (stade IIIB, IIIC ou IV selon la 7e édition de l'AJCC) après résection complète chez des patients sans thérapie systémique antérieure pour le traitement du mélanome. Le traitement adjuvant par nivolumab doit être commencé dans les 15 semaines à compter de la résection. OPDIVO sous-cutané doit être administré à la dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Les patients peuvent être traités jusqu'à un maximum de 12 mois ou jusqu'à une récidive de la maladie. Bristol-Myers Squibb SA rembourse en outre une partie définie de la durée maximale du traitement par OPDIVO sur demande de l’assureur maladie auprès duquel la personne en question était assurée au moment de l’achat. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "Mélanome En monothérapie pour le traitement adjuvant du mélanome avec atteinte ganglionnaire régionale ou métastases distantes (stade IIIB, IIIC ou IV selon la 7e édition de l'AJCC) après résection complète chez des patients sans thérapie systémique antérieure pour le traitement du mélanome. Le traitement adjuvant par nivolumab doit être commencé dans les 15 semaines à compter de la résection. OPDIVO sous-cutané doit être administré à la dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Les patients peuvent être traités jusqu'à un maximum de 12 mois ou jusqu'à une récidive de la maladie. Bristol-Myers Squibb SA rembourse en outre une partie définie de la durée maximale du traitement par OPDIVO sur demande de l’assureur maladie auprès duquel la personne en question était assurée au moment de l’achat. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.07---Melanom-adjuvant:20260901>20261001",
+   "kind": "control",
+   "set": 2
+  },
+  "fr:OPDIVO.07---Melanom-adjuvant:20260901>20261001|error": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Mélanome En monothérapie pour le traitement adjuvant du mélanome avec atteinte ganglionnaire régionale ou métastases distantes (stade IIIB, IIIC ou IV selon la 7e édition de l'AJCC) après résection complète chez des patients sans thérapie systémique antérieure pour le traitement du mélanome. Le traitement adjuvant par nivolumab doit être commencé dans les 15 semaines à compter de la résection. OPDIVO sous-cutané doit être administré à la dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Les patients peuvent être traités jusqu'à un maximum de 12 mois ou jusqu'à une récidive de la maladie. Bristol-Myers Squibb SA rembourse en outre une partie définie de la durée maximale du traitement par OPDIVO sur demande de l’assureur maladie auprès duquel la personne en question était assurée au moment de l’achat. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "Mélanome En monothérapie pour le traitement adjuvant du mélanome avec atteinte ganglionnaire régionale ou métastases distantes (stade IIIB, IIIC ou IV selon la 7e édition de l'AJCC) après résection complète chez des patients sans thérapie systémique antérieure pour le traitement du mélanome. Le traitement adjuvant par nivolumab doit être commencé dans les 15 semaines à compter de la résection. OPDIVO sous-cutané doit être administré à la dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Les patients peuvent être traités jusqu'à un maximum de 12 mois ou jusqu'à une récidive de la maladie. Bristol-Myers Squibb SA rembourse en outre une partie définie de la durée maximale du traitement par OPDIVO sur demande de l’assureur maladie auprès duquel la personne en question était assurée au moment de l’achat. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.07---Melanom-adjuvant:20260901>20261001",
+   "kind": "error",
+   "set": 1
+  },
+  "fr:OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001|control": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Cancer colorectal (CRC) avec dMMR/MSI-H En monothérapie dans le traitement des patients adultes atteints d’un cancer colorectal métastatique avec déficience du système de réparation des mésappariements de l’ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) après traitement préalable à base de fluoropyrimidine en association avec l’irinotécan ou l’oxaliplatine. La déficience du système de réparation des mésappariements de l'ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) doivent être confirmée par une méthode validée. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "Cancer colorectal (CRC) avec dMMR/MSI-H En monothérapie dans le traitement des patients adultes atteints d’un cancer colorectal métastatique avec déficience du système de réparation des mésappariements de l’ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) après traitement préalable à base de fluoropyrimidine en association avec l’irinotécan ou l’oxaliplatine. La déficience du système de réparation des mésappariements de l'ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) doivent être confirmée par une méthode validée. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001",
+   "kind": "control",
+   "set": 2
+  },
+  "fr:OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001|error": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Cancer colorectal (CRC) avec dMMR/MSI-H En monothérapie dans le traitement des patients adultes atteints d’un cancer colorectal métastatique avec déficience du système de réparation des mésappariements de l’ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) après traitement préalable à base de fluoropyrimidine en association avec l’irinotécan ou l’oxaliplatine. La déficience du système de réparation des mésappariements de l'ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) doivent être confirmée par une méthode validée. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "Cancer colorectal (CRC) avec dMMR/MSI-H En monothérapie dans le traitement des patients adultes atteints d’un cancer colorectal métastatique avec déficience du système de réparation des mésappariements de l’ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) après traitement préalable à base de fluoropyrimidine en association avec l’irinotécan ou l’oxaliplatine. La déficience du système de réparation des mésappariements de l'ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) doivent être confirmée par une méthode validée. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001",
+   "kind": "error",
+   "set": 1
+  },
+  "fr:OPDIVO.09---OC-oder-GEJC-adjuvant:20260901>20261001|control": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Traitement adjuvant du cancer de l'œsophage ou de la jonction œsogastrique (CO ou CJOG) En monothérapie pour le traitement adjuvant de patients adultes atteints d'un cancer de l'œsophage ou de la jonction œsogastrique entièrement réséqué présentant une maladie résiduelle pathologique après une précédente radiochimiothérapie néoadjuvante. La dose recommandée d'OPDIVO sous-cutané est de 600 mg toutes les 2 semaines ou 1200 mg toutes les 4 semaines. Les patients peuvent être traités jusqu'à un maximum de 12 mois ou jusqu'à une récidive de la maladie. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "Traitement adjuvant du cancer de l'œsophage ou de la jonction œsogastrique (CO ou CJOG) En monothérapie pour le traitement adjuvant de patients adultes atteints d'un cancer de l'œsophage ou de la jonction œsogastrique entièrement réséqué présentant une maladie résiduelle pathologique après une précédente radiochimiothérapie néoadjuvante. La dose recommandée d'OPDIVO sous-cutané est de 600 mg toutes les 2 semaines ou 1200 mg toutes les 4 semaines. Les patients peuvent être traités jusqu'à un maximum de 12 mois ou jusqu'à une récidive de la maladie. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.09---OC-oder-GEJC-adjuvant:20260901>20261001",
+   "kind": "control",
+   "set": 2
+  },
+  "fr:OPDIVO.09---OC-oder-GEJC-adjuvant:20260901>20261001|error": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Traitement adjuvant du cancer de l'œsophage ou de la jonction œsogastrique (CO ou CJOG) En monothérapie pour le traitement adjuvant de patients adultes atteints d'un cancer de l'œsophage ou de la jonction œsogastrique entièrement réséqué présentant une maladie résiduelle pathologique après une précédente radiochimiothérapie néoadjuvante. La dose recommandée d'OPDIVO sous-cutané est de 600 mg toutes les 2 semaines ou 1200 mg toutes les 4 semaines. Les patients peuvent être traités jusqu'à un maximum de 12 mois ou jusqu'à une récidive de la maladie. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "Traitement adjuvant du cancer de l'œsophage ou de la jonction œsogastrique (CO ou CJOG) En monothérapie pour le traitement adjuvant de patients adultes atteints d'un cancer de l'œsophage ou de la jonction œsogastrique entièrement réséqué présentant une maladie résiduelle pathologique après une précédente radiochimiothérapie néoadjuvante. La dose recommandée d'OPDIVO sous-cutané est de 600 mg toutes les 2 semaines ou 1200 mg toutes les 4 semaines. Les patients peuvent être traités jusqu'à un maximum de 12 mois ou jusqu'à une récidive de la maladie. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.09---OC-oder-GEJC-adjuvant:20260901>20261001",
+   "kind": "error",
+   "set": 1
+  },
+  "fr:OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001|control": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Cancer colorectal (CRC) avec dMMR/MSI-H OPDIVO sous-cutané est remboursé pour la phase de monothérapie après la combinaison de nivolumab intraveineux et ipilimumab dans le traitement du cancer colorectal métastatique chez des patients adultes avec déficience du système de réparation des mésappariements de l'ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) après traitement préalable à base de fluoropyrimidine en association avec l'irinotécan ou l'oxaliplatine. La déficience du système de réparation des mésappariements de l'ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) doivent être confirmée par une méthode validée. Dans la monothérapie faisant suite à la phase d'association, OPDIVO sous-cutané doit être administré à une dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "Cancer colorectal (CRC) avec dMMR/MSI-H OPDIVO sous-cutané est remboursé pour la phase de monothérapie après la combinaison de nivolumab intraveineux et ipilimumab dans le traitement du cancer colorectal métastatique chez des patients adultes avec déficience du système de réparation des mésappariements de l'ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) après traitement préalable à base de fluoropyrimidine en association avec l'irinotécan ou l'oxaliplatine. La déficience du système de réparation des mésappariements de l'ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) doivent être confirmée par une méthode validée. Dans la monothérapie faisant suite à la phase d'association, OPDIVO sous-cutané doit être administré à une dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001",
+   "kind": "control",
+   "set": 2
+  },
+  "fr:OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001|error": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Cancer colorectal (CRC) avec dMMR/MSI-H OPDIVO sous-cutané est remboursé pour la phase de monothérapie après la combinaison de nivolumab intraveineux et ipilimumab dans le traitement du cancer colorectal métastatique chez des patients adultes avec déficience du système de réparation des mésappariements de l'ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) après traitement préalable à base de fluoropyrimidine en association avec l'irinotécan ou l'oxaliplatine. La déficience du système de réparation des mésappariements de l'ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) doivent être confirmée par une méthode validée. Dans la monothérapie faisant suite à la phase d'association, OPDIVO sous-cutané doit être administré à une dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "Cancer colorectal (CRC) avec dMMR/MSI-H OPDIVO sous-cutané est remboursé pour la phase de monothérapie après la combinaison de nivolumab intraveineux et ipilimumab dans le traitement du cancer colorectal métastatique chez des patients adultes avec déficience du système de réparation des mésappariements de l'ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) après traitement préalable à base de fluoropyrimidine en association avec l'irinotécan ou l'oxaliplatine. La déficience du système de réparation des mésappariements de l'ADN (dMMR) ou haute instabilité microsatellitaire (MSI-H) doivent être confirmée par une méthode validée. Dans la monothérapie faisant suite à la phase d'association, OPDIVO sous-cutané doit être administré à une dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001",
+   "kind": "error",
+   "set": 1
+  },
+  "fr:OPDIVO.12---MIUC-adjuvant:20260901>20261001|control": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Traitement adjuvant du carcinome urothélial invasif musculaire (CUIM) En monothérapie pour le traitement adjuvant des patients adultes atteints de carcinome urothélial invasif musculaire (CUIM) avec une expression de PD-L1 ≥ 1%, après une résection radicale complète (R0) du CUIM et un risque élevé de récidive basé sur des preuves pathologiques et • ayant bénéficié d’une chimiothérapie néoadjuvante au cisplatine (stades ypT2 à ypT4a ou ypN+) ou • n’ayant pas bénéficié d’une chimiothérapie néoadjuvante à base de cisplatine et non éligibles ou rejetant une chimiothérapie adjuvante à base de cisplatine (stades pT3, pT4a ou pN+) Les patients peuvent être traités jusqu'à un maximum de 12 mois ou jusqu'à une récidive de la maladie. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "Traitement adjuvant du carcinome urothélial invasif musculaire (CUIM) En monothérapie pour le traitement adjuvant des patients adultes atteints de carcinome urothélial invasif musculaire (CUIM) avec une expression de PD-L1 ≥ 1%, après une résection radicale complète (R0) du CUIM et un risque élevé de récidive basé sur des preuves pathologiques et • ayant bénéficié d’une chimiothérapie néoadjuvante au cisplatine (stades ypT2 à ypT4a ou ypN+) ou • n’ayant pas bénéficié d’une chimiothérapie néoadjuvante à base de cisplatine et non éligibles ou rejetant une chimiothérapie adjuvante à base de cisplatine (stades pT3, pT4a ou pN+) Les patients peuvent être traités jusqu'à un maximum de 12 mois ou jusqu'à une récidive de la maladie. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.12---MIUC-adjuvant:20260901>20261001",
+   "kind": "control",
+   "set": 2
+  },
+  "fr:OPDIVO.12---MIUC-adjuvant:20260901>20261001|error": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Traitement adjuvant du carcinome urothélial invasif musculaire (CUIM) En monothérapie pour le traitement adjuvant des patients adultes atteints de carcinome urothélial invasif musculaire (CUIM) avec une expression de PD-L1 ≥ 1%, après une résection radicale complète (R0) du CUIM et un risque élevé de récidive basé sur des preuves pathologiques et • ayant bénéficié d’une chimiothérapie néoadjuvante au cisplatine (stades ypT2 à ypT4a ou ypN+) ou • n’ayant pas bénéficié d’une chimiothérapie néoadjuvante à base de cisplatine et non éligibles ou rejetant une chimiothérapie adjuvante à base de cisplatine (stades pT3, pT4a ou pN+) Les patients peuvent être traités jusqu'à un maximum de 12 mois ou jusqu'à une récidive de la maladie. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "Traitement adjuvant du carcinome urothélial invasif musculaire (CUIM) En monothérapie pour le traitement adjuvant des patients adultes atteints de carcinome urothélial invasif musculaire (CUIM) avec une expression de PD-L1 ≥ 1%, après une résection radicale complète (R0) du CUIM et un risque élevé de récidive basé sur des preuves pathologiques et • ayant bénéficié d’une chimiothérapie néoadjuvante au cisplatine (stades ypT2 à ypT4a ou ypN+) ou • n’ayant pas bénéficié d’une chimiothérapie néoadjuvante à base de cisplatine et non éligibles ou rejetant une chimiothérapie adjuvante à base de cisplatine (stades pT3, pT4a ou pN+) Les patients peuvent être traités jusqu'à un maximum de 12 mois ou jusqu'à une récidive de la maladie. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.12---MIUC-adjuvant:20260901>20261001",
+   "kind": "error",
+   "set": 1
+  },
+  "fr:OPDIVO.13--:20260901>20261001|control": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Carcinome épidermoïde de l'œsophage (CEO) En association avec une chimiothérapie à base de fluoropyrimidine et de cisplatine pour le traitement de première ligne de patients adultes atteints de carcinome épidermoïde de l'œsophage avancé ou métastatique avec une expression de PD-L1 ≥1% et pour lesquels un traitement curatif n'est pas possible. OPDIVO sous-cutané est associé à une chimiothérapie à base de fluoropyrimidine et de cisplatine à une dose de 600 mg toutes les 2 semaines ou 1200 mg toutes les 4 semaines. Les patients peuvent être traités jusqu'à un maximum de 24 mois. Un remboursement supplémentaire du nivolumab est exclu si une progression tumorale avait été observée lors d’un traitement antérieur avec un anticorps anti-PD-1, anti-PD-L1, anti-PD-L2, anti-CD137 ou anti-CTLA-4, ou avec un autre anticorps ou médicament ciblant spécifiquement la co-stimulation des cellules T ou des voies de signalisation des points de contrôle. La restriction supplémentaire relative à la progression tumorale ne s’applique pas chez des patients dont le traitement a débuté avant le 01.02.2025. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "Carcinome épidermoïde de l'œsophage (CEO) En association avec une chimiothérapie à base de fluoropyrimidine et de cisplatine pour le traitement de première ligne de patients adultes atteints de carcinome épidermoïde de l'œsophage avancé ou métastatique avec une expression de PD-L1 ≥1% et pour lesquels un traitement curatif n'est pas possible. OPDIVO sous-cutané est associé à une chimiothérapie à base de fluoropyrimidine et de cisplatine à une dose de 600 mg toutes les 2 semaines ou 1200 mg toutes les 4 semaines. Les patients peuvent être traités jusqu'à un maximum de 24 mois. Un remboursement supplémentaire du nivolumab est exclu si une progression tumorale avait été observée lors d’un traitement antérieur avec un anticorps anti-PD-1, anti-PD-L1, anti-PD-L2, anti-CD137 ou anti-CTLA-4, ou avec un autre anticorps ou médicament ciblant spécifiquement la co-stimulation des cellules T ou des voies de signalisation des points de contrôle. La restriction supplémentaire relative à la progression tumorale ne s’applique pas chez des patients dont le traitement a débuté avant le 01.02.2025. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.13--:20260901>20261001",
+   "kind": "control",
+   "set": 2
+  },
+  "fr:OPDIVO.13--:20260901>20261001|error": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Carcinome épidermoïde de l'œsophage (CEO) En association avec une chimiothérapie à base de fluoropyrimidine et de cisplatine pour le traitement de première ligne de patients adultes atteints de carcinome épidermoïde de l'œsophage avancé ou métastatique avec une expression de PD-L1 ≥1% et pour lesquels un traitement curatif n'est pas possible. OPDIVO sous-cutané est associé à une chimiothérapie à base de fluoropyrimidine et de cisplatine à une dose de 600 mg toutes les 2 semaines ou 1200 mg toutes les 4 semaines. Les patients peuvent être traités jusqu'à un maximum de 24 mois. Un remboursement supplémentaire du nivolumab est exclu si une progression tumorale avait été observée lors d’un traitement antérieur avec un anticorps anti-PD-1, anti-PD-L1, anti-PD-L2, anti-CD137 ou anti-CTLA-4, ou avec un autre anticorps ou médicament ciblant spécifiquement la co-stimulation des cellules T ou des voies de signalisation des points de contrôle. La restriction supplémentaire relative à la progression tumorale ne s’applique pas chez des patients dont le traitement a débuté avant le 01.02.2025. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "Carcinome épidermoïde de l'œsophage (CEO) En association avec une chimiothérapie à base de fluoropyrimidine et de cisplatine pour le traitement de première ligne de patients adultes atteints de carcinome épidermoïde de l'œsophage avancé ou métastatique avec une expression de PD-L1 ≥1% et pour lesquels un traitement curatif n'est pas possible. OPDIVO sous-cutané est associé à une chimiothérapie à base de fluoropyrimidine et de cisplatine à une dose de 600 mg toutes les 2 semaines ou 1200 mg toutes les 4 semaines. Les patients peuvent être traités jusqu'à un maximum de 24 mois. Un remboursement supplémentaire du nivolumab est exclu si une progression tumorale avait été observée lors d’un traitement antérieur avec un anticorps anti-PD-1, anti-PD-L1, anti-PD-L2, anti-CD137 ou anti-CTLA-4, ou avec un autre anticorps ou médicament ciblant spécifiquement la co-stimulation des cellules T ou des voies de signalisation des points de contrôle. La restriction supplémentaire relative à la progression tumorale ne s’applique pas chez des patients dont le traitement a débuté avant le 01.02.2025. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.13--:20260901>20261001",
+   "kind": "error",
+   "set": 1
+  },
+  "fr:OPDIVO.16---GC-GEJC-OC:20260901>20261001|control": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Adénocarcinome gastrique, de la jonction œsogastrique ou de l'œsophage distal (CG/CJOG/COD) En association avec une chimiothérapie à base d’oxaliplatine et de fluoropyrimidine dans le traitement de première ligne des patients adultes atteints d’un adénocarcinome gastrique, de la jonction œsogastrique ou de l'œsophage distal non résécable, localement avancé ou métastatique, exprimant PD-L1 avec un score combiné positif (CPS) ≥ 10. OPDIVO sous-cutané est associé à une chimiothérapie à base de fluoropyrimidine et d’oxaliplatine à une dose de 600 mg toutes les 2 semaines. Un remboursement supplémentaire du nivolumab est exclu si une progression tumorale avait été observée lors d’un traitement antérieur avec un anticorps anti-PD-1, anti-PD-L1, anti-PD-L2, anti-CD137 ou anti-CTLA-4, ou avec un autre anticorps ou médicament ciblant spécifiquement la co-stimulation des cellules T ou des voies de signalisation des points de contrôle. La restriction supplémentaire relative à la progression tumorale ne s’applique pas chez des patients dont le traitement a débuté avant le 01.02.2025. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "Adénocarcinome gastrique, de la jonction œsogastrique ou de l'œsophage distal (CG/CJOG/COD) En association avec une chimiothérapie à base d’oxaliplatine et de fluoropyrimidine dans le traitement de première ligne des patients adultes atteints d’un adénocarcinome gastrique, de la jonction œsogastrique ou de l'œsophage distal non résécable, localement avancé ou métastatique, exprimant PD-L1 avec un score combiné positif (CPS) ≥ 10. OPDIVO sous-cutané est associé à une chimiothérapie à base de fluoropyrimidine et d’oxaliplatine à une dose de 600 mg toutes les 2 semaines. Un remboursement supplémentaire du nivolumab est exclu si une progression tumorale avait été observée lors d’un traitement antérieur avec un anticorps anti-PD-1, anti-PD-L1, anti-PD-L2, anti-CD137 ou anti-CTLA-4, ou avec un autre anticorps ou médicament ciblant spécifiquement la co-stimulation des cellules T ou des voies de signalisation des points de contrôle. La restriction supplémentaire relative à la progression tumorale ne s’applique pas chez des patients dont le traitement a débuté avant le 01.02.2025. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.16---GC-GEJC-OC:20260901>20261001",
+   "kind": "control",
+   "set": 2
+  },
+  "fr:OPDIVO.16---GC-GEJC-OC:20260901>20261001|error": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Adénocarcinome gastrique, de la jonction œsogastrique ou de l'œsophage distal (CG/CJOG/COD) En association avec une chimiothérapie à base d’oxaliplatine et de fluoropyrimidine dans le traitement de première ligne des patients adultes atteints d’un adénocarcinome gastrique, de la jonction œsogastrique ou de l'œsophage distal non résécable, localement avancé ou métastatique, exprimant PD-L1 avec un score combiné positif (CPS) ≥ 10. OPDIVO sous-cutané est associé à une chimiothérapie à base de fluoropyrimidine et d’oxaliplatine à une dose de 600 mg toutes les 2 semaines. Un remboursement supplémentaire du nivolumab est exclu si une progression tumorale avait été observée lors d’un traitement antérieur avec un anticorps anti-PD-1, anti-PD-L1, anti-PD-L2, anti-CD137 ou anti-CTLA-4, ou avec un autre anticorps ou médicament ciblant spécifiquement la co-stimulation des cellules T ou des voies de signalisation des points de contrôle. La restriction supplémentaire relative à la progression tumorale ne s’applique pas chez des patients dont le traitement a débuté avant le 01.02.2025. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "Adénocarcinome gastrique, de la jonction œsogastrique ou de l'œsophage distal (CG/CJOG/COD) En association avec une chimiothérapie à base d’oxaliplatine et de fluoropyrimidine dans le traitement de première ligne des patients adultes atteints d’un adénocarcinome gastrique, de la jonction œsogastrique ou de l'œsophage distal non résécable, localement avancé ou métastatique, exprimant PD-L1 avec un score combiné positif (CPS) ≥ 10. OPDIVO sous-cutané est associé à une chimiothérapie à base de fluoropyrimidine et d’oxaliplatine à une dose de 600 mg toutes les 2 semaines. Un remboursement supplémentaire du nivolumab est exclu si une progression tumorale avait été observée lors d’un traitement antérieur avec un anticorps anti-PD-1, anti-PD-L1, anti-PD-L2, anti-CD137 ou anti-CTLA-4, ou avec un autre anticorps ou médicament ciblant spécifiquement la co-stimulation des cellules T ou des voies de signalisation des points de contrôle. La restriction supplémentaire relative à la progression tumorale ne s’applique pas chez des patients dont le traitement a débuté avant le 01.02.2025. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.16---GC-GEJC-OC:20260901>20261001",
+   "kind": "error",
+   "set": 1
+  },
+  "fr:OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib:20260901>20261001|control": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "1L carcinome à cellules rénales (RCC) en association avec le cabozantinib (Non inclus dans le prix de facturation unique) En association avec le cabozantinib pour le traitement de première ligne du carcinome à cellules rénales avancé (non résécable ou métastatique) chez les patients adultes présentant un profil de risque intermédiaire/défavorable. OPDIVO sous-cutané doit être administré à une dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Les patients peuvent être traités jusqu'à un maximum de 24 mois. Bristol-Myers Squibb SA rembourse à l’assurance maladie auprès de laquelle la personne était assurée au moment de la remise, sur première demande, une partie du prix de fabrique par emballage d’OPDIVO sous-cutané administré en association avec le cabozantinib; cette partie diffère des remboursements prévus dans le cadre du prix de facturation unique. Le titulaire de l’autorisation communique à l’assureur le montant du remboursement. La taxe sur la valeur ajoutée ne peut pas être remboursée en plus de ce montant. La demande de remboursement doit être faite à partir du moment de l'administration. Le remboursement d’OPDIVO n’est possible qu’en association avec le partenaire de combinaison cabozantinib dont la limitation précise explicitement l’association (OPDIVO + cabozantinib) dans l’indication 1L du CCR avancé. Les conditions de remboursement du partenaire de combinaison cabozantinib sont définies dans sa limitation. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "1L carcinome à cellules rénales (RCC) en association avec le cabozantinib (Non inclus dans le prix de facturation unique) En association avec le cabozantinib pour le traitement de première ligne du carcinome à cellules rénales avancé (non résécable ou métastatique) chez les patients adultes présentant un profil de risque intermédiaire/défavorable. OPDIVO sous-cutané doit être administré à une dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Les patients peuvent être traités jusqu'à un maximum de 24 mois. Bristol-Myers Squibb SA rembourse à l’assurance maladie auprès de laquelle la personne était assurée au moment de la remise, sur première demande, une partie du prix de fabrique par emballage d’OPDIVO sous-cutané administré en association avec le cabozantinib; cette partie diffère des remboursements prévus dans le cadre du prix de facturation unique. Le titulaire de l’autorisation communique à l’assureur le montant du remboursement. La taxe sur la valeur ajoutée ne peut pas être remboursée en plus de ce montant. La demande de remboursement doit être faite à partir du moment de l'administration. Le remboursement d’OPDIVO n’est possible qu’en association avec le partenaire de combinaison cabozantinib dont la limitation précise explicitement l’association (OPDIVO + cabozantinib) dans l’indication 1L du CCR avancé. Les conditions de remboursement du partenaire de combinaison cabozantinib sont définies dans sa limitation. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib:20260901>20261001",
+   "kind": "control",
+   "set": 2
+  },
+  "fr:OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib:20260901>20261001|error": {
+   "lang": "fr",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "36d94228",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "1L carcinome à cellules rénales (RCC) en association avec le cabozantinib (Non inclus dans le prix de facturation unique) En association avec le cabozantinib pour le traitement de première ligne du carcinome à cellules rénales avancé (non résécable ou métastatique) chez les patients adultes présentant un profil de risque intermédiaire/défavorable. OPDIVO sous-cutané doit être administré à une dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Les patients peuvent être traités jusqu'à un maximum de 24 mois. Bristol-Myers Squibb SA rembourse à l’assurance maladie auprès de laquelle la personne était assurée au moment de la remise, sur première demande, une partie du prix de fabrique par emballage d’OPDIVO sous-cutané administré en association avec le cabozantinib; cette partie diffère des remboursements prévus dans le cadre du prix de facturation unique. Le titulaire de l’autorisation communique à l’assureur le montant du remboursement. La taxe sur la valeur ajoutée ne peut pas être remboursée en plus de ce montant. La demande de remboursement doit être faite à partir du moment de l'administration. Le remboursement d’OPDIVO n’est possible qu’en association avec le partenaire de combinaison cabozantinib dont la limitation précise explicitement l’association (OPDIVO + cabozantinib) dans l’indication 1L du CCR avancé. Les conditions de remboursement du partenaire de combinaison cabozantinib sont définies dans sa limitation. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+   "correct_text": "1L carcinome à cellules rénales (RCC) en association avec le cabozantinib (Non inclus dans le prix de facturation unique) En association avec le cabozantinib pour le traitement de première ligne du carcinome à cellules rénales avancé (non résécable ou métastatique) chez les patients adultes présentant un profil de risque intermédiaire/défavorable. OPDIVO sous-cutané doit être administré à une dose maximale de 600 mg toutes les deux semaines ou 1200 mg toutes les quatre semaines. Les patients peuvent être traités jusqu'à un maximum de 24 mois. Bristol-Myers Squibb SA rembourse à l’assurance maladie auprès de laquelle la personne était assurée au moment de la remise, sur première demande, une partie du prix de fabrique par emballage d’OPDIVO sous-cutané administré en association avec le cabozantinib; cette partie diffère des remboursements prévus dans le cadre du prix de facturation unique. Le titulaire de l’autorisation communique à l’assureur le montant du remboursement. La taxe sur la valeur ajoutée ne peut pas être remboursée en plus de ce montant. La demande de remboursement doit être faite à partir du moment de l'administration. Le remboursement d’OPDIVO n’est possible qu’en association avec le partenaire de combinaison cabozantinib dont la limitation précise explicitement l’association (OPDIVO + cabozantinib) dans l’indication 1L du CCR avancé. Les conditions de remboursement du partenaire de combinaison cabozantinib sont définies dans sa limitation. Le code d'indication de cette limitation doit être transmis à l'assureur-maladie.",
+   "uid": "fr:OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib:20260901>20261001",
+   "kind": "error",
+   "set": 1
+  },
+  "fr:RESOLOR3:20260401>20260601|control": {
+   "lang": "fr",
+   "type": "negation_operator",
+   "subtype": "replaced",
+   "family": "c2c0c3f8",
+   "step": "20260401>20260601",
+   "product": "Resolor Filmtabl 1 mg",
+   "reversed": false,
+   "error_text": "Le traitement par RESOLOR n’est destiné aux adultes (âgées de >18 ans) qui n’ont pas répondu à un traitement antérieur avec au moins 2 laxatifs de classes différentes pendant une période de 9 mois au minimum. Si le traitement n’est pas efficace (augmentation de la fréquence des selles d’au moins 1 vidange intestinale spontanée par semaine) au bout de 4 semaines, l’administration du médicament doit être arrêtée. La durée maximale du traitement est de 12 semaines. Le traitement de > 12 semaines par RESOLOR nécessite une demande de prise en charge des coûts auprès de l’assurance, après consultation du médecin-conseil.",
+   "correct_text": "Le traitement par RESOLOR est destiné aux adultes (âgées de >18 ans) qui n’ont pas répondu à un traitement antérieur avec au moins 2 laxatifs de classes différentes pendant une période de 9 mois au minimum. Si le traitement n’est pas efficace (augmentation de la fréquence des selles d’au moins 1 vidange intestinale spontanée par semaine) au bout de 4 semaines, l’administration du médicament doit être arrêtée. La durée maximale du traitement est de 12 semaines. Le traitement de > 12 semaines par RESOLOR nécessite une demande de prise en charge des coûts auprès de l’assureur maladie, après consultation du médecin-conseil.",
+   "uid": "fr:RESOLOR3:20260401>20260601",
+   "kind": "control",
+   "set": 1
+  },
+  "fr:RESOLOR3:20260401>20260601|error": {
+   "lang": "fr",
+   "type": "negation_operator",
+   "subtype": "replaced",
+   "family": "c2c0c3f8",
+   "step": "20260401>20260601",
+   "product": "Resolor Filmtabl 1 mg",
+   "reversed": false,
+   "error_text": "Le traitement par RESOLOR n’est destiné aux adultes (âgées de >18 ans) qui n’ont pas répondu à un traitement antérieur avec au moins 2 laxatifs de classes différentes pendant une période de 9 mois au minimum. Si le traitement n’est pas efficace (augmentation de la fréquence des selles d’au moins 1 vidange intestinale spontanée par semaine) au bout de 4 semaines, l’administration du médicament doit être arrêtée. La durée maximale du traitement est de 12 semaines. Le traitement de > 12 semaines par RESOLOR nécessite une demande de prise en charge des coûts auprès de l’assurance, après consultation du médecin-conseil.",
+   "correct_text": "Le traitement par RESOLOR est destiné aux adultes (âgées de >18 ans) qui n’ont pas répondu à un traitement antérieur avec au moins 2 laxatifs de classes différentes pendant une période de 9 mois au minimum. Si le traitement n’est pas efficace (augmentation de la fréquence des selles d’au moins 1 vidange intestinale spontanée par semaine) au bout de 4 semaines, l’administration du médicament doit être arrêtée. La durée maximale du traitement est de 12 semaines. Le traitement de > 12 semaines par RESOLOR nécessite une demande de prise en charge des coûts auprès de l’assureur maladie, après consultation du médecin-conseil.",
+   "uid": "fr:RESOLOR3:20260401>20260601",
+   "kind": "error",
+   "set": 2
+  },
+  "it:OPDIVO.01---NSCLC-Mono:20260901>20261001|control": {
+   "lang": "it",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "cf83d1c3",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Carcinoma polmonare non a piccole cellule (NSCLC) Come monoterapia per il trattamento del carcinoma polmonare non a piccole cellule locale avanzato o metastatico a seguito di precedente chemioterapia. Il codice dell'indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.",
+   "correct_text": "Carcinoma polmonare non a piccole cellule (NSCLC) Come monoterapia per il trattamento del carcinoma polmonare non a piccole cellule locale avanzato o metastatico a seguito di precedente chemioterapia. Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.",
+   "uid": "it:OPDIVO.01---NSCLC-Mono:20260901>20261001",
+   "kind": "control",
+   "set": 1
+  },
+  "it:OPDIVO.01---NSCLC-Mono:20260901>20261001|error": {
+   "lang": "it",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "cf83d1c3",
+   "step": "20260901>20261001",
+   "product": "Opdivo Inj Lös, 600 mg/5 ml",
+   "reversed": false,
+   "error_text": "Carcinoma polmonare non a piccole cellule (NSCLC) Come monoterapia per il trattamento del carcinoma polmonare non a piccole cellule locale avanzato o metastatico a seguito di precedente chemioterapia. Il codice dell'indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.",
+   "correct_text": "Carcinoma polmonare non a piccole cellule (NSCLC) Come monoterapia per il trattamento del carcinoma polmonare non a piccole cellule locale avanzato o metastatico a seguito di precedente chemioterapia. Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.",
+   "uid": "it:OPDIVO.01---NSCLC-Mono:20260901>20261001",
+   "kind": "error",
+   "set": 2
+  },
+  "it:RA:213c9b7d-a450-40f6-b8ad-16e06e49236d#1:20260304>20260401|control": {
+   "lang": "it",
+   "type": "words",
+   "subtype": "removed",
+   "family": "cdc23968",
+   "step": "20260304>20260401",
+   "product": "Jemperli Inf Konz 500 mg/10 ml",
+   "reversed": false,
+   "error_text": "Carcinoma endometriale con deficit del sistema di mismatch repair del DNA (dMMR) / elevata instabilità dei microsatelliti (MSI-H) (in associazione con chemioterapia a base di platino) JEMPERLI in associazione a carboplatino e paclitaxel è rimborsato per il trattamento di prima linea di pazienti adulte affette da carcinoma endometriale primario avanzato o recidivante, con deficit del sistema di mismatch repair del DNA (dMMR) / elevata instabilità dei microsatelliti (MSI-H), che non abbiano ricevuto precedente terapia con anti-PD-1/anti-PD-L1, con elevato rischio di recidiva e al massimo una recidiva precedente, che siano eleggibili per la terapia sistemica. La durata massima della terapia è di 3 anni. Il titolare dell’autorizzazione, GlaxoSmithKline AG, rimborsa all'assicuratore sanitario presso il quale l'assicurato era affiliato al momento dell'acquisto, su richiesta della stessa, per ogni confezione di JEMPERLI utilizzata nella terapia di combinazione, una quota prestabilita del prezzo di fabbrica. Il titolare dell’autorizzazione comunica all'assicuratore sanitario l’importo specifico dei rimborsi. L'IVA non può essere richiesta in aggiunta a questa parte del prezzo di fabbrica. La richiesta di rimborso deve essere effettuata a partire dal momento della somministrazione. Il seguente codice deve essere trasmesso all’assicuratore malattia: 21373.02",
+   "correct_text": "Carcinoma endometriale con deficit del sistema di mismatch repair del DNA (dMMR) / elevata instabilità dei microsatelliti (MSI-H) (in associazione con chemioterapia a base di platino) JEMPERLI in associazione a carboplatino e paclitaxel è rimborsato per il trattamento di pazienti adulte affette da carcinoma endometriale primario avanzato o recidivante, con deficit del sistema di mismatch repair del DNA (dMMR) / elevata instabilità dei microsatelliti (MSI-H), che non abbiano ricevuto precedente terapia con anti-PD-1/anti-PD-L1, con elevato rischio di recidiva e al massimo una recidiva precedente, che siano eleggibili per la terapia sistemica. La durata massima della terapia è di 3 anni. Il titolare dell’autorizzazione, GlaxoSmithKline AG, rimborsa all'assicuratore sanitario presso il quale l'assicurato era affiliato al momento dell'acquisto, su richiesta della stessa, per ogni confezione di JEMPERLI utilizzata nella terapia di combinazione, una quota prestabilita del prezzo di fabbrica. Il titolare dell’autorizzazione comunica all'assicuratore sanitario l’importo specifico dei rimborsi. L'IVA non può essere richiesta in aggiunta a questa parte del prezzo di fabbrica. La richiesta di rimborso deve essere effettuata a partire dal momento della somministrazione. Il seguente codice deve essere trasmesso all’assicuratore malattia: 21373.02",
+   "uid": "it:RA:213c9b7d-a450-40f6-b8ad-16e06e49236d#1:20260304>20260401",
+   "kind": "control",
+   "set": 1
+  },
+  "it:RA:213c9b7d-a450-40f6-b8ad-16e06e49236d#1:20260304>20260401|error": {
+   "lang": "it",
+   "type": "words",
+   "subtype": "removed",
+   "family": "cdc23968",
+   "step": "20260304>20260401",
+   "product": "Jemperli Inf Konz 500 mg/10 ml",
+   "reversed": false,
+   "error_text": "Carcinoma endometriale con deficit del sistema di mismatch repair del DNA (dMMR) / elevata instabilità dei microsatelliti (MSI-H) (in associazione con chemioterapia a base di platino) JEMPERLI in associazione a carboplatino e paclitaxel è rimborsato per il trattamento di prima linea di pazienti adulte affette da carcinoma endometriale primario avanzato o recidivante, con deficit del sistema di mismatch repair del DNA (dMMR) / elevata instabilità dei microsatelliti (MSI-H), che non abbiano ricevuto precedente terapia con anti-PD-1/anti-PD-L1, con elevato rischio di recidiva e al massimo una recidiva precedente, che siano eleggibili per la terapia sistemica. La durata massima della terapia è di 3 anni. Il titolare dell’autorizzazione, GlaxoSmithKline AG, rimborsa all'assicuratore sanitario presso il quale l'assicurato era affiliato al momento dell'acquisto, su richiesta della stessa, per ogni confezione di JEMPERLI utilizzata nella terapia di combinazione, una quota prestabilita del prezzo di fabbrica. Il titolare dell’autorizzazione comunica all'assicuratore sanitario l’importo specifico dei rimborsi. L'IVA non può essere richiesta in aggiunta a questa parte del prezzo di fabbrica. La richiesta di rimborso deve essere effettuata a partire dal momento della somministrazione. Il seguente codice deve essere trasmesso all’assicuratore malattia: 21373.02",
+   "correct_text": "Carcinoma endometriale con deficit del sistema di mismatch repair del DNA (dMMR) / elevata instabilità dei microsatelliti (MSI-H) (in associazione con chemioterapia a base di platino) JEMPERLI in associazione a carboplatino e paclitaxel è rimborsato per il trattamento di pazienti adulte affette da carcinoma endometriale primario avanzato o recidivante, con deficit del sistema di mismatch repair del DNA (dMMR) / elevata instabilità dei microsatelliti (MSI-H), che non abbiano ricevuto precedente terapia con anti-PD-1/anti-PD-L1, con elevato rischio di recidiva e al massimo una recidiva precedente, che siano eleggibili per la terapia sistemica. La durata massima della terapia è di 3 anni. Il titolare dell’autorizzazione, GlaxoSmithKline AG, rimborsa all'assicuratore sanitario presso il quale l'assicurato era affiliato al momento dell'acquisto, su richiesta della stessa, per ogni confezione di JEMPERLI utilizzata nella terapia di combinazione, una quota prestabilita del prezzo di fabbrica. Il titolare dell’autorizzazione comunica all'assicuratore sanitario l’importo specifico dei rimborsi. L'IVA non può essere richiesta in aggiunta a questa parte del prezzo di fabbrica. La richiesta di rimborso deve essere effettuata a partire dal momento della somministrazione. Il seguente codice deve essere trasmesso all’assicuratore malattia: 21373.02",
+   "uid": "it:RA:213c9b7d-a450-40f6-b8ad-16e06e49236d#1:20260304>20260401",
+   "kind": "error",
+   "set": 2
+  },
+  "it:RESOLOR3:20260401>20260601|control": {
+   "lang": "it",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "2e3e0cb5",
+   "step": "20260401>20260601",
+   "product": "Resolor Filmtabl 1 mg",
+   "reversed": false,
+   "error_text": "La terapia con RESOLOR è indicata per adulti (>18 anni di età) che non hanno risposto a un precedente trattamento con almeno 2 lassativi di classi differenti condotto per un periodo di almeno 9 mesi. Nel caso in cui dopo 4 settimane il trattamento non sia stato efficace (aumento della frequenza delle defecazioni di almeno 1 evacuazione intestinale spontanea alla settimana), si deve interrompere l’assunzione del preparato. La durata massima della terapia è pari a 12 settimane. La terapia con RESOLOR per più di 12 settimane richiede una garanzia di assunzione dei costi da parte dell’assicurazione malattie previa consultazione del medico di fiducia.",
+   "correct_text": "La terapia con RESOLOR è indicata per adulti (>18 anni di età) che non hanno risposto a un precedente trattamento con almeno 2 lassativi di classi differenti condotto per un periodo di almeno 9 mesi. Nel caso in cui dopo 4 settimane il trattamento non sia stato efficace (aumento della frequenza delle defecazioni di almeno 1 evacuazione intestinale spontanea alla settimana), si deve interrompere l’assunzione del preparato. La durata massima della terapia è pari a 12 settimane. La terapia con RESOLOR per più di 12 settimane richiede una garanzia di assunzione dei costi da parte dell’assicuratore malattia previa consultazione del medico di fiducia.",
+   "uid": "it:RESOLOR3:20260401>20260601",
+   "kind": "control",
+   "set": 1
+  },
+  "it:RESOLOR3:20260401>20260601|error": {
+   "lang": "it",
+   "type": "words",
+   "subtype": "replaced",
+   "family": "2e3e0cb5",
+   "step": "20260401>20260601",
+   "product": "Resolor Filmtabl 1 mg",
+   "reversed": false,
+   "error_text": "La terapia con RESOLOR è indicata per adulti (>18 anni di età) che non hanno risposto a un precedente trattamento con almeno 2 lassativi di classi differenti condotto per un periodo di almeno 9 mesi. Nel caso in cui dopo 4 settimane il trattamento non sia stato efficace (aumento della frequenza delle defecazioni di almeno 1 evacuazione intestinale spontanea alla settimana), si deve interrompere l’assunzione del preparato. La durata massima della terapia è pari a 12 settimane. La terapia con RESOLOR per più di 12 settimane richiede una garanzia di assunzione dei costi da parte dell’assicurazione malattie previa consultazione del medico di fiducia.",
+   "correct_text": "La terapia con RESOLOR è indicata per adulti (>18 anni di età) che non hanno risposto a un precedente trattamento con almeno 2 lassativi di classi differenti condotto per un periodo di almeno 9 mesi. Nel caso in cui dopo 4 settimane il trattamento non sia stato efficace (aumento della frequenza delle defecazioni di almeno 1 evacuazione intestinale spontanea alla settimana), si deve interrompere l’assunzione del preparato. La durata massima della terapia è pari a 12 settimane. La terapia con RESOLOR per più di 12 settimane richiede una garanzia di assunzione dei costi da parte dell’assicuratore malattia previa consultazione del medico di fiducia.",
+   "uid": "it:RESOLOR3:20260401>20260601",
+   "kind": "error",
+   "set": 2
+  }
+ },
+ "ids": {
+  "X000": "fr:OPDIVO.12---MIUC-adjuvant:20260901>20261001|error",
+  "X001": "fr:OPDIVO.04---Nierenzellkarzinom--RCC-:20260901>20261001|control",
+  "X002": "fr:OPDIVO.13--:20260901>20261001|error",
+  "X003": "fr:OPDIVO.01---NSCLC-Mono:20260901>20261001|control",
+  "X004": "fr:OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001|error",
+  "X005": "it:OPDIVO.01---NSCLC-Mono:20260901>20261001|control",
+  "X006": "it:RA:213c9b7d-a450-40f6-b8ad-16e06e49236d#1:20260304>20260401|control",
+  "X007": "fr:OPDIVO.16---GC-GEJC-OC:20260901>20261001|error",
+  "X008": "fr:RESOLOR3:20260401>20260601|control",
+  "X009": "fr:OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib:20260901>20261001|error",
+  "X010": "it:RESOLOR3:20260401>20260601|control",
+  "X011": "fr:OPDIVO.02---Melanom-Monotherapie:20260901>20261001|error",
+  "X012": "fr:OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001|error",
+  "X013": "fr:OPDIVO.03---Melanom-Kombitherapie:20260901>20261001|error",
+  "X014": "fr:OPDIVO.09---OC-oder-GEJC-adjuvant:20260901>20261001|error",
+  "X015": "fr:OPDIVO.07---Melanom-adjuvant:20260901>20261001|error",
+  "X016": "fr:KEYTRUDA.XX---Inf-Konz:20260801>20260901|control",
+  "Y000": "fr:OPDIVO.12---MIUC-adjuvant:20260901>20261001|control",
+  "Y001": "fr:RESOLOR3:20260401>20260601|error",
+  "Y002": "fr:OPDIVO.02---Melanom-Monotherapie:20260901>20261001|control",
+  "Y003": "it:RA:213c9b7d-a450-40f6-b8ad-16e06e49236d#1:20260304>20260401|error",
+  "Y004": "fr:OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib:20260901>20261001|control",
+  "Y005": "it:OPDIVO.01---NSCLC-Mono:20260901>20261001|error",
+  "Y006": "fr:OPDIVO.01---NSCLC-Mono:20260901>20261001|error",
+  "Y007": "fr:OPDIVO.16---GC-GEJC-OC:20260901>20261001|control",
+  "Y008": "fr:OPDIVO.07---Melanom-adjuvant:20260901>20261001|control",
+  "Y009": "fr:OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001|control",
+  "Y010": "fr:KEYTRUDA.XX---Inf-Konz:20260801>20260901|error",
+  "Y011": "fr:OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001|control",
+  "Y012": "fr:OPDIVO.13--:20260901>20261001|control",
+  "Y013": "fr:OPDIVO.09---OC-oder-GEJC-adjuvant:20260901>20261001|control",
+  "Y014": "it:RESOLOR3:20260401>20260601|error",
+  "Y015": "fr:OPDIVO.04---Nierenzellkarzinom--RCC-:20260901>20261001|error",
+  "Y016": "fr:OPDIVO.03---Melanom-Kombitherapie:20260901>20261001|control",
+  "J000": "fr:KEYTRUDA.XX---Inf-Konz:20260801>20260901|control",
+  "J001": "fr:OPDIVO.16---GC-GEJC-OC:20260901>20261001|error",
+  "J002": "fr:OPDIVO.02---Melanom-Monotherapie:20260901>20261001|error",
+  "J003": "fr:OPDIVO.13--:20260901>20261001|error",
+  "J004": "fr:OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib:20260901>20261001|error",
+  "J005": "fr:RESOLOR3:20260401>20260601|control",
+  "J006": "fr:OPDIVO.03---Melanom-Kombitherapie:20260901>20261001|error",
+  "J007": "fr:OPDIVO.01---NSCLC-Mono:20260901>20261001|control",
+  "J008": "fr:OPDIVO.12---MIUC-adjuvant:20260901>20261001|error",
+  "J009": "fr:OPDIVO.07---Melanom-adjuvant:20260901>20261001|error",
+  "J010": "fr:OPDIVO.09---OC-oder-GEJC-adjuvant:20260901>20261001|error",
+  "J011": "fr:OPDIVO.04---Nierenzellkarzinom--RCC-:20260901>20261001|control",
+  "J012": "it:OPDIVO.01---NSCLC-Mono:20260901>20261001|control",
+  "J013": "fr:OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001|error",
+  "J014": "it:RESOLOR3:20260401>20260601|control",
+  "J015": "it:RA:213c9b7d-a450-40f6-b8ad-16e06e49236d#1:20260304>20260401|control",
+  "J016": "fr:OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001|error",
+  "K000": "fr:OPDIVO.04---Nierenzellkarzinom--RCC-:20260901>20261001|error",
+  "K001": "fr:OPDIVO.07---Melanom-adjuvant:20260901>20261001|control",
+  "K002": "fr:OPDIVO.12---MIUC-adjuvant:20260901>20261001|control",
+  "K003": "fr:OPDIVO.13--:20260901>20261001|control",
+  "K004": "fr:KEYTRUDA.XX---Inf-Konz:20260801>20260901|error",
+  "K005": "fr:OPDIVO.16---GC-GEJC-OC:20260901>20261001|control",
+  "K006": "it:RESOLOR3:20260401>20260601|error",
+  "K007": "fr:OPDIVO.09---OC-oder-GEJC-adjuvant:20260901>20261001|control",
+  "K008": "fr:OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001|control",
+  "K009": "it:OPDIVO.01---NSCLC-Mono:20260901>20261001|error",
+  "K010": "it:RA:213c9b7d-a450-40f6-b8ad-16e06e49236d#1:20260304>20260401|error",
+  "K011": "fr:OPDIVO.01---NSCLC-Mono:20260901>20261001|error",
+  "K012": "fr:OPDIVO.03---Melanom-Kombitherapie:20260901>20261001|control",
+  "K013": "fr:RESOLOR3:20260401>20260601|error",
+  "K014": "fr:OPDIVO.02---Melanom-Monotherapie:20260901>20261001|control",
+  "K015": "fr:OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001|control",
+  "K016": "fr:OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib:20260901>20261001|control"
+ }
+}
