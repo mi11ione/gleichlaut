@@ -15,13 +15,15 @@
 #   (a) the Job gleichlaut-fetch-gguf in certify-job.yaml: from huggingface.co, or from your internal mirror with
 #       GLEICHLAUT_MODEL_URL in the ConfigMap below (sha256-checked either way; an interrupted download resumes);
 #   (b) no egress at all: models-loader.yaml (a loader pod, then `kubectl cp` and a sha256 check; docs/deploy/README.md).
-#   apertus-v1.5-8b-text-q4_k_m.gguf, sha256 a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299
+#   apertus-v1.5-8b-text-q8_0.gguf (the default build), sha256 dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d
+#   (8 GiB node: apertus-v1.5-8b-text-q4_k_m.gguf, sha256 a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299)
 # Every other pod mounts it read-only (persistentVolumeClaim.readOnly and volumeMounts.readOnly). ReadWriteOnce attaches the
 # volume to one node at a time: the month Job and the one-off Jobs never run at the same time, so they take turns.
-# Certification: the image carries the shipped build certificate (eval/certificates/8b-q4_k_m-fresh166.json), which the
-# gate verifies at every run. With an HMAC key (GLEICHLAUT_CERT_KEY) run the Job gleichlaut-certify-build of
-# certify-job.yaml once: it imports a signed copy into state/ (with a key set, the unsigned shipped certificate is refused
-# and every 8B draft goes to review until that copy exists). One Secret holds the key for every Job and both lanes:
+# Certification: the image carries the shipped build certificates (eval/certificates/8b-q8_0-fresh166.json for the default
+# Q8_0 build, 8b-q4_k_m-fresh166.json for Q4_K_M), which the gate verifies at every run. With an HMAC key
+# (GLEICHLAUT_CERT_KEY) run the Job gleichlaut-certify-build of certify-job.yaml once: it imports a signed copy into
+# state/ (with a key set, the unsigned shipped certificate is refused and every 8B draft goes to review until that copy
+# exists). One Secret holds the key for every Job and both lanes:
 #   kubectl -n gleichlaut create secret generic gleichlaut-cert-key --from-file=cert.key=/path/to/cert.key
 # The pods below mount it already (optional: true, so they start without it); to use it, create the Secret, uncomment
 # GLEICHLAUT_CERT_KEY in the ConfigMap and run gleichlaut-certify-build.
@@ -50,7 +52,7 @@ kind: PersistentVolumeClaim
 metadata: { name: gleichlaut-models, labels: { app: gleichlaut } }
 spec:
   accessModes: [ReadWriteOnce]                 # written once (fetch Job or loader pod), then mounted read-only by every pod
-  resources: { requests: { storage: 12Gi } }   # Q4_K_M 5,059,027,136 bytes; Q8_0 (GLEICHLAUT_BUILD=q8_0) 8,567,121,856 bytes
+  resources: { requests: { storage: 12Gi } }   # Q8_0 (default) 8,567,121,856 bytes; Q4_K_M (GLEICHLAUT_BUILD=q4_k_m) 5,059,027,136 bytes
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -64,8 +66,9 @@ data:
   GLEICHLAUT_THREADS: "4"                       # = the CPU request below; llama.cpp otherwise uses the container's CPU set
   # GLEICHLAUT_CERT_KEY: /var/run/secrets/gleichlaut/cert.key     # once the gleichlaut-cert-key Secret exists (mounted below)
   # the GGUF from an internal mirror (fetch Job): keep the file name, the sha256 check stays the pinned one
-  # GLEICHLAUT_MODEL_URL: "https://artifacts.internal.example.ch/models/apertus-v1.5-8b-text-q4_k_m.gguf"
-  # GLEICHLAUT_BUILD: q8_0      # the Q8_0 build (16 GiB RAM): also change --gguf below to apertus-v1.5-8b-text-q8_0.gguf
+  # GLEICHLAUT_MODEL_URL: "https://artifacts.internal.example.ch/models/apertus-v1.5-8b-text-q8_0.gguf"
+  # GLEICHLAUT_BUILD: q4_k_m    # the Q4_K_M build on an 8 GiB node: also change --gguf below to
+  #                             # apertus-v1.5-8b-text-q4_k_m.gguf and the month resources to 8Gi / 10Gi
   # behind a proxy / internal CA (BAG feed, GGUF fetch): the gleichlaut-ca ConfigMap is mounted at /etc/gleichlaut/ca
   # HTTPS_PROXY: "http://proxy.example.ch:8080"
   # NO_PROXY: ".svc,.cluster.local"
@@ -84,7 +87,7 @@ spec:
   jobTemplate:
     spec:
       backoffLimit: 0                 # no blind retry: a re-run resumes from records.jsonl; alert on the exit code instead
-      activeDeadlineSeconds: 43200    # 12 h: ~57 items a month x ~153 s per item on 4 cores is ~2.5 h; 10x volume needs ~24 h (docs/operations.md §1)
+      activeDeadlineSeconds: 43200    # 12 h: ~57 items a month x 200.5 s per item (Q8_0) on 4 cores is ~3.2 h; 10x volume needs ~32 h: split the items (docs/operations.md §1)
       template:
         metadata: { labels: { app: gleichlaut, job: month, lane: 8b } }
         spec:
@@ -100,16 +103,16 @@ spec:
           containers:
             - name: month
               image: registry.example.ch/gleichlaut-offline@sha256:CHANGE-ME
-              args: [python, -m, gleichlaut, month, --backend, llamacpp, --gguf, /models/apertus-v1.5-8b-text-q4_k_m.gguf,
+              args: [python, -m, gleichlaut, month, --backend, llamacpp, --gguf, /models/apertus-v1.5-8b-text-q8_0.gguf,
                      --from, previous, --to, latest, --fetch, --emit]
               envFrom: [{ configMapRef: { name: gleichlaut-config } }]
               securityContext: &ctrsec
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
                 capabilities: { drop: [ALL] }
-              resources:                # the 8B lane: 5.1 GB of weights mapped + KV cache; one requirement: 8 GiB, 4 CPU
-                requests: { cpu: "4", memory: 8Gi }
-                limits: { cpu: "4", memory: 10Gi }
+              resources:                # the 8B lane, Q8_0: 8.6 GB of weights mapped + KV cache; one requirement: 16 GiB, 4 CPU
+                requests: { cpu: "4", memory: 16Gi }    # Q4_K_M (GLEICHLAUT_BUILD=q4_k_m): 8Gi, limit 10Gi
+                limits: { cpu: "4", memory: 18Gi }
               volumeMounts:
                 - { name: data, mountPath: /app/state, subPath: state }
                 - { name: data, mountPath: /app/out, subPath: out }

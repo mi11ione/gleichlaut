@@ -1,49 +1,54 @@
 # Offline lane evidence (manual): `make run-offline` on a clean GitHub runner, CPU only, no model endpoint, no secret.
 # Builds the `offline` Docker target (llama-cpp-python 0.3.35 from source, GGML_NATIVE=OFF), downloads the pinned
-# Apertus v1.5 8B GGUF (Q4_K_M, 5,059,027,136 bytes, sha256 a037df8d...f299; cached with actions/cache so it is fetched
+# Apertus v1.5 8B GGUF of the selected build (input `build`: q8_0, the default, 8,567,121,856 bytes, sha256
+# dea904ad...202d; or q4_k_m, 5,059,027,136 bytes, sha256 a037df8d...f299; cached with actions/cache so it is fetched
 # once), then runs the reproduction (freeze, re-execution, re-scoring, emit, review page) and the 5-item Fedlex live slice
 # on the GGUF in llama.cpp. Passes only on "reproduction PASSED; live slice PASSED".
-# Trigger: gh workflow run offline.yml -R mi11ione/gleichlaut
+# Trigger: gh workflow run offline.yml -R mi11ione/gleichlaut [-f build=q4_k_m]
 name: offline
 on:
   workflow_dispatch:
+    inputs:
+      build: { description: "certified 8B GGUF build: q8_0 (16 GiB, default) or q4_k_m (8 GiB)", required: true, default: "q8_0" }
 jobs:
   run-offline:
     runs-on: ubuntu-24.04
     timeout-minutes: 180
     defaults: { run: { working-directory: track_2b } }
     env:
-      GGUF: models/apertus-v1.5-8b-text-q4_k_m.gguf
-      GLEICHLAUT_MODEL_SHA256: a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299
+      BUILD: ${{ inputs.build || 'q8_0' }}
+      GGUF: models/apertus-v1.5-8b-text-${{ inputs.build || 'q8_0' }}.gguf
+      SHA_q8_0: dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d
+      SHA_q4_k_m: a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299
     steps:
       - uses: actions/checkout@v7
       - name: runner
         run: nproc; free -h; df -h / .; docker version --format '{{.Server.Version}}'
-      - name: free disk (docker build + 5 GB GGUF)
+      - name: free disk (docker build + 5.1-8.6 GB GGUF)
         run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL; df -h /
       - name: restore GGUF cache
         id: gguf
         uses: actions/cache/restore@v6
-        with: { path: track_2b/models, key: "gguf-apertus-v1.5-8b-text-q4_k_m-a037df8d" }
+        with: { path: track_2b/models, key: "gguf-apertus-v1.5-8b-text-${{ inputs.build || 'q8_0' }}" }
       - name: make run-offline
         run: |
           set -o pipefail
           mkdir -p models out
-          time make run-offline 2>&1 | tee run-offline.log
+          time make run-offline BUILD=$BUILD 2>&1 | tee run-offline.log
           grep -q "reproduction PASSED; live slice PASSED" run-offline.log
       - name: the gate accepts the shipped build certificate for this GGUF in the offline image
         run: |
           docker run --rm --network none -v $PWD/models:/models:ro gleichlaut-offline python -c "
           from gleichlaut import backends, certify
-          sha = backends.file_sha256('/models/apertus-v1.5-8b-text-q4_k_m.gguf'); c, why = certify.build_lookup(sha, backends.llama_version())
+          sha = backends.file_sha256('/models/apertus-v1.5-8b-text-$BUILD.gguf'); c, why = certify.build_lookup(sha, backends.llama_version())
           print(why); assert c, why"
       - name: GGUF sha256
         if: always()
-        run: test -f "$GGUF" && echo "$GLEICHLAUT_MODEL_SHA256  $GGUF" | sha256sum -c -
-      - name: save GGUF cache (also when the run failed, so the 5 GB are fetched once)
+        run: S=SHA_$BUILD; test -f "$GGUF" && echo "${!S}  $GGUF" | sha256sum -c -
+      - name: save GGUF cache (also when the run failed, so the GGUF is fetched once)
         if: always() && steps.gguf.outputs.cache-hit != 'true' && hashFiles('track_2b/models/*.gguf') != ''
         uses: actions/cache/save@v6
-        with: { path: track_2b/models, key: "gguf-apertus-v1.5-8b-text-q4_k_m-a037df8d" }
+        with: { path: track_2b/models, key: "gguf-apertus-v1.5-8b-text-${{ inputs.build || 'q8_0' }}" }
       - name: summary
         if: always()
         run: |

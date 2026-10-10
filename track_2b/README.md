@@ -54,30 +54,31 @@ Test set: 166 French/Italian amendments from SL changes between Jun 2025 and Feb
 during design. The checks and all their resources were hashed before any output existed (the freeze predates this
 repository; `eval/prereg/PREREG.md` says what can and cannot be verified from here).
 
-| | Apertus 8B Q4_K_M, CPU, 8 GiB | Apertus 8B Q8_0, CPU, 16 GiB | Apertus 70B, certified endpoint | No-model start |
+| | Apertus 8B Q8_0, CPU, 16 GiB (default) | Apertus 8B Q4_K_M, CPU, 8 GiB | Apertus 70B, certified endpoint | No-model start |
 |---|---|---|---|---|
-| Draft identical to the text BAG published | 16.9% (+10.8 points [4.8, 17.5]) | 17.5% (+11.4 points [4.8, 18.7]) | **17.5%** (+11.4 points [4.8, 18.7]) | 6.0% (old text, numbers updated by code) |
-| Token edits still needed to reach BAG's text | 20.9% fewer [7.6, 31.9] | 33.1% fewer [20.8, 43.9] | **42.4% fewer** [31.0, 54.1] | baseline |
-| Drafts ready for acceptance | 36.1% | 37.3% | **39.8%** | |
-| Errors in ready drafts (meaning / stale / German left) | 0 / 1 / 2 | **0 / 0 / 0** | **0 / 0 / 0** | |
-| Ready drafts that still need any fix | 33 of 60 (27 named by the terminology note) | 25 of 62 (22 named by it) | **3 of 66** | |
+| Draft identical to the text BAG published | 17.5% (+11.4 points [4.8, 18.7]) | 16.9% (+10.8 points [4.8, 17.5]) | **17.5%** (+11.4 points [4.8, 18.7]) | 6.0% (old text, numbers updated by code) |
+| Token edits still needed to reach BAG's text | 33.1% fewer [20.8, 43.9] | 20.9% fewer [7.6, 31.9] | **42.4% fewer** [31.0, 54.1] | baseline |
+| Drafts ready for acceptance | 37.3% | 36.1% | **39.8%** | |
+| Errors in ready drafts (meaning / stale / German left) | **0 / 0 / 0** | 0 / 1 / 2 | **0 / 0 / 0** | |
+| Ready drafts that still need any fix | 25 of 62 (22 named by the terminology note) | 33 of 60 (27 named by it) | **3 of 66** | |
 | Pre-registered pass rule | **PASS** | **PASS** | **PASS** (and again on a rerun with a new seed) | |
 
 Against rules+, our strongest no-model baseline (it also copies changed names and deletes whole sentences, 10.8%
 identical), the 70B still adds +6.6 points [1.8, 12.0] and 41.3% fewer edits [29.7, 53.0].
 
-The 8B runs on the CPU you already have (153.4 s per draft for Q4_K_M, 200.5 s for Q8_0, on a 4-core runner). The 70B
-costs **CHF 0.0024 per draft** at a Swiss provider's published price: CHF 0.14 a month at today's volume, CHF 1.36 at
+The 8B runs on the CPU you already have (200.5 s per draft for the default Q8_0, 153.4 s for Q4_K_M, on a 4-core
+runner). The 70B costs **CHF 0.0024 per draft** at a Swiss provider's published price: CHF 0.14 a month at today's volume, CHF 1.36 at
 ten times. Every number here is in [claims.tsv](claims.tsv) with the file and command that produce it.
 
 **Model size is measured, not assumed.** On SL conditions every build passes the same pre-registered safety rule, so
-the 8B on a CPU is sufficient and is the default: nothing leaves the building (Q4_K_M passes by one item: 1.81% stale
-or German against the 2% limit). On identical drafts neither size nor quantisation makes a measurable difference
-(17.5% for the 70B and Q8_0, 16.9% for Q4_K_M). On edits saved both do: Q8_0 saves 12.2 points more than Q4_K_M
+the 8B on a CPU is sufficient and is the default: nothing leaves the building. The default build is Q8_0, which passes
+with no error among its ready drafts; Q4_K_M passes by one item (1.81% stale or German against the 2% limit). On
+identical drafts neither size nor quantisation makes a measurable difference (17.5% for the 70B and Q8_0, 16.9% for
+Q4_K_M). On edits saved both do: Q8_0 saves 12.2 points more than Q4_K_M
 (paired 95% CI [6.0, 19.9]), and the 70B 9.3 more than Q8_0 ([−1.3, 20.2], not significant). Q8_0's 62 ready drafts
 have no meaning error, stale change or German left; 25 still need a small fix, 22 of them one insurance term. The
-70B's ready drafts rarely need any fix (3 of 66). So: Q4_K_M on an 8 GiB box, Q8_0
-where 16 GiB is available (`BUILD=q8_0`), the 70B where an endpoint you control is available and the extra edits are
+70B's ready drafts rarely need any fix (3 of 66). So: Q8_0 by default (16 GiB RAM), Q4_K_M
+on an 8 GiB box (`BUILD=q4_k_m`), the 70B where an endpoint you control is available and the extra edits are
 worth it. On 120 federal-statute amendments (Fedlex) the 70B is no better than the 8B (exact 48.3%, against 50.0% for the 8B
 MLX build and 45.8% / 47.5% for the shipped Q4_K_M / Q8_0 builds). No size passes the safety rule on statutes: the GGUF
 builds mark 4 drafts ready that change a provision (the vocational title "EFZ" rendered as a lower qualification, a
@@ -122,8 +123,8 @@ re-scores every run against `eval/results/`; drafts 5 statute paragraphs live if
 (`out/ui/index.html`).
 
 ```bash
-make run-offline    # adds the local CPU Apertus 8B (GGUF, sha256-pinned): the air-gapped default lane
-                    # BUILD=q8_0 for the 8.6 GB build on a 16 GiB box (certified too, see Results)
+make run-offline    # adds the local CPU Apertus 8B (GGUF, sha256-pinned): the air-gapped default lane, Q8_0
+                    # (8.6 GB, 16 GiB RAM); BUILD=q4_k_m for the 5.1 GB build on an 8 GiB box (certified too)
 make certify        # build certificate for the pinned 8B GGUF from its recorded held-out run (seconds, offline)
 make certify-endpoint # certify your own Apertus 70B endpoint on the frozen 166-item suite
 make month          # one monthly cycle on the public feed with the local 8B (shadow mode); make month-70b uses your endpoint

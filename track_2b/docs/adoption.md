@@ -17,8 +17,8 @@ office's own figures.
 | Input | the public SL feed (FHIR NDJSON, DE/FR/IT) | the same feed: German changes between two published dates | the section's unpublished German changes, exported from ePL as an item file ([item-schema.json](item-schema.json)) |
 | Model | none | local Apertus 8B on CPU, certified build | 8B air-gapped by default. The 70B is used only on an endpoint the office controls |
 | Data | official publication | official publication | not public until BAG publishes it ([operations.md](operations.md) §8) |
-| Infrastructure | any server with Python ≥ 3.9 or Docker. Outbound GET to `epl.bag.admin.ch`, or copy the snapshots in | 4 CPU cores, 8 GiB RAM, about 8 GB disk ([dependencies.md](dependencies.md)) | the same box inside the office network. The month run uses `--network none` |
-| Run | `make audit`, monthly or quarterly. It takes about 1 minute, or about 3 minutes with dating ([README](../README.md), [audit.md](audit.md)) | `make month`, monthly. About 2.4 h of CPU for about 57 FR/IT items ([operations.md](operations.md) §1) | `make month ITEMS=…` with the same timing. Then XLIFF goes to the translators |
+| Infrastructure | any server with Python ≥ 3.9 or Docker. Outbound GET to `epl.bag.admin.ch`, or copy the snapshots in | 4 CPU cores, 16 GiB RAM, about 12 GB disk for the default Q8_0 build; 8 GiB RAM and about 8 GB disk with Q4_K_M ([dependencies.md](dependencies.md)) | the same box inside the office network. The month run uses `--network none` |
+| Run | `make audit`, monthly or quarterly. It takes about 1 minute, or about 3 minutes with dating ([README](../README.md), [audit.md](audit.md)) | `make month`, monthly. About 3.2 h of CPU for about 57 FR/IT items ([operations.md](operations.md) §1) | `make month ITEMS=…` with the same timing. Then XLIFF goes to the translators |
 | Output | `audit_<date>_summary.json`, the findings with DE/FR/IT excerpts, and the audit tab of the register | `summary.json`, which grades the drafts against the French and Italian BAG published: exact, ready and flag rates, and every ready draft that differs | XLIFF 2.1 and 1.2 for Transit. Ready drafts arrive as segments to accept. Flagged drafts carry the check's complaint as a note |
 | Received by | the business owner and the staff responsible for each product | the business owner and the language side, as evidence | the translators, in their own CAT tool |
 
@@ -39,8 +39,8 @@ held-out set of 166. Phase 3 starts if three conditions hold:
   Claude annotators. The rule is: unflagged real errors ≤ 1%, unflagged stale and untranslated ≤ 2%, exact match ≥ the
   rules-only start + 5 points, and flagged ≤ 70% ([technical_report.md](../technical_report.md) §5).
 - (b) A timed study shows that translators finish sooner from the draft than from the no-model start (the old text
-  with its numbers updated by code). The repository measures token edits only: 20.9% fewer for the 8B Q4_K_M and 33.1%
-  fewer for Q8_0 ([README](../README.md)).
+  with its numbers updated by code). The repository measures token edits only: 33.1% fewer for the 8B Q8_0 (the default) and
+  20.9% fewer for Q4_K_M ([README](../README.md)).
 - (c) The XLIFF files have passed a round trip through the language service's Transit setup.
 
 The shadow workflow (`.github/workflows/shadow.yml`) and `make month` both need no access to internal data.
@@ -127,7 +127,7 @@ September (`first_seen` in `data/audit/audit_20261006.json`). Reading one findin
 
 | Role | Phase 1 | Phase 2 | Phase 3 |
 |---|---|---|---|
-| Operator: start the job, read the summary, pass the output on | about 0.5 h per run (*assumption*) | about 0.5 h. The run itself is unattended: 153.4 s per item, about 2.4 h of CPU ([operations.md](operations.md) §1) | about 0.5 h. On the 70B lane add a monthly canary (about 70 requests, a few minutes) and a re-certification every 90 days (under an hour, about CHF 0.40, [operations.md](operations.md) §3b, §4) |
+| Operator: start the job, read the summary, pass the output on | about 0.5 h per run (*assumption*) | about 0.5 h. The run itself is unattended: 200.5 s per item, about 3.2 h of CPU ([operations.md](operations.md) §1) | about 0.5 h. On the 70B lane add a monthly canary (about 70 requests, a few minutes) and a re-certification every 90 days (under an hour, about CHF 0.40, [operations.md](operations.md) §3b, §4) |
 | Reviewer | the first run: 38 findings, about 3–6 h once. After that about 1 new finding a month, under 0.5 h | the ready drafts that differ from what BAG published: at most about 21–23 a month, about 1–2 h. Plus a one-time timed study | the translator works the same 57 items as today, starting from drafts instead of old text. Ready drafts are accepted or edited. Flagged drafts come with the complaint as a note (13 of a sample of 20 flagged drafts needed no change, [technical_report.md](../technical_report.md) §5). The time saved is what the timed study measures |
 | Business owner | decides on corrections, in the existing process | a go or no-go after about 3 months | no new step: the decision stays in ePL |
 

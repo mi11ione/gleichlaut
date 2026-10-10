@@ -8,9 +8,10 @@
 #           --fetch --dry-run` (no model) and splits them into shards
 #   shard   `make month ITEMS=<shard>` on its own 4-core runner: builds the offline image (llama-cpp-python 0.3.35, hash-pinned),
 #           restores the GGUF (sha256-checked), and drafts with `gleichlaut month --backend llamacpp` under --network none.
-#           The gate verifies the shipped build certificate (eval/certificates/8b-q4_k_m-fresh166.json) for the loaded
-#           GGUF, so the drafts get their guards' ready / flagged status. ~153 s per item on 4 cores: a normal month
-#           (~57 items) is ~40 min per shard with 4 shards, inside the 6 h runner limit even at 4x the volume.
+#           The gate verifies the shipped build certificate of the selected build (default q8_0:
+#           eval/certificates/8b-q8_0-fresh166.json; q4_k_m: 8b-q4_k_m-fresh166.json) for the loaded GGUF, so the drafts
+#           get their guards' ready / flagged status. ~200 s per item on 4 cores for Q8_0 (~153 s for Q4_K_M): a normal
+#           month (~57 items) is ~50 min per shard with 4 shards, inside the 6 h runner limit even at 4x the volume.
 #   gather  merges the shard records, writes summary.json (shadow: exact / ready / flag rates against the published text),
 #           the review register (gleichlaut ui --records --items) and XLIFF/FHIR (gleichlaut emit), and uploads everything
 #           as the artifact shadow-<from>-<to>.
@@ -24,16 +25,16 @@ on:
       from: { description: "old feed date YYYYMMDD, or previous", required: true, default: "previous" }
       to: { description: "new feed date YYYYMMDD, or latest", required: true, default: "latest" }
       shards: { description: "parallel 4-core runners", required: true, default: "4" }
-      build: { description: "certified 8B GGUF build: q4_k_m (8 GiB) or q8_0 (16 GiB)", required: true, default: "q4_k_m" }
+      build: { description: "certified 8B GGUF build: q8_0 (16 GiB, default) or q4_k_m (8 GiB)", required: true, default: "q8_0" }
 permissions: { contents: read }
 concurrency: { group: shadow, cancel-in-progress: false }
 env:
-  BUILD: ${{ inputs.build || 'q4_k_m' }}
-  GGUF_FILE: models/apertus-v1.5-8b-text-${{ inputs.build || 'q4_k_m' }}.gguf
-  URL_q4_k_m: https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf
-  SHA_q4_k_m: a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299
+  BUILD: ${{ inputs.build || 'q8_0' }}
+  GGUF_FILE: models/apertus-v1.5-8b-text-${{ inputs.build || 'q8_0' }}.gguf
   URL_q8_0: https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf
   SHA_q8_0: dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d
+  URL_q4_k_m: https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf
+  SHA_q4_k_m: a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299
 jobs:
   plan:
     runs-on: ubuntu-24.04
@@ -106,14 +107,14 @@ jobs:
       - uses: actions/checkout@v7
       - name: runner
         run: nproc; free -h; df -h /
-      - name: free disk (docker build + 5 GB GGUF)
+      - name: free disk (docker build + 5.1-8.6 GB GGUF)
         run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL; df -h /
       - uses: actions/download-artifact@v7
         with: { name: shadow-plan, path: track_2b/out }
       - name: restore GGUF cache
         id: gguf
         uses: actions/cache/restore@v6
-        with: { path: track_2b/models, key: "gguf-apertus-v1.5-8b-text-${{ inputs.build || 'q4_k_m' }}" }
+        with: { path: track_2b/models, key: "gguf-apertus-v1.5-8b-text-${{ inputs.build || 'q8_0' }}" }
       - name: fetch and verify the GGUF
         run: |
           mkdir -p models
@@ -127,7 +128,7 @@ jobs:
       - name: save GGUF cache
         if: always() && matrix.k == 0 && steps.gguf.outputs.cache-hit != 'true' && hashFiles('track_2b/models/*.gguf') != ''
         uses: actions/cache/save@v6
-        with: { path: track_2b/models, key: "gguf-apertus-v1.5-8b-text-${{ inputs.build || 'q4_k_m' }}" }
+        with: { path: track_2b/models, key: "gguf-apertus-v1.5-8b-text-${{ inputs.build || 'q8_0' }}" }
       - uses: actions/upload-artifact@v7
         if: always()
         with:
@@ -201,6 +202,6 @@ jobs:
       - uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: shadow-${{ needs.plan.outputs.from }}-${{ needs.plan.outputs.to }}-${{ inputs.build || 'q4_k_m' }}
+          name: shadow-${{ needs.plan.outputs.from }}-${{ needs.plan.outputs.to }}-${{ inputs.build || 'q8_0' }}
           path: track_2b/out/month/${{ needs.plan.outputs.from }}-${{ needs.plan.outputs.to }}
           retention-days: 90

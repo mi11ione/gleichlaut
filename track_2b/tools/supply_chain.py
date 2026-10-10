@@ -17,14 +17,15 @@ import hashlib, json, os, re, sys, urllib.request, uuid
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOCKS = [("requirements.in", "requirements.txt", "base image and plain-Python installs (XLIFF/FHIR validation)"),
          ("requirements-offline.in", "requirements-offline.txt", "offline image only: in-process llama.cpp for the Apertus 8B GGUF")]
-GGUF = dict(name="apertus-v1.5-8b-text-q4_k_m.gguf", sha256="a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299",
-            size=5059027136, url="https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf",
-            ref="apertus-8b-gguf", version="Q4_K_M", build="q4_k_m", cert="eval/certificates/8b-q4_k_m-fresh166.json",
-            role="the default build (GLEICHLAUT_BUILD=q4_k_m; 8 GiB RAM)")
 GGUF_Q8 = dict(name="apertus-v1.5-8b-text-q8_0.gguf", sha256="dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
                size=8567121856, url="https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf",
                ref="apertus-8b-gguf-q8_0", version="Q8_0", build="q8_0", cert="eval/certificates/8b-q8_0-fresh166.json",
-               role="the option for a 16 GiB box (GLEICHLAUT_BUILD=q8_0)")
+               role="the default build (GLEICHLAUT_BUILD=q8_0; 16 GiB RAM)")
+GGUF_Q4 = dict(name="apertus-v1.5-8b-text-q4_k_m.gguf", sha256="a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299",
+               size=5059027136, url="https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf",
+               ref="apertus-8b-gguf-q4_k_m", version="Q4_K_M", build="q4_k_m", cert="eval/certificates/8b-q4_k_m-fresh166.json",
+               role="the option for an 8 GiB box (GLEICHLAUT_BUILD=q4_k_m)")
+GGUF = GGUF_Q8                                                   # the default build (gleichlaut.cli.BUILD)
 # the hosts the running solution contacts besides the optional 70B endpoint (docs/operations.md §9, docs/dependencies.md)
 SERVICES = [
     dict(name="BAG ePL public feed (epl.bag.admin.ch)", authenticated=False, **{"x-trust-boundary": True},
@@ -33,7 +34,7 @@ SERVICES = [
                      "per second, only with month --fetch / --to latest, gleichlaut feeds, gleichlaut.sl.ingest and the audit; "
                      "nothing is sent but the request"),
     dict(name="Hugging Face (huggingface.co), one-time GGUF download", authenticated=False, **{"x-trust-boundary": True},
-         endpoints=[GGUF["url"], GGUF_Q8["url"]],
+         endpoints=[GGUF_Q8["url"], GGUF_Q4["url"]],
          description="gleichlaut fetch-gguf downloads the pinned GGUF once (CDN: cas-bridge.xethub.hf.co, cdn-lfs.hf.co) and "
                      "checks its sha256; GLEICHLAUT_MODEL_URL points it at an internal mirror instead, and a copied-in file "
                      "needs no download at all"),
@@ -133,7 +134,7 @@ def sbom():
                       properties=[dict(name="gleichlaut:images", value="none: build time only (pip build isolation for the llama-cpp-python sdist)"),
                                   dict(name="gleichlaut:version", value="not pinned, not hash-checked (known gap, docs/dependencies.md): "
                                        "the version the index serves; a prebuilt, hash-pinned wheel removes it")]))
-    for g in (GGUF, GGUF_Q8):
+    for g in (GGUF_Q8, GGUF_Q4):
         comps.append(dict(type="machine-learning-model", **{"bom-ref": g["ref"]}, name=g["name"], version=g["version"],
                           hashes=[dict(alg="SHA-256", content=g["sha256"])], licenses=[dict(license=dict(id="Apache-2.0"))],
                           externalReferences=[dict(type="distribution", url=g["url"])],

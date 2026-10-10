@@ -3,11 +3,13 @@
 Two kinds authorise drafting:
   "build"     a local GGUF build of Apertus 8B run in process by llama.cpp (the SL default lane, PREREG R1). Bound to the
               GGUF's sha256, the llama-cpp-python version and the freeze hash. Made by running the suite locally
-              (`certify --backend llamacpp --gguf PATH`; about 7 h on 4 CPU cores at the measured 153.4 s per item) or by
-              importing a recorded run (`certify --import-run RECORDS --gguf-sha256 SHA --labels TSV`, e.g. the M1 run of
-              the GitHub Actions CPU runners). The shipped eval/certificates/8b-q4_k_m-fresh166.json is that import of the
-              M1 run: the gate accepts it (and any build certificate in the state directory) for exactly that GGUF and
-              llama-cpp-python version, after re-scoring its records like any other certificate (build_lookup()).
+              (`certify --backend llamacpp --gguf PATH`; on 4 CPU cores about 9.2 h for Q8_0 at the measured 200.5 s
+              per item, 7.1 h for Q4_K_M at 153.4 s) or by importing a recorded run (`certify --import-run RECORDS
+              --gguf-sha256 SHA --labels TSV`, e.g. the M1/M2 runs of the GitHub Actions CPU runners). Two build
+              certificates ship, both imports of those runs: eval/certificates/8b-q8_0-fresh166.json (M2, Q8_0, the
+              default build) and eval/certificates/8b-q4_k_m-fresh166.json (M1, Q4_K_M, the 8 GiB option). The gate
+              accepts each (and any build certificate in the state directory) for exactly its GGUF and llama-cpp-python
+              version, after re-scoring its records like any other certificate (build_lookup()).
               A build certificate does not expire and needs no canary: nothing it certifies can change under it (a file
               hash, a library version, frozen code), unlike a remote serving stack.
   "endpoint"  an OpenAI-compatible endpoint (--backend openai), the 70B "fewer edits" lane.
@@ -30,8 +32,8 @@ New certificates, their call logs, the suite records and recorded responses go t
 default track_2b/state, gitignored): state/certificates/, state/runs/, state/cache/, state/canary/. The certificates shipped
 in eval/certificates/ are evidence of the evaluation (a replay and the Public AI runs) and are never consulted by certified();
 the one exception is a build certificate there (kind "build"), which build_lookup() verifies and accepts like one in state/.
-With GLEICHLAUT_CERT_KEY set, unsigned certificates are refused, the shipped build certificate included: `make certify`
-imports a signed copy into state/.
+With GLEICHLAUT_CERT_KEY set, unsigned certificates are refused, the shipped build certificates included: `make certify`
+imports a signed copy of the selected build's certificate into state/.
 Custom check resources (GLEICHLAUT_RESOURCES, gleichlaut.resources) void every certificate: the gate refuses them all.
 
 Integrity (a certificate is a claim that is re-checked every time it is used, not trusted as written):
@@ -75,10 +77,14 @@ CANARY_N = 40
 CANARY_MIN_FLAG_AGREEMENT = 0.85
 CANARY_MAX_EXACT_DROP = 5.0
 LABEL_CLASSES = ("equivalent", "preexisting", "cosmetic", "minor", "german", "stale", "REAL", "garble")
-BUILD_NAME = "8b-q4_k_m-fresh166"                                    # the shipped build certificate (M1, PREREG R1)
+# the shipped build certificates (PREREG R1): M2 Q8_0 (the default build, cli.BUILD) and M1 Q4_K_M (an 8 GiB box)
+BUILD_NAMES = {"q8_0": "8b-q8_0-fresh166", "q4_k_m": "8b-q4_k_m-fresh166"}
+BUILD_NAME = BUILD_NAMES["q8_0"]                                     # the default build's certificate
 M1_RUN, M1_LABELS = "data/runs/8b_q4_k_m_fresh166_g3_final.jsonl", "eval/labels/m1_q4_k_m_fresh166.tsv"
-GGUF_SHA_Q4 = "a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299"
+M2_RUN, M2_LABELS = "data/runs/8b_q8_0_fresh166_g3_final.jsonl", "eval/labels/m1_q8_0_fresh166.tsv"
+GGUF_SHA_Q4 = "a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299"     # M1, eval/certificates/8b-q4_k_m-fresh166.json
 GGUF_SHA_Q8 = "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d"     # M2, eval/certificates/8b-q8_0-fresh166.json
+SECS_PER_ITEM = {GGUF_SHA_Q8: 200.5, GGUF_SHA_Q4: 153.4}            # measured on 4 cores (eval/results/m1_<build>.json)
 EXIT = dict(PASS=0, FAIL=5, PENDING_REVIEW=7)
 CERT_DAYS = 90
 CANARY_MAX_AGE_DAYS = 31
@@ -445,13 +451,16 @@ def build_lookup(gguf_sha256, runtime=None):
 
 
 def m1_inherited_labels(R):
-    """labels of the M1 run (two blind annotators + tie-break) for outputs identical to the M1 output of the same item."""
-    p = os.path.join(core.ROOT, M1_LABELS)
-    if not os.path.exists(p): return {}
-    M = score.load_jsonl(M1_RUN.split("data/", 1)[1])
-    lab, _ = read_label_table(p, M, ("exact",))
+    """labels of the M1 and M2 runs (two blind annotators + tie-break each) for outputs identical to the M1 or M2 output
+    of the same item."""
+    known = {}
+    for run, labels in ((M1_RUN, M1_LABELS), (M2_RUN, M2_LABELS)):
+        p = os.path.join(core.ROOT, labels)
+        if not os.path.exists(p): continue
+        lab, _ = read_label_table(p, score.load_jsonl(run.split("data/", 1)[1]), ("exact",))
+        for k, d in (lab or {}).items(): known.setdefault(k, {}).update(d)
     out = {}
-    for k, d in (lab or {}).items():
+    for k, d in known.items():
         if k in R and core.lock.norm(R[k]["out"]) in d: out[k] = d[core.lock.norm(R[k]["out"])]
     return out
 
@@ -703,7 +712,7 @@ def resolve_build(cert_path, c, labels_path):
 
 
 def run_build(a):
-    """certify --backend llamacpp --gguf PATH: the frozen suite on this machine's CPU (slow: about 7 h on 4 cores)."""
+    """certify --backend llamacpp --gguf PATH: the frozen suite on this machine's CPU (slow: about 7-9 h on 4 cores)."""
     if not a.gguf: raise backends.ConfigError("--backend llamacpp needs --gguf PATH (the GGUF file to certify)")
     backends.require_llama()
     sha = backends.file_sha256(a.gguf)
@@ -713,7 +722,8 @@ def run_build(a):
     ask = backends.LlamaCpp(a.gguf, backends.lang_of_prompt, log=log, gguf_sha256=sha)
     n = a.n or len(score.load_items(ITEMS))
     print(f"certify: build {os.path.basename(a.gguf)} sha256 {sha[:12]}... llama-cpp-python {ask.runtime}, {ask.n_threads} threads; "
-          f"{n} items one at a time (measured 153.4 s per item on 4 cores: about {n * 153.4 / 3600:.1f} h) -> {state_dir()}", flush=True)
+          f"{n} items one at a time (measured {SECS_PER_ITEM.get(sha, 200.5)} s per item on 4 cores: about "
+          f"{n * SECS_PER_ITEM.get(sha, 200.5) / 3600:.1f} h) -> {state_dir()}", flush=True)
     I, R, secs = run_suite(ask, a.n, 1)
     if a.n:
         print(json.dumps(evaluate(I, R)[0], indent=1)); return 0

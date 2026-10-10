@@ -2,7 +2,8 @@
 #   make run            replay + re-score (offline, --network none unless LLM_BASE_URL is set), live slice via
 #                       LLM_BASE_URL if set, emit FHIR/XLIFF with validation, build the review page. Outputs -> ./out
 #                       A failing live endpoint does not fail the reproduction: "reproduction PASSED; live slice FAILED".
-#   make run-offline    the same plus the live slice on a local CPU Apertus 8B GGUF (downloads ~5 GB once into ./models)
+#   make run-offline    the same plus the live slice on a local CPU Apertus 8B GGUF (downloads the selected BUILD once into
+#                       ./models: 8.6 GB for the default q8_0, 5.1 GB for BUILD=q4_k_m)
 #   make test           unit and reproduction tests (in Docker)
 #   make audit          DE<->FR/IT congruence audit of the whole register on the latest feed (AUDIT_DATE=YYYYMMDD for another
 #                       date). No model, no endpoint: fetches the public feed if missing -> ./out/audit
@@ -10,10 +11,11 @@
 # The SL default lane is the local Apertus 8B GGUF on CPU (offline image, air-gapped; PREREG R1). The 70B on a certified
 # endpoint is the optional "fewer edits" lane (targets ending in -70b / -endpoint, and the canary).
 #   make fetch-gguf     download the pinned 8B GGUF once into ./models (sha256-checked)
-#   make certify        build certificate for the pinned 8B GGUF from the recorded M1 run (seconds, no model, no network)
+#   make certify        build certificate for the pinned 8B GGUF from its recorded run (M2 for q8_0, M1 for q4_k_m;
+#                       seconds, no model, no network)
 #                       -> ./state, HMAC-signed when GLEICHLAUT_CERT_KEY is set
-#   make certify-build  the same certificate by running the frozen 166 suite on THIS machine's CPU (offline image; ~7 h on
-#                       4 cores at the measured 153.4 s per item)
+#   make certify-build  the same certificate by running the frozen 166 suite on THIS machine's CPU (offline image; on 4
+#                       cores ~9.2 h for q8_0 at the measured 200.5 s per item, ~7.1 h for q4_k_m at 153.4 s)
 #   make certify-endpoint  certify the 70B endpoint in LLM_BASE_URL on the frozen 166-item suite -> ./state
 #   make canary         re-run CANARY_N suite items on that endpoint and compare with its certified run (exit 3 on drift)
 #   make month                              one month of the public feed in shadow mode with the local 8B (offline image,
@@ -48,10 +50,11 @@ NET      = $(if $(LLM_BASE_URL),,--network none)
 AS_ME    = --user $$(id -u):$$(id -g)
 STATE    = -v $(CURDIR)/state:/app/state -e GLEICHLAUT_STATE=/app/state
 CANARY_N ?= 40
-# BUILD picks the certified 8B GGUF: q4_k_m (5.1 GB, 8 GiB RAM; the default) or q8_0 (8.6 GB, 16 GiB RAM; PREREG R1, M2)
-BUILD    ?= q4_k_m
-SHA_q4_k_m = a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299
+# BUILD picks the certified 8B GGUF: q8_0 (8.6 GB, 16 GiB RAM; the default; PREREG R1, M2) or q4_k_m (5.1 GB, 8 GiB RAM;
+# M1, for an 8 GiB box). Both pass the pre-registered rule; Q8_0 saves 12.2 points more edits (eval/results/size_compare.json)
+BUILD    ?= q8_0
 SHA_q8_0   = dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d
+SHA_q4_k_m = a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299
 GGUF_SHA ?= $(SHA_$(BUILD))
 GGUF     ?= /models/apertus-v1.5-8b-text-$(BUILD).gguf
 MONTH_ARGS ?=
@@ -79,15 +82,15 @@ test:
 	docker build --target base -t $(IMAGE) .
 	docker run --rm --network none $(IMAGE) python tests/run.py
 
-# The build certificate of the pinned 8B GGUF, from the recorded M1 run (PREREG R1): re-scored here with the frozen checks
-# and the M1 labels; PASS only if the pre-registered rule holds. No model, no network. Signed if GLEICHLAUT_CERT_KEY is set.
+# The build certificate of the pinned 8B GGUF, from its recorded run (PREREG R1; M2 for q8_0, M1 for q4_k_m): re-scored
+# here with the frozen checks and that run's labels; PASS only if the pre-registered rule holds. No model, no network. Signed if GLEICHLAUT_CERT_KEY is set.
 certify:
 	docker build --target base -t $(IMAGE) .
 	mkdir -p state
 	docker run --rm --network none $(TUNING) $(CERTKEY) $(AS_ME) $(STATE) $(IMAGE) python -m gleichlaut certify \
 	  --import-run data/runs/8b_$(BUILD)_fresh166_g3_final.jsonl --gguf-sha256 $(GGUF_SHA) --labels eval/labels/m1_$(BUILD)_fresh166.tsv
 
-# The same certificate from a run of the frozen 166 suite on this machine's CPU (offline image; slow: ~7 h on 4 cores).
+# The same certificate from a run of the frozen 166 suite on this machine's CPU (offline image; slow: ~7-9 h on 4 cores).
 certify-build:
 	docker build --target offline -t $(IMAGE)-offline .
 	mkdir -p state models

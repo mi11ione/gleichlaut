@@ -4,15 +4,15 @@
 #   kubectl apply -n gleichlaut -f gleichlaut.yaml                  # creates the PVCs (and the CronJobs: nothing runs before the 2nd)
 #   kubectl apply -n gleichlaut -f models-loader.yaml
 #   kubectl -n gleichlaut wait --for=condition=Ready pod/gleichlaut-models-loader --timeout=5m
-#   kubectl -n gleichlaut cp apertus-v1.5-8b-text-q4_k_m.gguf gleichlaut-models-loader:/models/apertus-v1.5-8b-text-q4_k_m.gguf
-#   kubectl -n gleichlaut exec gleichlaut-models-loader -- sha256sum /models/apertus-v1.5-8b-text-q4_k_m.gguf
-#       must print a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299 (Q8_0: dea904ad80cd725e...202d)
+#   kubectl -n gleichlaut cp apertus-v1.5-8b-text-q8_0.gguf gleichlaut-models-loader:/models/apertus-v1.5-8b-text-q8_0.gguf
+#   kubectl -n gleichlaut exec gleichlaut-models-loader -- sha256sum /models/apertus-v1.5-8b-text-q8_0.gguf
+#       must print dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d (Q4_K_M: a037df8d87ff6cae...f299)
 #   kubectl -n gleichlaut exec gleichlaut-models-loader -- python -m gleichlaut fetch-gguf
 #       the same check through Gleichlaut's own code: "GGUF verified" and no download (it downloads only a missing or wrong
 #       file, and fails with exit 6 here because there is no egress)
 #   kubectl -n gleichlaut delete pod gleichlaut-models-loader
 # kubectl cp needs tar in the image (the base image has it). The file name must stay as it is: the month CronJob passes
-# --gguf /models/apertus-v1.5-8b-text-q4_k_m.gguf (Q8_0: apertus-v1.5-8b-text-q8_0.gguf, GLEICHLAUT_BUILD=q8_0).
+# --gguf /models/apertus-v1.5-8b-text-q8_0.gguf (Q4_K_M: apertus-v1.5-8b-text-q4_k_m.gguf, GLEICHLAUT_BUILD=q4_k_m).
 apiVersion: v1
 kind: Pod
 metadata: { name: gleichlaut-models-loader, labels: { app: gleichlaut, job: models-loader } }

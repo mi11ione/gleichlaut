@@ -32,8 +32,9 @@ text **17.5%** of the time against **6.0%** for the no-model start (old text wit
 updated by code): **+11.4 points, 95% CI [4.8, 18.7]**; against rules+, our strongest no-model baseline, **+6.6 [1.8, 12.0]**. They cut the token edits still needed to reach BAG's text by **42.4%**
 [31.0, 54.1]. **39.8%** of drafts come out ready, with **0** meaning errors, stale changes or German left among them,
 and a rerun with a new seed passes the same rule (+12.0 points, 41.6% ready). **The shipped Apertus 8B, on a CPU,
-passes the same pre-registered rule** (Q4_K_M: +10.8 points [4.8, 17.5], 36.1% ready, 0 meaning errors among ready
-drafts), so the default deployment is fully air-gapped. At Q8_0 the 8B matches the 70B on identical drafts (17.5%), with
+passes the same pre-registered rule** (Q8_0, the default build: +11.4 points [4.8, 18.7], 37.3% ready; Q4_K_M, for an
+8 GiB box: +10.8 points [4.8, 17.5], 36.1% ready; 0 meaning errors among ready drafts in both), so the default deployment
+is fully air-gapped. At Q8_0 the 8B matches the 70B on identical drafts (17.5%), with
 0 errors of any severe kind among its 62 ready drafts; the 70B still saves more edits (42.4% vs 33.1% for Q8_0, paired
 difference 9.3 points [−1.3, 20.2]; vs 20.9% for Q4_K_M) and its ready drafts rarely need a fix to the amendment (3 of 66). The audit reduces 1,688 limitations to
 **27** findings that contain **all 10** known divergent limitations, **5** new confirmed problems (typos next to
@@ -59,7 +60,8 @@ published price for Apertus 70B. `make run` re-executes the recorded runs offlin
 ### Target architecture
 
 On-premise and air-gapped by default. The audit, the checks, the register and the XLIFF/FHIR output are Python standard
-library plus `lxml`. SL conditions and statutes are drafted by Apertus 8B (GGUF Q4_K_M) on CPU in process. Offices that
+library plus `lxml`. SL conditions and statutes are drafted by Apertus 8B (GGUF Q8_0 by default, 16 GiB RAM; Q4_K_M on an 8 GiB box) on CPU
+in process. Offices that
 want fewer edits add Apertus 70B on an endpoint they control: own GPUs (bf16 144.6 GB) or a Swiss provider
 (Infomaniak, Swisscom, PHOENIQS, Safe Swiss Cloud and OnPrem.ai serve it from Switzerland; Infomaniak CHF 0.70 / 2.50
 per million input/output tokens). No provider-specific code exists: an endpoint is admitted only by a certificate bound
@@ -83,8 +85,8 @@ evaluation only.
 | Use | Model / build | Where it ran for the reported numbers |
 |---|---|---|
 | SL drafting | Apertus v1.5 70B | Public AI through a budget gateway; temperature 0; plain user messages; served model logged |
-| SL and statute drafting (default) | Apertus v1.5 8B GGUF Q4_K_M, sha256-pinned | 4-core CPU GitHub runners via llama.cpp (R1, 153.4 s per draft); greedy; digit and number-word logit mask |
-| SL drafting (16 GiB option) | Apertus v1.5 8B GGUF Q8_0, sha256-pinned | the same runners (R1/M2, 200.5 s per draft) |
+| SL and statute drafting (default) | Apertus v1.5 8B GGUF Q8_0, sha256-pinned | 4-core CPU GitHub runners via llama.cpp (R1/M2, 200.5 s per draft); greedy; digit and number-word logit mask |
+| SL and statute drafting (8 GiB option) | Apertus v1.5 8B GGUF Q4_K_M, sha256-pinned | the same runners and decoding (R1/M1, 153.4 s per draft) |
 | research arms (dev, statutes) | Apertus v1.5 8B, MLX 4-bit DWQ | a laptop; this build agreed with bf16 on 548 of 648 decisions in our parity battery, the GGUF on 622 |
 
 We do not control which weights Public AI serves. The 70B name is answered by two backends (`tp2` and `fp1-nes`,
@@ -151,8 +153,8 @@ German changes. Every ready non-exact draft was read in full; a seeded 20 flagge
 | same, unseen edit patterns | held-out | 154 | 15.6% | +12.3 [5.8, 20.1] | 60.4% | 39.6% | 0 / 0 / 0 | PASS |
 | same, rerun with seed 1 (R2) | held-out | 166 | 18.1% | +12.0 [5.4, 19.3] | 58.4% | 41.6% | 0 / 0 / 2 | PASS |
 | Apertus 70B, earlier checks | out-of-sample | 242 | 29.3% | +14.9 [9.9, 20.7] | 61.6% | 38.4% | 1 / 0 / 10 | FAIL |
-| **Apertus 8B GGUF Q4_K_M on CPU + checks + re-ask (R1)** | **held-out** | **166** | **16.9%** | **+10.8 [4.8, 17.5]** | **63.9%** | **36.1%** | **0 / 1 / 2** | **PASS** |
-| **Apertus 8B GGUF Q8_0 on CPU, same (R1, M2)** | **held-out** | **166** | **17.5%** | **+11.4 [4.8, 18.7]** | **62.7%** | **37.3%** | **0 / 0 / 0** | **PASS** |
+| **Apertus 8B GGUF Q8_0 on CPU + checks + re-ask (R1, M2; default)** | **held-out** | **166** | **17.5%** | **+11.4 [4.8, 18.7]** | **62.7%** | **37.3%** | **0 / 0 / 0** | **PASS** |
+| **Apertus 8B GGUF Q4_K_M on CPU, same (R1, M1; 8 GiB option)** | **held-out** | **166** | **16.9%** | **+10.8 [4.8, 17.5]** | **63.9%** | **36.1%** | **0 / 1 / 2** | **PASS** |
 | Apertus 8B (MLX DWQ), no re-ask | dev | 120 | 15.0% | +9.2 [3.3, 15.8] | 85.0% | 15.0% | 1 / 0 / 0 | FAIL |
 | Statutes: 8B (MLX DWQ) | Fedlex (dev) | 120 | 50.0% | rules 35.0% | 31.7% | 68.3% | 0 / 4 / 4 | review all |
 | Statutes: 70B | Fedlex (dev) | 120 | 48.3% | rules 35.0% | 23.3% | 76.7% | 2 / 1 / 4 | review all |

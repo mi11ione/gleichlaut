@@ -8,7 +8,7 @@ from test_ops import env, tmpdir, run_cli, fresh, write_json
 from gleichlaut import api, backends, certify, cli, core, resources, score
 
 ROOT = core.ROOT
-SHIPPED = os.path.join(certify.EVIDENCE, certify.BUILD_NAME + ".json")
+SHIPPED = os.path.join(certify.EVIDENCE, certify.BUILD_NAMES["q4_k_m"] + ".json")      # M1; the tamper tests use it with M1
 M1 = os.path.join(ROOT, certify.M1_RUN); M1L = os.path.join(ROOT, certify.M1_LABELS)
 
 
@@ -56,7 +56,7 @@ def gguf(d, content=b"not really a GGUF, only its sha256 matters here"):
 def test_shipped_build_certificate_verifies_and_reproduces_m1():
     c = json.load(open(SHIPPED, encoding="utf-8"))
     assert c["kind"] == "build" and c["status"] == "PASS" and c["files_base"] == "root"
-    assert c["gguf"]["sha256"] == certify.GGUF_SHA_Q4 == cli.GGUF_SHA and c["runtime"]["llama_cpp_python"] == "0.3.35"
+    assert c["gguf"]["sha256"] == certify.GGUF_SHA_Q4 == cli.BUILDS["q4_k_m"][1] and c["runtime"]["llama_cpp_python"] == "0.3.35"
     assert c["freeze_sha256"] == core.sha256(core.FREEZE)
     m1 = json.load(open(os.path.join(ROOT, "eval", "results", "m1_q4_k_m.json"), encoding="utf-8"))
     for k in ("exact", "ef1", "chrf", "flag_rate", "ready_rate", "unflagged", "unflagged_REAL", "unflagged_stale", "unflagged_german", "pass_rule"):
@@ -64,14 +64,27 @@ def test_shipped_build_certificate_verifies_and_reproduces_m1():
     assert "0.3.35" in read("requirements-offline.txt") and certify.pinned_llama() == "0.3.35"
     with tmpdir() as d, env(GLEICHLAUT_STATE=d):
         cert, why = certify.build_lookup(certify.GGUF_SHA_Q4, "0.3.35")
-        assert cert and cert["name"] == certify.BUILD_NAME, why
+        assert cert and cert["name"] == certify.BUILD_NAMES["q4_k_m"], why
         assert certify.build_lookup(certify.GGUF_SHA_Q4, "0.3.36")[0] is None                 # another llama-cpp-python
         assert "no build certificate" in certify.build_lookup("0" * 64)[1]
         assert certify.certified("recorded responses (data/cache)", core.M70) is None           # never an endpoint certificate
 
 
+def test_q8_0_is_the_default_build():
+    assert certify.BUILD_NAME == certify.BUILD_NAMES["q8_0"] == "8b-q8_0-fresh166" and list(cli.BUILDS)[0] == "q8_0"
+    assert certify.SECS_PER_ITEM[certify.GGUF_SHA_Q8] == json.load(open(os.path.join(ROOT, "eval", "results", "m1_q8_0.json")))["cpu_secs_per_item"]
+    if not any(os.environ.get(k) for k in ("GLEICHLAUT_BUILD", "GLEICHLAUT_MODEL_URL", "GLEICHLAUT_MODEL_SHA256")):
+        assert cli.BUILD == "q8_0" and cli.GGUF_SHA == certify.GGUF_SHA_Q8 and cli.GGUF_URL.endswith("q8_0.gguf")
+    r = run_cli("fetch-gguf", "--help")
+    assert r[0] == 0 and "q8_0 8.6 GB, the default" in r[1] + r[2], r
+    R2 = score.load_jsonl(certify.M2_RUN.split("data/", 1)[1])            # {key: record}; a local Q8_0 run inherits M2's labels
+    lab2, _ = certify.read_label_table(os.path.join(ROOT, certify.M2_LABELS), R2, ("exact",))
+    inherited = certify.m1_inherited_labels(R2)
+    assert lab2 and set(lab2) <= set(inherited) and all(inherited[k] in lab2[k].values() for k in lab2)
+
+
 def test_shipped_q8_0_build_certificate_verifies_and_reproduces_m2():
-    c = json.load(open(os.path.join(ROOT, "eval", "certificates", "8b-q8_0-fresh166.json"), encoding="utf-8"))
+    c = json.load(open(os.path.join(certify.EVIDENCE, certify.BUILD_NAME + ".json"), encoding="utf-8"))
     assert c["kind"] == "build" and c["status"] == "PASS" and c["gguf"]["sha256"] == certify.GGUF_SHA_Q8 == cli.BUILDS["q8_0"][1]
     m2 = json.load(open(os.path.join(ROOT, "eval", "results", "m1_q8_0.json"), encoding="utf-8"))
     for k in ("exact", "flag_rate", "ready_rate", "unflagged", "unflagged_REAL", "unflagged_stale", "unflagged_german", "pass_rule"):
@@ -325,7 +338,10 @@ def test_requirements_are_hash_pinned_and_the_sbom_is_current():
     b = json.loads(read("docs/sbom.json"))
     names = {c["name"]: c for c in b["components"]}
     assert b["bomFormat"] == "CycloneDX" and names["lxml"]["version"] == "6.0.2"
-    assert names["apertus-v1.5-8b-text-q4_k_m.gguf"]["hashes"][0]["content"] == cli.GGUF_SHA
+    assert names["apertus-v1.5-8b-text-q8_0.gguf"]["hashes"][0]["content"] == cli.BUILDS["q8_0"][1]
+    gg = [c["name"] for c in b["components"] if c["type"] == "machine-learning-model"]
+    assert gg == ["apertus-v1.5-8b-text-q8_0.gguf", "apertus-v1.5-8b-text-q4_k_m.gguf"], gg       # the default first
+    assert any("the default build" in p["value"] for p in names["apertus-v1.5-8b-text-q8_0.gguf"]["properties"])
     assert sc.base_image()[1].split(":")[1] in json.dumps(names)
     assert "cosign" in read("docs/dependencies.md") and "cosign" in read("docs/operations.md")
 
@@ -343,11 +359,13 @@ def test_docs_and_help_say_the_same_about_the_lanes():
     docs["cli"] = cli.__doc__
     for f, t in docs.items():
         assert re.search(r"8B.{0,80}(default|SL default)|default.{0,120}8B", t, re.S), f
-        assert "8 GiB" in t or f == "cli", f
+        assert ("16 GiB" in t and "8 GiB" in t) or f == "cli", f
         assert "certified" in t, f
     ops = docs["docs/operations.md"]
     assert "no IT approval" not in ops and "wherever your\nIT already allows Python or Docker" in ops
-    assert "153.4 s" in ops and "2.4 h" in ops and "24.5 h" in ops and "1.7 calls per item" in ops
+    assert "200.5 s" in ops and "3.2 h" in ops and "32.0 h" in ops and "1.7 calls per item" in ops     # Q8_0, the default
+    assert "153.4 s" in ops and "2.4 h" in ops and "24.5 h" in ops                                     # Q4_K_M
+    assert "16 GiB" in cli.__doc__ and "q4_k_m" in cli.__doc__
     assert "4 GB RAM" not in ops and "review-only on SL" not in ops and "Air-gapped 8B lane (optional)" not in ops
     assert "SL default lane" not in docs["docs/dependencies.md"].split("Apertus v1.5 70B")[1].split("\n")[0]
     assert "What a self-hosted 70B costs" in docs["docs/target-architecture.md"]
@@ -364,7 +382,7 @@ def test_make_targets_run_the_8b_lane_by_default():
     assert "--target base" in m70 and "--backend openai" in m70
     cert = mk.split("\ncertify:\n")[1].split("\n\n")[0]
     assert "--import-run data/runs/8b_$(BUILD)_fresh166_g3_final.jsonl" in cert and "--network none" in cert
-    assert "\nBUILD    ?= q4_k_m\n" in mk and "SHA_q8_0" in mk
+    assert "\nBUILD    ?= q8_0\n" in mk and "SHA_q4_k_m" in mk
     assert "\ncertify-endpoint:\n" in mk and "\nmonth-offline: month" in mk and "\ncertify-build:\n" in mk
     assert "ENVS8B" in mk and "-e LLM_" not in mk.split("ENVS8B   =")[1].split("\n")[0]
 
@@ -384,7 +402,8 @@ def k8s_docs():
 
 def test_deploy_manifests_for_the_8b_lane():
     k = read(f"{K8S}/gleichlaut.yaml")
-    assert "gleichlaut-offline" in k and "requests: { cpu: \"4\", memory: 8Gi }" in k
+    assert "gleichlaut-offline" in k and "requests: { cpu: \"4\", memory: 16Gi }" in k and "limits: { cpu: \"4\", memory: 18Gi }" in k
+    assert "--gguf, /models/apertus-v1.5-8b-text-q8_0.gguf" in k
     assert "{ name: models, mountPath: /models, readOnly: true }" in k and "--fail-on-findings" in k
     np_ = read(f"{K8S}/networkpolicy.yaml")
     assert "kind: NetworkPolicy" in np_ and "epl.bag.admin.ch" in np_ and "toFQDNs" in np_ and "lane: 70b" in np_
@@ -392,7 +411,7 @@ def test_deploy_manifests_for_the_8b_lane():
     assert "--import-run" in cj and "--backend, llamacpp" in cj and "--backend, openai" in cj
     assert "--backend, openai" in read(f"{K8S}/gleichlaut-70b.yaml")
     sm = read("docs/deploy/systemd/gleichlaut-month.service")
-    assert "--backend llamacpp" in sm and "ReadOnlyPaths=/var/lib/gleichlaut/models" in sm and "MemoryMax=10G" in sm
+    assert "--backend llamacpp" in sm and "ReadOnlyPaths=/var/lib/gleichlaut/models" in sm and "MemoryMax=18G" in sm and "apertus-v1.5-8b-text-q8_0.gguf" in sm
     assert "--backend openai" in read("docs/deploy/systemd/gleichlaut-month-70b.service")
     assert "8) sev=reviewer" in read("docs/deploy/alert.sh")
 
@@ -415,7 +434,7 @@ def test_models_volume_is_written_once_then_mounted_read_only():
     fetch = next(d for f, d in docs if "name: gleichlaut-fetch-gguf" in d and "kind: Job" in d)
     assert "envFrom: [{ configMapRef: { name: gleichlaut-config } }]" in fetch, "fetch Job must get proxy/CA/MODEL_URL"
     assert "{ name: ca, mountPath: /etc/gleichlaut/ca, readOnly: true }" in fetch and "name: gleichlaut-ca, optional: true" in fetch
-    assert "# GLEICHLAUT_MODEL_URL:" in read(f"{K8S}/gleichlaut.yaml") and "# GLEICHLAUT_BUILD: q8_0" in read(f"{K8S}/gleichlaut.yaml")
+    assert "# GLEICHLAUT_MODEL_URL:" in read(f"{K8S}/gleichlaut.yaml") and "# GLEICHLAUT_BUILD: q4_k_m" in read(f"{K8S}/gleichlaut.yaml")
     rd = read("docs/deploy/README.md")
     assert "Operator FAQ" in rd and "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d" in rd and "kubectl cp" in rd
 

@@ -13,12 +13,15 @@
 #                                  is mounted). Needs egress to the mirror, the proxy or huggingface.co once (networkpolicy.yaml,
 #                                  rule "fetch-gguf"). A failed attempt keeps the .part file; the retry resumes it (HTTP Range).
 #                                  No egress at all: models-loader.yaml instead (kubectl cp; docs/deploy/README.md).
-#   gleichlaut-certify-build       the build certificate of the pinned 8B GGUF from the recorded M1 run (PREREG R1): the
-#                                  stored records are re-scored with the frozen checks and the M1 labels; PASS only if the
+#   gleichlaut-certify-build       the build certificate of the pinned 8B GGUF from its recorded run (PREREG R1; the M2 run
+#                                  of the default Q8_0 below; for Q4_K_M use 8b_q4_k_m_fresh166_g3_final.jsonl, sha256
+#                                  a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299, m1_q4_k_m_fresh166.tsv):
+#                                  the stored records are re-scored with the frozen checks and that run's labels; PASS only if the
 #                                  pre-registered rule holds. Seconds, no model, no network. Needed only with an HMAC key
 #                                  (the image already carries the unsigned certificate, which the gate accepts without one).
 #   gleichlaut-certify-build-local the same certificate from a run of the frozen 166 suite on the cluster's CPU, offline image
-#                                  (hours: ~7 h at the measured 153.4 s per item on 4 cores). Evidence for your own hardware.
+#                                  (hours: ~9.2 h for Q8_0 at the measured 200.5 s per item on 4 cores; ~7.1 h for Q4_K_M).
+#                                  Evidence for your own hardware.
 #   gleichlaut-certify-endpoint    the 70B endpoint of gleichlaut-70b.yaml (about 285 requests, under an hour)
 apiVersion: batch/v1
 kind: Job
@@ -65,9 +68,9 @@ spec:
       containers:
         - name: certify
           image: registry.example.ch/gleichlaut@sha256:CHANGE-ME
-          args: [python, -m, gleichlaut, certify, --import-run, data/runs/8b_q4_k_m_fresh166_g3_final.jsonl,
-                 --gguf-sha256, a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299,
-                 --labels, eval/labels/m1_q4_k_m_fresh166.tsv]
+          args: [python, -m, gleichlaut, certify, --import-run, data/runs/8b_q8_0_fresh166_g3_final.jsonl,
+                 --gguf-sha256, dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d,
+                 --labels, eval/labels/m1_q8_0_fresh166.tsv]
           envFrom: [{ configMapRef: { name: gleichlaut-config } }]
           env: [{ name: GLEICHLAUT_CERT_KEY, value: /var/run/secrets/gleichlaut/cert.key }]
           securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: [ALL] } }
@@ -100,10 +103,10 @@ spec:
       containers:
         - name: certify
           image: registry.example.ch/gleichlaut-offline@sha256:CHANGE-ME
-          args: [python, -m, gleichlaut, certify, --backend, llamacpp, --gguf, /models/apertus-v1.5-8b-text-q4_k_m.gguf]
+          args: [python, -m, gleichlaut, certify, --backend, llamacpp, --gguf, /models/apertus-v1.5-8b-text-q8_0.gguf]
           envFrom: [{ configMapRef: { name: gleichlaut-config } }]
           securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: [ALL] } }
-          resources: { requests: { cpu: "4", memory: 8Gi }, limits: { cpu: "4", memory: 10Gi } }
+          resources: { requests: { cpu: "4", memory: 16Gi }, limits: { cpu: "4", memory: 18Gi } }     # Q4_K_M: 8Gi / 10Gi
           volumeMounts:
             - { name: data, mountPath: /app/state, subPath: state }
             - { name: data, mountPath: /app/out, subPath: out }

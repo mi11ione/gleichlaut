@@ -1,21 +1,22 @@
 # Scheduling and alerting
 
 Two ways to run Gleichlaut unattended: systemd on a server, or Kubernetes. Both run the default lane, the local Apertus
-8B GGUF on CPU (a certified build, `eval/certificates/8b-q4_k_m-fresh166.json`), and offer the 70B on a certified
+8B GGUF on CPU (a certified build: Q8_0 by default, `eval/certificates/8b-q8_0-fresh166.json`; Q4_K_M for an 8 GiB
+box, `eval/certificates/8b-q4_k_m-fresh166.json`), and offer the 70B on a certified
 endpoint as an optional variant.
 
 | Job | When | Needs | Command |
 |---|---|---|---|
 | audit | quarterly, or monthly after the publication | the public feed only (no model, no endpoint, no secret) | `gleichlaut feeds --latest`, then `gleichlaut.sl.ingest <date>`, then `gleichlaut audit --date <date> --fail-on-findings` (exit 8 on findings not marked likely equivalent) |
-| month (default: 8B) | the 2nd of each month (BAG publishes on the 1st) | the offline image or a venv with `requirements-offline.txt`, the GGUF on a read-only path, **4 CPU cores and 8 GiB RAM** | `gleichlaut month --backend llamacpp --gguf /models/apertus-v1.5-8b-text-q4_k_m.gguf --from previous --to latest --fetch --emit` |
-| certify (8B, once) | only with an HMAC key; again after a GGUF / llama-cpp-python / frozen-code change | nothing (seconds, no network) | `gleichlaut certify --import-run data/runs/8b_q4_k_m_fresh166_g3_final.jsonl --gguf-sha256 a037df8d… --labels eval/labels/m1_q4_k_m_fresh166.tsv` |
+| month (default: 8B) | the 2nd of each month (BAG publishes on the 1st) | the offline image or a venv with `requirements-offline.txt`, the GGUF on a read-only path, **4 CPU cores and 16 GiB RAM** (Q8_0; 8 GiB with Q4_K_M) | `gleichlaut month --backend llamacpp --gguf /models/apertus-v1.5-8b-text-q8_0.gguf --from previous --to latest --fetch --emit` |
+| certify (8B, once) | only with an HMAC key; again after a GGUF / llama-cpp-python / frozen-code change | nothing (seconds, no network) | `gleichlaut certify --import-run data/runs/8b_q8_0_fresh166_g3_final.jsonl --gguf-sha256 dea904ad… --labels eval/labels/m1_q8_0_fresh166.tsv` (Q4_K_M: `8b_q4_k_m_…`, `a037df8d…`, `m1_q4_k_m_…`) |
 | canary (70B variant) | monthly, before the 70B month run (the 2nd, 19:00 on systemd; an init container on Kubernetes) | the certified endpoint and its key | `gleichlaut certify --backend openai --canary 40` |
 | month-70b (variant) | the 2nd of each month at 20:00, after the canary and after the 8B month (never at the same time: both use the same feed snapshots) | the certified endpoint, a passing canary at most 31 days old | `gleichlaut month --backend openai --from previous --to latest --fetch --emit` |
 
 Without a key the gate accepts the build certificate shipped in the image, so the 8B lane needs no certification step.
 The 70B endpoint is certified by hand (`gleichlaut certify --backend openai`): once per endpoint and model, every 90
-days, and after a failed canary. Timing of the 8B month: about 153 s per item on 4 cores, about 2.4 h at today's volume
-of ~57 FR/IT items, about 24.5 h at 10× (`docs/operations.md` §1).
+days, and after a failed canary. Timing of the 8B month (Q8_0): 200.5 s per item on 4 cores, about 3.2 h at today's
+volume of ~57 FR/IT items, about 32.0 h at 10× (Q4_K_M: 153.4 s, 2.4 h, 24.5 h; `docs/operations.md` §1).
 
 ## systemd (a VM or a server, without Docker)
 
@@ -47,7 +48,7 @@ The units are `oneshot` services. Each has `OnFailure=gleichlaut-alert@%n.servic
 [`alert.sh`](alert.sh) with the failed unit's name. The script reads the unit's exit code (`ExecMainStatus`), writes
 one line to the journal (`journalctl -t gleichlaut`), and mails it if `ALERT_MAIL` is set in `/etc/gleichlaut/alert.env`.
 The units run with `ProtectSystem=strict` and write only under `/var/lib/gleichlaut`; the 8B month unit sees the models
-directory read-only (`ReadOnlyPaths=`) and is limited to `MemoryMax=10G` and `CPUQuota=400%`. The HMAC key reaches the
+directory read-only (`ReadOnlyPaths=`) and is limited to `MemoryMax=18G` (Q8_0; `10G` for Q4_K_M) and `CPUQuota=400%`. The HMAC key reaches the
 process through `LoadCredential=`, readable only by the unit. Without a key, delete the two
 `LoadCredential`/`GLEICHLAUT_CERT_KEY` lines. The 70B month writes to `/var/lib/gleichlaut/out-70b`, so both lanes can
 be enabled without mixing their `--from previous`. They share the feed snapshots, so they do not run at the same time:
@@ -64,8 +65,8 @@ to `ReadWritePaths=`); node_exporter's textfile collector then exposes `gleichla
 
 | File | Contents |
 |---|---|
-| [`kubernetes/gleichlaut.yaml`](kubernetes/gleichlaut.yaml) | the default 8B lane: data PVC (state/ and out/), **models PVC (ReadWriteOnce: written once, then mounted read-only)**, ConfigMap, CronJob `gleichlaut-month` (offline image; requests and limits 4 CPU, 8 GiB / 10 GiB; 2nd of the month 06:00 Zurich, 12 h deadline), CronJob `gleichlaut-audit` (quarterly, the 3rd 07:00, `--fail-on-findings`) |
-| [`kubernetes/certify-job.yaml`](kubernetes/certify-job.yaml) | one-off Jobs, applied one at a time with `-l`: `gleichlaut-fetch-gguf` (fills the models PVC from Hugging Face or your mirror; proxy, CA and `GLEICHLAUT_MODEL_URL` from the ConfigMap; resumes an interrupted download), `gleichlaut-certify-build` (signed build certificate from the M1 run; seconds), `gleichlaut-certify-build-local` (the suite on the cluster's CPU; hours), `gleichlaut-certify-endpoint` (the 70B) |
+| [`kubernetes/gleichlaut.yaml`](kubernetes/gleichlaut.yaml) | the default 8B lane: data PVC (state/ and out/), **models PVC (ReadWriteOnce: written once, then mounted read-only)**, ConfigMap, CronJob `gleichlaut-month` (offline image; requests and limits 4 CPU, 16 GiB / 18 GiB for Q8_0, 8 GiB / 10 GiB for Q4_K_M; 2nd of the month 06:00 Zurich, 12 h deadline), CronJob `gleichlaut-audit` (quarterly, the 3rd 07:00, `--fail-on-findings`) |
+| [`kubernetes/certify-job.yaml`](kubernetes/certify-job.yaml) | one-off Jobs, applied one at a time with `-l`: `gleichlaut-fetch-gguf` (fills the models PVC from Hugging Face or your mirror; proxy, CA and `GLEICHLAUT_MODEL_URL` from the ConfigMap; resumes an interrupted download), `gleichlaut-certify-build` (signed build certificate from the M2 run of Q8_0, or the M1 run of Q4_K_M; seconds), `gleichlaut-certify-build-local` (the suite on the cluster's CPU; hours), `gleichlaut-certify-endpoint` (the 70B) |
 | [`kubernetes/models-loader.yaml`](kubernetes/models-loader.yaml) | the no-egress alternative to the fetch Job: a loader pod for `kubectl cp` and a sha256 check |
 | [`kubernetes/gleichlaut-70b.yaml`](kubernetes/gleichlaut-70b.yaml) | the 70B variant: ConfigMap with the endpoint, CronJob `gleichlaut-month-70b` (the 2nd 20:00, after the 8B month's deadline) with the canary as an init container |
 | [`kubernetes/networkpolicy.yaml`](kubernetes/networkpolicy.yaml) | direct egress: default deny (DNS only); egress to `epl.bag.admin.ch` for month and audit; for the 70B variant to the endpoint; for the one-off GGUF fetch to your mirror. Plain NetworkPolicy matches IP blocks (fill in the CIDRs); a CiliumNetworkPolicy variant with `toFQDNs` is included |
@@ -111,17 +112,19 @@ The PVC `gleichlaut-models` is ReadWriteOnce: it is written once and then mounte
    is still the pinned one, so the mirror can only serve the certified file. Narrow the `gleichlaut-fetch-gguf` policy in
    `networkpolicy.yaml` to the mirror's address.
 3. **No egress at all:** download the file on a connected machine, check it there
-   (`sha256sum apertus-v1.5-8b-text-q4_k_m.gguf` must print `a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299`),
+   (`sha256sum apertus-v1.5-8b-text-q8_0.gguf` must print `dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d`),
    carry it in by your transfer process, then follow [`kubernetes/models-loader.yaml`](kubernetes/models-loader.yaml):
    apply the loader pod, `kubectl cp` the file to `/models/`, run `sha256sum` (and `python -m gleichlaut fetch-gguf`, which
    prints "GGUF verified" and downloads nothing when the file is right) in the pod, delete the pod. If your storage team
    can put the file on a volume directly (an NFS export, a pre-populated PV bound to the claim), that works as well: the
-   pods only need the file at `/models/apertus-v1.5-8b-text-q4_k_m.gguf`.
+   pods only need the file at `/models/apertus-v1.5-8b-text-q8_0.gguf`.
 
-**The Q8_0 build** (`GLEICHLAUT_BUILD=q8_0`, 16 GiB RAM, also certified): file `apertus-v1.5-8b-text-q8_0.gguf`, sha256
-`dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d`, 8,567,121,856 bytes. Set `GLEICHLAUT_BUILD: q8_0` in
-`gleichlaut-config` (the fetch Job then fetches and checks that file), change `--gguf` of `gleichlaut-month` to
-`/models/apertus-v1.5-8b-text-q8_0.gguf`, and raise its memory request and limit to the 16 GiB the Q8_0 build needs
+The default build is Q8_0: file `apertus-v1.5-8b-text-q8_0.gguf`, sha256
+`dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d`, 8,567,121,856 bytes, 16 GiB RAM. **The Q4_K_M build**
+(`GLEICHLAUT_BUILD=q4_k_m`, for a node with 8 GiB RAM, also certified): file `apertus-v1.5-8b-text-q4_k_m.gguf`, sha256
+`a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299`, 5,059,027,136 bytes. Set `GLEICHLAUT_BUILD: q4_k_m`
+in `gleichlaut-config` (the fetch Job then fetches and checks that file), change `--gguf` of `gleichlaut-month` to
+`/models/apertus-v1.5-8b-text-q4_k_m.gguf`, and lower its memory request and limit to 8Gi / 10Gi
 ([docs/dependencies.md](../dependencies.md)). The PVC's 12Gi holds either file.
 
 ## Exit codes and alerts
@@ -204,7 +207,7 @@ What a build certificate binds (`certify.write_build_certificate`, checked by `c
 
 It does not bind how llama-cpp-python was compiled (compiler, CMake flags, CPU, BLAS), the Python or numpy version, or
 the base image. So a wheel you build yourself from the 0.3.35 source reports version 0.3.35 and the certificate holds.
-That is already the case for the image: the shipped certificate comes from the M1 run on GitHub's CPU runners
+That is already the case for the image: the shipped certificates come from the M1 and M2 runs on GitHub's CPU runners
 (`CMAKE_ARGS="-DGGML_NATIVE=OFF"`, source build), and the Dockerfile compiles the same version again.
 
 Re-certification is needed after: another GGUF file (any other sha256, including a re-quantisation), another
@@ -213,8 +216,8 @@ valid certificate the month still runs, but every 8B item goes to review (`revie
 resources (`GLEICHLAUT_RESOURCES`) void every certificate.
 
 **Recommendation:** because compile flags are not bound, run `gleichlaut-certify-build-local` once on your own build
-and hardware (~7 h on 4 cores). It writes a certificate from your own run and lists any ready output that differs from the
-labelled M1 outputs in `needs_review`.
+and hardware (~9.2 h on 4 cores for Q8_0, ~7.1 h for Q4_K_M). It writes a certificate from your own run and lists any
+ready output that differs from the labelled M1 / M2 outputs in `needs_review`.
 
 **2. Who owns the HMAC key and `state/`: generation, rotation, backup?**
 

@@ -1,4 +1,5 @@
-# The 70B lane: the 2nd at 20:00, after its canary (19:00) and after the 8B month (06:00, about 2.4 h at today's volume).
+# The 70B lane: the 2nd at 20:00, after its canary (19:00) and after the 8B month (06:00, about 3.2 h at today's volume
+# with Q8_0).
 # Enable this or gleichlaut-month.timer, or both: separate outputs, but the same feed snapshots (out/hist), so they never
 # run at the same time (staggered here; gleichlaut-month-70b.service also waits for a still-running 8B month: After=).
 [Unit]

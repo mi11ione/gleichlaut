@@ -1532,53 +1532,6 @@
   },
   {
    "type": "machine-learning-model",
-   "bom-ref": "apertus-8b-gguf",
-   "name": "apertus-v1.5-8b-text-q4_k_m.gguf",
-   "version": "Q4_K_M",
-   "hashes": [
-    {
-     "alg": "SHA-256",
-     "content": "a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299"
-    }
-   ],
-   "licenses": [
-    {
-     "license": {
-      "id": "Apache-2.0"
-     }
-    }
-   ],
-   "externalReferences": [
-    {
-     "type": "distribution",
-     "url": "https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf"
-    }
-   ],
-   "properties": [
-    {
-     "name": "gleichlaut:size-bytes",
-     "value": "5059027136"
-    },
-    {
-     "name": "gleichlaut:build",
-     "value": "GLEICHLAUT_BUILD=q4_k_m: the default build (GLEICHLAUT_BUILD=q4_k_m; 8 GiB RAM)"
-    },
-    {
-     "name": "gleichlaut:provenance",
-     "value": "docs/dependencies.md, GGUF provenance"
-    },
-    {
-     "name": "gleichlaut:build-certificate",
-     "value": "eval/certificates/8b-q4_k_m-fresh166.json"
-    },
-    {
-     "name": "gleichlaut:not-in-image",
-     "value": "downloaded at run time into the mounted models/ and sha256-checked"
-    }
-   ]
-  },
-  {
-   "type": "machine-learning-model",
    "bom-ref": "apertus-8b-gguf-q8_0",
    "name": "apertus-v1.5-8b-text-q8_0.gguf",
    "version": "Q8_0",
@@ -1608,7 +1561,7 @@
     },
     {
      "name": "gleichlaut:build",
-     "value": "GLEICHLAUT_BUILD=q8_0: the option for a 16 GiB box (GLEICHLAUT_BUILD=q8_0)"
+     "value": "GLEICHLAUT_BUILD=q8_0: the default build (GLEICHLAUT_BUILD=q8_0; 16 GiB RAM)"
     },
     {
      "name": "gleichlaut:provenance",
@@ -1617,6 +1570,53 @@
     {
      "name": "gleichlaut:build-certificate",
      "value": "eval/certificates/8b-q8_0-fresh166.json"
+    },
+    {
+     "name": "gleichlaut:not-in-image",
+     "value": "downloaded at run time into the mounted models/ and sha256-checked"
+    }
+   ]
+  },
+  {
+   "type": "machine-learning-model",
+   "bom-ref": "apertus-8b-gguf-q4_k_m",
+   "name": "apertus-v1.5-8b-text-q4_k_m.gguf",
+   "version": "Q4_K_M",
+   "hashes": [
+    {
+     "alg": "SHA-256",
+     "content": "a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299"
+    }
+   ],
+   "licenses": [
+    {
+     "license": {
+      "id": "Apache-2.0"
+     }
+    }
+   ],
+   "externalReferences": [
+    {
+     "type": "distribution",
+     "url": "https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf"
+    }
+   ],
+   "properties": [
+    {
+     "name": "gleichlaut:size-bytes",
+     "value": "5059027136"
+    },
+    {
+     "name": "gleichlaut:build",
+     "value": "GLEICHLAUT_BUILD=q4_k_m: the option for an 8 GiB box (GLEICHLAUT_BUILD=q4_k_m)"
+    },
+    {
+     "name": "gleichlaut:provenance",
+     "value": "docs/dependencies.md, GGUF provenance"
+    },
+    {
+     "name": "gleichlaut:build-certificate",
+     "value": "eval/certificates/8b-q4_k_m-fresh166.json"
     },
     {
      "name": "gleichlaut:not-in-image",
@@ -1647,8 +1647,8 @@
    "authenticated": false,
    "x-trust-boundary": true,
    "endpoints": [
-    "https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf",
-    "https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf"
+    "https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf",
+    "https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf"
    ],
    "description": "gleichlaut fetch-gguf downloads the pinned GGUF once (CDN: cas-bridge.xethub.hf.co, cdn-lfs.hf.co) and checks its sha256; GLEICHLAUT_MODEL_URL points it at an internal mirror instead, and a copied-in file needs no download at all"
   }
@@ -1669,10 +1669,10 @@
     "deb-build-essential",
     "deb-cmake",
     "pypi-scikit-build-core",
-    "apertus-8b-gguf",
-    "apertus-8b-gguf-q8_0"
+    "apertus-8b-gguf-q8_0",
+    "apertus-8b-gguf-q4_k_m"
    ]
   }
  ],
- "serialNumber": "urn:uuid:c342d1a6-c485-5981-b9f6-a06933e06d7b"
+ "serialNumber": "urn:uuid:cd9f09a9-0e20-571b-bbbc-1648a2574ad1"
 }

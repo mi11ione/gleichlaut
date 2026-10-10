@@ -2,7 +2,8 @@
 #   base    (what `make run`, `make audit`, `make certify` and `make month-70b` use): Python + lxml. No model weights, no
 #           network needed at runtime.
 #   offline (`make month`, `make run-offline`, `make certify-build`): adds llama-cpp-python for the local CPU Apertus 8B
-#           GGUF lane, the SL default (air-gapped; certified build, eval/certificates/8b-q4_k_m-fresh166.json).
+#           GGUF lane, the SL default (air-gapped; certified builds: Q8_0 by default, eval/certificates/8b-q8_0-fresh166.json,
+#           16 GiB RAM; Q4_K_M for an 8 GiB box, eval/certificates/8b-q4_k_m-fresh166.json).
 # Supply chain: every Python package is installed with `pip --require-hashes` from the hash-pinned locks
 # (requirements*.txt, generated from requirements*.in by tools/supply_chain.py lock); the SBOM is docs/sbom.json.
 # Build-time dependencies (PyPI wheels/sdists, the base image) are fetched here; runtime dependencies are listed in

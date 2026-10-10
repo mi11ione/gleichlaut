@@ -22,9 +22,10 @@
   fetch-gguf download the pinned Apertus 8B GGUF and verify its sha256
 
 Routing (PREREG R1, vision §3):
-  corpus sl, default lane -> the local Apertus 8B GGUF on CPU (4 cores, 8 GiB RAM; offline image), in process,
-             air-gapped, when the GGUF has a build certificate (sha256 of the file + llama-cpp-python version + frozen
-             code; `gleichlaut certify`, shipped: eval/certificates/8b-q4_k_m-fresh166.json): drafts get the guards'
+  corpus sl, default lane -> the local Apertus 8B GGUF on CPU (Q8_0: 4 cores, 16 GiB RAM; GLEICHLAUT_BUILD=q4_k_m
+             for an 8 GiB box; offline image), in process, air-gapped, when the GGUF has a build certificate (sha256 of
+             the file + llama-cpp-python version + frozen code; `gleichlaut certify`, shipped for both builds:
+             eval/certificates/8b-q8_0-fresh166.json, 8b-q4_k_m-fresh166.json): drafts get the guards'
              ready / flagged status. A GGUF without a build certificate drafts with every item marked for review.
   corpus sl, fewer edits  -> Apertus 70B on a certified endpoint (--backend openai: exact endpoint + model) whose latest
              canary passed within 31 days.
@@ -50,14 +51,16 @@ from collections import Counter
 from . import core, backends
 
 # The two certified 8B builds (PREREG R1: M1 Q4_K_M, M2 Q8_0; build certificates in eval/certificates/). GLEICHLAUT_BUILD
-# picks one; GLEICHLAUT_MODEL_URL / GLEICHLAUT_MODEL_SHA256 override both (any other file needs its own certificate).
+# picks one, Q8_0 by default (0 errors in its ready drafts, 12.2 points more edits saved than Q4_K_M:
+# eval/results/size_compare.json); GLEICHLAUT_MODEL_URL / GLEICHLAUT_MODEL_SHA256 override both (any other file needs its
+# own certificate).
 BUILDS = {
+    "q8_0": ("https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf",
+             "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d"),       # 8.6 GB, a 16 GiB box (default)
     "q4_k_m": ("https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf",
                "a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299"),     # 5.1 GB, an 8 GiB box
-    "q8_0": ("https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf",
-             "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d"),       # 8.6 GB, a 16 GiB box
 }
-BUILD = os.environ.get("GLEICHLAUT_BUILD") or "q4_k_m"
+BUILD = os.environ.get("GLEICHLAUT_BUILD") or "q8_0"
 if BUILD not in BUILDS: sys.exit(f"error: GLEICHLAUT_BUILD={BUILD!r}: one of {', '.join(BUILDS)}")
 GGUF_URL = os.environ.get("GLEICHLAUT_MODEL_URL") or BUILDS[BUILD][0]
 GGUF_SHA = os.environ.get("GLEICHLAUT_MODEL_SHA256") or BUILDS[BUILD][1]
@@ -343,7 +346,7 @@ def local_ggufs():
 
 def certified_gguf(paths=None):
     """-> (path, sha256, certificate, reason) of the first GGUF with a valid build certificate, else (None, None, None, reason).
-    Every candidate file is hashed (about 10 s for the 5 GB Q4_K_M)."""
+    Every candidate file is hashed (about 10 s per 5 GB)."""
     from . import certify
     paths = local_ggufs() if paths is None else paths
     if not paths: return None, None, None, f"no GGUF in {models_dir()} (GLEICHLAUT_MODELS)"
@@ -828,7 +831,7 @@ def write_metrics(path, cmd, rc, secs, m=None):
 NOARG_HELP = {
     "run": "gleichlaut run: replay + re-score + emit + review page (no arguments; LLM_BASE_URL etc. from the environment)",
     "live": "gleichlaut live: draft the 5 live statute paragraphs through LLM_BASE_URL (no arguments)",
-    "fetch-gguf": "gleichlaut fetch-gguf: download the certified 8B GGUF (GLEICHLAUT_BUILD=q4_k_m 5.1 GB | q8_0 8.6 GB) into "
+    "fetch-gguf": "gleichlaut fetch-gguf: download the certified 8B GGUF (GLEICHLAUT_BUILD=q8_0 8.6 GB, the default | q4_k_m 5.1 GB) into "
                   "GLEICHLAUT_MODELS and check its sha256; downloads nothing if a verified file is there (no arguments)",
 }
 

@@ -11,7 +11,7 @@ IT already allows Python or Docker.** The research and evaluation background is 
 
 | Lane | Model | Status of its drafts |
 |---|---|---|
-| SL conditions, **default** | the local Apertus 8B GGUF on CPU, in process, air-gapped: a **certified build** (PREREG R1 passed on the held-out 166; build certificate `eval/certificates/8b-q4_k_m-fresh166.json`) | ready / flagged by the frozen checks |
+| SL conditions, **default** | the local Apertus 8B GGUF on CPU, in process, air-gapped: a **certified build**, Q8_0 by default (PREREG R1 passed on the held-out 166; build certificate `eval/certificates/8b-q8_0-fresh166.json`; Q4_K_M for an 8 GiB box: `eval/certificates/8b-q4_k_m-fresh166.json`) | ready / flagged by the frozen checks |
 | SL conditions, optional "fewer edits" | Apertus 70B on an endpoint you control, **certified** (`make certify-endpoint`) and watched by a monthly canary | ready / flagged by the frozen checks |
 | Federal statutes (Fedlex) | the same local 8B | every draft reviewed (neither size passes the rule on statutes) |
 
@@ -37,9 +37,11 @@ through unchanged (`AUDIT_ARGS=...` with `make`).
 
 ## 1. Install
 
-**Hardware: one requirement, for the default 8B lane: 4 CPU cores and 8 GiB RAM** (the 5.1 GB GGUF is memory-mapped,
-plus the KV cache and Python), about 8 GB disk (the GGUF plus the two images) and about 16 MB for each feed date you
-keep. No GPU. Docker 24+ on any x86-64 or arm64 Linux/macOS host. (The audit, `make run` and the 70B lane fit in far less,
+**Hardware: one requirement, for the default 8B lane: 4 CPU cores and 16 GiB RAM** (the 8.6 GB Q8_0 GGUF is
+memory-mapped, plus the KV cache and Python), about 12 GB disk (the GGUF plus the two images) and about 16 MB for each
+feed date you keep. On a box with 8 GiB RAM run the certified Q4_K_M build instead (`BUILD=q4_k_m`, or
+`GLEICHLAUT_BUILD=q4_k_m` without `make`: 5.1 GB GGUF, about 8 GB disk); it passes the same pre-registered rule but saves
+fewer edits (README, Results). No GPU. Docker 24+ on any x86-64 or arm64 Linux/macOS host. (The audit, `make run` and the 70B lane fit in far less,
 but size the box for the 8B lane, which is the default.)
 
 ```bash
@@ -59,20 +61,22 @@ requirements-offline.txt` (builds llama-cpp-python 0.3.35 from source: a C compi
 `gleichlaut` command (a developer who only wants the checks: [api.md](api.md)).
 
 **The 8B lane (the default).** `make fetch-gguf` downloads the pinned Apertus 8B GGUF once into `./models`
-(5,059,027,136 bytes, sha256-checked); on an air-gapped host copy the file there instead. `make month` builds the
-`offline` image (llama-cpp-python) and drafts with it. The image carries the build certificate of exactly this GGUF and
+(Q8_0: 8,567,121,856 bytes; with `BUILD=q4_k_m` 5,059,027,136 bytes; sha256-checked); on an air-gapped host copy the
+file there instead. `make month` builds the `offline` image (llama-cpp-python) and drafts with it. The image carries the build certificate of exactly this GGUF and
 llama-cpp-python version, so its SL drafts get the guards' normal ready / flagged status (§3). `make run-offline` adds
 the 8B live slice to the reproduction.
 
-**Throughput of the 8B lane (measured, M1: GitHub Actions runner, 4 cores, Q4_K_M).** 153.4 s per item on average, all
-model calls of the item included: the first draft, a lock retry, a guard re-ask (≈1.7 calls per item, the 70B suite's
-285 requests for 166 items; the 8B re-asks more often, 105 of 166 items, so somewhat more). The 166-item suite took
-7.1 h. Items the code lane applies by itself (numbers or months only, 12 of 166) need no model call.
+**Throughput of the 8B lane (measured, M2: GitHub Actions runner, 4 cores, Q8_0, the default).** 200.5 s per item on
+average (`eval/results/m1_q8_0.json`, `cpu_secs_per_item`), all model calls of the item included: the first draft, a
+lock retry, a guard re-ask (≈1.7 calls per item, the 70B suite's 285 requests for 166 items; the 8B re-asks more often,
+Q4_K_M on 105 of 166 items, so somewhat more). The 166-item suite took 9.2 h. Q4_K_M (M1,
+`eval/results/m1_q4_k_m.json`): 153.4 s per item, 7.1 h for the suite. Items the code lane applies by itself (numbers or
+months only, 12 of 166) need no model call. Monthly CPU time below = items a month × seconds per item.
 
-| Volume | FR/IT items a month | One 4-core box, items one at a time |
-|---|---|---|
-| today (1×: 28.7 German changes a month, `eval/results/economics.json`) | 57 | about 2.4 h |
-| 10× | 574 | about 24.5 h: still one box, or two boxes on two halves of the item file in about 12 h |
+| Volume | FR/IT items a month | One 4-core box, items one at a time: Q8_0 (200.5 s per item) | Q4_K_M (153.4 s) |
+|---|---|---|---|
+| today (1×: 28.7 German changes a month, `eval/results/economics.json`) | 57 | about 3.2 h | about 2.4 h |
+| 10× | 574 | about 32.0 h: still one box, or two boxes on two halves of the item file in about 16 h | about 24.5 h |
 
 The run is unattended, once a month. Only 4 cores were measured; more threads (`GLEICHLAUT_THREADS`) are expected to help
 but are not measured, so for 10× plan on parallel processes over separate item files (records are per item, so the
@@ -86,7 +90,8 @@ and proxy variables into the container. The key is never written to any file Gle
 | Variable | Meaning | Default |
 |---|---|---|
 | `GLEICHLAUT_MODELS` | where the GGUF lives (`make` mounts `./models` as `/models`) | `./models` |
-| `GLEICHLAUT_MODEL_URL`, `GLEICHLAUT_MODEL_SHA256` | the GGUF `fetch-gguf` downloads, and the sha256 it must have | the pinned Q4_K_M build |
+| `GLEICHLAUT_BUILD` | which certified 8B build: `q8_0` (16 GiB RAM) or `q4_k_m` (8 GiB RAM); `make` sets it from `BUILD` | `q8_0` |
+| `GLEICHLAUT_MODEL_URL`, `GLEICHLAUT_MODEL_SHA256` | the GGUF `fetch-gguf` downloads, and the sha256 it must have (only for a mirror or your own file) | the pinned file of `GLEICHLAUT_BUILD` |
 | `LLM_BASE_URL` | the optional 70B lane: OpenAI-compatible endpoint serving Apertus 70B, e.g. `https://llm.internal.example/v1` | unset: no live calls |
 | `LLM_API_KEY` | bearer key for that endpoint | empty |
 | `LLM_NAME` | model id to request | `swiss-ai/apertus-v1.5-70b` |
@@ -123,22 +128,24 @@ and the stored records re-scored with the frozen checks and the labels to the sa
 8B's drafts get the guards' ready / flagged status; without one (another GGUF, another llama-cpp-python, a FAIL) every
 item goes to review, as before R1.
 
-The image already carries the certificate of the pinned build (`eval/certificates/8b-q4_k_m-fresh166.json`: the M1 run
-of PREREG R1, imported). Make your own copy in `./state` (required when `GLEICHLAUT_CERT_KEY` is set, because the shipped
-one is unsigned):
+The image already carries the certificates of both pinned builds (`eval/certificates/8b-q8_0-fresh166.json`: the M2 run
+of PREREG R1, the default; `eval/certificates/8b-q4_k_m-fresh166.json`: the M1 run; both imported). Make your own copy in
+`./state` (required when `GLEICHLAUT_CERT_KEY` is set, because the shipped ones are unsigned):
 
 ```bash
-make certify          # seconds, no model, no network: imports the recorded M1 run, re-scores it, signs it if a key is set
-# = gleichlaut certify --import-run data/runs/8b_q4_k_m_fresh166_g3_final.jsonl \
-#     --gguf-sha256 a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299 --labels eval/labels/m1_q4_k_m_fresh166.tsv
-make certify-build    # the same suite run on THIS machine's CPU: ~7 h on 4 cores (gleichlaut certify --backend llamacpp --gguf PATH)
+make certify          # seconds, no model, no network: imports the recorded M2 run, re-scores it, signs it if a key is set
+# = gleichlaut certify --import-run data/runs/8b_q8_0_fresh166_g3_final.jsonl \
+#     --gguf-sha256 dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d --labels eval/labels/m1_q8_0_fresh166.tsv
+make certify BUILD=q4_k_m    # the same for Q4_K_M (the M1 run)
+make certify-build    # the same suite run on THIS machine's CPU: ~9.2 h on 4 cores for Q8_0, ~7.1 h for Q4_K_M
+                      # (gleichlaut certify --backend llamacpp --gguf PATH)
 ```
 
 `--import-run` takes any recorded suite run (one JSON line per suite item, e.g. the shards of `.github/workflows/m1.yml`
 merged by `python -m gleichlaut.m1 gather`) with the GGUF sha256 it was drafted with and its labels (`key<TAB>class`, or
-a table with a `final` column such as the M1 annotation file). PASS only if the pre-registered rule holds and no ready
-non-exact draft is unlabelled; otherwise FAIL or PENDING_REVIEW (`--resolve`, below). A local run inherits the M1 labels
-for outputs identical to the M1 run's, and lists every other ready non-exact output in `needs_review`. A build certificate
+a table with a `final` column such as the M1/M2 annotation files). PASS only if the pre-registered rule holds and no ready
+non-exact draft is unlabelled; otherwise FAIL or PENDING_REVIEW (`--resolve`, below). A local run inherits the M1 and M2 labels
+for outputs identical to the M1 or M2 run's, and lists every other ready non-exact output in `needs_review`. A build certificate
 does not expire and needs no canary: what it certifies (a file hash, a library version, frozen code) cannot change under
 it. Re-certify when the GGUF, llama-cpp-python or the frozen code changes.
 
@@ -376,7 +383,7 @@ Errors are one line on stderr, with no traceback (`GLEICHLAUT_DEBUG=1` shows it)
 reproduction passes, even if the live slice failed. Look for `LIVE SLICE FAILED`.
 
 **Scheduling and alerting.** [docs/deploy/](deploy/) has systemd units (month with the 8B, audit, and the 70B variant
-with its canary) and Kubernetes manifests (the 8B CronJob with 8 GiB / 4 CPU and the GGUF on a read-only PVC, the 70B
+with its canary) and Kubernetes manifests (the 8B CronJob with 16 GiB / 4 CPU for Q8_0 and the GGUF on a read-only PVC, the 70B
 variant, certification Jobs, a NetworkPolicy). It also lists which exit code should page whom: 2 and 4 are
 configuration (operator), 3 is model drift of the 70B endpoint (operator, stop drafting on it), 6 is an outage (retry
 next run, page if it repeats), 8 is audit findings (reviewer), and 1 is a broken build (developer).
