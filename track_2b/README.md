@@ -78,8 +78,9 @@ ten times. Every number here is in [claims.tsv](claims.tsv) with the file and co
 the 8B on a CPU is sufficient and is the default: nothing leaves the building. The default build is Q8_0, which passes
 with no error among its ready drafts; Q4_K_M passes by one item (1.81% stale or German against the 2% limit). On
 identical drafts neither size nor quantisation makes a measurable difference (17.5% for the 70B and Q8_0, 16.9% for
-Q4_K_M). On edits saved both do: Q8_0 saves 12.2 points more than Q4_K_M
-(paired 95% CI [6.0, 19.9]), and the 70B 9.3 more than Q8_0 ([−1.3, 20.2], not significant). Q8_0's 62 ready drafts
+Q4_K_M). On edits saved, quantisation clearly matters: Q8_0 saves 12.2 points more than Q4_K_M
+(paired 95% CI [6.0, 19.9]). The 70B saves 9.3 more than Q8_0; the aggregate interval [−1.3, 20.2] includes zero, but
+item by item the 70B needs fewer edits on 81 drafts and Q8_0 on 26. Q8_0's 62 ready drafts
 have no meaning error, stale change or German left; 25 still need a small fix, 22 of them one insurance term. The
 70B's ready drafts rarely need a fix to the amendment (3 of 66). So: Q8_0 by default (16 GiB RAM), Q4_K_M
 on an 8 GiB box (`BUILD=q4_k_m`), the 70B where an endpoint you control is available and the extra edits are

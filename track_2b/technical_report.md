@@ -104,9 +104,10 @@ text, numbers as slot codes; the model returns the amended paragraph. The 70B wr
 drafts it wrote a number word itself ("due", "quatre", "quattro"), and all 3 were flagged; the 8B cannot emit either.
 **Size is measured on the same items in both directions.** SL conditions (pre-registered R1, same pipeline, same 166
 items): both 8B GGUF builds pass the rule (Q4_K_M: flagged 63.9%, ready drafts 0 meaning errors and 3 stale or German;
-Q8_0: flagged 62.7%, ready drafts 0 / 0 / 0), so under R1 the SL default is the local 8B. Quantisation matters as much
-as size: Q8_0 ties the 70B on exact match and is within the paired CI on edits saved (33.1% vs 42.4%, difference
-[−1.3, 20.2]); Q4_K_M is clearly behind on edits (20.9%, difference [8.7, 34.9]). The 70B is worth its endpoint where
+Q8_0: flagged 62.7%, ready drafts 0 / 0 / 0), so under R1 the SL default is the local 8B. Quantisation matters about
+as much as size: Q8_0 ties the 70B on exact match; on edits saved (33.1% vs 42.4%) the aggregate difference [−1.3, 20.2]
+includes zero, though the 70B needs fewer edits on 81 items and Q8_0 on 26; Q4_K_M is clearly behind (20.9%,
+difference [8.7, 34.9]). The 70B is worth its endpoint where
 editing time matters (ready drafts needing a fix: 3 of 66, against 25 of 62 for Q8_0 and 33 of 60 for Q4_K_M, mostly one
 insurance term). The research-phase MLX build had flagged 85.0% on dev
 items without the re-ask. Federal statutes (pre-registered R5, 120 paragraphs): the 70B is no better (exact
@@ -119,10 +120,10 @@ review because German job titles ("EFZ") need a terminology list that only exist
 
 | Task | Result | Done instead by |
 |---|---|---|
-| Free translation of the new German (8B MLX 4-bit, dev 120) | 0% exact; lexicon counters fire on 78 of 120; a seeded read of 20 found 2 real flips ("deve" → "dovrebbe"), about 8 in 120, none flagged | locked rewrite of the old text |
+| Free translation of the new German (8B MLX 4-bit, dev 120) | 0% exact (the locked rewrite reaches 15.0% on the same items); lexicon counters fire on 78 of 120; a seeded read of 20 found 2 real flips ("deve" → "dovrebbe"), about 8 in 120, none flagged | locked rewrite of the old text |
 | Edit only a marked span (dev 120) | span ignored in 73% (8B) and 81% (70B) of windows | whole-paragraph rewrite + lock check |
 | Judge DE/FR/IT equivalence (9 known Fedlex divergences) | as a yes/no answer, 8B (MLX) 0 of 9, 70B 0 of 9 ("they differ" in 2 of 270 answers); the 8B's log-probabilities rank the divergent language first in 6 of 9 (AUROC 0.81, order-fragile), which the API does not expose for the 70B | deterministic checks and the audit |
-| Type numeric conditions | 8B operator accuracy 36%; errors correlated across languages | code (slots, audit) |
+| Type numeric conditions | 8B (MLX 4-bit) operator accuracy 36%; errors correlated across languages | code (slots, audit) |
 | SL drafting with the 8B, MLX build, no re-ask (dev 120) | flagged 85.0%; 1 ready draft reverses a meaning | the shipped GGUF build with the full pipeline (passes R1) |
 | SL terminology with the 8B GGUF (held-out 166) | 29 of 60 ready drafts use "assurance obligatoire de maladie" for BAG's "…des soins" | the 70B, or a terminology list |
 | SL drafting, 70B with the earlier checks (out-of-sample 242) | failed the rule: 4.1% of items with German left, unflagged | copied-from-German, terminology and vocabulary checks, then a new held-out set |

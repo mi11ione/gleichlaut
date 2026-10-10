@@ -185,6 +185,8 @@ size_q8_hi	20.2	eval/results/size_compare.json	q8_0.saved_diff_ci95.1	{:.1f}	PYT
 q8q4_diff	12.2	eval/results/size_compare.json	q8_0_vs_q4_k_m.saved_diff_pts	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 q8q4_lo	6.0	eval/results/size_compare.json	q8_0_vs_q4_k_m.saved_diff_ci95.0	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 q8q4_hi	19.9	eval/results/size_compare.json	q8_0_vs_q4_k_m.saved_diff_ci95.1	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+size_q8_items70	81	eval/results/size_compare.json	q8_0.items_70b_fewer_edits	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+size_q8_items8	26	eval/results/size_compare.json	q8_0.items_8b_fewer_edits	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 size_q4_diff	21.5	eval/results/size_compare.json	q4_k_m.saved_diff_pts	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 size_q4_lo	8.7	eval/results/size_compare.json	q4_k_m.saved_diff_ci95.0	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 size_q4_hi	34.9	eval/results/size_compare.json	q4_k_m.saved_diff_ci95.1	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes

@@ -37,7 +37,7 @@ button,select,input,textarea{font:inherit;color:inherit}
 .tools{margin-left:auto;display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;color:var(--ink2);font:400 12px/1.4 var(--mono)}
 .tools b{color:var(--ink);font-weight:400}
 .tools select{background:none;border:0;border-bottom:1px solid var(--hair);padding:1px 0}
-.ctx{margin:0;padding:9px 0 10px;color:var(--ink2);font:400 13px/1.45 var(--sans);border-bottom:1px solid var(--hair);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ctx{margin:0;padding:9px 0 10px;color:var(--ink2);font:400 13px/1.45 var(--sans);border-bottom:1px solid var(--hair);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-width:150ch}
 .ctx b{color:var(--ink);font-weight:500}
 /* buttons */
 .tb{background:none;border:0;padding:1px 0;cursor:pointer;color:var(--ink2);border-bottom:1px solid transparent}
@@ -197,6 +197,7 @@ details[open]>summary{margin-bottom:6px}
 .ftl{margin:14px 0 2px;color:var(--ink2);font:400 12px/1.4 var(--mono)}.ftl b{color:var(--ink);font:500 15px/1.3 var(--sans);margin-right:6px}
 .facts{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:3px 18px;margin:0;font:400 14px/1.45 var(--sans)}
 .facts dt{color:var(--ink2);font:400 12px/1.8 var(--mono)}.facts dd{margin:0}
+.facts .term,.facts .sub2{display:block}.facts .sub2{color:var(--ink2);font-size:13px;margin-top:3px}
 .term s{color:var(--sig);text-decoration-thickness:1px}.term u{text-decoration-thickness:2px;text-underline-offset:3px}
 table.mem{width:100%;table-layout:auto;margin:4px 0 6px}
 table.mem td{font-size:13px;padding:6px 10px 6px 0;cursor:default}
@@ -701,18 +702,18 @@ it:{aLead:"Ogni riga è un caso: un punto in cui i testi tedesco, francese e ita
 Object.keys(TX4).forEach(function(L){Object.keys(TX4[L]).forEach(function(k){TX[L][k]=TX4[L][k]})});
 // redesign (10 Oct 2026): one bar, a context line, list + case in both views, statistics in the footer
 var TX5={
-de:{ctxAud:"Der Code vergleicht alle {n} Limitationen auf DE/FR/IT, ohne Modell. Zu entscheiden ist, welche Fassung dem Entscheid des BAG entspricht.",export:"Export",ctxD:"Vergangene Änderungen, vom BAG bereits publiziert; die Entwürfe sind für die Übersetzung.",whereS:"Entscheide bleiben in diesem Browser, bis sie exportiert werden.",backList:"Liste",slotsT:"Platzhalter zeigen",famChange1:"1 Änderung",aThen:"Weiter",aOr:"Oder",aboutH:"Über dieses Register",aBind:"Massgebend ist die Fassung, die dem Entscheid des BAG entspricht; welche das ist, weiss die Prüfung nicht.",
+de:{gCond:"Ändert eine Bedingung",gEdit:"Tippfehler und Redaktion",gTerm:"Terminologie",ctxAud:"Der Code vergleicht alle {n} Limitationen auf DE/FR/IT, ohne Modell. Zu entscheiden ist, welche Fassung dem Entscheid des BAG entspricht.",export:"Export",ctxD:"Die optionale 70B-Spur; die Standardspur (8B auf CPU) entwirft dieselben Änderungen. Vergangene, bereits publizierte Änderungen. Markiert heisst: eine Person prüft – die Prüfungen sind darauf ausgelegt, nichts zu übersehen.",whereS:"Entscheide bleiben in diesem Browser, bis sie exportiert werden.",backList:"Liste",slotsT:"Platzhalter zeigen",famChange1:"1 Änderung",aThen:"Weiter",aOr:"Oder",aboutH:"Über dieses Register",aBind:"Massgebend ist die Fassung, die dem Entscheid des BAG entspricht; welche das ist, weiss die Prüfung nicht.",
  aKnownHeadS:"Von unserer früheren Erhebung erfasst · {k} von {n} gefunden",aTermHeadS:"Terminologie · {n}",aWhat:"Was abweicht",aDating:"Seit wann",aNote2:"Hinweis",aTermL:"Begriff",
- aTexts:"Die Texte",aActL:"Massnahmen und Notiz",saveNextI:"Speichern, nächster Fall",keysA:"j/k oder ↑/↓ wechseln · Ctrl/Cmd+Enter speichern und weiter",lane:"Spur",laneM:"Methode",comparedW:"Verglichen mit"},
-en:{ctxAud:"Code compares all {n} limitations in DE/FR/IT, no model. Each issue needs one decision: which version matches BAG's decision.",export:"Export",ctxD:"Past changes, already published by BAG; the drafts are for translators.",whereS:"Decisions stay in this browser until exported.",backList:"List",slotsT:"Show number slots",famChange1:"1 change",aThen:"Then",aOr:"Or",aboutH:"About this register",aBind:"What counts is the version that matches BAG's decision; which one that is, the audit cannot know.",
+ aTexts:"Die Texte",aActL:"Massnahmen und Notiz",saveNextI:"Nächster Fall",keysA:"j/k oder ↑/↓ wechseln · Ctrl/Cmd+Enter speichern und weiter",lane:"Spur",laneM:"Methode",comparedW:"Verglichen mit"},
+en:{gCond:"Changes a condition",gEdit:"Typos and editorial",gTerm:"Terminology",ctxAud:"Code compares all {n} limitations in DE/FR/IT, no model. Each issue needs one decision: which version matches BAG's decision.",export:"Export",ctxD:"The optional 70B lane; the default 8B on CPU drafts the same changes. Past changes BAG has already published. Flagged means a person checks it: the checks are tuned to miss nothing.",whereS:"Decisions stay in this browser until exported.",backList:"List",slotsT:"Show number slots",famChange1:"1 change",aThen:"Then",aOr:"Or",aboutH:"About this register",aBind:"What counts is the version that matches BAG's decision; which one that is, the audit cannot know.",
  aKnownHeadS:"Listed by our earlier census · {k} of {n} found",aTermHeadS:"Terminology · {n}",aWhat:"What differs",aDating:"Since when",aNote2:"Note",aTermL:"Term",
- aTexts:"The texts",aActL:"Actions and note",saveNextI:"Save, next issue",keysA:"j/k or ↑/↓ move · Ctrl/Cmd+Enter save and next",lane:"Lane",laneM:"Method",comparedW:"Compared with"},
-fr:{ctxAud:"Le code compare les {n} limitations en DE/FR/IT, sans modèle. Chaque cas demande une décision : quelle version correspond à la décision de l'OFSP.",export:"Exporter",ctxD:"Modifications passées, déjà publiées par l'OFSP ; les brouillons sont destinés aux traducteurs.",whereS:"Les décisions restent dans ce navigateur jusqu'à leur exportation.",backList:"Liste",slotsT:"Afficher les emplacements",famChange1:"1 modification",aThen:"Ensuite",aOr:"Ou",aboutH:"À propos de ce registre",aBind:"Ce qui compte est la version conforme à la décision de l'OFSP ; laquelle, l'audit ne peut pas le savoir.",
+ aTexts:"The texts",aActL:"Actions and note",saveNextI:"Next issue",keysA:"j/k or ↑/↓ move · Ctrl/Cmd+Enter save and next",lane:"Lane",laneM:"Method",comparedW:"Compared with"},
+fr:{gCond:"Modifie une condition",gEdit:"Coquilles et rédaction",gTerm:"Terminologie",ctxAud:"Le code compare les {n} limitations en DE/FR/IT, sans modèle. Chaque cas demande une décision : quelle version correspond à la décision de l'OFSP.",export:"Exporter",ctxD:"La voie 70B optionnelle ; la voie par défaut (8B sur CPU) rédige les mêmes modifications. Modifications passées, déjà publiées par l'OFSP. Signalé veut dire : une personne vérifie, les contrôles sont réglés pour ne rien laisser passer.",whereS:"Les décisions restent dans ce navigateur jusqu'à leur exportation.",backList:"Liste",slotsT:"Afficher les emplacements",famChange1:"1 modification",aThen:"Ensuite",aOr:"Ou",aboutH:"À propos de ce registre",aBind:"Ce qui compte est la version conforme à la décision de l'OFSP ; laquelle, l'audit ne peut pas le savoir.",
  aKnownHeadS:"Recensés par notre inventaire antérieur · {k} sur {n} trouvés",aTermHeadS:"Terminologie · {n}",aWhat:"Ce qui diverge",aDating:"Depuis quand",aNote2:"Remarque",aTermL:"Terme",
- aTexts:"Les textes",aActL:"Mesures et remarque",saveNextI:"Enregistrer, cas suivant",keysA:"j/k ou ↑/↓ naviguer · Ctrl/Cmd+Entrée enregistrer et continuer",lane:"Voie",laneM:"Méthode",comparedW:"Comparé avec"},
-it:{ctxAud:"Il codice confronta tutte le {n} limitazioni in DE/FR/IT, senza modello. Ogni caso chiede una decisione: quale versione è conforme alla decisione dell'UFSP.",export:"Esporta",ctxD:"Modifiche passate, già pubblicate dall'UFSP; le bozze sono per i traduttori.",whereS:"Le decisioni restano in questo browser finché non vengono esportate.",backList:"Elenco",slotsT:"Mostra i segnaposto",famChange1:"1 modifica",aThen:"Poi",aOr:"Oppure",aboutH:"Informazioni su questo registro",aBind:"Conta la versione conforme alla decisione dell'UFSP; quale sia, la verifica non può saperlo.",
+ aTexts:"Les textes",aActL:"Mesures et remarque",saveNextI:"Cas suivant",keysA:"j/k ou ↑/↓ naviguer · Ctrl/Cmd+Entrée enregistrer et continuer",lane:"Voie",laneM:"Méthode",comparedW:"Comparé avec"},
+it:{gCond:"Modifica una condizione",gEdit:"Refusi e redazione",gTerm:"Terminologia",ctxAud:"Il codice confronta tutte le {n} limitazioni in DE/FR/IT, senza modello. Ogni caso chiede una decisione: quale versione è conforme alla decisione dell'UFSP.",export:"Esporta",ctxD:"La corsia 70B opzionale; la corsia predefinita (8B su CPU) redige le stesse modifiche. Modifiche passate, già pubblicate dall'UFSP. Segnalata significa: la verifica una persona, i controlli sono tarati per non lasciar passare nulla.",whereS:"Le decisioni restano in questo browser finché non vengono esportate.",backList:"Elenco",slotsT:"Mostra i segnaposto",famChange1:"1 modifica",aThen:"Poi",aOr:"Oppure",aboutH:"Informazioni su questo registro",aBind:"Conta la versione conforme alla decisione dell'UFSP; quale sia, la verifica non può saperlo.",
  aKnownHeadS:"Censiti dal nostro inventario precedente · {k} su {n} trovati",aTermHeadS:"Terminologia · {n}",aWhat:"Che cosa diverge",aDating:"Da quando",aNote2:"Nota",aTermL:"Termine",
- aTexts:"I testi",aActL:"Misure e nota",saveNextI:"Salva, caso successivo",keysA:"j/k o ↑/↓ spostarsi · Ctrl/Cmd+Invio salva e continua",lane:"Corsia",laneM:"Metodo",comparedW:"Confrontato con"}};
+ aTexts:"I testi",aActL:"Misure e nota",saveNextI:"Caso successivo",keysA:"j/k o ↑/↓ spostarsi · Ctrl/Cmd+Invio salva e continua",lane:"Corsia",laneM:"Metodo",comparedW:"Confrontato con"}};
 Object.keys(TX5).forEach(function(L){Object.keys(TX5[L]).forEach(function(k){TX[L][k]=TX5[L][k]})});
 function pickUI(){if(TX[P.ui])return P.ui;var L=[];try{L=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||""]}catch(e){}
  for(var i=0;i<L.length;i++){var c=String(L[i]||"").slice(0,2).toLowerCase();if(TX[c])return c}return "de"}
@@ -762,7 +763,7 @@ function chrome(){
  document.documentElement.lang=UL;$("l-ui").textContent=t("ui");applyTheme();
  var C=D.counts;
  $("t-drafts").innerHTML=esc(t("tabDrafts"))+' <span class="c">'+C.items+"</span>";
- $("t-audit").hidden=!AU;if(AU)$("t-audit").innerHTML=esc(t("tabAudit"))+' <span class="c">'+AU.issues.length+"</span>";
+ $("t-audit").hidden=!AU;if(AU)$("t-audit").innerHTML=esc(t("tabAudit"))+' <span class="c" title="'+esc(fmt(t("aFindingsV"),{a:AU.meta.main,b:"",t:AU.meta.term,n:AU.issues.length}).replace(" ()",""))+'">'+AU.issues.length+"</span>";
  $("t-audit").setAttribute("aria-selected",TAB==="audit");$("t-drafts").setAttribute("aria-selected",TAB==="drafts");
  $("t-audit").tabIndex=TAB==="audit"?0:-1;$("t-drafts").tabIndex=TAB==="drafts"?0:-1;
  $("p-audit").hidden=TAB!=="audit";$("p-drafts").hidden=TAB!=="drafts";
@@ -804,7 +805,8 @@ function seg(id,label,opts,cur,fn){var s=$(id);s.innerHTML='<span class="k">'+es
  opts.forEach(function(o){var b=document.createElement("button");b.type="button";b.className="tb";b.textContent=o[1];b.setAttribute("aria-pressed",o[0]===cur);
   b.onclick=function(){s.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});fn(o[0])};s.appendChild(b)})}
 function progress(){if(TAB==="audit"&&AU){var tm=AU.rows.filter(function(r){return r.kind==="terminology"}),fm=AU.rows.filter(function(r){return r.kind!=="terminology"});
-  $("progress").innerHTML="<b>"+esc(fmt(t("progA"),{i:IS.filter(iDecided).length,n:IS.length,x:fm.filter(aDecided).length,a:fm.length,y:tm.filter(aDecided).length,t:tm.length}))+"</b>";return}
+  var pa=fmt(t("progA"),{i:IS.filter(iDecided).length,n:IS.length,x:fm.filter(aDecided).length,a:fm.length,y:tm.filter(aDecided).length,t:tm.length});
+  $("progress").innerHTML="<b>"+esc(pa.split(" (")[0])+"</b>";$("progress").title=pa;return}
  var n=ITEMS.filter(function(it){return dec(it)}).length;$("progress").innerHTML="<b>"+n+"/"+ITEMS.length+"</b> "+esc(t("decided"))}
 // ------------------------------------------------------------------ tabs
 function setTab(tb){if(tb==="audit"&&!AU)tb="drafts";TAB=tb;chrome();
@@ -906,7 +908,8 @@ function memHTML(I){return '<table class="mem"><tbody>'+I.M.map(function(r){var 
     :'<span class="stt">'+esc(t("memFollow"))+'</span> <button type="button" class="tb" data-split="1">'+esc(t("memSplit"))+"</button>")+"</td></tr>"}).join("")+"</tbody></table>"}
 // the list: one row per issue (mark, product and codes, what differs); the selected issue opens on the right
 var ASEL=null,AVIS=[];
-function whatTxt(I){return I.what.map(function(w){var L=(w[1]||"").toUpperCase();
+function whatTxt(I){var W=I.what;if(sev(I)===1&&W.some(function(w){return w[0]==="editorial"}))W=W.filter(function(w){return w[0]==="editorial"});
+ return W.map(function(w){var L=(w[1]||"").toUpperCase();
   if(w[0]==="number")return "DE "+w[2]+" · "+L+" "+w[3];
   if(w[0]==="language")return L+": "+fmt(t("aFoundL"),{F:t("lname")[w[2]]||w[2]});
   if(w[0]==="terminology")return L+" «"+w[2]+"» → «"+w[3]+"»";
@@ -915,17 +918,17 @@ function whatTxt(I){return I.what.map(function(w){var L=(w[1]||"").toUpperCase()
 function aRow(I){var codes=I.lims.length>2?I.lims.slice(0,2).join(" · ")+" +"+(I.lims.length-2):I.lims.join(" · ");
  return '<tr data-iss="'+esc(I.key)+'" class="cnt'+(I.eq?" eq":"")+'" aria-selected="'+(ASEL===I)+'"><td>'+aMark(I)+"</td>"+
   '<td class="ap"><b>'+esc(uniqP(I.products).join(", ")||I.lims[0])+'</b><span class="code" title="'+esc(I.lims.join("\n"))+'">'+esc(codes)+"</span></td>"+
-  '<td class="aw"><span class="kd">'+esc(I.kinds.map(function(k){return t("kinds")[k]||k}).join(" + "))+"</span>"+esc(short(whatTxt(I),70))+"</td></tr>"}
+  '<td class="aw"><span class="kd">'+esc(I.kinds.map(function(k){return t("kinds")[k]||k}).join(" + "))+"</span>"+esc(short(whatTxt(I),I.term?44:70))+"</td></tr>"}
 function short(x,n){return x.length>n?x.slice(0,n).replace(/\s+\S*$/,"")+" …":x}
+function sev(I){if(I.eq)return 3;if(I.term)return 2;var ed=I.M.some(function(r){return r.kind==="editorial"}),expl=I.M.some(function(r){return r.expl&&r.expl.length});
+ if(I.kinds.every(function(k){return k==="editorial"})||(ed&&expl))return 1;return 0}
 function renderAudit(){if(!AU){$("p-audit").innerHTML='<p class="empty">'+esc(t("aNoFile"))+"</p>";return}
- var tb=document.querySelector("#aud tbody"),Is=IS.filter(aOk),kn=Is.filter(function(I){return I.known}),
-  ot=Is.filter(function(I){return !I.known&&!I.eq&&!I.term}),tm=Is.filter(function(I){return !I.known&&!I.eq&&I.term}),eq=Is.filter(function(I){return !I.known&&I.eq}),h="",m=AU.meta;
+ var tb=document.querySelector("#aud tbody"),Is=IS.filter(aOk),G=[[],[],[],[]],h="";
+ Is.forEach(function(I){G[sev(I)].push(I)});
  var nf=function(L){return L.reduce(function(s,I){return s+I.M.length},0)};
- AVIS=kn.concat(ot,tm,EQOPEN?eq:[]);
- if(kn.length)h+='<tr class="grp"><td colspan="3">'+esc(fmt(t("aKnownHeadS"),{k:m.known_found!=null?m.known_found:m.known_ids.length,n:m.known_of!=null?m.known_of:m.known_ids.length}))+"</td></tr>"+kn.map(aRow).join("");
- if(ot.length)h+='<tr class="grp"><td colspan="3">'+esc(t("aOtherHead"))+"</td></tr>"+ot.map(aRow).join("");
- if(tm.length)h+='<tr class="grp"><td colspan="3">'+esc(fmt(t("aTermHeadS"),{n:tm.length}))+"</td></tr>"+tm.map(aRow).join("");
- if(eq.length)h+='<tr class="eqh"><td colspan="3"><button type="button" id="eq-tg" aria-expanded="'+EQOPEN+'">['+(EQOPEN?"−":"+")+"] "+esc(fmt(t("eqHead"),{n:eq.length}))+"</button></td></tr>"+(EQOPEN?eq.map(aRow).join(""):"");
+ AVIS=G[0].concat(G[1],G[2],EQOPEN?G[3]:[]);
+ [["gCond",G[0]],["gEdit",G[1]],["gTerm",G[2]]].forEach(function(x){if(x[1].length)h+='<tr class="grp"><td colspan="3">'+esc(t(x[0]))+" · "+x[1].length+"</td></tr>"+x[1].map(aRow).join("")});
+ if(G[3].length)h+='<tr class="eqh"><td colspan="3"><button type="button" id="eq-tg" aria-expanded="'+EQOPEN+'">['+(EQOPEN?"−":"+")+"] "+esc(fmt(t("eqHead"),{n:G[3].length}))+"</button></td></tr>"+(EQOPEN?G[3].map(aRow).join(""):"");
  tb.innerHTML=h||'<tr><td colspan="3" class="empty">'+esc(t("aNone"))+"</td></tr>";
  var tg=$("eq-tg");if(tg)tg.onclick=function(){EQOPEN=!EQOPEN;renderAudit();var b=$("eq-tg");if(b)b.focus()};
  $("a-shown").textContent=fmt(t("aShownI"),{n:Is.length,m:nf(Is)});

@@ -147,6 +147,7 @@ C = [  # id, source, path, fmt, command
  ("size_q8_hi", "eval/results/size_compare.json", "q8_0.saved_diff_ci95.1", "{:.1f}", RE),
  ("q8q4_diff", "eval/results/size_compare.json", "q8_0_vs_q4_k_m.saved_diff_pts", "{:.1f}", RE), ("q8q4_lo", "eval/results/size_compare.json", "q8_0_vs_q4_k_m.saved_diff_ci95.0", "{:.1f}", RE),
  ("q8q4_hi", "eval/results/size_compare.json", "q8_0_vs_q4_k_m.saved_diff_ci95.1", "{:.1f}", RE),
+ ("size_q8_items70", "eval/results/size_compare.json", "q8_0.items_70b_fewer_edits", "{}", RE), ("size_q8_items8", "eval/results/size_compare.json", "q8_0.items_8b_fewer_edits", "{}", RE),
  ("size_q4_diff", "eval/results/size_compare.json", "q4_k_m.saved_diff_pts", "{:.1f}", RE), ("size_q4_lo", "eval/results/size_compare.json", "q4_k_m.saved_diff_ci95.0", "{:.1f}", RE),
  ("size_q4_hi", "eval/results/size_compare.json", "q4_k_m.saved_diff_ci95.1", "{:.1f}", RE),
  ("tb_house", "eval/results/termbase.json", "termbase.house_total", "{}", RE), ("tb_house_fr", "eval/results/termbase.json", "termbase.house.fr", "{}", RE), ("tb_house_it", "eval/results/termbase.json", "termbase.house.it", "{}", RE),

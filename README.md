@@ -15,10 +15,10 @@ something different in each language is a condition nobody can apply consistentl
   62 drafts it marks ready have **0 meaning errors**, stale changes or German left.
 - **The 70B where an endpoint you control is available:** 42.4% fewer token edits, ready drafts that rarely need a fix
   to the amendment (3 of 66), at **CHF 0.0024 per draft**.
-- **The audit needs no model at all:** it reduces 1,688 limitations to 27 findings, including the 10 divergences an
+- **The audit needs no model at all:** it reduces 1,688 limitations to 27 findings (18 issues to decide), including the 10 divergences an
   earlier census had listed; within its scope (numbers bound to a unit) it finds 93.0% of planted changes.
 - **Every number is checkable:** `cd track_2b && make run` (Docker, CPU, about a minute, no network) re-runs every
-  recorded Apertus request and re-derives every figure; `make local-run` does the same without Docker.
+  recorded 70B request, re-scores the 8B runs and re-derives every figure; `make local-run` does the same without Docker.
 
 ![The review register: the German change, then the French and Italian drafts. Code writes the underlined numbers; the
 Italian note says the old Italian already said "every 4 weeks" and the draft follows the German's 8.](track_2b/docs/register-nemluvio.png)
