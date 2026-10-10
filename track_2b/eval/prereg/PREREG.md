@@ -32,6 +32,7 @@ human labels were used.
 | R11 | annotator sensitivity to planted meaning errors | 66 of 66 caught, reference shown or hidden |
 | R12 | house wording in the prompt, both live months | more identical drafts, fewer flags; no pair meets R0; default unchanged |
 | R13 | fully blind relabel of the headline 70B run | 0 severe errors among ready drafts; κ 0.892 |
+| R15 | audit round 5: operator direction, negation, number words | pending |
 
 ## R0. Pass rule for a drafting lane (frozen 9 Oct 2026, before the fresh 2025 run)
 
@@ -360,6 +361,65 @@ research labeller's, who knew each draft's guard verdict, while the 8B runs (R1)
   ready drafts by the research labels) are not replaced. If the blind majority finds any severe error among the ready
   drafts, it is reported next to the headline 0 in the README and the technical report, with its key and class, whatever
   it is; if it finds none, that is stated beside the headline as the blind confirmation.
+
+## R15. Audit round 5: operator direction, negation, number words (frozen 10 Oct 2026, before any of these rules is written)
+
+Two jurors: the planted-recall v2 (`eval/results/audit_injection_v2.json`) reads flipped comparison operators and
+dropped negations 0 of 200 each and number words 37.0%, and these are the legally dangerous blind spots: a "congruence
+checked" stamp gives false assurance exactly there. A third juror: the register shows "IT —" for Nemluvio, where the
+Italian says "quattro". R15 adds three checks to `gleichlaut.audit` and fixes how they are judged before they exist.
+
+- **Rules (intent fixed now; lexicons and thresholds written on the dev half only).** Deterministic, stdlib, no model.
+  (1) `operator`: for a value bound to a unit (R2 parse) that the German and the target both state, the direction of
+  the comparison attached to it (lower bound: ≥, >, mindestens, ab, über, mehr als / au moins, plus de, supérieur à,
+  dès / almeno, più di, oltre, superiore a …; upper bound: ≤, <, höchstens, bis (zu), unter, weniger als, maximal / au
+  plus, au maximum, moins de, inférieur à, jusqu'à / al massimo, meno di, fino a, inferiore a …); a finding when the
+  directions are opposite. Inclusive against strict of the same direction (≥ against >) is not a finding (Q5 style).
+  (2) `negation`: German and target sentences aligned conservatively (monotone, on shared values and length; pairs that
+  do not align are not judged); a finding when an aligned pair has a negation (nicht, kein, ohne, weder … / ne … pas,
+  aucun, sans, ni, non … / non, nessuno, senza, né …) on one side only. (3) `number_word`: number words (2–12, already
+  read by the number check; ordinals where safe; 1 stays unreported, R3) compared per aligned sentence, unit-bound or
+  not (a number word is never a code, a year or a table cell); a value written as a word on either side that the aligned
+  sentence of the other side lacks is a finding unless an existing number finding already names it. Number findings
+  also get a display field with the value the aligned target passage states instead (Nemluvio: DE 8, IT 4).
+- **Separation.** The new kinds are reported apart (their own list and counts). The existing kinds must not change:
+  number 21, unit 0, language 1, editorial 5 (the 27-finding headline) and terminology 11, with the same ids, ranks and
+  values; a test enforces it. If any existing finding changes anyway, the change is reported finding by finding.
+- **Design on the dev half only** (`audit.half()`: md5 of the limitation id even = dev, as rounds 2–4): the register's
+  dev limitations, and planted copies of dev limitations only (`tools/audit_inject.py --protocol r15 --half dev`, seed
+  20261015). No held-half text, finding or planted copy is looked at before the freeze. The freeze is the commit of the
+  round-5 block of `audit.py`; its sha256 goes into the results log. After the freeze only reporting may change.
+- **Held planted recall** (`tools/audit_inject.py --protocol r15 --half held`, seed 20261016, `random.Random('20261016:
+  <type>:<lang>')`). Register, execution and one-fault-per-copy as v2. Eligible: one representative per distinct text
+  triple, half `held`, no finding of any kind (round-5 kinds included) under the frozen audit. 100 copies per type and
+  target language (all eligible if fewer). Types: `operator` (the v2 injector), `negation_drop` (the v2 negation
+  injector), `negation_add` (new: FR a finite verb among est, sont, doit, doivent, peut, peuvent, a, ont, within 60
+  characters of a number in the same sentence and not already negated, becomes `n'est pas`, `ne doit pas` …; IT `non`
+  inserted before è, sono, deve, devono, può, possono, viene, vengono, ha, hanno under the same conditions),
+  `number_word` (the v2 injector). Detection: the v2 rules (any existing kind pointing to the place, number types as v1
+  numbers), plus: `operator` an operator finding in the target language whose target operator or value lies within 30
+  characters of the edit; `negation_*` a negation finding in the target language whose target sentence contains the
+  edit; `number_word` a number or number_word finding with the new value on the target side or the old value on the
+  German side. Reported per type and language with Wilson 95%: recall **before** (the same copies, existing kinds only)
+  and **after**.
+- **Register findings and precision.** The frozen audit on the 6 Oct 2026 register: the number of findings per new
+  kind. All of a kind are labelled if there are at most 60, otherwise a `random.Random(20261017)` sample of 60. Blind
+  worklist (ids `R00`…, shuffled with the same seed, fields `id, kind, lang, de, fr, it, finding, question`; question:
+  "Is the difference named in 'finding' a real divergence between the German and the 'lang' text (a different condition
+  for the reader)? Answer real / minor / not (same condition: rephrasing, style, alignment or parser artefact)"). The key
+  map is kept apart. Two fresh general-purpose Claude subagents, each given only a copy of the worklist in an otherwise
+  empty directory, PROTOCOL.md set-up, the second in reverse order; a third fresh agent labels every record where the
+  two disagree on divergence (real or minor against not); final = majority. Precision = real or minor by the final
+  label (strict real reported beside), Wilson 95%, also on held-half findings alone. No human labels, no model API calls.
+- **Pass criteria, per kind.** `operator`: held recall ≥ 60% and precision ≥ 50%. `negation`: held recall ≥ 50% for
+  drop and for add, and precision ≥ 50%. `number_word`: held recall ≥ 60% (v2: 37.0%) and precision ≥ 50% (with no
+  finding on the register, precision is not assessed and the kind passes on recall). And for all: the existing kinds
+  unchanged as above.
+- **Decision and reporting.** A kind that passes is on by default (in the audit output and the summary). A kind that
+  fails is shipped off (computed and reported in the results, not in the default output), and the README and report keep
+  stating it as a blind spot with the measured recall. README, report and `docs/audit.md` state recall before and after
+  per type and the precision, whatever they are (`score.audit_r15` -> `eval/results/audit_r15.json`, re-derived by
+  `replay`).
 
 ## R4. Post-freeze changes
 
