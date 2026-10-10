@@ -186,9 +186,11 @@ the French text since 1 Aug 2026, and five typos next to numbers ("de15 kg", "1 
 On MiGeL and the Analysenliste (1 Jul 2026), lists the rules were never designed on: 11 findings, 7 confirmed (63.6%),
 among them an Analysenliste position billable after 13 repetitions in Italian and 14 in German and French.
 
-**Labels.** Every ready non-exact draft and the flagged sample were read in full by a blind annotator; a second blind
-annotator re-labelled them (agreement 62 of 69, κ 0.532) and found no meaning error, stale change or German left among
-the ready drafts; a third broke all 7 disagreements. Worklists and labels are in `eval/labels/`, so the labelling can be
+**Labels.** Every ready non-exact draft and the flagged sample were first read in full by a research labeller who knew
+each draft's guard verdict; a blind annotator re-labelled them (agreement 62 of 69, κ 0.532) and a third broke all 7
+disagreements. Because the first labeller was not blind, the run was relabelled fully blind under the same protocol
+(pre-registered R13): the two blind annotators agree on 67 of 69 records (κ 0.892), and their majority finds 0 meaning
+errors, stale changes or German left among the ready drafts (3 need a small fix: one term, two spacing slips). Worklists and labels are in `eval/labels/`, so the labelling can be
 re-run by anyone.
 
 **Cost and scale** (recorded tokens: 285 calls; 17.15 s of model time per item, sequential):

@@ -196,8 +196,10 @@ runtime dependencies: [docs/dependencies.md](docs/dependencies.md); target archi
   exceptions: R0 predates this repository, R7 was written after the first shadow-month outputs were seen, and the
   default build was chosen after both 8B results.
 - **Labelling you can re-run:** every ready draft was read in full and labelled twice, disagreements broken by a third
-  blind Claude annotator (agreement κ 0.532; for the headline 70B run the first labels are the research labeller's, who
-  knew each draft's guard verdict, the second and third blind). The worklists, the exact annotator instructions
+  blind Claude annotator. The headline 70B run was first labelled by a research labeller who knew each draft's guard
+  verdict, so it was relabelled fully blind (pre-registered R13): the two blind annotators agree on 67 of 69 records
+  (κ 0.892) and find 0 meaning errors, stale changes or German left among the ready drafts; 3 need a small fix (one
+  term, two spacing slips). The worklists, the exact annotator instructions
   (`eval/labels/PROTOCOL.md`) and every label are in `eval/labels/`; a BAG translator can be the next annotator on the
   same worklists, with no change to the pipeline.
 - **Every number is traceable:** `claims.tsv` maps every number in this README, the report and the form notes to a

@@ -49,6 +49,8 @@ C = [  # id, source, path, fmt, command
  ("cost_secs", "eval/results/cost_fresh166.json", "model_secs_per_item", "{:.2f}", RE),
  ("ag_agree", "eval/results/agreement_fresh166.json", "agree", "{}", RE), ("ag_n", "eval/results/agreement_fresh166.json", "n", "{}", RE),
  ("ag_kappa", "eval/results/agreement_fresh166.json", "kappa", "{:.3f}", RE),
+ ("blind_agree", "eval/results/fresh166_blind.json", "annotators.agree", "{}", RE), ("blind_n", "eval/results/fresh166_blind.json", "annotators.n", "{}", RE),
+ ("blind_kappa", "eval/results/fresh166_blind.json", "annotators.kappa", "{:.3f}", RE),
  ("tie_n", "eval/results/agreement_fresh166.json", "tiebreak.disagreements", "{}", RE),
  ("tie_sided", "eval/results/agreement_fresh166.json", "tiebreak.third_sided_with_second", "{}", RE),
  ("tie_fix", "eval/results/agreement_fresh166.json", "tiebreak.final_unflagged_needs_fix", "{}", RE),
