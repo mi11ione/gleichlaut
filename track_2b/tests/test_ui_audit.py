@@ -53,12 +53,39 @@ def test_page_has_both_tabs_audit_first():
     R = {k: json.load(open(os.path.join(audit_view.core.ROOT, "eval", "results", f"{k}.json"), encoding="utf-8")) for k in ("audit", "audit_more")}
     assert (m["main"], m["term"]) == (27, 11) and m["main"] + m["term"] == len(D["audit"]["rows"])
     assert (m["main_real"], m["term_real"]) == (R["audit"]["v2"]["real_all_kinds"], R["audit_more"]["terminology"]["real"])   # R14 majority labels
-    assert D["meta"]["lane"] == "70b" and "Model calls" not in s.split("var TX3=")[1]
+    assert D["meta"]["lane"] == "8b" and "Model calls" not in s.split("var TX3=")[1]          # the drafts open on the 8B (default)
     for k in ('<option value="de">DE</option>', 'return "de"}', "Ready means checked by code, not by a person.",
               "Bereit heisst: vom Code geprüft, nicht von einer Person.", 'id="imp-file"', "data-copy", "gleichlaut:changed"):
         assert k in s, k
     for r in ("T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8"): assert s.count('rd' + r + ':"') == 4    # every rule in the legend, 4 languages
     assert "family cb735e3b" not in s
+
+
+def test_one_sided_number_shows_the_value_written_there():
+    """'DE has 8 (Wochen), IT does not': the list shows what IT writes at that place (ogni quattro settimane -> 4), and keeps
+    '—' where the other language has no number with that unit there."""
+    W = {(tuple(I["products"]), w[1]): w for I in _audit()["issues"] for w in I["what"] if w[0] == "number"}
+    assert W[(("Nemluvio",), "it")][2:] == ["8", "4"] and W[(("Leqvio",), "fr")][2:] == ["4", "1.4"]
+    assert W[(("Cerdelga",), "fr")][2:] == ["18", "—"] and W[(("Emgality",), "fr")][2:] == ["120", "—"]
+    r = dict(snip={"de": [["…alle ", 0], ["acht Wochen", 2]], "it": [["30 mg", 1], ["…ogni ", 0], ["quattro settimane", 1]]})
+    assert audit_view.counterpart(r, "it", "de") == "4" and audit_view.counterpart(dict(snip={"de": r["snip"]["de"], "it": [["30 mg", 1]]}), "it", "de") is None
+    F = json.load(open(audit_view.AUDIT, encoding="utf-8"))["findings"]           # the audit's own counterpart field agrees
+    R = [x for x in audit_view.rows(F) if x["kind"] == "number" and x["cp"] is not None]
+    assert R and all(x["cp"].get(x["lang"], []) == ([audit_view.counterpart(x, x["lang"], "de")] if audit_view.counterpart(x, x["lang"], "de") else [])
+                     for x in R if x["vals"].get("de") and not x["vals"].get(x["lang"]))
+
+
+def test_experimental_round5_findings_confirmed_only_and_outside_the_headline():
+    A = _audit(); E = A["exp"]; m = A["meta"]
+    lab = {l.split("\t")[1]: l.split("\t") for l in open(os.path.join(audit_view.core.ROOT, "eval", "labels", "audit_r15_20261006.tsv"), encoding="utf-8").read().splitlines()[1:]}
+    assert E["n"] == 31 and E["confirmed"] == len(E["rows"]) == sum(r[9] in ("real", "minor") for r in lab.values()) == 6
+    assert not any(E["on"].values())                                          # every round-5 kind ships off
+    assert all(lab[r["fid"]][6] == lab[r["fid"]][7] == r["label"] for r in E["rows"])      # both blind annotators agree
+    X = {(r["lim"], r["lang"]): r for r in E["rows"]}
+    assert X[("AMVUTTRA.01a", "fr")]["what"] == ["operator", "fr", "> 10", "≤ 10"] and X[("AMVUTTRA.01a", "fr")]["label"] == "real"
+    for k in (("BEYONTTRA", "it"), ("VYNDAQEL.01b", "it")):
+        assert X[k]["what"] == ["negation", "it", "nicht", "—"] and X[k]["label"] == "real" and "on deve" in X[k]["snip"]["it"][0][0]
+    assert (m["issues"], m["main"], m["term"]) == (18, 27, 11) and len(A["issues"]) == 18     # the headline is unchanged
 
 
 def test_old_text_language_problem_is_a_display_notice():

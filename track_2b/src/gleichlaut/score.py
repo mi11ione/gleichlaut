@@ -27,6 +27,9 @@ RUNS = {
     "q8_0_rerun": dict(items="items/items_fresh.json", final="runs/8b_q8_0_fresh166_g3_rerun.jsonl", stack="g3", labels=None,
                        flagged20=None, cache="cache/responses_8b/q8_0", model="gguf:q8_0.gguf",
                        what="R9: the certified 8B GGUF Q8_0 again on the fresh 166 (CPU, GitHub Actions), every call recorded"),
+    "q8_0": dict(items="items/items_fresh.json", final="runs/8b_q8_0_fresh166_g3_final.jsonl", stack="g3", labels=None, flagged20=None,
+                 what="R1 (M2): the certified 8B GGUF Q8_0 on the fresh 166 (CPU, GitHub Actions; build certificate "
+                      "eval/certificates/8b-q8_0-fresh166.json, blind labels scored by m1('q8_0')): the default SL lane"),
     "dev120_8b": dict(items="items/items_dev.json", final="runs/8b_dwq_dev120_s2b.jsonl", stack="g3", recorded_flag=False,
                       labels="dev120_8b_s2b_unflagged.tsv", flagged20=None,
                       what="8B (MLX 4-bit DWQ, local) whole-paragraph + guards3, NO re-ask, 120 dev items"),

@@ -8,7 +8,10 @@ from .. import __version__, core, score
 
 SCHEMAS = os.path.join(core.ROOT, "data", "schemas")
 # The model each recorded run requested (the run records carry outputs, not the model name; see score.RUNS["..."]["what"]).
-MODEL = {"fresh166": core.M70, "oos242": core.M70, "dev120": core.M70}
+# The 8B Q8_0 runs name their model in the build certificate (eval/certificates/8b-q8_0-fresh166.json, models_served) and
+# in the shadow records' backend label ('llamacpp gguf:apertus-v1.5-8b-text-q8_0.gguf'); tests/test_emit_ui.py checks both.
+M8_Q8_0 = "gguf:apertus-v1.5-8b-text-q8_0.gguf"
+MODEL = {"fresh166": core.M70, "oos242": core.M70, "dev120": core.M70, "q8_0": M8_Q8_0, "q8_0_rerun": M8_Q8_0}
 GUARDS = [("lock", "Lock", "only the amended part changed"), ("slot", "Slots", "numbers, negation, modals mirror the DE change"),
           ("g1", "G1", "no German left in the target"), ("g2", "G2", "the DE change is carried over"),
           ("g3", "G3", "no text lost outside the change (G3a) or removed beyond it (G3c)"),

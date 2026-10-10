@@ -19,7 +19,12 @@ numbers as 1, each with its unit when one follows.
   eq         a number finding the audit marks likely_equivalent (probably a paraphrase): its reason (shown collapsed under
              "probably equivalent wording", never dropped).
   term       a finding of kind 'terminology' (BAG corrected term X -> Y elsewhere, this text still says X): old term, new
-             term and where BAG already corrected it (explain.term_parts)."""
+             term and where BAG already corrected it (explain.term_parts).
+  what       per issue, the list line: for a number finding with values on one side only, the other side shows the value it
+             writes at that place (the audit's display-only 'counterpart', round 5; else counterpart() from the snippets:
+             Nemluvio 'DE 8 · IT 4'), '—' when there is none.
+  exp        the round-5 findings (operator, negation, number word; findings_r5, every kind off by default) that both blind
+             annotators confirmed (eval/labels/audit_r15_<date>.tsv): a separate read-only group, outside the headline."""
 import hashlib, json, os, re
 from .. import core
 
@@ -273,6 +278,7 @@ def rows(F, hist=None, date="20261006", snaps=None):
                         twin=bool(twin), found=f.get("detected"), expl=f.get("explained_by") or [],
                         fix=[f.get("surface"), f.get("suggestion")] if f.get("surface") and f.get("suggestion") else None,
                         since=f.get("first_seen"), seen=f.get("seen_in"),
+                        cp={k: [_canon(x.get("value")) for x in v] for k, v in f["counterpart"].items()} if isinstance(f.get("counterpart"), dict) else None,
                         snip={k: highlight(_clip(s) if src.get(k) != "context" else s, k, V[k] or hot) for k, s in snip.items()},
                         src=src))
     order = {k: i for i, k in enumerate(KINDS)}
@@ -285,6 +291,37 @@ GROUPING = ("Findings are one issue when they name the same difference (same kin
             "term) on the same text: the same limitation, a sibling limitation of the same product, or the same quoted "
             "passage; a typo that the audit says explains a number difference joins that difference; a terminology "
             "notice is one issue per language and term pair, wherever the old term still stands.")
+
+
+# unit words of the three languages by what they measure, so that "acht Wochen" and "quattro settimane" are compared
+_UNIT_KIND = (("day", r"tag|täg|jour|giorn"), ("week", r"woche|wöch|semaine|settiman"), ("month", r"monat|mois|mes[ei]"),
+              ("year", r"jahr|jähr|\ban(?:s|née)|ann[oi]"))
+
+
+def _unit_of(seg, lang):
+    """'acht Wochen' -> 'week', '30 mg' -> 'mg', '16' -> '' (the unit after the number of a highlighted segment)."""
+    m = _num_rx(lang).match(seg.strip())
+    rest = seg.strip()[m.end():].strip(" -.").lower() if m else ""
+    if not rest: return ""
+    return next((k for k, rx in _UNIT_KIND if re.match(rx, rest)), rest)
+
+
+def counterpart(r, L, other):
+    """The value language L writes where the finding's values of language `other` stand, when the audit names none for L
+    (a number finding of the kind 'DE has 8 (Wochen), IT does not') and the finding carries no counterpart of its own
+    (the audit's display-only 'counterpart' field, round 5, is used when present): the one number with the same unit in L's passage
+    (the row's snippet aligned with the German context) that the other language's passage does not also have. None when
+    there is no such number or more than one: the list then shows '—' (L has no counterpart at that place)."""
+    S = r.get("snip") or {}
+    if not S.get(L) or not S.get(other): return None
+    hot = [(x[0], _unit_of(x[0], other)) for x in S[other] if x[1] == 2]
+    units = {u for _, u in hot if u}
+    if not units: return None
+    def val(seg, lang):
+        v = _values_in(seg.strip(), lang); return v[0][1] if v else None
+    there = {val(x[0], other) for x in S[other] if x[1]}
+    cand = {val(x[0], L) for x in S[L] if x[1] and _unit_of(x[0], L) in units} - there - {None}
+    return next(iter(cand)) if len(cand) == 1 else None
 
 
 def issues(R):
@@ -317,7 +354,12 @@ def issues(R):
         what = []
         for r in M:
             k, L, f = r["kind"], r["lang"], r
-            if k == "number": w = [k, L, " ".join(r["vals"].get("de", [])) or "—", " ".join(r["vals"].get(L, [])) or "—"]
+            if k == "number":
+                de, tg = " ".join(r["vals"].get("de", [])), " ".join(r["vals"].get(L, []))
+                cp = r.get("cp")             # the audit's own counterpart (round 5, from the full texts), else from the snippets
+                if de and not tg: tg = " ".join(cp.get(L, [])) if cp is not None else counterpart(r, L, "de") or ""
+                elif tg and not de: de = " ".join(cp.get("de", [])) if cp is not None else counterpart(r, "de", L) or ""
+                w = [k, L, de or "—", tg or "—"]
             elif k == "editorial" and r["fix"]: w = [k, L, r["fix"][0], r["fix"][1]]
             elif k == "terminology" and r["term"]: w = [k, L, r["term"]["old"] or "", r["term"]["new"] or ""]
             elif k == "language": w = [k, L, str(r["found"] or ""), ""]
@@ -370,6 +412,53 @@ def full_texts(F, R, hist=None, date="20261006"):
     return out
 
 
+R15_LABELS = os.path.join(core.ROOT, "eval", "labels", "audit_r15_{date}.tsv")
+CONFIRMED = ("real", "minor")
+
+
+def _mark(s, words):
+    """A sentence with the given words in '[...]' (for highlight): the negation words of a negation finding."""
+    for w in sorted({w for w in words if w}, key=len, reverse=True):
+        tail = "" if w[-1] in "’'" else r"(?![\w\]])"                  # an elided n’ / l’ is followed by a letter
+        s = re.sub(r"(?<![\w\[])" + re.escape(w) + tail, "[" + w + "]", s, count=1)
+    return s
+
+
+def experimental(A, date, labels=None):
+    """Round-5 findings (operator, negation, number word: findings_r5, PREREG R15) that both blind annotators confirmed
+    (final label real or minor in eval/labels/audit_r15_<date>.tsv). Every round-5 kind ships off (summary.round5.on): they
+    are shown apart, read-only, and never counted in the headline or the issues. None without round-5 findings or labels.
+    Each row: fid, lim, product, kind, lang, label, what [kind, lang, DE, target] and the excerpts (DE, target) with the
+    finding's words highlighted."""
+    F5 = A.get("findings_r5") if isinstance(A, dict) else None
+    p = labels or R15_LABELS.format(date=date)
+    if not F5 or not os.path.exists(p): return None
+    lines = open(p, encoding="utf-8").read().splitlines(); hdr = lines[0].split("\t")
+    lab = {c["fid"]: c for c in (dict(zip(hdr, l.split("\t"))) for l in lines[1:] if l.strip())}
+    out = []
+    for f in F5:
+        L, k, fl = f.get("lang"), f.get("kind"), (lab.get(f.get("fid")) or {}).get("final")
+        if fl not in CONFIRMED: continue
+        ctx = [c for c in (f.get("context") or []) if isinstance(c, str)]
+        if k == "operator":
+            what = [k, L, f"{f.get('de_op')} {f.get('value')}", f"{f.get('tgt_op')} {f.get('value')}"]; de, tg = (ctx + ["", ""])[:2]
+        elif k == "negation":
+            neg = " ".join(f.get("negations") or []); de, tg = (ctx + ["", ""])[:2]
+            what = [k, L, neg, "—"] if f.get("side") == "de" else [k, L, "—", neg]
+            if f.get("side") == "de": de = _mark(de, f.get("negations") or [])
+            else: tg = _mark(tg, f.get("negations") or [])
+        else:
+            dv = " ".join(str(x.get("value")) for x in f.get("de_only") or []); tv = " ".join(str(x.get("value")) for x in f.get("tgt_only") or [])
+            what = [k, L, dv or "—", tv or "—"]
+            de = next((c for x in f.get("de_only") or [] for c in x.get("context") or []), "")
+            tg = next((c for x in f.get("tgt_only") or [] for c in x.get("context") or []), "")
+        prod = f.get("product"); prod = ", ".join(prod) if isinstance(prod, (list, tuple)) else (prod or "")
+        out.append(dict(fid=f.get("fid"), lim=f.get("id"), product=prod, kind=k, lang=L, label=fl, what=what, desc=f.get("description") or "",
+                        snip={"de": highlight(de, "de", set()) if de else None, L: highlight(tg, L, set()) if tg else None}))
+    S = A.get("summary", {}).get("round5") or {}
+    return dict(n=len(F5), confirmed=len(out), on=S.get("on") or {}, labels=os.path.relpath(p, core.ROOT), rows=out)
+
+
 def data(path=AUDIT, results=RESULTS, hist=None):
     """-> dict(meta, rows) for the page, or None when there is no audit file."""
     if not path or not os.path.exists(path): return None
@@ -405,4 +494,4 @@ def data(path=AUDIT, results=RESULTS, hist=None):
     R = rows(F, hist, date, snaps)
     I = issues(R)
     meta.update(issues=len(I))
-    return dict(meta=meta, rows=R, issues=I, texts=full_texts(F, R, hist, date))
+    return dict(meta=meta, rows=R, issues=I, texts=full_texts(F, R, hist, date), exp=experimental(A, date))

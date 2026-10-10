@@ -163,7 +163,10 @@ details[open]>summary{margin-bottom:6px}
 .dec label{display:block;color:var(--ink2);margin-top:8px;font:400 12px/1.4 var(--mono)}
 .dec select,.dec textarea{display:block;width:100%;margin-top:3px;background:var(--paper);border:1px solid var(--hair);padding:4px 6px;font:400 14px/1.4 var(--sans);color:var(--ink)}
 .dec textarea{min-height:52px;resize:vertical}
-.dec .stt,.stt{color:var(--ink2);margin-top:4px;font:400 12px/1.4 var(--mono)}
+.dec .stt,.stt{color:var(--ink2);margin-top:4px;font:400 12px/1.4 var(--mono)}.stt.done{color:var(--ink)}
+.sl .sub{flex-basis:100%;font:400 12px/1.4 var(--mono);color:var(--ink2)}
+.lsn{color:var(--ink2)}
+.ctx .lsel select{background:none;border:0;border-bottom:1px solid var(--ink);padding:0 2px 0 0;margin-right:4px;font:500 13px/1.3 var(--sans);color:var(--ink);max-width:100%}
 .save{position:sticky;bottom:0;z-index:2;background:var(--paper);display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-top:16px;padding:10px 0;border-top:1px solid var(--rule)}
 .save .hint{color:var(--ink2);font:400 12px/1.4 var(--mono)}
 .empty{color:var(--ink2);padding:24px 0}
@@ -180,6 +183,8 @@ details[open]>summary{margin-bottom:6px}
 #aud tr.eqh td{cursor:default;padding:12px 8px 5px;border-bottom:1px solid var(--rule)}
 #aud tr.eqh button{background:none;border:0;padding:0;cursor:pointer;font:600 12px/1.4 var(--sans);color:var(--ink2)}
 #aud tr.eq td{color:var(--ink2)}
+#aud tr.exp td,#aud tr.expd td,#aud tr.expn td{cursor:default}#aud tr.exp td{border-bottom:0}#aud tr.expd td{padding-top:0}
+#aud tr.expn td{color:var(--ink2);font:400 12px/1.45 var(--sans)}#aud .expd .snip{font-size:13px;line-height:1.45;margin-top:3px}
 /* audit case */
 .snip{font:400 15px/1.55 var(--sans);overflow-wrap:anywhere}
 .snip .v2{border:1px solid var(--sig);padding:0 2px;white-space:nowrap}
@@ -233,7 +238,7 @@ footer p{margin:6px 0 0;overflow-wrap:anywhere;max-width:150ch}
  .app{padding-inline:16px}
  .work.case-open .register{display:none}.back{display:inline-block}.sl .no{position:static}
  .lang{display:block;grid-row:auto}.drafts{grid-template-rows:none}.lang+.lang{border-top:1px solid var(--rule);margin-top:18px;padding-top:12px}
- .register .key{display:none}.ctx{white-space:normal}
+ .register .key{display:none}.ctx{white-space:normal;display:block;-webkit-line-clamp:none;overflow:visible}.ctx .lsel{display:block;margin-bottom:4px}
  .key>span{white-space:normal}.tools{gap:6px 12px}.wm{font-size:22px}.views{gap:16px}.box{white-space:normal}
  .bar{position:static}.views{align-self:auto}.view{margin-bottom:0;padding-bottom:4px}.tools{margin-left:0}
  .work{grid-template-columns:minmax(0,1fr)}
@@ -302,10 +307,17 @@ BODY = r"""<div class="app">
 </div>
 <div id="print"></div>
 <script type="application/json" id="data">__DATA__</script>
-<script>
+__LANES__<script>
 (function(){
 "use strict";
-var D=JSON.parse(document.getElementById("data").textContent),M=D.meta,A=D.all,G=D.groups,AU=D.audit;
+// lanes: the page carries the drafts of each lane (build.LANES) and parses only the one it shows. The first is the default
+// (Apertus 8B Q8_0 on CPU); another is named by the hash prefix (#70b, #70b/wb013, #aug2026/drafts) and survives a reload.
+var D0=JSON.parse(document.getElementById("data").textContent),LANES=D0.lanes||[],DEF=LANES.length?LANES[0].id:"";
+function laneOf(h){var m=/^([a-z0-9]+)(?:\/|$)/.exec(h||""),ok=function(id){return LANES.some(function(l){return l.id===id})};return m&&ok(m[1])?m[1]:DEF}
+function hashRest(h){var m=/^([a-z0-9]+)(?:\/|$)/.exec(h||"");return m&&laneOf(h)===m[1]&&LANES.length?(h.slice(m[0].length)||"drafts"):h}
+var LANE=laneOf(decodeURIComponent(location.hash.slice(1))),HP=LANE&&LANE!==DEF?LANE+"/":"",DL=HP&&document.getElementById("data-"+LANE);
+var D=DL?JSON.parse(DL.textContent):D0;if(D!==D0){D.audit=D0.audit;D.lanes=LANES}D0=null;
+var M=D.meta,A=D.all,G=D.groups,AU=D.audit;
 var LK="gleichlaut:"+M.run+":"+M.run_sha256.slice(0,12),AK="gleichlaut:audit-decisions",AKOLD="gleichlaut:audit:"+(AU?AU.meta.date:"none");
 function lsGet(k,d){try{var v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}}
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
@@ -715,6 +727,66 @@ it:{gCond:"Modifica una condizione",gEdit:"Refusi e redazione",gTerm:"Terminolog
  aKnownHeadS:"Censiti dal nostro inventario precedente · {k} su {n} trovati",aTermHeadS:"Terminologia · {n}",aWhat:"Che cosa diverge",aDating:"Da quando",aNote2:"Nota",aTermL:"Termine",
  aTexts:"I testi",aActL:"Misure e nota",saveNextI:"Caso successivo",keysA:"j/k o ↑/↓ spostarsi · Ctrl/Cmd+Invio salva e continua",lane:"Corsia",laneM:"Metodo",comparedW:"Confrontato con"}};
 Object.keys(TX5).forEach(function(L){Object.keys(TX5[L]).forEach(function(k){TX[L][k]=TX5[L][k]})});
+// lanes (8B Q8_0 on CPU the default, 70B fewer edits, live months), one save-and-next pattern, what counts as decided,
+// where decisions live, distinct legend labels (10 Oct 2026, juror round)
+var TX6={
+de:{laneOpt8:"Apertus 8B Q8_0 · CPU (Standard)",laneOpt70:"Apertus 70B · Endpunkt (weniger Korrekturen)",laneOptLive:"Apertus 8B Q8_0 · CPU · Live-Monat {m}",
+ ctxD8:"Die Standardspur: Apertus 8B auf CPU, ohne Netz. Vergangene, bereits publizierte Änderungen. Markiert heisst: eine Person prüft – die Prüfungen sind darauf ausgelegt, nichts zu übersehen.",
+ ctxDL:"Die Standardspur (8B auf CPU) in einem Live-Monat: vom BAG im Monat {m} publizierte Änderungen, danach aus dem öffentlichen Feed entworfen; die französische und italienische Fassung des BAG hat das Modell nie gesehen. Lange oder umgeschriebene Texte gehen ohne Entwurf an die Übersetzung. Markiert heisst: eine Person prüft.",
+ keyS:[["✓","bereit"],["~","markiert, wohl in Ordnung"],["▲","markiert, zu prüfen"],["≠","bisheriger Text mit Problem"]],
+ saveNext:"Speichern, nächste Änderung",saveNextI:"Speichern, nächster Fall",
+ keys:"j/k oder ↑/↓ wechseln · 1/2/3 entscheiden · f/i Sprache · Ctrl/Cmd+Enter speichern, weiter",keysA:"j/k oder ↑/↓ wechseln · 1–4 Fassung · Ctrl/Cmd+Enter speichern, weiter",
+ needDec:"Zuerst entscheiden (1 übernehmen · 2 bearbeitet übernehmen · 3 zurückweisen); j oder ↓ überspringt ohne Entscheid.",
+ needDecA:"Zuerst entscheiden: die richtige Fassung oder eine Massnahme; j oder ↓ überspringt ohne Entscheid.",
+ aDecHint:"Gilt als entschieden, sobald eine Antwort unten (eine Fassung oder «noch unklar») oder eine Massnahme gewählt ist; eine Notiz allein lässt den Fall offen.",
+ figsA:"{r} bereit ({rp}) · {f} markiert · {x} identisch mit dem publizierten Text des BAG",figsC:"{r} bereit · {f} markiert · {h} an die Übersetzung",figsX:"{x} von {n} identisch mit dem publizierten Text des BAG",
+ lblHeld:"zurückgehaltene Testmenge (SL-Änderungen {p})",lblLive:"Live-Monat {m} (SL {a} → {b})",
+ expHead:"Experimentelle Prüfungen (standardmässig aus) · {c} von {n} bestätigt",expNote:"Die Prüfungen auf Operator, Verneinung und Zahlwort (Runde 5) sind ausgeschaltet: weniger als die Hälfte ihrer Befunde war echt. Hier stehen nur Befunde, die zwei blinde Annotatoren beide bestätigt haben; sie zählen nicht zu den Fällen oben, ein Entscheid wird nicht erfasst.",
+ kindsX:{operator:"Operator",negation:"Verneinung",number_word:"Zahlwort"},labX:{real:"bestätigt: ändert die Bedeutung",minor:"bestätigt: geringfügig"},
+ aNoteOnly:"offen · Notiz gespeichert, noch keine Fassung oder Massnahme gewählt",lsNote:"nur in diesem Browser gespeichert · zum Behalten exportieren"},
+en:{laneOpt8:"Apertus 8B Q8_0 · CPU (default)",laneOpt70:"Apertus 70B · endpoint (fewer edits)",laneOptLive:"Apertus 8B Q8_0 · CPU · live month {m}",
+ ctxD8:"The default lane: Apertus 8B on CPU, air-gapped. Past changes BAG has already published. Flagged means a person checks it: the checks are tuned to miss nothing.",
+ ctxDL:"The default lane (8B on CPU) on a live month: changes BAG published in {m}, drafted afterwards from the public feed; BAG's French and Italian were never shown to the model. Long or rewritten texts go to a translator without a draft. Flagged means a person checks it.",
+ keyS:[["✓","ready"],["~","flagged, probably fine"],["▲","flagged, to check"],["≠","old text has a problem"]],
+ saveNext:"Save, next change",saveNextI:"Save, next issue",
+ keys:"j/k or ↑/↓ move · 1/2/3 decide · f/i language · Ctrl/Cmd+Enter save, next",keysA:"j/k or ↑/↓ move · 1–4 version · Ctrl/Cmd+Enter save, next",
+ needDec:"Decide first (1 accept · 2 accept edited · 3 send back); j or ↓ skips without deciding.",
+ needDecA:"Decide first: the right version or an action; j or ↓ skips without deciding.",
+ aDecHint:"Counts as decided once an answer below (a version, or not clear yet) or an action is chosen; a note alone leaves the issue open.",
+ figsA:"{r} ready ({rp}) · {f} flagged · {x} identical to BAG's published text",figsC:"{r} ready · {f} flagged · {h} to a translator",figsX:"{x} of {n} identical to BAG's published text",
+ lblHeld:"held-out set (SL changes {p})",lblLive:"live month {m} (SL {a} → {b})",
+ expHead:"Experimental checks (off by default) · {c} confirmed of {n}",expNote:"The operator, negation and number-word checks (round 5) ship off: fewer than half of their findings were real. Listed here only where two blind annotators both confirmed the finding; not counted in the issues above, no decision recorded.",
+ kindsX:{operator:"operator",negation:"negation",number_word:"number word"},labX:{real:"confirmed: changes the meaning",minor:"confirmed: minor"},
+ aNoteOnly:"open · note saved, no version or action chosen yet",lsNote:"saved in this browser only · export to keep"},
+fr:{laneOpt8:"Apertus 8B Q8_0 · CPU (par défaut)",laneOpt70:"Apertus 70B · point d'accès (moins de corrections)",laneOptLive:"Apertus 8B Q8_0 · CPU · mois réel {m}",
+ ctxD8:"La voie par défaut : Apertus 8B sur CPU, hors réseau. Modifications passées, déjà publiées par l'OFSP. Signalé veut dire : une personne vérifie, les contrôles sont réglés pour ne rien laisser passer.",
+ ctxDL:"La voie par défaut (8B sur CPU) sur un mois réel : modifications publiées par l'OFSP au mois {m}, rédigées ensuite à partir du flux public ; le modèle n'a jamais vu le français ni l'italien de l'OFSP. Les textes longs ou réécrits vont au traducteur sans brouillon. Signalé veut dire : une personne vérifie.",
+ keyS:[["✓","prêt"],["~","signalé, sans doute correct"],["▲","signalé, à vérifier"],["≠","l'ancien texte a un problème"]],
+ saveNext:"Enregistrer, modification suivante",saveNextI:"Enregistrer, cas suivant",
+ keys:"j/k ou ↑/↓ naviguer · 1/2/3 décider · f/i langue · Ctrl/Cmd+Entrée enregistrer, suivant",keysA:"j/k ou ↑/↓ naviguer · 1–4 version · Ctrl/Cmd+Entrée enregistrer, suivant",
+ needDec:"Décider d'abord (1 accepter · 2 accepter modifié · 3 renvoyer) ; j ou ↓ passe sans décider.",
+ needDecA:"Décider d'abord : la bonne version ou une mesure ; j ou ↓ passe sans décider.",
+ aDecHint:"Compte comme décidé dès qu'une réponse ci-dessous (une version, ou « pas encore clair ») ou une mesure est choisie ; une remarque seule laisse le cas ouvert.",
+ figsA:"{r} prêts ({rp}) · {f} signalés · {x} identiques au texte publié par l'OFSP",figsC:"{r} prêts · {f} signalés · {h} confiés à un traducteur",figsX:"{x} sur {n} identiques au texte publié par l'OFSP",
+ lblHeld:"jeu de test réservé (modifications LS {p})",lblLive:"mois réel {m} (LS {a} → {b})",
+ expHead:"Contrôles expérimentaux (désactivés par défaut) · {c} confirmés sur {n}",expNote:"Les contrôles d'opérateur, de négation et de nombre en lettres (5e série) sont désactivés : moins de la moitié de leurs constats étaient réels. Ne figurent ici que les constats confirmés par deux annotateurs à l'aveugle ; ils ne comptent pas dans les cas ci-dessus et aucune décision n'est enregistrée.",
+ kindsX:{operator:"opérateur",negation:"négation",number_word:"nombre en lettres"},labX:{real:"confirmé : change le sens",minor:"confirmé : mineur"},
+ aNoteOnly:"ouvert · remarque enregistrée, ni version ni mesure choisie",lsNote:"enregistré dans ce navigateur seulement · exporter pour conserver"},
+it:{laneOpt8:"Apertus 8B Q8_0 · CPU (predefinita)",laneOpt70:"Apertus 70B · endpoint (meno correzioni)",laneOptLive:"Apertus 8B Q8_0 · CPU · mese reale {m}",
+ ctxD8:"La corsia predefinita: Apertus 8B su CPU, senza rete. Modifiche passate, già pubblicate dall'UFSP. Segnalata significa: la verifica una persona, i controlli sono tarati per non lasciar passare nulla.",
+ ctxDL:"La corsia predefinita (8B su CPU) su un mese reale: modifiche pubblicate dall'UFSP nel mese {m}, redatte in seguito dal flusso pubblico; il modello non ha mai visto il francese né l'italiano dell'UFSP. I testi lunghi o riscritti vanno al traduttore senza bozza. Segnalata significa: la verifica una persona.",
+ keyS:[["✓","pronta"],["~","segnalata, probabilmente in ordine"],["▲","segnalata, da verificare"],["≠","il vecchio testo ha un problema"]],
+ saveNext:"Salva, modifica successiva",saveNextI:"Salva, caso successivo",
+ keys:"j/k o ↑/↓ spostarsi · 1/2/3 decidere · f/i lingua · Ctrl/Cmd+Invio salva, avanti",keysA:"j/k o ↑/↓ spostarsi · 1–4 versione · Ctrl/Cmd+Invio salva, avanti",
+ needDec:"Decidere prima (1 accetta · 2 accetta modificata · 3 rinvia); j o ↓ salta senza decidere.",
+ needDecA:"Decidere prima: la versione giusta o una misura; j o ↓ salta senza decidere.",
+ aDecHint:"Conta come deciso appena si sceglie una risposta qui sotto (una versione, o «non ancora chiaro») o una misura; una nota da sola lascia il caso aperto.",
+ figsA:"{r} pronte ({rp}) · {f} segnalate · {x} identiche al testo pubblicato dall'UFSP",figsC:"{r} pronte · {f} segnalate · {h} affidate a un traduttore",figsX:"{x} su {n} identiche al testo pubblicato dall'UFSP",
+ lblHeld:"insieme di prova riservato (modifiche ES {p})",lblLive:"mese reale {m} (ES {a} → {b})",
+ expHead:"Controlli sperimentali (disattivati per impostazione predefinita) · {c} confermati su {n}",expNote:"I controlli di operatore, negazione e numero in lettere (5ª serie) sono disattivati: meno della metà dei loro rilievi era reale. Qui figurano solo i rilievi confermati da entrambi gli annotatori alla cieca; non contano nei casi qui sopra e non si registra alcuna decisione.",
+ kindsX:{operator:"operatore",negation:"negazione",number_word:"numero in lettere"},labX:{real:"confermato: cambia il senso",minor:"confermato: minore"},
+ aNoteOnly:"aperto · nota salvata, nessuna versione o misura scelta",lsNote:"salvato solo in questo browser · esportare per conservare"}};
+Object.keys(TX6).forEach(function(L){Object.keys(TX6[L]).forEach(function(k){TX[L][k]=TX6[L][k]})});
 function pickUI(){if(TX[P.ui])return P.ui;var L=[];try{L=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||""]}catch(e){}
  for(var i=0;i<L.length;i++){var c=String(L[i]||"").slice(0,2).toLowerCase();if(TX[c])return c}return "de"}
 var UL=pickUI();function t(k){return (TX[UL][k]!=null?TX[UL][k]:TX.en[k])}
@@ -751,7 +823,7 @@ var TAB=AU?"audit":"drafts";   // landing view: the register audit (runs today, 
 function kv(id,rows){if(!$(id))return;$(id).innerHTML=rows.map(function(r){return "<dt"+(r[3]?' title="'+esc(r[3])+'"':"")+">"+esc(r[0])+"</dt><dd"+(r[2]?' class="'+r[2]+'"':"")+">"+esc(r[1])+"</dd>"}).join("")}
 function ddate(s){return /^\d{8}$/.test(s||"")?s.slice(6,8)+"."+s.slice(4,6)+"."+s.slice(0,4):(s||"?")}
 function grp(n){var s=String(n==null?"—":n);return /^\d{4,6}$/.test(s)?s.slice(0,-3)+(UL==="en"?",":"’")+s.slice(-3):s}
-var MS=M.lane==="70b"?"70B":M.lane==="8b"?"8B":M.model;
+var MS=M.lane==="70b"?"70B":M.lane==="8b"?"8B"+(/q8_0/i.test(M.model||"")?" Q8_0":""):M.model;
 function keyHTML(items){return items.map(function(k){var g=k[0],m;
   if(g==="AER")m='<span class="mk"><span class="lt">A</span></span><span class="mk"><span class="lt">E</span></span><span class="mk"><span class="lt">R</span></span>';
   else if(g==="K")m='<span class="lt s">K</span>';else if(g==="D")m='<span class="lt">D</span>';
@@ -774,8 +846,18 @@ function chrome(){
  $("prov").title=M.pipeline+" · outputs sha256:"+M.run_sha256+" · items sha256:"+M.items_sha256+(AU?" · audit "+AU.meta.file:"");
  if(TAB==="audit"){chromeAudit();$("ctxline").title=$("ctxline").textContent;return}
  // one line of context: what these drafts are, whose decision they are
- $("ctxline").innerHTML="<b>"+esc(cap(fmt(t("drawingBy"),{l:M.label,n:C.items,m:MS})))+".</b> "+esc(M.custom?t("dB2"):t("ctxD"));
- $("ctxline").title=$("ctxline").textContent;
+ // with lanes: a select of the lanes first (8B default, 70B fewer edits, the live months), then what the lane shown is
+ var LB=M.live&&M.live_span?fmt(t("lblLive"),{m:M.live,a:M.live_span[0],b:M.live_span[1]}):M.period&&!M.custom&&/^held-out set \(/.test(M.label||"")?fmt(t("lblHeld"),{p:M.period}):M.label;
+ // the lane's figures, from the run shown: its scored summary (recorded runs), else the counts of its records
+ var FG=A?fmt(t("figsA"),{r:A.unflagged,rp:pct(A.ready_rate),f:A.flagged,x:pct(A.exact.model)}):fmt(t("figsC"),{r:C.ready,f:C.flagged,h:C.human});
+ if(!A&&!C.human)FG=FG.split(" · ").slice(0,2).join(" · ");if(!A&&C.exact!=null)FG+=" · "+fmt(t("figsX"),{x:C.exact,n:C.exact_of});
+ var ctx=(FG?FG+". ":"")+(M.live?fmt(t("ctxDL"),{m:M.live}):M.custom?t("dB2"):M.lane==="70b"?t("ctxD"):M.lane==="8b"?t("ctxD8"):t("dB2"));
+ $("ctxline").innerHTML=(LANES.length>1?'<label class="lsel"><span class="vh">'+esc(t("lane"))+'</span><select id="lane-s">'+LANES.map(function(l){
+   var o=l.live?fmt(t("laneOptLive"),{m:l.live}):l.lane==="70b"?t("laneOpt70"):t("laneOpt8");
+   return '<option value="'+esc(l.id)+'"'+(l.id===(LANE||DEF)?" selected":"")+">"+esc(o)+"</option>"}).join("")+"</select></label> ":"")+
+  "<b>"+esc(cap(fmt(t("drawingBy"),{l:LB,n:C.items,m:MS})))+".</b> "+esc(ctx);
+ if($("lane-s"))$("lane-s").onchange=function(){var v=this.value;location.hash="#"+(v===DEF?"":v+"/")+"drafts"};
+ $("ctxline").title=cap(fmt(t("drawingBy"),{l:LB,n:C.items,m:MS}))+". "+ctx;
  var fz=(M.pipeline.match(/freeze sha256:([0-9a-f]+)/)||[])[1]||"";
  kv("kv-l",[[t("guards"),(M.stack==="g3"?"guards3 (frozen)":"guards v2 (frozen)")+(fz?" · freeze "+fz.slice(0,12):"")],
   [t("items"),String(D.counts.items)],[t("changes"),String(D.counts.changes)],["Model",M.model],["Run",M.run],
@@ -797,7 +879,7 @@ function chrome(){
   var o=new Option(short(nm,32)+(more?" …":"")+" · "+f[1],f[0]);o.title=f[2];fs.appendChild(o)});fs.value=F.fam;$("f-q").placeholder=t("search");famBar();
  $("h-prod").textContent=t("product");$("h-chg").textContent=t("change");
  $("x-xlf").textContent=t("xlf");$("x-xlf12").textContent=t("xlf12");$("x-copy").textContent=t("copy");$("x-imp").textContent=t("imp");
- $("reg-key").innerHTML=keyHTML(t("keyReg").filter(function(k){return ["✓","▲","~","≠"].indexOf(k[0])>=0}).map(function(k){return [k[0],k[1].split(",")[0]]}));
+ $("reg-key").innerHTML=keyHTML(t("keyS"));
  $("reg-key").title=t("legend");progress()}
 function selF(id,label,opts,cur,fn){var s=$(id);s.innerHTML='<label class="k" for="'+id+'-s">'+esc(label)+'</label><select id="'+id+'-s">'+opts.map(function(o){
   return '<option value="'+esc(o[0])+'"'+(o[0]===cur?" selected":"")+">"+esc(o[1])+"</option>"}).join("")+"</select>";$(id+"-s").onchange=function(){fn(this.value)}}
@@ -806,11 +888,11 @@ function seg(id,label,opts,cur,fn){var s=$(id);s.innerHTML='<span class="k">'+es
   b.onclick=function(){s.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});fn(o[0])};s.appendChild(b)})}
 function progress(){if(TAB==="audit"&&AU){var tm=AU.rows.filter(function(r){return r.kind==="terminology"}),fm=AU.rows.filter(function(r){return r.kind!=="terminology"});
   var pa=fmt(t("progA"),{i:IS.filter(iDecided).length,n:IS.length,x:fm.filter(aDecided).length,a:fm.length,y:tm.filter(aDecided).length,t:tm.length});
-  $("progress").innerHTML="<b>"+esc(pa.split(" (")[0])+"</b>";$("progress").title=pa;return}
- var n=ITEMS.filter(function(it){return dec(it)}).length;$("progress").innerHTML="<b>"+n+"/"+ITEMS.length+"</b> "+esc(t("decided"))}
+  $("progress").innerHTML="<b>"+esc(pa.split(" (")[0])+'</b> · <span class="lsn">'+esc(t("lsNote"))+"</span>";$("progress").title=pa+" · "+t("where");return}
+ var n=ITEMS.filter(function(it){return dec(it)}).length;$("progress").innerHTML="<b>"+n+"/"+ITEMS.length+"</b> "+esc(t("decided"))+' · <span class="lsn">'+esc(t("lsNote"))+"</span>";$("progress").title=t("where")}
 // ------------------------------------------------------------------ tabs
 function setTab(tb){if(tb==="audit"&&!AU)tb="drafts";TAB=tb;chrome();
- if(TAB==="audit"){renderAudit();try{if(location.hash!=="#audit")history.replaceState(null,"","#audit")}catch(e){}}
+ if(TAB==="audit"){renderAudit();try{if(location.hash!=="#"+HP+"audit")history.replaceState(null,"","#"+HP+"audit")}catch(e){}}
  else{renderReg();if(sel){markSel(true);renderCase()}}}
 $("t-audit").onclick=function(){setTab("audit")};$("t-drafts").onclick=function(){setTab("drafts")};
 document.querySelector(".views").addEventListener("keydown",function(e){if(e.key==="ArrowRight"||e.key==="ArrowLeft"){e.preventDefault();setTab(TAB==="audit"?"drafts":"audit");$(TAB==="audit"?"t-audit":"t-drafts").focus()}});
@@ -819,7 +901,7 @@ document.querySelector(".views").addEventListener("keydown",function(e){if(e.key
 // listed below it. Decisions are stored per finding signature (SA[sig] = {right, actions[], note, at, by, date} + own:true
 // when a finding is decided apart from its issue): a decision on the issue is written to every finding of the issue
 // that is not decided separately, so it carries over to the next audit run finding by finding.
-var AF={show:"all",lang:"all",kind:"all",since:""},EQOPEN=false,OPEN={},
+var AF={show:"all",lang:"all",kind:"all",since:""},EQOPEN=false,EXOPEN=true,OPEN={},
  ACTS=["fix_de","fix_fr","fix_it","langsvc","decfile","pending","none","falsealarm"],LEGACY=["exofficio","holder","unclear"];
 var IS=AU?AU.issues:[];
 if(AU){IS.forEach(function(I){I.M=I.rows.map(function(i){return AU.rows[i]});I.M.forEach(function(r){r.I=I})})}
@@ -828,6 +910,7 @@ function aHas(d){return !!(d&&(d.right||aActs(d).length||d.note))}
 function aDecided(r){var d=SA[r.sig];return !!(d&&(d.right||aActs(d).length))}
 function iDec(I){for(var i=0;i<I.M.length;i++){var d=SA[I.M[i].sig];if(d&&!d.own)return d}return null}
 function iDecided(I){return I.M.every(aDecided)}
+function iAny(I){return I.M.some(aDecided)}
 function iOwn(I){return I.M.filter(function(r){var d=SA[r.sig];return d&&d.own}).length}
 function clone(d){var o={};Object.keys(d||{}).forEach(function(k){o[k]=Array.isArray(d[k])?d[k].slice():d[k]});return o}
 // decisions from earlier page versions: one action -> a list; a finding decided on its own (before issues existed) is
@@ -840,7 +923,7 @@ function aMigrate(){if(!AU)return;var ch=false;
  if(ch)saveA()}
 aMigrate();
 function aMark(I){return iDecided(I)?'<span class="mk" title="'+esc(t("aDecF"))+'">✓</span>':""}
-function aStatus(d){if(!d||!d.at)return t("openSt");var day=ddate(d.at.slice(0,10).replace(/-/g,""));
+function aStatus(d){if(!d||!d.at)return t("openSt");if(!(d.right||aActs(d).length))return t("aNoteOnly");var day=ddate(d.at.slice(0,10).replace(/-/g,""));
  var s=d.by?fmt(t("decOn"),{d:day,n:d.by}):fmt(t("decOnAnon"),{d:day});
  if(d.date&&AU&&d.date!==AU.meta.date)s+=" "+fmt(t("earlier"),{s:ddate(d.date)});return s}
 function dating(x){if(!x)return "";if(x.earliest&&x.n===x.m)return fmt(t("dA"),{n:x.n,d:ddate(x.first)});
@@ -893,7 +976,7 @@ function ctlActs(d){var A=aActs(d),acts=t("acts"),b=function(v,lab){return '<but
  A.forEach(function(v){if(ACTS.indexOf(v)<0)h+='<div class="grp2">'+b(v,acts[v]||v)+"</div>"});           // an action of an earlier page version stays visible
  return h}
 function ctlNote(d){return '<textarea data-a="note" aria-label="'+esc(t("aNote"))+'" placeholder="'+esc(t("aNote"))+'">'+esc(d.note||"")+"</textarea>"}
-function iStatus(I){var d=iDec(I),o=iOwn(I),s=aStatus(d);if(I.M.length>1)s+=" · "+fmt(t("appliesAll"),{n:I.M.length-o});if(o)s+=" · "+fmt(t("someOwn"),{n:o});return s}
+function iStatus(I){var d=iDec(I),o=iOwn(I),s=(iDecided(I)?"✓ ":"")+aStatus(d);if(I.M.length>1)s+=" · "+fmt(t("appliesAll"),{n:I.M.length-o});if(o)s+=" · "+fmt(t("someOwn"),{n:o});return s}
 function ftHTML(I){var h="";
  I.lims.forEach(function(lim){var T=AU.texts[lim],r=I.M.filter(function(x){return x.lim===lim})[0];
   if(I.lims.length>1)h+='<p class="ftl"><b>'+esc(r.product||lim)+"</b> "+esc(lim)+"</p>";
@@ -929,11 +1012,23 @@ function renderAudit(){if(!AU){$("p-audit").innerHTML='<p class="empty">'+esc(t(
  AVIS=G[0].concat(G[1],G[2],EQOPEN?G[3]:[]);
  [["gCond",G[0]],["gEdit",G[1]],["gTerm",G[2]]].forEach(function(x){if(x[1].length)h+='<tr class="grp"><td colspan="3">'+esc(t(x[0]))+" · "+x[1].length+"</td></tr>"+x[1].map(aRow).join("")});
  if(G[3].length)h+='<tr class="eqh"><td colspan="3"><button type="button" id="eq-tg" aria-expanded="'+EQOPEN+'">['+(EQOPEN?"−":"+")+"] "+esc(fmt(t("eqHead"),{n:G[3].length}))+"</button></td></tr>"+(EQOPEN?G[3].map(aRow).join(""):"");
+ h+=expHTML();
  tb.innerHTML=h||'<tr><td colspan="3" class="empty">'+esc(t("aNone"))+"</td></tr>";
  var tg=$("eq-tg");if(tg)tg.onclick=function(){EQOPEN=!EQOPEN;renderAudit();var b=$("eq-tg");if(b)b.focus()};
+ var xg=$("ex-tg");if(xg)xg.onclick=function(){EXOPEN=!EXOPEN;renderAudit();var b=$("ex-tg");if(b)b.focus()};
  $("a-shown").textContent=fmt(t("aShownI"),{n:Is.length,m:nf(Is)});
  if(AVIS.indexOf(ASEL)<0)ASEL=AVIS[0]||null;
  renderACase();progress()}
+// experimental checks (round 5, off by default): only the findings both blind annotators confirmed, read-only, below the
+// issues and outside every count of the headline; shown with the unfiltered list only
+function expHTML(){var E=AU.exp;if(!E||!E.rows.length||AF.show!=="all"||AF.kind!=="all"||AF.since)return "";
+ var R=E.rows.filter(function(r){return AF.lang==="all"||AF.lang==="de"||r.lang===AF.lang});if(!R.length)return "";
+ var h='<tr class="eqh exh"><td colspan="3"><button type="button" id="ex-tg" aria-expanded="'+EXOPEN+'">['+(EXOPEN?"−":"+")+"] "+esc(fmt(t("expHead"),{c:E.confirmed,n:E.n}))+"</button></td></tr>";
+ if(!EXOPEN)return h;h+='<tr class="expn"><td colspan="3">'+esc(t("expNote"))+"</td></tr>";
+ return h+R.map(function(r){var L=r.lang.toUpperCase(),w=r.what,sn=function(k){return r.snip[k]?'<div class="snip"><span class="lt">'+k.toUpperCase()+"</span> "+segHTML(r.snip[k])+"</div>":""};
+  return '<tr class="exp" data-exp="'+esc(r.fid)+'"><td></td><td class="ap"><b>'+esc(r.product||r.lim)+'</b><span class="code">'+esc(r.lim)+" · "+esc(r.fid)+'</span></td><td class="aw"><span class="kd">'+
+   esc(t("kindsX")[r.kind]||r.kind)+"</span>DE "+esc(w[2])+" · "+L+" "+esc(w[3])+"</td></tr>"+
+   '<tr class="expd"><td></td><td colspan="2"><span class="xl">'+esc(t("labX")[r.label]||r.label)+"</span>"+sn("de")+sn(r.lang)+"</td></tr>"}).join("")}
 function aMarkSel(scroll){document.querySelectorAll("#aud tbody tr[data-iss]").forEach(function(r){var on=!!ASEL&&r.dataset.iss===ASEL.key;r.setAttribute("aria-selected",on);
  if(on&&scroll){var w=$("aud-wrap"),top=r.offsetTop,hh=30;if(top-hh<w.scrollTop)w.scrollTop=top-hh;else if(top+r.offsetHeight>w.scrollTop+w.clientHeight)w.scrollTop=top+r.offsetHeight-w.clientHeight}})}
 function aMove(d){if(!AVIS.length)return;var i=AVIS.indexOf(ASEL);i=Math.max(0,Math.min(AVIS.length-1,(i<0?0:i+d)));ASEL=AVIS[i];aMarkSel(true);renderACase()}
@@ -957,10 +1052,10 @@ function aCaseHTML(I){var r=I.M[0],d=iDec(I)||{},n=I.M.length,odd=I.odd==="uncle
  if(shortTexts(I))h=h.slice(0,h.lastIndexOf('<section class="sec"><div class="sl"><span class="no">2</span>'))+'<section class="sec"><div class="sl"><span class="no">2</span><span class="t">'+esc(t("aTexts"))+"</span></div>"+ftHTML(I)+"</section>";
  var no=3;
  if(n>1){h+='<section class="sec"><div class="sl"><span class="no">'+no+'</span><span class="t">'+esc(fmt(t("mem"),{n:n}))+"</span></div>"+memHTML(I)+"</section>";no++}
- h+='<section class="sec"><div class="sl"><span class="no">'+no+'</span><span class="t">'+esc(t("s4"))+'</span></div><div class="adec"><div><label class="q">'+esc(t("aRight"))+"</label>"+ctlRight(d)+
+ h+='<section class="sec"><div class="sl"><span class="no">'+no+'</span><span class="t">'+esc(t("s4"))+'</span><span class="sub">'+esc(t("aDecHint"))+'</span></div><div class="adec"><div><label class="q">'+esc(t("aRight"))+"</label>"+ctlRight(d)+
   (r.sug?'<div class="sug">'+esc(t("aSug"))+": "+esc(t("acts")[r.sug]||r.sug)+"</div>":"")+'</div><div><label class="q">'+esc(t("aAction"))+"</label>"+ctlActs(d)+ctlNote(d)+"</div></div>"+
   '<div class="who"><label>'+esc(t("rev"))+' <input type="text" data-rev="1" autocomplete="name" value="'+esc(P.reviewer||"")+'" placeholder="'+esc(t("revPh"))+'"></label></div>'+
-  '<div class="stt" id="a-stt">'+esc(iStatus(I))+'</div><div class="save"><button class="box primary" type="button" id="a-next">'+esc(t("saveNextI"))+'</button><span class="hint">'+esc(t("keysA"))+"</span></div></section>";
+  '<div class="stt'+(iAny(I)?" done":"")+'" id="a-stt">'+esc(iStatus(I))+'</div><div class="save"><button class="box primary" type="button" id="a-next"'+(iAny(I)?"":" disabled")+' aria-describedby="an-why">'+esc(t("saveNextI"))+'</button><span class="hint" id="an-why">'+esc(iAny(I)?t("keysA"):t("needDecA"))+"</span></div></section>";
  return h}
 function shortTexts(I){return I.lims.every(function(lim){var T=AU.texts[lim];return T&&["de","fr","it"].every(function(L){return (T[L]||[]).reduce(function(n,x){return n+x[0].length},0)<=800})})}
 function renderACase(){var c=$("acase");if(!ASEL){c.innerHTML='<p class="empty">'+esc(t("aNone"))+"</p>";return}c.innerHTML=aCaseHTML(ASEL)}
@@ -972,13 +1067,14 @@ function upd(d,f){var v=f.dataset.v!=null?f.dataset.v:f.value,on=f.tagName==="BU
   if(on){if(v==="none"||v==="falsealarm")A=[];else A=A.filter(function(x){return x!=="none"&&x!=="falsealarm"});A.push(v)}d.actions=A;delete d.action}
  else if(f.dataset.a==="right")d.right=f.tagName==="BUTTON"?(on?v:""):v;
  else d[f.dataset.a]=f.value;return d}
-function aRefresh(I){var tr=document.querySelector('#aud tr[data-iss="'+I.key+'"]');if(tr)tr.cells[0].innerHTML=aMark(I);var st=$("a-stt");if(st&&ASEL===I)st.textContent=iStatus(I);progress()}
+function aRefresh(I){var tr=document.querySelector('#aud tr[data-iss="'+I.key+'"]');if(tr)tr.cells[0].innerHTML=aMark(I);var st=$("a-stt");if(st&&ASEL===I){st.textContent=iStatus(I);st.classList.toggle("done",iAny(I));
+  var b=$("a-next"),w=$("an-why");if(b)b.disabled=!iAny(I);if(w)w.textContent=iAny(I)?t("keysA"):t("needDecA")}progress()}
 function aSet(f){var I=issueOf(f);if(!I)return;var mt=f.closest(".mem tr[data-sig]");
  if(mt){var sg=mt.dataset.sig,d=upd(clone(SA[sg]),f);d.own=true;delete d.via;SA[sg]=stamp(d);saveA();var st=mt.querySelector(".stt");if(st)st.textContent=t("memOwn")+" · "+aStatus(SA[sg])}
  else{var base=upd(clone(iDec(I)),f);delete base.own;base.via=1;var keep=aHas(base);if(keep)stamp(base);
   I.M.forEach(function(r){var d=SA[r.sig];if(d&&d.own)return;if(keep)SA[r.sig]=clone(base);else delete SA[r.sig]});saveA()}
  aRefresh(I)}
-function aNext(){var i=AVIS.indexOf(ASEL);renderAudit();var j=AVIS.indexOf(ASEL);ASEL=AVIS[(j>=0?j:i)+1]||ASEL;aMarkSel(true);renderACase();var c=$("acase");if(c.getBoundingClientRect().top<0)c.scrollIntoView()}
+function aNext(){if(ASEL&&!iAny(ASEL))return;var i=AVIS.indexOf(ASEL);renderAudit();var j=AVIS.indexOf(ASEL);ASEL=AVIS[(j>=0?j:i)+1]||ASEL;aMarkSel(true);renderACase();var c=$("acase");if(c.getBoundingClientRect().top<0)c.scrollIntoView()}
 (function(){var tb=document.querySelector("#aud tbody"),c=$("acase");
  tb.addEventListener("click",function(e){var tr=e.target.closest("tr[data-iss]");if(!tr)return;ASEL=issueOf(tr);aMarkSel();renderACase();if(window.innerWidth<=900){$("p-audit").classList.add("case-open");window.scrollTo(0,0)}});
  c.addEventListener("change",function(e){var f=e.target.closest("[data-a]");if(f)aSet(f)});
@@ -1137,7 +1233,7 @@ function caseHTML(g,live){var Ls=langs(g),one=Ls.length<2?" one":"",h="",nf=famS
   '</div><div class="txt de" lang="de">'+segs(g.de,live&&ctxMode,false)+"</div></section>";
  h+='<section class="sec"><div class="sl"><span class="no">2</span><span class="t">'+esc(t("s2"))+"</span>"+(live?'<button class="tb sp" type="button" id="slots" aria-pressed="'+SLOTS+'" title="'+esc(t("keyNum")[0])+'">'+esc(t("slotsT"))+"</button>":"")+
   '</div><div class="drafts'+one+'">'+Ls.map(function(L){return langHTML(g,L,live)}).join("")+"</div></section>";
- if(live)h+='<div class="save"><button class="box primary" type="button" id="savenext">'+esc(t("saveNext"))+'</button><span class="hint">'+esc(t("keys"))+"</span></div>";
+ if(live){var ok=caseDecided(g);h+='<div class="save"><button class="box primary" type="button" id="savenext"'+(ok?"":" disabled")+' aria-describedby="sn-why">'+esc(t("saveNext"))+'</button><span class="hint" id="sn-why">'+esc(ok?t("keys"):t("needDec"))+"</span></div>"}
  h+='<details class="ids"><summary>'+esc(t("ids"))+"</summary> "+esc(t("family"))+" "+esc(g.family)+(FAML[g.family]?" ("+esc(FAML[g.family])+")":"")+" · "+esc(t("pair"))+" "+esc(g.pair)+" · "+esc(t("itemsL"))+" "+esc(keys)+"</details>";
  return h}
 function edmeta(key){var it=byKey[key],e=S.edits[key]!=null;
@@ -1146,7 +1242,7 @@ function edmeta(key){var it=byKey[key],e=S.edits[key]!=null;
   (it.rt&&it.rt[0]!==it.draft&&S.edits[key]!==it.rt[0]?'<button class="tb" type="button" data-start="'+esc(key)+'" title="'+esc(fmt(t("startOldT"),{n:it.rt[1]}))+'">'+esc(t("startOld"))+"</button>":"")+
   (it.rt&&S.edits[key]===it.rt[0]?"<span>"+esc(fmt(t("startOldDone"),{n:it.rt[1]}))+"</span>":"")}
 function renderCase(){var c=$("case");if(!sel){c.innerHTML='<p class="empty">'+esc(t("none"))+"</p>";return}
- try{if(TAB==="drafts"&&location.hash.slice(1)!==sel.pair)history.replaceState(null,"","#"+sel.pair)}catch(e){}
+ try{if(TAB==="drafts"&&decodeURIComponent(location.hash.slice(1))!==HP+sel.pair)history.replaceState(null,"","#"+HP+sel.pair)}catch(e){}
  var Ls=langs(sel);if(Ls.indexOf(focusL)<0)focusL=Ls[0];c.classList.toggle("slots",SLOTS);c.innerHTML=caseHTML(sel,true);wire(c)}
 function copyText(s,ok,fail){var box=$("clipbox");
  function fallback(){try{box.value=s;box.select();if(document.execCommand&&document.execCommand("copy")){ok();return}}catch(e){}fail()}
@@ -1160,7 +1256,9 @@ function wire(c){
   el.addEventListener("focus",function(){setFocus(it.lang)});
   el.addEventListener("input",function(){var v=readEd(el);if(v===it.draft||(it.status==="human"&&v===plain(it.segs,false)))delete S.edits[key];else S.edits[key]=v;save();
    var m=c.querySelector('[data-meta="'+key+'"]');if(m)m.innerHTML=edmeta(key)})});
- c.addEventListener("click",function(e){if(e.target.closest("[data-back]")){$("p-drafts").classList.remove("case-open");markSel(true);return}
+ // the case container outlives each render: its delegated click handler is attached once (attached on every render, a
+ // decision button fired once per render and an even count toggled the decision straight back off)
+ if(!c.dataset.wired)c.dataset.wired="1",c.addEventListener("click",function(e){if(e.target.closest("[data-back]")){$("p-drafts").classList.remove("case-open");markSel(true);return}
   var r=e.target.closest("[data-reset]");if(r){delete S.edits[r.dataset.reset];var d=S.dec[r.dataset.reset];if(d&&d.decision==="accept-edited"){delete S.dec[r.dataset.reset]};save();renderCase();refreshRow(sel);progress();return}
   var so=e.target.closest("[data-start]");if(so){var k0=so.dataset.start;S.edits[k0]=byKey[k0].rt[0];save();renderCase();
    var ed0=c.querySelector('.ed[data-key="'+k0+'"]');if(ed0)ed0.focus();return}
@@ -1181,8 +1279,11 @@ function decide(L,v){var it=sel&&sel.items[L];if(!it)return;var dv=document.quer
   S.dec[k]={decision:v,lang:L,status:it.status,edited:S.edits[k]!=null,text:v==="accept-edited"?S.edits[k]:(it.status==="human"?null:it.draft),reason:reason,note:note,at:new Date().toISOString(),by:who()}}
  delete pend[k];save();
  dv.querySelectorAll("button[data-d]").forEach(function(b){b.setAttribute("aria-pressed",!!S.dec[k]&&S.dec[k].decision===b.dataset.d)});
- dv.querySelector(".stt").textContent=S.dec[k]?t("savedAt")+" · "+S.dec[k].at.slice(0,16).replace("T"," "):t("openSt");refreshRow(sel);progress()}
-function saveNext(){save();var old=sel,i=VIS.indexOf(old);renderReg();var j=VIS.indexOf(old);
+ dv.querySelector(".stt").textContent=S.dec[k]?t("savedAt")+" · "+S.dec[k].at.slice(0,16).replace("T"," "):t("openSt");refreshRow(sel);progress();snState()}
+// "save, next" moves on once the change shown has a decision (in one of its languages); j / ↓ skip without deciding
+function caseDecided(g){return !!g&&langs(g).some(function(L){return !!dec(g.items[L])})}
+function snState(){var b=$("savenext"),w=$("sn-why");if(!b)return;var ok=caseDecided(sel);b.disabled=!ok;if(w)w.textContent=ok?t("keys"):t("needDec")}
+function saveNext(){if(!caseDecided(sel)){snState();return}save();var old=sel,i=VIS.indexOf(old);renderReg();var j=VIS.indexOf(old);
  sel=j>=0?(VIS[j+1]||old):(VIS[Math.max(0,i)]||VIS[VIS.length-1]||null);markSel(true);renderCase();var c=$("case");if(c.getBoundingClientRect().top<0)c.scrollIntoView()}
 // ------------------------------------------------------------------ keyboard (drafts tab)
 document.addEventListener("keydown",function(e){if(TAB!=="drafts")return;var tg=e.target,typing=tg.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(tg.tagName);
@@ -1275,7 +1376,7 @@ $("x-imp").onclick=function(){pickImport("x-msg")};$("a-imp").onclick=function()
 // ------------------------------------------------------------------ print: one case per page (drafts tab)
 window.addEventListener("beforeprint",function(){if(TAB==="drafts")$("print").innerHTML=VIS.map(function(g){return '<article class="pcase">'+caseHTML(g,false)+"</article>"}).join("")});
 window.addEventListener("afterprint",function(){$("print").innerHTML=""});
-function fromHash(){var h=decodeURIComponent(location.hash.slice(1));if(h==="audit"&&AU){TAB="audit";return true}
+function fromHash(){var h=decodeURIComponent(location.hash.slice(1));if(laneOf(h)!==LANE){location.reload();return false}h=hashRest(h);if(h==="audit"&&AU){TAB="audit";return true}
  if(h==="drafts"){TAB="drafts";return true}
  var g=G.filter(function(g){return g.pair===h||g.no===h})[0];
  if(g){TAB="drafts";if(F.fam&&F.fam!==g.family){F.fam="";famAsk=false;famMsg=""}if(F.q){F.q="";$("f-q").value=""}if(!langs(g).length)F.lang="all";

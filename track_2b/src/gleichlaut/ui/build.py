@@ -1,10 +1,19 @@
-"""python3 -m gleichlaut.ui.build [--run fresh166 | --records R.jsonl --items I.json] [--out PATH] [--fragment]
-                                 [--audit data/audit/audit_20261006.json] [--hist DIR]
+"""python3 -m gleichlaut.ui.build [--run q8_0 | fresh166 | q8_0_rerun | ... | --records R.jsonl --items I.json] [--out PATH]
+                                 [--fragment] [--audit data/audit/audit_20261006.json] [--hist DIR]
 
 One self-contained HTML review page (inline CSS/JS/data and embedded fonts; no request at view time; works from
-file://) with two views shown as one system: "01 Drafts" (Apertus drafts, code checks; the landing view, #wbNNN opens a
-draft) and "02 Register audit" (code only; #audit), each tab a cell with its headline figure. The title block names the
-run and its lane (the held-out set drafted by the 70B is the optional "fewer edits" lane; the 8B on CPU is the default).
+file://) with two views shown as one system: "Register audit" (code only; the landing view, #audit) and "Drafts"
+(Apertus drafts, code checks; #drafts, #wbNNN opens a draft), each tab with its count.
+Lanes: without --run / --records the page carries the drafts of every lane of LANES, each as its own JSON block, and
+parses only the one it shows: the default SL lane first (the certified Apertus 8B GGUF Q8_0 run on CPU over the
+held-out set, score.RUNS["q8_0"] = data/runs/8b_q8_0_fresh166_g3_final.jsonl, figures from score.m1("q8_0") as in its
+build certificate), then the optional 70B endpoint lane on the same changes ("fewer edits"; score.RUNS["fresh166"]),
+then the default 8B on the two live months (the shadow records of data/shadow/<month>/q8_0 over the public feed). A
+select in the drafts context line switches lanes; the hash carries a lane other than the default as a prefix (#70b,
+#70b/wb013, #aug2026/drafts) so that #wbNNN keeps working on whichever lane is shown; decisions are stored per run.
+The context line names the lane and its figures from the run shown (ready, flagged, identical to BAG's published text:
+the scored summary of a recorded run, else the counts of the records). With --run or --records the page has that one
+run (python3 -m gleichlaut.ui.build --run q8_0_rerun works: emit.MODEL names the 8B GGUF of the Q8_0 runs).
 "Register audit": one row per finding of the pre-existing DE/FR/IT audit (ui/audit_view.py), the conflicting statements
 side by side, and the officer's two decisions (which language is right; correct ex officio / raise with the holder in the
 triennial review / language service / no action / unclear) with a note and the reviewer's name, keyed by the finding's
@@ -22,7 +31,7 @@ draft ("n issues to check, m probably fine") counts what that list shows (xliff.
 mark follows it (to check when one item is). Compact legends
 sit next to the marks they explain. Diffs, number provenance and the plain-language guard findings are computed
 here in Python from the same per-item views the emitters use (gleichlaut.emit.load); the header figures come from
-score.score_run(run)["summary"]["all"] (counts only for --records) and, for the audit, eval/results/audit.json.
+score.score_run(run)["summary"]["all"] (score.m1 for q8_0; counts only for --records) and, for the audit, eval/results/audit.json.
 Flag triage (emit/triage.py, rules T1-T8) and the reworded reasons (xliff.reasons) only order and collapse findings and
 split the flagged drafts into "to check" and "all findings probably fine" for display; pre-existing problems of the old text are a display notice ("ready
 (old text needs attention)"); neither changes a verdict or a metric. A flagged draft can be restarted from the old text
@@ -44,8 +53,23 @@ FONTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fonts")
 TOK = re.compile(core.gl2.NUMRX.pattern + r"|\w+|\s+|[^\w\s]")        # numbers first: a number is one token
 WHOLE = 0.40          # a sentence block with more than this share of changed words is shown old-struck / new-underlined
 LABEL = {"fresh166": "held-out set (SL changes 06.2025–02.2026)", "m3_seed1": "held-out set, rerun seed 1", "oos242": "out-of-sample 2026 set",
-         "dev120": "development set (in-sample)", "dev120_8b": "development set, 8B"}
-PERIOD = {"fresh166": "06.2025–02.2026", "m3_seed1": "06.2025–02.2026"}      # the SL changes a recorded run drafts (drafts banner)
+         "dev120": "development set (in-sample)", "dev120_8b": "development set, 8B", "q8_0": "held-out set (SL changes 06.2025–02.2026)",
+         "q8_0_rerun": "held-out set, 8B Q8_0 rerun"}
+PERIOD = {"fresh166": "06.2025–02.2026", "m3_seed1": "06.2025–02.2026", "q8_0": "06.2025–02.2026",
+          "q8_0_rerun": "06.2025–02.2026"}      # the SL changes a recorded run drafts (drafts banner)
+# Header figures of a recorded run: score.score_run(run)["summary"]; the certified 8B run is scored with its blind labels
+# (eval/labels/m1_q8_0_fresh166.tsv plus the labels inherited from identical outputs: score.m1), as in the certificate.
+SUMMARY = {"q8_0": lambda: dict(all=score.m1("q8_0"))}
+_SH = "data/shadow/{m}/q8_0/{f}"
+# The drafts the default page carries, one lane each; the first is the one the Drafts tab opens with: the default SL lane
+# (Apertus 8B GGUF Q8_0 on CPU, the certified run on the held-out set), then the optional 70B endpoint lane on the same
+# changes ("fewer edits"), then the default 8B on the two live months (shadow runs over the public feed after BAG had
+# published; BAG's FR/IT never shown to the model). The page parses only the lane it shows (#70b/..., #aug2026/...).
+LANES = (dict(id="8b", run="q8_0"), dict(id="70b", run="fresh166"),
+         dict(id="aug2026", records=_SH.format(m="20260801-20260901", f="records.jsonl"), items="data/shadow/20260801-20260901/items.json",
+              live="08.2026", span=("01.08.2026", "01.09.2026"), label="live month 08.2026 (SL 01.08.2026 → 01.09.2026)", name="shadow_20260801-20260901_q8_0"),
+         dict(id="sep2026", records=_SH.format(m="20260901-20261001", f="records.jsonl"), items="data/shadow/20260901-20261001/items.json",
+              live="09.2026", span=("01.09.2026", "01.10.2026"), label="live month 09.2026 (SL 01.09.2026 → 01.10.2026)", name="shadow_20260901-20261001_q8_0"))
 GLUE = 2              # changed runs separated by at most this many unchanged words merge into one phrase
 
 
@@ -260,13 +284,14 @@ def _family_labels(views):
     return out
 
 
-def data(run="fresh166", records=None, items=None, audit=audit_view.AUDIT, hist=None):
+def data(run="fresh166", records=None, items=None, audit=audit_view.AUDIT, hist=None, name=None):
     meta, views = load(run, records, items)
+    if name: meta["run"] = name                  # a records file named records.jsonl: the run name its lane gives it
     if meta["custom"]:
         from ..emit import _read_items
-        summ = None; I = {x["key"]: x for x in _read_items(meta["items_path"])} if meta["has_tgt_new"] else {}
+        summ = None; I = {x["key"]: x for x in _read_items(meta["items_path"]) if x.get("tgt_new")}     # BAG's published text, where known
     else:
-        summ = score.score_run(run)["summary"]; I = {}
+        summ = SUMMARY[run]() if run in SUMMARY else score.score_run(run)["summary"]; I = {}
     groups = {}
     for v in views:
         g = groups.setdefault(v["pair"], dict(pair=v["pair"], product=v["product"], code=v["cud_id"], snap_old=_date(v["snap_old"]),
@@ -295,7 +320,7 @@ def data(run="fresh166", records=None, items=None, audit=audit_view.AUDIT, hist=
                 rt, done = core.gl2.rules(v["de_old"], v["de_new"], v["tgt_old"], v["lang"])
                 ops = difflib.SequenceMatcher(None, v["tgt_old"], rt, autojunk=False).get_opcodes()
                 it["rt"] = [[[i1, i2, rt[j1:j2]] for op, i1, i2, j1, j2 in ops if op != "equal"], sum(1 for d in done if d[2])]
-            if I: it["exact"] = core.lock.norm(v["draft"]) == core.lock.norm(I[v["key"]].get("tgt_new", ""))
+            if v["key"] in I: it["exact"] = core.lock.norm(v["draft"]) == core.lock.norm(I[v["key"]].get("tgt_new", ""))
         g["items"][v["lang"]] = it
     fam = Counter(v["family"] for v in views); flab = _family_labels(views)
     counts = dict(items=len(views), changes=len(groups), ready=sum(v["status"] == "ready" for v in views),
@@ -309,7 +334,9 @@ def data(run="fresh166", records=None, items=None, audit=audit_view.AUDIT, hist=
     counts["probably_fine"] = sum(it["tri"][1] for g in G for it in g["items"].values())
     counts["lvl_fine"] = sum(it["lvl"] == "fine" for g in G for it in g["items"].values())
     counts["lvl_check"] = sum(it["lvl"] == "check" for g in G for it in g["items"].values())
-    if I: counts["exact"] = sum(1 for g in G for it in g["items"].values() if it.get("exact"))
+    if I:                         # exact among the drafts with a published text (status human: no draft, not compared)
+        counts["exact"] = sum(1 for g in G for it in g["items"].values() if it.get("exact"))
+        counts["exact_of"] = sum(1 for g in G for it in g["items"].values() if "exact" in it)
     m = {k: meta[k] for k in ("run", "what", "stack", "model", "pipeline", "items_sha256", "run_sha256", "custom", "has_tgt_new")}
     m["model"] = model_label(meta)
     m["label"] = LABEL.get(meta["run"], meta["what"]) if not meta["custom"] else "records " + meta["run"]
@@ -355,10 +382,34 @@ def fonts_css():
     return "\n".join(rules)
 
 
-def build(run="fresh166", out=OUT, records=None, items=None, fragment=False, audit=audit_view.AUDIT, hist=None):
-    D = data(run, records, items, audit, hist)
-    blob = json.dumps(D, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
-    body = BODY.replace("__DATA__", blob)
+def _blob(D): return json.dumps(D, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+
+
+def lanes_data(lanes, audit=audit_view.AUDIT, hist=None):
+    """-> [(lane id, data)] for each lane (dict(id, run | records + items, optional live = the month, label)); only the
+    first carries the audit. Each data's meta names its lane (meta.lane_id, meta.live) and the first lists them all
+    (lanes: [{id, lane (8b | 70b), live, items, ready, flagged}])."""
+    out = []
+    for i, ln in enumerate(lanes):
+        rec = os.path.join(core.ROOT, ln["records"]) if ln.get("records") else None
+        its = os.path.join(core.ROOT, ln["items"]) if ln.get("items") else None
+        D = data(ln.get("run") or "fresh166", rec, its, audit if i == 0 else None, hist, ln.get("name"))
+        D["meta"].update(lane_id=ln["id"], live=ln.get("live"), live_span=list(ln["span"]) if ln.get("span") else None)
+        if ln.get("label"): D["meta"]["label"] = ln["label"]
+        out.append((ln["id"], D))
+    out[0][1]["lanes"] = [dict(id=k, lane=D["meta"]["lane"], live=D["meta"]["live"], items=D["counts"]["items"], ready=D["counts"]["ready"],
+                               flagged=D["counts"]["flagged"]) for k, D in out]
+    return out
+
+
+def build(run=None, out=OUT, records=None, items=None, fragment=False, audit=audit_view.AUDIT, hist=None, lanes=None):
+    """Writes the page; -> (path, data of the lane it opens with). No run and no records: the LANES page (8B default,
+    70B fewer-edits lane, the live months); a run or records: a page with that one run."""
+    if lanes is None:
+        lanes = LANES if not (run or records) else [dict(id="run", run=run or "fresh166", records=records, items=items)]
+    L = lanes_data(lanes, audit, hist); D = L[0][1]
+    body = BODY.replace("__DATA__", _blob(D)).replace("__LANES__", "".join(
+        f'<script type="application/json" id="data-{k}">{_blob(X)}</script>\n' for k, X in L[1:]))
     head = HEAD.replace("__FONTS__", fonts_css())
     page = (head + body) if fragment else ("<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n"
            "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" + head + "</head>\n<body>\n" + body + "</body>\n</html>\n")
@@ -372,7 +423,8 @@ from .page import HEAD, BODY          # noqa: E402  (the template lives in page.
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description="build the static translator review page")
-    ap.add_argument("--run", default="fresh166"); ap.add_argument("--out", default=OUT)
+    ap.add_argument("--run", help="one recorded run of score.RUNS (q8_0, fresh166, q8_0_rerun, ...); default: the lanes page "
+                    "(8B Q8_0 default, 70B fewer edits, the live months)"); ap.add_argument("--out", default=OUT)
     ap.add_argument("--records", help="records JSONL (gleichlaut month / draft) instead of a recorded run; needs --items")
     ap.add_argument("--items", help="items file for --records")
     ap.add_argument("--fragment", action="store_true", help="no doctype/html/head/body (for a claude.ai artifact)")
@@ -383,6 +435,8 @@ def main(argv=None):
     p, D = build(a.run, a.out, a.records, a.items, a.fragment, a.audit, hist_dir(a.hist))
     c = D["counts"]
     au = D.get("audit")
+    if len(D.get("lanes") or []) > 1:
+        print("ui lanes: " + "; ".join(f"{x['id']} {x['items']} drafts ({x['ready']} ready, {x['flagged']} flagged)" for x in D["lanes"]))
     print(f"ui: {c['items']} drafts in {c['changes']} German changes ({c['ready']} ready, {c['flagged']} flagged"
           + (f", {c['human']} routed to a translator" if c["human"] else "") + f"; flag findings {c['to_check']} to check, "
           f"{c['probably_fine']} probably fine; flagged drafts {c['lvl_check']} to check, {c['lvl_fine']} with every finding probably fine)" + (f"; audit {au['meta']['main']} findings + {au['meta']['term']} terminology notices" + (" (snippets from the SL snapshot)" if au["meta"]["hist"] else "") if au else "")
