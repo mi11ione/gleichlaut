@@ -4,7 +4,7 @@
 amends a condition in German, Gleichlaut drafts the matching French and Italian change with Apertus, and it audits the
 whole register for places where the languages already disagree. Numbers never reach the model; code writes them.
 
-Track 2B · team 444 · maturity: feasibility study · Apertus v1.5 8B + 70B ·
+Track 2B · team 444 · maturity: feasibility study · Apertus v1.5 8B (local GGUF) + 70B (as served by Public AI) ·
 **[open the review register](https://gleichlaut.mi11ion.io/)** · [demo video](https://gleichlaut.mi11ion.io/demo.mp4) · [technical report](technical_report.md)
 
 ## The job
@@ -64,14 +64,14 @@ repository; `eval/prereg/PREREG.md` says what can and cannot be verified from he
 |---|---|---|---|---|
 | Draft identical to the text BAG published | 17.5% (+11.4 points [4.8, 18.7]) | 16.9% (+10.8 points [4.8, 17.5]) | **17.5%** (+11.4 points [4.8, 18.7]) | 6.0% (old text, numbers updated by code) |
 | Token edits still needed to reach BAG's text | 33.1% fewer [20.8, 43.9] | 20.9% fewer [7.6, 31.9] | **42.4% fewer** [31.0, 54.1] | baseline |
-| Drafts ready for acceptance | 37.3% | 36.1% | **39.8%** | |
+| Drafts that pass every check ("ready") | 37.3% | 36.1% | **39.8%** | |
 | Errors in ready drafts (meaning / stale / German left) | **0 / 0 / 0** | 0 / 1 / 2 | **0 / 0 / 0** | |
 | Ready drafts that need a fix to the amendment | 25 of 62 (22 named by the terminology note) | 33 of 60 (27 named by it) | **3 of 66** | |
-| Pre-registered pass rule | **PASS** | **PASS** | **PASS** (and again on a rerun with a new seed) | |
+| Pre-registered pass rule | **PASS** | **PASS** | **PASS** (and again on a repeat run) | |
 
 **Would the annotators have seen a meaning error?** Measured (pre-registered R11): one meaning error of 7 kinds (dropped condition, and/or, obligation, scope, direction, negation, number) planted into each of 66 ready drafts was labelled a meaning error by both blind annotators 66 of 66 times (95% CI lower bound 94.5%), with BAG's published text shown and with it hidden alike, and 0 of the same 66 drafts left untouched were; real errors are subtler: of 3 drafts labelled a meaning error earlier, both annotators agree on 1 ([eval/labels/PROTOCOL.md](eval/labels/PROTOCOL.md)).
 
-The checks are tuned to miss nothing, and it shows: 13 of a seeded 20 flagged 70B drafts needed no change, and 12 of
+The checks are tuned to flag generously, and it shows: 13 of a seeded 20 flagged 70B drafts needed no change, and 12 of
 the 29 drafts identical to BAG's text were flagged.
 
 How much rests on one pattern: a single boilerplate family (one insurance-term change across many products) supplies
@@ -177,7 +177,7 @@ Phased pilot (audit first), owners, protection needs and monthly effort: [docs/a
 ## Run it
 
 ```bash
-make run            # Docker, CPU, about a minute, no network (--network none unless LLM_BASE_URL is set)
+make run            # Docker, CPU, about two minutes, no network (--network none unless LLM_BASE_URL is set)
 make local-run      # the same without Docker: Python ≥ 3.9, lxml for the XSD check (1–3 min on a laptop)
 ```
 

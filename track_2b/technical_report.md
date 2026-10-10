@@ -31,7 +31,7 @@ seen during design; checks and resources hashed before any output existed), Aper
 text **17.5%** of the time against **6.0%** for the no-model start (old text with numbers
 updated by code): **+11.4 points, 95% CI [4.8, 18.7]**; against rules+, our strongest no-model baseline, **+6.6 [1.8, 12.0]**. They cut the token edits still needed to reach BAG's text by **42.4%**
 [31.0, 54.1]. **39.8%** of drafts come out ready, with **0** meaning errors, stale changes or German left among them,
-and a rerun with a new seed passes the same rule (+12.0 points, 41.6% ready). The annotators behind that 0 were tested (pre-registered R11): a meaning error planted into each of 66 ready drafts was labelled one by both of them 66 of 66 times (95% CI lower bound 94.5%), with BAG's text shown or hidden. **The shipped Apertus 8B, on a CPU,
+and a repeat run (seed changed; at temperature 0 the differences come from the serving side, §4) passes the same rule (+12.0 points, 41.6% ready). The annotators behind that 0 were tested (pre-registered R11): a meaning error planted into each of 66 ready drafts was labelled one by both of them 66 of 66 times (95% CI lower bound 94.5%), with BAG's text shown or hidden. **The shipped Apertus 8B, on a CPU,
 passes the same pre-registered rule** (Q8_0, the default build: +11.4 points [4.8, 18.7], 37.3% ready; Q4_K_M, for an
 8 GiB box: +10.8 points [4.8, 17.5], 36.1% ready; 0 meaning errors among ready drafts in both), so the default deployment
 is fully air-gapped. At Q8_0 the 8B has the same identical-draft rate as the 70B (17.5% each; no equivalence test), with
@@ -89,20 +89,22 @@ evaluation only.
 | SL drafting | Apertus v1.5 70B | Public AI through a budget gateway; temperature 0; plain user messages; served model logged |
 | SL and statute drafting (default) | Apertus v1.5 8B GGUF Q8_0, sha256-pinned | 4-core CPU GitHub runners via llama.cpp (R1/M2, 200.5 s per draft); greedy; digit and number-word logit mask |
 | SL and statute drafting (8 GiB option) | Apertus v1.5 8B GGUF Q4_K_M, sha256-pinned | the same runners and decoding (R1/M1, 153.4 s per draft) |
-| research arms (dev, statutes) | Apertus v1.5 8B, MLX 4-bit DWQ | a laptop; this build agreed with the bf16 DPO checkpoint on 548 of 648 decisions in our parity battery, the GGUF on 622 |
+| research arms (dev, statutes) | Apertus v1.5 8B, MLX 4-bit DWQ | a laptop; this build agreed with the bf16 reference checkpoint of our research runs on 548 of 648 decisions in our parity battery, the GGUF on 622 |
 
 We do not control which weights Public AI serves. The 70B name is answered by two backends (`tp2` and `fp1-nes`,
 logged per call where the API reports it: 202 / 81 calls in the seeded rerun); `fp1-nes` also answers the
 `apertus-v1.5-8b` name with byte-identical greedy outputs in 760 of 792 cells. We infer that it serves the 70B from MMLU
 (84.4% on 250 questions, against 70.8% for the v1 8B route; that comparison mixes model version and size), which is evidence, not proof. So every 8B number here comes
 from local runs, and the 70B rows describe "the 70B as Public AI served it"; the 8B rows carry a digit and number-word
-logit mask that the API cannot offer the 70B (the 70B's 3 number-word drafts were all flagged).
+logit mask that the API cannot offer the 70B (the 70B's 3 number-word drafts were all flagged). The 8B GGUF builds come from a third-party text-only extraction of `swiss-ai/Apertus-v1.5-8B` (`docs/dependencies.md`); llama.cpp applies the chat template embedded in the GGUF, which we did not compare with the official Apertus template.
 
 ### 3.2 How the model is used, and which size
 
 One prompt (Appendix A): old and new German, a code-derived list of the German changes, and the old French/Italian
 text, numbers as slot codes; the model returns the amended paragraph. The 70B wrote 0 digits in 285 calls; in 3 of 166
-drafts it wrote a number word itself ("due", "quatre", "quattro"), and all 3 were flagged; the 8B cannot emit either.
+drafts it wrote a number word itself ("due", "quatre", "quattro"), and all 3 were flagged; the 8B's logit mask blocks every digit
+token and the number words two to twelve as whole tokens (a word split across tokens or above twelve could still appear;
+none did in its 166 drafts).
 **Size is measured on the same items in both directions.** SL conditions (pre-registered R1, same pipeline, same 166
 items): both 8B GGUF builds pass the rule (Q4_K_M: flagged 63.9%, ready drafts 0 meaning errors and 3 stale or German;
 Q8_0: flagged 62.7%, ready drafts 0 / 0 / 0), so under R1 the SL default is the local 8B. In this pipeline, with one run per
@@ -222,13 +224,13 @@ At this volume a per-token Swiss endpoint costs CHF 0.14 a month; dedicated 70B 
 
 ## 7. Reproducibility
 
-`make run` (Docker, CPU, `--network none` unless `LLM_BASE_URL` is set; about a minute; `make local-run` without Docker) verifies the
+`make run` (Docker, CPU, `--network none` unless `LLM_BASE_URL` is set; about two minutes; `make local-run` without Docker) verifies the
 sha256 of the frozen code, check resources and items; re-executes the recorded 70B runs and the
 recorded 8B Q8_0 CPU run (R9) end-to-end from the recorded responses (every request rebuilt byte-for-byte and found by its
 payload hash: 285 of 285 for the headline run, 283 of 283 for the 70B rerun, 242 of 242 for dev, 294 of 294 for the 8B);
 re-scores every recorded run against `eval/results/`; drafts 5 statute
 paragraphs live if `LLM_BASE_URL` is set; writes and validates XLIFF and FHIR; builds the register. `claims.tsv` maps
-every number in this report to a results file; CI fails on drift. Pre-registrations: `eval/prereg/PREREG.md` (R0–R7)
+every number in this report to a results file; CI fails on drift. Pre-registrations: `eval/prereg/PREREG.md` (every rule, indexed at the top)
 with run timestamps from the gateway ledger. The first out-of-sample run failed its rule; it is reported.
 
 **Coding assistants and labellers.** Code written with Claude Code agents (Anthropic) under the team's direction;

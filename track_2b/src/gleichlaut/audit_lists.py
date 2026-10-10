@@ -2,7 +2,7 @@
 KLV Anhang 2) and the Analysenliste (AL, KLV Anhang 3). BAG publishes both as xlsx with one sheet per language; rows are
 aligned by item number. The number, unit, language and editorial checks of gleichlaut.audit run on each text column
 (MiGeL: Bezeichnung, Limitation; AL: Bezeichnung, Limitationen, Bemerkungen), with register statistics built from the
-list itself. Stdlib only (zipfile + xml.etree); no model calls. Raw files stay outside the repo (docs/audit.md).
+list itself. Stdlib only (zipfile + xml.etree); no model calls. The 1 Jul 2026 files are in data/lists/ (docs/audit.md).
 
 usage: python3 -m gleichlaut.audit --list migel|al --file PATH [--date YYYYMMDD] [--out data/audit] [--worklist DIR]"""
 import hashlib, json, os, random, re, sys, zipfile

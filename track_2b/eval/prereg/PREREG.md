@@ -13,6 +13,8 @@ Each rule below is fixed **before** the run it governs. Failed runs are reported
 ## Index
 
 Sections are in the order they were written (R9 before R8; R4, a standing rule, last). Outcomes are in the results log.
+"Hand-checked" in R0 and R1 means read in full and labelled by blind Claude annotators (`eval/labels/PROTOCOL.md`); no
+human labels were used.
 
 | Rule | Governs | Outcome |
 |---|---|---|

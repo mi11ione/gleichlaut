@@ -212,15 +212,16 @@ editorial checks run unchanged, with register statistics built from the list its
 parse report, findings) and, with `--worklist DIR`, a blind seeded sample of up to 40 findings plus a key map.
 
 The raw files were fetched once from the BAG pages (`docs/sources.md` §6) with the user agent `hackapertus-research/0.1`,
-at most 1 request per second. They are stored outside the repo in `~/Desktop/hackapertus/spikes/lists/raw/`:
+at most 1 request per second. They are in the repo as `data/lists/migel_20260701.xlsx` and `data/lists/al_20260701.xlsx` (sha256 below), so
+`python3 -m gleichlaut.audit --list al --file data/lists/al_20260701.xlsx` reproduces the committed findings:
 
 | list | version | sha256 | positions (all 3 languages aligned) | DE text fields | findings |
 |---|---|---|---|---|---|
 | MiGeL | per 1 Jul 2026 | `6335483a…` | 1,036 | 1,304 | **8**: number 7 (6 FR, 1 IT), editorial 1 (FR `30jours`); unit 0, language 0 |
 | AL | per 1 Jul 2026 | `0b0730ee…` | 1,280 | 1,933 | **3**: number 3 (2 FR, 1 IT); unit 0, language 0, editorial 0 |
 
-None of the 10 number findings is marked `likely_equivalent`. They are not labelled: all 11 findings are in the blind
-worklists (`annot_lists/migel`, `annot_lists/al`), so precision on these lists is unknown. The texts are short and
+None of the 10 number findings is marked `likely_equivalent`. All 11 findings were labelled from the blind
+worklists (`eval/labels/audit_migel_20260701.tsv`, `audit_al_20260701.tsv`): 7 real. The texts are short and
 structured. Most language fields are too short to judge (MiGeL DE 870 of 1,304; AL DE 1,294 of 1,933), so the language
 check says little here.
 
@@ -342,8 +343,8 @@ caveats: six findings give a wide interval, and Keytruda was known before the la
 written to find exactly that case, so it does not count as an independent hit. The round-2 number findings stay at
 **10/21 real** (0.28–0.68).
 
-**Labels status (round 4).** Terminology: all 11 findings are in the blind worklist (`--worklist-terms`, ids C00…, seed
-20261011), not labelled. MiGeL/AL: 11 findings in two blind worklists, not labelled. `likely_equivalent` is checked
+**Labels status (round 4).** Terminology: all 11 findings in the blind worklist (`--worklist-terms`, ids C00…, seed
+20261011), labelled: 8 confirmed. MiGeL/AL: 11 findings in two blind worklists, labelled: 7 confirmed. `likely_equivalent` is checked
 against the round-2 labels (above).
 
 ### Why this differs from the S1 census (6% overall, numbers 3/15)

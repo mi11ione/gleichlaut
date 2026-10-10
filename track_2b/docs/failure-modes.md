@@ -4,7 +4,7 @@ Every row is a measured result; the numbers and their sources are in `technical_
 Gleichlaut uses Apertus for one job only, rewriting the wording of a French or Italian paragraph under a lock, because
 that is the one job where both sizes were measured to beat a no-model baseline. Everything else is code. Read the rows
 as evidence about this pipeline and these builds, not about Apertus in general. The research ran these tests on our own
-MLX 4-bit build, which agrees with the bf16 DPO checkpoint on 548 of 648 decisions in our parity battery (the shipped GGUF
+MLX 4-bit build, which agrees with the bf16 reference checkpoint of our research runs on 548 of 648 decisions in our parity battery (the shipped GGUF
 builds: Q4_K_M 622, Q8_0 638). After a juror from the Apertus team asked, every 8B test we had prompts and data for was
 re-run on the shipped Q8_0 with the same prompts and items on CPU runners (PREREG R8,
 `eval/results/failure_modes_q8_0.json`): the 8B numbers below are Q8_0, the MLX number in parentheses. The 70B rows are
