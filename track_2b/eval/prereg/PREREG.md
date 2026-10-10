@@ -163,6 +163,39 @@ ships (638 of 648). R8 re-runs every one of those tests whose prompts and data w
   whatever the shipped build does, better or worse, is what the table says. Scoring is deterministic from the recorded
   outputs (`replay` writes `eval/results/failure_modes_q8_0.json`).
 
+## R10. A second, prospective shadow month (01.08.2026 → 01.09.2026) under R0 (frozen 10 Oct 2026, before any drafting)
+
+A juror asked for a second month on data the team has not drafted, under a rule written in advance. Written before
+the month's items were mined in a run directory, before any model saw them, and before anyone read their published
+FR/IT.
+
+- **Month.** The most recent pair of consecutive first-of-month BAG SL feeds not drafted yet (`gleichlaut feeds`,
+  10 Oct 2026: 20260801, 20260901, 20261001 published; 20261006 is a mid-month feed, not a month, and is left to the
+  scheduled run): **from 20260801 to 20260901**. Items: what the shadow workflow's plan job mines from the two public
+  feeds (`gleichlaut month --fetch --dry-run`), unchanged, copied to `data/shadow/20260801-20260901/items.json`.
+- **Seen items.** The dev 120 contain 10 items from this snapshot pair and the out-of-sample 242 may contain some. Items
+  whose (lang, de_old, de_new) equals an item of `data/items/items_{dev,oos,fresh}.json` are counted as "seen"; every
+  number below is reported for the whole month and, beside it, for the unseen remainder. The verdict line is the whole
+  month (the same item definition as R7).
+- **Models, frozen pipeline.** No change to the pipeline, guards, routing or prompts (frozen code as of this commit).
+  (a) Apertus 8B GGUF Q8_0, the default build, through the shadow workflow (`gh workflow run shadow.yml -f
+  from=20260801 -f to=20260901 -f build=q8_0`; GitHub Actions CPU, offline image, `--network none`, build certificate
+  gate) → `data/shadow/20260801-20260901/q8_0/`. (b) Apertus 70B through the development gateway
+  (`tools/run_shadow70b.py 20260801-20260901`: plain user messages, temperature 0, served model checked on every call),
+  responses recorded only in the run's own `70b/responses/` → `data/shadow/20260801-20260901/70b/`. (c) The no-model
+  start (rules only, `gl2.rules`) on the same items. Nothing runs a model on a team machine.
+- **Labels.** Every ready draft of (a) and (b) that differs from BAG's published text, pooled and shuffled, by the R1
+  protocol (`eval/labels/PROTOCOL.md`: two blind Claude annotators, the second in reverse order; a third on every
+  disagreement or any REAL) → `eval/labels/shadow_20260801_20260901_ready.tsv`. No flagged sample (as R7).
+- **Reported, per model, side by side with rules-only.** Items, routed to a translator, compared, identical, ready,
+  flagged, ready classes; and the four R0 criteria, with n = the month's drafts compared with BAG's text (status ≠
+  human, as R7): unflagged REAL ≤ 1% of n; unflagged stale + German ≤ 2% of n; exact (identical) minus rules-only
+  exact ≥ +5 points on the same n; flagged ≤ 70% of n. Each criterion is stated as holds / fails; a model "meets R0
+  this month" only if all four hold. Also reported: the share sent to review counting the routed items as flagged.
+- **Use.** Descriptive: one month, no change to the defaults set under R1, no change to the pipeline after seeing it. A
+  failed criterion is reported as failed in the README, the technical report and here. Scored by
+  `score.shadow_month("20260801-20260901")` in `replay` (`eval/results/shadow_20260801_20260901.json`).
+
 ## R4. Post-freeze changes
 
 No change to `frozen/` after this commit. Any guard change needs a new held-out run before a claim; anything measured on
