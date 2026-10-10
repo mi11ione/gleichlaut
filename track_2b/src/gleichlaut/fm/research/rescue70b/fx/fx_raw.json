@@ -1,0 +1,2432 @@
+[
+ {
+  "id": "T:oc/2026/65",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023216,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2026/65",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023216,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2026/65",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023051999999999998,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2026/65",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023051999999999998,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2026/65",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023216,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2026/65",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023216,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_98/para_1/lbl_c",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022723999999999997,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_98/para_1/lbl_c",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022723999999999997,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_98/para_1/lbl_c",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023051999999999998,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_98/para_1/lbl_c",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023051999999999998,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_98/para_1/lbl_c",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021904,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_98/para_1/lbl_c",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021904,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_35/para_5",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.0002461,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_35/para_5",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.0002461,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_35/para_5",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024118,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_35/para_5",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024118,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_35/para_5",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024692,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_35/para_5",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024692,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_28_b/para_1/lbl_b",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024528,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_28_b/para_1/lbl_b",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024528,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_28_b/para_1/lbl_b",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024035999999999998,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_28_b/para_1/lbl_b",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024035999999999998,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_28_b/para_1/lbl_b",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024692,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_28_b/para_1/lbl_b",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024692,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_30/para_2",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022723999999999997,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_30/para_2",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022723999999999997,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_30/para_2",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023051999999999998,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_30/para_2",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023051999999999998,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_30/para_2",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022723999999999997,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2026/65:art_30/para_2",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022723999999999997,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2025/97",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021494,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2025/97",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021494,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2025/97",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021248,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2025/97",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021248,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2025/97",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00020838,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2025/97",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00020838,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_34/para_1",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.000242,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_34/para_1",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.000242,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_34/para_1",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024364,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_34/para_1",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024364,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_34/para_1",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.000242,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_34/para_1",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.000242,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_26/para_1",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00025511999999999996,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_26/para_1",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00025511999999999996,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_26/para_1",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026085999999999997,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_26/para_1",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026085999999999997,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_26/para_1",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026249999999999993,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_26/para_1",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026249999999999993,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_25/para_2/lbl_c",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022559999999999998,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_25/para_2/lbl_c",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022559999999999998,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_25/para_2/lbl_c",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022067999999999998,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_25/para_2/lbl_c",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022067999999999998,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_25/para_2/lbl_c",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021904,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_25/para_2/lbl_c",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021904,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_6/para_1/lbl_d",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00019690000000000002,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_6/para_1/lbl_d",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00019690000000000002,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_6/para_1/lbl_d",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00020345999999999998,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_6/para_1/lbl_d",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00020345999999999998,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_6/para_1/lbl_d",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00019444,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2025/97:art_6/para_1/lbl_d",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00019444,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2024/79",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.0002338,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2024/79",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.0002338,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2024/79",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023626,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2024/79",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023626,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2024/79",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023626,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2024/79",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023626,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_26/para_1",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022232,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_26/para_1",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022232,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_26/para_1",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022396,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_26/para_1",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022396,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_26/para_1",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022888,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_26/para_1",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022888,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_22/para_3",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023134,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_22/para_3",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023134,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_22/para_3",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023872,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_22/para_3",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023872,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_22/para_3",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023626,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_22/para_3",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023626,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_28/para_2/lbl_a",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023544,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_28/para_2/lbl_a",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja.",
+  "ans": "ja",
+  "usd": 0.00022933999999999997,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_28/para_2/lbl_a",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023544,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_28/para_2/lbl_a",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023544,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_28/para_2/lbl_a",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.0002338,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_28/para_2/lbl_a",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.0002338,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_18/para_2/lbl_c",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021985999999999997,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_18/para_2/lbl_c",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021985999999999997,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_18/para_2/lbl_c",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022478,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_18/para_2/lbl_c",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022478,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_18/para_2/lbl_c",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021739999999999997,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2024/79:art_18/para_2/lbl_c",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021739999999999997,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2023/7",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Nein",
+  "ans": "nein",
+  "usd": 0.00020182,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2023/7",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00020182,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2023/7",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00020428,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2023/7",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00020428,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2023/7",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00020345999999999998,
+  "cached": true
+ },
+ {
+  "id": "T:oc/2023/7",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00020345999999999998,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2023/7:art_2/para_1/listintro",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00017804,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2023/7:art_2/para_1/listintro",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00017804,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2023/7:art_2/para_1/listintro",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00018295999999999997,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2023/7:art_2/para_1/listintro",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00018295999999999997,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2023/7:art_2/para_1/listintro",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00018623999999999998,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/7:art_2/para_1/listintro",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00018623999999999998,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/7:art_1/para_3/lbl_a",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.000201,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/7:art_1/para_3/lbl_a",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.000201,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/7:art_1/para_3/lbl_a",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.000201,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/7:art_1/para_3/lbl_a",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.000201,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/7:art_1/para_3/lbl_a",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00019607999999999998,
+  "cached": true
+ },
+ {
+  "id": "C:oc/2023/7:art_1/para_3/lbl_a",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00019607999999999998,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/7:art_2/para_2/listintro",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.0001764,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/7:art_2/para_2/listintro",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.0001764,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/7:art_2/para_2/listintro",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00017476,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/7:art_2/para_2/listintro",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00017476,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/7:art_2/para_2/listintro",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.0001764,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/7:art_2/para_2/listintro",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.0001764,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/7:art_2/para_3",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00019034,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/7:art_2/para_3",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00019034,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/7:art_2/para_3",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00019198,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/7:art_2/para_3",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00019198,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/7:art_2/para_3",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00019772,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/7:art_2/para_3",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00019772,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2025/135",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024774,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2025/135",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024774,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2025/135",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024692,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2025/135",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024692,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2025/135",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024281999999999998,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2025/135",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024281999999999998,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_21/para_2/lbl_19/lbl_d",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026331999999999994,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_21/para_2/lbl_19/lbl_d",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026331999999999994,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_21/para_2/lbl_19/lbl_d",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026249999999999993,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_21/para_2/lbl_19/lbl_d",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026249999999999993,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_21/para_2/lbl_19/lbl_d",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026249999999999993,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_21/para_2/lbl_19/lbl_d",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026249999999999993,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_115_b/para_2/listintro",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00027316,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_115_b/para_2/listintro",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00027316,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_115_b/para_2/listintro",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00027397999999999995,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_115_b/para_2/listintro",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00027397999999999995,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_115_b/para_2/listintro",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00028053999999999997,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_115_b/para_2/listintro",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00028053999999999997,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_23/para_2/lbl_13",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00025676,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_23/para_2/lbl_13",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00025676,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_23/para_2/lbl_13",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00025511999999999996,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_23/para_2/lbl_13",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00025511999999999996,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_23/para_2/lbl_13",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00025184,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_23/para_2/lbl_13",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00025184,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_26/para_3",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024364,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_26/para_3",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024364,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_26/para_3",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00025348,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_26/para_3",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00025348,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_26/para_3",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023544,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2025/135:art_26/para_3",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023544,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2024/137",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024035999999999998,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2024/137",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Nein",
+  "ans": "nein",
+  "usd": 0.00024035999999999998,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2024/137",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024774,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2024/137",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024774,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2024/137",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023461999999999997,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2024/137",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023461999999999997,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_13/para_3",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024035999999999998,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_13/para_3",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024035999999999998,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_13/para_3",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024692,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_13/para_3",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024692,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_13/para_3",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.0002338,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_13/para_3",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.0002338,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_14/para_2",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026495999999999996,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_14/para_2",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026495999999999996,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_14/para_2",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026168,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_14/para_2",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026168,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_14/para_2",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026823999999999994,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_14/para_2",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026823999999999994,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_12/para_3",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024035999999999998,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_12/para_3",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024035999999999998,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_12/para_3",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024774,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_12/para_3",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024774,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_12/para_3",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023297999999999998,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_12/para_3",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023297999999999998,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_4/para_4",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00027316,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_4/para_4",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00027316,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_4/para_4",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00027971999999999996,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_4/para_4",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00027971999999999996,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_4/para_4",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026987999999999996,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2024/137:art_4/para_4",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026987999999999996,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2026/170",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00025511999999999996,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2026/170",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00025511999999999996,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2026/170",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00027152,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2026/170",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00027152,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2026/170",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.0002502,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2026/170",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.0002502,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_77_g/para_1",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00028873999999999995,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_77_g/para_1",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00028873999999999995,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_77_g/para_1",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00029693999999999993,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_77_g/para_1",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00029693999999999993,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_77_g/para_1",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00029775999999999994,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_77_g/para_1",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00029775999999999994,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_71_b/para_4",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00027234,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_71_b/para_4",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00027234,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_71_b/para_4",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00028053999999999997,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_71_b/para_4",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00028053999999999997,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_71_b/para_4",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026495999999999996,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_71_b/para_4",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026495999999999996,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_74_a/para_1",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026495999999999996,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_74_a/para_1",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026495999999999996,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_74_a/para_1",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00028217999999999993,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_74_a/para_1",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00028217999999999993,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_74_a/para_1",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00027397999999999995,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_74_a/para_1",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00027397999999999995,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_71_b/para_1/lbl_d",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00027808,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_71_b/para_1/lbl_d",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00027808,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_71_b/para_1/lbl_d",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00028136,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_71_b/para_1/lbl_d",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00028136,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_71_b/para_1/lbl_d",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026823999999999994,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/170:art_71_b/para_1/lbl_d",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026823999999999994,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2023/129",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022478,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2023/129",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022478,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2023/129",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023626,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2023/129",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023626,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2023/129",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.000242,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2023/129",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.000242,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_70/para_1/lbl_g",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021822,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_70/para_1/lbl_g",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021822,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_70/para_1/lbl_g",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022232,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_70/para_1/lbl_g",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022232,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_70/para_1/lbl_g",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021985999999999997,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_70/para_1/lbl_g",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021985999999999997,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_71/para_1",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023134,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_71/para_1",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023134,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_71/para_1",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023134,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_71/para_1",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023134,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_71/para_1",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023216,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_71/para_1",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023216,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_50/para/lbl_c",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024364,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_50/para/lbl_c",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024364,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_50/para/lbl_c",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024774,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_50/para/lbl_c",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024774,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_50/para/lbl_c",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026249999999999993,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_50/para/lbl_c",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00026249999999999993,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_30/para_4/lbl_f",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021166,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_30/para_4/lbl_f",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021166,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_30/para_4/lbl_f",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021739999999999997,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_30/para_4/lbl_f",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021739999999999997,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_30/para_4/lbl_f",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021166,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2023/129:art_30/para_4/lbl_f",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021166,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2026/273",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023626,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2026/273",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023626,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2026/273",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023216,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2026/273",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023216,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2026/273",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024281999999999998,
+  "cached": false
+ },
+ {
+  "id": "T:oc/2026/273",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024281999999999998,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:art_7/para_3",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024856,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:art_7/para_3",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00024856,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:art_7/para_3",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00025101999999999996,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:art_7/para_3",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00025101999999999996,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:art_7/para_3",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00025921999999999995,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:art_7/para_3",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00025921999999999995,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:art_25/para_3",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.0002215,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:art_25/para_3",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.0002215,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:art_25/para_3",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022478,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:art_25/para_3",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022478,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:art_25/para_3",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023051999999999998,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:art_25/para_3",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023051999999999998,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:annex_1_3/lvl_u1/lvl_5/lbl_5_3_2/listintro",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021822,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:annex_1_3/lvl_u1/lvl_5/lbl_5_3_2/listintro",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00021822,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:annex_1_3/lvl_u1/lvl_5/lbl_5_3_2/listintro",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022067999999999998,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:annex_1_3/lvl_u1/lvl_5/lbl_5_3_2/listintro",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022067999999999998,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:annex_1_3/lvl_u1/lvl_5/lbl_5_3_2/listintro",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.0002215,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:annex_1_3/lvl_u1/lvl_5/lbl_5_3_2/listintro",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.0002215,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:art_80/para_2",
+  "pair": "de-fr",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022559999999999998,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:art_80/para_2",
+  "pair": "de-fr",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00022559999999999998,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:art_80/para_2",
+  "pair": "de-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023134,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:art_80/para_2",
+  "pair": "de-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023134,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:art_80/para_2",
+  "pair": "fr-it",
+  "order": "ab",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023134,
+  "cached": false
+ },
+ {
+  "id": "C:oc/2026/273:art_80/para_2",
+  "pair": "fr-it",
+  "order": "ba",
+  "raw": "Ja",
+  "ans": "ja",
+  "usd": 0.00023134,
+  "cached": false
+ }
+]

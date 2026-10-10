@@ -1,0 +1,77 @@
+# PREREG R8: the failure-mode tests of docs/failure-modes.md on the shipped Apertus 8B GGUF Q8_0, on CPU runners.
+# Tests: free (T1), window (T2), judge (T3), typing (T4), s2b (T5); prompts and loops from the research source
+# (gleichlaut.fm.run). Manual trigger only. Each (test, shard) is one job; every raw response is uploaded.
+# Resume: re-run with resume_run=<run id>; each job first restores its shard from that run's artifact.
+name: fm-8b-q8_0
+on:
+  workflow_dispatch:
+    inputs:
+      tests: { description: "comma list of free,window,s2b,judge,typing", required: true, default: "free,window,s2b,judge,typing" }
+      shards: { description: "JSON: shards per test", required: true, default: '{"free":10,"window":16,"s2b":14,"judge":6,"typing":12}' }
+      limit: { description: "smoke run: items per shard (0 = all)", required: true, default: "0" }
+      resume_run: { description: "run id whose shard artifacts to resume from (empty = fresh)", required: false, default: "" }
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs: { matrix: "${{ steps.m.outputs.matrix }}" }
+    steps:
+      - id: m
+        env: { TESTS: "${{ inputs.tests }}", SHARDS: "${{ inputs.shards }}" }
+        run: |
+          python3 - <<'EOF' >> $GITHUB_OUTPUT
+          import json, os
+          n = json.loads(os.environ["SHARDS"])
+          inc = [{"test": t, "k": k, "n": n[t]} for t in os.environ["TESTS"].split(",") if t.strip() for t in [t.strip()] for k in range(n[t])]
+          print("matrix=" + json.dumps({"include": inc}))
+          EOF
+  shard:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    permissions: { contents: read, actions: read }
+    strategy: { fail-fast: false, max-parallel: 20, matrix: "${{ fromJson(needs.plan.outputs.matrix) }}" }
+    defaults: { run: { working-directory: track_2b } }
+    env:
+      URL_q8_0: https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf
+      SHA_q8_0: dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d
+      ART: "fm-${{ matrix.test }}-${{ matrix.k }}of${{ matrix.n }}"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: { python-version: "3.12" }
+      - uses: actions/cache@v6
+        with: { path: track_2b/models, key: "gguf-q8_0" }
+      - name: fetch and verify GGUF
+        run: |
+          mkdir -p models; F=models/q8_0.gguf
+          [ -f $F ] || curl -sSL --retry 5 -A gleichlaut/0.1 -o $F "$URL_q8_0"
+          echo "$SHA_q8_0  $F" | sha256sum -c -
+      - name: restore shard from an earlier run
+        if: inputs.resume_run != ''
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: gh run download ${{ inputs.resume_run }} -R ${{ github.repository }} -n "$ART" -D out/fm || echo "no earlier artifact for $ART"
+      - run: CMAKE_ARGS="-DGGML_NATIVE=OFF" pip install --require-hashes -r requirements.txt -r requirements-offline.txt
+      - name: run shard
+        run: |
+          PYTHONPATH=src python -m gleichlaut.fm.run run --test ${{ matrix.test }} --gguf models/q8_0.gguf --gguf-sha256 $SHA_q8_0 \
+            --shard ${{ matrix.k }} --of ${{ matrix.n }} --out out/fm --limit ${{ inputs.limit }} --budget 19800
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with: { name: "${{ env.ART }}", path: track_2b/out/fm, if-no-files-found: warn }
+  gather:
+    needs: shard
+    if: always() && inputs.limit == '0'
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: track_2b } }
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: { python-version: "3.12" }
+      - uses: actions/download-artifact@v7
+        with: { pattern: "fm-*", path: track_2b/out/fmparts }
+      - run: PYTHONPATH=src python -m gleichlaut.fm.run gather --partial --in out/fmparts
+      - uses: actions/upload-artifact@v7
+        with:
+          name: fm-merged
+          path: |
+            track_2b/data/runs/8b_q8_0_fm_*

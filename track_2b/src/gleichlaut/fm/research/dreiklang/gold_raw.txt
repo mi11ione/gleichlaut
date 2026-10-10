@@ -1,0 +1,157 @@
+# Dreiklang hand gold (Claude, 9-10 Oct 2026), labelled from the full DE/FR/IT texts via scripts/view.py.
+# One line per CUD and language: "CUD lang: tok tok ..." with one token per candidate, in candidate order.
+#   N            not a condition (code, date, legal ref, trial/endpoint name, scale bounds, disease name, article)
+#   subj+op      subj in age wt dose int time cnt meas price ; op in >= > <= < =
+#   ...:unit     override the code's unit when it is missing or wrong (year month week day kg mg pct times line cycle ...)
+#   #k           checkpoint: the next token is candidate k
+# "COPY A = B" copies all three lines of B to A (identical texts except the indication code).
+# Labelling rules are in results.md (Gold).
+# Edit log: 10 Oct, before any model output was read: DUPIXENT.05a fr #24 'une fois par an' int= -> cnt= (consistency
+#   with every other 'N fois par/Mal/volte' frequency, labelled cnt=); found while building regex v2 on dev.
+
+NEMLUVIO.01 de: age>= dose= cnt= dose= time= N dose= int= time<= dose= #10 int= age>= wt>= meas= N N meas> meas>= time>= time= #20 meas>= meas>= N meas>= N N
+NEMLUVIO.01 fr: age>= N dose= cnt= dose= time= N dose= int= time<= #10 N dose= int= age>= wt>= meas= N N meas> meas>= #20 time>= time= meas>= meas>= N meas>= N N
+NEMLUVIO.01 it: age>= N dose= cnt= dose= time= N dose= int= time<= #10 N dose= int= age>= wt>= meas= N N meas> meas>= #20 time>= time= meas>= meas>= N meas>= N N
+
+DUPIXENT.02 de: age>= age<= N N age>= age<= wt>= dose= cnt= dose= #10 N dose= int= wt>= wt< dose= cnt= dose= N dose= #20 int= wt>= wt< dose= N dose= time= dose= time= N #30 dose= int= time= time= meas= N N meas> meas>= age>= #40 time>= time= meas>= meas>= N meas>= N time= N
+DUPIXENT.02 fr: age>= age<= N N age>= age<= wt> N dose= cnt= #10 dose= N dose= int= wt< N dose= cnt= dose= N #20 dose= int= meas= N N meas> meas>= age>= time>= N #30 time= meas>= meas>= N meas>= N time= N
+DUPIXENT.02 it: age>= age<= N N age>= age<= wt> N dose= cnt= #10 dose= N dose= int= wt>= wt< N dose= cnt= dose= #20 N dose= int= wt>= wt< dose= dose= time= dose= time= #30 N dose= int= time= time= meas= N N meas> meas>= #40 age>= time>= N time= meas>= meas>= N meas>= N time= #50 N
+COPY DUPIXENT.02P = DUPIXENT.02
+
+DUPIXENT.05a de: age>= age<= age>= age<= N N N dose= int= wt>= #10 wt< dose= int= wt>= age>= age<= N cnt>= time<= meas= #20 meas>= meas>= meas>= time<= meas>= age>= age<= N
+DUPIXENT.05a fr: age>= age<= age>= age<= N N N dose= int= wt>= #10 wt< dose= int= wt> age>= age<= N cnt>= time<= meas= #20 meas>= meas>= meas>= time<= cnt= meas>= age>= age<= N
+DUPIXENT.05a it: age>= age<= age>= age<= N N N dose= int= wt>= #10 wt< dose= int= wt>= age>= age<= N cnt>= time<= meas= #20 meas>= meas>= meas>= time<= meas>= N
+COPY DUPIXENT.05P = DUPIXENT.05a
+
+STELARACU2 de: cnt= time= int= time=
+STELARACU2 fr: cnt= time= int= time=
+STELARACU2 it: cnt= time= int= time=
+
+MVASI.05 de: cnt= time= time>= cnt>= cnt<= cnt>= cnt<= cnt<= cnt= N
+MVASI.05 fr: N cnt= time= time>= cnt>= cnt<= cnt>= cnt<= cnt<= cnt= #10 N
+MVASI.05 it: cnt= time= time>= cnt>= cnt<= cnt>= cnt<= cnt<= cnt= N
+
+ZARZIO de: meas>= meas<= time<= cnt= meas< N time<=
+ZARZIO fr: meas>= meas<= time<=:month meas< N cnt=:times time<=:month
+ZARZIO it: meas>= meas<= time<= meas< N cnt= time<=
+
+EZETSIMVSand de: meas< meas= meas< meas= meas> dose>= dose<= cnt>= cnt<=
+EZETSIMVSand fr: meas< meas= meas< meas= meas> dose>= dose<= cnt>= cnt<=
+EZETSIMVSand it: meas< meas= meas< meas= meas> dose>= dose<= cnt>= cnt<=
+
+NUSTENDI.01 de: meas>= meas>= time>= N meas>= time<= meas>=
+NUSTENDI.01 fr: meas>= meas>= time>= meas>= meas>= time<=
+NUSTENDI.01 it: meas>= meas>= time>= meas>= meas>= time<=
+
+ELAHERE de: cnt<=:line meas>= meas= meas= N
+ELAHERE fr: cnt<= meas= meas= meas>= N
+ELAHERE it: cnt<= meas>= meas= meas= N
+
+DIAPHIN.6- de: N N N price=
+DIAPHIN.6- fr: N N N price=
+DIAPHIN.6- it: N N N price=
+
+CRESE.Kps.IM de: age>= wt>=
+CRESE.Kps.IM fr: age>=
+CRESE.Kps.IM it: age>= wt>=
+
+NEPEXTO de: time= cnt= dose= cnt= dose= time= time= cnt<= dose=
+NEPEXTO fr: wt>= time= cnt= dose= cnt= dose= time= cnt<= dose= time=
+NEPEXTO it: time= cnt= dose= cnt= dose= time= cnt<= dose= time=
+COPY BENEPALI4 = NEPEXTO
+COPY ERELZI2 = NEPEXTO
+
+FORXIGA.HFPM de: time>= dose= meas> cnt>= time<=
+FORXIGA.HFPM fr: time>= meas> dose= time<=:month
+FORXIGA.HFPM it: time>= meas> dose= cnt>= time<=
+
+CABAZ.VIA-02 de: time<= cnt<= cnt=:cycle cnt=:cycle
+CABAZ.VIA-02 fr: time<= cnt<=:cycle cnt=:cycle cnt=:cycle
+CABAZ.VIA-02 it: time<= cnt<=:cycle cnt= cnt=:cycle
+
+TREMFYAPE.04 de: cnt<= dose= time= time=:week time=:week time= cnt= N N N #10 cnt<= dose= int= dose= int= time= N N N N #20 N N N N N
+TREMFYAPE.04 fr: N dose<= time= time=:week time=:week time= cnt= N N N #10 N dose<= int= dose= int= time= N N N N #20 N N N N N
+TREMFYAPE.04 it: N dose<= time= time=:week time=:week time= cnt= N N N #10 N dose<= int= dose= int= time= N N N N #20 N N N N N
+
+DUPHALACGRAN de: N N N N N N N N N
+DUPHALACGRAN fr: N N N N N N N N N N N
+DUPHALACGRAN it: N N N N N N N N N N N
+
+RYBREVAN.01d de: cnt=:line N N N wt>= N
+RYBREVAN.01d fr: cnt=:line N N N wt>= N
+RYBREVAN.01d it: cnt=:line N N N wt>= N
+
+SUBUTEX de: N N N
+SUBUTEX fr: N N N
+SUBUTEX it: N N N
+
+LIBTAYO.01a de: cnt=:line meas>= meas>= N cnt< cnt<=:cycle N
+LIBTAYO.01a fr: cnt=:line meas>= meas>= N cnt< cnt<=:cycle N
+LIBTAYO.01a it: cnt=:line meas>= meas>= N cnt< cnt<=:cycle N
+
+TRIMBOW de: cnt>= time>= meas>= cnt>= cnt>= time>= meas>=
+TRIMBOW fr: cnt>= time>= meas>= cnt>= cnt>= time>= meas>=
+TRIMBOW it: cnt>= time>= meas>= cnt>= cnt>= time>= meas>=
+
+XELJANZ.02 de: N N N N time<= dose= cnt= time= time= N
+XELJANZ.02 fr: N N N N time<= dose= cnt= time= time= N
+XELJANZ.02 it: N N N N time<=:week dose= cnt= time=:week time= N
+
+LENVIMA.02 de: meas< meas>= meas<= cnt=:times dose= dose= dose= N
+LENVIMA.02 fr: meas< meas>= meas<= dose= dose= dose= cnt= N
+LENVIMA.02 it: meas< meas>= meas<= dose= dose= dose= cnt= N
+
+LENALI.DE.09 de: cnt>= N N N cnt>= N
+LENALI.DE.09 fr: cnt>= N N N cnt>= N
+LENALI.DE.09 it: cnt>= N N N N N N cnt>= N
+
+KEYTRUDA.26 de: age>= meas>= N meas= meas= time= cnt<= time>= time<= N #10 N cnt<= cnt<= cnt=:pack cnt=:cycle N
+KEYTRUDA.26 fr: age>= meas>= N meas= meas= time= cnt<= time>= time<= N #10 N cnt<= cnt<= cnt=:cycle N
+KEYTRUDA.26 it: age>= meas>= N meas= meas= time= cnt<= time>= time<= N #10 N cnt<= cnt<= cnt= cnt=:cycle N
+
+KADCYLA.01 de: N price= N price= N
+KADCYLA.01 fr: N price= N price= N
+KADCYLA.01 it: price= N price= N N
+
+OPDIVO-22095.XX de: dose<= int= dose<= int= N dose= int= N N
+OPDIVO-22095.XX fr: dose<= int= dose<= int= N dose= int= N N
+OPDIVO-22095.XX it: dose<= int= dose<= int= dose= int= N N
+
+KISQALI.04 de: N cnt=:line N
+KISQALI.04 fr: N cnt= N
+KISQALI.04 it: N cnt= N
+
+LENALISA.13 de: cnt=:line N
+LENALISA.13 fr: cnt=:line N
+LENALISA.13 it: cnt=:line N
+
+ADARTREL de: time=
+ADARTREL fr: time=
+ADARTREL it: time=
+
+POMALI.De.04 de: cnt>=:line N
+POMALI.De.04 fr: cnt>= N
+POMALI.De.04 it: cnt>= N
+
+HAVRIX720 de: N
+HAVRIX720 fr: N
+HAVRIX720 it: N
+
+LAITEA de: time<=
+LAITEA fr: time<=
+LAITEA it: time<=
+
+FLIXABI.02 de: N
+FLIXABI.02 fr: N
+FLIXABI.02 it: N
+
+FLUIMUCIL-2 de: time>= time<=
+FLUIMUCIL-2 fr: time>= time<=
+FLUIMUCIL-2 it: time>= time<=
+
+CUBICIN de:
+CUBICIN fr:
+CUBICIN it:
+NINTEDANIB.MEPHA.XX de:
+NINTEDANIB.MEPHA.XX fr:
+NINTEDANIB.MEPHA.XX it:

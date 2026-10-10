@@ -1,0 +1,42 @@
+cud	split	kind	odd	tuple	verdict	note
+NEMLUVIO.01	dev	2:1	it	int=56 day	real	maintenance interval: DE/FR every 8 weeks, IT every 4 weeks
+DIAPHIN.6-	held	presence	it	price=12 pct	real	surcharge 6% DE/FR vs 12% IT
+DIAPHIN.6-	held	2:1	it	price=6 pct	real	surcharge 6% DE/FR vs 12% IT
+NEPEXTO	held	presence	fr	wt>=62.5 kg	real	FR-only weight >= 62.5 kg on JIA
+BENEPALI4	held	presence	fr	wt>=62.5 kg	real	FR-only weight >= 62.5 kg on JIA
+ERELZI2	held	presence	fr	wt>=62.5 kg	real	FR-only weight >= 62.5 kg on JIA
+CRESE.Kps.IM	held	2:1	fr	wt>=16 kg	real	FR omits body weight >= 16 kg
+DUPIXENT.02	dev	2:1	fr	int=28 day	real	FR omits the 15-<30 kg tier (q4w, start 4 weeks after day 15)
+DUPIXENT.02	dev	2:1	fr	time=1 day	real	FR omits the 15-<30 kg tier (day 1)
+DUPIXENT.02	dev	2:1	fr	time=15 day	real	FR omits the 15-<30 kg tier (>=15 kg, day 15)
+DUPIXENT.02	dev	2:1	fr	time=28 day	real	FR omits the 15-<30 kg tier (q4w, start 4 weeks after day 15)
+DUPIXENT.02	dev	2:1	fr	wt<30 kg	real	FR omits 15-<30 tier and the >=30 kg lower bound of the middle tier
+DUPIXENT.02	dev	2:1	de	wt>60 kg	minor	boundary at 60 kg: DE 'ab 60' (>=) vs FR/IT 'plus de/superiore a' (>)
+DUPIXENT.02	dev	2:1	fr	wt>=15 kg	real	FR omits the 15-<30 kg tier (>=15 kg, day 15)
+DUPIXENT.02	dev	2:1	fr	wt>=30 kg	real	FR omits 15-<30 tier and the >=30 kg lower bound of the middle tier
+DUPIXENT.02	dev	presence	de	wt>=60 kg	minor	boundary at 60 kg: DE 'ab 60' (>=) vs FR/IT 'plus de/superiore a' (>)
+DUPIXENT.02P	dev	2:1	fr	int=28 day	real	FR omits the 15-<30 kg tier (q4w, start 4 weeks after day 15)
+DUPIXENT.02P	dev	2:1	fr	time=1 day	real	FR omits the 15-<30 kg tier (day 1)
+DUPIXENT.02P	dev	2:1	fr	time=15 day	real	FR omits the 15-<30 kg tier (>=15 kg, day 15)
+DUPIXENT.02P	dev	2:1	fr	time=28 day	real	FR omits the 15-<30 kg tier (q4w, start 4 weeks after day 15)
+DUPIXENT.02P	dev	2:1	fr	wt<30 kg	real	FR omits 15-<30 tier and the >=30 kg lower bound of the middle tier
+DUPIXENT.02P	dev	2:1	de	wt>60 kg	minor	boundary at 60 kg: DE 'ab 60' (>=) vs FR/IT 'plus de/superiore a' (>)
+DUPIXENT.02P	dev	2:1	fr	wt>=15 kg	real	FR omits the 15-<30 kg tier (>=15 kg, day 15)
+DUPIXENT.02P	dev	2:1	fr	wt>=30 kg	real	FR omits 15-<30 tier and the >=30 kg lower bound of the middle tier
+DUPIXENT.02P	dev	presence	de	wt>=60 kg	minor	boundary at 60 kg: DE 'ab 60' (>=) vs FR/IT 'plus de/superiore a' (>)
+DUPIXENT.05a	dev	presence	fr	cnt=1 times	benign	FR 'une fois par an' = DE 'jährlich' / IT 'a cadenze annuali' (no number)
+DUPIXENT.05a	dev	presence	fr	wt>60 kg	minor	boundary at 60 kg: FR 'supérieur à' (>) vs DE/IT >=
+DUPIXENT.05a	dev	2:1	fr	wt>=15 kg	real	FR lower weight bound 30 kg vs DE/IT 15 kg
+DUPIXENT.05a	dev	presence	fr	wt>=30 kg	real	FR lower weight bound 30 kg vs DE/IT 15 kg
+DUPIXENT.05a	dev	2:1	fr	wt>=60 kg	minor	boundary at 60 kg: FR 'supérieur à' (>) vs DE/IT >=
+DUPIXENT.05P	dev	presence	fr	cnt=1 times	benign	FR 'une fois par an' = DE 'jährlich' / IT 'a cadenze annuali' (no number)
+DUPIXENT.05P	dev	presence	fr	wt>60 kg	minor	boundary at 60 kg: FR 'supérieur à' (>) vs DE/IT >=
+DUPIXENT.05P	dev	2:1	fr	wt>=15 kg	real	FR lower weight bound 30 kg vs DE/IT 15 kg
+DUPIXENT.05P	dev	presence	fr	wt>=30 kg	real	FR lower weight bound 30 kg vs DE/IT 15 kg
+DUPIXENT.05P	dev	2:1	fr	wt>=60 kg	minor	boundary at 60 kg: FR 'supérieur à' (>) vs DE/IT >=
+FORXIGA.HFPM	dev	2:1	fr	cnt>=1	benign	FR 'au moins l'un' is not a candidate (generator gap)
+TREMFYAPE.04	held	presence	de	cnt<=1 dose	benign	DE 'maximal eine Dosis von X mg' vs FR/IT 'une dose maximale de X mg': same cap
+TREMFYAPE.04	held	2:1	de	dose<=100 mg	benign	same as above (maintenance 100 mg)
+TREMFYAPE.04	held	2:1	de	dose<=200 mg	benign	same as above (induction 200 mg)
+TREMFYAPE.04	held	presence	de	dose=100 mg	benign	same as above (maintenance 100 mg)
+KEYTRUDA.26	held	2:1	fr	cnt=2 pack	benign	FR 'les deux premiers emballages' masked by the BOTH rule (generator gap)

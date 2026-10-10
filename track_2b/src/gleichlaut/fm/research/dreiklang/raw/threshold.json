@@ -1,0 +1,21 @@
+{
+ "tau": 9.00923290261585,
+ "dev_f1": 0.8591065292096219,
+ "dev_tp": 500,
+ "dev_fp": 139,
+ "dev_fn": 25,
+ "n_dev": 742,
+ "dev_auroc": 0.7227737546631556,
+ "tied_range": [
+  9.00923290261585,
+  9.00923290261585
+ ],
+ "premises": {
+  "model": "m1rkocasu/Apertus-v1.5-8B-text-MLX-4bit-DWQ",
+  "weights_sha256": {
+   "model.safetensors": "12bbfc28706913a83c203ca2388f7af7f0356ca91b51cfe65e0b1effea423768"
+  },
+  "template_sha256": "058d9ad4fde4bbce232ec32164d8372da37827497490224b36b0803c31ee85d4",
+  "instr_sha256": "e317a7baee86edf5e2ce8d277e6a7398af3924735f85e3e0fa42668314bafb71"
+ }
+}
