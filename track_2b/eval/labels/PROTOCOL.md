@@ -88,7 +88,8 @@ the file so every line shows in full, still only this file). Severe = REAL or st
   narrowed to "l'oculochirurgo". In the full protocol such a split goes to a third annotator.
 - **What it does and does not show.** A single local edit of a known type (one word, a clause, a number) is caught
   every time, with or without the reference: the annotators diff the draft against the old text and the German change
-  (several wrote small word-diff helpers for their own file), so an edit the German change does not explain stands out.
+  (several wrote small word-diff helpers over their own worklist file, a deviation from the "one read, one write"
+  instruction; none read any other file), so an edit the German change does not explain stands out.
   Errors that look like a plausible part of the amendment (scope drift inside the edited sentence) are harder, as the
   real REAL items show; R14 below plants such errors. The 95% upper bound on severe errors among ready drafts (5.5% for the 70B, 5.8% for Q8_0) is
   unchanged when divided by the measured recall.
