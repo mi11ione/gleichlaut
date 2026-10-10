@@ -1,0 +1,50 @@
+id	answer	note
+R00	real	Italian field contains the French text verbatim.
+R01	not	7,5x7,5 cm vs 7.5x 7.5 cm: formatting only.
+R02	not	"deux fois" renders "das Doppelte"; same condition.
+R03	minor	Limitation correct; "communiqué" vs "transmis" is wording inconsistency, same meaning.
+R04	not	"déterminée deux fois" = Doppelbestimmung; same condition.
+R05	real	FR omits the 2-3 month trial duration.
+R06	minor	'de15' missing space; cosmetic typo.
+R07	real	FR lacks 15-<30 kg band; puts all <60 kg on 400/200 mg dosing.
+R08	minor	'moins de15' missing space; cosmetic.
+R09	not	DE '1 .4' artefact; IT 1,4 mmol/l matches.
+R10	real	ACE inhibitor wording for angiotensin II receptor antagonist; different drug class.
+R11	real	DE 15-<60 kg vs FR 30-<60 kg.
+R12	minor	Meaning correct (ARB); ungrammatical 'un cosiddetti antagonisti'.
+R13	real	Supplement 6% in DE vs 12% in IT.
+R14	minor	"communiqué" vs "transmis"; same meaning, inconsistent wording.
+R15	not	"tous les deux jours" = "an jedem zweiten Tag".
+R16	minor	Meaning correct (ARB); ungrammatical 'un cosiddetti antagonisti'.
+R17	real	More than 14 times (DE) vs more than 13 times (IT).
+R18	minor	Meaning correct (ARB); ungrammatical 'un cosiddetti antagonisti'.
+R19	real	FR adds ≥62.5 kg restriction for juvenile arthritis absent in DE.
+R20	minor	'moins de15' missing space; cosmetic.
+R21	minor	'1 .4' stray space in German; cosmetic.
+R22	real	FR omits the 2-3 month trial duration.
+R23	not	FR 1 first + max 4 additional = DE max 5; same.
+R24	not	'de15' tokenisation artefact; 15 kg present in FR.
+R25	real	FR adds ≥62.5 kg restriction absent in DE.
+R26	real	FR adds ≥62.5 kg restriction absent in DE.
+R27	not	120 mg is product-strength mention, not a condition; IT same.
+R28	real	FR omits minimum body weight 16 kg for paediatric patients.
+R29	real	FR lacks 15-<30 kg band and its distinct dosing.
+R30	real	Maintenance every eight weeks (DE) vs every four weeks (IT).
+R31	real	ACE inhibitor wording for angiotensin II receptor antagonist; different class.
+R32	real	'se mesi' typo drops the six-month duration value.
+R33	not	"adultes" equals "ab 18 Jahren" (DE redundant); same condition.
+R34	minor	IT 'se mesi' typo; six months intended but number garbled.
+R35	real	ACE inhibitor wording for angiotensin II receptor antagonist; different class.
+R36	not	"deux semaines" = 14 Tage.
+R37	minor	Meaning correct (ARB); ungrammatical 'un cosiddetti antagonisti'.
+R38	real	ACE inhibitor wording for angiotensin II receptor antagonist; different class.
+R39	real	DE 15-<60 kg vs FR 30-<60 kg.
+R40	not	"ogni due giorni" = jeden zweiten Tag.
+R41	not	"deux fois le nombre" = "die doppelte Anzahl".
+R42	not	"adulti" equals "ab 18 Jahren"; same condition.
+R43	minor	'30jours' missing space; cosmetic.
+R44	real	FR states 8x714 cm vs 8x14 cm; wrong dimension (typo), oval missing.
+R45	not	DE '1 .4' artefact; FR 1.4 mmol/l matches.
+R46	not	120 mg is product-strength mention, not a condition; FR same.
+R47	real	IT adds limitation of 1 device per 5 years absent in DE.
+R48	minor	"communiqué" vs "transmis"; same meaning, inconsistent wording.

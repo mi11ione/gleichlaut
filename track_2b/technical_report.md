@@ -31,15 +31,15 @@ seen during design; checks and resources hashed before any output existed), Aper
 text **17.5%** of the time against **6.0%** for the no-model start (old text with numbers
 updated by code): **+11.4 points, 95% CI [4.8, 18.7]**; against rules+, our strongest no-model baseline, **+6.6 [1.8, 12.0]**. They cut the token edits still needed to reach BAG's text by **42.4%**
 [31.0, 54.1]. **39.8%** of drafts come out ready, with **0** meaning errors, stale changes or German left among them,
-and a repeat run (seed changed; at temperature 0 the differences come from the serving side, §4) passes the same rule (+12.0 points, 41.6% ready). The annotators behind that 0 were tested (pre-registered R11): a meaning error planted into each of 66 ready drafts was labelled one by both of them 66 of 66 times (95% CI lower bound 94.5%), with BAG's text shown or hidden. **The shipped Apertus 8B, on a CPU,
+and a repeat run (seed changed; at temperature 0 the differences come from the serving side, §4) passes the same rule (+12.0 points, 41.6% ready). The annotators behind that 0 were tested (pre-registered R11): a meaning error planted into each of 66 ready drafts was labelled one by both of them 66 of 66 times (95% CI lower bound 94.5%), with BAG's text shown or hidden; written inside the amended sentence so that it reads like part of the amendment (R14), 38 of 38 were labelled REAL or stale by both (lower bound 90.8%), with 0 false alarms on the 38 drafts untouched. **The shipped Apertus 8B, on a CPU,
 passes the same pre-registered rule** (Q8_0, the default build: +11.4 points [4.8, 18.7], 37.3% ready; Q4_K_M, for an
 8 GiB box: +10.8 points [4.8, 17.5], 36.1% ready; 0 meaning errors among ready drafts in both), so the default deployment
 is fully air-gapped. At Q8_0 the 8B has the same identical-draft rate as the 70B (17.5% each; no equivalence test), with
 0 errors of any severe kind among its 62 ready drafts; the 70B still saves more edits (42.4% vs 33.1% for Q8_0, paired
 difference 9.3 points [−1.3, 20.2]; vs 20.9% for Q4_K_M) and its ready drafts rarely need a fix to the amendment (3 of 66). The audit reduces 1,688 limitations to
-**27** findings, **16** of them real (59.3%), that contain **all 10** known divergent limitations (not a recall
+**27** findings, **17** of them real (63.0%), that contain **all 10** known divergent limitations (not a recall
 measure: the rules were written around the census that found them), **5** new confirmed problems (typos next to
-numbers) and Keytruda's Italian field holding the French text (spotted by hand before the language check existed).
+numbers, one counted by two checks) and Keytruda's Italian field holding the French text (spotted by hand before the language check existed).
 On 1,000 divergences planted into clean limitations its recall is 77.2% [74.5, 79.7]: 93.0% for a changed number,
 94.0% for a field in the wrong language, 51.0% for a typo next to a number. Its scope is numbers bound to a unit: at any
 number token recall is 55.5%, and flipped operators or dropped negations are not read (0 of 200 each; next rules). A draft costs **CHF 0.0024** at a Swiss provider's
@@ -179,14 +179,19 @@ fewer token edits to reach BAG's published text (95% CI [31.0, 54.1]); 59.1% few
 backends; either way, this is why certification re-runs the whole suite on the endpoint it certifies.
 
 **Audit.** On the 6 Oct 2026 register, numeric check: 21 findings in 17 limitations; all 10 known divergent limitations
-and all 13 of their known values are among them; a blind annotation finds 10 of the 21 real (47.6%, Wilson
-[28.3, 67.6]); the other 11 are paraphrases such as "ab 18 Jahren" vs "adultes", or typos. Language and editorial
+and all 13 of their known values are among them; the blind majority finds 11 of the 21 real (52.4%, Wilson
+[32.4, 71.7]): the 10 known and the Italian typo "se mesi" (also an editorial finding); the other 10 are paraphrases such
+as "ab 18 Jahren" vs "adultes", or typos. Language and editorial
 checks (added in round 2, rules written before any label): 6 findings, all 6 confirmed: Keytruda's Italian field holds
-the French text since 1 Aug 2026, and five typos next to numbers ("de15 kg", "1 .4 mmol/l", "se mesi"). In total 16 of
-27 findings are real (59.3%). Terminology learned from BAG's own corrections (round 3): 11 findings, 8 confirmed
-(four French texts naming an ACE inhibitor for angiotensin-II receptor antagonists, four ungrammatical Italian ones).
-On MiGeL and the Analysenliste (1 Jul 2026), lists the rules were never designed on: 11 findings, 7 confirmed (63.6%),
-among them an Analysenliste position billable after 13 repetitions in Italian and 14 in German and French.
+the French text since 1 Aug 2026, and five typos next to numbers ("de15 kg", "1 .4 mmol/l", "se mesi"). In total 17 of
+27 findings are real (63.0%). Terminology learned from BAG's own corrections (round 3): 11 findings, 11 confirmed
+(four French texts naming an ACE inhibitor for angiotensin-II receptor antagonists, four ungrammatical Italian ones,
+three French "communiqué" where the register now says "transmis"; 4 change the meaning, 7 are wording).
+On MiGeL and the Analysenliste (1 Jul 2026), lists the rules were never designed on: 11 findings, 6 confirmed (54.5%),
+among them an Analysenliste position billable after 13 repetitions in Italian and 14 in German and French. These counts
+are the majority of two blind annotators (the second in reverse order) and a third where their answers differed
+(pre-registered R14): the two agree whether a finding is real on all 49 (κ 1.000). The first, single-annotator labels
+gave 16, 8 and 7 (agreement 44 of 49); they stay in the results as `first_annotation`.
 
 **Labels.** Every ready non-exact draft and the flagged sample were first read in full by a research labeller who knew
 each draft's guard verdict; a blind annotator re-labelled them (agreement 62 of 69, κ 0.532) and a third broke all 7

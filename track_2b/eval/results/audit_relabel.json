@@ -1,0 +1,489 @@
+{
+ "all": {
+  "annotators": {
+   "agree": 49,
+   "agree_pct": 100.0,
+   "answer_agree": 48,
+   "kappa": 1.0,
+   "n": 49,
+   "tiebreak": 1
+  },
+  "answers": {
+   "minor": 13,
+   "not": 16,
+   "real": 20
+  },
+  "changed": [
+   {
+    "A": "minor",
+    "B": "minor",
+    "T": null,
+    "first": "no",
+    "majority": "yes",
+    "notes": [
+     "\"communiqué\" vs \"transmis\"; same meaning, inconsistent wording.",
+     "Limitierung correctly 'limitation'; only verb communiqué vs transmis differs, same meaning"
+    ],
+    "uid": "audit3_terminology_20261006:C02"
+   },
+   {
+    "A": "minor",
+    "B": "minor",
+    "T": null,
+    "first": "no",
+    "majority": "yes",
+    "notes": [
+     "\"communiqué\" vs \"transmis\"; same meaning, inconsistent wording.",
+     "'limitation' correct; communiqué vs transmis is wording variance only"
+    ],
+    "uid": "audit3_terminology_20261006:C03"
+   },
+   {
+    "A": "minor",
+    "B": "minor",
+    "T": null,
+    "first": "no",
+    "majority": "yes",
+    "notes": [
+     "Limitation correct; \"communiqué\" vs \"transmis\" is wording inconsistency, same meaning.",
+     "'limitation' correct; communiqué vs transmis wording variance"
+    ],
+    "uid": "audit3_terminology_20261006:C06"
+   },
+   {
+    "A": "minor",
+    "B": "minor",
+    "T": null,
+    "first": "no",
+    "majority": "yes",
+    "notes": [
+     "IT 'se mesi' typo; six months intended but number garbled.",
+     "IT typo 'se mesi' for sei mesi; intended 6 months recoverable"
+    ],
+    "uid": "audit_20261006:A19"
+   },
+   {
+    "A": "not",
+    "B": "not",
+    "T": null,
+    "first": "yes",
+    "majority": "no",
+    "notes": [
+     "FR 1 first + max 4 additional = DE max 5; same.",
+     "FR 1 + max 4 additional = max 5; same as DE"
+    ],
+    "uid": "audit_al_20260701:AL01"
+   }
+  ],
+  "confirmed_first": 31,
+  "confirmed_majority": 34,
+  "confirmed_strict_real": 20,
+  "n": 49,
+  "precision_first_pct": 63.3,
+  "precision_majority_pct": 69.4,
+  "precision_majority_wilson95": [
+   55.5,
+   80.5
+  ],
+  "precision_strict_pct": 40.8,
+  "vs_first": {
+   "agree": 44,
+   "agree_pct": 89.8,
+   "kappa": 0.773,
+   "n": 49
+  }
+ },
+ "files": {
+  "audit2_20261006": {
+   "annotators": {
+    "agree": 6,
+    "agree_pct": 100.0,
+    "answer_agree": 6,
+    "kappa": null,
+    "n": 6,
+    "tiebreak": 0
+   },
+   "answers": {
+    "minor": 4,
+    "real": 2
+   },
+   "changed": [],
+   "confirmed_first": 6,
+   "confirmed_majority": 6,
+   "confirmed_strict_real": 2,
+   "n": 6,
+   "precision_first_pct": 100.0,
+   "precision_majority_pct": 100.0,
+   "precision_majority_wilson95": [
+    61.0,
+    100.0
+   ],
+   "precision_strict_pct": 33.3,
+   "vs_first": {
+    "agree": 6,
+    "agree_pct": 100.0,
+    "kappa": null,
+    "n": 6
+   }
+  },
+  "audit3_terminology_20261006": {
+   "annotators": {
+    "agree": 11,
+    "agree_pct": 100.0,
+    "answer_agree": 11,
+    "kappa": null,
+    "n": 11,
+    "tiebreak": 0
+   },
+   "answers": {
+    "minor": 7,
+    "real": 4
+   },
+   "changed": [
+    {
+     "A": "minor",
+     "B": "minor",
+     "T": null,
+     "first": "no",
+     "majority": "yes",
+     "notes": [
+      "\"communiqué\" vs \"transmis\"; same meaning, inconsistent wording.",
+      "Limitierung correctly 'limitation'; only verb communiqué vs transmis differs, same meaning"
+     ],
+     "uid": "audit3_terminology_20261006:C02"
+    },
+    {
+     "A": "minor",
+     "B": "minor",
+     "T": null,
+     "first": "no",
+     "majority": "yes",
+     "notes": [
+      "\"communiqué\" vs \"transmis\"; same meaning, inconsistent wording.",
+      "'limitation' correct; communiqué vs transmis is wording variance only"
+     ],
+     "uid": "audit3_terminology_20261006:C03"
+    },
+    {
+     "A": "minor",
+     "B": "minor",
+     "T": null,
+     "first": "no",
+     "majority": "yes",
+     "notes": [
+      "Limitation correct; \"communiqué\" vs \"transmis\" is wording inconsistency, same meaning.",
+      "'limitation' correct; communiqué vs transmis wording variance"
+     ],
+     "uid": "audit3_terminology_20261006:C06"
+    }
+   ],
+   "confirmed_first": 8,
+   "confirmed_majority": 11,
+   "confirmed_strict_real": 4,
+   "n": 11,
+   "precision_first_pct": 72.7,
+   "precision_majority_pct": 100.0,
+   "precision_majority_wilson95": [
+    74.1,
+    100.0
+   ],
+   "precision_strict_pct": 36.4,
+   "vs_first": {
+    "agree": 8,
+    "agree_pct": 72.7,
+    "kappa": 0.0,
+    "n": 11
+   }
+  },
+  "audit_20261006": {
+   "annotators": {
+    "agree": 21,
+    "agree_pct": 100.0,
+    "answer_agree": 21,
+    "kappa": 1.0,
+    "n": 21,
+    "tiebreak": 0
+   },
+   "answers": {
+    "minor": 1,
+    "not": 10,
+    "real": 10
+   },
+   "changed": [
+    {
+     "A": "minor",
+     "B": "minor",
+     "T": null,
+     "first": "no",
+     "majority": "yes",
+     "notes": [
+      "IT 'se mesi' typo; six months intended but number garbled.",
+      "IT typo 'se mesi' for sei mesi; intended 6 months recoverable"
+     ],
+     "uid": "audit_20261006:A19"
+    }
+   ],
+   "confirmed_first": 10,
+   "confirmed_majority": 11,
+   "confirmed_strict_real": 10,
+   "n": 21,
+   "precision_first_pct": 47.6,
+   "precision_majority_pct": 52.4,
+   "precision_majority_wilson95": [
+    32.4,
+    71.7
+   ],
+   "precision_strict_pct": 47.6,
+   "vs_first": {
+    "agree": 20,
+    "agree_pct": 95.2,
+    "kappa": 0.905,
+    "n": 21
+   }
+  },
+  "audit_al_20260701": {
+   "annotators": {
+    "agree": 3,
+    "agree_pct": 100.0,
+    "answer_agree": 3,
+    "kappa": 1.0,
+    "n": 3,
+    "tiebreak": 0
+   },
+   "answers": {
+    "not": 2,
+    "real": 1
+   },
+   "changed": [
+    {
+     "A": "not",
+     "B": "not",
+     "T": null,
+     "first": "yes",
+     "majority": "no",
+     "notes": [
+      "FR 1 first + max 4 additional = DE max 5; same.",
+      "FR 1 + max 4 additional = max 5; same as DE"
+     ],
+     "uid": "audit_al_20260701:AL01"
+    }
+   ],
+   "confirmed_first": 2,
+   "confirmed_majority": 1,
+   "confirmed_strict_real": 1,
+   "n": 3,
+   "precision_first_pct": 66.7,
+   "precision_majority_pct": 33.3,
+   "precision_majority_wilson95": [
+    6.1,
+    79.2
+   ],
+   "precision_strict_pct": 33.3,
+   "vs_first": {
+    "agree": 2,
+    "agree_pct": 66.7,
+    "kappa": 0.4,
+    "n": 3
+   }
+  },
+  "audit_migel_20260701": {
+   "annotators": {
+    "agree": 8,
+    "agree_pct": 100.0,
+    "answer_agree": 7,
+    "kappa": 1.0,
+    "n": 8,
+    "tiebreak": 1
+   },
+   "answers": {
+    "minor": 1,
+    "not": 4,
+    "real": 3
+   },
+   "changed": [],
+   "confirmed_first": 5,
+   "confirmed_majority": 5,
+   "confirmed_strict_real": 3,
+   "n": 8,
+   "precision_first_pct": 62.5,
+   "precision_majority_pct": 62.5,
+   "precision_majority_wilson95": [
+    30.6,
+    86.3
+   ],
+   "precision_strict_pct": 37.5,
+   "vs_first": {
+    "agree": 8,
+    "agree_pct": 100.0,
+    "kappa": 1.0,
+    "n": 8
+   }
+  }
+ },
+ "findings": 49,
+ "numbers_switch": true,
+ "prereg": "R14 (part A)",
+ "sets": {
+  "lists": {
+   "annotators": {
+    "agree": 11,
+    "agree_pct": 100.0,
+    "answer_agree": 10,
+    "kappa": 1.0,
+    "n": 11,
+    "tiebreak": 1
+   },
+   "answers": {
+    "minor": 1,
+    "not": 6,
+    "real": 4
+   },
+   "changed": [
+    {
+     "A": "not",
+     "B": "not",
+     "T": null,
+     "first": "yes",
+     "majority": "no",
+     "notes": [
+      "FR 1 first + max 4 additional = DE max 5; same.",
+      "FR 1 + max 4 additional = max 5; same as DE"
+     ],
+     "uid": "audit_al_20260701:AL01"
+    }
+   ],
+   "confirmed_first": 7,
+   "confirmed_majority": 6,
+   "confirmed_strict_real": 4,
+   "n": 11,
+   "precision_first_pct": 63.6,
+   "precision_majority_pct": 54.5,
+   "precision_majority_wilson95": [
+    28.0,
+    78.7
+   ],
+   "precision_strict_pct": 36.4,
+   "vs_first": {
+    "agree": 10,
+    "agree_pct": 90.9,
+    "kappa": 0.814,
+    "n": 11
+   }
+  },
+  "register": {
+   "annotators": {
+    "agree": 27,
+    "agree_pct": 100.0,
+    "answer_agree": 27,
+    "kappa": 1.0,
+    "n": 27,
+    "tiebreak": 0
+   },
+   "answers": {
+    "minor": 5,
+    "not": 10,
+    "real": 12
+   },
+   "changed": [
+    {
+     "A": "minor",
+     "B": "minor",
+     "T": null,
+     "first": "no",
+     "majority": "yes",
+     "notes": [
+      "IT 'se mesi' typo; six months intended but number garbled.",
+      "IT typo 'se mesi' for sei mesi; intended 6 months recoverable"
+     ],
+     "uid": "audit_20261006:A19"
+    }
+   ],
+   "confirmed_first": 16,
+   "confirmed_majority": 17,
+   "confirmed_strict_real": 12,
+   "n": 27,
+   "precision_first_pct": 59.3,
+   "precision_majority_pct": 63.0,
+   "precision_majority_wilson95": [
+    44.2,
+    78.5
+   ],
+   "precision_strict_pct": 44.4,
+   "vs_first": {
+    "agree": 26,
+    "agree_pct": 96.3,
+    "kappa": 0.922,
+    "n": 27
+   }
+  },
+  "terminology": {
+   "annotators": {
+    "agree": 11,
+    "agree_pct": 100.0,
+    "answer_agree": 11,
+    "kappa": null,
+    "n": 11,
+    "tiebreak": 0
+   },
+   "answers": {
+    "minor": 7,
+    "real": 4
+   },
+   "changed": [
+    {
+     "A": "minor",
+     "B": "minor",
+     "T": null,
+     "first": "no",
+     "majority": "yes",
+     "notes": [
+      "\"communiqué\" vs \"transmis\"; same meaning, inconsistent wording.",
+      "Limitierung correctly 'limitation'; only verb communiqué vs transmis differs, same meaning"
+     ],
+     "uid": "audit3_terminology_20261006:C02"
+    },
+    {
+     "A": "minor",
+     "B": "minor",
+     "T": null,
+     "first": "no",
+     "majority": "yes",
+     "notes": [
+      "\"communiqué\" vs \"transmis\"; same meaning, inconsistent wording.",
+      "'limitation' correct; communiqué vs transmis is wording variance only"
+     ],
+     "uid": "audit3_terminology_20261006:C03"
+    },
+    {
+     "A": "minor",
+     "B": "minor",
+     "T": null,
+     "first": "no",
+     "majority": "yes",
+     "notes": [
+      "Limitation correct; \"communiqué\" vs \"transmis\" is wording inconsistency, same meaning.",
+      "'limitation' correct; communiqué vs transmis wording variance"
+     ],
+     "uid": "audit3_terminology_20261006:C06"
+    }
+   ],
+   "confirmed_first": 8,
+   "confirmed_majority": 11,
+   "confirmed_strict_real": 4,
+   "n": 11,
+   "precision_first_pct": 72.7,
+   "precision_majority_pct": 100.0,
+   "precision_majority_wilson95": [
+    74.1,
+    100.0
+   ],
+   "precision_strict_pct": 36.4,
+   "vs_first": {
+    "agree": 8,
+    "agree_pct": 72.7,
+    "kappa": 0.0,
+    "n": 11
+   }
+  }
+ }
+}

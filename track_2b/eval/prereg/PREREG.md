@@ -32,7 +32,7 @@ human labels were used.
 | R11 | annotator sensitivity to planted meaning errors | 66 of 66 caught, reference shown or hidden |
 | R12 | house wording in the prompt, both live months | more identical drafts, fewer flags; no pair meets R0; default unchanged |
 | R13 | fully blind relabel of the headline 70B run | 0 severe errors among ready drafts; κ 0.892 |
-| R14 | (A) audit findings relabelled by two blind annotators + a third; (B) annotator sensitivity to meaning errors inside the amended wording | pending |
+| R14 | (A) audit findings relabelled by two blind annotators + a third; (B) annotator sensitivity to meaning errors inside the amended wording | (A) κ 1.000; register 17 of 27, terminology 11 of 11, lists 6 of 11 (first: 16, 8, 7); (B) 38 of 38 caught by both, 0 false alarms |
 | R15 | audit round 5: operator direction, negation, number words | pending |
 | R16 | memorisation probe: could the models have seen the held-out answers | pending |
 
@@ -678,3 +678,21 @@ data the change was designed on is labelled "dev" in every table.
   acceptable drafts are one insurer word: the Italian termbase head «assicuratore» where BAG writes «assicuratore
   malattie», and BAG's own minority French « assurance maladie » (`eval/results/r12_terms.json`,
   `eval/labels/r12_terms_ready.tsv`).
+- **R14, 10 Oct 2026:** pre-registered at commit c05a46f before any annotation; 7 fresh blind Claude annotators (no
+  model API calls). **(A) Audit relabel:** 49 findings, two blind annotators (the second in reverse order) agree on
+  confirmed (real or minor) for 49 of 49, κ 1.000, and on the three-way answer for 48; a third took the one split
+  (MiGeL MG05: real / minor / not, majority confirmed). Majority precision: register **17 of 27** (63.0%, Wilson [44.2,
+  78.5]; first annotation 16), terminology **11 of 11** (first 8; strict "real" 4: the French drug-class errors; the
+  four ungrammatical Italian texts and three French «communiqué» for the register's «transmis» are "minor"), MiGeL +
+  Analysenliste **6 of 11** (first 7). Majority vs first single labels: 44 of 49 (κ 0.773); changed: register A19 (the
+  number check's view of the Italian typo «se mesi», no -> yes), terminology C02 / C03 / C06 (no -> yes, wording only),
+  Analysenliste AL01 (yes -> no: both read FR "1 + max 4 additional" as DE's 5). As pre-registered, the README and
+  report numbers switch to the majority (`score.audit_eval`, `score.audit_more` read `eval/labels/audit_relabel.tsv`); the
+  first labels stay as `first_annotation` (`eval/results/audit_relabel.json`, `audit.json`, `audit_more.json`).
+  **(B) In-span sensitivity:** 38 hand-written plants inside the touched sentence (scope 11, condition 12, number on the
+  wrong noun 8, and/or 7), two blind annotators per worklist, reference shown: severe (REAL or stale) by both **38 of
+  38** (Wilson 95% [90.8, 100]), every type, language and family; 33 REAL by both, the 5 plants that keep part of the old
+  text called stale by one or both. False alarms on the 38 untouched copies: 0 needs-fix, 0 severe. Real drafts: stale
+  12 of 12 and German 14 of 15 severe by both; of the 3 earlier REAL labels both agree on 1 (either 3), as in R11. The 95%
+  bounds on severe errors among ready drafts are unchanged by the recall (5.5% 70B, 5.8% Q8_0)
+  (`eval/results/annotator_sensitivity_inspan.json`, `eval/labels/inspan_sensitivity.tsv`).

@@ -1,0 +1,2461 @@
+{
+ "generated_by": "python3 tools/audit_inject.py --protocol r15 --half dev",
+ "model_calls": 0,
+ "network": false,
+ "date": "20261006",
+ "half": "dev",
+ "seed": 20261015,
+ "status": "design (dev half): not a measurement",
+ "protocol": {
+  "written": "PROTOCOL r15 in the tools/audit_inject.py docstring; PREREG R15 (commit 28fe22b)",
+  "register": "public SL feed 20261006: 1688 limitations, 1624 distinct DE/FR/IT text triples",
+  "eligible": "half dev: 809 triples, 788 with no finding of any kind (round-5 kinds included)",
+  "sampling": "per type and target language: random.Random('20261015:<type>:<lang>') shuffle, first 100 with a site; one fault per copy",
+  "types": {
+   "operator": "v2 operator flip",
+   "negation_drop": "v2 negation drop",
+   "negation_add": "docstring 'negation_add'",
+   "number_word": "v2 number word change"
+  },
+  "detection": "docstring 'PROTOCOL r15': before = v2 rule on the pre-round-5 kinds; after = plus the round-5 kinds"
+ },
+ "summary": {
+  "operator": {
+   "n": 200,
+   "recall_before": 0.0,
+   "recall_after": 0.735,
+   "wilson95_after": [
+    0.67,
+    0.791
+   ]
+  },
+  "negation_drop": {
+   "n": 200,
+   "recall_before": 0.0,
+   "recall_after": 0.48,
+   "wilson95_after": [
+    0.412,
+    0.549
+   ]
+  },
+  "negation_add": {
+   "n": 200,
+   "recall_before": 0.0,
+   "recall_after": 0.51,
+   "wilson95_after": [
+    0.441,
+    0.578
+   ]
+  },
+  "number_word": {
+   "n": 200,
+   "recall_before": 0.425,
+   "recall_after": 0.87,
+   "wilson95_after": [
+    0.816,
+    0.91
+   ]
+  }
+ },
+ "types": {
+  "operator": {
+   "n": 200,
+   "detected_before": 0,
+   "recall_before": 0.0,
+   "wilson95_before": [
+    0.0,
+    0.019
+   ],
+   "detected_after": 147,
+   "recall_after": 0.735,
+   "wilson95_after": [
+    0.67,
+    0.791
+   ],
+   "eligible_limitations": {
+    "fr": 271,
+    "it": 301
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "before": 0,
+     "after": 74,
+     "recall_before": 0.0,
+     "recall_after": 0.74,
+     "wilson95_after": [
+      0.646,
+      0.816
+     ]
+    },
+    "it": {
+     "n": 100,
+     "before": 0,
+     "after": 73,
+     "recall_before": 0.0,
+     "recall_after": 0.73,
+     "wilson95_after": [
+      0.636,
+      0.807
+     ]
+    }
+   },
+   "by_subtype": {
+    "<->>": {
+     "n": 15,
+     "detected_after": 12
+    },
+    ">-><": {
+     "n": 12,
+     "detected_after": 9
+    },
+    "al massimo->almeno": {
+     "n": 4,
+     "detected_after": 3
+    },
+    "almeno->al massimo": {
+     "n": 33,
+     "detected_after": 23
+    },
+    "au maximum->au minimum": {
+     "n": 3,
+     "detected_after": 2
+    },
+    "au moins->au plus": {
+     "n": 35,
+     "detected_after": 23
+    },
+    "au plus->au moins": {
+     "n": 2,
+     "detected_after": 0
+    },
+    "inferior->superior": {
+     "n": 2,
+     "detected_after": 1
+    },
+    "inférieur->supérieur": {
+     "n": 4,
+     "detected_after": 3
+    },
+    "massim->minim": {
+     "n": 12,
+     "detected_after": 9
+    },
+    "maximum->minimum": {
+     "n": 8,
+     "detected_after": 8
+    },
+    "minimum->maximum": {
+     "n": 1,
+     "detected_after": 1
+    },
+    "oltre->sotto": {
+     "n": 4,
+     "detected_after": 2
+    },
+    "più->meno": {
+     "n": 2,
+     "detected_after": 2
+    },
+    "plus->moins": {
+     "n": 9,
+     "detected_after": 8
+    },
+    "superior->inferior": {
+     "n": 13,
+     "detected_after": 8
+    },
+    "supérieur->inférieur": {
+     "n": 5,
+     "detected_after": 3
+    },
+    "≤->≥": {
+     "n": 4,
+     "detected_after": 3
+    },
+    "≥->≤": {
+     "n": 32,
+     "detected_after": 27
+    }
+   },
+   "also_found_as": {
+    "negation": 1,
+    "operator": 147
+   },
+   "miss_reasons": {
+    "no finding at the planted comparison operator": 52,
+    "a finding appeared, but not at the planted comparison operator": 1
+   },
+   "miss_examples": [
+    {
+     "id": "SAIZEN",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "before": "tesse de croissance au bout d'un an est au moins de +1, le traitement par Saizen est pou",
+     "after": "tesse de croissance au bout d'un an est au plus de +1, le traitement par Saizen est pou",
+     "reason": "no finding at the planted comparison operator",
+     "findings": []
+    },
+    {
+     "id": "COSENTYX.05",
+     "lang": "fr",
+     "sub": "inférieur->supérieur",
+     "before": " réponse clinique après 16 semaines est inférieure à 50% selon le HiSCR. Après 52 semaine",
+     "after": " réponse clinique après 16 semaines est supérieure à 50% selon le HiSCR. Après 52 semaine",
+     "reason": "a finding appeared, but not at the planted comparison operator",
+     "findings": [
+      "negation: The German sentence is negated (kein); the aligned French sentence has no negation."
+     ]
+    },
+    {
+     "id": "ORLISTATSPIR",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "before": "x mois si la perte de poids n'est pas d'au moins 10% par rapport au poids corporel mesur",
+     "after": "x mois si la perte de poids n'est pas d'au plus 10% par rapport au poids corporel mesur",
+     "reason": "no finding at the planted comparison operator",
+     "findings": []
+    },
+    {
+     "id": "ADTRALZA.01b",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "before": "score initial ou aucune amélioration de ≥50% du score SCORAD (SCORAD 50) par rapp",
+     "after": "score initial ou aucune amélioration de ≤50% du score SCORAD (SCORAD 50) par rapp",
+     "reason": "no finding at the planted comparison operator",
+     "findings": []
+    },
+    {
+     "id": "BLINCYTO.03a",
+     "lang": "fr",
+     "sub": ">-><",
+     "before": "2 cycles. Si BLINCYTO doit être utilisé > 2 cycles, le laboratoire AMGEN Switzerl",
+     "after": "2 cycles. Si BLINCYTO doit être utilisé < 2 cycles, le laboratoire AMGEN Switzerl",
+     "reason": "no finding at the planted comparison operator",
+     "findings": []
+    },
+    {
+     "id": "ABRILADA4",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "before": "ui n’atteignent pas une réponse HiSCR d’au moins 50 % après 12 semaines. Renouvellement ",
+     "after": "ui n’atteignent pas une réponse HiSCR d’au plus 50 % après 12 semaines. Renouvellement ",
+     "reason": "no finding at the planted comparison operator",
+     "findings": []
+    },
+    {
+     "id": "ORLISTATMEPH",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "before": "lable du médecin-conseil de l'assureur. Au moins BMI 35 Uniquement pour le traitement de",
+     "after": "lable du médecin-conseil de l'assureur. Au plus BMI 35 Uniquement pour le traitement de",
+     "reason": "no finding at the planted comparison operator",
+     "findings": []
+    },
+    {
+     "id": "RIBOMUSTIN2",
+     "lang": "fr",
+     "sub": "au plus->au moins",
+     "before": "e en association avec le rituximab pour au plus 6 cycles. Chez les patients avec lympho",
+     "after": "e en association avec le rituximab pour au moins 6 cycles. Chez les patients avec lympho",
+     "reason": "no finding at the planted comparison operator",
+     "findings": []
+    }
+   ],
+   "misses": [
+    {
+     "id": "SAIZEN",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "ORLISTATSPIR",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "ADTRALZA.01b",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "BLINCYTO.03a",
+     "lang": "fr",
+     "sub": ">-><",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "ABRILADA4",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "COSENTYX.05",
+     "lang": "fr",
+     "sub": "inférieur->supérieur",
+     "reason": "a finding appeared, but not at the planted comparison operator"
+    },
+    {
+     "id": "ORLISTATMEPH",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "RIBOMUSTIN2",
+     "lang": "fr",
+     "sub": "au plus->au moins",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "RINVOQ.04a",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "ERIVEDGE2",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "OLUMIANT.02",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "ZEJULA.02",
+     "lang": "fr",
+     "sub": "supérieur->inférieur",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "DUPIXENT.03a",
+     "lang": "fr",
+     "sub": "plus->moins",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "BIMZELX.04c",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "WEGOVY.01---Erwachsene",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "SULIQUA",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "EPIDYOLEX.01",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "XENICAL",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "IMRALDI3",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "PHESGO.02",
+     "lang": "fr",
+     "sub": "au maximum->au minimum",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "BLINCYTO.01a",
+     "lang": "fr",
+     "sub": ">-><",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "OMLYCLO.02",
+     "lang": "fr",
+     "sub": "au plus->au moins",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "BIMZELX.04b",
+     "lang": "fr",
+     "sub": "≥->≤",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "IDACIO4",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "LYNPARZA.05",
+     "lang": "fr",
+     "sub": "au moins->au plus",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "EZETSIMVMeTe",
+     "lang": "fr",
+     "sub": "supérieur->inférieur",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "WEGOVY.01---Erwachsene",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "QARZIBA.01",
+     "lang": "it",
+     "sub": "superior->inferior",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "ANDEMBRY",
+     "lang": "it",
+     "sub": "superior->inferior",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "EZETSIMVMeTe",
+     "lang": "it",
+     "sub": "<->>",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "LYNPARZA.05",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "CYTOTECT",
+     "lang": "it",
+     "sub": "al massimo->almeno",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "KEYTRUDA.05a---Inj-L-s---KN006",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "TALZENNA",
+     "lang": "it",
+     "sub": "oltre->sotto",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "JAKAVI3",
+     "lang": "it",
+     "sub": "superior->inferior",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "HUMATROPE-2",
+     "lang": "it",
+     "sub": "<->>",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "XANAX",
+     "lang": "it",
+     "sub": "superior->inferior",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "XULTOPHY",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "SAIZEN",
+     "lang": "it",
+     "sub": "inferior->superior",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "EMEND125-80",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "KEYTRUDA.10",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "SULIQUA",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "MVASI.09",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "ERIVEDGE2",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "EVRYSDI.01a",
+     "lang": "it",
+     "sub": "≤->≥",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "RUBRACA.01",
+     "lang": "it",
+     "sub": "<->>",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "RIVA.VIA.vas",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "BLINCYTO.03a",
+     "lang": "it",
+     "sub": "massim->minim",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "EZE-ATOR-SAN",
+     "lang": "it",
+     "sub": ">-><",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "OPFOLDA2",
+     "lang": "it",
+     "sub": "oltre->sotto",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "EPIDYOLEX.01",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "SOGROYA.01",
+     "lang": "it",
+     "sub": "superior->inferior",
+     "reason": "no finding at the planted comparison operator"
+    },
+    {
+     "id": "KIMMTRAK.01",
+     "lang": "it",
+     "sub": "almeno->al massimo",
+     "reason": "no finding at the planted comparison operator"
+    }
+   ]
+  },
+  "negation_drop": {
+   "n": 200,
+   "detected_before": 0,
+   "recall_before": 0.0,
+   "wilson95_before": [
+    0.0,
+    0.019
+   ],
+   "detected_after": 96,
+   "recall_after": 0.48,
+   "wilson95_after": [
+    0.412,
+    0.549
+   ],
+   "eligible_limitations": {
+    "fr": 108,
+    "it": 143
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "before": 0,
+     "after": 43,
+     "recall_before": 0.0,
+     "recall_after": 0.43,
+     "wilson95_after": [
+      0.337,
+      0.528
+     ]
+    },
+    "it": {
+     "n": 100,
+     "before": 0,
+     "after": 53,
+     "recall_before": 0.0,
+     "recall_after": 0.53,
+     "wilson95_after": [
+      0.433,
+      0.625
+     ]
+    }
+   },
+   "by_subtype": {
+    "ne_pas": {
+     "n": 68,
+     "detected_after": 28
+    },
+    "non": {
+     "n": 132,
+     "detected_after": 68
+    }
+   },
+   "also_found_as": {
+    "negation": 96,
+    "operator": 1
+   },
+   "miss_reasons": {
+    "no finding at the planted negation": 103,
+    "a finding appeared, but not at the planted negation": 1
+   },
+   "miss_examples": [
+    {
+     "id": "ZEJULA.02",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "before": "près ≥ 3 cycles de thérapie • patientes ne présentant pas de signes cliniques de progression ou d",
+     "after": "près ≥ 3 cycles de thérapie • patientes présentant de signes cliniques de progression ou d",
+     "reason": "no finding at the planted negation",
+     "findings": []
+    },
+    {
+     "id": "BALVERSA",
+     "lang": "it",
+     "sub": "non",
+     "before": "pia contenente platino, se appropriata. Non più di due trattamenti sistemici precede",
+     "after": "pia contenente platino, se appropriata. Più di due trattamenti sistemici precede",
+     "reason": "a finding appeared, but not at the planted negation",
+     "findings": [
+      "operator: DE makes 2 an upper bound ('Nicht mehr als'), IT a lower bound ('Più di')."
+     ]
+    },
+    {
+     "id": "ADTRALZA.01b",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "before": "0 ou score EASI ≥ 21.1) si ces patients ne répondent pas de façon adéquate à un traitement local",
+     "after": "0 ou score EASI ≥ 21.1) si ces patients répondent de façon adéquate à un traitement local",
+     "reason": "no finding at the planted negation",
+     "findings": []
+    },
+    {
+     "id": "EBGLYSS.01",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "before": "0 ou score EASI ≥ 21.1) si ces patients ne répondent pas de façon adéquate à un traitement local",
+     "after": "0 ou score EASI ≥ 21.1) si ces patients répondent de façon adéquate à un traitement local",
+     "reason": "no finding at the planted negation",
+     "findings": []
+    },
+    {
+     "id": "OLUMIANT.02",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "before": "0 ou score EASI ≥ 21.1) si ces patients ne répondent pas de façon adéquate à un traitement local",
+     "after": "0 ou score EASI ≥ 21.1) si ces patients répondent de façon adéquate à un traitement local",
+     "reason": "no finding at the planted negation",
+     "findings": []
+    },
+    {
+     "id": "QARZIBA.02",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "before": "édiatriques âgés de 12 mois ou plus qui ne présentent pas de maladie en phase de progression acti",
+     "after": "édiatriques âgés de 12 mois ou plus qui présentent de maladie en phase de progression acti",
+     "reason": "no finding at the planted negation",
+     "findings": []
+    },
+    {
+     "id": "PHESGO.03",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "before": "ar un traitement adjuvant pour un total n’excédant pas 18 cycles (p. ex. 4 cycles néoadjuvants",
+     "after": "ar un traitement adjuvant pour un total excédant 18 cycles (p. ex. 4 cycles néoadjuvants",
+     "reason": "no finding at the planted negation",
+     "findings": []
+    },
+    {
+     "id": "TECENTR.ein2",
+     "lang": "fr",
+     "sub": "non",
+     "before": "axel et au carboplatine) et 1L du CPNPC non épidermoïde (en association au paclita",
+     "after": "axel et au carboplatine) et 1L du CPNPC épidermoïde (en association au paclita",
+     "reason": "no finding at the planted negation",
+     "findings": []
+    }
+   ],
+   "misses": [
+    {
+     "id": "ZEJULA.02",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ADTRALZA.01b",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "EBGLYSS.01",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "OLUMIANT.02",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "QARZIBA.02",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "PHESGO.03",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TECENTR.ein2",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "XENICAL",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "AIMOVIG.01",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "VEGZELMA.05",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "LENALIDOMSPI",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ZYDELIG2",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "BESPONSA",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "JADENU",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "JENTADUETO3",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "DUPIXENT.01",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "INTUNIV",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ORLISTATSPIR",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "LENALIDOMSAN",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "LIBTAYO.01a",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "FLIXABI.04",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "DUPIXENT.03a",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "LENALIDOMZEN",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "WEGOVY.Jugen",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "PROLASTINliq",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "WEGOVY.01---Erwachsene",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "PEMETRSP.02",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "VERZENIO.01a",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ENSPRYNG",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "KEYTRUDA.14---Inj-L-s---2L-CRC-mit-hoher-MSI-H--Monotherapie--KN",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "LENALIDOMbms",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TECENTR.06",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "OSPOLOTSusp",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "LIBTAYO.03",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "MOUNJARO.02K",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "NEMLUVIO.03a",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "SUNLENCA.01a",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "JAKAVI3",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "0808-NEU",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "IMPORTALGP12",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "DUPIXENT.03P",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ORLISTATMEPH",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "PERJETA.03",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "EZETSIMVMeTe",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TECENT.L-.06",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "GALVUMET3",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "EPIDYOLEX.01",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "NEMLUVIO.02a",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TECENT.L--05",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "KEYTRUDA.17",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TECENTR.ein3",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "RINVOQ.04a",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ONPATTRO-1",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TECENTRIQ.04",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ACTEMRA6",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "GAZYVARO.03",
+     "lang": "fr",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "IDACIO4",
+     "lang": "fr",
+     "sub": "ne_pas",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "EZETSIMVMeTe",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "NEMLUVIO.03a",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "PERJETA.03",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TECENTR.06",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "HEMGENIX.01---H-mophilie-B-bei-M-nner",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "LIBTAYO.03",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "HULIO4",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "LYNPARZA.02",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TECENT.L--05",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "QARZIBA.02",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TECENT.L-.06",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "DARZALEX.01b",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "EPIDYOLEX.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ZYDELIG2",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "BESPONSA",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "IMRALDI3",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "0808-NEU",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TREMFYA-PEN",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "MYOZYME4",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TRIXEO",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "BALVERSA",
+     "lang": "it",
+     "sub": "non",
+     "reason": "a finding appeared, but not at the planted negation"
+    },
+    {
+     "id": "LIBTAYO.01a",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "HUMIRA6",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "GALVUMET3",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "DUPIXENT.09P",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "NUSTENDI.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "KEYTRUDA.14---Inj-L-s---2L-CRC-mit-hoher-MSI-H--Monotherapie--KN",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ONPATTRO-1",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "PEMETRSP.02",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TECENTR.ein2",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "IMPORTALGP12",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "GAZYVARO.03",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ALITRETINOIN",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "MOUNJARO.02K",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ZOLGENSMA.03",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "EBGLYSS.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "AIMOVIG.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "PAXLOVID.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ENSPRYNG",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "VYEPTI.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "INTUNIV",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "OLUMIANT.02",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TECENTRIQ.04",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "NEMLUVIO.02a",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ABRILADA4",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "EVRYSDI.01a",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "DUPIXENT.01",
+     "lang": "it",
+     "sub": "non",
+     "reason": "no finding at the planted negation"
+    }
+   ]
+  },
+  "negation_add": {
+   "n": 200,
+   "detected_before": 0,
+   "recall_before": 0.0,
+   "wilson95_before": [
+    0.0,
+    0.019
+   ],
+   "detected_after": 102,
+   "recall_after": 0.51,
+   "wilson95_after": [
+    0.441,
+    0.578
+   ],
+   "eligible_limitations": {
+    "fr": 282,
+    "it": 273
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "before": 0,
+     "after": 49,
+     "recall_before": 0.0,
+     "recall_after": 0.49,
+     "wilson95_after": [
+      0.394,
+      0.587
+     ]
+    },
+    "it": {
+     "n": 100,
+     "before": 0,
+     "after": 53,
+     "recall_before": 0.0,
+     "recall_after": 0.53,
+     "wilson95_after": [
+      0.433,
+      0.625
+     ]
+    }
+   },
+   "by_subtype": {
+    "fr:a": {
+     "n": 8,
+     "detected_after": 2
+    },
+    "fr:doit": {
+     "n": 23,
+     "detected_after": 9
+    },
+    "fr:doivent": {
+     "n": 2,
+     "detected_after": 2
+    },
+    "fr:est": {
+     "n": 36,
+     "detected_after": 24
+    },
+    "fr:ont": {
+     "n": 13,
+     "detected_after": 2
+    },
+    "fr:peut": {
+     "n": 8,
+     "detected_after": 7
+    },
+    "fr:peuvent": {
+     "n": 3,
+     "detected_after": 1
+    },
+    "fr:sont": {
+     "n": 7,
+     "detected_after": 2
+    },
+    "it:deve": {
+     "n": 18,
+     "detected_after": 7
+    },
+    "it:devono": {
+     "n": 2,
+     "detected_after": 2
+    },
+    "it:hanno": {
+     "n": 6,
+     "detected_after": 1
+    },
+    "it:possono": {
+     "n": 3,
+     "detected_after": 2
+    },
+    "it:può": {
+     "n": 8,
+     "detected_after": 7
+    },
+    "it:sono": {
+     "n": 9,
+     "detected_after": 4
+    },
+    "it:vengono": {
+     "n": 2,
+     "detected_after": 1
+    },
+    "it:viene": {
+     "n": 13,
+     "detected_after": 11
+    },
+    "it:è": {
+     "n": 39,
+     "detected_after": 18
+    }
+   },
+   "also_found_as": {
+    "negation": 102
+   },
+   "miss_reasons": {
+    "no finding at the planted negation": 98
+   },
+   "miss_examples": [
+    {
+     "id": "XENICAL",
+     "lang": "fr",
+     "sub": "fr:doit",
+     "before": "ement de patients obèses. Le traitement doit être arrêté au bout de six mois si la p",
+     "after": "ement de patients obèses. Le traitement ne doit pas être arrêté au bout de six mois si la p",
+     "reason": "no finding at the planted negation",
+     "findings": []
+    },
+    {
+     "id": "ENBREL4",
+     "lang": "fr",
+     "sub": "fr:peut",
+     "before": ". Dans des cas exceptionnels, le dosage peut être augmenté au maximum à 2 x 50 mg pa",
+     "after": ". Dans des cas exceptionnels, le dosage ne peut pas être augmenté au maximum à 2 x 50 mg pa",
+     "reason": "no finding at the planted negation",
+     "findings": []
+    },
+    {
+     "id": "ALITRETINOIN",
+     "lang": "fr",
+     "sub": "fr:sont",
+     "before": " satisfaisante, b) lorsque les patients sont toujours sévèrement affectés au bout de",
+     "after": " satisfaisante, b) lorsque les patients ne sont pas toujours sévèrement affectés au bout de",
+     "reason": "no finding at the planted negation",
+     "findings": []
+    },
+    {
+     "id": "0808-NEU",
+     "lang": "fr",
+     "sub": "fr:ont",
+     "before": " au sens de l'art. 56, al. 3bis, LAMal, ont été conclues.",
+     "after": " au sens de l'art. 56, al. 3bis, LAMal, n'ont pas été conclues.",
+     "reason": "no finding at the planted negation",
+     "findings": []
+    },
+    {
+     "id": "POMALI.De.03",
+     "lang": "fr",
+     "sub": "fr:ont",
+     "before": "nt ou après le dernier traitement, ou - ont reçu au moins deux lignes de traitement",
+     "after": "nt ou après le dernier traitement, ou - n'ont pas reçu au moins deux lignes de traitement",
+     "reason": "no finding at the planted negation",
+     "findings": []
+    },
+    {
+     "id": "MAVIRET3",
+     "lang": "fr",
+     "sub": "fr:est",
+     "before": "lage – si son administration au patient est démontrée. Un remboursement de la TVA e",
+     "after": "lage – si son administration au patient n'est pas démontrée. Un remboursement de la TVA e",
+     "reason": "no finding at the planted negation",
+     "findings": []
+    },
+    {
+     "id": "ABIRATDevat2",
+     "lang": "fr",
+     "sub": "fr:doit",
+     "before": "ectomie, l’administration d’abiratérone doit commencer au cours des 3 mois suivant l",
+     "after": "ectomie, l’administration d’abiratérone ne doit pas commencer au cours des 3 mois suivant l",
+     "reason": "no finding at the planted negation",
+     "findings": []
+    },
+    {
+     "id": "TOFAC.DE.02",
+     "lang": "fr",
+     "sub": "fr:doit",
+     "before": "a semaine 16, le traitement d’induction doit être arrêté. Le traitement par la dose ",
+     "after": "a semaine 16, le traitement d’induction ne doit pas être arrêté. Le traitement par la dose ",
+     "reason": "no finding at the planted negation",
+     "findings": []
+    }
+   ],
+   "misses": [
+    {
+     "id": "XENICAL",
+     "lang": "fr",
+     "sub": "fr:doit",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ENBREL4",
+     "lang": "fr",
+     "sub": "fr:peut",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ALITRETINOIN",
+     "lang": "fr",
+     "sub": "fr:sont",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "0808-NEU",
+     "lang": "fr",
+     "sub": "fr:ont",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "POMALI.De.03",
+     "lang": "fr",
+     "sub": "fr:ont",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "MAVIRET3",
+     "lang": "fr",
+     "sub": "fr:est",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ABIRATDevat2",
+     "lang": "fr",
+     "sub": "fr:doit",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TOFAC.DE.02",
+     "lang": "fr",
+     "sub": "fr:doit",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "EBGLYSS.01",
+     "lang": "fr",
+     "sub": "fr:est",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "OPDIVO.10---RCC-Nierenzellkarzinom",
+     "lang": "fr",
+     "sub": "fr:doit",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "DARZALEX.01b",
+     "lang": "fr",
+     "sub": "fr:ont",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ALITRECUTAN",
+     "lang": "fr",
+     "sub": "fr:sont",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "RIXATHON.03a",
+     "lang": "fr",
+     "sub": "fr:est",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "RETSEVMO.01---2L-NSCLC",
+     "lang": "fr",
+     "sub": "fr:est",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "PEMETRSA.Kom",
+     "lang": "fr",
+     "sub": "fr:a",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TOCTINO",
+     "lang": "fr",
+     "sub": "fr:sont",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "POMALI.Sa.03",
+     "lang": "fr",
+     "sub": "fr:ont",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "RIVASUR.01",
+     "lang": "fr",
+     "sub": "fr:est",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "Pomali.Sp.03",
+     "lang": "fr",
+     "sub": "fr:ont",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ALKINDI",
+     "lang": "fr",
+     "sub": "fr:est",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "PHESGO.03",
+     "lang": "fr",
+     "sub": "fr:est",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "IMRALDI3",
+     "lang": "fr",
+     "sub": "fr:doit",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "LENALI.ZE.09",
+     "lang": "fr",
+     "sub": "fr:ont",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "LAZCLUZE.01b",
+     "lang": "fr",
+     "sub": "fr:peuvent",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "BIMZELX.02a",
+     "lang": "fr",
+     "sub": "fr:doit",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "RINVOQ.04a",
+     "lang": "fr",
+     "sub": "fr:doit",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TECENT.L-.01",
+     "lang": "fr",
+     "sub": "fr:est",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "LENALI.AC.09",
+     "lang": "fr",
+     "sub": "fr:ont",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TRIMBOW",
+     "lang": "fr",
+     "sub": "fr:sont",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ILARIS.03a",
+     "lang": "fr",
+     "sub": "fr:sont",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "COSENTYX.04",
+     "lang": "fr",
+     "sub": "fr:doit",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "LENALI.DE.09",
+     "lang": "fr",
+     "sub": "fr:ont",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ORLISTATSPIR",
+     "lang": "fr",
+     "sub": "fr:doit",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "SKYRIZI.03---Morbus-Crohn--nur-360-mg-und-600-mg-",
+     "lang": "fr",
+     "sub": "fr:doit",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TAFINLAR.02",
+     "lang": "fr",
+     "sub": "fr:doit",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "Eltrombopag-Generika.03a",
+     "lang": "fr",
+     "sub": "fr:a",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "LONSURF.02",
+     "lang": "fr",
+     "sub": "fr:ont",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "FLIXABI.02",
+     "lang": "fr",
+     "sub": "fr:a",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "RYBREVAN.01c",
+     "lang": "fr",
+     "sub": "fr:est",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "IDACIO4",
+     "lang": "fr",
+     "sub": "fr:doit",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "LENALI.TE.09",
+     "lang": "fr",
+     "sub": "fr:ont",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "REVOLADE.02a---SAA-2L-",
+     "lang": "fr",
+     "sub": "fr:doit",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "RYBREVAN.02b",
+     "lang": "fr",
+     "sub": "fr:a",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ENFLONSIA.01",
+     "lang": "fr",
+     "sub": "fr:a",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "HUMIRA6",
+     "lang": "fr",
+     "sub": "fr:a",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ZEJULA.02",
+     "lang": "fr",
+     "sub": "fr:est",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ORLISTATMEPH",
+     "lang": "fr",
+     "sub": "fr:est",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "WEGOVY.01---Erwachsene",
+     "lang": "fr",
+     "sub": "fr:doit",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "DARZALEX.09",
+     "lang": "fr",
+     "sub": "fr:est",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "LAZCLUZE.01a",
+     "lang": "fr",
+     "sub": "fr:peuvent",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "TRIMBOW.asth",
+     "lang": "fr",
+     "sub": "fr:ont",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "POMALI.Ac.04",
+     "lang": "it",
+     "sub": "it:hanno",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "RIVASUR.01",
+     "lang": "it",
+     "sub": "it:sono",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "CABAZITTE.02",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ALKINDI",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "CABAZ.VIA-02",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "JAYPIRCA.02",
+     "lang": "it",
+     "sub": "it:sono",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "POMALI.Ac.03",
+     "lang": "it",
+     "sub": "it:hanno",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ENSPRYNG",
+     "lang": "it",
+     "sub": "it:deve",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "DARZALEX.08b",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "JARDIANCE-MET.01",
+     "lang": "it",
+     "sub": "it:sono",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "XIFAXAN",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "IBRANCE.01b",
+     "lang": "it",
+     "sub": "it:deve",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "QUOFENIX",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "INTELENCE2",
+     "lang": "it",
+     "sub": "it:sono",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ZEPOSIA.02a",
+     "lang": "it",
+     "sub": "it:deve",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "JEVTANA2",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "YUFLYMA20.03",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "OMVOHDstf.02a",
+     "lang": "it",
+     "sub": "it:deve",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "NEMLUVIO.02a",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "JADENU",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "PROLASTINliq",
+     "lang": "it",
+     "sub": "it:sono",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ORLISTATMEPH",
+     "lang": "it",
+     "sub": "it:deve",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "RYBREVAN.02b",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "DARZALEX.03c",
+     "lang": "it",
+     "sub": "it:viene",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "MABTHERA.03a",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ABRILADA4",
+     "lang": "it",
+     "sub": "it:deve",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "VERQUVO",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "CABAZ.SPI.02",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "STRENSIQ.01",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "LAZCLUZE.01b",
+     "lang": "it",
+     "sub": "it:possono",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "MEKIN.adj.02",
+     "lang": "it",
+     "sub": "it:deve",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "JAKAVI3",
+     "lang": "it",
+     "sub": "it:hanno",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "QTERN",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "KEYTRUDA.25",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "XENICAL",
+     "lang": "it",
+     "sub": "it:deve",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "DUPIXENT.03a",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "SOMATULINE.01---NET",
+     "lang": "it",
+     "sub": "it:vengono",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ORLISTATSPIR",
+     "lang": "it",
+     "sub": "it:deve",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "RUBRACA.01",
+     "lang": "it",
+     "sub": "it:deve",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ZEJULA.02",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "OPDIVO.07a",
+     "lang": "it",
+     "sub": "it:hanno",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "XARELTO98-3",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "POMALI.De.04",
+     "lang": "it",
+     "sub": "it:hanno",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ONPATTRO-1",
+     "lang": "it",
+     "sub": "it:può",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "NUSTENDI.01",
+     "lang": "it",
+     "sub": "it:è",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "FLUVASTMEPHA",
+     "lang": "it",
+     "sub": "it:viene",
+     "reason": "no finding at the planted negation"
+    },
+    {
+     "id": "ALYFTREK.01",
+     "lang": "it",
+     "sub": "it:deve",
+     "reason": "no finding at the planted negation"
+    }
+   ]
+  },
+  "number_word": {
+   "n": 200,
+   "detected_before": 85,
+   "recall_before": 0.425,
+   "wilson95_before": [
+    0.359,
+    0.494
+   ],
+   "detected_after": 174,
+   "recall_after": 0.87,
+   "wilson95_after": [
+    0.816,
+    0.91
+   ],
+   "eligible_limitations": {
+    "fr": 141,
+    "it": 144
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "before": 38,
+     "after": 86,
+     "recall_before": 0.38,
+     "recall_after": 0.86,
+     "wilson95_after": [
+      0.779,
+      0.915
+     ]
+    },
+    "it": {
+     "n": 100,
+     "before": 47,
+     "after": 88,
+     "recall_before": 0.47,
+     "recall_after": 0.88,
+     "wilson95_after": [
+      0.802,
+      0.93
+     ]
+    }
+   },
+   "by_subtype": {
+    "v1_site": {
+     "n": 101,
+     "detected_after": 95
+    },
+    "word": {
+     "n": 99,
+     "detected_after": 79
+    }
+   },
+   "also_found_as": {
+    "number": 85,
+    "number_word": 101,
+    "unit": 1
+   },
+   "miss_reasons": {
+    "value not bound to a unit in the audit's parse (R2)": 15,
+    "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)": 11
+   },
+   "miss_examples": [
+    {
+     "id": "SUNLENCA.01a",
+     "lang": "fr",
+     "sub": "word",
+     "before": "traitement. - Une résistance à au moins deux des principales classes de médicaments ",
+     "after": "traitement. - Une résistance à au moins quatre des principales classes de médicaments ",
+     "reason": "value not bound to a unit in the audit's parse (R2)",
+     "findings": []
+    },
+    {
+     "id": "MOUNJARO.02K",
+     "lang": "fr",
+     "sub": "word",
+     "before": "es centres d’obésité emploient au total deux médecins spécialistes disposant chacune",
+     "after": "es centres d’obésité emploient au total trois médecins spécialistes disposant chacune",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)",
+     "findings": []
+    },
+    {
+     "id": "MVASI.09",
+     "lang": "fr",
+     "sub": "word",
+     "before": " de bévacizumab en association avec les trois derniers cycles de chimiothérapie à bas",
+     "after": " de bévacizumab en association avec les six derniers cycles de chimiothérapie à bas",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)",
+     "findings": []
+    },
+    {
+     "id": "NEXPOVIO.01",
+     "lang": "fr",
+     "sub": "word",
+     "before": "t la maladie est réfractaire à au moins deux inhibiteurs du protéasome, deux immunom",
+     "after": "t la maladie est réfractaire à au moins quatre inhibiteurs du protéasome, deux immunom",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)",
+     "findings": []
+    },
+    {
+     "id": "INTUNIV",
+     "lang": "fr",
+     "sub": "v1_site",
+     "before": " doit normalement être soumise dans les six mois.",
+     "after": " doit normalement être soumise dans les sept mois.",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)",
+     "findings": []
+    },
+    {
+     "id": "LONSURF.02",
+     "lang": "fr",
+     "sub": "word",
+     "before": " qui ont déjà été traités avec au moins deux des chimiothérapies suivantes : chimiot",
+     "after": " qui ont déjà été traités avec au moins quatre des chimiothérapies suivantes : chimiot",
+     "reason": "value not bound to a unit in the audit's parse (R2)",
+     "findings": []
+    },
+    {
+     "id": "GIVLAARI.01",
+     "lang": "fr",
+     "sub": "word",
+     "before": "ue aiguë (PHA) qui • ont eu au moins 4 (quatre) crises de porphyrie confirmées cliniqu",
+     "after": "ue aiguë (PHA) qui • ont eu au moins 4 (deux) crises de porphyrie confirmées cliniqu",
+     "reason": "value not bound to a unit in the audit's parse (R2)",
+     "findings": []
+    },
+    {
+     "id": "NEUPOGEN",
+     "lang": "fr",
+     "sub": "word",
+     "before": "pénie (< 0.5 x 10^9 ANC/l) documentée à trois reprises au cours des 6 derniers mois, ",
+     "after": "pénie (< 0.5 x 10^9 ANC/l) documentée à six reprises au cours des 6 derniers mois, ",
+     "reason": "value not bound to a unit in the audit's parse (R2)",
+     "findings": []
+    }
+   ],
+   "misses": [
+    {
+     "id": "MOUNJARO.02K",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "MVASI.09",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "SUNLENCA.01a",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "NEXPOVIO.01",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "INTUNIV",
+     "lang": "fr",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "LONSURF.02",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "GIVLAARI.01",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "NEUPOGEN",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "DUPIXENT.09P",
+     "lang": "fr",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "EBGLYSS.01",
+     "lang": "fr",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "RUBRACA.01",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "WEGOVY.01---Erwachsene",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "MYOZYME4",
+     "lang": "fr",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "ZARZIO",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "LENALI.DE.09",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "LONSURF.02",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "VYEPTI.01",
+     "lang": "it",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "LENALI.TE.09",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "DUPIXENT.03a",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "LENALI.AC.09",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "TALZENNA",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "TYSABRI4",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "OPFOLDA2",
+     "lang": "it",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "KEYTRUDA.10",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "LENALI.ZE.09",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "DUPIXENT.01",
+     "lang": "it",
+     "sub": "v1_site",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    }
+   ]
+  }
+ },
+ "verification": {
+  "copies": 0,
+  "stats_identical": 0,
+  "limitation_identical": 0,
+  "findings_new_elsewhere": 0,
+  "findings_lost_elsewhere": 0,
+  "copies_list": []
+ },
+ "baseline": {
+  "findings": 69,
+  "by_kind": {
+   "number": 21,
+   "language": 1,
+   "editorial": 5,
+   "terminology": 11,
+   "operator": 4,
+   "negation": 18,
+   "number_word": 9
+  },
+  "limitations": 52
+ },
+ "inputs": {
+  "audit_py_sha256": "1aa6d7e84c5c009f1a6b36ab1792477c2afd40703d1e6eac3cf6b95ea97ec52d",
+  "snapshot_sha256": {
+   "de": "fe5e60f1931a6b345ae4687f9affbf1b05efa14263d20c16f410d3260228cc68",
+   "fr": "4d10dd047bdfd65a3bff5aca361706f2d3901c7872c6c9179948ede2f9477a54",
+   "it": "bcd86c674898d32f52b034674f54c67c2dac7cb893afc941e86da0642e1cd577"
+  }
+ },
+ "runtime": {
+  "seconds_total": 621.0,
+  "seconds_copies": 569.5,
+  "jobs": 8
+ }
+}

@@ -1,16 +1,37 @@
 {
  "findings": 21,
+ "first_annotation": {
+  "held_real": 6,
+  "precision_pct": 47.6,
+  "real": 10,
+  "v2": {
+   "by_kind": {
+    "editorial": [
+     5,
+     5
+    ],
+    "language": [
+     1,
+     1
+    ]
+   },
+   "new_kinds_real": 6,
+   "precision_all_pct": 59.3,
+   "real_all_kinds": 16
+  }
+ },
  "held_findings": 11,
  "held_real": 6,
  "known_found": 10,
+ "labels": "majority of three blind annotators (PREREG R14, eval/labels/audit_relabel.tsv)",
  "limitations_found": 17,
- "precision_pct": 47.6,
+ "precision_pct": 52.4,
  "precision_wilson95": [
-  28.3,
-  67.6
+  32.4,
+  71.7
  ],
- "real": 10,
- "real_new": 0,
+ "real": 11,
+ "real_new": 1,
  "summary": {
   "by_half": {
    "dev": 10,
@@ -803,8 +824,8 @@
   "language_swaps": 1,
   "new_kinds_findings": 6,
   "new_kinds_real": 6,
-  "precision_all_pct": 59.3,
-  "real_all_kinds": 16,
+  "precision_all_pct": 63.0,
+  "real_all_kinds": 17,
   "real_new_beyond_known": 6
  }
 }

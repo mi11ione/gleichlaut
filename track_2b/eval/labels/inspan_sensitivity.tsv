@@ -1,0 +1,107 @@
+uid	kind	type	lang	A_fix	A_class	B_fix	B_class	note_A	note_B
+wb000-fr|planted	planted	and_or	fr	yes	REAL	yes	REAL	"carboplatine et pémétrexed" changed to "ou"	"carboplatine et le pémétrexed" changed to "ou".
+wb000-fr|untouched	untouched		fr	no	exact	no	exact	Matches official.	Identical to official.
+wb000-it|planted	planted	scope	it	yes	REAL	yes	REAL	Added "in monoterapia o" option	Adds "in monoterapia o" option absent from German.
+wb000-it|untouched	untouched		it	no	exact	no	exact	Matches official.	Identical to official.
+wb002-fr|planted	planted	scope	fr	yes	REAL	yes	REAL	Dropped "non épidermoïde" restriction	Drops "non épidermoïde" restriction.
+wb002-fr|untouched	untouched		fr	no	exact	no	exact	Matches official.	Identical to official.
+wb002-it|planted	planted	number_noun	it	yes	REAL	yes	REAL	Exon 19 and 21 swapped	Exon 19 and exon 21 swapped.
+wb002-it|untouched	untouched		it	no	exact	no	exact	Matches official.	Identical to official.
+wb003-fr|planted	planted	and_or	fr	yes	REAL	yes	REAL	"réfractaire et récidivant" changes or to and.	réfractaire ou récidivant changed to et.
+wb003-fr|untouched	untouched		fr	no	exact	no	exact	Abbreviation updated correctly	Heading abbreviation changed to LMPGBrr.
+wb007-fr|planted	planted	scope	fr	yes	REAL	yes	REAL	Added "en monothérapie ou" option	Adds "en monothérapie ou" option absent from German.
+wb007-fr|untouched	untouched		fr	no	equivalent	no	equivalent	Prior-auth removed, VENCLYXTO applied; official changed "indiqué" to "remboursé" extra.	Cost-approval sentence removed, name uppercased; official also changed indiqué to remboursé.
+wb007-it|planted	planted	condition	it	yes	stale	yes	stale	Deleted cost-guarantee requirement partly retained	Cost-approval requirement removed in German but partly kept in draft.
+wb007-it|untouched	untouched		it	no	equivalent	no	equivalent	Prior-auth sentence removed, VENCLYXTO capitalised; official made extra wording fix.	Cost-approval removed, name uppercased; official also rephrased an unchanged clause.
+wb010-fr|real	real		fr	yes	stale	yes	stale	Deleted guarantee/dose sentences kept; heading missing; German "Folgant Indikationscode" left	Heading missing, removed KG/dose sentences kept; German "Folgant Indikationscode".
+wb010-it|real	real		it	yes	stale	yes	stale	Deleted sentences kept; German heading and "Indikationscode" left	Heading not translated, removed KG/dose sentences kept; German "Ösophageales..." and "Folgore Indikationscode" left.
+wb011-fr|real	real		fr	yes	stale	yes	stale	New prior-approval, until-progression and indication-code sentences not added.	Three new sentences (cost approval, until progression, code) not added.
+wb011-it|real	real		it	yes	german	yes	german	German "Nur" left; new conditions inserted mid-text; calque "codice indicativo"	German "Nur" left; new KG sentences inserted mid-paragraph; spacing defects.
+wb013-it|real	real		it	yes	german	yes	german	Full German sentences and heading fragments left untranslated	Two German sentences untranslated; heading in German abbreviations and misplaced.
+wb014-fr|real	real		fr	yes	stale	yes	stale	Heading "Colite ulcéreuse" missing; German "Folguer Indikationscode" left	"Colite ulcéreuse" heading missing; code sentence has German "Folguer Indikationscode".
+wb015-fr|planted	planted	scope	fr	yes	REAL	yes	REAL	Added "patients de plus de 65 ans" restriction	Adds restriction "chez les patients de plus de 65 ans" absent from German.
+wb015-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Insurance term updated; ARB mistranslated as ACE inhibitor in tgt_old.	Change applied; wrong ARB term preexisting in old text.
+wb017-it|planted	planted	scope	it	yes	REAL	yes	REAL	Added "nei pazienti con insufficienza renale" restriction	Adds condition "nei pazienti con insufficienza renale" absent from German.
+wb017-it|untouched	untouched		it	no	preexisting	no	preexisting	Insurance term updated; "un cosiddetti antagonisti" error preexisting.	Change applied; grammar errors in drug-class list preexisting.
+wb019-it|planted	planted	condition	it	yes	REAL	yes	REAL	Non-reimbursement turned into reimbursement with guarantee	Reverses exclusion: reimbursed after cost approval instead of not reimbursed.
+wb019-it|untouched	untouched		it	no	preexisting	no	preexisting	Insurance term updated; "un cosiddetti antagonisti" error preexisting.	Change applied; grammar errors in drug-class list preexisting.
+wb023-it|planted	planted	and_or	it	yes	REAL	yes	REAL	"e/o" changed to "e" before ACE inhibitor	"e/o" before ACE inhibitor changed to "e".
+wb023-it|untouched	untouched		it	no	preexisting	no	preexisting	Insurance term updated; ARB phrasing error preexisting.	Change applied; grammar errors in drug-class list preexisting.
+wb029-fr|planted	planted	condition	fr	yes	REAL	yes	REAL	Non-reimbursement reversed into reimbursement after prior guarantee	Reverses exclusion: reimbursed after prior approval instead of not reimbursed.
+wb029-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Insurance term updated; ARB mistranslation preexisting.	Change applied; wrong ARB term preexisting in old text.
+wb030-fr|planted	planted	condition	fr	yes	REAL	yes	REAL	Added "au-delà des trois premiers mois" restriction	Adds "au-delà des trois premiers mois" limitation absent from German.
+wb030-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Insurance term updated; ARB mistranslated as ACE inhibitor already in tgt_old.	Change applied; 'd' VALSARTAN' and wrong ARB term preexisting.
+wb031-fr|planted	planted	scope	fr	yes	REAL	yes	REAL	Added "en traitement initial" restriction	Adds "en traitement initial" restriction absent from German.
+wb031-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Insurance term updated; ARB mistranslation preexisting in tgt_old.	Change applied; wrong ARB term preexisting in old text.
+wb031-it|planted	planted	condition	it	yes	REAL	yes	REAL	Added "per più di sei mesi" restriction	Adds "per più di sei mesi" condition absent from German.
+wb031-it|untouched	untouched		it	no	preexisting	no	preexisting	Insurance term updated; "un cosiddetti antagonisti" error preexisting.	Change applied; grammar errors in drug-class list preexisting.
+wb032-fr|planted	planted	condition	fr	yes	REAL	yes	REAL	Adds "pendant les douze premiers mois de traitement"; time restriction not in German.	Adds 'pendant les douze premiers mois de traitement' restriction.
+wb032-fr|untouched	untouched		fr	no	preexisting	no	preexisting	Change applied; ARA mistranslation preexisting in tgt_old	Insurance change applied; wrong ARB term was already in tgt_old.
+wb033-fr|real	real		fr	yes	german	yes	german	Garbled German "Folgoureux" in added code sentence	Code sentence starts with garbled German "Folgoureux".
+wb033-it|real	real		it	yes	german	yes	german	"Folgore Indikationscode è an den Krankenversicherer zu übermitteln": German left.	Code sentence left in German ('Folgore Indikationscode ... an den Krankenversicherer').
+wb036-it|real	real		it	yes	stale	yes	stale	New opening sentences (Kostengutsprache, code, uniform price) missing; last sentence calqued.	Three new opening sentences (cost approval, code, uniform price) missing.
+wb039-fr|real	real		fr	yes	REAL	yes	minor	Price model/refund scope moved from RYBREVANT to amivantamab; "de L'amivantamab" errors	Over-replaces RYBREVANT with "L'amivantamab" in price-model sentences; capitalised article.
+wb040-fr|planted	planted	scope	fr	yes	REAL	yes	REAL	Adds "en monothérapie", restricting rebate scope.	Adds 'en monothérapie' restriction not in German.
+wb040-fr|untouched	untouched		fr	no	exact	no	exact	Pack size updated	"(2 flacons)" applied.
+wb040-it|planted	planted	number_noun	it	yes	REAL	yes	REAL	Rebate per vial (flaconcino) instead of per pack of 2 vials.	Rebate per pack changed to per vial.
+wb040-it|untouched	untouched		it	no	exact	no	exact	Pack size updated correctly	"(2 flaconcini)" applied.
+wb042-it|real	real		it	yes	REAL	yes	minor	b) changes "il medico" to "l'oculochirurgo"; German unchanged there, narrows scope.	Term change fine, but 'medico' in b) needlessly narrowed to oculochirurgo.
+wb043-fr|real	real		fr	yes	REAL	yes	REAL	Centre A rendered as "deux", bracket artefacts; cabinet doctor changed to ophthalmic surgeon	Centre A rendered "deux" with marker artefacts; "médecin" narrowed to ophtalmochirurgien.
+wb054-fr|real	real		fr	yes	german	yes	german	New sentence starts "Folguer Indikationscode": German left untranslated.	'Folguer Indikationscode' German term left in code sentence.
+wb054-it|real	real		it	yes	german	yes	german	Garbled German "Folgente"; calque "codice indicativo"	Code sentence starts with garbled German "Folgente"; calque "codice indicativo".
+wb056-it|real	real		it	yes	german	yes	german	Entire new elimination-diet sentence left in German.	New diet sentence left largely in German.
+wb057-fr|real	real		fr	yes	stale	yes	stale	Old KDd header and dosing-scheme sentence kept; general clause and code-in-approval missing.	New general header, cost-approval code sentence missing; old KDd heading retained.
+wb058-it|real	real		it	yes	stale	yes	stale	Removed dosing/Kd sentence and old auth clause kept; "Preismodell", "Folgore Code" German.	Removed dosage caps retained; German 'Preismodell' and 'Folgore Code' left.
+wb060-it|planted	planted	condition	it	yes	REAL	yes	stale	"rimunerazione e del trattamento" widens exemption scope; German now remuneration only.	Keeps old 'trattamento' alongside new reimbursement duration.
+wb060-it|untouched	untouched		it	no	equivalent	no	equivalent	"rimunerazione" vs official "rimborso", same meaning	"rimunerazione" for Vergütung; official uses "rimborso", harmless.
+wb061-fr|planted	planted	number_noun	fr	yes	REAL	yes	REAL	100 mg and 160 mg amounts swapped	Refund amounts swapped between 100 mg and 160 mg.
+wb061-fr|untouched	untouched		fr	no	cosmetic	no	cosmetic	Amounts updated correctly; "100mg"/"160mg" spacing not adjusted like German.	Amounts updated; '100mg' spacing change not applied.
+wb063-fr|planted	planted	condition	fr	yes	stale	yes	REAL	Deleted relapse-within-24-months alternative retained	Keeps deleted relapse-within-24-months alternative (rewritten); scope too broad.
+wb063-fr|untouched	untouched		fr	no	equivalent	no	equivalent	Second indication removed, "à partir de la première ligne" applied; wording differs only.	Second indication removed, 'à partir de la première ligne' correct.
+wb065-fr|real	real		fr	yes	stale	yes	stale	"alle 6 Monate" not applied (still après 6 mois); stray ". ."	"après 6 mois" not changed to every 6 months; stray ". .".
+wb067-fr|real	real		fr	yes	stale	yes	stale	"proportion fixe" kept; amount appended loosely instead of replacing per-pack fixed share.	Keeps 'proportion fixe' wording; fixed amount appended instead of replacing it.
+wb067-it|real	real		it	yes	stale	yes	stale	Fixed amount Fr. 713.53 not applied; old wording kept	Fixed amount Fr. 713.53 not applied; old fixed-share wording kept.
+wb068-fr|real	real		fr	no	equivalent	yes	german	New exclusion correctly added; I-CANS follows German source	Exclusion sentence correct, but copies German hyphenation artefact "I-CANS".
+wb069-fr|real	real		fr	yes	stale	yes	stale	New indication, ATRA combo and opening not applied; old prior-auth kept; German term left.	Restructure not applied: new indication missing, cost approval kept, German fragments.
+wb069-it|real	real		it	yes	stale	yes	stale	Removed prior-approval sentence still kept at start; otherwise new text added.	Deleted cost-approval sentence retained; 'Arseni triossido' odd.
+wb071-fr|planted	planted	number_noun	fr	yes	REAL	yes	REAL	Rebate per month of treatment instead of per pack.	Rebate per pack changed to per month of treatment.
+wb071-fr|untouched	untouched		fr	no	exact	no	exact	Amount updated	Amount updated to Fr. 595.16.
+wb071-it|planted	planted	condition	it	yes	REAL	yes	REAL	Adds "a partire dalla terza": rebate only from third pack.	Adds 'a partire dalla terza' pack restriction.
+wb071-it|untouched	untouched		it	no	exact	no	exact	Amount updated correctly	Amount updated to Fr. 595.16.
+wb072-it|planted	planted	and_or	it	yes	REAL	yes	REAL	"isatuximab o desametasone" changes and to or.	isatuximab o desametasone: and changed to or.
+wb072-it|untouched	untouched		it	no	exact	no	exact	Name and code updated	Product name and code updated.
+wb074-it|planted	planted	condition	it	yes	stale	yes	REAL	Deleted refund sentence kept in altered form instead of removed	Keeps deleted refund obligation, rewritten (syringe only); German deleted it.
+wb074-it|untouched	untouched		it	no	cosmetic	no	equivalent	Rebate removed correctly; trailing period after code kept.	Rebate clause removed correctly; only trailing period differs.
+wb075-fr|planted	planted	scope	fr	yes	REAL	yes	REAL	Adds "terminale", narrowing indication to end-stage renal failure.	Adds 'terminale' to renal insufficiency, narrowing indication.
+wb075-fr|untouched	untouched		fr	no	exact	no	exact	Code updated	Code updated to 17807.01.
+wb075-it|planted	planted	and_or	it	yes	REAL	yes	REAL	"Anemia renale o insufficienza renale" changes relation to or.	Renal anaemia o renal insufficiency: changes relation between conditions.
+wb075-it|untouched	untouched		it	no	exact	no	exact	Code updated	Code updated to 17807.01.
+wb076-fr|real	real		fr	yes	german	yes	german	"un GLP-1-analogue": German compound order; rest of restructuring correct.	'GLP-1-analogue' is a Germanised compound; should be 'analogue du GLP-1'.
+wb079-fr|planted	planted	number_noun	fr	yes	REAL	yes	REAL	Drops "par application"; price now per patient only.	Drops 'par application' from price basis.
+wb079-fr|untouched	untouched		fr	no	exact	no	exact	Price updated correctly	Price updated to 222.41.
+wb081-fr|planted	planted	number_noun	fr	yes	REAL	yes	REAL	"pour les deux emballages" instead of per pack; changes amount.	Amount per pack turned into amount for both packs.
+wb081-fr|untouched	untouched		fr	no	exact	no	exact	Amount updated	Amount updated to CHF 13'148.57.
+wb081-it|planted	planted	scope	it	yes	REAL	yes	REAL	Adds "nei pazienti adulti", restricting rebate scope; price update correct.	Adds 'nei pazienti adulti' restriction; German covers adolescents too.
+wb081-it|untouched	untouched		it	no	equivalent	no	equivalent	Amount updated; official also changed cassa malati wording	Amount updated; official also changed cassa malati to assicuratore (extra fix).
+wb083-fr|real	real		fr	yes	german	yes	german	Germanised "In Combinaison avec un GLP-1-Analogue"	"In Combinaison avec un GLP-1-Analogue" is German-influenced.
+wb083-it|real	real		it	yes	german	yes	german	"GLP-1-Analogo": German compound hyphenation and capitalisation.	'GLP-1-Analogo' Germanised compound; should be 'analogo del GLP-1'.
+wb084-fr|planted	planted	condition	fr	yes	REAL	yes	REAL	"with or without metformin" became "and metformin"	"avec ou sans metformine" became "et la metformine".
+wb084-fr|untouched	untouched		fr	no	equivalent	no	equivalent	SGLT-2 line added correctly; "inhibiteur SGLT-2" harmless variant.	SGLT-2 line added; 'inhibiteur SGLT-2' acceptable wording.
+wb084-it|planted	planted	and_or	it	yes	REAL	yes	REAL	"con o senza metformina" became "o con metformina"	"con o senza metformina" became "o con metformina".
+wb084-it|untouched	untouched		it	no	equivalent	no	equivalent	"inibitore SGLT-2" vs "inibitore del SGLT-2"; harmless wording.	SGLT-2 line added; 'inibitore SGLT-2' acceptable wording.
+wb085-fr|real	real		fr	yes	german	yes	german	"un SGLT - 2 - inhibiteur": German compound order with hyphenation artefacts.	'un SGLT - 2 - inhibiteur' German word order/hyphenation artefact.
+wb085-it|real	real		it	yes	german	yes	REAL	Germanised "SGLT-2-inibitore"; stray dash before BMI 28 line	"Almeno BMI 28" turned into list option; also Germanised "SGLT-2-inibitore".
+wb086-it|planted	planted	condition	it	yes	stale	yes	stale	Rebate sentence deleted in German still present (reworded).	Rebate sentence deleted in German but retained (rephrased) in draft.
+wb086-it|untouched	untouched		it	no	equivalent	no	equivalent	Refund sentence removed; only trailing period differs	Novartis refund sentence removed; only a trailing period differs.
+wb087-fr|real	real		fr	yes	german	yes	german	Garbled German "Folguer Code" in added code sentence	German "Folguer Code" left in new sentence.
+wb088-fr|real	real		fr	yes	german	yes	german	New code sentence "Folguer Code est à transmettre": German left.	'Folguer Code' German-derived artefact in new code sentence.
+wb089-it|planted	planted	scope	it	yes	REAL	yes	REAL	Adds "Per i pazienti pediatrici" to code transmission; rebate removal correct.	Rebate removed but code restricted to paediatric patients, wrong scope.
+wb089-it|untouched	untouched		it	no	equivalent	no	equivalent	Refund sentence removed; only trailing period differs	Novartis refund sentence removed; only a trailing period differs.
+wb090-fr|planted	planted	number_noun	fr	yes	REAL	yes	REAL	Adds "par année civile" to the 12-month maximum duration.	Adds 'par année civile' to maximum duration.
+wb090-fr|untouched	untouched		fr	no	exact	no	exact	Name replaced correctly	Brand replaced by Prasugrel.
+wb090-it|planted	planted	scope	it	yes	REAL	yes	REAL	Adds "nei pazienti di età superiore a 75 anni" restriction.	Adds unrequested condition: patients older than 75 years.
+wb090-it|untouched	untouched		it	no	exact	no	exact	Name replaced correctly	Brand replaced by Prasugrel as in official.
+wb091-fr|planted	planted	and_or	fr	yes	REAL	yes	REAL	Adds "ou l'acide acétylsalicylique" to the 12-month duration limit; condition not in German.	Adds 'ou l'acide acétylsalicylique' to the duration limit.
+wb091-fr|untouched	untouched		fr	no	exact	no	exact	Name replaced correctly	Brand replaced by Prasugrel.
+wb091-it|planted	planted	number_noun	it	yes	REAL	yes	REAL	"di ogni ciclo di trattamento" makes limit per cycle instead of total duration.	'ogni ciclo di trattamento' changes duration limit to per cycle.
+wb091-it|untouched	untouched		it	no	exact	no	exact	Name replaced correctly	Brand replaced by Prasugrel.

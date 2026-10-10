@@ -3,15 +3,23 @@
   "by_kind": {
    "number": [
     3,
-    2
+    1
    ]
   },
   "findings": 3,
-  "real": 2
+  "real": 1
  },
+ "first_annotation": {
+  "al_real": 2,
+  "lists_precision_pct": 63.6,
+  "lists_real": 7,
+  "migel_real": 5,
+  "terminology_real": 8
+ },
+ "labels": "majority of three blind annotators (PREREG R14, eval/labels/audit_relabel.tsv)",
  "lists_findings": 11,
- "lists_precision_pct": 63.6,
- "lists_real": 7,
+ "lists_precision_pct": 54.5,
+ "lists_real": 6,
  "migel": {
   "by_kind": {
    "editorial": [
@@ -30,10 +38,10 @@
   "by_kind": {
    "terminology": [
     11,
-    8
+    11
    ]
   },
   "findings": 11,
-  "real": 8
+  "real": 11
  }
 }

@@ -1,0 +1,50 @@
+id	answer	note
+R00	real	Italian field is entirely French text
+R01	not	7,5x7,5 vs 7.5x 7.5 formatting only
+R02	not	'deux fois' = 'das Doppelte'
+R03	minor	'limitation' correct; communiqué vs transmis wording variance
+R04	not	'deux fois' renders Doppelbestimmung; same
+R05	real	FR omits the 2-3 month therapy trial duration
+R06	minor	Missing space 'de15'; cosmetic
+R07	real	FR omits 15-<30 kg band and its 300 mg q4w regimen
+R08	minor	Missing space 'de15'; cosmetic
+R09	not	'1 .4' spacing artefact in DE; IT 1,4 same
+R10	real	FR renders ARB as ACE inhibitor; different drug class
+R11	real	DE weight band 15-<60 kg, FR 30-<60 kg
+R12	minor	IT 'un cosiddetti antagonisti' ungrammatical but same meaning
+R13	real	DE surcharge 6%, IT 12%
+R14	minor	'limitation' correct; communiqué vs transmis is wording variance only
+R15	not	'tous les deux jours' = 'jedem zweiten Tag'
+R16	minor	IT 'un cosiddetti antagonisti' ungrammatical but same meaning
+R17	real	DE more than 14 times, IT more than 13 times
+R18	minor	IT 'un cosiddetti antagonisti' ungrammatical but same meaning
+R19	real	FR adds ≥62.5 kg restriction for JIA not in DE
+R20	minor	Missing space 'de15'; cosmetic
+R21	minor	Stray space in '1 .4'; cosmetic
+R22	real	FR omits the 2-3 month therapy trial duration
+R23	not	FR 1 + max 4 additional = max 5; same as DE
+R24	not	'de15 kg' spacing; FR has 15 kg, same condition
+R25	real	FR adds ≥62.5 kg restriction for JIA not in DE
+R26	real	FR adds ≥62.5 kg restriction for JIA not in DE
+R27	not	120 mg only a dose label in DE; condition identical
+R28	real	FR omits minimum body weight 16 kg for paediatric patients
+R29	real	FR omits 15-<30 kg band (300 mg q4w); lumps under 60 kg into 200 mg q2w
+R30	real	Maintenance every 8 weeks in DE, every 4 weeks in IT
+R31	real	FR renders ARB as ACE inhibitor; different drug class
+R32	real	'se mesi' typo obscures the 6-month minimum duration; should be fixed
+R33	not	'adultes' equals 'ab 18 Jahren'
+R34	minor	IT typo 'se mesi' for sei mesi; intended 6 months recoverable
+R35	real	FR renders ARB as ACE inhibitor; different drug class
+R36	not	14 Tage = deux semaines
+R37	minor	IT 'un cosiddetti antagonisti del recettore' ungrammatical but same meaning
+R38	real	FR says ACE inhibitor instead of angiotensin-II receptor antagonist; different drug class
+R39	real	DE weight band 15-<60 kg, FR 30-<60 kg
+R40	not	'ogni due giorni' = 'an jedem zweiten Tag'
+R41	not	'deux fois' renders 'das Doppelte'; same
+R42	not	'adulti' equals 'ab 18 Jahren'; same condition
+R43	minor	Missing space '30jours'; cosmetic
+R44	real	FR states 8x714 cm instead of 8x14 cm; also drops 'oval'
+R45	not	'1 .4' in DE is spacing artefact; FR 1.4 same
+R46	not	120 mg is only a dose label in DE; condition identical
+R47	minor	IT Bezeichnung carries a limitation (1 per 5 years) absent from DE field; likely field placement
+R48	minor	Limitierung correctly 'limitation'; only verb communiqué vs transmis differs, same meaning

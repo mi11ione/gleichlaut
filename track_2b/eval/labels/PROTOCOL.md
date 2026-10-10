@@ -45,6 +45,12 @@ in `eval/prereg/PREREG.md` R1.
 
 The audit worklists (`audit*`) use the same blind set-up; each record carries the texts, the finding and its own
 `question` field (whether the finding is a real divergence between the language versions).
+Their first labels (the `real` column of `audit*_*.tsv`) were one annotator's. Under PREREG R14 all 49 findings were
+pooled under neutral ids (`audit_relabel_worklist.json`, question unchanged) and labelled again by two fresh blind
+annotators, the second in reverse order, and a third on the 1 finding where their answers differed (`audit_relabel.tsv`;
+confirmed = real or minor). The two agree whether a finding is real on all 49 (κ 1.000) and the majority agrees with the
+first labels on 44 of 49: register 17 of 27 confirmed (first 16), terminology 11 of 11 (8), MiGeL and Analysenliste 6
+of 11 (7). The reported audit precision is the majority's; the first labels stay in the results as `first_annotation`.
 
 ## Sensitivity: do the annotators catch meaning errors? (PREREG R11)
 
@@ -84,8 +90,27 @@ the file so every line shows in full, still only this file). Severe = REAL or st
   every time, with or without the reference: the annotators diff the draft against the old text and the German change
   (several wrote small word-diff helpers for their own file), so an edit the German change does not explain stands out.
   Errors that look like a plausible part of the amendment (scope drift inside the edited sentence) are harder, as the
-  real REAL items show. The 95% upper bound on severe errors among ready drafts (5.5% for the 70B, 5.8% for Q8_0) is
+  real REAL items show; R14 below plants such errors. The 95% upper bound on severe errors among ready drafts (5.5% for the 70B, 5.8% for Q8_0) is
   unchanged when divided by the measured recall.
+
+## In-span sensitivity: errors that read like part of the amendment (PREREG R14)
+
+R11's plants were single local edits that an annotator can find by diffing the draft against the old text. R14 wrote one
+meaning error by hand into each of 38 ready drafts (70B and Q8_0, labelled exact or equivalent; `tools/plant_inspan.py`,
+seed 20261017, plants in `inspan_plants.json`), inside the sentence the German change touched and adjoining the amended
+wording, as fluent text: scope widened or narrowed (11), a condition half-applied or changed (12), a number or unit on
+the wrong noun (8), and/or (7). Planted and untouched copies in different worklists, the 30 real drafts of R11 mixed in,
+two blind annotators per worklist with the instructions above (reference shown) and the same operational note
+(`inspan_sensitivity.tsv`, `eval/results/annotator_sensitivity_inspan.json`).
+
+- **Every planted copy was labelled severe (REAL or stale) by both of its annotators**: 38 of 38 [Wilson 95% lower bound
+  90.8], every type, FR and IT, in and outside the family 981f07a8; the 5 plants that keep part of the old text (a deleted
+  condition or the replaced term) were called stale by one or both annotators, the other 33 REAL by both. **False alarms** on the 38 untouched copies: 0 needs-fix, 0 severe.
+- The annotators' notes name the edit and why it departs from the German (for example "Added 'in monoterapia o'
+  option", "Exon 19 and 21 swapped"): placed inside the amended wording, a clear meaning error is still caught. Where
+  annotators split is the real drafts: of the 3 earlier REAL labels among the mixed-in real drafts, both call 1 severe
+  (either: 3); the others turn on whether a wording change changes a condition, which is what the third annotator of
+  the full protocol decides.
 
 ## Re-running it
 

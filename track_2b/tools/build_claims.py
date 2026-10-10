@@ -265,6 +265,26 @@ for cid, path, fmt in (("as_planted", "counts.planted", "{}"), ("as_untouched", 
                        ("as_b_real_REAL_either", ASB + "real.severe_incl_german_by_existing.REAL.either.k", "{}")):
     C.append((cid, AS, path, fmt, RE))
 
+# PREREG R14: (A) every labelled audit finding relabelled by two blind annotators + a third; (B) errors inside the amended wording
+AR = "eval/results/audit_relabel.json"
+for cid, path, fmt in (("ar14_n", "findings", "{}"), ("ar14_agree", "all.annotators.agree", "{}"), ("ar14_kappa", "all.annotators.kappa", "{:.3f}"),
+                       ("ar14_answer_agree", "all.annotators.answer_agree", "{}"), ("ar14_tiebreak", "all.annotators.tiebreak", "{}"),
+                       ("ar14_vs_first", "all.vs_first.agree", "{}"), ("ar14_vs_first_kappa", "all.vs_first.kappa", "{:.3f}"),
+                       ("ar14_reg_first", "sets.register.confirmed_first", "{}"), ("ar14_reg_maj", "sets.register.confirmed_majority", "{}"),
+                       ("ar14_term_first", "sets.terminology.confirmed_first", "{}"), ("ar14_term_maj", "sets.terminology.confirmed_majority", "{}"),
+                       ("ar14_term_strict", "sets.terminology.confirmed_strict_real", "{}"),
+                       ("ar14_lists_first", "sets.lists.confirmed_first", "{}"), ("ar14_lists_maj", "sets.lists.confirmed_majority", "{}"),
+                       ("ar14_reg_lo", "sets.register.precision_majority_wilson95.0", "{:.1f}"), ("ar14_reg_hi", "sets.register.precision_majority_wilson95.1", "{:.1f}"),
+                       ("ar14_first_prec", "sets.register.precision_first_pct", "{:.1f}"), ("ar14_lists_first_prec", "sets.lists.precision_first_pct", "{:.1f}")):
+    C.append((cid, AR, path, fmt, RE))
+ASI = "eval/results/annotator_sensitivity_inspan.json"
+for cid, path, fmt in (("asi_planted", "counts.planted", "{}"), ("asi_real", "counts.real", "{}"),
+                       ("asi_both", "planted.severe.both.k", "{}"), ("asi_both_lo", "planted.severe.both.wilson95.0", "{:.1f}"),
+                       ("asi_either", "planted.severe.either.k", "{}"), ("asi_fa_fix", "untouched.needs_fix.either.k", "{}"),
+                       ("asi_fa_sev", "untouched.severe.either.k", "{}"), ("asi_bound_70b", "ready_bound.70b.adjusted_both", "{:.1f}"),
+                       ("asi_bound_q8", "ready_bound.q8_0.adjusted_both", "{:.1f}")):
+    C.append((cid, ASI, path, fmt, RE))
+
 # PREREG R12: house wording in the drafting prompt (variant v3-terms) beside the frozen pipeline on both live months
 R12 = "eval/results/r12_terms.json"
 for mk, mon in (("aug", "20260801-20260901"), ("sep", "20260901-20261001")):

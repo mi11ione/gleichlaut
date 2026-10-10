@@ -50,7 +50,9 @@ def test_page_has_both_tabs_audit_first():
     assert s.index('id="t-audit"') < s.index('id="t-drafts"') and 'location.hash.slice(1)' in s and 'h==="audit"' in s
     assert 'var TAB=AU?"audit":"drafts"' in s and 'h==="drafts"' in s
     m = D["audit"]["meta"]                                 # the README's headline: 27 findings + 11 terminology notices
-    assert (m["main"], m["term"]) == (27, 11) and m["main"] + m["term"] == len(D["audit"]["rows"]) and (m["main_real"], m["term_real"]) == (16, 8)
+    R = {k: json.load(open(os.path.join(audit_view.core.ROOT, "eval", "results", f"{k}.json"), encoding="utf-8")) for k in ("audit", "audit_more")}
+    assert (m["main"], m["term"]) == (27, 11) and m["main"] + m["term"] == len(D["audit"]["rows"])
+    assert (m["main_real"], m["term_real"]) == (R["audit"]["v2"]["real_all_kinds"], R["audit_more"]["terminology"]["real"])   # R14 majority labels
     assert D["meta"]["lane"] == "70b" and "Model calls" not in s.split("var TX3=")[1]
     for k in ('<option value="de">DE</option>', 'return "de"}', "Ready means checked by code, not by a person.",
               "Bereit heisst: vom Code geprüft, nicht von einer Person.", 'id="imp-file"', "data-copy", "gleichlaut:changed"):

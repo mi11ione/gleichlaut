@@ -37,12 +37,15 @@ wrong language and typos next to numbers. On the 6 Oct 2026 feed it reduces 1,68
 that found them; recall is measured on planted faults below), plus **6** more problems: five typos next to numbers that nobody had listed, and
 Keytruda's Italian field (which we had spotted by hand before), which has held the French text since 1 Aug 2026. It
 also learns from BAG's own corrections: where BAG replaced a term in some texts, it flags the texts that still use the
-old one. That finds four French texts naming the wrong drug class and four ungrammatical Italian ones (8 of 11 notices
-confirmed). In all, blind annotators confirm 16 of the 27 findings as real (59.3%). In the review register the 27 findings and 11 terminology notices become 18 issues, one decision each:
-sibling products that share a divergence are one issue. On two lists it was never designed on, MiGeL and the Analysenliste, **7 of 11** findings are real; the
+old one. That finds four French texts naming the wrong drug class, four ungrammatical Italian ones and three French
+texts still saying «communiqué» where the register now says «transmis» (11 of 11 notices confirmed; 4 change the meaning).
+In all, blind annotators confirm 17 of the 27 findings as real (63.0%; the 17th is the number check's view of the
+Italian typo «se mesi», which the editorial check also finds). In the review register the 27 findings and 11 terminology notices become 18 issues, one decision each:
+sibling products that share a divergence are one issue. On two lists it was never designed on, MiGeL and the Analysenliste, **6 of 11** findings are real; the
 Analysenliste's Italian, for example, makes a test billable after 13 repetitions where German and French say 14. Each
-finding was read by blind Claude annotators (`eval/labels/`), and the confirmed counts above are theirs; the audit itself
-calls no model. Its recall,
+finding was read by two blind Claude annotators, the second in reverse order, and a third where their answers differed
+(pre-registered R14: they agree whether a finding is real on all 49, κ 1.000); the confirmed counts above are their majority. A single first
+annotator had given 16, 8 and 7 (agreement 44 of 49, `eval/results/audit_relabel.json`). The audit itself calls no model. Its recall,
 measured independently on 1,000 divergences planted into clean limitations: 77.2% [74.5, 79.7] overall, 93.0% for a
 changed number, 94.0% for a field in the wrong language, 73.0% for a changed unit, 75.0% for a deleted clause and 51.0%
 for a typo next to a number. Those faults sit where the audit looks by design: a number bound to a unit (dose, interval,
@@ -50,9 +53,10 @@ weight, percentage). Planted at any number token instead, recall is 55.5% (37.0%
 operators or dropped negations are not read at all (0 of 200 each): the next rules to add, listed in
 [docs/audit.md](docs/audit.md).
 
-The two meet in the review register. Nemluvio's old Italian already says "every 4 weeks"; Apertus' draft writes "every
-8 weeks", matching the German. BAG's own update kept the 4. The register shows the draft as a correction to check, not
-as an error.
+The two meet in the review register. Nemluvio's old Italian already says "every 4 weeks"; the 70B draft (the register's
+"fewer edits" lane) writes "every 8 weeks", matching the German, and the register shows it as a correction to check, not
+as an error. The default 8B keeps the 4, and the register marks the old text as already diverging. BAG's own update kept
+the 4.
 
 ## Results (pre-registered, held out)
 
@@ -69,7 +73,7 @@ repository; `eval/prereg/PREREG.md` says what can and cannot be verified from he
 | Ready drafts that need a fix to the amendment | 25 of 62 (22 named by the terminology note) | 33 of 60 (27 named by it) | **3 of 66** | |
 | Pre-registered pass rule | **PASS** | **PASS** | **PASS** (and again on a repeat run) | |
 
-**Would the annotators have seen a meaning error?** Measured (pre-registered R11): one meaning error of 7 kinds (dropped condition, and/or, obligation, scope, direction, negation, number) planted into each of 66 ready drafts was labelled a meaning error by both blind annotators 66 of 66 times (95% CI lower bound 94.5%), with BAG's published text shown and with it hidden alike, and 0 of the same 66 drafts left untouched were; real errors are subtler: of 3 drafts labelled a meaning error earlier, both annotators agree on 1 ([eval/labels/PROTOCOL.md](eval/labels/PROTOCOL.md)).
+**Would the annotators have seen a meaning error?** Measured (pre-registered R11): one meaning error of 7 kinds (dropped condition, and/or, obligation, scope, direction, negation, number) planted into each of 66 ready drafts was labelled a meaning error by both blind annotators 66 of 66 times (95% CI lower bound 94.5%), with BAG's published text shown and with it hidden alike, and 0 of the same 66 drafts left untouched were. Errors written inside the amended sentence so that they read like part of the amendment (pre-registered R14: widened or narrowed scope, a half-applied condition, a number on the wrong noun, and/or) were caught by both 38 of 38 times (lower bound 90.8%), with 0 false alarms on the same 38 drafts untouched; real errors are subtler: of 3 drafts labelled a meaning error earlier, both annotators agree on 1 ([eval/labels/PROTOCOL.md](eval/labels/PROTOCOL.md)).
 
 The checks are tuned to flag generously, and it shows: 13 of a seeded 20 flagged 70B drafts needed no change, and 12 of
 the 29 drafts identical to BAG's text were flagged.

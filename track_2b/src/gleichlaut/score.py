@@ -654,12 +654,17 @@ def ready_quality():
                 fresh_gold_seen_as_dev_input=sum(n(x["tgt_new"]) in olds for x in I.values()))
 
 
-def audit_eval():
-    """The divergence audit on the 6 Oct 2026 feed (data/audit), against a blind annotation of every finding."""
+def audit_eval(majority=True):
+    """The divergence audit on the 6 Oct 2026 feed (data/audit), against a blind annotation of every finding: the R14
+    majority of three blind annotators when committed (eval/labels/audit_relabel.tsv), the first single-annotator labels
+    (`real` column of the audit TSVs) kept as first_annotation."""
+    M = audit_majority_labels() if majority else None
     S = json.load(open(os.path.join(DATA, "audit", "audit_20261006_summary.json"), encoding="utf-8"))
     rows = [l.split("\t") for l in open(os.path.join(LABELS, "audit_20261006.tsv"), encoding="utf-8").read().splitlines()[1:]]
+    if M: rows = [r[:6] + [M[f"audit_20261006:{r[0]}"]] + r[7:] for r in rows]
     real = [r for r in rows if r[6] == "yes"]; held = [r for r in rows if r[5] == "held"]
     rows2 = [l.split("\t") for l in open(os.path.join(LABELS, "audit2_20261006.tsv"), encoding="utf-8").read().splitlines()[1:]]
+    if M: rows2 = [r[:4] + [M[f"audit2_20261006:{r[0]}"]] + r[5:] for r in rows2]
     real2 = [r for r in rows2 if r[4] == "yes"]
     allf = len(rows) + len(rows2); allreal = len(real) + len(real2)
     v2 = dict(findings_all_kinds=allf, real_all_kinds=allreal, precision_all_pct=round(100 * allreal / allf, 1),
@@ -667,11 +672,17 @@ def audit_eval():
               by_kind={k: [sum(r[1] == k for r in rows2), sum(r[1] == k and r[4] == "yes" for r in real2)] for k in sorted({r[1] for r in rows2})},
               real_new_beyond_known=len(real2), language_swaps=sum(r[1] == "language" and r[4] == "yes" for r in rows2),
               editorial_real=sum(r[1] == "editorial" and r[4] == "yes" for r in rows2))
-    return dict(findings=len(rows), real=len(real), precision_pct=round(100 * len(real) / len(rows), 1), v2=v2,
-                precision_wilson95=[round(v, 1) for v in wilson(len(real), len(rows))],
-                real_new=sum(r[4] != "True" for r in real), known_found=sum(r[4] == "True" for r in rows),
-                held_findings=len(held), held_real=sum(r[6] == "yes" for r in held),
-                limitations_found=len({r[1] for r in rows}), summary=S)
+    out = dict(findings=len(rows), real=len(real), precision_pct=round(100 * len(real) / len(rows), 1), v2=v2,
+               precision_wilson95=[round(v, 1) for v in wilson(len(real), len(rows))],
+               real_new=sum(r[4] != "True" for r in real), known_found=sum(r[4] == "True" for r in rows),
+               held_findings=len(held), held_real=sum(r[6] == "yes" for r in held),
+               limitations_found=len({r[1] for r in rows}), summary=S)
+    if M:
+        f = audit_eval(majority=False)
+        out["labels"] = "majority of three blind annotators (PREREG R14, eval/labels/audit_relabel.tsv)"
+        out["first_annotation"] = {k: f[k] for k in ("real", "precision_pct", "held_real")}
+        out["first_annotation"]["v2"] = {k: f["v2"][k] for k in ("real_all_kinds", "precision_all_pct", "new_kinds_real", "by_kind")}
+    return out
 
 
 def baseline_plus():
@@ -796,14 +807,25 @@ def m2_rerun(build="q8_0"):
 def audit_more():
     """Audit round 3: terminology findings learned from BAG's own corrections (6 Oct 2026 SL), and the same audit on two
     other trilingual BAG lists it was never designed on (MiGeL, Analysenliste, 1 Jul 2026), each against a blind annotation."""
-    def lab(name):
+    M = audit_majority_labels()
+
+    def lab(name, M=M):
         rows = [l.split("\t") for l in open(os.path.join(LABELS, name), encoding="utf-8").read().splitlines()[1:]]
+        if M: rows = [r[:4] + [M[f"{name[:-4]}:{r[0]}"]] + r[5:] for r in rows]
         return dict(findings=len(rows), real=sum(r[4] == "yes" for r in rows),
                     by_kind={k: [sum(r[1] == k for r in rows), sum(r[1] == k and r[4] == "yes" for r in rows)] for k in sorted({r[1] for r in rows})})
-    t, m, a = lab("audit3_terminology_20261006.tsv"), lab("audit_migel_20260701.tsv"), lab("audit_al_20260701.tsv")
+    names = ("audit3_terminology_20261006.tsv", "audit_migel_20260701.tsv", "audit_al_20260701.tsv")
+    t, m, a = (lab(n) for n in names)
     lists_f, lists_r = m["findings"] + a["findings"], m["real"] + a["real"]
-    return dict(terminology=t, migel=m, al=a, lists_findings=lists_f, lists_real=lists_r,
-                lists_precision_pct=round(100 * lists_r / lists_f, 1))
+    out = dict(terminology=t, migel=m, al=a, lists_findings=lists_f, lists_real=lists_r,
+               lists_precision_pct=round(100 * lists_r / lists_f, 1))
+    if M:                                      # PREREG R14: the first single-annotator labels stay as first_annotation
+        t1, m1_, a1 = (lab(n, None) for n in names)
+        out["labels"] = "majority of three blind annotators (PREREG R14, eval/labels/audit_relabel.tsv)"
+        out["first_annotation"] = dict(terminology_real=t1["real"], migel_real=m1_["real"], al_real=a1["real"],
+                                       lists_real=m1_["real"] + a1["real"],
+                                       lists_precision_pct=round(100 * (m1_["real"] + a1["real"]) / lists_f, 1))
+    return out
 
 
 def failure_modes_q8_0():
@@ -962,3 +984,143 @@ def blind_relabel_70b(res=None):
                 flagged_sample_no_fix=sum(M[k]["final_fix"] == "no" for k in fl), flagged_sample_research_good=sum(v == "good" for v in F.values()),
                 flagged_sample_classes=dict(sorted(Counter(M[k]["final"] for k in fl).items())),
                 severe_among_ready=len(severe), severe_among_ready_items=severe, r0_with_blind_labels=r0, vs_research=vs)
+
+
+# ------------------------------------------------------------------ PREREG R14 part A: audit findings relabelled blind
+AUDIT_RELABEL_SETS = {"register": ("audit_20261006", "audit2_20261006"), "terminology": ("audit3_terminology_20261006",),
+                      "lists": ("audit_migel_20260701", "audit_al_20260701")}
+AUDIT_RELABEL_COLS = ("uid", "set", "first", "A", "B", "T", "final", "final_confirmed", "note_A", "note_B", "note_T")
+
+
+def audit_first_labels():
+    """The first (single-annotator) audit labels: {'<file>:<id>': 'yes' | 'no'} from the `real` column of each file."""
+    out = {}
+    for files in AUDIT_RELABEL_SETS.values():
+        for f in files:
+            lines = open(os.path.join(LABELS, f"{f}.tsv"), encoding="utf-8").read().splitlines(); hdr = lines[0].split("\t")
+            for l in lines[1:]:
+                c = dict(zip(hdr, l.split("\t"))); out[f"{f}:{c['id']}"] = c["real"]
+    return out
+
+
+def audit_relabel_merge():
+    """R14 part A merge -> rows (AUDIT_RELABEL_COLS) sorted by uid: `final` is the answer at least two of A, B, T share,
+    else T's; confirmed = real or minor; `final_confirmed` is the majority of three on confirmed (A's when A and B agree)."""
+    def ann(name):
+        lines = open(os.path.join(LABELS, name), encoding="utf-8").read().splitlines()[1:]
+        return {c[0]: dict(ans=c[1], note=c[2] if len(c) > 2 else "") for c in (l.split("\t") for l in lines if l)}
+    K = json.load(open(os.path.join(LABELS, "audit_relabel_key.json"), encoding="utf-8"))
+    tids = {u: i for i, u in json.load(open(os.path.join(LABELS, "audit_relabel_tiebreak_key.json"), encoding="utf-8"))["ids"].items()}
+    A, B, T = ann("audit_relabel_A.tsv"), ann("audit_relabel_B.tsv"), ann("audit_relabel_T.tsv")
+    first = audit_first_labels(); st = {f: s for s, fs in AUDIT_RELABEL_SETS.items() for f in fs}
+    conf = lambda a: "yes" if a in ("real", "minor") else "no"
+    out = []
+    for i, u in sorted(K["ids"].items(), key=lambda t: t[1]):
+        a, b = A[i], B[i]; t = T[tids[u]] if u in tids else None
+        if t:
+            cs = [a["ans"], b["ans"], t["ans"]]; fin = next((c for c in cs if cs.count(c) >= 2), t["ans"])
+            fc = max(("yes", "no"), key=[conf(c) for c in cs].count)
+        else:
+            fin = a["ans"]; fc = conf(a["ans"])
+        out.append(dict(uid=u, set=st[u.split(":")[0]], first=first[u], A=a["ans"], B=b["ans"], T=t["ans"] if t else "", final=fin,
+                        final_confirmed=fc, note_A=a["note"], note_B=b["note"], note_T=t["note"] if t else ""))
+    return out
+
+
+def _kappa_yes(x, y):
+    n = len(x); ag = sum(p == q for p, q in zip(x, y)); pA = x.count("yes") / n; pB = y.count("yes") / n
+    pe = pA * pB + (1 - pA) * (1 - pB)
+    return dict(n=n, agree=ag, agree_pct=round(100 * ag / n, 1), kappa=round((ag / n - pe) / (1 - pe), 3) if pe < 1 else None)
+
+
+def audit_majority_labels():
+    """{'<file>:<id>': 'yes' | 'no'}: the R14 majority-of-three labels when committed, else None."""
+    if not os.path.exists(os.path.join(LABELS, "audit_relabel.tsv")): return None
+    lines = open(os.path.join(LABELS, "audit_relabel.tsv"), encoding="utf-8").read().splitlines(); hdr = lines[0].split("\t")
+    return {r["uid"]: r["final_confirmed"] for r in (dict(zip(hdr, l.split("\t"))) for l in lines[1:])}
+
+
+def audit_relabel():
+    """PREREG R14 part A: every labelled audit finding (register 27, terminology 11, MiGeL + Analysenliste 11) relabelled
+    by two fresh blind annotators (the second in reverse order) and a third on every differing answer, with each record's
+    audit question unchanged. Re-derived from the raw annotator files and keys; the committed eval/labels/audit_relabel.tsv
+    must equal the merge. Confirmed = real or minor (the first annotation's yes)."""
+    if not os.path.exists(os.path.join(LABELS, "audit_relabel.tsv")): return None
+    rows = audit_relabel_merge()
+    lines = open(os.path.join(LABELS, "audit_relabel.tsv"), encoding="utf-8").read().splitlines()
+    assert lines == ["\t".join(AUDIT_RELABEL_COLS)] + ["\t".join(r[h] for h in AUDIT_RELABEL_COLS) for r in rows], \
+        "audit_relabel.tsv is not the merge of the raw labels"
+    conf = lambda a: "yes" if a in ("real", "minor") else "no"
+
+    def block(R):
+        n = len(R); maj = sum(r["final_confirmed"] == "yes" for r in R); fst = sum(r["first"] == "yes" for r in R)
+        strict = sum(r["final"] == "real" for r in R)
+        return dict(n=n, annotators=dict(_kappa_yes([conf(r["A"]) for r in R], [conf(r["B"]) for r in R]),
+                                         answer_agree=sum(r["A"] == r["B"] for r in R), tiebreak=sum(bool(r["T"]) for r in R)),
+                    confirmed_majority=maj, precision_majority_pct=round(100 * maj / n, 1),
+                    precision_majority_wilson95=[round(v, 1) for v in wilson(maj, n)],
+                    confirmed_strict_real=strict, precision_strict_pct=round(100 * strict / n, 1),
+                    confirmed_first=fst, precision_first_pct=round(100 * fst / n, 1),
+                    vs_first=_kappa_yes([r["first"] for r in R], [r["final_confirmed"] for r in R]),
+                    answers=dict(sorted(Counter(r["final"] for r in R).items())),
+                    changed=[dict(uid=r["uid"], first=r["first"], majority=r["final_confirmed"], A=r["A"], B=r["B"], T=r["T"] or None,
+                                  notes=[r[f"note_{x}"] for x in "ABT" if r[f"note_{x}"]]) for r in R if r["first"] != r["final_confirmed"]])
+    out = dict(prereg="R14 (part A)", findings=len(rows), all=block(rows),
+               sets={s: block([r for r in rows if r["set"] == s]) for s in AUDIT_RELABEL_SETS},
+               files={f: block([r for r in rows if r["uid"].startswith(f + ":")]) for fs in AUDIT_RELABEL_SETS.values() for f in fs})
+    out["numbers_switch"] = any(b["confirmed_majority"] != b["confirmed_first"] for b in out["sets"].values())
+    return out
+
+
+# ------------------------------------------------------------------ PREREG R14 part B: meaning errors inside the amended wording
+def annotator_sensitivity_inspan(res=None):
+    """PREREG R14 part B: how often the blind annotators of eval/labels/PROTOCOL.md (reference shown) catch a meaning error
+    written inside the sentence the German change touched, as fluent text that reads like part of the amendment
+    (tools/plant_inspan.py, seed 20261017; plants by hand in eval/labels/inspan_plants.json). 38 bases (70B and Q8_0 ready
+    drafts labelled exact or equivalent) planted and untouched, 30 real drafts mixed in; two annotators per worklist
+    (eval/labels/inspan_sensitivity.tsv). Severe = REAL or stale (as R11). Wilson 95% over items."""
+    if not os.path.exists(os.path.join(LABELS, "inspan_sensitivity.tsv")): return None
+    K = json.load(open(os.path.join(LABELS, "inspan_key.json"), encoding="utf-8"))
+    lines = open(os.path.join(LABELS, "inspan_sensitivity.tsv"), encoding="utf-8").read().splitlines()
+    hdr = lines[0].split("\t"); rows = [dict(zip(hdr, l.split("\t"))) for l in lines[1:]]
+    assert {r["uid"] for r in rows} == set(K["items"])
+    sev = ("REAL", "stale")
+
+    def rate(k, n): return dict(k=k, n=n, pct=round(100 * k / n, 1) if n else None, wilson95=[round(v, 1) for v in wilson(k, n)])
+
+    def block(R, hit):
+        a = [hit(r, "A") for r in R]; b = [hit(r, "B") for r in R]; n = len(R)
+        return dict(A=rate(sum(a), n), B=rate(sum(b), n), both=rate(sum(x and y for x, y in zip(a, b)), n),
+                    either=rate(sum(x or y for x, y in zip(a, b)), n))
+    fix = lambda r, x: r[f"{x}_fix"] == "yes"
+    severe = lambda r, x: r[f"{x}_class"] in sev
+
+    def summary(R):
+        return dict(n=len(R), needs_fix=block(R, fix), severe=block(R, severe),
+                    classes=dict(sorted(Counter(r[f"{x}_class"] for r in R for x in "AB").items())))
+    for r in rows: r.update(family=K["items"][r["uid"]].get("family"), base_class=K["items"][r["uid"]].get("base_class"))
+    P = [r for r in rows if r["kind"] == "planted"]; U = [r for r in rows if r["kind"] == "untouched"]; R = [r for r in rows if r["kind"] == "real"]
+    ex = {r["uid"]: K["items"][r["uid"]]["existing"] for r in R}
+    out = dict(prereg="R14 (part B)", seed=K["seed"], types=K["types"], counts=K["counts"],
+               planted=summary(P), untouched=summary(U),
+               planted_by_type={t: summary([r for r in P if r["type"] == t]) for t in K["types"]},
+               planted_by_lang={L: summary([r for r in P if r["lang"] == L]) for L in ("fr", "it")},
+               planted_by_family={f: summary([r for r in P if r["family"] == f]) for f in (DOMINANT_FAMILY, "other")},
+               planted_by_base_class={c: summary([r for r in P if r["base_class"] == c]) for c in ("exact", "equivalent")},
+               real=dict(summary(R), existing=dict(sorted(Counter(ex.values()).items())),
+                         severe_incl_german_by_existing={c: block([r for r in R if ex[r["uid"]] == c],
+                                                                  lambda r, x: r[f"{x}_class"] in ("REAL", "stale", "german"))
+                                                         for c in ("REAL", "stale", "german")}))
+    it = K["items"]
+    out["missed_planted"] = [dict(uid=r["uid"], type=r["type"], error=it[r["uid"]]["error"], old=it[r["uid"]]["old"], new=it[r["uid"]]["new"],
+                                  A=r["A_class"], B=r["B_class"], note_A=r["note_A"], note_B=r["note_B"])
+                             for r in P if not (severe(r, "A") and severe(r, "B"))]
+    if res is None:
+        res = {k: json.load(open(os.path.join(core.ROOT, "eval", "results", f"{k}.json"), encoding="utf-8")) for k in ("fresh166", "m1_q8_0")}
+    a = out["planted"]["severe"]; out["ready_bound"] = {}
+    for name, s in (("70b", res["fresh166"]["summary"]["all"]), ("q8_0", res["m1_q8_0"])):
+        hi = s["wilson95_severe_among_ready"][1]
+        out["ready_bound"][name] = dict(ready=s["unflagged"], bound95=hi,
+                                        adjusted_both=round(min(100.0, hi / (a["both"]["pct"] / 100)), 1) if a["both"]["k"] else None,
+                                        adjusted_either=round(min(100.0, hi / (a["either"]["pct"] / 100)), 1) if a["either"]["k"] else None)
+    return out

@@ -1,0 +1,50 @@
+uid	set	first	A	B	T	final	final_confirmed	note_A	note_B	note_T
+audit2_20261006:B00	register	yes	minor	minor		minor	yes	'moins de15' missing space; cosmetic.	Missing space 'de15'; cosmetic	
+audit2_20261006:B01	register	yes	minor	minor		minor	yes	'1 .4' stray space in German; cosmetic.	Stray space in '1 .4'; cosmetic	
+audit2_20261006:B02	register	yes	real	real		real	yes	Italian field contains the French text verbatim.	Italian field is entirely French text	
+audit2_20261006:B03	register	yes	real	real		real	yes	'se mesi' typo drops the six-month duration value.	'se mesi' typo obscures the 6-month minimum duration; should be fixed	
+audit2_20261006:B04	register	yes	minor	minor		minor	yes	'de15' missing space; cosmetic typo.	Missing space 'de15'; cosmetic	
+audit2_20261006:B05	register	yes	minor	minor		minor	yes	'moins de15' missing space; cosmetic.	Missing space 'de15'; cosmetic	
+audit3_terminology_20261006:C00	terminology	yes	minor	minor		minor	yes	Meaning correct (ARB); ungrammatical 'un cosiddetti antagonisti'.	IT 'un cosiddetti antagonisti del recettore' ungrammatical but same meaning	
+audit3_terminology_20261006:C01	terminology	yes	minor	minor		minor	yes	Meaning correct (ARB); ungrammatical 'un cosiddetti antagonisti'.	IT 'un cosiddetti antagonisti' ungrammatical but same meaning	
+audit3_terminology_20261006:C02	terminology	no	minor	minor		minor	yes	"communiqué" vs "transmis"; same meaning, inconsistent wording.	Limitierung correctly 'limitation'; only verb communiqué vs transmis differs, same meaning	
+audit3_terminology_20261006:C03	terminology	no	minor	minor		minor	yes	"communiqué" vs "transmis"; same meaning, inconsistent wording.	'limitation' correct; communiqué vs transmis is wording variance only	
+audit3_terminology_20261006:C04	terminology	yes	real	real		real	yes	ACE inhibitor wording for angiotensin II receptor antagonist; different class.	FR renders ARB as ACE inhibitor; different drug class	
+audit3_terminology_20261006:C05	terminology	yes	real	real		real	yes	ACE inhibitor wording for angiotensin II receptor antagonist; different class.	FR says ACE inhibitor instead of angiotensin-II receptor antagonist; different drug class	
+audit3_terminology_20261006:C06	terminology	no	minor	minor		minor	yes	Limitation correct; "communiqué" vs "transmis" is wording inconsistency, same meaning.	'limitation' correct; communiqué vs transmis wording variance	
+audit3_terminology_20261006:C07	terminology	yes	minor	minor		minor	yes	Meaning correct (ARB); ungrammatical 'un cosiddetti antagonisti'.	IT 'un cosiddetti antagonisti' ungrammatical but same meaning	
+audit3_terminology_20261006:C08	terminology	yes	real	real		real	yes	ACE inhibitor wording for angiotensin II receptor antagonist; different class.	FR renders ARB as ACE inhibitor; different drug class	
+audit3_terminology_20261006:C09	terminology	yes	minor	minor		minor	yes	Meaning correct (ARB); ungrammatical 'un cosiddetti antagonisti'.	IT 'un cosiddetti antagonisti' ungrammatical but same meaning	
+audit3_terminology_20261006:C10	terminology	yes	real	real		real	yes	ACE inhibitor wording for angiotensin II receptor antagonist; different drug class.	FR renders ARB as ACE inhibitor; different drug class	
+audit_20261006:A00	register	no	not	not		not	no	"adultes" equals "ab 18 Jahren" (DE redundant); same condition.	'adultes' equals 'ab 18 Jahren'	
+audit_20261006:A01	register	no	not	not		not	no	"ogni due giorni" = jeden zweiten Tag.	'ogni due giorni' = 'an jedem zweiten Tag'	
+audit_20261006:A02	register	yes	real	real		real	yes	FR adds ≥62.5 kg restriction for juvenile arthritis absent in DE.	FR adds ≥62.5 kg restriction for JIA not in DE	
+audit_20261006:A03	register	no	not	not		not	no	120 mg is product-strength mention, not a condition; IT same.	120 mg only a dose label in DE; condition identical	
+audit_20261006:A04	register	yes	real	real		real	yes	DE 15-<60 kg vs FR 30-<60 kg.	DE weight band 15-<60 kg, FR 30-<60 kg	
+audit_20261006:A05	register	yes	real	real		real	yes	FR lacks 15-<30 kg band; puts all <60 kg on 400/200 mg dosing.	FR omits 15-<30 kg band and its 300 mg q4w regimen	
+audit_20261006:A06	register	yes	real	real		real	yes	Maintenance every eight weeks (DE) vs every four weeks (IT).	Maintenance every 8 weeks in DE, every 4 weeks in IT	
+audit_20261006:A07	register	yes	real	real		real	yes	FR lacks 15-<30 kg band and its distinct dosing.	FR omits 15-<30 kg band (300 mg q4w); lumps under 60 kg into 200 mg q2w	
+audit_20261006:A08	register	yes	real	real		real	yes	FR omits minimum body weight 16 kg for paediatric patients.	FR omits minimum body weight 16 kg for paediatric patients	
+audit_20261006:A09	register	no	not	not		not	no	"adulti" equals "ab 18 Jahren"; same condition.	'adulti' equals 'ab 18 Jahren'; same condition	
+audit_20261006:A10	register	no	not	not		not	no	'de15' tokenisation artefact; 15 kg present in FR.	'de15 kg' spacing; FR has 15 kg, same condition	
+audit_20261006:A11	register	yes	real	real		real	yes	DE 15-<60 kg vs FR 30-<60 kg.	DE weight band 15-<60 kg, FR 30-<60 kg	
+audit_20261006:A12	register	yes	real	real		real	yes	FR adds ≥62.5 kg restriction absent in DE.	FR adds ≥62.5 kg restriction for JIA not in DE	
+audit_20261006:A13	register	yes	real	real		real	yes	FR adds ≥62.5 kg restriction absent in DE.	FR adds ≥62.5 kg restriction for JIA not in DE	
+audit_20261006:A14	register	no	not	not		not	no	DE '1 .4' artefact; IT 1,4 mmol/l matches.	'1 .4' spacing artefact in DE; IT 1,4 same	
+audit_20261006:A15	register	no	not	not		not	no	DE '1 .4' artefact; FR 1.4 mmol/l matches.	'1 .4' in DE is spacing artefact; FR 1.4 same	
+audit_20261006:A16	register	no	not	not		not	no	"deux semaines" = 14 Tage.	14 Tage = deux semaines	
+audit_20261006:A17	register	no	not	not		not	no	"tous les deux jours" = "an jedem zweiten Tag".	'tous les deux jours' = 'jedem zweiten Tag'	
+audit_20261006:A18	register	no	not	not		not	no	120 mg is product-strength mention, not a condition; FR same.	120 mg is only a dose label in DE; condition identical	
+audit_20261006:A19	register	no	minor	minor		minor	yes	IT 'se mesi' typo; six months intended but number garbled.	IT typo 'se mesi' for sei mesi; intended 6 months recoverable	
+audit_20261006:A20	register	yes	real	real		real	yes	Supplement 6% in DE vs 12% in IT.	DE surcharge 6%, IT 12%	
+audit_al_20260701:AL00	lists	yes	real	real		real	yes	More than 14 times (DE) vs more than 13 times (IT).	DE more than 14 times, IT more than 13 times	
+audit_al_20260701:AL01	lists	yes	not	not		not	no	FR 1 first + max 4 additional = DE max 5; same.	FR 1 + max 4 additional = max 5; same as DE	
+audit_al_20260701:AL02	lists	no	not	not		not	no	"déterminée deux fois" = Doppelbestimmung; same condition.	'deux fois' renders Doppelbestimmung; same	
+audit_migel_20260701:MG00	lists	yes	real	real		real	yes	FR omits the 2-3 month trial duration.	FR omits the 2-3 month therapy trial duration	
+audit_migel_20260701:MG01	lists	yes	real	real		real	yes	FR states 8x714 cm vs 8x14 cm; wrong dimension (typo), oval missing.	FR states 8x714 cm instead of 8x14 cm; also drops 'oval'	
+audit_migel_20260701:MG02	lists	yes	minor	minor		minor	yes	'30jours' missing space; cosmetic.	Missing space '30jours'; cosmetic	
+audit_migel_20260701:MG03	lists	yes	real	real		real	yes	FR omits the 2-3 month trial duration.	FR omits the 2-3 month therapy trial duration	
+audit_migel_20260701:MG04	lists	no	not	not		not	no	7,5x7,5 cm vs 7.5x 7.5 cm: formatting only.	7,5x7,5 vs 7.5x 7.5 formatting only	
+audit_migel_20260701:MG05	lists	yes	real	minor	not	not	yes	IT adds limitation of 1 device per 5 years absent in DE.	IT Bezeichnung carries a limitation (1 per 5 years) absent from DE field; likely field placement	IT appends a labelled "Limitazione:" clause into Bezeichnung; field-merge artefact, not a differing description condition.
+audit_migel_20260701:MG06	lists	no	not	not		not	no	"deux fois le nombre" = "die doppelte Anzahl".	'deux fois' renders 'das Doppelte'; same	
+audit_migel_20260701:MG07	lists	no	not	not		not	no	"deux fois" renders "das Doppelte"; same condition.	'deux fois' = 'das Doppelte'	

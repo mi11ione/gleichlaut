@@ -770,6 +770,154 @@
 "wb032-it"
 ]
 }
+},
+"round5": {
+"note": "PREREG R15: operator / negation / number_word, reported apart from the kinds above (findings_r5 in audit_<date>.json); 'on' is set by the R15 outcome; number findings carry a display-only 'counterpart'",
+"rules_sha256": "2d5dcaaf3b7a8c53f8baae797f045708ac843efeef0db692aa383d3a64d8e1bc",
+"on": {
+"operator": false,
+"negation": false,
+"number_word": false
+},
+"findings": 31,
+"by_kind": {
+"operator": 4,
+"negation": 18,
+"number_word": 9
+},
+"by_kind_lang": {
+"operator": {
+"fr": 1,
+"it": 3
+},
+"negation": {
+"fr": 11,
+"it": 7
+},
+"number_word": {
+"fr": 4,
+"it": 5
+}
+},
+"by_kind_half": {
+"operator": {
+"dev": 1,
+"held": 3
+},
+"negation": {
+"held": 14,
+"dev": 4
+},
+"number_word": {
+"held": 4,
+"dev": 5
+}
+},
+"limitations": 27,
+"number_counterparts": {
+"N01": {
+"it": [
+{
+"value": "12",
+"unit": "%",
+"src": "digit",
+"for_value": "6"
+}
+],
+"de": [
+{
+"value": "6",
+"unit": "%",
+"src": "digit",
+"for_value": "12"
+}
+]
+},
+"N02": {
+"fr": [
+{
+"value": "30",
+"unit": "kg",
+"src": "digit",
+"for_value": "15"
+}
+],
+"de": [
+{
+"value": "15",
+"unit": "kg",
+"src": "digit",
+"for_value": "30"
+}
+]
+},
+"N03": {
+"fr": [
+{
+"value": "30",
+"unit": "kg",
+"src": "digit",
+"for_value": "15"
+}
+],
+"de": [
+{
+"value": "15",
+"unit": "kg",
+"src": "digit",
+"for_value": "30"
+}
+]
+},
+"N04": {
+"fr": [
+{
+"value": "5",
+"unit": "kg",
+"src": "digit",
+"for_value": "15"
+}
+],
+"de": [
+{
+"value": "15",
+"unit": "kg",
+"src": "digit",
+"for_value": "5"
+}
+]
+},
+"N16": {
+"fr": [
+{
+"value": "1.4",
+"unit": "mmol",
+"src": "digit",
+"for_value": "4"
+}
+]
+},
+"N17": {
+"it": [
+{
+"value": "1.4",
+"unit": "mmol",
+"src": "digit",
+"for_value": "4"
+}
+]
+},
+"N18": {
+"it": [
+{
+"value": "4",
+"unit": "settimane",
+"src": "word",
+"for_value": "8"
+}
+]
+}
+}
 }
 },
 "findings": [
@@ -823,6 +971,24 @@
 "explained_by": [],
 "likely_equivalent": false,
 "equivalence": null,
+"counterpart": {
+"it": [
+{
+"value": "12",
+"unit": "%",
+"src": "digit",
+"for_value": "6"
+}
+],
+"de": [
+{
+"value": "6",
+"unit": "%",
+"src": "digit",
+"for_value": "12"
+}
+]
+},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -876,6 +1042,24 @@
 "explained_by": [],
 "likely_equivalent": false,
 "equivalence": null,
+"counterpart": {
+"fr": [
+{
+"value": "30",
+"unit": "kg",
+"src": "digit",
+"for_value": "15"
+}
+],
+"de": [
+{
+"value": "15",
+"unit": "kg",
+"src": "digit",
+"for_value": "30"
+}
+]
+},
 "first_seen": "20260601",
 "seen_in": 6
 },
@@ -929,6 +1113,24 @@
 "explained_by": [],
 "likely_equivalent": false,
 "equivalence": null,
+"counterpart": {
+"fr": [
+{
+"value": "30",
+"unit": "kg",
+"src": "digit",
+"for_value": "15"
+}
+],
+"de": [
+{
+"value": "15",
+"unit": "kg",
+"src": "digit",
+"for_value": "30"
+}
+]
+},
 "first_seen": "20260601",
 "seen_in": 6
 },
@@ -984,6 +1186,24 @@
 ],
 "likely_equivalent": true,
 "equivalence": "typo: E04 explains the difference",
+"counterpart": {
+"fr": [
+{
+"value": "5",
+"unit": "kg",
+"src": "digit",
+"for_value": "15"
+}
+],
+"de": [
+{
+"value": "15",
+"unit": "kg",
+"src": "digit",
+"for_value": "5"
+}
+]
+},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1026,6 +1246,7 @@
 "explained_by": [],
 "likely_equivalent": false,
 "equivalence": null,
+"counterpart": {},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1068,6 +1289,7 @@
 "explained_by": [],
 "likely_equivalent": true,
 "equivalence": "Q1 conversion: 14 Tagen = 2 semaines",
+"counterpart": {},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1110,6 +1332,7 @@
 "explained_by": [],
 "likely_equivalent": true,
 "equivalence": "Q3 adults: '18 Jahren' = 'adultes'",
+"counterpart": {},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1152,6 +1375,7 @@
 "explained_by": [],
 "likely_equivalent": true,
 "equivalence": "Q3 adults: '18 Jahren' = 'adulti'",
+"counterpart": {},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1194,6 +1418,7 @@
 "explained_by": [],
 "likely_equivalent": false,
 "equivalence": null,
+"counterpart": {},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1236,6 +1461,7 @@
 "explained_by": [],
 "likely_equivalent": false,
 "equivalence": null,
+"counterpart": {},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1278,6 +1504,7 @@
 "explained_by": [],
 "likely_equivalent": false,
 "equivalence": null,
+"counterpart": {},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1320,6 +1547,7 @@
 "explained_by": [],
 "likely_equivalent": false,
 "equivalence": null,
+"counterpart": {},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1366,6 +1594,7 @@
 ],
 "likely_equivalent": true,
 "equivalence": "typo: E05 explains the difference",
+"counterpart": {},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1409,6 +1638,7 @@
 "explained_by": [],
 "likely_equivalent": true,
 "equivalence": "Q2 interval: '2 jours' = 'zweiten Tag'",
+"counterpart": {},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1452,6 +1682,7 @@
 "explained_by": [],
 "likely_equivalent": true,
 "equivalence": "Q2 interval: '2 giorni' = 'zweiten Tag'",
+"counterpart": {},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1496,6 +1727,16 @@
 ],
 "likely_equivalent": true,
 "equivalence": "typo: E01 explains the difference",
+"counterpart": {
+"fr": [
+{
+"value": "1.4",
+"unit": "mmol",
+"src": "digit",
+"for_value": "4"
+}
+]
+},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1540,6 +1781,16 @@
 ],
 "likely_equivalent": true,
 "equivalence": "typo: E01 explains the difference",
+"counterpart": {
+"it": [
+{
+"value": "1.4",
+"unit": "mmol",
+"src": "digit",
+"for_value": "4"
+}
+]
+},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1582,6 +1833,16 @@
 "explained_by": [],
 "likely_equivalent": false,
 "equivalence": null,
+"counterpart": {
+"it": [
+{
+"value": "4",
+"unit": "settimane",
+"src": "word",
+"for_value": "8"
+}
+]
+},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1624,6 +1885,7 @@
 "explained_by": [],
 "likely_equivalent": false,
 "equivalence": null,
+"counterpart": {},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1679,6 +1941,7 @@
 "explained_by": [],
 "likely_equivalent": false,
 "equivalence": null,
+"counterpart": {},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -1734,6 +1997,7 @@
 "explained_by": [],
 "likely_equivalent": false,
 "equivalence": null,
+"counterpart": {},
 "first_seen": "20260219",
 "seen_in": 9
 },
@@ -3565,7 +3829,7 @@
 "… SANDOZ et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
 ],
 "detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
-"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; l'OFSP a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
 }
 ]
 },
@@ -3831,7 +4095,7 @@
 "… SANDOZ et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
 ],
 "detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
-"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; l'OFSP a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
 }
 ]
 },
@@ -4097,7 +4361,7 @@
 "…VIATRIS et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
 ],
 "detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
-"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; l'OFSP a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
 }
 ]
 },
@@ -4363,7 +4627,7 @@
 "…ZENTIVA et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
 ],
 "detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
-"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; l'OFSP a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
 }
 ]
 },
@@ -4629,7 +4893,7 @@
 "…T-MEPHA et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
 ],
 "detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
-"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; l'OFSP a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
 }
 ]
 },
@@ -4895,7 +5159,7 @@
 "…ha Teva et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
 ],
 "detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
-"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; l'OFSP a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
 }
 ]
 },
@@ -5161,7 +5425,7 @@
 "…IRIG HC et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
 ],
 "detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
-"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; l'OFSP a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
 }
 ]
 },
@@ -5427,7 +5691,7 @@
 "…RGE HCT et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
 ],
 "detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
-"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; l'OFSP a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
 }
 ]
 },
@@ -5693,7 +5957,7 @@
 "…EXFORGE et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
 ],
 "detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
-"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; l'OFSP a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
 }
 ]
 },
@@ -5959,7 +6223,7 @@
 "…RIG HC et d'un antagoniste du calcium I.T. 02.06. [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
 ],
 "detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
-"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; l'OFSP a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
 }
 ]
 },
@@ -6225,7 +6489,7 @@
 "…SANDOZ et d'un antagoniste du calcium I.T. 02.06. [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
 ],
 "detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
-"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; l'OFSP a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
 }
 ]
 },
@@ -6491,7 +6755,7 @@
 "…ENTIVA et d'un antagoniste du calcium I.T. 02.06. [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
 ],
 "detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
-"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; l'OFSP a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
 }
 ]
 },
@@ -6757,7 +7021,7 @@
 "… MEPHA et d'un antagoniste du calcium I.T. 02.06. [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
 ],
 "detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
-"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; l'OFSP a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
 }
 ]
 },
@@ -7023,7 +7287,7 @@
 "…entiva et d'un antagoniste du calcium I.T. 02.06. [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
 ],
 "detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
-"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; l'OFSP a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
 }
 ]
 },
@@ -7289,7 +7553,7 @@
 "…AR/HCT et d'un antagoniste du calcium I.T. 02.06. [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
 ],
 "detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
-"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; l'OFSP a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
 }
 ]
 },
@@ -7555,7 +7819,7 @@
 "…IRIG HC et d'un antagoniste du calcium I.T. 02.06 [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA ne sera pas rembou…"
 ],
 "detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
-"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; l'OFSP a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
 }
 ]
 },
@@ -7821,7 +8085,7 @@
 "…dipine et d'un antagoniste du calcium I.T. 02.06. [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA n’est pas rembours…"
 ],
 "detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
-"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; l'OFSP a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
 }
 ]
 },
@@ -8087,7 +8351,7 @@
 "…iazide et d'un antagoniste du calcium I.T. 02.06. [et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II] et/ou d'un inhibiteur de l'ECA n’est pas rembours…"
 ],
 "detail": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
-"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; le BAG a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
+"text": "l'ancien texte dit «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II» ; l'OFSP a remplacé ce terme par «et/ou d’un antagoniste des récepteurs de l'angiotensine II» (allemand «Angiotensin-II-Antagonisten») dans 18 autres limitations"
 }
 ]
 },
@@ -8244,6 +8508,1078 @@
 "text": "il vecchio testo italiano è in francese"
 }
 ]
+}
+],
+"findings_r5": [
+{
+"id": "AMVUTTRA.01a",
+"lang": "fr",
+"kind": "operator",
+"languages": [
+"de",
+"fr"
+],
+"value": "10",
+"unit": "Punkte",
+"de_op": ">",
+"tgt_op": "≤",
+"de_dir": "min",
+"tgt_dir": "max",
+"context": [
+"…n folgende Kriterien eingetreten sein müssen: • NIS-Zunahme [> 10] Punkte und • Zunahme im PND-Score um > 1 Stufe (PND IIIa zu…",
+"…critères suivants sont remplis: - augmentation du score NIS [≤ 10] points, et - pas d’augmentation du score PND. • après 24 mo…"
+],
+"tgt_spans": [
+[
+2686,
+2690
+],
+[
+3054,
+3058
+],
+[
+3191,
+3195
+]
+],
+"description": "DE makes 10 a lower bound ('>'), FR an upper bound ('≤').",
+"product": [
+"Amvuttra"
+],
+"half": "dev",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 1,
+"fid": "O01"
+},
+{
+"id": "NPLATE4",
+"lang": "it",
+"kind": "operator",
+"languages": [
+"de",
+"it"
+],
+"value": "20",
+"unit": "x",
+"de_op": "mindestens",
+"tgt_op": "inferiore a",
+"de_dir": "min",
+"tgt_dir": "max",
+"context": [
+"…te (10 mcg/kg) auch nach 4 Wochen eine Thrombozytenzahl von [mindestens 20] x 109/L nicht erreichen, sollten die Behandlung abbrechen.",
+"…ttimanale di 10 mcg/kg, la conta piastrinica risulta ancora [inferiore a 20] x 109/l."
+],
+"tgt_spans": [
+[
+677,
+691
+]
+],
+"description": "DE makes 20 a lower bound ('mindestens'), IT an upper bound ('inferiore a').",
+"product": [
+"Nplate"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 2,
+"fid": "O02"
+},
+{
+"id": "OPDIVO.03a",
+"lang": "it",
+"kind": "operator",
+"languages": [
+"de",
+"it"
+],
+"value": "2021",
+"unit": null,
+"de_op": "ab",
+"tgt_op": "fino al",
+"de_dir": "min",
+"tgt_dir": "max",
+"context": [
+"…it OPDIVO und YERVOY vor dem 01.09.2021 begonnen und werden [ab dem 01.09.2021] weitere Kombinationszyklen verabreicht, gilt pro nachweisli…",
+"…rso sulla fase di monoterapia secondo la limitazione valida [fino al 31.08.2021]. Se la fase di combinazione con OPDIVO e YERVOY è stata ini…"
+],
+"tgt_spans": [
+[
+818,
+836
+]
+],
+"description": "DE makes 2021 a lower bound ('ab'), IT an upper bound ('fino al').",
+"product": [
+"Opdivo"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 3,
+"fid": "O03"
+},
+{
+"id": "WYNZORA",
+"lang": "it",
+"kind": "operator",
+"languages": [
+"de",
+"it"
+],
+"value": "120",
+"unit": "g",
+"de_op": "nicht mehr als",
+"tgt_op": "più di",
+"de_dir": "max",
+"tgt_dir": "min",
+"context": [
+"… Pro 4 Tage wird nicht mehr als 60 g (= 1 Tube), pro 8 Tage [nicht mehr als 120] g (= 2 Tuben) vergütet.",
+"…e. Non sono rimborsati più di 60 g (=1 tubo) per 4 giorni e [più di 120] g (= 2 tubi) per 8 giorni."
+],
+"tgt_spans": [
+[
+118,
+128
+]
+],
+"description": "DE makes 120 an upper bound ('nicht mehr als'), IT a lower bound ('più di').",
+"product": [
+"Wynzora"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 4,
+"fid": "O04"
+},
+{
+"id": "AMVUTTRA.02",
+"lang": "fr",
+"kind": "negation",
+"languages": [
+"de",
+"fr"
+],
+"side": "de",
+"negations": [
+"nicht"
+],
+"unit": "sentence",
+"context": [
+"Die Mehrwertsteuer kann nicht zusätzlich zu diesem Anteil des Fabrikabgabepreises zurückgefordert werden.",
+"Il informe l’assureur-maladie du montant correspondant qui est remboursé sur la base du prix de fabrique par emballage d’AMVUTTRA."
+],
+"tgt_span": [
+4663,
+4793
+],
+"description": "The German sentence is negated (nicht); the aligned French sentence has no negation.",
+"product": [
+"Amvuttra"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 1,
+"fid": "G01"
+},
+{
+"id": "AMVUTTRA.02",
+"lang": "fr",
+"kind": "negation",
+"languages": [
+"de",
+"fr"
+],
+"side": "fr",
+"negations": [
+"ne"
+],
+"unit": "sentence",
+"context": [
+"Die Aufforderung zur Rückerstattung soll ab dem Zeitpunkt der Verabreichung erfolgen.",
+"La taxe sur la valeur ajoutée ne peut pas être réclamée en plus de cette part du prix de fabrique."
+],
+"tgt_span": [
+4794,
+4892
+],
+"description": "The French sentence is negated (ne); the aligned German sentence has no negation.",
+"product": [
+"Amvuttra"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 2,
+"fid": "G02"
+},
+{
+"id": "BEYONTTRA",
+"lang": "it",
+"kind": "negation",
+"languages": [
+"de",
+"it"
+],
+"side": "de",
+"negations": [
+"nicht"
+],
+"unit": "sentence",
+"context": [
+"BEYONTTRA darf nicht mit anderen spezifischen Arzneimitteln zur Behandlung der Transthyretin-Amyloidose (z.B. TTR-Stabilisatoren, TTR-Gen Silencer) kombiniert werden.",
+"BEYONTTRA on deve essere combinato con altri medicamenti specifici per il trattamento dell’amiloidosi da transtiretina (ad esempio stabilizzatori del TTR, agenti silenziatori del gene TTR)."
+],
+"tgt_span": [
+2279,
+2468
+],
+"description": "The German sentence is negated (nicht); the aligned Italian sentence has no negation.",
+"product": [
+"Beyonttra"
+],
+"half": "dev",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 3,
+"fid": "G03"
+},
+{
+"id": "DECADURABOL2",
+"lang": "it",
+"kind": "negation",
+"languages": [
+"de",
+"it"
+],
+"side": "it",
+"negations": [
+"inefficaci"
+],
+"unit": "sentence",
+"context": [
+"Vergütung ausschliesslich bei schwerer postmenopausaler Osteoporose, wenn andere Therapieoptionen ausgeschöpft wurden.",
+"Rimborso esclusivamente per il trattamento dell’osteoporosi post-menopausale grave, nel caso in cui altre opzioni terapeutiche si siano rivelate inefficaci."
+],
+"tgt_span": [
+0,
+156
+],
+"description": "The Italian sentence is negated (inefficaci); the aligned German sentence has no negation.",
+"product": [
+"Deca"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 4,
+"fid": "G04"
+},
+{
+"id": "ERBITUX5",
+"lang": "fr",
+"kind": "negation",
+"languages": [
+"de",
+"fr"
+],
+"side": "de",
+"negations": [
+"nicht-mutiertem"
+],
+"unit": "sentence",
+"context": [
+"Vergütung bei Patienten mit metastasiertem Kolorektalkarzinom mit nicht-mutiertem Wildtyp-Ras-Gen:",
+"Remboursement pour les patients atteints de carcinome colorectal métastatique présentant le gène RAS de type sauvage:"
+],
+"tgt_span": [
+138,
+255
+],
+"description": "The German sentence is negated (nicht-mutiertem); the aligned French sentence has no negation.",
+"product": [
+"Erbitux"
+],
+"half": "dev",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 5,
+"fid": "G05"
+},
+{
+"id": "GALAFOLD3",
+"lang": "it",
+"kind": "negation",
+"languages": [
+"de",
+"it"
+],
+"side": "de",
+"negations": [
+"nicht"
+],
+"unit": "sentence",
+"context": [
+"Die Kosten für den Test ob eine bis dato nicht charakterisierte Mutation auf Migalastat anspricht, werden von Amicus Therapeutics Switzerland GmbH, (info@amicusrx.ch) übernommen.",
+"I costi del test per verificare se una mutazione finora sconosciuta risponde a migalastat sono coperti da Amicus Therapeutics Switzerland GmbH (info@amicusrx.ch)."
+],
+"tgt_span": [
+515,
+677
+],
+"description": "The German sentence is negated (nicht); the aligned Italian sentence has no negation.",
+"product": [
+"Galafold"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 6,
+"fid": "G06"
+},
+{
+"id": "HEMLIBRA.XXb",
+"lang": "it",
+"kind": "negation",
+"languages": [
+"de",
+"it"
+],
+"side": "de",
+"negations": [
+"kein"
+],
+"unit": "sentence",
+"context": [
+"Die Preisberechnung für Blutpräparate erfolgt aufgrund des Fabrikabgabepreises zuzüglich einer Fixmarge wegen der speziellen Verteilersituation (praktisch kein Zwischenhandel) von Fr. 40.-- zuzüglich MWST.",
+"Il calcolo del prezzo per i preparati sanguini si basa sul prezzo di fabbrica, maggiorato di un margine fisso di Fr. 40.-- più IVA dovuto alla speciale situazione distributiva (commissioni intermedie praticamente assenti)."
+],
+"tgt_span": [
+2850,
+3072
+],
+"description": "The German sentence is negated (kein); the aligned Italian sentence has no negation.",
+"product": [
+"Hemlibra"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 7,
+"fid": "G07"
+},
+{
+"id": "KEYTRUDA.03",
+"lang": "fr",
+"kind": "negation",
+"languages": [
+"de",
+"fr"
+],
+"side": "fr",
+"negations": [
+"non"
+],
+"unit": "sentence",
+"context": [
+"1L plattenepitheliales NSCLC (in Kombination mit Carboplatin und Paclitaxel) KN407 (mit Preismodell) KEYTRUDA in Kombination mit Carboplatin und Paclitaxel zur Erstlinienbehandlung des metastasierten, plattenepithelialen NSCLC bei Erwachsenen, die eine Lebenserwartung von mindestens 3 Monaten haben.",
+"1L NSCLC épidermoïde (en association au carboplatine et au paclitaxel) KN407 (avec modèle de prix) KEYTRUDA, en association au carboplatine et au paclitaxel, est indiqué dans le traitement de première ligne du cancer du poumon non à petites cellules (NSCLC) épidermoïde au stade métastatique chez les…"
+],
+"tgt_span": [
+0,
+357
+],
+"description": "The French sentence is negated (non); the aligned German sentence has no negation.",
+"product": [
+"Keytruda"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 8,
+"fid": "G08"
+},
+{
+"id": "KEYTRUDA.03---Inj-L-s---1L-plattenepitheliales-NSCLC-KN407",
+"lang": "fr",
+"kind": "negation",
+"languages": [
+"de",
+"fr"
+],
+"side": "fr",
+"negations": [
+"non"
+],
+"unit": "sentence",
+"context": [
+"1L plattenepitheliales NSCLC (in Kombination mit Carboplatin und Paclitaxel) KN407 (mit Preismodell) KEYTRUDA in Kombination mit Carboplatin und Paclitaxel zur Erstlinienbehandlung des metastasierten, plattenepithelialen NSCLC bei Erwachsenen, die eine Lebenserwartung von mindestens 3 Monaten haben.",
+"1L NSCLC épidermoïde (en association au carboplatine et au paclitaxel) KN407 (avec modèle de prix) KEYTRUDA, en association au carboplatine et au paclitaxel, est indiqué dans le traitement de première ligne du cancer du poumon non à petites cellules (NSCLC) épidermoïde au stade métastatique chez les…"
+],
+"tgt_span": [
+0,
+357
+],
+"description": "The French sentence is negated (non); the aligned German sentence has no negation.",
+"product": [
+"Keytruda"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 9,
+"fid": "G09"
+},
+{
+"id": "KEYTRUDA.XX---Inf-Konz",
+"lang": "it",
+"kind": "negation",
+"languages": [
+"de",
+"it"
+],
+"side": "it",
+"negations": [
+"Non"
+],
+"unit": "sentence",
+"context": [
+"Die Aufforderung zur Rückerstattung soll zeitnah zur Verabreichung erfolgen.",
+"Non si può applicare l’IVA in aggiunta a questo importo del prezzo di fabbrica."
+],
+"tgt_span": [
+1539,
+1618
+],
+"description": "The Italian sentence is negated (Non); the aligned German sentence has no negation.",
+"product": [
+"Keytruda"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 10,
+"fid": "G10"
+},
+{
+"id": "LIORESAL",
+"lang": "fr",
+"kind": "negation",
+"languages": [
+"de",
+"fr"
+],
+"side": "de",
+"negations": [
+"Therapierefraktäre"
+],
+"unit": "sentence",
+"context": [
+"Therapierefraktäre Spastizität.",
+"Spasticité résistante au traitement."
+],
+"tgt_span": [
+0,
+36
+],
+"description": "The German sentence is negated (Therapierefraktäre); the aligned French sentence has no negation.",
+"product": [
+"Baclofen",
+"Lioresal"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 11,
+"fid": "G11"
+},
+{
+"id": "LIORESAL",
+"lang": "it",
+"kind": "negation",
+"languages": [
+"de",
+"it"
+],
+"side": "de",
+"negations": [
+"Therapierefraktäre"
+],
+"unit": "sentence",
+"context": [
+"Therapierefraktäre Spastizität.",
+"Spasticità resistente al trattamento."
+],
+"tgt_span": [
+0,
+37
+],
+"description": "The German sentence is negated (Therapierefraktäre); the aligned Italian sentence has no negation.",
+"product": [
+"Baclofen",
+"Lioresal"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 12,
+"fid": "G12"
+},
+{
+"id": "MABTHERA.02",
+"lang": "fr",
+"kind": "negation",
+"languages": [
+"de",
+"fr"
+],
+"side": "de",
+"negations": [
+"nicht"
+],
+"unit": "sentence",
+"context": [
+"- Bei nicht abgeschlossener Familienplanung (Infertilitätsrisiko).",
+"- lorsque le patient souhaite encore avoir un ou des enfants (risque d’infertilité)."
+],
+"tgt_span": [
+861,
+945
+],
+"description": "The German sentence is negated (nicht); the aligned French sentence has no negation.",
+"product": [
+"MabThera"
+],
+"half": "dev",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 13,
+"fid": "G13"
+},
+{
+"id": "RIXATHON.02",
+"lang": "fr",
+"kind": "negation",
+"languages": [
+"de",
+"fr"
+],
+"side": "de",
+"negations": [
+"nicht"
+],
+"unit": "sentence",
+"context": [
+"- Bei nicht abgeschlossener Familienplanung (Infertilitätsrisiko).",
+"- lorsque le patient souhaite encore avoir un ou des enfants (risque d’infertilité)."
+],
+"tgt_span": [
+861,
+945
+],
+"description": "The German sentence is negated (nicht); the aligned French sentence has no negation.",
+"product": [
+"Rixathon"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 14,
+"fid": "G14"
+},
+{
+"id": "RUXIENCE.02",
+"lang": "fr",
+"kind": "negation",
+"languages": [
+"de",
+"fr"
+],
+"side": "de",
+"negations": [
+"nicht"
+],
+"unit": "sentence",
+"context": [
+"- Bei nicht abgeschlossener Familienplanung (Infertilitätsrisiko).",
+"- lorsque le patient souhaite encore avoir un ou des enfants (risque d’infertilité)."
+],
+"tgt_span": [
+861,
+945
+],
+"description": "The German sentence is negated (nicht); the aligned French sentence has no negation.",
+"product": [
+"Ruxience"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 15,
+"fid": "G15"
+},
+{
+"id": "TRUXIMA.02",
+"lang": "fr",
+"kind": "negation",
+"languages": [
+"de",
+"fr"
+],
+"side": "de",
+"negations": [
+"nicht"
+],
+"unit": "sentence",
+"context": [
+"- Bei nicht abgeschlossener Familienplanung (Infertilitätsrisiko).",
+"- lorsque le patient souhaite encore avoir un ou des enfants (risque d’infertilité)."
+],
+"tgt_span": [
+860,
+944
+],
+"description": "The German sentence is negated (nicht); the aligned French sentence has no negation.",
+"product": [
+"Truxima"
+],
+"half": "dev",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 16,
+"fid": "G16"
+},
+{
+"id": "VYNDAQEL.01b",
+"lang": "it",
+"kind": "negation",
+"languages": [
+"de",
+"it"
+],
+"side": "de",
+"negations": [
+"nicht"
+],
+"unit": "sentence",
+"context": [
+"VYNDAQEL darf nicht mit anderen spezifischen Arzneimitteln zur Behandlung der Transthyretin-Amyloidose (z.B. TTR-Stabilisatoren, TTR-Gen Silencer) kombiniert werden.",
+"VYNDAQEL on deve essere combinato con altri medicamenti specifici per il trattamento dell’amiloidosi da transtiretina (ad esempio stabilizzatori del TTR, agenti silenziatori del gene TTR)."
+],
+"tgt_span": [
+2628,
+2816
+],
+"description": "The German sentence is negated (nicht); the aligned Italian sentence has no negation.",
+"product": [
+"Vyndaqel"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 17,
+"fid": "G17"
+},
+{
+"id": "ZAVICEFTA2",
+"lang": "fr",
+"kind": "negation",
+"languages": [
+"de",
+"fr"
+],
+"side": "fr",
+"negations": [
+"n’"
+],
+"unit": "sentence",
+"context": [
+"Die Pfizer AG vergütet dem Leistungserbringer, bei dem eine angebrochene Packung ZAVICEFTA verfällt, auf dessen erste Aufforderung hin den Anteil des Fabrikabgabepreises für die Anzahl der verfallenen Ampullen zurück.",
+"À la première demande d’un prestataire de service n’ayant pas utilisé l’intégralité du contenu d’une boîte de ZAVICEFTA, la société Pfizer AG rembourse à celui-ci la part du prix de fabrique proportionnelle au nombre d’ampoules non utilisées."
+],
+"tgt_span": [
+1502,
+1744
+],
+"description": "The French sentence is negated (n’); the aligned German sentence has no negation.",
+"product": [
+"Zavicefta"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 18,
+"fid": "G18"
+},
+{
+"id": "HEMLIBRA.XXb",
+"lang": "fr",
+"kind": "number_word",
+"languages": [
+"de",
+"fr"
+],
+"de_only": [],
+"tgt_only": [
+{
+"value": "2",
+"unit": null,
+"src": "word",
+"context": [
+"Pour toutes les [deux] indications, les conditions de remboursement suivantes s’ap…"
+],
+"span": [
+16,
+20
+]
+}
+],
+"context": [
+"Pour toutes les [deux] indications, les conditions de remboursement suivantes s’ap…"
+],
+"description": "FR has 2 (number word), DE does not (in the aligned sentence).",
+"product": [
+"Hemlibra"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 1,
+"fid": "W01"
+},
+{
+"id": "IDEFIRIX",
+"lang": "it",
+"kind": "number_word",
+"languages": [
+"de",
+"it"
+],
+"de_only": [
+{
+"value": "5",
+"unit": null,
+"src": "word",
+"context": [
+"Zu den [fünf] Universitätsspitälern gehören das Inselspital Bern, das Uni…"
+]
+}
+],
+"tgt_only": [],
+"context": [
+"Zu den [fünf] Universitätsspitälern gehören das Inselspital Bern, das Uni…"
+],
+"description": "DE has 5 (number word), IT does not (in the aligned sentence).",
+"product": [
+"Idefirix"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 2,
+"fid": "W02"
+},
+{
+"id": "LEQVIO.01",
+"lang": "it",
+"kind": "number_word",
+"languages": [
+"de",
+"it"
+],
+"de_only": [],
+"tgt_only": [
+{
+"value": "5",
+"unit": "volte",
+"src": "word",
+"context": [
+"…rificato un aumento della creatinina chinasi pari ad almeno [cinque] volte il limite superiore di normalità, oppure • in caso di…"
+],
+"span": [
+1191,
+1197
+]
+}
+],
+"context": [
+"…rificato un aumento della creatinina chinasi pari ad almeno [cinque] volte il limite superiore di normalità, oppure • in caso di…"
+],
+"description": "IT has 5 (volte), DE does not (in the aligned sentence).",
+"product": [
+"Leqvio"
+],
+"half": "dev",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 3,
+"fid": "W03"
+},
+{
+"id": "PRALUENT.01a",
+"lang": "it",
+"kind": "number_word",
+"languages": [
+"de",
+"it"
+],
+"de_only": [],
+"tgt_only": [
+{
+"value": "5",
+"unit": "volte",
+"src": "word",
+"context": [
+"…rificato un aumento della creatinina chinasi pari ad almeno [cinque] volte il limite superiore di normalità, oppure • in caso di…"
+],
+"span": [
+1195,
+1201
+]
+}
+],
+"context": [
+"…rificato un aumento della creatinina chinasi pari ad almeno [cinque] volte il limite superiore di normalità, oppure • in caso di…"
+],
+"description": "IT has 5 (volte), DE does not (in the aligned sentence).",
+"product": [
+"Praluent"
+],
+"half": "dev",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 4,
+"fid": "W04"
+},
+{
+"id": "REPATHA.01a",
+"lang": "it",
+"kind": "number_word",
+"languages": [
+"de",
+"it"
+],
+"de_only": [],
+"tgt_only": [
+{
+"value": "5",
+"unit": "volte",
+"src": "word",
+"context": [
+"…rificato un aumento della creatinina chinasi pari ad almeno [cinque] volte il limite superiore di normalità, oppure • in caso di…"
+],
+"span": [
+1220,
+1226
+]
+}
+],
+"context": [
+"…rificato un aumento della creatinina chinasi pari ad almeno [cinque] volte il limite superiore di normalità, oppure • in caso di…"
+],
+"description": "IT has 5 (volte), DE does not (in the aligned sentence).",
+"product": [
+"Repatha"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 5,
+"fid": "W05"
+},
+{
+"id": "STELARAPP4",
+"lang": "fr",
+"kind": "number_word",
+"languages": [
+"de",
+"fr"
+],
+"de_only": [
+{
+"value": "3",
+"unit": null,
+"src": "word",
+"context": [
+"…iasis, bei denen eine Phototherapie oder eine der folgenden [drei] systemischen Therapien (Ciclosporin, Methotrexat, Acitretin…"
+]
+}
+],
+"tgt_only": [],
+"context": [
+"…iasis, bei denen eine Phototherapie oder eine der folgenden [drei] systemischen Therapien (Ciclosporin, Methotrexat, Acitretin…"
+],
+"description": "DE has 3 (number word), FR does not (in the aligned sentence).",
+"product": [
+"Stelara"
+],
+"half": "dev",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 6,
+"fid": "W06"
+},
+{
+"id": "STELARAPP4",
+"lang": "it",
+"kind": "number_word",
+"languages": [
+"de",
+"it"
+],
+"de_only": [
+{
+"value": "3",
+"unit": null,
+"src": "word",
+"context": [
+"…iasis, bei denen eine Phototherapie oder eine der folgenden [drei] systemischen Therapien (Ciclosporin, Methotrexat, Acitretin…"
+]
+}
+],
+"tgt_only": [],
+"context": [
+"…iasis, bei denen eine Phototherapie oder eine der folgenden [drei] systemischen Therapien (Ciclosporin, Methotrexat, Acitretin…"
+],
+"description": "DE has 3 (number word), IT does not (in the aligned sentence).",
+"product": [
+"Stelara"
+],
+"half": "dev",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 7,
+"fid": "W07"
+},
+{
+"id": "TEPKINLY.01a",
+"lang": "fr",
+"kind": "number_word",
+"languages": [
+"de",
+"fr"
+],
+"de_only": [
+{
+"value": "2",
+"unit": null,
+"src": "word",
+"context": [
+"… B‐Zell-Lymphom (diffuse large B-cell lymphoma, DLBCL) nach [zwei] oder mehr systemischen Therapielinien, einschliesslich eine…"
+]
+}
+],
+"tgt_only": [],
+"context": [
+"… B‐Zell-Lymphom (diffuse large B-cell lymphoma, DLBCL) nach [zwei] oder mehr systemischen Therapielinien, einschliesslich eine…"
+],
+"description": "DE has 2 (number word), FR does not (in the aligned sentence).",
+"product": [
+"Tepkinly"
+],
+"half": "held",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 8,
+"fid": "W08"
+},
+{
+"id": "TEPKINLY.01b",
+"lang": "fr",
+"kind": "number_word",
+"languages": [
+"de",
+"fr"
+],
+"de_only": [
+{
+"value": "2",
+"unit": null,
+"src": "word",
+"context": [
+"… B‐Zell-Lymphom (diffuse large B-cell lymphoma, DLBCL) nach [zwei] oder mehr systemischen Therapielinien, einschliesslich eine…"
+]
+}
+],
+"tgt_only": [],
+"context": [
+"… B‐Zell-Lymphom (diffuse large B-cell lymphoma, DLBCL) nach [zwei] oder mehr systemischen Therapielinien, einschliesslich eine…"
+],
+"description": "DE has 2 (number word), FR does not (in the aligned sentence).",
+"product": [
+"Tepkinly"
+],
+"half": "dev",
+"odd_one_out": null,
+"suggested_action": null,
+"likely_equivalent": false,
+"equivalence": null,
+"rank": 9,
+"fid": "W09"
 }
 ]
 }

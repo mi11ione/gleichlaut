@@ -1182,6 +1182,7 @@ KINDS_ALL = ("number", "unit", "language", "editorial", "terminology")
 
 def audit_item(x, stats=None, kinds=KINDS_ALL, terms=None):
     """For the review UI: pre-existing problems of an item's old texts. x: dict with de_old, tgt_old, lang.
+    kinds may also name the round-5 kinds (operator, negation, number_word; not in the default).
     -> [] or a list of dicts, each with kind ('number'|'unit'|'language'|'editorial'|'terminology'), lang, detail (one
     English sentence), values (optional), odd_one_out (optional), and 'text' (one phrase in the item's language).
     Number findings keep the round-2 shape (side 'de'|lang, value, n, unit, src, context) and add likely_equivalent /
@@ -1232,6 +1233,9 @@ def audit_item(x, stats=None, kinds=KINDS_ALL, terms=None):
                             context=[ctx(nrm(x["tgt_old"]), dict(s=m.start(), e=m.end()), 50)] if m else [],
                             detail=term_detail(p, L),
                             text=LOC_TERM[L].format(o=p["old_surface"], n=p["new_surface"], d=p["de_surface"], k=p["n_limitations"])))
+    for f in r5_findings(None, x["de_old"], x["tgt_old"], L, kinds=tuple(k for k in KINDS_R5 if k in kinds)) if set(kinds) & set(KINDS_R5) else []:
+        vals = [f["value"]] if f.get("value") else [y["value"] for y in f.get("de_only", []) + f.get("tgt_only", [])]
+        out.append(dict({k: v for k, v in f.items() if k not in ("id", "description")}, values=vals, detail=f["description"]))
     return out
 
 
@@ -1394,6 +1398,7 @@ def run_all(hist, date, J=None, names=None, st=None, pairs=None, r5=False):
         vs = set(x["value"] for x in f["de_only"] + f["tgt_only"])
         f["explained_by"] = [e["fid"] for e in ed.get(f["id"], []) if e["lang"] in ("de", f["lang"]) and vs & set(e["values"])]
         f["likely_equivalent"], f["equivalence"] = likely_equivalent(f, J["de"]["lim"][f["id"]], J[f["lang"]]["lim"][f["id"]])
+        f["counterpart"] = counterpart(f, J["de"]["lim"][f["id"]], J[f["lang"]]["lim"][f["id"]])     # display only (round 5)
     for f in U + Lg + E + Tm: f["likely_equivalent"], f["equivalence"] = False, None     # assessed for number findings only
     X = dict(language_fields_judged=dict(judged), language_fields_too_short=dict(short), unit_one_sided=one)
     if r5: return F + U + Lg + E + Tm + run_r5(J, names, F), S, X
@@ -1558,6 +1563,38 @@ def worklist_terms(F, J, d, seed=SEED + 2):
     return len(pool)
 
 
+QUESTION_R5 = ("Is the difference named in 'finding' a real divergence between the German and the 'lang' text (a different "
+               "condition for the reader)? Answer real / minor / not (same condition: rephrasing, style, alignment or parser "
+               "artefact).")
+SEED_R5 = 20261017
+
+
+def worklist_r5(R, J, d, n=60, seed=SEED_R5):
+    """PREREG R15: all round-5 findings of a kind if there are at most n, else a seeded sample of n; shuffled, blind
+    (ids R00..., no kind-specific rule names, no rank, no half) -> {kind: (findings, labelled)}."""
+    S = []; used = {}
+    for k in KINDS_R5:
+        pool = [f for f in R if f["kind"] == k]
+        pick = pool if len(pool) <= n else random.Random(seed).sample(pool, n)
+        S += pick; used[k] = dict(findings=len(pool), labelled=len(pick))
+    S = random.Random(seed).sample(S, len(S))
+    os.makedirs(d, exist_ok=True); W, K = [], {}; w = 2 if len(S) <= 100 else 3
+    for j, f in enumerate(S):
+        r = f"R{j:0{w}d}"
+        W.append(dict(id=r, kind=f["kind"], lang=f["lang"], de=nrm(J["de"]["lim"][f["id"]]), fr=nrm(J["fr"]["lim"].get(f["id"]) or ""),
+                      it=nrm(J["it"]["lim"].get(f["id"]) or ""), finding=f["description"], question=QUESTION_R5))
+        K[r] = dict(cud=f["id"], fid=f["fid"], kind=f["kind"], lang=f["lang"], half=f["half"])
+    json.dump(W, open(os.path.join(d, "worklist.json"), "w"), ensure_ascii=False, indent=1)
+    json.dump(K, open(os.path.join(d, "key_map_DO_NOT_SHOW.json"), "w"), ensure_ascii=False, indent=1)
+    return used
+
+
+def r5_block_sha():
+    s = open(os.path.abspath(__file__), encoding="utf-8").read()
+    a = s.index("# " + "=" * 66 + " round 5"); b = s.index("# " + "-" * 66 + " END OF ROUND-5 RULES")
+    return hashlib.sha256(s[a:b].encode("utf-8")).hexdigest()
+
+
 QUESTION_TERM = ("Does the 'lang' text render the German term named in 'finding' with a term that is wrong or that BAG no "
                  "longer uses (so the newer wording should be used)? Answer real (wrong term: different meaning) / minor "
                  "(outdated or inconsistent wording, same meaning) / not (correct here, e.g. it translates a different "
@@ -1597,6 +1634,7 @@ def main(argv=None):
     ap.add_argument("--worklist", help="write the blind round-2 worklist (number findings) + key map to this dir")
     ap.add_argument("--worklist-new", help="write the blind round-3 worklist (all unit/language/editorial findings) + key map")
     ap.add_argument("--worklist-terms", help="write the blind worklist of all terminology findings + key map to this dir")
+    ap.add_argument("--worklist-r5", help="write the blind round-5 worklist (PREREG R15: operator/negation/number_word) + key map")
     ap.add_argument("--no-dating", action="store_true", help="skip the run over the earlier snapshots of the year")
     ap.add_argument("--terms", help="use this term_pairs_<date>.json instead of mining the pairs from the snapshots")
     ap.add_argument("--list", choices=("migel", "al"), help="audit another trilingual BAG list (xlsx) instead of the SL")
@@ -1663,19 +1701,29 @@ def main(argv=None):
                                          source="spikes/gleichlaut/results.md (research, not shipped)"),
                 term_pairs=terms,
                 fresh=dict((k, v) for k, v in fr.items() if k != "hits") if fr else None)
-    json.dump(dict(summary=summ, findings=ALL, fresh_items=fr["hits"] if fr else None),
+    R5 = run_r5(J, names, F)
+    summ["round5"] = dict(note="PREREG R15: operator / negation / number_word, reported apart from the kinds above (findings_r5 in "
+                               "audit_<date>.json); 'on' is set by the R15 outcome; number findings carry a display-only 'counterpart'",
+                          rules_sha256=r5_block_sha(), on=dict(R5_ON), findings=len(R5),
+                          by_kind={k: sum(f["kind"] == k for f in R5) for k in KINDS_R5},
+                          by_kind_lang={k: dict(Counter(f["lang"] for f in R5 if f["kind"] == k)) for k in KINDS_R5},
+                          by_kind_half={k: dict(Counter(f["half"] for f in R5 if f["kind"] == k)) for k in KINDS_R5},
+                          limitations=len(set(f["id"] for f in R5)),
+                          number_counterparts={f["fid"]: f["counterpart"] for f in F if f.get("counterpart")})
+    json.dump(dict(summary=summ, findings=ALL, fresh_items=fr["hits"] if fr else None, findings_r5=R5),
               open(os.path.join(a.out, f"audit_{a.date}.json"), "w"), ensure_ascii=False, indent=0)
-    texts_file(ALL, J, a.date, os.path.join(a.out, f"audit_texts_{a.date}.json"))
+    texts_file(ALL + R5, J, a.date, os.path.join(a.out, f"audit_texts_{a.date}.json"))
+    if a.worklist_r5: summ["round5"]["worklist"] = worklist_r5(R5, J, a.worklist_r5)
     if a.worklist: summ["worklist"] = dict(zip(("pool", "n"), worklist(F, H, a.date, a.worklist)))
     if a.worklist_new: summ["worklist_new"] = dict(pool=worklist_new([f for f in ALL if f["kind"] != "terminology"], H, a.date, a.worklist_new))
     if a.worklist_terms: summ["worklist_terms"] = dict(pool=worklist_terms(ALL, J, a.worklist_terms))
     json.dump(summ, open(os.path.join(a.out, f"audit_{a.date}_summary.json"), "w"), ensure_ascii=False, indent=1)
-    open_ = sum(1 for f in ALL if not f["likely_equivalent"])
+    open_ = sum(1 for f in ALL if not f["likely_equivalent"]) + sum(1 for f in R5 if R5_ON.get(f["kind"]))
     print(f"{len(ALL)} findings {summ['by_kind']} on {summ['limitations_with_any_finding']} of {S['n_limitations']} limitations; "
           f"{summ['likely_equivalent']['number']} number findings likely equivalent; {len(P)} terminology pairs; "
           f"recall {summ['recall']['limitations']}/{len(R)} known limitations; Keytruda {'found' if summ['keytruda_bonus']['found'] else 'not found'}; "
           f"fresh items with a language/number problem: {fr['with_language_or_number'] if fr else '-'} of {fr['items'] if fr else '-'}"
-          f"{'; with a terminology notice: ' + str(fr['with_terminology']) if fr else ''}")
+          f"{'; with a terminology notice: ' + str(fr['with_terminology']) if fr else ''}; round 5 (R15, apart): {summ['round5']['by_kind']}")
     print("wrote " + ", ".join(os.path.join(a.out, n) for n in (f"audit_{a.date}.json", f"audit_{a.date}_summary.json",
           f"audit_texts_{a.date}.json", f"lang_stats_{a.date}.json.gz") + ((f"term_pairs_{a.date}.json",) if not a.terms else ())))
     return 1 if a.fail_on_findings and open_ else 0

@@ -1,0 +1,15 @@
+[
+ {
+  "id": "T00",
+  "list": "migel",
+  "position": "03.06.01.02.1",
+  "field": "Bezeichnung",
+  "kind": "number",
+  "lang": "it",
+  "de": "Infusionspumpe, nicht tragbar, Kauf",
+  "fr": "Pompe à perfusion, non portable, achat",
+  "it": "Pompa per perfusione non portatile, acquisto Limitazione: al massimo 1 apparecchio ogni 5 anni a terapia",
+  "finding": "IT has 5 (anni), DE does not",
+  "question": "Do the German and the 'lang' text state a different condition for at least one of the values named in 'finding'? Answer real / minor / not (same condition: formatting, rephrasing, unit conversion, parser artefact)."
+ }
+]

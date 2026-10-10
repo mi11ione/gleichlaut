@@ -1,0 +1,219 @@
+{
+ "R00": {
+  "cud": "ERBITUX5",
+  "fid": "G05",
+  "kind": "negation",
+  "lang": "fr",
+  "half": "dev"
+ },
+ "R01": {
+  "cud": "AMVUTTRA.01a",
+  "fid": "O01",
+  "kind": "operator",
+  "lang": "fr",
+  "half": "dev"
+ },
+ "R02": {
+  "cud": "LIORESAL",
+  "fid": "G11",
+  "kind": "negation",
+  "lang": "fr",
+  "half": "held"
+ },
+ "R03": {
+  "cud": "AMVUTTRA.02",
+  "fid": "G02",
+  "kind": "negation",
+  "lang": "fr",
+  "half": "held"
+ },
+ "R04": {
+  "cud": "ZAVICEFTA2",
+  "fid": "G18",
+  "kind": "negation",
+  "lang": "fr",
+  "half": "held"
+ },
+ "R05": {
+  "cud": "WYNZORA",
+  "fid": "O04",
+  "kind": "operator",
+  "lang": "it",
+  "half": "held"
+ },
+ "R06": {
+  "cud": "LIORESAL",
+  "fid": "G12",
+  "kind": "negation",
+  "lang": "it",
+  "half": "held"
+ },
+ "R07": {
+  "cud": "MABTHERA.02",
+  "fid": "G13",
+  "kind": "negation",
+  "lang": "fr",
+  "half": "dev"
+ },
+ "R08": {
+  "cud": "IDEFIRIX",
+  "fid": "W02",
+  "kind": "number_word",
+  "lang": "it",
+  "half": "held"
+ },
+ "R09": {
+  "cud": "HEMLIBRA.XXb",
+  "fid": "W01",
+  "kind": "number_word",
+  "lang": "fr",
+  "half": "held"
+ },
+ "R10": {
+  "cud": "RIXATHON.02",
+  "fid": "G14",
+  "kind": "negation",
+  "lang": "fr",
+  "half": "held"
+ },
+ "R11": {
+  "cud": "VYNDAQEL.01b",
+  "fid": "G17",
+  "kind": "negation",
+  "lang": "it",
+  "half": "held"
+ },
+ "R12": {
+  "cud": "HEMLIBRA.XXb",
+  "fid": "G07",
+  "kind": "negation",
+  "lang": "it",
+  "half": "held"
+ },
+ "R13": {
+  "cud": "STELARAPP4",
+  "fid": "W06",
+  "kind": "number_word",
+  "lang": "fr",
+  "half": "dev"
+ },
+ "R14": {
+  "cud": "LEQVIO.01",
+  "fid": "W03",
+  "kind": "number_word",
+  "lang": "it",
+  "half": "dev"
+ },
+ "R15": {
+  "cud": "KEYTRUDA.03---Inj-L-s---1L-plattenepitheliales-NSCLC-KN407",
+  "fid": "G09",
+  "kind": "negation",
+  "lang": "fr",
+  "half": "held"
+ },
+ "R16": {
+  "cud": "TEPKINLY.01b",
+  "fid": "W09",
+  "kind": "number_word",
+  "lang": "fr",
+  "half": "dev"
+ },
+ "R17": {
+  "cud": "GALAFOLD3",
+  "fid": "G06",
+  "kind": "negation",
+  "lang": "it",
+  "half": "held"
+ },
+ "R18": {
+  "cud": "NPLATE4",
+  "fid": "O02",
+  "kind": "operator",
+  "lang": "it",
+  "half": "held"
+ },
+ "R19": {
+  "cud": "OPDIVO.03a",
+  "fid": "O03",
+  "kind": "operator",
+  "lang": "it",
+  "half": "held"
+ },
+ "R20": {
+  "cud": "KEYTRUDA.03",
+  "fid": "G08",
+  "kind": "negation",
+  "lang": "fr",
+  "half": "held"
+ },
+ "R21": {
+  "cud": "RUXIENCE.02",
+  "fid": "G15",
+  "kind": "negation",
+  "lang": "fr",
+  "half": "held"
+ },
+ "R22": {
+  "cud": "AMVUTTRA.02",
+  "fid": "G01",
+  "kind": "negation",
+  "lang": "fr",
+  "half": "held"
+ },
+ "R23": {
+  "cud": "TRUXIMA.02",
+  "fid": "G16",
+  "kind": "negation",
+  "lang": "fr",
+  "half": "dev"
+ },
+ "R24": {
+  "cud": "PRALUENT.01a",
+  "fid": "W04",
+  "kind": "number_word",
+  "lang": "it",
+  "half": "dev"
+ },
+ "R25": {
+  "cud": "STELARAPP4",
+  "fid": "W07",
+  "kind": "number_word",
+  "lang": "it",
+  "half": "dev"
+ },
+ "R26": {
+  "cud": "REPATHA.01a",
+  "fid": "W05",
+  "kind": "number_word",
+  "lang": "it",
+  "half": "held"
+ },
+ "R27": {
+  "cud": "TEPKINLY.01a",
+  "fid": "W08",
+  "kind": "number_word",
+  "lang": "fr",
+  "half": "held"
+ },
+ "R28": {
+  "cud": "DECADURABOL2",
+  "fid": "G04",
+  "kind": "negation",
+  "lang": "it",
+  "half": "held"
+ },
+ "R29": {
+  "cud": "BEYONTTRA",
+  "fid": "G03",
+  "kind": "negation",
+  "lang": "it",
+  "half": "dev"
+ },
+ "R30": {
+  "cud": "KEYTRUDA.XX---Inf-Konz",
+  "fid": "G10",
+  "kind": "negation",
+  "lang": "it",
+  "half": "held"
+ }
+}
