@@ -37,6 +37,7 @@ human labels were used.
 | R16 | memorisation probe: could the models have seen the held-out answers | no evidence beyond the negative control (70B, 8B); probe sensitivity not shown |
 | R17 | real errors BAG fixed without a German change (Claude annotators); Apertus 70B as a non-Claude annotator | 17 content changes: needs fix by both 5 (shown) / 7 (hidden), the same 4 severe; Apertus confirms all 49 findings (κ 0.000), flags 2 of 17 |
 | R18 | Apertus 8B log-probability filter on the round-5 audit findings that ship off (threshold from planted copies, applied to the 31 register findings) | planted AUROC 0.955; register kept 13, 2 of 6 confirmed (15.4%): fails, the kinds stay off |
+| R19 | the certified 8B Q8_0 on the identity probes (the 250 MMLU questions, the 792-cell battery): is `fp1-nes` an 8B? | pending |
 
 ## R0. Pass rule for a drafting lane (frozen 9 Oct 2026, before the fresh 2025 run)
 
@@ -693,6 +694,69 @@ lifts the precision enough to switch them on.
   run (`score.audit_apertus_filter` -> `eval/results/audit_apertus_filter.json`, re-derived by `replay`).
 - **Caveats stated now.** The threshold comes from planted single-word edits; register false findings are alignment and
   parser artefacts, which may score differently. 31 register findings with 6 confirmed: any precision has a wide interval.
+
+## R19. The certified 8B Q8_0 on the identity probes: is `fp1-nes` an 8B? (frozen 11 Oct 2026, before any model run)
+
+An Apertus-team juror asked whether the backend `fp1-nes`, which answered part of the "70B" calls, could be an 8B. The
+70B inference rests on one record: on the same 250 MMLU questions the shared model scored 84.4% (211) and the v1 8B route
+`apertus-8b-instruct` 70.8% (177) (`docs/research/model-identity-and-quantisation.md`). No v1.5 8B was ever scored on
+those questions. R19 scores the certified local v1.5 8B on them and on the 792-cell battery whose recorded outputs
+identify the backends.
+
+- **What the recorded reference numbers are** (stated now, from the records). The 84.4% was measured on the model name
+  `swiss-ai/apertus-v1.5-8b` (the "shared model"); the record keeps the served model name per call, not the backend. On
+  the battery that name was served by `vllm-0.23.1rc1…-tp8-pp2` in 1,584 of 1,584 calls. `fp1-nes` answered the
+  `apertus-v1.5-70b` name on the battery (792 of 792, free generation, no log-probabilities) and gave byte-identical
+  text to the 8B name in 760 of 792 cells. `tp2` (`vllm-0.1.dev1+g54b4292c2-tp2`) was recorded on the battery only
+  through the `apertus-70b-instruct` alias, as exact forced choice (log-probabilities of prefilled candidates), never as
+  free generation: a byte-level comparison with `tp2` is therefore not possible, and `tp2` is compared on decisions.
+  Recorded cross-backend references: fp1-nes vs the 8B name, decisions 787 / 792; the 8B name vs tp2 (forced choice),
+  decisions 760 / 792; fp1-nes (generation) vs tp2 (forced choice), decisions 758 / 792; the v1 8B vs fp1-nes, text
+  0 / 792.
+- **Inputs, vendored byte-identical with sha256** (`data/r19/SHA256SUMS`; copied from the research tree before any
+  run). MMLU: `mmlu/items.json` (the 250 questions: subjects miscellaneous, professional law, high-school European and US
+  history, college biology, prehistory; MMLU, MIT licence), `mmlu/run.py` (the research script: prompt and decoding),
+  `mmlu/res_swiss-ai_apertus-v1.5-8b.json` and `mmlu/res_swiss-ai_apertus-8b-instruct.json` (the recorded predictions).
+  Battery: `battery/live.py` (prompts `Q`, candidates `CANDS`, parser `parse`), `battery/linie_items.json` (72) and
+  `battery/never_items.json` (90), and the recorded runs `battery/gen_apertus-v1.5-70b.json` (fp1-nes),
+  `battery/gen_apertus-v1.5-8b.json`, `battery/fc_apertus-v1.5-8b.json` (the 8B name) and
+  `battery/fc_apertus-70b-instruct.json` (tp2). The question strings used are the `questions` stored in the recorded
+  files, asserted equal to `live.py` Q.
+- **Calls, exactly as recorded.** One plain user message, no system message of ours, the GGUF's own chat template (it is
+  byte-identical to the official template, which the API rendered: `docs/research/chat-template.md`), greedy
+  (temperature 0), no logit mask. (i) MMLU: the user message of `run.py` `prompt(it)` (question, blank line, "A. … D."
+  lines, blank line, "Answer with only the letter (A, B, C or D)."), at most 3 tokens; the prediction is `run.py`'s
+  first match of `[ABCD]` in the answer text (kept verbatim; the raw text is recorded). (ii) Battery, generation: the user
+  message `text + Q[framing][rung]` of `live.py` `gen_cell`, at most 24 tokens; decision by `live.py` `parse`. (iii)
+  Battery, forced choice (as `live.py` `fc_cell` / `stage9.py`): the rendered prompt followed by the candidate ("Ja" /
+  "Nein"; "Urteil: schuldig" / "Urteil: nicht schuldig"), the candidate's last 1 / 2 / 3 tokens (asserted to detokenise to
+  the tokens the API recorded) scored by teacher forcing; log-odds = lp(first) − lp(second); decision = log-odds > 0.
+  Check, reported: the prompt token counts against the API's recorded `prompt_tokens` for every cell (generation and
+  forced choice); mismatches listed, not dropped.
+- **Model and runner.** The certified 8B GGUF Q8_0 (sha256 `dea904ad…202d`), llama-cpp-python 0.3.35 in process, GitHub
+  Actions `ubuntu-latest` CPU runners, workflow `r19-8b`, 20 shards (question / cell index modulo 20), resumable. Every
+  shard first verifies the build certificate of the loaded file (`cli.certified_gguf`) and stops without one; the
+  verdict is kept per shard. Records and every raw answer in `data/r19/runs/8b_q8_0/`. Not on a team machine. A smoke
+  run of at most 2 questions and 2 cells per shard may precede the full run; its outputs are not used.
+- **Measured** (`score.identity_r19` → `eval/results/identity_r19.json`, re-derived by `replay`). MMLU: Q8_0 accuracy
+  k / 250 (Wilson 95%); the paired differences shared model − Q8_0 and Q8_0 − v1 8B with a bootstrap 95% CI over
+  questions (2,000 resamples, `random.Random(20261019)`); letter agreement with each. Battery: **B_f** = cells whose
+  Q8_0 generated text is byte-identical to fp1-nes's recorded text (/792; also after stripping outer whitespace); the
+  same against the 8B name (B_8); **D_f** = generation decisions equal to fp1-nes's (both parsed; /792), D_8 the same
+  against the 8B name; **D_t** = forced-choice decisions equal to tp2's (/792), D_8fc against the 8B name's forced
+  choice; Pearson r and mean |Δ| of the forced-choice log-odds against tp2 and against the 8B name; Q8_0's own
+  generation vs forced-choice decision agreement.
+- **Decision rule, stated now.** MMLU-low: Q8_0 ≤ 78.0% and the CI of (shared − Q8_0) lies above 0.
+  (O1) MMLU-low with Q8_0 ≥ 65.0%, **and** B_f ≥ 90.0% (≥ 713 of 792) **and** D_f − D_t ≥ 3.0 points: `fp1-nes` is
+  likely an 8B; README and report then say that the headline "70B" arm may be partly 8B-served (its backend was not
+  logged per call; in the R2 rerun 81 of 283 calls went to `fp1-nes`). (O2) MMLU-low **and** B_f < 75.0% (< 594): the
+  70B inference is strengthened. (O3) Q8_0 ≥ 80.0%, or the CI of (shared − Q8_0) includes 0: MMLU does not separate the
+  shared model from the v1.5 8B, and the 84.4% is no longer cited as evidence of size. (O4) Anything else: inconclusive.
+  Whatever comes out is reported as is, in report §3.1 and wherever the README mentions the 70B identity.
+- **Caveats stated now.** Local Q8_0 on CPU is not the served bf16/fp8 stack: identical weights would still differ in
+  some cells (Q8_0 matches the bf16 DPO checkpoint on 638 of 648 parity decisions). The battery's answers are short
+  ("Ja.", "schuldig"), so byte identity carries less information than on long text. A v1.5 8B scoring near the shared
+  model would not show the shared model is an 8B.
 
 ## R4. Post-freeze changes
 
