@@ -39,8 +39,9 @@ also learns from BAG's own corrections: where BAG replaced a term in some texts,
 old one. That finds four French texts naming the wrong drug class and four ungrammatical Italian ones (8 of 11 notices
 confirmed). In the review register the 27 findings and 11 terminology notices become 18 issues, one decision each:
 sibling products that share a divergence are one issue. On two lists it was never designed on, MiGeL and the Analysenliste, **7 of 11** findings are real; the
-Analysenliste's Italian, for example, makes a test billable after 13 repetitions where German and French say 14. Every
-count here was confirmed by blind Claude annotators (`eval/labels/`); the audit itself calls no model. Its recall,
+Analysenliste's Italian, for example, makes a test billable after 13 repetitions where German and French say 14. Each
+finding was read by blind Claude annotators (`eval/labels/`), and the confirmed counts above are theirs; the audit itself
+calls no model. Its recall,
 measured independently on 1,000 divergences planted into clean limitations: 77.2% [74.5, 79.7] overall, 93.0% for a
 changed number, 94.0% for a field in the wrong language, 73.0% for a changed unit, 75.0% for a deleted clause and 51.0%
 for a typo next to a number. Those faults sit where the audit looks by design: a number bound to a unit (dose, interval,
@@ -66,6 +67,10 @@ repository; `eval/prereg/PREREG.md` says what can and cannot be verified from he
 | Errors in ready drafts (meaning / stale / German left) | **0 / 0 / 0** | 0 / 1 / 2 | **0 / 0 / 0** | |
 | Ready drafts that need a fix to the amendment | 25 of 62 (22 named by the terminology note) | 33 of 60 (27 named by it) | **3 of 66** | |
 | Pre-registered pass rule | **PASS** | **PASS** | **PASS** (and again on a rerun with a new seed) | |
+
+How much rests on one pattern: a single boilerplate family (one insurance-term change across many products) supplies
+half of the 70B's ready drafts. Without it, 75.8% of drafts are flagged, which would fail the 70% flag cap of our own
+rule, while the exact-match gain grows to +14.4 points (report §6).
 
 Against rules+, our strongest no-model baseline (it also copies changed names and deletes whole sentences, 10.8%
 identical), the 70B still adds +6.6 points [1.8, 12.0] and 41.3% fewer edits [29.7, 53.0].
@@ -113,7 +118,7 @@ German changes from the public feed, drafts them, and grades itself against what
 Sektion Arzneimittelaufnahmen and the ePL team. Operator runbook: [docs/operations.md](docs/operations.md).
 
 **The first shadow month has run** (1 Sep → 1 Oct 2026, pre-registered R7, `data/shadow/`): 52 FR/IT items; 8 went
-straight to a translator (rewrites, over-long texts). It was a hard month: 32 of the other 41 add a new standard
+straight to a translator (rewrites, over-long texts). On this month the drafting fails the 70% flag cap of our own rule: 32 of the other 41 add a new standard
 sentence ("Der Indikationscode dieser Limitierung …"), and the no-model start got 0 of 41 right. Apertus drafted 3 (8B)
 to 4 (70B) identical to BAG's text, and the checks flagged 82.9–92.7% of drafts, mostly for German left in that
 sentence. The 14 drafts marked ready across the three models contain no error: the blind labels find only equivalent
@@ -125,7 +130,7 @@ Phased pilot (audit first), owners, protection needs and monthly effort: [docs/a
 
 ```bash
 make run            # Docker, CPU, about a minute, no network (--network none unless LLM_BASE_URL is set)
-make local-run      # the same without Docker: Python ≥ 3.9, lxml for the XSD check (67 s on a laptop)
+make local-run      # the same without Docker: Python ≥ 3.9, lxml for the XSD check (1–3 min on a laptop)
 ```
 
 It verifies the sha256 of the frozen code, checks and test items; **re-executes the recorded Apertus runs end-to-end
@@ -162,10 +167,13 @@ runtime dependencies: [docs/dependencies.md](docs/dependencies.md); target archi
 
 - **The code that produced the numbers is the code that ships:** the research code is vendored byte-identical and
   hash-checked (`eval/prereg/freeze.json`); `make run` re-runs it from the recorded model responses.
-- **Every rule was written before its test:** `eval/prereg/PREREG.md`, with run timestamps from the gateway ledger.
-  The first out-of-sample run failed the rule; it is reported, and the fix was tested on new data.
-- **Labelling you can re-run:** every ready draft was read in full by a blind Claude annotator, re-labelled by a second,
-  disagreements broken by a third (agreement κ 0.532). The worklists, the exact annotator instructions
+- **Rules written before their tests:** `eval/prereg/PREREG.md`, with run timestamps from the gateway ledger. The
+  first out-of-sample run failed the rule; it is reported, and the fix was tested on new data. PREREG states the
+  exceptions: R0 predates this repository, R7 was written after the first shadow-month outputs were seen, and the
+  default build was chosen after both 8B results.
+- **Labelling you can re-run:** every ready draft was read in full and labelled twice, disagreements broken by a third
+  blind Claude annotator (agreement κ 0.532; for the headline 70B run the first labels are the research labeller's,
+  the second and third blind). The worklists, the exact annotator instructions
   (`eval/labels/PROTOCOL.md`) and every label are in `eval/labels/`; a BAG translator can be the next annotator on the
   same worklists, with no change to the pipeline.
 - **Every number is traceable:** `claims.tsv` maps every number in this README, the report and the form notes to a

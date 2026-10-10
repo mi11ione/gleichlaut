@@ -77,14 +77,14 @@ def pipeline():
     b = []
     for i, (title, sub, col) in enumerate(boxes):
         x = 12 + i * (bw + gap)
-        b.append(f'<rect x="{x}" y="22" width="{bw}" height="76" rx="6" fill="{SURF}" stroke="{col or INK2}" stroke-width="{2 if col else 1}"/>')
+        b.append(f'<rect x="{x}" y="22" width="{bw}" height="76" rx="0" fill="{SURF}" stroke="{col or INK2}" stroke-width="{2 if col else 1}"/>')
         b.append(t(x + bw / 2, 44, title, 12, col or INK, "middle", "bold"))
         for j, line in enumerate(sub.split("\n")): b.append(t(x + bw / 2, 64 + j * 14, line, 9, INK2, "middle"))
         if i < len(boxes) - 1:
             ax = x + bw + 2
             b.append(f'<path d="M{ax} 60 L{ax + gap - 5} 60" stroke="{MUTED}" stroke-width="1.5"/><path d="M{ax + gap - 6} 56 L{ax + gap - 2} 60 L{ax + gap - 6} 64" fill="none" stroke="{MUTED}" stroke-width="1.5"/>')
     b.append(t(12, 14, "Model steps in blue; everything else is deterministic code, frozen by sha256", 10, INK2))
-    b.append(t(12, 114, "Routing: Fedlex -> 8B on CPU  |  SL -> 70B on a certified endpoint  |  air-gapped SL -> 8B, every item reviewed  |  DE change > 60% -> human", 9.5, INK2))
+    b.append(t(12, 114, "Routing: SL and Fedlex -> 8B on CPU, air-gapped (default; certified build)  |  SL, fewer edits -> 70B on a certified endpoint (option)  |  DE change > 60% -> human", 9.5, INK2))
     return svg(W, H, "".join(b))
 
 

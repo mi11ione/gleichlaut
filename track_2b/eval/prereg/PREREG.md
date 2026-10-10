@@ -183,7 +183,7 @@ data the change was designed on is labelled "dev" in every table.
 - **R1 (M2), 10 Oct 2026:** Apertus 8B GGUF Q8_0 on CPU (GitHub Actions, 8 shards), same pipeline, fresh 166: exact
   17.5% (+11.4 [4.8, 18.7]), flagged 62.7%, ready drafts 0 meaning / 0 stale / 0 German (two blind annotators, needs-fix
   κ 0.789, a third broke 7 disagreements): **PASS** (`eval/results/m1_q8_0.json`, build certificate
-  `eval/certificates/8b-q8_0-fresh166.json`). Q4_K_M stays the default build (8 GiB box); Q8_0 is the certified option
+  `eval/certificates/8b-q8_0-fresh166.json`). Q4_K_M stays the default build (superseded on 10 Oct 2026, see "Default build" below) (8 GiB box); Q8_0 is the certified option
   for a 16 GiB box (`BUILD=q8_0`). Paired against the 70B (`eval/results/size_compare.json`): exact 17.5% each, edits
   saved 33.1% vs 42.4% (difference 9.3 points, 95% CI [−1.3, 20.2]).
 - **R6, 10 Oct 2026:** the shipped Fedlex lane with the GGUF builds on the 120 Fedlex items (GitHub Actions CPU, 8 shards

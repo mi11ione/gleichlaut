@@ -13,7 +13,8 @@ something different in each language is a condition nobody can apply consistentl
 - **Runs air-gapped on an ordinary CPU** with Apertus 8B: on 166 held-out amendments, with every rule fixed in advance,
   its drafts need 33.1% fewer token edits to reach BAG's published text than the old text with updated numbers (about
   670 fewer word-level edits a month at today's volume), and the
-  62 drafts it marks ready have **0 meaning errors**, stale changes or German left.
+  62 drafts it marks ready have **0 meaning errors**, stale changes or German left (25 still need a small fix,
+  mostly one insurance term; 166 amendments = 83 German changes in French and Italian).
 - **The 70B where an endpoint you control is available:** 42.4% fewer token edits, ready drafts that rarely need a fix
   to the amendment (3 of 66), at **CHF 0.0024 per draft**.
 - **The audit needs no model at all:** it reduces 1,688 limitations to 27 findings (18 issues to decide), including the 10 divergences an
