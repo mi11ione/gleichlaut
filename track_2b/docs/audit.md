@@ -292,7 +292,8 @@ is therefore expected and is not evidence about divergences of other kinds.
 |---|---|
 | Findings by kind | **number 21** (14 FR, 7 IT; unchanged), **unit 0**, **language 1** (IT), **editorial 5** (1 DE, 3 FR, 1 IT), **terminology 11** (7 FR, 4 IT; round 4); 38 findings on 27 limitations (27 on 20 without terminology) |
 | Likely equivalent (number) | 9 of 21 (round 4, triage only) |
-| Recall, known divergent limitations (number) | **10 of 10**; 13 of 13 hand-verified values on the right side and in the right language |
+| Recall, known divergent limitations (number) | **10 of 10**; 13 of 13 hand-verified values on the right side and in the right language (circular: see the next row) |
+| Recall, planted divergences (200 per type, FR+IT) | number **93.0%**, unit **73.0%**, clause deletion **75.0%**, wrong language **94.0%**, typo next to a number **51.0%** (section "Recall on planted divergences") |
 | Keytruda KN045 | **found** (`L01`): the IT field is identical to the FR text (function words fr 39 / it 1, trigram margin 2.16 nat); first seen **1 Aug 2026**, present in 4 snapshots (Aug, Sep, 1 Oct, 6 Oct) |
 | Other language findings | none on 6 Oct, and none in any of the 9 snapshots (`language_any_snapshot`). On 6 Oct no other field passes even rule A alone |
 | Number findings explained by a typo | 4 of 21: LEQVIO FR+IT (`N16`, `N17` ← German `1 .4`), PREVYMIS FR (`N04` ← `de15`), FORSTEO IT (`N13` ← `se mesi`) |
@@ -359,6 +360,113 @@ reached 3/15 = 20%, with 7 of the 15 being parser noise. The audit differs in fi
 The cost is coverage: 230 count-only and 148 unbound differences are not shown. The two numbers measure different
 things, so a high audit precision does not mean the census was wrong. It means the audit asks a narrower question.
 
+## Recall on planted divergences
+
+The 10/10 above is circular. An earlier numeric census found the 10 known cases, and the rules were written around that
+census's noise classes. To measure recall without that loop, we planted faults of five declared types into copies of the
+register and ran the unmodified audit on every copy. Command: `python3 tools/audit_inject.py` (stdlib, no model, no
+network, seed 20261010). Output: `eval/results/audit_injection.json`, with every miss and its reason. It takes about
+25 minutes on 8 cores.
+
+**Protocol.** It was written into the script's docstring before the first run, and the audit's rules were not touched.
+
+- **Register.** The 6 Oct 2026 snapshot (1,688 limitations). We keep one limitation per distinct DE/FR/IT text triple
+  and drop every triple that has a baseline finding of any kind. That leaves 1,597 eligible limitations, so any finding
+  on a copy comes from the planted fault.
+- **Sites.** The script's own pattern finds them, not the audit's parser: a number (digits, or a number word 2–12)
+  followed by a unit or quantity word.
+- **Sampling.** Per type and target language: a seeded shuffle of the eligible limitations that have a site; we take the
+  first 100. That gives 100 FR + 100 IT copies per type. Each copy has one fault and one modified field.
+- **Types.**
+  - `number`: one value changed to another plausible one (n → 2n, n±1, n/2, n+10; x → 2x or x/2; a number word to
+    another number word).
+  - `unit`: one unit changed within its dimension, the number kept (mg↔µg, g→mg, kg→g, ml→dl; days→weeks→months,
+    months→weeks, years→months).
+  - `deletion`: one sentence or comma clause that contains a number is deleted.
+  - `language`: the whole target field is replaced by one of the other two language fields.
+  - `typo`: one edit next to a number. The edit glues a word to the number or deletes, doubles, substitutes or
+    transposes a letter. It lands in the word before the number, in the unit word after it, or in a number word itself.
+- **Detection (strict).**
+  - `number`: a number finding with the new value on the target side or the old value on the German side.
+  - `unit`: a unit finding for the changed value.
+  - `deletion`: a number finding with a value of the deleted clause on the German side.
+  - `language`: a language finding on the target field that names the source language.
+  - `typo`: an editorial finding within 30 characters of the edit.
+  - "Any" counts a copy whose limitation has any finding of any kind.
+- **Execution.** For each copy, the register statistics are rebuilt from the modified register (`build_stats`). The
+  shipped terminology pairs are used (as with `--terms`), and `run_all` runs on the copy's limitation. A limitation's
+  findings depend only on its own three texts, the statistics and the pairs. We checked this on 100 copies by running
+  the full register: the statistics were identical in 100 of 100, and so were the findings on the modified limitation.
+
+| type | n (FR+IT) | detected | recall | Wilson 95% | any finding |
+|---|---|---|---|---|---|
+| number | 200 | 186 | **93.0%** | 88.6–95.8 | 93.0% |
+| unit | 200 | 146 | **73.0%** | 66.5–78.7 | 73.0% |
+| deletion | 200 | 150 | **75.0%** | 68.6–80.5 | 75.0% |
+| language | 200 | 188 | **94.0%** | 89.8–96.5 | 94.0% |
+| typo | 200 | 102 | **51.0%** | 44.1–57.8 | 56.0% |
+
+Pooled, the five types give 772 of 1,000 (77.2%, 74.5–79.7). That figure describes this protocol's equal mix of types,
+not the real frequency of errors. FR and IT differ by at most 8 points in every type.
+
+**False positives elsewhere.** In the 100 full-register re-runs, no finding appeared on or disappeared from any other
+limitation (0 new, 0 lost). In 11 of those re-runs, the trigram margin of the Keytruda language finding moved in the
+third decimal: the profile of a language includes the one changed text. The finding stayed the same. The first full run
+showed this as 3 "new + lost" pairs, so the comparison now ignores the margin.
+
+**What the misses teach** (all counts from the output file):
+
+- **Number: masked by repetition (12 of 14 misses).** The comparison works on sets of values (R5). Take STRENSIQ:
+  `2 mg` → `1 mg` is invisible when the target still says 2 mg elsewhere and the German states 1 mg elsewhere. One
+  more miss is R4d at work: NORDITROPIN `4 ans` → `3 ans`, where the German "4. Lebensjahr" is age 3. The planted text
+  is arguably a correct rendering. The last miss (KIMMTRAK `tre` → `quattro infusioni`) is R2: the German
+  "drei KIMMTRAK-Infusionen" binds no unit, and 4 occurs in the German elsewhere.
+- **Unit: one-directional (51 of 54 misses).** The value still carries its old unit somewhere else in the target. For
+  example, ABEVMY `3 semaines` → `3 mois` while another `3 semaines` stays. The unit check needs a class difference in
+  both directions, so this lands in the `unit_one_sided` diagnostic and not in the findings (see "Unit check" under
+  Caveats). Two more misses have the value with both units in both texts. The last has a German unit outside the
+  classes (RINVOQ "18. Lebensjahr"). Promoting `unit_one_sided` to a finding would flag these 51. Its precision
+  is unmeasured: 13 such cases on 6 Oct, unlabelled.
+- **Deletion: the deleted values survive elsewhere (40 of 50 misses).** An example is SELINCRO "… 12 mois maximum.",
+  where 12 months appears again. On the 160 copies where at least one deleted value disappears from the target,
+  recall is **150/160 = 93.8%** (88.9–96.6). The other misses: 6 are R3 (value 1 is never reported when the other text
+  has an article, even `1%`), and 4 are R2 (unbound values).
+- **Language: short fields (11 of 12 misses).** The check does not judge fields with fewer than 3 function words, for
+  example MERONEM "Fibrosi cistica" → "Mukoviszidose". On judged fields recall is **188/189 = 99.5%** (97.1–99.9). The
+  one miss is OCTOSTIM: its FR field became the Italian "Emofilia A et morbo di di von Willebrand Tipo I.", which has
+  only 2 Italian function words.
+- **Typo: the rules are narrow by design (98 misses).**
+
+  | subtype | detected | why the rest are missed |
+  |---|---|---|
+  | glue before a number | 36/41 | E2 accepts only listed prepositions and articles |
+  | glue to a unit word | 19/23 | E3 covers time words only |
+  | doubled letter in a unit word | 26/27 | |
+  | substituted letter in a unit word | 11/18 | |
+  | deleted letter in a unit word | 6/28 | `semaine` is a real word, and E5 skips words under 4 letters (`ans`, `ore`) |
+  | edit to a number word (no transposition) | 4/8 | E4 needs the corrected phrase in at least 5 register texts |
+  | transposed letter | 0/24 | a transposition is 2 edits for `lev1` |
+  | edit to the word before a number | 0/31 | no rule looks there |
+
+  Ten more copies are caught as number findings instead, which is why "any" reaches 56%.
+
+**Limits of this measurement.**
+
+- We designed the faults ourselves. The site pattern and the audit share the common unit words, so number, unit and
+  deletion recall hold only for faults next to a unit word.
+- Paraphrase-level divergences, partial translations, changed operators and dropped negations are not planted.
+- The typo model is ours, not an observed error distribution.
+- The result answers "if a fault of this shape were there, would the audit see it?" It does not say how many real
+  divergences the register holds.
+
+**Cheap rule changes the misses point to** (reported, not applied; no rule was changed for this measurement):
+
+- restrict R3 to a `1` that no unit symbol follows (R3 hid 6 deletions, among them SIMVASzentiv's `supérieur à 1%`);
+- treat a transposition as one edit in E4/E5 (24 typo misses);
+- report `unit_one_sided` (51 unit misses).
+
+Each of these would need its own precision check before it ships.
+
 ## Second signal: term pairs (measured, off)
 
 `term_pairs()` derives DE→FR/IT term pairs mechanically. A German word or hyphen compound of at least 8 letters is paired
@@ -405,7 +513,8 @@ error. The signal is therefore off; the statistics are reported in the summary (
   at least 5 texts. FORSTEO's `almeno sei mesi` is in 5 texts in August, but only 4 in June and July, so E4 would not have
   fired with those months' own statistics. Misspellings that are not next to a number are not looked for.
 - **Recall of the number check is measured on cases a numeric method found.** It is optimistic for divergences in
-  general.
+  general. The planted-divergence measurement above is the independent estimate. It is still limited to fault shapes
+  that we designed.
 - **Number words.** Only 2–12 (frozen `NUMW`). FR hyphenated numbers (`dix-huit`) are read as 10 and 8.
 - **Duplicated boilerplate.** Three etanercept findings are one copied error, and so are E02/E03, T01–T04 and T05–T08.
   There are fewer independent errors than findings.

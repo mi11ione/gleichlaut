@@ -385,6 +385,18 @@ def shadow_month(run="20260901-20261001"):
                 **out)
 
 
+def audit_recall():
+    """Audit recall on planted divergences (tools/audit_inject.py -> eval/results/audit_injection.json; it needs the 6 Oct
+    snapshot, so replay reads its committed output): per fault type, detected / n, recall and Wilson 95% in percent."""
+    d = json.load(open(os.path.join(core.ROOT, "eval", "results", "audit_injection.json"), encoding="utf-8"))
+    pct = lambda v: round(100 * v, 1)
+    out = dict(injections=d["summary"]["injections"], detected=d["summary"]["detected"], recall_pct=pct(d["summary"]["recall"]),
+               wilson95_pct=[pct(v) for v in d["summary"]["wilson95"]], seed=d["seed"])
+    out["types"] = {k: dict(n=v["n"], detected=v["detected"], recall_pct=pct(v["recall"]), wilson95_pct=[pct(x) for x in v["wilson95"]])
+                    for k, v in d["types"].items()}
+    return out
+
+
 def size_compare(builds=("q4_k_m", "q8_0")):
     """Model size, paired: the 70B (fresh 166) against each 8B GGUF build on the same items. Paired cluster bootstrap over
     German changes (4000 resamples, seed 7) of the difference in token edits saved against the rules-only start, and the

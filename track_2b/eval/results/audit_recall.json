@@ -1,0 +1,57 @@
+{
+ "detected": 772,
+ "injections": 1000,
+ "recall_pct": 77.2,
+ "seed": 20261010,
+ "types": {
+  "deletion": {
+   "detected": 150,
+   "n": 200,
+   "recall_pct": 75.0,
+   "wilson95_pct": [
+    68.6,
+    80.5
+   ]
+  },
+  "language": {
+   "detected": 188,
+   "n": 200,
+   "recall_pct": 94.0,
+   "wilson95_pct": [
+    89.8,
+    96.5
+   ]
+  },
+  "number": {
+   "detected": 186,
+   "n": 200,
+   "recall_pct": 93.0,
+   "wilson95_pct": [
+    88.6,
+    95.8
+   ]
+  },
+  "typo": {
+   "detected": 102,
+   "n": 200,
+   "recall_pct": 51.0,
+   "wilson95_pct": [
+    44.1,
+    57.8
+   ]
+  },
+  "unit": {
+   "detected": 146,
+   "n": 200,
+   "recall_pct": 73.0,
+   "wilson95_pct": [
+    66.5,
+    78.7
+   ]
+  }
+ },
+ "wilson95_pct": [
+  74.5,
+  79.7
+ ]
+}

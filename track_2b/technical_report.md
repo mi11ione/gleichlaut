@@ -37,7 +37,9 @@ drafts), so the default deployment is fully air-gapped. At Q8_0 the 8B matches t
 0 errors of any severe kind among its 62 ready drafts; the 70B still saves more edits (42.4% vs 33.1% for Q8_0, paired
 difference 9.3 points [−1.3, 20.2]; vs 20.9% for Q4_K_M) and its ready drafts rarely need a fix to the amendment (3 of 66). The audit reduces 1,688 limitations to
 **27** findings that contain **all 10** known divergent limitations, **5** new confirmed problems (typos next to
-numbers) and Keytruda's Italian field holding the French text (spotted by hand before the language check existed). A draft costs **CHF 0.0024** at a Swiss provider's
+numbers) and Keytruda's Italian field holding the French text (spotted by hand before the language check existed).
+On 1,000 divergences planted into clean limitations its recall is 77.2% [74.5, 79.7]: 93.0% for a changed number,
+94.0% for a field in the wrong language, 51.0% for a typo next to a number. A draft costs **CHF 0.0024** at a Swiss provider's
 published price for Apertus 70B. `make run` re-executes the recorded runs offline and re-derives every number.
 
 ## 2. Architecture

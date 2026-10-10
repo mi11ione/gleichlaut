@@ -40,7 +40,10 @@ also learns from BAG's own corrections: where BAG replaced a term in some texts,
 old one. That finds four French texts naming the wrong drug class and four ungrammatical Italian ones (8 of 11 findings
 confirmed). On two lists it was never designed on, MiGeL and the Analysenliste, **7 of 11** findings are real; the
 Analysenliste's Italian, for example, makes a test billable after 13 repetitions where German and French say 14. Every
-count here was confirmed by blind Claude annotators (`eval/labels/`); the audit itself calls no model.
+count here was confirmed by blind Claude annotators (`eval/labels/`); the audit itself calls no model. Its recall,
+measured independently on 1,000 divergences planted into clean limitations: 77.2% [74.5, 79.7] overall, 93.0% for a
+changed number, 94.0% for a field in the wrong language, 73.0% for a changed unit, 75.0% for a deleted clause and 51.0%
+for a typo next to a number ([docs/audit.md](docs/audit.md)).
 
 The two meet in the review register. Nemluvio's old Italian already says "every 4 weeks"; Apertus' draft writes "every
 8 weeks", matching the German. BAG's own update kept the 4. The register shows the draft as a correction to check, not

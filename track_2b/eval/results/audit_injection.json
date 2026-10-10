@@ -1,0 +1,3207 @@
+{
+ "generated_by": "python3 tools/audit_inject.py",
+ "model_calls": 0,
+ "network": false,
+ "date": "20261006",
+ "seed": 20261010,
+ "protocol": {
+  "written": "before the first run (tools/audit_inject.py docstring); the audit's rules were not changed",
+  "register": "public SL feed 20261006: 1688 limitations, 1624 distinct DE/FR/IT text triples",
+  "eligible": "one representative per distinct triple, no baseline finding of any kind: 1597 limitations (27 triples with a baseline finding excluded)",
+  "sampling": "per type and target language (fr, it): random.Random('20261010:<type>:<lang>') shuffle, first 100 with a site; one fault per copy",
+  "types": {
+   "number": "one number (digits or number word 2..12, followed by a unit word) changed to another plausible value",
+   "unit": "one unit changed within its dimension, number kept (mg<->µg, g->mg, kg->g, ml->dl; days->weeks->months, months->weeks, years->months, hours->days)",
+   "deletion": "one number-bearing sentence (text has >= 2) or comma clause (sentence has >= 2) deleted",
+   "language": "the target field replaced by one of the two other language fields (50/50)",
+   "typo": "one edit in the word before a number, the unit word after it, or a number word: glue (delete the space; not before a unit symbol), delete, double, substitute or transpose a letter"
+  },
+  "detection": {
+   "number": "number finding: new value on the target side or old value on the German side",
+   "unit": "unit finding for the changed value",
+   "deletion": "number finding with a deleted value on the German side",
+   "language": "language finding on the target field naming the source language",
+   "typo": "editorial finding whose surface is within 30 characters of the edit",
+   "any": "the limitation has any finding (all were finding-free before the injection)"
+  },
+  "execution": "register statistics rebuilt from each modified register (audit.build_stats on the modified language), shipped terminology pairs (as --terms), audit.run_all on the copy's limitation; equivalence to a full-register run checked on the 'verification' copies"
+ },
+ "summary": {
+  "injections": 1000,
+  "detected": 772,
+  "recall": 0.772,
+  "wilson95": [
+   0.745,
+   0.797
+  ],
+  "note": "pooled over types with equal n per type: a summary of this protocol's mix, not of real error frequencies"
+ },
+ "types": {
+  "number": {
+   "n": 200,
+   "detected": 186,
+   "recall": 0.93,
+   "wilson95": [
+    0.886,
+    0.958
+   ],
+   "any_finding": 186,
+   "any_recall": 0.93,
+   "any_wilson95": [
+    0.886,
+    0.958
+   ],
+   "eligible_limitations": {
+    "fr": 740,
+    "it": 744
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "detected": 91,
+     "recall": 0.91
+    },
+    "it": {
+     "n": 100,
+     "detected": 95,
+     "recall": 0.95
+    }
+   },
+   "by_subtype": {
+    "digit": {
+     "n": 180,
+     "detected": 169
+    },
+    "word": {
+     "n": 20,
+     "detected": 17
+    }
+   },
+   "also_found_as": {
+    "number": 186,
+    "unit": 1
+   },
+   "miss_reasons": {
+    "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)": 12,
+    "reconciled by lebensjahr": 1,
+    "value not bound to a unit in the audit's parse (R2)": 1
+   },
+   "miss_examples": [
+    {
+     "id": "STRENSIQ.01",
+     "lang": "fr",
+     "sub": "digit",
+     "before": "2 mg",
+     "after": "1 mg",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)",
+     "findings": []
+    },
+    {
+     "id": "NORDITROPIN2",
+     "lang": "fr",
+     "sub": "digit",
+     "before": "4 ans",
+     "after": "3 ans",
+     "reason": "reconciled by lebensjahr",
+     "findings": []
+    },
+    {
+     "id": "KIMMTRAK.01",
+     "lang": "it",
+     "sub": "word",
+     "before": "tre infusioni",
+     "after": "quattro infusioni",
+     "reason": "value not bound to a unit in the audit's parse (R2)",
+     "findings": []
+    },
+    {
+     "id": "FLIXABI.05",
+     "lang": "fr",
+     "sub": "digit",
+     "before": "1 an",
+     "after": "2 an",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)",
+     "findings": []
+    },
+    {
+     "id": "TREMFYAPE.04",
+     "lang": "fr",
+     "sub": "digit",
+     "before": "2 ml",
+     "after": "4 ml",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)",
+     "findings": []
+    },
+    {
+     "id": "MOUNJARO.02K",
+     "lang": "fr",
+     "sub": "digit",
+     "before": "6 mois",
+     "after": "12 mois",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)",
+     "findings": []
+    },
+    {
+     "id": "SOLIRIS.02",
+     "lang": "fr",
+     "sub": "digit",
+     "before": "12 mois",
+     "after": "6 mois",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)",
+     "findings": []
+    },
+    {
+     "id": "DUPIXENT.09P",
+     "lang": "fr",
+     "sub": "word",
+     "before": "deux semaines",
+     "after": "quatre semaines",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)",
+     "findings": []
+    }
+   ],
+   "misses": [
+    {
+     "id": "STRENSIQ.01",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "FLIXABI.05",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "TREMFYAPE.04",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "NORDITROPIN2",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "reconciled by lebensjahr"
+    },
+    {
+     "id": "MOUNJARO.02K",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "SOLIRIS.02",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "DUPIXENT.09P",
+     "lang": "fr",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "NUCALA-02",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "DUODOPA.01",
+     "lang": "fr",
+     "sub": "digit",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "MYOZYME4",
+     "lang": "it",
+     "sub": "word",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "MICROLAX",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "OPDIVO.13--",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "MOVENTIG",
+     "lang": "it",
+     "sub": "digit",
+     "reason": "masked: the old value stays elsewhere in the target and the new value is in the German (set comparison, R5)"
+    },
+    {
+     "id": "KIMMTRAK.01",
+     "lang": "it",
+     "sub": "word",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    }
+   ]
+  },
+  "unit": {
+   "n": 200,
+   "detected": 146,
+   "recall": 0.73,
+   "wilson95": [
+    0.665,
+    0.787
+   ],
+   "any_finding": 146,
+   "any_recall": 0.73,
+   "any_wilson95": [
+    0.665,
+    0.787
+   ],
+   "eligible_limitations": {
+    "fr": 678,
+    "it": 685
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "detected": 72,
+     "recall": 0.72
+    },
+    "it": {
+     "n": 100,
+     "detected": 74,
+     "recall": 0.74
+    }
+   },
+   "by_subtype": {
+    "an->mois": {
+     "n": 1,
+     "detected": 1
+    },
+    "anni->mesi": {
+     "n": 27,
+     "detected": 23
+    },
+    "anno->mese": {
+     "n": 1,
+     "detected": 1
+    },
+    "ans->mois": {
+     "n": 25,
+     "detected": 13
+    },
+    "g->mg": {
+     "n": 4,
+     "detected": 4
+    },
+    "giorni->settimane": {
+     "n": 2,
+     "detected": 0
+    },
+    "jours->semaines": {
+     "n": 2,
+     "detected": 2
+    },
+    "kg->g": {
+     "n": 4,
+     "detected": 4
+    },
+    "mesi->settimane": {
+     "n": 29,
+     "detected": 23
+    },
+    "mg->µg": {
+     "n": 41,
+     "detected": 27
+    },
+    "ml->dl": {
+     "n": 7,
+     "detected": 3
+    },
+    "mois->semaines": {
+     "n": 23,
+     "detected": 20
+    },
+    "semaines->mois": {
+     "n": 12,
+     "detected": 9
+    },
+    "settimane->mesi": {
+     "n": 22,
+     "detected": 16
+    }
+   },
+   "also_found_as": {
+    "unit": 146
+   },
+   "miss_reasons": {
+    "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)": 51,
+    "both texts still have this value with both units (unit classes are compared as sets)": 2,
+    "the German unit of this value is outside the time/mass/volume classes": 1
+   },
+   "miss_examples": [
+    {
+     "id": "ABEVMY.02a---Lungenkarzinom",
+     "lang": "fr",
+     "sub": "semaines->mois",
+     "before": "3 semaines",
+     "after": "3 mois",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)",
+     "findings": []
+    },
+    {
+     "id": "Eltrombopag-Generika.04a",
+     "lang": "fr",
+     "sub": "ans->mois",
+     "before": "6 ans",
+     "after": "6 mois",
+     "reason": "both texts still have this value with both units (unit classes are compared as sets)",
+     "findings": []
+    },
+    {
+     "id": "RINVOQ.04a",
+     "lang": "fr",
+     "sub": "ans->mois",
+     "before": "18 ans",
+     "after": "18 mois",
+     "reason": "the German unit of this value is outside the time/mass/volume classes",
+     "findings": []
+    },
+    {
+     "id": "ROSUVASTAX-DROSSAPHARM.01",
+     "lang": "fr",
+     "sub": "ans->mois",
+     "before": "75 ans",
+     "after": "75 mois",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)",
+     "findings": []
+    },
+    {
+     "id": "KERENDIA",
+     "lang": "fr",
+     "sub": "ml->dl",
+     "before": "59 ml",
+     "after": "59 dl",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)",
+     "findings": []
+    },
+    {
+     "id": "KEYTRUDA.25a---Inj-L-s---KN564",
+     "lang": "fr",
+     "sub": "mg->µg",
+     "before": "395 mg",
+     "after": "395 µg",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)",
+     "findings": []
+    },
+    {
+     "id": "ROSUVASNobel",
+     "lang": "fr",
+     "sub": "ans->mois",
+     "before": "75 ans",
+     "after": "75 mois",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)",
+     "findings": []
+    },
+    {
+     "id": "DUPIXENT.03a",
+     "lang": "fr",
+     "sub": "semaines->mois",
+     "before": "quatre semaines",
+     "after": "quatre mois",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)",
+     "findings": []
+    }
+   ],
+   "misses": [
+    {
+     "id": "ABEVMY.02a---Lungenkarzinom",
+     "lang": "fr",
+     "sub": "semaines->mois",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "ROSUVASTAX-DROSSAPHARM.01",
+     "lang": "fr",
+     "sub": "ans->mois",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "KERENDIA",
+     "lang": "fr",
+     "sub": "ml->dl",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "KEYTRUDA.25a---Inj-L-s---KN564",
+     "lang": "fr",
+     "sub": "mg->µg",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "ROSUVASNobel",
+     "lang": "fr",
+     "sub": "ans->mois",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "DUPIXENT.03a",
+     "lang": "fr",
+     "sub": "semaines->mois",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "TAKHZYRO.01a",
+     "lang": "fr",
+     "sub": "mg->µg",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "XELJANZ.02",
+     "lang": "fr",
+     "sub": "mg->µg",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "CRESTOR",
+     "lang": "fr",
+     "sub": "ans->mois",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "NOXAFIL3",
+     "lang": "fr",
+     "sub": "ans->mois",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "YERVOY.01",
+     "lang": "fr",
+     "sub": "mg->µg",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "SORTIS",
+     "lang": "fr",
+     "sub": "ans->mois",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "ROSUVASTSand",
+     "lang": "fr",
+     "sub": "ans->mois",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "TRIXEO",
+     "lang": "fr",
+     "sub": "mois->semaines",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "ROSUVAspirig",
+     "lang": "fr",
+     "sub": "ans->mois",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "TREMFYADF.04",
+     "lang": "fr",
+     "sub": "mg->µg",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "ROSUVASTAX",
+     "lang": "fr",
+     "sub": "ans->mois",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "OPDIVO.17",
+     "lang": "fr",
+     "sub": "mg->µg",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "RINVOQ.04a",
+     "lang": "fr",
+     "sub": "ans->mois",
+     "reason": "the German unit of this value is outside the time/mass/volume classes"
+    },
+    {
+     "id": "TREMFYASP.03",
+     "lang": "fr",
+     "sub": "ml->dl",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "Eltrombopag-Generika.04a",
+     "lang": "fr",
+     "sub": "ans->mois",
+     "reason": "both texts still have this value with both units (unit classes are compared as sets)"
+    },
+    {
+     "id": "HEMANGIOL",
+     "lang": "fr",
+     "sub": "mois->semaines",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "TRIKAFTA-150",
+     "lang": "fr",
+     "sub": "mois->semaines",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "KEYTRUDA.XXa---Inj-L-s",
+     "lang": "fr",
+     "sub": "mg->µg",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "GATINARGP",
+     "lang": "fr",
+     "sub": "ml->dl",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "DUPIXENT.10P",
+     "lang": "fr",
+     "sub": "ans->mois",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "MOVENTIG",
+     "lang": "fr",
+     "sub": "semaines->mois",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "SYMDEKO-01",
+     "lang": "fr",
+     "sub": "ans->mois",
+     "reason": "both texts still have this value with both units (unit classes are compared as sets)"
+    },
+    {
+     "id": "OPDIVO.17",
+     "lang": "it",
+     "sub": "settimane->mesi",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "MIACALCICNAS",
+     "lang": "it",
+     "sub": "mesi->settimane",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "ILARIS.04a",
+     "lang": "it",
+     "sub": "mg->µg",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "TAKHZYRO.01a",
+     "lang": "it",
+     "sub": "settimane->mesi",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "STIVARGA3",
+     "lang": "it",
+     "sub": "giorni->settimane",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "PITAVASTSPIR",
+     "lang": "it",
+     "sub": "anni->mesi",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "TRIKAFTA-150",
+     "lang": "it",
+     "sub": "anni->mesi",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "PHESGO.02",
+     "lang": "it",
+     "sub": "mg->µg",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "TREMFYASP.04",
+     "lang": "it",
+     "sub": "ml->dl",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "DUPIXENT.03a",
+     "lang": "it",
+     "sub": "settimane->mesi",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "ILARISfmf.05",
+     "lang": "it",
+     "sub": "mg->µg",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "BIMZELX.01a",
+     "lang": "it",
+     "sub": "mg->µg",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "EZMEKLY.01---Monotherapie-p-diatrisch",
+     "lang": "it",
+     "sub": "mesi->settimane",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "OYAVAS.02",
+     "lang": "it",
+     "sub": "settimane->mesi",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "ASPAVELI.01a",
+     "lang": "it",
+     "sub": "mesi->settimane",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "NOXAFIL3",
+     "lang": "it",
+     "sub": "anni->mesi",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "OPFOLDA2",
+     "lang": "it",
+     "sub": "giorni->settimane",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "RESOLOR3",
+     "lang": "it",
+     "sub": "settimane->mesi",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "SIMCORA",
+     "lang": "it",
+     "sub": "anni->mesi",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "LATUDA2",
+     "lang": "it",
+     "sub": "mg->µg",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "SOLIRIS.02",
+     "lang": "it",
+     "sub": "settimane->mesi",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "KALYDECO-150",
+     "lang": "it",
+     "sub": "mesi->settimane",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "KEYTRUDA.25",
+     "lang": "it",
+     "sub": "mesi->settimane",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "SOMATULINE.01---NET",
+     "lang": "it",
+     "sub": "mg->µg",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "SKYCLARYS.01",
+     "lang": "it",
+     "sub": "mesi->settimane",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    },
+    {
+     "id": "TREMFYADF.04",
+     "lang": "it",
+     "sub": "mg->µg",
+     "reason": "one-directional: the target still has this value with the old unit elsewhere (unit_one_sided, not a finding)"
+    }
+   ]
+  },
+  "deletion": {
+   "n": 200,
+   "detected": 150,
+   "recall": 0.75,
+   "wilson95": [
+    0.686,
+    0.805
+   ],
+   "any_finding": 150,
+   "any_recall": 0.75,
+   "any_wilson95": [
+    0.686,
+    0.805
+   ],
+   "eligible_limitations": {
+    "fr": 692,
+    "it": 691
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "detected": 76,
+     "recall": 0.76
+    },
+    "it": {
+     "n": 100,
+     "detected": 74,
+     "recall": 0.74
+    }
+   },
+   "by_subtype": {
+    "comma": {
+     "n": 66,
+     "detected": 49
+    },
+    "sentence": {
+     "n": 134,
+     "detected": 101
+    }
+   },
+   "also_found_as": {
+    "number": 150
+   },
+   "miss_reasons": {
+    "the deleted values occur elsewhere in the target (set comparison, R5)": 40,
+    "reconciled by one": 6,
+    "value not bound to a unit in the audit's parse (R2)": 4
+   },
+   "miss_examples": [
+    {
+     "id": "TENKASI.01",
+     "lang": "fr",
+     "sub": "sentence",
+     "before": "Pour le traitement d’infections bactériennes aiguës de la peau et des tissus mous (IBAPTM) chez les enfants à partir de l'âge de 3 mois et chez les adultes.",
+     "after": "",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)",
+     "findings": []
+    },
+    {
+     "id": "SIMVASzentiv",
+     "lang": "fr",
+     "sub": "comma",
+     "before": "et chez les personnes présentant un risque supérieur à 1% selon la catégorie de risque du GSLA.",
+     "after": "",
+     "reason": "reconciled by one",
+     "findings": []
+    },
+    {
+     "id": "ENTYVIO2",
+     "lang": "fr",
+     "sub": "sentence",
+     "before": "Le passage à Entyvio sous-cutané (vedolizumab sous-cutané) comme thérapie d'entretien se fait après au moins 2 perfusions intraveineuses d'Entyvio.",
+     "after": "",
+     "reason": "value not bound to a unit in the audit's parse (R2)",
+     "findings": []
+    },
+    {
+     "id": "LIBTAYO.03",
+     "lang": "fr",
+     "sub": "sentence",
+     "before": "1L CBNPC non-épidermoïde, en association avec une chimiothérapie à base de platine Libtayo, en association à une chimiothérapie à base de platine, est remboursé…",
+     "after": "",
+     "reason": "reconciled by one",
+     "findings": []
+    },
+    {
+     "id": "SELINCRO",
+     "lang": "fr",
+     "sub": "sentence",
+     "before": "Le traitement n’est remboursé que pour une période de 12 mois maximum.",
+     "after": "",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)",
+     "findings": []
+    },
+    {
+     "id": "SPRAVATO.01",
+     "lang": "fr",
+     "sub": "comma",
+     "before": "au maximum deux fois de 3 mois.",
+     "after": "",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)",
+     "findings": []
+    },
+    {
+     "id": "MOUNJARO.02",
+     "lang": "fr",
+     "sub": "sentence",
+     "before": "12% de moins que le poids initial) restent inchangés.",
+     "after": "",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)",
+     "findings": []
+    },
+    {
+     "id": "MIACALCICNAS",
+     "lang": "fr",
+     "sub": "sentence",
+     "before": "3 mois.",
+     "after": "",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)",
+     "findings": []
+    }
+   ],
+   "misses": [
+    {
+     "id": "ENTYVIO2",
+     "lang": "fr",
+     "sub": "sentence",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "SIMVASzentiv",
+     "lang": "fr",
+     "sub": "comma",
+     "reason": "reconciled by one"
+    },
+    {
+     "id": "TENKASI.01",
+     "lang": "fr",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "LIBTAYO.03",
+     "lang": "fr",
+     "sub": "sentence",
+     "reason": "reconciled by one"
+    },
+    {
+     "id": "SELINCRO",
+     "lang": "fr",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "SPRAVATO.01",
+     "lang": "fr",
+     "sub": "comma",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "MOUNJARO.02",
+     "lang": "fr",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "MIACALCICNAS",
+     "lang": "fr",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "JORVEZA.Ind2",
+     "lang": "fr",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "ILARIS.05a",
+     "lang": "fr",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "SIMCORA",
+     "lang": "fr",
+     "sub": "comma",
+     "reason": "reconciled by one"
+    },
+    {
+     "id": "SORTIS",
+     "lang": "fr",
+     "sub": "comma",
+     "reason": "reconciled by one"
+    },
+    {
+     "id": "ELMIRON",
+     "lang": "fr",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "ORLISTATSPIR",
+     "lang": "fr",
+     "sub": "comma",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "ROSUVAspirig",
+     "lang": "fr",
+     "sub": "sentence",
+     "reason": "reconciled by one"
+    },
+    {
+     "id": "SPINRAZA.01",
+     "lang": "fr",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "DUODOPA.01",
+     "lang": "fr",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "ABIRATAccor2",
+     "lang": "fr",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "BESPONSA",
+     "lang": "fr",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "MAVIRET3",
+     "lang": "fr",
+     "sub": "comma",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "AJOVY.01",
+     "lang": "fr",
+     "sub": "comma",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "REMSIMA.05---Schwere-Plaque-Psoriasis",
+     "lang": "fr",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "ANDEMBRY",
+     "lang": "fr",
+     "sub": "comma",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "NOXAFIL3",
+     "lang": "fr",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "MVASI.05",
+     "lang": "it",
+     "sub": "comma",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "ORKAMBI.02",
+     "lang": "it",
+     "sub": "comma",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "MOUNJARO.02K",
+     "lang": "it",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "KEYTRUDA.25",
+     "lang": "it",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "ABIRATZenti2",
+     "lang": "it",
+     "sub": "comma",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "EPIDYOLEX.03",
+     "lang": "it",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "TAVNEOS",
+     "lang": "it",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "EPCLUSA5",
+     "lang": "it",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "KERENDIA",
+     "lang": "it",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "KEYTRUDA.XXa---Inj-L-s",
+     "lang": "it",
+     "sub": "comma",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "ABEVMY.05a---Ovarialkarzinom",
+     "lang": "it",
+     "sub": "comma",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "LIVAZO2",
+     "lang": "it",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "KEYTRUDA.06c",
+     "lang": "it",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "PITAVASTSPIR",
+     "lang": "it",
+     "sub": "comma",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "KYPROLIS.06",
+     "lang": "it",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "VYEPTI.01",
+     "lang": "it",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "AIMOVIG.01",
+     "lang": "it",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "DUPIXENT.09",
+     "lang": "it",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "CRESE.Lsg.IA",
+     "lang": "it",
+     "sub": "sentence",
+     "reason": "reconciled by one"
+    },
+    {
+     "id": "OPDIVOEINF8",
+     "lang": "it",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "ILARIS.03a",
+     "lang": "it",
+     "sub": "comma",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "IMULDOSA.01",
+     "lang": "it",
+     "sub": "comma",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "TREMFYASP.03",
+     "lang": "it",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "KAPRUVIA.01",
+     "lang": "it",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    },
+    {
+     "id": "MILUPAPREGO",
+     "lang": "it",
+     "sub": "comma",
+     "reason": "value not bound to a unit in the audit's parse (R2)"
+    },
+    {
+     "id": "LYNPARZA.02",
+     "lang": "it",
+     "sub": "sentence",
+     "reason": "the deleted values occur elsewhere in the target (set comparison, R5)"
+    }
+   ],
+   "values_gone_subset": {
+    "n": 160,
+    "detected": 150,
+    "recall": 0.938,
+    "wilson95": [
+     0.889,
+     0.966
+    ],
+    "note": "copies where at least one deleted value no longer occurs anywhere in the target"
+   }
+  },
+  "language": {
+   "n": 200,
+   "detected": 188,
+   "recall": 0.94,
+   "wilson95": [
+    0.898,
+    0.965
+   ],
+   "any_finding": 188,
+   "any_recall": 0.94,
+   "any_wilson95": [
+    0.898,
+    0.965
+   ],
+   "eligible_limitations": {
+    "fr": 1597,
+    "it": 1597
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "detected": 95,
+     "recall": 0.95
+    },
+    "it": {
+     "n": 100,
+     "detected": 93,
+     "recall": 0.93
+    }
+   },
+   "by_subtype": {
+    "fr<-de": {
+     "n": 52,
+     "detected": 50
+    },
+    "fr<-it": {
+     "n": 48,
+     "detected": 45
+    },
+    "it<-de": {
+     "n": 48,
+     "detected": 43
+    },
+    "it<-fr": {
+     "n": 52,
+     "detected": 50
+    }
+   },
+   "also_found_as": {
+    "language": 188,
+    "number": 15
+   },
+   "miss_reasons": {
+    "not judged: fewer than 3 function words (short field)": 11,
+    "rule A: too few function words of the source language": 1
+   },
+   "miss_examples": [
+    {
+     "id": "MUTAFLOR",
+     "lang": "fr",
+     "sub": "fr<-it",
+     "before": "Recto-colite hémorrhagique (Colitis ulcerosa) dans la phase de rémission.",
+     "after": "Recto-colite emorragica (Colitis ulcerosa) nella fase di remissione.",
+     "reason": "not judged: fewer than 3 function words (short field)",
+     "findings": []
+    },
+    {
+     "id": "OCTOSTIM",
+     "lang": "fr",
+     "sub": "fr<-it",
+     "before": "Hémophilie A et maladie de von Willebrand Type I.",
+     "after": "Emofilia A et morbo di di von Willebrand Tipo I.",
+     "reason": "rule A: too few function words of the source language",
+     "findings": []
+    },
+    {
+     "id": "KYTRIL2",
+     "lang": "fr",
+     "sub": "fr<-de",
+     "before": "Chimiothérapie fortement émétogène.",
+     "after": "Stark emetogene Chemotherapie.",
+     "reason": "not judged: fewer than 3 function words (short field)",
+     "findings": []
+    },
+    {
+     "id": "MENOPUR",
+     "lang": "fr",
+     "sub": "fr<-de",
+     "before": "Stimulation folliculaire simple.",
+     "after": "Einfache follikuläre Stimulation.",
+     "reason": "not judged: fewer than 3 function words (short field)",
+     "findings": []
+    },
+    {
+     "id": "MYSOLINE",
+     "lang": "fr",
+     "sub": "fr<-it",
+     "before": "Patients réfractaires à tous les autres traitements standard. Patients qui suivent déjà un traitement avec Mysoline.",
+     "after": "Pazienti refrattari a tutte le altre terapie standard. Pazienti già aggiustati a Mysoline.",
+     "reason": "not judged: fewer than 3 function words (short field)",
+     "findings": []
+    },
+    {
+     "id": "CUVITRU",
+     "lang": "it",
+     "sub": "it<-de",
+     "before": "Per il trattamento di sindromi provocate dall'assenza di anticorpi. Pagamento delle spese se la cassa ha dato una garanz",
+     "after": "Zur Behandlung des Antikörpermangelsyndroms. Nach Kostengutsprache des Krankenversicherers.",
+     "reason": "not judged: fewer than 3 function words (short field)",
+     "findings": []
+    },
+    {
+     "id": "MERONEM",
+     "lang": "it",
+     "sub": "it<-de",
+     "before": "Fibrosi cistica",
+     "after": "Mukoviszidose",
+     "reason": "not judged: fewer than 3 function words (short field)",
+     "findings": []
+    },
+    {
+     "id": "MYOVIEW2",
+     "lang": "it",
+     "sub": "it<-de",
+     "before": "Prezzo di fatturazione per applicazione e paziente 222,41 (Divisione 7.5)",
+     "after": "Verrechnungspreis pro Applikation und Patient 222.41 (Teilung 7.5).",
+     "reason": "not judged: fewer than 3 function words (short field)",
+     "findings": []
+    }
+   ],
+   "misses": [
+    {
+     "id": "MUTAFLOR",
+     "lang": "fr",
+     "sub": "fr<-it",
+     "reason": "not judged: fewer than 3 function words (short field)"
+    },
+    {
+     "id": "KYTRIL2",
+     "lang": "fr",
+     "sub": "fr<-de",
+     "reason": "not judged: fewer than 3 function words (short field)"
+    },
+    {
+     "id": "MENOPUR",
+     "lang": "fr",
+     "sub": "fr<-de",
+     "reason": "not judged: fewer than 3 function words (short field)"
+    },
+    {
+     "id": "OCTOSTIM",
+     "lang": "fr",
+     "sub": "fr<-it",
+     "reason": "rule A: too few function words of the source language"
+    },
+    {
+     "id": "MYSOLINE",
+     "lang": "fr",
+     "sub": "fr<-it",
+     "reason": "not judged: fewer than 3 function words (short field)"
+    },
+    {
+     "id": "CUVITRU",
+     "lang": "it",
+     "sub": "it<-de",
+     "reason": "not judged: fewer than 3 function words (short field)"
+    },
+    {
+     "id": "MERONEM",
+     "lang": "it",
+     "sub": "it<-de",
+     "reason": "not judged: fewer than 3 function words (short field)"
+    },
+    {
+     "id": "MYOVIEW2",
+     "lang": "it",
+     "sub": "it<-de",
+     "reason": "not judged: fewer than 3 function words (short field)"
+    },
+    {
+     "id": "NEOTIGASON",
+     "lang": "it",
+     "sub": "it<-de",
+     "reason": "not judged: fewer than 3 function words (short field)"
+    },
+    {
+     "id": "ASACOL",
+     "lang": "it",
+     "sub": "it<-fr",
+     "reason": "not judged: fewer than 3 function words (short field)"
+    },
+    {
+     "id": "240PTEBEHERW",
+     "lang": "it",
+     "sub": "it<-de",
+     "reason": "not judged: fewer than 3 function words (short field)"
+    },
+    {
+     "id": "CREON",
+     "lang": "it",
+     "sub": "it<-fr",
+     "reason": "not judged: fewer than 3 function words (short field)"
+    }
+   ],
+   "judged_subset": {
+    "n": 189,
+    "detected": 188,
+    "recall": 0.995,
+    "wilson95": [
+     0.971,
+     0.999
+    ],
+    "note": "copies whose planted text has >= 3 function words (the check's own judging floor)"
+   }
+  },
+  "typo": {
+   "n": 200,
+   "detected": 102,
+   "recall": 0.51,
+   "wilson95": [
+    0.441,
+    0.578
+   ],
+   "any_finding": 112,
+   "any_recall": 0.56,
+   "any_wilson95": [
+    0.491,
+    0.627
+   ],
+   "eligible_limitations": {
+    "fr": 630,
+    "it": 656
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "detected": 47,
+     "recall": 0.47
+    },
+    "it": {
+     "n": 100,
+     "detected": 55,
+     "recall": 0.55
+    }
+   },
+   "by_subtype": {
+    "before:delete": {
+     "n": 9,
+     "detected": 0
+    },
+    "before:double": {
+     "n": 9,
+     "detected": 0
+    },
+    "before:glue": {
+     "n": 41,
+     "detected": 36
+    },
+    "before:substitute": {
+     "n": 7,
+     "detected": 0
+    },
+    "before:transpose": {
+     "n": 6,
+     "detected": 0
+    },
+    "numword:delete": {
+     "n": 4,
+     "detected": 3
+    },
+    "numword:double": {
+     "n": 1,
+     "detected": 1
+    },
+    "numword:substitute": {
+     "n": 3,
+     "detected": 0
+    },
+    "numword:transpose": {
+     "n": 1,
+     "detected": 0
+    },
+    "unit:delete": {
+     "n": 28,
+     "detected": 6
+    },
+    "unit:double": {
+     "n": 27,
+     "detected": 26
+    },
+    "unit:glue": {
+     "n": 23,
+     "detected": 19
+    },
+    "unit:substitute": {
+     "n": 18,
+     "detected": 11
+    },
+    "unit:transpose": {
+     "n": 23,
+     "detected": 0
+    }
+   },
+   "also_found_as": {
+    "editorial": 102,
+    "number": 43
+   },
+   "miss_reasons": {
+    "no rule looks at a misspelt word before a number": 31,
+    "a transposition is two edits (E4/E5 allow one)": 24,
+    "E5 looks at words of >= 4 letters only": 20,
+    "real-word or common register word (E5 needs a rare word)": 6,
+    "the glued word is not a preposition/article (E2 closed list)": 5,
+    "glued to a non-time unit word (E3 covers time words only)": 4,
+    "E4: the corrected phrase is in < 5 register texts, or the edit is not one edit from a number word before a unit word": 4,
+    "no frequent unit word one edit away (E5 threshold 20 texts)": 2,
+    "other": 2
+   },
+   "miss_examples": [
+    {
+     "id": "STIVARGA3",
+     "lang": "fr",
+     "sub": "before:transpose",
+     "before": "des 21 jours",
+     "after": "dse 21 jours",
+     "reason": "no rule looks at a misspelt word before a number",
+     "findings": []
+    },
+    {
+     "id": "COMIRNATY1",
+     "lang": "fr",
+     "sub": "unit:transpose",
+     "before": "de 16 ans",
+     "after": "de 16 asn",
+     "reason": "a transposition is two edits (E4/E5 allow one)",
+     "findings": []
+    },
+    {
+     "id": "CUPRIOR",
+     "lang": "fr",
+     "sub": "unit:substitute",
+     "before": "de 5 ans",
+     "after": "de 5 tns",
+     "reason": "E5 looks at words of >= 4 letters only",
+     "findings": []
+    },
+    {
+     "id": "ADARTREL",
+     "lang": "fr",
+     "sub": "unit:delete",
+     "before": "de 8 semaines",
+     "after": "de 8 semaine",
+     "reason": "real-word or common register word (E5 needs a rare word)",
+     "findings": []
+    },
+    {
+     "id": "DACEPTON.01a",
+     "lang": "fr",
+     "sub": "before:glue",
+     "before": "moins 5 ans",
+     "after": "moins5 ans",
+     "reason": "the glued word is not a preposition/article (E2 closed list)",
+     "findings": [
+      "number: DE has 5 (Jahre), FR does not"
+     ]
+    },
+    {
+     "id": "KADCYLA2mono",
+     "lang": "fr",
+     "sub": "unit:glue",
+     "before": "14 cycles",
+     "after": "14cycles",
+     "reason": "glued to a non-time unit word (E3 covers time words only)",
+     "findings": []
+    },
+    {
+     "id": "EPREXSYMPTAN",
+     "lang": "fr",
+     "sub": "numword:substitute",
+     "before": "de deux mois",
+     "after": "de deox mois",
+     "reason": "E4: the corrected phrase is in < 5 register texts, or the edit is not one edit from a number word before a unit word",
+     "findings": [
+      "number: DE has 2 (Monaten), FR does not"
+     ]
+    },
+    {
+     "id": "CAMPRAL",
+     "lang": "fr",
+     "sub": "unit:substitute",
+     "before": "1 année",
+     "after": "1 tnnée",
+     "reason": "no frequent unit word one edit away (E5 threshold 20 texts)",
+     "findings": []
+    }
+   ],
+   "misses": [
+    {
+     "id": "STIVARGA3",
+     "lang": "fr",
+     "sub": "before:transpose",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "CUPRIOR",
+     "lang": "fr",
+     "sub": "unit:substitute",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "DACEPTON.01a",
+     "lang": "fr",
+     "sub": "before:glue",
+     "reason": "the glued word is not a preposition/article (E2 closed list)"
+    },
+    {
+     "id": "CAMPRAL",
+     "lang": "fr",
+     "sub": "unit:substitute",
+     "reason": "no frequent unit word one edit away (E5 threshold 20 texts)"
+    },
+    {
+     "id": "KADCYLA2mono",
+     "lang": "fr",
+     "sub": "unit:glue",
+     "reason": "glued to a non-time unit word (E3 covers time words only)"
+    },
+    {
+     "id": "DUPIXENT.10P",
+     "lang": "fr",
+     "sub": "before:delete",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "COMIRNATY1",
+     "lang": "fr",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "PREVYMIS.01a",
+     "lang": "fr",
+     "sub": "before:delete",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "ADARTREL",
+     "lang": "fr",
+     "sub": "unit:delete",
+     "reason": "real-word or common register word (E5 needs a rare word)"
+    },
+    {
+     "id": "CABLIVI.01",
+     "lang": "fr",
+     "sub": "before:double",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "CABAZITTE.02",
+     "lang": "fr",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "KEYTRUDA.05a---Inj-L-s---KN006",
+     "lang": "fr",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "DUPIXENT.04",
+     "lang": "fr",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "TECENTR.ein3",
+     "lang": "fr",
+     "sub": "before:double",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "RIVA.vas.Mep",
+     "lang": "fr",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "EZMEKLY.01---Monotherapie-p-diatrisch",
+     "lang": "fr",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "DOPTELET",
+     "lang": "fr",
+     "sub": "before:delete",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "LIBTAYO.03",
+     "lang": "fr",
+     "sub": "before:substitute",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "DUPIXENT.01P",
+     "lang": "fr",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "JYLAMVO",
+     "lang": "fr",
+     "sub": "unit:delete",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "JAKAVI3",
+     "lang": "fr",
+     "sub": "unit:delete",
+     "reason": "real-word or common register word (E5 needs a rare word)"
+    },
+    {
+     "id": "CAPVAXIVE.01",
+     "lang": "fr",
+     "sub": "unit:substitute",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "MVASI.09",
+     "lang": "fr",
+     "sub": "numword:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "AVASTIN3.03a",
+     "lang": "fr",
+     "sub": "unit:substitute",
+     "reason": "real-word or common register word (E5 needs a rare word)"
+    },
+    {
+     "id": "AVTOZMA.02",
+     "lang": "fr",
+     "sub": "unit:substitute",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "VENCLYXTO-02",
+     "lang": "fr",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "COAMOXILABAT",
+     "lang": "fr",
+     "sub": "before:double",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "AGOMELATIN",
+     "lang": "fr",
+     "sub": "unit:delete",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "MEKIN.met.01",
+     "lang": "fr",
+     "sub": "before:delete",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "TAKHZYRO.01a",
+     "lang": "fr",
+     "sub": "before:delete",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "NUSTENDI.01",
+     "lang": "fr",
+     "sub": "before:substitute",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "BEVACIZUM.05",
+     "lang": "fr",
+     "sub": "before:transpose",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "ARLEVERT",
+     "lang": "fr",
+     "sub": "before:transpose",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "XELJANZ.02",
+     "lang": "fr",
+     "sub": "unit:delete",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "TYSABRI4",
+     "lang": "fr",
+     "sub": "before:substitute",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "EPREXSYMPTAN",
+     "lang": "fr",
+     "sub": "numword:substitute",
+     "reason": "E4: the corrected phrase is in < 5 register texts, or the edit is not one edit from a number word before a unit word"
+    },
+    {
+     "id": "CABAZ.VIA-02",
+     "lang": "fr",
+     "sub": "before:delete",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "EZE-ATOR-SAN",
+     "lang": "fr",
+     "sub": "unit:glue",
+     "reason": "glued to a non-time unit word (E3 covers time words only)"
+    },
+    {
+     "id": "ANDEMBRY",
+     "lang": "fr",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "BOTOX4",
+     "lang": "fr",
+     "sub": "unit:substitute",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "ENHERTU.01",
+     "lang": "fr",
+     "sub": "before:substitute",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "IMPORTALGP",
+     "lang": "fr",
+     "sub": "before:glue",
+     "reason": "the glued word is not a preposition/article (E2 closed list)"
+    },
+    {
+     "id": "ALHEMO.01",
+     "lang": "fr",
+     "sub": "unit:delete",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "MOUNJARO.02K",
+     "lang": "fr",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "WEGOVY.01---Erwachsene",
+     "lang": "fr",
+     "sub": "before:double",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "IDEFIRIX",
+     "lang": "fr",
+     "sub": "before:double",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "EDURANT",
+     "lang": "fr",
+     "sub": "unit:delete",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "OTEZLA.03",
+     "lang": "fr",
+     "sub": "unit:delete",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "MEKIN.NSC.03",
+     "lang": "fr",
+     "sub": "unit:delete",
+     "reason": "real-word or common register word (E5 needs a rare word)"
+    },
+    {
+     "id": "SOGROYA.01",
+     "lang": "fr",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "BEXSERO",
+     "lang": "fr",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "CAPVAXIVE.03",
+     "lang": "fr",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "OPDIVO-22095.XX",
+     "lang": "fr",
+     "sub": "unit:double",
+     "reason": "other"
+    },
+    {
+     "id": "PIQRAY",
+     "lang": "it",
+     "sub": "unit:delete",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "TECENTRIQ.05",
+     "lang": "it",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "SKYCLARYS.01",
+     "lang": "it",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "AVASTIN.06",
+     "lang": "it",
+     "sub": "before:transpose",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "VENCLYXTO-04",
+     "lang": "it",
+     "sub": "unit:glue",
+     "reason": "glued to a non-time unit word (E3 covers time words only)"
+    },
+    {
+     "id": "FILGRASTIM",
+     "lang": "it",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "VIMPAT",
+     "lang": "it",
+     "sub": "unit:delete",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "BIMZELX.02",
+     "lang": "it",
+     "sub": "before:delete",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "MIACALCICPAR",
+     "lang": "it",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "TRUVADA",
+     "lang": "it",
+     "sub": "before:glue",
+     "reason": "the glued word is not a preposition/article (E2 closed list)"
+    },
+    {
+     "id": "EVENITY.01a",
+     "lang": "it",
+     "sub": "unit:delete",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "CAMZYOS.01",
+     "lang": "it",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "ATTENTIN",
+     "lang": "it",
+     "sub": "unit:delete",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "VERZENIO.02a",
+     "lang": "it",
+     "sub": "unit:delete",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "ZIRABEV.02",
+     "lang": "it",
+     "sub": "before:substitute",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "PLENADREN.01",
+     "lang": "it",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "RINVOQ.06",
+     "lang": "it",
+     "sub": "before:double",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "FYCOMPA2",
+     "lang": "it",
+     "sub": "unit:delete",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "CAPVAXIVE.02",
+     "lang": "it",
+     "sub": "unit:delete",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "BEVACIZUM.06",
+     "lang": "it",
+     "sub": "before:transpose",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "RIBOMUSTIN2",
+     "lang": "it",
+     "sub": "unit:substitute",
+     "reason": "real-word or common register word (E5 needs a rare word)"
+    },
+    {
+     "id": "BENLYSTA.Ein",
+     "lang": "it",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "CABAZ.SPI.02",
+     "lang": "it",
+     "sub": "before:transpose",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "ONPATTRO-1",
+     "lang": "it",
+     "sub": "before:glue",
+     "reason": "the glued word is not a preposition/article (E2 closed list)"
+    },
+    {
+     "id": "RUXIENCE.03a",
+     "lang": "it",
+     "sub": "before:delete",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "VITD3.1000",
+     "lang": "it",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "OPDIVO.07---Melanom-adjuvant",
+     "lang": "it",
+     "sub": "unit:delete",
+     "reason": "other"
+    },
+    {
+     "id": "OCREVUS.01c",
+     "lang": "it",
+     "sub": "before:glue",
+     "reason": "the glued word is not a preposition/article (E2 closed list)"
+    },
+    {
+     "id": "ORLADEYO",
+     "lang": "it",
+     "sub": "before:substitute",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "DIMETHY-ACCO",
+     "lang": "it",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "OPDIVO.07a",
+     "lang": "it",
+     "sub": "unit:glue",
+     "reason": "glued to a non-time unit word (E3 covers time words only)"
+    },
+    {
+     "id": "VAXNEUVANCE",
+     "lang": "it",
+     "sub": "numword:delete",
+     "reason": "E4: the corrected phrase is in < 5 register texts, or the edit is not one edit from a number word before a unit word"
+    },
+    {
+     "id": "SCHMIDS",
+     "lang": "it",
+     "sub": "before:double",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "MAX2INJIN48H",
+     "lang": "it",
+     "sub": "unit:delete",
+     "reason": "no frequent unit word one edit away (E5 threshold 20 texts)"
+    },
+    {
+     "id": "ALITRECUTAN",
+     "lang": "it",
+     "sub": "unit:transpose",
+     "reason": "a transposition is two edits (E4/E5 allow one)"
+    },
+    {
+     "id": "YERVOY.02",
+     "lang": "it",
+     "sub": "before:delete",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "EMEND125-80",
+     "lang": "it",
+     "sub": "numword:substitute",
+     "reason": "E4: the corrected phrase is in < 5 register texts, or the edit is not one edit from a number word before a unit word"
+    },
+    {
+     "id": "VESOXX.01new",
+     "lang": "it",
+     "sub": "unit:delete",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "PITAVASTZENT",
+     "lang": "it",
+     "sub": "unit:delete",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "INSPRA2",
+     "lang": "it",
+     "sub": "numword:substitute",
+     "reason": "E4: the corrected phrase is in < 5 register texts, or the edit is not one edit from a number word before a unit word"
+    },
+    {
+     "id": "ABIRATDevat2",
+     "lang": "it",
+     "sub": "unit:delete",
+     "reason": "real-word or common register word (E5 needs a rare word)"
+    },
+    {
+     "id": "VOCABRIAinj",
+     "lang": "it",
+     "sub": "unit:delete",
+     "reason": "E5 looks at words of >= 4 letters only"
+    },
+    {
+     "id": "NUCALA.03---COPD",
+     "lang": "it",
+     "sub": "before:double",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "MVASI.05",
+     "lang": "it",
+     "sub": "before:double",
+     "reason": "no rule looks at a misspelt word before a number"
+    },
+    {
+     "id": "CAPVAXIVE.01",
+     "lang": "it",
+     "sub": "before:substitute",
+     "reason": "no rule looks at a misspelt word before a number"
+    }
+   ]
+  }
+ },
+ "verification": {
+  "copies": 100,
+  "stats_identical": 100,
+  "limitation_identical": 100,
+  "findings_new_elsewhere": 0,
+  "findings_lost_elsewhere": 0,
+  "statistic_only_changes_elsewhere": 11,
+  "copies_list": [
+   {
+    "type": "number",
+    "id": "ILARISfmf.05",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "STELARACU2",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "CIMIFEMIN",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "NEXVIADYME2",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "TECENTR.06",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "ABIRATViatr2",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "EZETSIMVMeTe",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "EPIDYOLEX.03",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "CAMZYOS.01",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "TAFINLAR.02",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "DUPIXENT.01",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "KEPPRA",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "KYPROLIS.06",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "WEZENLA.03",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "Eltrombopag-Generika.03a",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "PHESGO.03",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "IMBRUVICA.01",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "ILARIStra.03",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "RUDOLACGP",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "number",
+    "id": "CRESE.Kps.IA",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "YERVOY.03",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "RIVASUR.01",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "COSENTYX.05",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "TOCILIZSP.03",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "KEYTRUDA.13",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "KOSELUGO.01---Monotherapie",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "OYAVAS.02",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "TRUXIMA.01",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "HEMANGIOL",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "RAYALDEE",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "OPDIVO.17",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "LUXTURNA",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "DOPTELET",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "DUPIXENT.03a",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "DUPIXENT.09P",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "OPFOLDA2",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 1
+   },
+   {
+    "type": "unit",
+    "id": "TECENTR.ein2",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "RUXIENCE.01",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "TYMLOS",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "unit",
+    "id": "PRALUENT.01a",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "deletion",
+    "id": "BLINCYTO.02a",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "deletion",
+    "id": "TRUVADA",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "deletion",
+    "id": "SYMDEKO-01",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "deletion",
+    "id": "ALHEMO.01",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 1
+   },
+   {
+    "type": "deletion",
+    "id": "ILARIS.05a",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "deletion",
+    "id": "OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 1
+   },
+   {
+    "type": "deletion",
+    "id": "LUPKYNIS",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "deletion",
+    "id": "TEVIMBRA.XX",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "deletion",
+    "id": "XANAX",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 1
+   },
+   {
+    "type": "deletion",
+    "id": "EVENITY.01a",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "deletion",
+    "id": "MVASI.05",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "deletion",
+    "id": "CRESTOR",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "deletion",
+    "id": "PREVYMIS.01a",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "deletion",
+    "id": "INSPRA",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "deletion",
+    "id": "POTELIGEO.01",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "deletion",
+    "id": "LIBTAYO-EINF",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "deletion",
+    "id": "VYEPTI.01",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "deletion",
+    "id": "CRESE.Lsg.IA",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "deletion",
+    "id": "MEKIN.met.01",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "deletion",
+    "id": "ALUNBRIG.02",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "language",
+    "id": "KEYTRUDA.24a---Inj-L-s---KNA18",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "language",
+    "id": "MUTAFLOR",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 1
+   },
+   {
+    "type": "language",
+    "id": "VOCABRIAinj",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 1
+   },
+   {
+    "type": "language",
+    "id": "METOPIRON",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "language",
+    "id": "IMBRUVICA.05",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "language",
+    "id": "LENALISP.15",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 1
+   },
+   {
+    "type": "language",
+    "id": "OCTOSTIM2",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 1
+   },
+   {
+    "type": "language",
+    "id": "NINTEDANIB.ZENTIVA.XX",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 1
+   },
+   {
+    "type": "language",
+    "id": "ADTRALZA.01b",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 1
+   },
+   {
+    "type": "language",
+    "id": "ZIRABEV.05",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "language",
+    "id": "METHADDICT",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "language",
+    "id": "2X2MCI48H",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "language",
+    "id": "LECIGON",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "language",
+    "id": "ORACEA",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "language",
+    "id": "PaclitaAlbSp",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "language",
+    "id": "YERVOY.03",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "language",
+    "id": "KEYTRUDA.08",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 1
+   },
+   {
+    "type": "language",
+    "id": "YUFLYMA20.01",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "language",
+    "id": "KEYTRUDA.06a---Inj-L-s---KN054",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "language",
+    "id": "OYAVAS.R-B",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "MAVENCLAD.02---hochaktive-RRMS",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "OPFOLDA2",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "CABAZITTE.02",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "DIFLUCAN",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "PRALUENT.01a",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "BAQSIMI",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "MENQUADFI2",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "EZE-ATOR-SAN",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "TECENTR.03",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "OTEZLA.03",
+    "lang": "fr",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "PIQRAY",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "AVASTIN.06",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "TAVNEOS",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "SLENYTO.01",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "RINVOQ.06",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "RIBOMUSTIN2",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "ADCETRIS.03",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "EzetSimvSpir",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "EMEND125-80",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   },
+   {
+    "type": "typo",
+    "id": "Eltrombopag-Generika.04a",
+    "lang": "it",
+    "stats_identical": true,
+    "limitation_identical": true,
+    "elsewhere_new": 0,
+    "elsewhere_lost": 0,
+    "elsewhere_statistic_only": 0
+   }
+  ],
+  "note": "full-register run_all on these copies: false positives elsewhere = findings on other limitations (by identity) that the baseline does not have; statistic-only = the same finding with a different trigram margin (the language profile moved by the copy's one changed text)"
+ },
+ "baseline": {
+  "findings": 38,
+  "by_kind": {
+   "number": 21,
+   "language": 1,
+   "editorial": 5,
+   "terminology": 11
+  },
+  "limitations": 27
+ },
+ "inputs": {
+  "audit_py_sha256": "88bd90c3809e9a0c9b2e546390dcaf0538997c9cea1e64516074ab999a2147a3",
+  "snapshot_sha256": {
+   "de": "fe5e60f1931a6b345ae4687f9affbf1b05efa14263d20c16f410d3260228cc68",
+   "fr": "4d10dd047bdfd65a3bff5aca361706f2d3901c7872c6c9179948ede2f9477a54",
+   "it": "bcd86c674898d32f52b034674f54c67c2dac7cb893afc941e86da0642e1cd577"
+  },
+  "term_pairs": "data/audit/term_pairs_20261006.json"
+ },
+ "runtime": {
+  "seconds_total": 2259.8,
+  "seconds_baseline": 19.9,
+  "seconds_copies": 2025.4,
+  "jobs": 8,
+  "seconds_per_copy_core": 16.2
+ }
+}
