@@ -131,6 +131,18 @@ def test_terminology_notice_on_ready_drafts_comes_from_audit_item():
     assert it["banner"] == it["old"][0]["t"]
 
 
+def test_audit_decision_strings_in_four_languages():
+    """One question per issue, then the remedy: every string of the audit decision exists in DE/FR/IT/EN, the two old
+    identical DE/FR/IT rows are gone, and the GEVER CSV header carries kind_code and action_code in every language."""
+    from gleichlaut.ui import page
+    s = page.BODY; tx8 = s[s.index("var TX8="):s.index("Object.keys(TX8)")]
+    for k in ("aWrongQ", "oddDiff", "aRemQ", "rem", "remNeedW", "aMajQ", "aMajYes", "aMajNo", "aNameAsk", "aDecHint", "aLegacy", "csvHead"):
+        assert tx8.count(k + ":") == 4, k
+    assert tx8.count('"kind_code","Werte"') == 1 and tx8.count('"action_code"') == 4
+    for k in ("ctlRight", "ctlActs", 'data-a="act"', 'data-a="right"'): assert k not in s, k
+    assert "function aGate(" in s and "if(!who()){ANAME=true" in s and "function aDerive(" in s
+
+
 if __name__ == "__main__":
     fs = [(n, f) for n, f in sorted(globals().items()) if n.startswith("test_") and callable(f)]
     for n, f in fs: f(); print("ok", n)

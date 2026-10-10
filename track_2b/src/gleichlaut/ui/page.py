@@ -213,7 +213,7 @@ table.mem .code{color:var(--ink2);font-size:12px}table.mem .sub2{display:block;c
 .adec{display:grid;grid-template-columns:minmax(0,1fr);gap:14px 0}
 .adec .btns .box{padding:7px 14px;font-size:13px}.adec .grp2{display:flex;flex-wrap:wrap;gap:6px;align-items:baseline;margin-top:6px}
 .adec .grp2 .lbl{font:400 12px/1.4 var(--mono);color:var(--ink2);min-width:9em}
-.adec label.q{display:block;font:400 12px/1.4 var(--mono);color:var(--ink2);margin-bottom:4px}
+.adec .q{display:block;font:400 12px/1.4 var(--mono);color:var(--ink2);margin-bottom:4px}
 .adec select,.adec textarea{width:100%;background:var(--paper);border:1px solid var(--hair);padding:4px 6px;font:400 14px/1.4 var(--sans);color:var(--ink)}
 .adec textarea{display:block;margin-top:8px;min-height:60px;resize:vertical}
 .acts{display:flex;flex-direction:column;gap:4px;font:400 14px/1.35 var(--sans)}
@@ -221,6 +221,12 @@ table.mem .code{color:var(--ink2);font-size:12px}table.mem .sub2{display:block;c
 .acts .ck{display:inline-flex;gap:8px;align-items:baseline;cursor:pointer}
 .acts input{accent-color:var(--ink);margin:0;transform:translateY(1px)}
 .sug{color:var(--ink2);font:400 12px/1.4 var(--mono);margin-top:6px}
+.adec .sub2{display:block;color:var(--ink2);font:400 12px/1.4 var(--sans);margin-bottom:2px}
+.oddb{font-size:11px}.box[aria-pressed=false] .oddb{color:var(--sig)}
+.arem{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin:6px 0}.arem .box{white-space:normal;text-align:left;padding:7px 14px;font-size:13px;max-width:100%}
+.arem .box:disabled{opacity:.45;cursor:not-allowed}.arem .hint{color:var(--ink2);font:400 12px/1.4 var(--mono)}
+.aconf{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;margin:6px 0 2px;padding:8px 10px;border:1px solid var(--ink);background:var(--wash)}.aconf .q{flex-basis:100%;font:400 14px/1.4 var(--sans);color:var(--ink)}
+.who.ask input{border-bottom:2px solid var(--sig)}.who input#a-rev{width:min(100%,40ch)}.who+.adec{margin-top:16px}.aname{margin:6px 0 0;font:400 13px/1.4 var(--sans);color:var(--ink)}
 /* footer: what the register is, its numbers, provenance, the full legend */
 footer{border-top:1px solid var(--hair);margin-top:32px;padding:10px 0 32px;color:var(--ink2);font:400 11px/1.6 var(--mono)}
 .menu{position:relative}.menu>summary{list-style:none;cursor:pointer}.menu>summary::-webkit-details-marker{display:none}
@@ -866,6 +872,55 @@ it:{rulesOnly:"solo regole",kindExp:"controllo sperimentale",
  decLang:"Lingua della decisione",decLangV:"assente dai dati della verifica",
  txtChange:"Modifica del testo {L} tra il {p} e il {d}: non nel repository (sono inclusi solo i testi del {s})"}};
 Object.keys(TX7).forEach(function(L){Object.keys(TX7[L]).forEach(function(k){TX[L][k]=TX7[L][k]});TX[L].kinds=Object.assign({},TX[L].kinds,{experimental:TX7[L].kindExp})});
+// one question per issue (juror round, 10 Oct 2026): which text is wrong (the odd one first and labelled), then what to
+// do; a majority version marked wrong is confirmed inline; the reviewer's name before the first decision; exports in
+// the interface language with machine codes alongside
+var TX8={
+de:{aWrongQ:"Welcher Text ist falsch?",aWrongSub:"Gemessen am Entscheid des BAG, den die Prüfung nicht kennt. Mehrere Antworten möglich.",oddDiff:"weicht von den beiden anderen ab",
+ aRemQ:"Was ist zu tun?",rem:{exofficio:"Von Amtes wegen berichtigen",holder:"Mit der Zulassungsinhaberin in der dreijährlichen Überprüfung aufnehmen",langsvc:"An den Sprachdienst",none:"Keine Massnahme (gleichwertige Formulierung)",unclear:"Noch unklar – Entscheiddossier prüfen"},
+ remNeedW:"«Von Amtes wegen berichtigen» und «Mit der Zulassungsinhaberin aufnehmen» setzen voraus, dass oben der falsche Text gewählt ist.",
+ aMajQ:"{L} stimmt hier mit {M} überein; abweichend ist {O}. {L} trotzdem als falsch markieren?",aMajYes:"Ja, {L} ist falsch",aMajNo:"Abbrechen",
+ aNameAsk:"Zuerst Ihren Namen eingeben: Er wird mit jedem Entscheid und in den Exporten gespeichert. Danach erneut wählen.",revPh:"Name (nötig, wird mit jedem Entscheid gespeichert)",
+ aDecHint:"Entschieden, sobald der falsche Text und die Massnahme gewählt sind. «An den Sprachdienst», «Keine Massnahme» und «Noch unklar» gelten auch ohne Angabe des falschen Texts; eine Notiz allein lässt den Fall offen.",
+ needDecA:"Zuerst entscheiden: welcher Text falsch ist und was zu tun ist; j oder ↓ überspringt ohne Entscheid.",
+ keysA:"j/k oder ↑/↓ wechseln · 1–3 falscher Text · Ctrl/Cmd+Enter speichern, weiter",
+ aPartW:"offen · {w} als falsch markiert, noch keine Massnahme gewählt",aPartM:"offen · diese Massnahme setzt den falschen Text voraus",aWrongS:"{w} falsch",
+ aLegacy:"Von einer früheren Version dieser Seite gespeichert: {x}",aRightS:"Fassung gemäss Entscheid {r}",
+ csvHead:["Fall","Befunde","Produkt","Limitation","Sprachen","Art","kind_code","Werte","Datierung","Vor dieser Prüfung erfasst","Falscher Text","Fassung gemäss Entscheid","Massnahme","action_code","Notiz","Entschieden am","Entschieden von","Prüfung (SL-Stand)","Einzeln entschieden"]},
+en:{aWrongQ:"Which text is wrong?",aWrongSub:"Measured against BAG's decision, which the audit cannot see. More than one may be wrong.",oddDiff:"differs from the other two",
+ aRemQ:"What should happen?",rem:{exofficio:"Correct ex officio",holder:"Raise with the holder in the triennial review",langsvc:"Send to the language service",none:"No action (equivalent wording)",unclear:"Not clear yet — check the decision file"},
+ remNeedW:"“Correct ex officio” and “Raise with the holder” need the wrong text chosen above.",
+ aMajQ:"{L} agrees with {M} here; {O} is the one that differs. Mark {L} as wrong anyway?",aMajYes:"Yes, {L} is wrong",aMajNo:"Cancel",
+ aNameAsk:"Enter your name first: it is stored with each decision and in the exports. Then choose again.",revPh:"Name (required, stored with each decision)",
+ aDecHint:"Decided once the wrong text and what to do are chosen. “Send to the language service”, “No action” and “Not clear yet” also count without naming the wrong text; a note alone leaves the issue open.",
+ needDecA:"Decide first: which text is wrong and what to do; j or ↓ skips without deciding.",
+ keysA:"j/k or ↑/↓ move · 1–3 wrong text · Ctrl/Cmd+Enter save, next",
+ aPartW:"open · {w} marked wrong, no action chosen yet",aPartM:"open · this action needs the wrong text",aWrongS:"{w} wrong",
+ aLegacy:"Stored by an earlier version of this page: {x}",aRightS:"version matching the decision {r}",
+ csvHead:["Issue","Findings","Product","Limitation","Languages","Kind","kind_code","Values","Dating","Listed before this audit","Wrong text","Version matching the decision","Action","action_code","Note","Decided on","Decided by","Audit (SL of)","Decided separately"]},
+fr:{aWrongQ:"Quel texte est erroné ?",aWrongSub:"Par rapport à la décision de l'OFSP, que l'audit ne connaît pas. Plusieurs réponses possibles.",oddDiff:"diffère des deux autres",
+ aRemQ:"Que faire ?",rem:{exofficio:"Corriger d'office",holder:"Aborder avec le titulaire lors du réexamen triennal",langsvc:"Transmettre au service linguistique",none:"Aucune mesure (formulation équivalente)",unclear:"Pas encore clair – vérifier le dossier de décision"},
+ remNeedW:"« Corriger d'office » et « Aborder avec le titulaire » supposent que le texte erroné soit choisi ci-dessus.",
+ aMajQ:"{L} concorde ici avec {M} ; c'est {O} qui diffère. Marquer quand même {L} comme erroné ?",aMajYes:"Oui, {L} est erroné",aMajNo:"Annuler",
+ aNameAsk:"Saisissez d'abord votre nom : il est enregistré avec chaque décision et dans les exports. Puis choisissez à nouveau.",revPh:"Nom (requis, enregistré avec chaque décision)",
+ aDecHint:"Décidé dès que le texte erroné et la mesure sont choisis. « Transmettre au service linguistique », « Aucune mesure » et « Pas encore clair » comptent aussi sans indiquer le texte erroné ; une remarque seule laisse le cas ouvert.",
+ needDecA:"Décider d'abord : quel texte est erroné et que faire ; j ou ↓ passe sans décider.",
+ keysA:"j/k ou ↑/↓ naviguer · 1–3 texte erroné · Ctrl/Cmd+Entrée enregistrer, suivant",
+ aPartW:"ouvert · {w} marqué erroné, aucune mesure choisie",aPartM:"ouvert · cette mesure suppose le texte erroné",aWrongS:"{w} erroné",
+ aLegacy:"Enregistré par une version antérieure de cette page : {x}",aRightS:"version conforme à la décision {r}",
+ csvHead:["Cas","Constats","Produit","Limitation","Langues","Type","kind_code","Valeurs","Datation","Recensé avant cet audit","Texte erroné","Version conforme à la décision","Mesure","action_code","Remarque","Décidé le","Décidé par","Audit (version LS)","Décidé séparément"]},
+it:{aWrongQ:"Quale testo è errato?",aWrongSub:"Rispetto alla decisione dell'UFSP, che la verifica non conosce. Più risposte possibili.",oddDiff:"diverge dalle altre due",
+ aRemQ:"Che cosa fare?",rem:{exofficio:"Correggere d'ufficio",holder:"Discutere con il titolare nel riesame triennale",langsvc:"Inviare al servizio linguistico",none:"Nessuna misura (formulazione equivalente)",unclear:"Non ancora chiaro – verificare il dossier della decisione"},
+ remNeedW:"«Correggere d'ufficio» e «Discutere con il titolare» presuppongono che sopra sia scelto il testo errato.",
+ aMajQ:"{L} concorda qui con {M}; a divergere è {O}. Segnare comunque {L} come errato?",aMajYes:"Sì, {L} è errato",aMajNo:"Annulla",
+ aNameAsk:"Inserire prima il proprio nome: viene salvato con ogni decisione e negli export. Poi scegliere di nuovo.",revPh:"Nome (obbligatorio, salvato con ogni decisione)",
+ aDecHint:"Deciso appena si scelgono il testo errato e la misura. «Inviare al servizio linguistico», «Nessuna misura» e «Non ancora chiaro» valgono anche senza indicare il testo errato; una nota da sola lascia il caso aperto.",
+ needDecA:"Decidere prima: quale testo è errato e che cosa fare; j o ↓ salta senza decidere.",
+ keysA:"j/k o ↑/↓ spostarsi · 1–3 testo errato · Ctrl/Cmd+Invio salva, avanti",
+ aPartW:"aperto · {w} segnato come errato, nessuna misura scelta",aPartM:"aperto · questa misura presuppone il testo errato",aWrongS:"{w} errato",
+ aLegacy:"Salvato da una versione precedente di questa pagina: {x}",aRightS:"versione conforme alla decisione {r}",
+ csvHead:["Caso","Rilievi","Prodotto","Limitazione","Lingue","Tipo","kind_code","Valori","Datazione","Già rilevato in precedenza","Testo errato","Versione conforme alla decisione","Misura","action_code","Nota","Deciso il","Deciso da","Verifica (versione ES)","Deciso separatamente"]}};
+Object.keys(TX8).forEach(function(L){Object.keys(TX8[L]).forEach(function(k){TX[L][k]=TX8[L][k]})});
 function nT(k,n,o){o=o||{};o.n=n;return fmt(n===1&&TX[UL][k+"1"]!=null?t(k+"1"):t(k),o)}
 function pickUI(){if(TX[P.ui])return P.ui;var L=[];try{L=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||""]}catch(e){}
  for(var i=0;i<L.length;i++){var c=String(L[i]||"").slice(0,2).toLowerCase();if(TX[c])return c}return "de"}
@@ -985,7 +1040,7 @@ document.querySelector(".views").addEventListener("keydown",function(e){if(e.key
 // when a finding is decided apart from its issue): a decision on the issue is written to every finding of the issue
 // that is not decided separately, so it carries over to the next audit run finding by finding.
 var AF={show:"all",lang:"all",kind:"all",since:""},EQOPEN=false,EXOPEN=false,OPEN={},
- ACTS=["fix_de","fix_fr","fix_it","langsvc","decfile","pending","none","falsealarm"],LEGACY=["exofficio","holder","unclear"];
+ LNG=["DE","FR","IT"],REM=["exofficio","holder","langsvc","none","unclear"],AWC=null,ANAME=false;
 var IS=AU?AU.issues:[];
 if(AU){IS.forEach(function(I){I.M=I.rows.map(function(i){return AU.rows[i]});I.M.forEach(function(r){r.I=I})})}
 // experimental issues (round 5, checks off): one per finding, decided like an issue, outside the issue counts
@@ -993,8 +1048,25 @@ var XIS=AU&&AU.exp&&AU.exp.issues?AU.exp.issues:[],XROWS=AU&&AU.exp?AU.exp.rows:
 XIS.forEach(function(I){I.M=I.rows.map(function(i){return XROWS[i]});I.M.forEach(function(r){r.I=I})});
 function allRows(){return AU?AU.rows.concat(XROWS):[]}
 function aActs(d){return d?(d.actions||(d.action?[ACTMAP[d.action]||d.action]:[])):[]}
-function aHas(d){return !!(d&&(d.right||aActs(d).length||d.note))}
-function aDecided(r){var d=SA[r.sig];return !!(d&&(d.right||aActs(d).length))}
+function aHas(d){return !!(d&&(d.right||aActs(d).length||d.note||(d.wrong||[]).length||d.remedy))}
+// a decision has two answers: which text is wrong (wrong: ["IT"], several allowed) and what to do (remedy: one of REM).
+// The stored fields of earlier page versions are derived from them (right: the versions not marked wrong, or "unclear";
+// actions: fix_<lang> per wrong text for a correction plus the remedy, "decfile" for not clear yet), so older readers
+// and exports keep working. A decision stored by an earlier page version (right + actions only) is read back into the
+// two answers for display (aAns) and keeps its fields until it is changed.
+function aAns(d){if(!d)return {w:[],m:""};if(d.remedy!=null||d.wrong)return {w:(d.wrong||[]).slice(),m:d.remedy||""};
+ var A=aActs(d),w=A.filter(function(v){return /^fix_(de|fr|it)$/.test(v)}).map(function(v){return v.slice(4).toUpperCase()}),m="";
+ [["exofficio","exofficio"],["holder","holder"],["langsvc","langsvc"],["none","none"],["falsealarm","none"],["decfile","unclear"],["unclear","unclear"]].some(function(p){if(A.indexOf(p[0])>=0){m=p[1];return true}return false});
+ if(!m&&d.right==="unclear")m="unclear";return {w:w,m:m}}
+function lsort(a,b){return LNG.indexOf(a)-LNG.indexOf(b)}
+function fixRem(m){return m==="exofficio"||m==="holder"||m==="langsvc"}
+function aDerive(d){var w=(d.wrong||[]).filter(function(x){return LNG.indexOf(x)>=0}).sort(lsort),m=REM.indexOf(d.remedy)>=0?d.remedy:"";d.wrong=w;d.remedy=m;
+ d.right=w.length?LNG.filter(function(x){return w.indexOf(x)<0}).join("+"):(m==="unclear"?"unclear":"");
+ var A=fixRem(m)?w.map(function(x){return "fix_"+x.toLowerCase()}):[];if(m)A.push(m==="unclear"?"decfile":m);d.actions=A;delete d.action;return d}
+// decided: a remedy, and the wrong text unless the remedy is the language service, no action or not clear yet; a decision
+// of an earlier page version counts as before (a version or an action)
+function aDone(d){if(!d)return false;if(d.remedy!=null){var m=d.remedy;return !!m&&(!(m==="exofficio"||m==="holder")||(d.wrong||[]).length>0)}return !!(d.right||aActs(d).length)}
+function aDecided(r){return aDone(SA[r.sig])}
 function iDec(I){for(var i=0;i<I.M.length;i++){var d=SA[I.M[i].sig];if(d&&!d.own)return d}return null}
 function iDecided(I){return I.M.every(aDecided)}
 function iAny(I){return I.M.some(aDecided)}
@@ -1010,8 +1082,10 @@ function aMigrate(){if(!AU)return;var ch=false;
  if(ch)saveA()}
 aMigrate();
 function aMark(I){return iDecided(I)?'<span class="mk" title="'+esc(t("aDecF"))+'">✓</span>':""}
-function aStatus(d){if(!d||!d.at)return t("openSt");if(!(d.right||aActs(d).length))return t("aNoteOnly");var day=ddate(d.at.slice(0,10).replace(/-/g,""));
- var s=d.by?fmt(t("decOn"),{d:day,n:d.by}):fmt(t("decOnAnon"),{d:day});
+function aStatus(d){if(!d||!d.at)return t("openSt");
+ if(!aDone(d)){var x=aAns(d);if(d.remedy!=null&&x.w.length&&!x.m)return fmt(t("aPartW"),{w:x.w.join(", ")});if(d.remedy!=null&&x.m)return t("aPartM");return t("aNoteOnly")}
+ var day=ddate(d.at.slice(0,10).replace(/-/g,""));
+ var s=(d.remedy!=null?ansTxt(d)+" · ":"")+(d.by?fmt(t("decOn"),{d:day,n:d.by}):fmt(t("decOnAnon"),{d:day}));
  if(d.date&&AU&&d.date!==AU.meta.date)s+=" "+fmt(t("earlier"),{s:ddate(d.date)});return s}
 function dating(x){if(!x)return "";if(x.earliest&&x.n===x.m)return fmt(t("dA"),{n:x.n,d:ddate(x.first)});
  if(x.prev&&x.n===x.m)return fmt(t("dB"),{p:ddate(x.prev),d:ddate(x.first),n:x.n});return fmt(t("dC"),{d:ddate(x.first),n:x.n,m:x.m==null?"?":x.m})}
@@ -1056,14 +1130,31 @@ function termHTML(r){var m=r.term;if(!m)return "";var h="";
  return h}
 function uniqP(xs){var o=[];xs.forEach(function(x){if(x&&o.indexOf(x)<0)o.push(x)});return o}
 // the decision controls, for an issue (scope "i") or one finding decided separately (scope "m")
-function ctlRight(d){return '<div class="btns" role="group" aria-label="'+esc(t("aRight"))+'">'+[["DE","DE"],["FR","FR"],["IT","IT"],["unclear",t("rUnclear")]].map(function(o,i){
-  return '<button type="button" class="box" data-a="right" data-v="'+o[0]+'" aria-pressed="'+(d.right===o[0])+'">'+esc(o[1])+"</button>"}).join("")+"</div>"}
-function ctlActs(d){var A=aActs(d),acts=t("acts"),b=function(v,lab){return '<button type="button" class="box" data-a="act" data-v="'+v+'" aria-pressed="'+(A.indexOf(v)>=0)+'">'+esc(lab)+"</button>"};
- var h='<div class="grp2" role="group" aria-label="'+esc(acts.fix)+'"><span class="lbl">'+esc(acts.fix)+"</span>"+b("fix_de","DE")+b("fix_fr","FR")+b("fix_it","IT")+"</div>"+
-  '<div class="grp2"><span class="lbl">'+esc(t("aThen"))+"</span>"+b("langsvc",acts.langsvc)+b("decfile",acts.decfile)+b("pending",acts.pending)+"</div>"+
-  '<div class="grp2"><span class="lbl">'+esc(t("aOr"))+"</span>"+b("none",acts.none)+b("falsealarm",acts.falsealarm)+"</div>";
- A.forEach(function(v){if(ACTS.indexOf(v)<0)h+='<div class="grp2">'+b(v,acts[v]||v)+"</div>"});           // an action of an earlier page version stays visible
+function ansTxt(d){var x=aAns(d);return [x.w.length?fmt(t("aWrongS"),{w:x.w.join(", ")}):"",actLab(d)].filter(Boolean).join(" · ")}
+// the action in the interface language (exports and status); a decision of an earlier page version by its stored actions
+function actLab(d){if(!d)return "";var x=aAns(d);
+ if(d.remedy!=null)return x.m?t("rem")[x.m]+(x.w.length&&fixRem(x.m)?" ("+x.w.join(", ")+")":""):"";
+ var acts=t("acts");return aActs(d).map(function(v){return /^fix_/.test(v)?acts.fix+": "+v.slice(4).toUpperCase():(t("rem")[v]||acts[v]||v)}).join("; ")}
+function kindLab(I){return I.exp?t("kinds").experimental:I.kinds.map(function(k){return t("kinds")[k]||k}).join(" + ")}
+// the other version that agrees with v when odd is the one that differs ("" when v is the odd one or nothing differs)
+function majPartner(odd,v){var O=String(odd||"").toUpperCase();if(LNG.indexOf(O)<0||v===O)return "";return LNG.filter(function(x){return x!==O&&x!==v})[0]}
+// question 1, which text is wrong: nothing preselected; the version that differs from the other two first and labelled
+function ctlWrong(d,odd,scope){var A=aAns(d),O=String(odd||"").toUpperCase(),L=LNG.indexOf(O)>=0?[O].concat(LNG.filter(function(x){return x!==O})):LNG;
+ var h='<div class="btns aw" role="group" aria-label="'+esc(t("aWrongQ"))+'">'+L.map(function(v){
+  return '<button type="button" class="box" data-a="wrong" data-v="'+v+'" aria-pressed="'+(A.w.indexOf(v)>=0)+'">'+esc(v)+(v===O?'<span class="oddb"> · '+esc(t("oddDiff"))+"</span>":"")+"</button>"}).join("")+"</div>";
+ if(AWC&&AWC.s===scope)h+='<div class="aconf" role="alert"><span class="q">'+esc(fmt(t("aMajQ"),{L:AWC.v,M:majPartner(O,AWC.v),O:O}))+'</span><button type="button" class="box primary" data-a="wrong" data-ok="1" data-v="'+AWC.v+'">'+
+  esc(fmt(t("aMajYes"),{L:AWC.v}))+'</button><button type="button" class="box" data-a="wcancel">'+esc(t("aMajNo"))+"</button></div>";
  return h}
+// question 2, what to do: one remedy; a correction or the holder needs the wrong text
+function ctlRem(d,scope){var A=aAns(d),R=t("rem"),id="rn-"+scope.replace(/[^\w-]/g,"_");
+ return '<div class="arem" role="group" aria-label="'+esc(t("aRemQ"))+'">'+REM.map(function(v){var need=(v==="exofficio"||v==="holder")&&!A.w.length&&A.m!==v;
+  return '<button type="button" class="box" data-a="rem" data-v="'+v+'" aria-pressed="'+(A.m===v)+'"'+(need?' disabled aria-describedby="'+id+'"':"")+">"+esc(R[v])+(A.w.length&&fixRem(v)?" · "+esc(A.w.join(", ")):"")+"</button>"}).join("")+
+  (A.w.length?"":'<span class="hint" id="'+id+'">'+esc(t("remNeedW"))+"</span>")+"</div>"}
+// what an earlier page version stored, shown until the decision is changed
+function ctlLegacy(d){if(!d||d.remedy!=null||!(d.right||aActs(d).length))return "";
+ var x=[d.right?fmt(t("aRightS"),{r:d.right==="unclear"?t("rUnclear"):d.right}):"",actLab(d)].filter(Boolean).join(" · ");return '<div class="sug">'+esc(fmt(t("aLegacy"),{x:x}))+"</div>"}
+function whoHTML(){var ask=ANAME&&!who();return '<div class="who'+(ask?" ask":"")+'"><label>'+esc(t("rev"))+' <input type="text" id="a-rev" data-rev="1" autocomplete="name" value="'+esc(P.reviewer||"")+'" placeholder="'+esc(t("revPh"))+'"'+
+ (ask?' aria-invalid="true" aria-describedby="a-name-ask"':"")+"></label>"+(ask?'<p class="aname" id="a-name-ask" role="alert">'+esc(t("aNameAsk"))+"</p>":"")+"</div>"}
 function ctlNote(d){return '<textarea data-a="note" aria-label="'+esc(t("aNote"))+'" placeholder="'+esc(t("aNote"))+'">'+esc(d.note||"")+"</textarea>"}
 function iStatus(I){var d=iDec(I),o=iOwn(I),s=(iDecided(I)?"✓ ":"")+aStatus(d);if(I.M.length>1)s+=" · "+fmt(t("appliesAll"),{n:I.M.length-o});if(o)s+=" · "+nT("someOwn",o);return s}
 function ftHTML(I){var h="";
@@ -1076,7 +1167,7 @@ function ftHTML(I){var h="";
 function memHTML(I){return '<table class="mem"><tbody>'+I.M.map(function(r){var d=SA[r.sig],own=!!(d&&d.own);
   return '<tr data-sig="'+esc(r.sig)+'"><td class="mf">'+esc(r.no||"")+"</td><td><b>"+esc(r.product||r.lim)+"</b> "+'<span class="code">'+esc(r.lim)+"</span>"+
    '<span class="sub2">'+esc((t("kinds")[r.kind]||r.kind)+" · "+(r.lang||"").toUpperCase())+(r.dating?" · "+esc(dating(r.dating)):"")+"</span></td>"+
-   '<td class="mc">'+(own?ctlRight(d)+ctlActs(d)+ctlNote(d)+'<div class="stt">'+esc(t("memOwn")+" · "+aStatus(d))+'</div><button type="button" class="tb" data-join="1">'+esc(t("memJoin"))+"</button>"
+   '<td class="mc">'+(own?ctlWrong(d,r.odd,r.sig)+ctlRem(d,r.sig)+ctlLegacy(d)+ctlNote(d)+'<div class="stt">'+esc(t("memOwn")+" · "+aStatus(d))+'</div><button type="button" class="tb" data-join="1">'+esc(t("memJoin"))+"</button>"
     :'<span class="stt">'+esc(t("memFollow"))+'</span> <button type="button" class="tb" data-split="1">'+esc(t("memSplit"))+"</button>")+"</td></tr>"}).join("")+"</tbody></table>"}
 // the list: one row per issue (mark, product and codes, what differs); the selected issue opens on the right
 var ASEL=null,AVIS=[];
@@ -1144,9 +1235,9 @@ function aCaseHTML(I){var r=I.M[0],d=iDec(I)||{},n=I.M.length,odd=I.odd==="uncle
  if(shortTexts(I))h=h.slice(0,h.lastIndexOf('<section class="sec"><div class="sl"><span class="no">2</span>'))+'<section class="sec"><div class="sl"><span class="no">2</span><span class="t">'+esc(t("aTexts"))+"</span></div>"+ftHTML(I)+"</section>";
  var no=3;
  if(n>1){h+='<section class="sec"><div class="sl"><span class="no">'+no+'</span><span class="t">'+esc(fmt(t("mem"),{n:n}))+"</span></div>"+memHTML(I)+"</section>";no++}
- h+='<section class="sec"><div class="sl"><span class="no">'+no+'</span><span class="t">'+esc(t("s4"))+'</span><span class="sub">'+esc(t("aDecHint"))+'</span></div><div class="adec"><div><label class="q">'+esc(t("aRight"))+"</label>"+ctlRight(d)+
-  (r.sug?'<div class="sug">'+esc(t("aSug"))+": "+esc(t("acts")[r.sug]||r.sug)+"</div>":"")+'</div><div><label class="q">'+esc(t("aAction"))+"</label>"+ctlActs(d)+ctlNote(d)+"</div></div>"+
-  '<div class="who"><label>'+esc(t("rev"))+' <input type="text" data-rev="1" autocomplete="name" value="'+esc(P.reviewer||"")+'" placeholder="'+esc(t("revPh"))+'"></label></div>'+
+ h+='<section class="sec"><div class="sl"><span class="no">'+no+'</span><span class="t">'+esc(t("s4"))+'</span><span class="sub">'+esc(t("aDecHint"))+"</span></div>"+whoHTML()+
+  '<div class="adec"><div><div class="q" id="aq-w">'+esc(t("aWrongQ"))+'</div><div class="sub2">'+esc(t("aWrongSub"))+"</div>"+ctlWrong(d,I.odd,"i:"+I.key)+"</div>"+
+  '<div><div class="q">'+esc(t("aRemQ"))+"</div>"+ctlRem(d,"i:"+I.key)+(r.sug?'<div class="sug">'+esc(t("aSug"))+": "+esc(t("rem")[r.sug]||t("acts")[r.sug]||r.sug)+"</div>":"")+ctlLegacy(d)+ctlNote(d)+"</div></div>"+
   '<div class="stt'+(iAny(I)?" done":"")+'" id="a-stt">'+esc(iStatus(I))+'</div><div class="save"><button class="box primary" type="button" id="a-next"'+(iAny(I)?"":" disabled")+' aria-describedby="an-why">'+esc(t("saveNextI"))+'</button><span class="hint" id="an-why">'+esc(iAny(I)?t("keysA"):t("needDecA"))+"</span></div></section>";
  return h}
 function shortTexts(I){return I.lims.every(function(lim){var T=AU.texts[lim];return T&&["de","fr","it"].every(function(L){return (T[L]||[]).reduce(function(n,x){return n+x[0].length},0)<=800})})}
@@ -1154,27 +1245,38 @@ function renderACase(){var c=$("acase");if(!ASEL){c.innerHTML='<p class="empty">
 function issueOf(el){if(el.closest("#acase"))return ASEL;var tr=el.closest("tr[data-iss]");if(!tr)return null;var k=tr.dataset.iss;return IS.concat(XIS).filter(function(I){return I.key===k})[0]||null}
 function rowOf(sig){return allRows().filter(function(x){return x.sig===sig})[0]}
 function stamp(d){d.at=new Date().toISOString();d.by=who();d.date=AU.meta.date;return d}
-function upd(d,f){var v=f.dataset.v!=null?f.dataset.v:f.value,on=f.tagName==="BUTTON"?f.getAttribute("aria-pressed")!=="true":f.checked;
- if(f.dataset.a==="act"){var A=aActs(d).filter(function(x){return x!==v});
-  if(on){if(v==="none"||v==="falsealarm")A=[];else A=A.filter(function(x){return x!=="none"&&x!=="falsealarm"});A.push(v)}d.actions=A;delete d.action}
- else if(f.dataset.a==="right")d.right=f.tagName==="BUTTON"?(on?v:""):v;
- else d[f.dataset.a]=f.value;return d}
+function upd(d,f){var a=f.dataset.a,v=f.dataset.v;
+ if(a==="wrong"||a==="rem"){var x=aAns(d);d.wrong=x.w;d.remedy=x.m;
+  if(a==="wrong"){var on=d.wrong.indexOf(v)<0;d.wrong=d.wrong.filter(function(y){return y!==v});if(on)d.wrong.push(v)}
+  else d.remedy=d.remedy===v?"":v;
+  aDerive(d)}
+ else d[a]=f.value;return d}
+// before a choice is saved: the reviewer's name (asked for inline, once per browser), and an inline confirmation when the
+// version marked wrong is one of the two that agree; returns false when nothing was saved
+function aGate(f,I,mt){var a=f.dataset.a;if(a==="wcancel"){AWC=null;return false}if(a!=="wrong"&&a!=="rem")return true;
+ if(!who()){ANAME=true;AWC=null;return false}ANAME=false;
+ if(a==="wrong"&&!f.dataset.ok){var sg=mt?mt.dataset.sig:"",cur=aAns(mt?SA[sg]:iDec(I)),odd=mt?(rowOf(sg)||{}).odd:I.odd;
+  if(cur.w.indexOf(f.dataset.v)<0&&majPartner(odd,f.dataset.v)){AWC={s:mt?sg:"i:"+I.key,v:f.dataset.v};return false}}
+ AWC=null;return true}
 function aRefresh(I){var tr=document.querySelector('#aud tr[data-iss="'+I.key+'"]');if(tr)tr.cells[0].innerHTML=aMark(I);var st=$("a-stt");if(st&&ASEL===I){st.textContent=iStatus(I);st.classList.toggle("done",iAny(I));
   var b=$("a-next"),w=$("an-why");if(b)b.disabled=!iAny(I);if(w)w.textContent=iAny(I)?t("keysA"):t("needDecA")}
  var xg=$("ex-tg");if(xg&&I.exp&&AU.exp)xg.textContent="["+(EXOPEN?"−":"+")+"] "+fmt(t("expHead"),{c:AU.exp.confirmed,n:AU.exp.n,d:XIS.filter(iDecided).length});progress()}
-function aSet(f){var I=issueOf(f);if(!I)return;var mt=f.closest(".mem tr[data-sig]");
+function aSet(f){var I=issueOf(f);if(!I)return;var mt=f.closest(".mem tr[data-sig]");if(!aGate(f,I,mt))return;
  if(mt){var sg=mt.dataset.sig,d=upd(clone(SA[sg]),f);d.own=true;delete d.via;SA[sg]=stamp(d);saveA();var st=mt.querySelector(".stt");if(st)st.textContent=t("memOwn")+" · "+aStatus(SA[sg])}
  else{var base=upd(clone(iDec(I)),f);delete base.own;base.via=1;var keep=aHas(base);if(keep)stamp(base);
   I.M.forEach(function(r){var d=SA[r.sig];if(d&&d.own)return;if(keep)SA[r.sig]=clone(base);else delete SA[r.sig]});saveA()}
  aRefresh(I)}
+function aAfter(){var y=window.scrollY;renderACase();window.scrollTo(0,y);var n=$("a-rev");if(ANAME&&n&&!who()){n.focus();return}
+ var k=document.querySelector("#acase .aconf .primary");if(k)k.focus()}
 function aNext(){if(ASEL&&!iAny(ASEL))return;var i=AVIS.indexOf(ASEL);renderAudit();var j=AVIS.indexOf(ASEL);ASEL=AVIS[(j>=0?j:i)+1]||ASEL;aMarkSel(true);renderACase();var c=$("acase");if(c.getBoundingClientRect().top<0)c.scrollIntoView()}
 (function(){var tb=document.querySelector("#aud tbody"),c=$("acase");
  tb.addEventListener("click",function(e){var tr=e.target.closest("tr[data-iss]");if(!tr)return;ASEL=issueOf(tr);aMarkSel();renderACase();if(window.innerWidth<=900){$("p-audit").classList.add("case-open");window.scrollTo(0,0)}});
  c.addEventListener("change",function(e){var f=e.target.closest("[data-a]");if(f)aSet(f)});
- c.addEventListener("input",function(e){if(e.target.dataset&&e.target.dataset.rev){P.reviewer=e.target.value;lsSet("gleichlaut:prefs",P);return}var f=e.target.closest("textarea[data-a]");if(f)aSet(f)});
+ c.addEventListener("input",function(e){if(e.target.dataset&&e.target.dataset.rev){P.reviewer=e.target.value;lsSet("gleichlaut:prefs",P);
+   if(who()){ANAME=false;e.target.removeAttribute("aria-invalid");e.target.removeAttribute("aria-describedby");var q=$("a-name-ask");if(q)q.remove()}return}var f=e.target.closest("textarea[data-a]");if(f)aSet(f)});
  c.addEventListener("click",function(e){if(e.target.closest("#a-next")){aNext();return}
   if(e.target.closest("[data-back]")){$("p-audit").classList.remove("case-open");aMarkSel(true);return}
-  var ab=e.target.closest("button[data-a]");if(ab){aSet(ab);var y=window.scrollY;renderACase();window.scrollTo(0,y);return}
+  var ab=e.target.closest("button[data-a]");if(ab){aSet(ab);aAfter();return}
   var b=e.target.closest("button[data-split],button[data-join]");if(!b)return;var I=ASEL,sg=b.closest("tr[data-sig]").dataset.sig;
   if(b.dataset.split){var d=clone(SA[sg]||iDec(I));d.own=true;delete d.via;if(!aHas(d))d.at=null;SA[sg]=d}
   else{var base=iDec(I);if(base)SA[sg]=clone(base);else delete SA[sg]}
@@ -1186,35 +1288,40 @@ function aNext(){if(ASEL&&!iAny(ASEL))return;var i=AVIS.indexOf(ASEL);renderAudi
   if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)){e.preventDefault();aNext();return}
   if(typing||e.altKey||e.metaKey||e.ctrlKey)return;if(tg.closest&&tg.closest(".views"))return;
   if(e.key==="j"||e.key==="ArrowDown"){e.preventDefault();aMove(1)}else if(e.key==="k"||e.key==="ArrowUp"){e.preventDefault();aMove(-1)}
-  else if(/^[1-4]$/.test(e.key)&&ASEL){var bt=c.querySelectorAll('.adec button[data-a="right"]')[+e.key-1];if(bt){aSet(bt);renderACase()}}})})();
-function iRow(I){var d=iDec(I)||{},acts=TX[UL].acts,A=aActs(d);
+  else if(/^[1-3]$/.test(e.key)&&ASEL){var bt=c.querySelectorAll('.adec .aw button[data-a="wrong"]')[+e.key-1];if(bt){aSet(bt);aAfter()}}})})();
+function iRow(I){var d=iDec(I)||{},x=aAns(d);
  var what=I.exp?whatTxt(I):I.what.map(function(w){var L=(w[1]||"").toUpperCase();
   if(w[0]==="number")return "DE "+w[2]+" / "+L+" "+w[3];
   if(w[0]==="language")return L+": "+fmt(t("aFoundL"),{F:t("lname")[w[2]]||w[2]});
   if(w[0]==="terminology")return L+": «"+w[2]+"» → «"+w[3]+"»";
   return L+": "+w[2]+(w[3]?" → "+w[3]:"")}).join("; ");
- var actL=A.map(function(v){return /^fix_/.test(v)?acts.fix+": "+v.slice(4).toUpperCase():acts[v]||v}).join("; ");
- var own=I.M.filter(function(r){var x=SA[r.sig];return x&&x.own}).map(function(r){var x=SA[r.sig];
-  return r.no+" ("+[x.right,aActs(x).map(function(v){return /^fix_/.test(v)?acts.fix+": "+v.slice(4).toUpperCase():acts[v]||v}).join(", "),x.note].filter(Boolean).join(" · ")+")"}).join("; ");
+ var own=I.M.filter(function(r){var y=SA[r.sig];return y&&y.own}).map(function(r){var y=SA[r.sig];
+  return r.no+" ("+[ansTxt(y)||y.right,y.note].filter(Boolean).join(" · ")+")"}).join("; ");
  return [I.iid,I.fids.join(" "),uniqP(I.products).join(", "),I.lims.join(" "),I.langs.map(function(L){return L.toUpperCase()}).join(" "),
-  I.kinds.map(function(k){return t("kinds")[k]||k}).join(" + "),what,I.dating?dating(I.dating):"",I.known?t("yes"):t("no2"),
-  d.right==="unclear"?t("rUnclear"):(d.right||""),actL,d.note||"",d.at?d.at.slice(0,10):"",d.by||"",ddate(d.date||AU.meta.date),own]}
+  kindLab(I),I.exp?"experimental":I.kinds.join("+"),what,I.dating?dating(I.dating):"",I.known?t("yes"):t("no2"),
+  x.w.join(", "),d.right==="unclear"?t("rUnclear"):(d.right||""),actLab(d),aActs(d).join(" "),d.note||"",d.at?d.at.slice(0,10):"",d.by||"",ddate(d.date||AU.meta.date),own]}
 // the issues with their decisions, one line each, for filing (GEVER): in the interface language, ';'-separated with a BOM so
 // that Excel (de-CH) opens it in columns
 function auditCsv(){var lines=[t("csvHead")].concat(IS.map(iRow),XIS.map(iRow));
  return "﻿"+lines.map(function(l){return l.map(csvCellS).join(";")}).join("\r\n")+"\r\n"}
 function csvCellS(s){s=String(s==null?"":s);return /[";\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
-function auditExport(){if(!AU)return {};var o={};allRows().forEach(function(r){var d=SA[r.sig];if(d)o[r.sig]={limitation:r.lim,product:r.product,lang:r.lang,kind:r.kind==="experimental"?"experimental check":r.kind,check:r.xkind||undefined,odd_one_out:r.odd,known:r.known,
- issue:r.I?r.I.iid:"",issue_key:r.I?r.I.key:"",decided_separately:!!d.own,right:d.right||"",actions:aActs(d),note:d.note||"",at:d.at,by:d.by||"",audit_date:d.date||AU.meta.date}});return o}
-function auditIssues(){return IS.concat(XIS).map(function(I){var d=iDec(I)||{};return {issue:I.iid,key:I.key,kind:I.exp?"experimental check":I.kinds.join(" + "),findings:I.M.map(function(r){return r.sig}),fids:I.fids,limitations:I.lims,
- right:d.right||"",actions:aActs(d),note:d.note||"",decided:iDecided(I)}})}
+// the JSON exports: codes (kind, wrong, remedy, right, actions) for machines, labels in the interface language at export
+// time (kind_label, action_label, ui_lang) for the record
+function rKindLab(r){return r.kind==="experimental"?t("kinds").experimental+(r.xkind?" ("+(t("kindsX")[r.xkind]||r.xkind)+")":""):(t("kinds")[r.kind]||r.kind)}
+function auditExport(){if(!AU)return {};var o={};allRows().forEach(function(r){var d=SA[r.sig];if(d){var x=aAns(d);o[r.sig]={limitation:r.lim,product:r.product,lang:r.lang,kind:r.kind==="experimental"?"experimental check":r.kind,kind_label:rKindLab(r),check:r.xkind||undefined,odd_one_out:r.odd,known:r.known,
+ issue:r.I?r.I.iid:"",issue_key:r.I?r.I.key:"",decided_separately:!!d.own,decided:aDone(d),wrong:x.w,remedy:x.m,right:d.right||"",actions:aActs(d),action_label:actLab(d),note:d.note||"",at:d.at,by:d.by||"",audit_date:d.date||AU.meta.date,ui_lang:UL}}});return o}
+function auditIssues(){return IS.concat(XIS).map(function(I){var d=iDec(I)||{},x=aAns(d);return {issue:I.iid,key:I.key,kind:I.exp?"experimental check":I.kinds.join(" + "),kind_label:kindLab(I),findings:I.M.map(function(r){return r.sig}),fids:I.fids,limitations:I.lims,
+ wrong:x.w,remedy:x.m,right:d.right||"",actions:aActs(d),action_label:actLab(d),note:d.note||"",by:d.by||"",decided:iDecided(I)}})}
 function csvCell(s){s=String(s==null?"":s);return /[",\n;]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
 function snipText(r,L){return (r.snip[L]||[]).map(function(x){return x[0]}).join("")}
 $("a-csv-i").onclick=function(){download("gleichlaut-audit-"+AU.meta.date+"-issues.csv",auditCsv(),"text/csv");$("a-msg").textContent=t("dl")+": CSV"};
-$("a-csv").onclick=function(){var head=["rank","issue","limitation","product","kind","lang","odd_one_out","known","probably_equivalent","de","fr","it","right","actions","note","decided_at","decided_by","decided_in_audit","decided_separately"],acts=TX.en.acts;
- var lines=[head.join(",")].concat(allRows().map(function(r){var d=SA[r.sig]||{};return [r.rank,r.I?r.I.iid:"",r.lim,r.product,r.kind==="experimental"?"experimental check ("+r.xkind+")":r.kind,r.lang,r.odd,r.known?"yes":"no",r.eq!=null?(r.eq||"yes"):"",snipText(r,"de"),snipText(r,"fr"),snipText(r,"it"),d.right||"",
-  aActs(d).map(function(v){return /^fix_/.test(v)?"correct "+v.slice(4).toUpperCase():acts[v]||v}).join("; "),d.note||"",d.at||"",d.by||"",d.date||"",d.own?"yes":""].map(csvCell).join(",")}));
- download("gleichlaut-audit-"+AU.meta.date+"-findings.csv","﻿"+lines.join("\r\n")+"\r\n","text/csv");$("a-msg").textContent=t("dl")+": CSV"};
+// the findings, one line each: machine column names, the kind and the action in the interface language with their codes
+function findingsCsv(){var head=["rank","issue","limitation","product","kind","kind_code","lang","odd_one_out","known","probably_equivalent","de","fr","it","wrong","right","action","action_code","note","decided_at","decided_by","decided_in_audit","decided_separately"];
+ var lines=[head.join(",")].concat(allRows().map(function(r){var d=SA[r.sig]||{};return [r.rank,r.I?r.I.iid:"",r.lim,r.product,rKindLab(r),r.kind==="experimental"?"experimental:"+r.xkind:r.kind,r.lang,r.odd,r.known?"yes":"no",r.eq!=null?(r.eq||"yes"):"",snipText(r,"de"),snipText(r,"fr"),snipText(r,"it"),aAns(d).w.join(" "),d.right||"",
+  actLab(d),aActs(d).join(" "),d.note||"",d.at||"",d.by||"",d.date||"",d.own?"yes":""].map(csvCell).join(",")}));
+ return "\ufeff"+lines.join("\r\n")+"\r\n"}
+$("a-csv").onclick=function(){
+ download("gleichlaut-audit-"+AU.meta.date+"-findings.csv",findingsCsv(),"text/csv");$("a-msg").textContent=t("dl")+": CSV"};
 
 // ------------------------------------------------------------------ register (drafts)
 var F={status:"open",lang:"all",fam:"",q:""},sel=null,focusL="fr",VIS=[];
@@ -1396,7 +1503,7 @@ document.addEventListener("keydown",function(e){if(TAB!=="drafts")return;var tg=
  else if(k==="1"||k==="2"||k==="3"){if(sel){var L=langs(sel).indexOf(focusL)>=0?focusL:langs(sel)[0];decide(L,["accept","accept-edited","send-back"][+k-1])}}});
 // ------------------------------------------------------------------ export / import
 function payload(){return {run:M.run,model:M.model,pipeline:M.pipeline,run_sha256:M.run_sha256,items_sha256:M.items_sha256,exported_at:new Date().toISOString(),
- decisions:S.dec,edits:S.edits,audit_date:AU?AU.meta.date:null,audit:SA,audit_rows:auditExport(),audit_issues:AU?auditIssues():[]}}
+ reviewer:who(),ui_lang:UL,decisions:S.dec,edits:S.edits,audit_date:AU?AU.meta.date:null,audit:SA,audit_rows:auditExport(),audit_issues:AU?auditIssues():[]}}
 function download(name,text,type){var u=URL.createObjectURL(new Blob([text],{type:type})),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();
  setTimeout(function(){URL.revokeObjectURL(u);a.remove()},500)}
 function x(s){return esc(s).replace(/'/g,"&apos;")}
@@ -1480,7 +1587,7 @@ function importDecisions(o){var L=Array.isArray(o)?o:[o],nd={},na={},note="",con
      if(newer(d,c)){dd[k]=d;if(o.edits&&o.edits[k]!=null)S.edits[k]=o.edits[k]}});
     Object.keys(o.edits||{}).forEach(function(k){if(byKey[k]&&!dd[k])S.edits[k]=o.edits[k]})}}
   if(o.audit&&AU)Object.keys(o.audit).forEach(function(k){var sg=bySig[k]?k:(!o.audit_date||o.audit_date===AU.meta.date)?byRid[k]:null;if(!sg)return;var d=o.audit[k];
-   if(d&&ACTMAP[d.action])d.action=ACTMAP[d.action];if(d&&!d.date)d.date=o.audit_date||AU.meta.date;var c=ds[sg],r=bySig[sg];
+   if(d&&ACTMAP[d.action])d.action=ACTMAP[d.action];if(d&&(d.remedy!=null||d.wrong))aDerive(d);if(d&&!d.date)d.date=o.audit_date||AU.meta.date;var c=ds[sg],r=bySig[sg];
    if(c&&!same(c,d)){var lab=(r&&r.I?r.I.iid:"")+(r&&r.no?" "+r.no:"");if(conf.indexOf(lab)<0)conf.push(lab)}if(newer(d,c))ds[sg]=d})});
  if(bad===L.length)return t("impBad");
  Object.keys(dd).forEach(function(k){if(newer(dd[k],S.dec[k])){S.dec[k]=dd[k]}nd[k]=1});save();
@@ -1501,7 +1608,7 @@ function fromHash(){var h=decodeURIComponent(location.hash.slice(1));if(laneOf(h
   if(!(langs(g).some(function(L){return okItem(g.items[L])})))F.status="all";sel=g;return true}return false}
 var fromLink=fromHash()&&TAB==="drafts"&&!!sel;chrome();if(TAB==="audit")renderAudit();else{renderReg();if(sel){markSel(true);renderCase()}}
 if(fromLink)setTimeout(function(){var c=$("case");if(c&&c.getBoundingClientRect().top<64)c.scrollIntoView({block:"start"})},0);
-window.GleichlautReview={xliff:xliff,xliff12:xliff12,payload:payload,importDecisions:importDecisions,setTab:setTab,auditCsv:auditCsv};
+window.GleichlautReview={xliff:xliff,xliff12:xliff12,payload:payload,importDecisions:importDecisions,setTab:setTab,auditCsv:auditCsv,findingsCsv:findingsCsv};
 window.addEventListener("hashchange",function(){if(fromHash()){setTab(TAB);var c=$("case");if(TAB==="drafts"&&c&&c.getBoundingClientRect().top<64)c.scrollIntoView({block:"start"})}});
 })();
 </script>

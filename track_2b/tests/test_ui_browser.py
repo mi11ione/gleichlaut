@@ -7,7 +7,10 @@ that width: headless Chrome on macOS lays a --window-size below 500 px out at 50
 opens the Register audit tab, a hash naming a draft opens it under the same number, the interface defaults to the browser language (else German), decisions import, the family action
 accepts after an in-page confirmation, "start from the old text" replaces the editable draft, and the page's own XLIFF
 2.1 and 1.2 exports (with an accepted-edited and a sent-back decision) validate against the 2.1 core XSD + constraints
-and the 1.2 strict XSD.
+and the 1.2 strict XSD. The audit decision asks one question first ("Which text is wrong?", the odd one first and
+labelled, nothing preselected), then the remedy; it needs the reviewer's name, confirms inline when a version that agrees
+with another is marked wrong, still imports decision files of the earlier page, and exports labels in the interface
+language with machine codes alongside.
 Runs under pytest or as `python3 tests/test_ui_browser.py`."""
 import html, json, os, re, shutil, subprocess, sys, tempfile, unittest
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src"))
@@ -47,6 +50,14 @@ def _dom(path, hash_="", lang="en", probe=""):
 
 
 ERR = "window.__err=[];window.addEventListener('error',function(e){window.__err.push(String(e.message))});"
+NAME = ("function name(v){var n=document.getElementById('a-rev');n.value=v;n.dispatchEvent(new Event('input',{bubbles:true}))}"
+        "function q(s){return document.querySelector('#acase '+s)}function bw(L){return q('.aw button[data-a=\"wrong\"][data-v=\"'+L+'\"]')}"
+        "function br(v){return q('button[data-a=\"rem\"][data-v=\"'+v+'\"]')}function out(o){var e=document.createElement('pre');e.id='out';e.textContent=JSON.stringify(o);document.body.appendChild(e)}"
+        "function rows(){return window.GleichlautReview.payload().audit_rows}")
+
+
+def _out(s):
+    return json.loads(html.unescape(re.search(r'<pre id="out">(.*?)</pre>', s, re.S).group(1)))
 
 
 def test_audit_tab_opens_with_hash_and_german_default():
@@ -132,20 +143,22 @@ def test_save_next_waits_for_a_decision_legend_and_storage_note():
     assert not o["err"] and o["d0"] is True and o["d1"] is False and o["label"] == "Save, next change" and o["w0"].startswith("Decide first"), o
     assert "~ flagged, probably fine" in o["key"] and "▲ flagged, to check" in o["key"]
     assert o["prog"] == "1/166 decided · saved in this browser only · export to keep"
-    probe = ERR + ("setTimeout(function(){var b=document.getElementById('a-next'),d0=b.disabled,h=document.querySelector('#acase .sl .sub').textContent;"
-                   "document.querySelector('#acase button[data-a=\"right\"]').click();var st=document.getElementById('a-stt');"
-                   "var e=document.createElement('pre');e.id='out';e.textContent=JSON.stringify({d0:d0,h:h,d1:document.getElementById('a-next').disabled,"
-                   "st:st.textContent,done:st.className,label:b.textContent,err:window.__err});document.body.appendChild(e)},300);")
+    probe = ERR + NAME + ("setTimeout(function(){var b=document.getElementById('a-next'),d0=b.disabled,h=document.querySelector('#acase .sl .sub').textContent;name('A. Muster');"
+                   "document.querySelector('#acase .aw button[data-a=\"wrong\"]').click();var dw=document.getElementById('a-next').disabled;"
+                   "document.querySelector('#acase button[data-a=\"rem\"][data-v=\"exofficio\"]').click();var st=document.getElementById('a-stt');"
+                   "var e=document.createElement('pre');e.id='out';e.textContent=JSON.stringify({d0:d0,h:h,dw:dw,d1:document.getElementById('a-next').disabled,"
+                   "st:st.textContent,done:st.className,label:document.getElementById('a-next').textContent,err:window.__err});document.body.appendChild(e)},300);")
     o = json.loads(html.unescape(re.search(r'<pre id="out">(.*?)</pre>', _dom(C["p"], "#audit", "en", probe), re.S).group(1)))
-    assert not o["err"] and o["d0"] is True and o["d1"] is False and o["label"] == "Save, next issue"
-    assert o["h"].startswith("Counts as decided once a version (or not clear yet) or at least one action is chosen, even only “Send to the language service”") and "done" in o["done"]
+    assert not o["err"] and o["d0"] is True and o["dw"] is True and o["d1"] is False and o["label"] == "Save, next issue", o   # the wrong text alone is not a decision
+    assert o["h"].startswith("Decided once the wrong text and what to do are chosen. “Send to the language service”, “No action” and “Not clear yet” also count without naming the wrong text") and "done" in o["done"]
+    assert o["st"].startswith("✓ IT wrong · Correct ex officio (IT) · decided on ") and " by A. Muster" in o["st"], o["st"]
 
 
 def test_experimental_findings_are_decidable_and_exported_as_their_own_kind():
     C = _page()
-    probe = ERR + ("setTimeout(function(){document.getElementById('ex-tg').click();var rows=document.querySelectorAll('#aud tr[data-iss]').length;"
+    probe = ERR + NAME + ("setTimeout(function(){document.getElementById('ex-tg').click();var rows=document.querySelectorAll('#aud tr[data-iss]').length;"
                    "var x=document.querySelector('#aud tr[data-iss]:last-child');x.querySelector('td').click();"
-                   "var h=document.getElementById('acase').textContent;document.querySelector('#acase button[data-a=\"act\"][data-v=\"langsvc\"]').click();"
+                   "var h=document.getElementById('acase').textContent;name('A. Muster');document.querySelector('#acase button[data-a=\"rem\"][data-v=\"langsvc\"]').click();"
                    "var R=window.GleichlautReview,p=R.payload(),csv=R.auditCsv(),xi=p.audit_issues.filter(function(i){return i.kind==='experimental check'});"
                    "var e=document.createElement('pre');e.id='out';e.textContent=JSON.stringify({rows:rows,h:h,xi:xi.length,dec:xi.filter(function(i){return i.decided}).length,"
                    "kinds:Object.keys(p.audit_rows).map(function(k){return p.audit_rows[k].kind}),csv:csv.indexOf('experimental check')>=0,"
@@ -239,6 +252,76 @@ def test_page_xliff_export_validates():
         if L == "fr":
             assert 'state="reviewed" subState="gleichlaut:accepted-edited"' in x and "Texte révisé : 5 mg." in x
             assert 'state="initial" subState="gleichlaut:sent-back"' in x and "Révision : accepté modifié" in x
+
+
+DIAPHIN = "DIAPHIN.6-|number|it|12,6"
+
+
+def test_audit_asks_which_text_is_wrong_odd_first_majority_confirmed_name_required():
+    """The juror's mis-click: on Diaphin (IT differs) one question 'Which text is wrong?' with IT first and labelled, nothing
+    preselected; no save without the reviewer's name (inline prompt, focus on the field); DE (agrees with FR) asks for an
+    inline confirmation and saves nothing until confirmed; IT + language service is stored as right DE+FR, fix_it."""
+    C = _page()
+    probe = ERR + NAME + ("setTimeout(function(){var o={};o.order=[].map.call(document.querySelectorAll('#acase .aw button'),function(b){return b.textContent});"
+        "o.pressed0=document.querySelectorAll('#acase button[aria-pressed=\"true\"]').length;o.dis0=[].filter.call(document.querySelectorAll('#acase .arem button'),function(b){return b.disabled}).map(function(b){return b.dataset.v});"
+        "bw('IT').click();o.n0=Object.keys(rows()).length;o.ask=!!document.getElementById('a-name-ask');o.focus=document.activeElement&&document.activeElement.id;"
+        "name('R. Muster');o.ask2=!!document.getElementById('a-name-ask');"
+        "bw('DE').click();o.conf=(q('.aconf')||{}).textContent||'';o.n1=Object.keys(rows()).length;q('button[data-a=\"wcancel\"]').click();o.conf2=!!q('.aconf');"
+        "bw('FR').click();q('.aconf .primary').click();o.fr=rows()[" + json.dumps(DIAPHIN) + "].wrong;bw('FR').click();"
+        "bw('IT').click();o.next1=document.getElementById('a-next').disabled;br('langsvc').click();o.next2=document.getElementById('a-next').disabled;"
+        "o.r=rows()[" + json.dumps(DIAPHIN) + "];o.rev=window.GleichlautReview.payload().reviewer;o.st=document.getElementById('a-stt').textContent;"
+        "o.lab=br('langsvc').textContent;o.err=window.__err;out(o)},300);")
+    o = _out(_dom(C["p"], "#audit", "en", probe))
+    assert not o["err"], o["err"]
+    assert o["order"] == ["IT · differs from the other two", "DE", "FR"] and o["pressed0"] == 0 and o["dis0"] == ["exofficio", "holder"]
+    assert o["n0"] == 0 and o["ask"] and o["focus"] == "a-rev" and not o["ask2"]                 # nothing saved without a name
+    assert o["conf"].startswith("DE agrees with FR here; IT is the one that differs. Mark DE as wrong anyway?") and o["n1"] == 0 and not o["conf2"]
+    assert o["fr"] == ["FR"]                                                                       # confirmed, then taken back
+    assert o["next1"] is True and o["next2"] is False and o["lab"] == "Send to the language service · IT"
+    r = o["r"]
+    assert (r["wrong"], r["remedy"], r["right"], r["actions"], r["by"], r["decided"]) == (["IT"], "langsvc", "DE+FR", ["fix_it", "langsvc"], "R. Muster", True), r
+    assert o["rev"] == "R. Muster" and o["st"].startswith("✓ IT wrong · Send to the language service (IT) · decided on ")
+
+
+def test_old_decision_files_still_import():
+    """A decision file of the earlier page (right + actions; the oldest with a single 'action') imports, counts as decided,
+    keeps its fields in the export and shows as the two answers plus what was stored."""
+    C = _page(); R = C["D"]["audit"]["rows"]
+    s2 = next(r["sig"] for r in R if r["lim"] == "NEMLUVIO.01")
+    old = {"audit_date": C["D"]["audit"]["meta"]["date"], "audit": {
+        DIAPHIN: {"right": "", "actions": ["fix_de", "langsvc"], "note": "", "at": "2026-10-09T10:00:00Z", "by": ""},
+        s2: {"right": "IT", "action": "Berichtigung", "note": "alt", "at": "2026-10-08T10:00:00Z", "by": "X"}}}
+    probe = ERR + NAME + ("setTimeout(function(){var R=window.GleichlautReview,m=R.importDecisions(" + json.dumps(old) + ");R.setTab('audit');var o={m:m};"
+        "o.p=[].map.call(document.querySelectorAll('#acase button[aria-pressed=\"true\"]'),function(b){return b.dataset.v});"
+        "o.legs=[].map.call(document.querySelectorAll('#acase .sug'),function(x){return x.textContent});o.st=document.getElementById('a-stt').textContent;"
+        "var x=rows();o.a=x[" + json.dumps(DIAPHIN) + "];o.b=x[" + json.dumps(s2) + "];o.prog=document.getElementById('progress').textContent;o.err=window.__err;out(o)},300);")
+    o = _out(_dom(C["p"], "#audit", "en", probe))
+    assert not o["err"], o["err"]
+    assert o["m"] == "Imported 0 draft decisions and 2 audit decisions.", o["m"]
+    a, b = o["a"], o["b"]
+    assert (a["right"], a["actions"], a["wrong"], a["remedy"], a["decided"]) == ("", ["fix_de", "langsvc"], ["DE"], "langsvc", True)
+    assert (b["right"], b["actions"], b["remedy"], b["decided"], b["by"]) == ("IT", ["exofficio"], "exofficio", True, "X")
+    assert sorted(o["p"]) == ["DE", "langsvc"] and any(x.startswith("Stored by an earlier version of this page: Correct the text: DE; Send to the language service") for x in o["legs"]), o
+    assert o["prog"].startswith("2/18 issues decided")
+
+
+def test_exports_in_the_interface_language_with_codes():
+    """A German reviewer's GEVER CSV is German (kind, action), with kind_code and action_code alongside; the findings CSV
+    and the JSON carry the same labels and codes."""
+    C = _page()
+    probe = ERR + NAME + ("setTimeout(function(){name('R. Muster');bw('IT').click();br('exofficio').click();var R=window.GleichlautReview;"
+        "out({csv:R.auditCsv(),f:R.findingsCsv(),j:rows()[" + json.dumps(DIAPHIN) + "],i:R.payload().audit_issues[0],err:window.__err})},300);")
+    o = _out(_dom(C["p"], "#audit", "de-CH,de", probe))
+    assert not o["err"], o["err"]
+    head, row = o["csv"].lstrip("\ufeff").split("\r\n")[:2]
+    H = head.split(";"); V = dict(zip(H, row.split(";")))
+    assert H[5:7] == ["Art", "kind_code"] and H[10:14] == ["Falscher Text", "Fassung gemäss Entscheid", "Massnahme", "action_code"], H
+    assert (V["Art"], V["kind_code"], V["Falscher Text"], V["Fassung gemäss Entscheid"], V["Massnahme"], V["action_code"], V["Entschieden von"]) == \
+        ("Zahl", "number", "IT", "DE+FR", "Von Amtes wegen berichtigen (IT)", "fix_it exofficio", "R. Muster"), V
+    assert "Correct" not in o["csv"] and ",Zahl,number," in o["f"] and ",Von Amtes wegen berichtigen (IT),fix_it exofficio,," in o["f"]
+    j, i = o["j"], o["i"]
+    assert (j["kind"], j["kind_label"], j["action_label"], j["actions"], j["ui_lang"]) == ("number", "Zahl", "Von Amtes wegen berichtigen (IT)", ["fix_it", "exofficio"], "de")
+    assert i["action_label"] == j["action_label"] and i["by"] == "R. Muster" and i["kind_label"] == "Zahl"
 
 
 if __name__ == "__main__":
