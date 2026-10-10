@@ -1,0 +1,21 @@
+key	id	A_class	B_class	T_class	final	note_A	note_B	note_T
+04-it	F04	equivalent	equivalent		equivalent	Same meaning.	population, 35 cycles, code preserved	
+08-it	F17	equivalent	equivalent		equivalent	Same meaning; può solo = darf nur.	darf nur->può solo; rebate and code preserved	
+14-fr	F09	REAL	REAL		REAL	Obligation "ist auszuprobieren" softened to "il convient d'essayer" (should).	ist auszuprobieren (must) -> "il convient d'essayer" (should)	
+17-fr	F05	equivalent	equivalent		equivalent	Same meaning; medecin de confiance is terminology only.	same combination, population, until progression, code	
+17-it	F11	equivalent	equivalent		equivalent	Same meaning.	adults, newly diagnosed, transplant-ineligible, until progression preserved	
+20-fr	F13	REAL	REAL		REAL	Recommendation "sollte abgebrochen werden" became obligation "doit être arrêté".	sollte abgebrochen werden (should) -> "doit être arrêté" (must)	
+22-fr	F14	REAL	REAL		REAL	Vertrauensarzt became "médecin de famille"; also "prescrite" instead of purchased.	Vertrauensarzt rendered "médecin de famille": wrong consulting physician; also bezogen->"prescrite"	
+25-it	F18	equivalent	equivalent		equivalent	Same meaning.	dose, interval, packs, one-year Kostengutsprache all preserved	
+26-fr	F16	equivalent	equivalent		equivalent	Same meaning.	same indication and symptoms	
+28-fr	F08	equivalent	minor	REAL	REAL	Muss eingesetzt -> est utilisé; same trigger; numbers preserved.	Muss ... eingesetzt werden -> "est utilisé"; Fabrikabgabepreis -> "prix de revient"	Fabrikabgabepreis -> "prix de revient" (cost price) changes refund amount; "Muss" dropped in "est utilisé".
+37-it	F15	equivalent	equivalent		equivalent	Same meaning.	prescriber restriction and csDMARD condition preserved	
+40-fr	F19	minor	minor		minor	prix de revient for economic prices; "prescrits" instead of purchased packs.	bezogene->"prescrits"; wirtschaftliche Preise->"prix de revient"; conditions otherwise intact	
+44-fr	F01	minor	minor		minor	Rebate qualifier "auf die Kombination von ZELBORAF und COTELLIC" dropped; practically redundant.	dropped "auf die Kombination von ZELBORAF und COTELLIC"; Bezug->"prise en charge"	
+46-it	F12	equivalent	equivalent		equivalent	Same meaning; può = kann.	kann->può; SSc-ILD expansion dropped but same notion	
+47-fr	F07	equivalent	equivalent		equivalent	Same conditions, dose, interval, amount.	300 mg q4w, one-year KoGu, Fr. 108.80 preserved	
+48-fr	F10	equivalent	equivalent		equivalent	Same meaning; truncation mirrors German.	PD-L1>=50%, stages, 35 cycles, code preserved	
+50-fr	F03	REAL	REAL		REAL	Dropped "messbarem Resttumor" for 54.18%; "dès la date de la prescription" instead of administration.	dropped "mit messbarem Resttumor" for 54.18% rebate; Verabreichung->"prescription"; (neo)adjuvant->"(néoadjuvante)"	
+50-it	F02	REAL	REAL		REAL	Residual-tumour restriction dropped: 54.18% rebate "dopo 24 mesi" lacks "messbarem Resttumor".	dropped "mit messbarem Resttumor" condition for 54.18% rebate after 24 months	
+54-it	F06	equivalent	equivalent		equivalent	soll->deve matches official; possono al massimo = dürfen maximal.	soll->deve customary; dürfen->possono; conditions preserved	
+56-fr	F00	equivalent	equivalent		equivalent	All conditions preserved; soll rendered as doit, same as official.	36 packs, Fr. 484.07, exclusions preserved	

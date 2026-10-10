@@ -1,0 +1,238 @@
+{
+ "model": "gguf:q8_0",
+ "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+ "runtime": "0.3.35",
+ "chat_format": "chat_template.default",
+ "options": [
+  " Alter ≥",
+  " Alter >",
+  " Alter ≤",
+  " Alter <",
+  " Alter =",
+  " Gewicht ≥",
+  " Gewicht >",
+  " Gewicht ≤",
+  " Gewicht <",
+  " Gewicht =",
+  " Dosis ≥",
+  " Dosis >",
+  " Dosis ≤",
+  " Dosis <",
+  " Dosis =",
+  " Intervall ≥",
+  " Intervall >",
+  " Intervall ≤",
+  " Intervall <",
+  " Intervall =",
+  " Zeit ≥",
+  " Zeit >",
+  " Zeit ≤",
+  " Zeit <",
+  " Zeit =",
+  " Anzahl ≥",
+  " Anzahl >",
+  " Anzahl ≤",
+  " Anzahl <",
+  " Anzahl =",
+  " Messwert ≥",
+  " Messwert >",
+  " Messwert ≤",
+  " Messwert <",
+  " Messwert =",
+  " Preis ≥",
+  " Preis >",
+  " Preis ≤",
+  " Preis <",
+  " Preis =",
+  " keine"
+ ],
+ "instr": "Du bekommst einen Ausschnitt aus einer Limitierung der Schweizer Spezialitätenliste (auf Deutsch, Französisch oder Italienisch). Eine Zahl ist mit ⟦ ⟧ markiert. Bestimme die Rolle genau dieser Zahl.\n\nIst die Zahl eine Bedingung für die Vergütung (wer, wie viel, wie oft, wie lange, zu welchem Preis), nenne die Grösse und den Vergleichsoperator, die im Text für diese Zahl gelten.\nGrössen:\nAlter – Alter der Patienten\nGewicht – Körpergewicht\nDosis – Dosis oder Wirkstoffmenge einer Gabe\nIntervall – Abstand zwischen zwei Gaben (alle N Wochen)\nZeit – Dauer, Zeitpunkt oder Zeitfenster (Behandlungsdauer, nach N Wochen, in den letzten N Monaten)\nAnzahl – Anzahl von Ereignissen, Vortherapien, Therapielinien, Gaben, Packungen oder Zyklen\nMesswert – Laborwert, Score, Stadium oder prozentuale Veränderung\nPreis – Preis, Zuschlag oder Rückerstattung\nOperatoren: ≥ (mindestens, ab), > (mehr als, über), ≤ (höchstens, bis), < (weniger als, unter), = (genau dieser Wert, ohne Vergleich).\nIst die Zahl keine Bedingung (Code, Datum, Gesetzesartikel, Studien-, Gen- oder Krankheitsname, Skalenangabe, Packungsgrösse, Artikel wie «eine Dosis»), antworte «keine».\nAntworte nur mit «Grösse Operator» oder «keine».\n\n<ausschnitt>\n",
+ "tail": "\n</ausschnitt>\n\nMarkierte Zahl: ⟦{surface}⟧",
+ "prefix": "Antwort:",
+ "static_tokens": 391,
+ "selfcheck_maxdiff": 0.0,
+ "option_ids": [
+  [
+   42286,
+   30652
+  ],
+  [
+   42286,
+   3006
+  ],
+  [
+   42286,
+   37127
+  ],
+  [
+   42286,
+   1534
+  ],
+  [
+   42286,
+   1376
+  ],
+  [
+   91847,
+   30652
+  ],
+  [
+   91847,
+   3006
+  ],
+  [
+   91847,
+   37127
+  ],
+  [
+   91847,
+   1534
+  ],
+  [
+   91847,
+   1376
+  ],
+  [
+   1407,
+   5577,
+   30652
+  ],
+  [
+   1407,
+   5577,
+   3006
+  ],
+  [
+   1407,
+   5577,
+   37127
+  ],
+  [
+   1407,
+   5577,
+   1534
+  ],
+  [
+   1407,
+   5577,
+   1376
+  ],
+  [
+   6323,
+   63642,
+   30652
+  ],
+  [
+   6323,
+   63642,
+   3006
+  ],
+  [
+   6323,
+   63642,
+   37127
+  ],
+  [
+   6323,
+   63642,
+   1534
+  ],
+  [
+   6323,
+   63642,
+   1376
+  ],
+  [
+   9242,
+   30652
+  ],
+  [
+   9242,
+   3006
+  ],
+  [
+   9242,
+   37127
+  ],
+  [
+   9242,
+   1534
+  ],
+  [
+   9242,
+   1376
+  ],
+  [
+   45357,
+   30652
+  ],
+  [
+   45357,
+   3006
+  ],
+  [
+   45357,
+   37127
+  ],
+  [
+   45357,
+   1534
+  ],
+  [
+   45357,
+   1376
+  ],
+  [
+   19497,
+   35049,
+   30652
+  ],
+  [
+   19497,
+   35049,
+   3006
+  ],
+  [
+   19497,
+   35049,
+   37127
+  ],
+  [
+   19497,
+   35049,
+   1534
+  ],
+  [
+   19497,
+   35049,
+   1376
+  ],
+  [
+   47220,
+   30652
+  ],
+  [
+   47220,
+   3006
+  ],
+  [
+   47220,
+   37127
+  ],
+  [
+   47220,
+   1534
+  ],
+  [
+   47220,
+   1376
+  ],
+  [
+   15075
+  ]
+ ],
+ "instr_sha256": "e317a7baee86edf5e2ce8d277e6a7398af3924735f85e3e0fa42668314bafb71",
+ "template_sha256": "058d9ad4fde4bbce232ec32164d8372da37827497490224b36b0803c31ee85d4",
+ "template_tail": "start|>Deliberation: disabled\nTool Capabilities: disabled<|developer_end|><|user_start|>X<|user_end|><|assistant_start|>",
+ "gguf_template_sha256": "d23af2850029e9df88bb017e06e0c14a0462604588f1dbe4f519cdfac3e260e0"
+}

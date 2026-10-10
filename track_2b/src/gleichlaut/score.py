@@ -649,3 +649,10 @@ def audit_more():
     lists_f, lists_r = m["findings"] + a["findings"], m["real"] + a["real"]
     return dict(terminology=t, migel=m, al=a, lists_findings=lists_f, lists_real=lists_r,
                 lists_precision_pct=round(100 * lists_r / lists_f, 1))
+
+
+def failure_modes_q8_0():
+    """PREREG R8: the failure-mode tests (free translation, window-only edit, yes/no equivalence, operator typing, greedy
+    retry) on the shipped Q8_0 GGUF beside the recorded MLX 4-bit runs, each scored by its research scorer (fm/measure.py)."""
+    from .fm import measure
+    return measure.compute()

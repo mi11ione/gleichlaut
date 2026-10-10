@@ -118,16 +118,18 @@ review because German job titles ("EFZ") need a terminology list that only exist
 
 ### 3.3 Where Apertus fell short, and what does that job instead
 
+8B rows: the shipped Q8_0, re-run with the research prompts and items (PREREG R8); the MLX 4-bit number in parentheses.
+
 | Task | Result | Done instead by |
 |---|---|---|
-| Free translation of the new German (8B MLX 4-bit, dev 120) | 0% exact (the locked rewrite reaches 15.0% on the same items); lexicon counters fire on 78 of 120; a seeded read of 20 found 2 real flips ("deve" → "dovrebbe"), about 8 in 120, none flagged | locked rewrite of the old text |
-| Edit only a marked span (dev 120) | span ignored in 73% (8B) and 81% (70B) of windows | whole-paragraph rewrite + lock check |
-| Judge DE/FR/IT equivalence (9 known Fedlex divergences) | as a yes/no answer, 8B (MLX) 0 of 9, 70B 0 of 9 ("they differ" in 2 of 270 answers); the 8B's log-probabilities rank the divergent language first in 6 of 9 (AUROC 0.81, order-fragile), which the API does not expose for the 70B | deterministic checks and the audit |
-| Type numeric conditions | 8B (MLX 4-bit) operator accuracy 36%; errors correlated across languages | code (slots, audit) |
-| SL drafting with the 8B, MLX build, no re-ask (dev 120) | flagged 85.0%; 1 ready draft reverses a meaning | the shipped GGUF build with the full pipeline (passes R1) |
+| Free translation of the new German (dev 120) | 0% exact (0%; the locked rewrite reaches 17.5% (15.0%) on the same items); lexicon counters fire on 70 (78) of 120; blind labels of a seeded 20 find 6 (2) real flips ("il convient d'essayer" for "ist auszuprobieren"), about 21 (8) in 120, none flagged | locked rewrite of the old text |
+| Edit only a marked span (dev 120) | span ignored in 54% (73%) of 8B windows and 81% of 70B windows | whole-paragraph rewrite + lock check |
+| Judge DE/FR/IT equivalence (9 known Fedlex divergences) | as a yes/no answer, 8B 0 of 9 (0), 70B 0 of 9 ("they differ" in 1 and 2 of 270 answers); the 8B's log-probabilities rank the divergent language first in 3 (6) of 9, AUROC 0.77 (0.81; order-fragile on MLX only), which the API does not expose for the 70B | deterministic checks and the audit |
+| Type numeric conditions | 8B operator accuracy 39% (36%), "≥" prior; errors correlated across languages | code (slots, audit) |
+| SL drafting with the 8B, no re-ask (dev 120) | flagged 82.5% (85.0%); 0 (1) ready drafts reverse a meaning | the shipped GGUF build with the full pipeline (passes R1) |
 | SL terminology with the 8B GGUF (held-out 166) | 29 of 60 ready drafts use "assurance obligatoire de maladie" for BAG's "…des soins" | the 70B, or a terminology list |
 | SL drafting, 70B with the earlier checks (out-of-sample 242) | failed the rule: 4.1% of items with German left, unflagged | copied-from-German, terminology and vocabulary checks, then a new held-out set |
-| Self-correction | 8B greedy retry fixed 0 of 26; 70B re-ask fixed 3 of 98 | one re-ask, kept only if every check passes |
+| Self-correction | 8B greedy retry fixed 1 of 23 (0 of 26); 70B re-ask fixed 3 of 98 | one re-ask, kept only if every check passes |
 
 ## 4. Data
 

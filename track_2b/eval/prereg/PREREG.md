@@ -211,3 +211,20 @@ data the change was designed on is labelled "dev" in every table.
   ready draft is exact or identical to an already-labelled output). `make run` re-executes it from
   `data/cache/responses_8b/q8_0/`: 294 requests rebuilt and found, 0 misses, 0 records differing
   (`eval/results/m2_rerun.json`).
+- **R8, 10 Oct 2026:** the failure-mode tests on the shipped Q8_0 GGUF, GitHub Actions CPU runners (`fm` workflow, run
+  38043642490, 58 shards, all succeeded; a smoke run 38042995294 of 1 item per test before it, not used). Q8_0 beside
+  the MLX 4-bit run, each scored by its research scorer, which reproduces every recorded MLX and 70B number from the
+  recorded outputs (`eval/results/failure_modes_q8_0.json`). T1 free translation: 0 of 120 exact (MLX 0), chrF 73.5
+  (71.2), counter hits 70 (78); blind labels of the seeded 20: 6 real meaning changes (MLX hand check: 2 of 20), 2 minor,
+  12 equivalent (annotators agreed on 19; the third decided a three-way split as REAL), about 21 in 120 extrapolated (8).
+  T2 window-only: 121 of 226 windows disobeyed = 54% (MLX 165 = 73%; 70B 81%), exact 5.8% = rules, chrF 86.8 against
+  88.8 for rules-only, 0 model-written digits. T3 yes/no equivalence: generation 0 of 9, 0 of 36 false flags, "Nein" in 1
+  of 270 (70B: 0, 0, 2); log-probabilities 0 hits and 0 false flags at 0.5, item AUROC 0.77 (0.74 / 0.78 by order),
+  argmax 3 of 9 (MLX 0.81, 0.62 / 0.82, 6 of 9). T4 typing: operator accuracy 327 of 831 = 39.4% (MLX 35.6%), "≥" the
+  top operator for 619; held-out triples wrong in all three languages 53 of 77 (53), phi 0.78–0.85 (0.51–0.61). T5:
+  greedy retry fixed 1 of 23 (MLX 0 of 26); the S2b row on dev 120: flagged 82.5% (85.0%), exact 17.5% (15.0%), 21
+  ready drafts, none with a meaning error (two blind annotators agreed on all 7 non-exact: 5 cosmetic, 1 minor,
+  1 equivalent; MLX: 1 REAL among 18). Already recorded (R1): retry 0 of 40, re-ask kept 1 of 100. As pre-registered, the
+  8B numbers in `docs/failure-modes.md` and report §3.3 are now Q8_0 with MLX in parentheses; free translation is worse
+  on the shipped build by this read, span obedience, operator typing and the S2b row are better, the yes/no answer is the
+  same, and the log-probability ranking is weaker but no longer order-dependent.

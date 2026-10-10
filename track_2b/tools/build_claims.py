@@ -186,6 +186,38 @@ C = [  # id, source, path, fmt, command
  ("lag_units", "data/backtest/lag.json", "summary.draft.units", "{}", BT),
  ("lag_over60", "data/backtest/lag.json", "vision_figures_check.over60_distinct_text_pairs", "{}", BT),
 ]
+FM = "eval/results/failure_modes_q8_0.json"   # PREREG R8: failure-mode tests on the shipped Q8_0, beside the MLX 4-bit runs
+for cid, path, fmt in (
+        ("fm_free_exact", "free.q8_0.exact", "{:.1f}"), ("fm_free_flips", "free.q8_0.lexicon_flips", "{}"),
+        ("fm_free_sample", "free.q8_0.sample_n", "{}"), ("fm_free_real", "free.q8_0.sample_real_flips", "{}"),
+        ("fm_free_real_extrap", "free.q8_0.real_flips_extrapolated", "{}"), ("fm_free_chrf", "free.q8_0.chrf", "{:.1f}"),
+        ("fm_free_mlx_flips", "free.mlx.lexicon_flips", "{}"),
+        ("fm_win_disobeyed_pct", "window.q8_0.disobeyed_pct", "{:.0f}"), ("fm_win_disobeyed", "window.q8_0.disobeyed", "{}"),
+        ("fm_win_windows", "window.q8_0.windows", "{}"), ("fm_win_exact", "window.q8_0.exact", "{:.1f}"),
+        ("fm_win_chrf", "window.q8_0.chrf", "{:.1f}"), ("fm_win_rules_chrf", "window.rules.chrf", "{:.1f}"),
+        ("fm_win_mlx_pct", "window.mlx.disobeyed_pct", "{:.0f}"), ("fm_win_70b_pct", "window.70b.disobeyed_pct", "{:.0f}"),
+        ("fm_judge_gen_hits", "judge.q8_0_generation.hits", "{}"), ("fm_judge_gen_ff", "judge.q8_0_generation.false_flags", "{}"),
+        ("fm_judge_gen_nein", "judge.q8_0_generation.nein_answers", "{}"), ("fm_judge_gen_calls", "judge.q8_0_generation.calls", "{}"),
+        ("fm_judge_70b_nein", "judge.70b_generation.nein_answers", "{}"),
+        ("fm_judge_lp_hits", "judge.q8_0_logprob.hits_at_half", "{}"), ("fm_judge_lp_ff", "judge.q8_0_logprob.false_flags", "{}"),
+        ("fm_judge_auroc", "judge.q8_0_logprob.auroc_item", "{:.2f}"), ("fm_judge_auroc_ab", "judge.q8_0_logprob.auroc_item_ab", "{:.2f}"),
+        ("fm_judge_auroc_ba", "judge.q8_0_logprob.auroc_item_ba", "{:.2f}"), ("fm_judge_argmax", "judge.q8_0_logprob.argmax_hits", "{}"),
+        ("fm_judge_mlx_auroc", "judge.mlx_logprob.auroc_item", "{:.2f}"), ("fm_judge_mlx_argmax", "judge.mlx_logprob.argmax_hits", "{}"),
+        ("fm_judge_mlx_auroc_ab", "judge.mlx_logprob.auroc_item_ab", "{:.2f}"), ("fm_judge_mlx_auroc_ba", "judge.mlx_logprob.auroc_item_ba", "{:.2f}"),
+        ("fm_typ_op_pct", "typing.q8_0.operator_acc_pct", "{:.0f}"), ("fm_typ_conditions", "typing.q8_0.gold_conditions", "{}"),
+        ("fm_typ_ge", "typing.q8_0.top_operator_ge", "{}"), ("fm_typ_mlx_op_pct", "typing.mlx.operator_acc_pct", "{:.0f}"),
+        ("fm_typ_all3", "typing.q8_0.held_wrong_all_three", "{}"), ("fm_typ_triples", "typing.q8_0.held_triples", "{}"),
+        ("fm_typ_phi_min", "typing.q8_0.held_phi_min", "{:.2f}"), ("fm_typ_phi_max", "typing.q8_0.held_phi_max", "{:.2f}"),
+        ("fm_typ_mlx_phi_min", "typing.mlx.held_phi_min", "{:.2f}"), ("fm_typ_mlx_phi_max", "typing.mlx.held_phi_max", "{:.2f}"),
+        ("fm_retry_n", "retry.q8_0.retried", "{}"), ("fm_retry_fixed", "retry.q8_0.retry_fixed", "{}"),
+        ("fm_retry_mlx_n", "retry.mlx.retried", "{}"), ("fm_retry_mlx_fixed", "retry.mlx.retry_fixed", "{}"),
+        ("fm_retry_r1_n", "retry.q8_0_fresh166_r1.retried", "{}"), ("fm_retry_r1_fixed", "retry.q8_0_fresh166_r1.retry_fixed", "{}"),
+        ("fm_reask_r1_n", "retry.q8_0_fresh166_r1.reasked", "{}"), ("fm_reask_r1_kept", "retry.q8_0_fresh166_r1.reask_kept", "{}"),
+        ("fm_s2b_exact", "retry.q8_0.exact", "{:.1f}"), ("fm_s2b_flag", "retry.q8_0.flag_rate", "{:.1f}"),
+        ("fm_s2b_ready", "retry.q8_0.ready", "{}"), ("fm_s2b_ready_real", "retry.q8_0.ready_real", "{}"),
+        ("fm_s2b_ready_exact", "retry.q8_0.ready_classes.exact", "{}"), ("fm_s2b_mlx_flag", "retry.mlx.flag_rate", "{:.1f}"),
+        ("fm_s2b_mlx_exact", "retry.mlx.exact", "{:.1f}")):
+    C.append((cid, FM, path, fmt, RE))
 R = "eval/results/research_facts.json"; X = "eval/results/external_facts.json"
 for k, f in (("window_disobeyed_8b_pct", "{}"), ("window_disobeyed_70b_pct", "{}"), ("window_8b_unflagged_real", "{}"), ("judge_known_divergences", "{}"),
              ("judge_70b_nein", "{}"), ("typing_operator_accuracy_8b_pct", "{}"), ("typing_wrong_in_all_three", "{}"), ("retry_8b_fixed", "{}"),

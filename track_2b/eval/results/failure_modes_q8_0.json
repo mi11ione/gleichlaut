@@ -1,0 +1,345 @@
+{
+ "build": {
+  "gguf": "apertus-v1.5-8b-text-q8_0.gguf",
+  "runtime": "llama-cpp-python 0.3.35, GitHub Actions ubuntu-latest CPU (fm workflow)",
+  "sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d"
+ },
+ "free": {
+  "mlx": {
+   "chrf": 71.2,
+   "ef1": 28.2,
+   "exact": 0.0,
+   "flagged": 0.0,
+   "lexicon_flips": 78,
+   "n": 120,
+   "sample_n": 20,
+   "sample_real_flips": 2,
+   "source_labels": "docs/research/gleichlaut-results.md (S2 hand check)"
+  },
+  "q8_0": {
+   "annotators": {
+    "agree": 19,
+    "n": 20,
+    "tiebreak": 1
+   },
+   "chrf": 73.5,
+   "ef1": 29.2,
+   "exact": 0.0,
+   "flagged": 0.0,
+   "lexicon_flips": 70,
+   "n": 120,
+   "real_flips_extrapolated": 21,
+   "sample_classes": {
+    "REAL": 6,
+    "equivalent": 12,
+    "minor": 2
+   },
+   "sample_n": 20,
+   "sample_real_flips": 6,
+   "secs_per_item": 87.9
+  }
+ },
+ "judge": {
+  "70b_generation": {
+   "calls": 270,
+   "controls": 36,
+   "false_flags": 0,
+   "hits": 0,
+   "nein_answers": 2,
+   "order_agreement": 0.985,
+   "targets": 9,
+   "targets_flagged": 0,
+   "unparsed": 0
+  },
+  "mlx_logprob": {
+   "argmax_hits": 6,
+   "auroc_item": 0.812,
+   "auroc_item_ab": 0.616,
+   "auroc_item_ba": 0.821,
+   "cases": [
+    {
+     "argmax": "it",
+     "case": "MinöStV 24/2b",
+     "gold": "it"
+    },
+    {
+     "argmax": "it",
+     "case": "MAV 22/2",
+     "gold": "it"
+    },
+    {
+     "argmax": "fr",
+     "case": "DBA Kanada 10/2a",
+     "gold": "de"
+    },
+    {
+     "argmax": "fr",
+     "case": "VZVM 5/2",
+     "gold": "fr"
+    },
+    {
+     "argmax": "de",
+     "case": "MWSTG 18/3",
+     "gold": "it"
+    },
+    {
+     "argmax": "de",
+     "case": "ETS Anh. IV",
+     "gold": "de"
+    },
+    {
+     "argmax": "it",
+     "case": "VZAE 82/1",
+     "gold": "it"
+    },
+    {
+     "argmax": "de",
+     "case": "EnG 71a/1",
+     "gold": "it"
+    },
+    {
+     "argmax": "it",
+     "case": "EnFV 46a/1",
+     "gold": "it"
+    }
+   ],
+   "controls": 36,
+   "false_flags": 0,
+   "hits_at_half": 0,
+   "logodds_argmax_hits": 5,
+   "logodds_auroc_item": 0.807,
+   "max_p_diff_controls": 0.0009110511944006454,
+   "max_p_diff_targets": 0.02297736991002561,
+   "mean_mass": 1.0,
+   "targets": 9
+  },
+  "q8_0_answer_token_ids": {
+   "Ja": [
+    39488
+   ],
+   "Nein": [
+    67048
+   ]
+  },
+  "q8_0_generation": {
+   "calls": 270,
+   "controls": 36,
+   "false_flags": 0,
+   "hits": 0,
+   "nein_answers": 1,
+   "order_agreement": 0.993,
+   "targets": 9,
+   "targets_flagged": 0,
+   "unparsed": 0
+  },
+  "q8_0_logprob": {
+   "argmax_hits": 3,
+   "auroc_item": 0.765,
+   "auroc_item_ab": 0.741,
+   "auroc_item_ba": 0.775,
+   "cases": [
+    {
+     "argmax": "fr",
+     "case": "MinöStV 24/2b",
+     "gold": "it"
+    },
+    {
+     "argmax": "it",
+     "case": "MAV 22/2",
+     "gold": "it"
+    },
+    {
+     "argmax": "fr",
+     "case": "DBA Kanada 10/2a",
+     "gold": "de"
+    },
+    {
+     "argmax": "fr",
+     "case": "VZVM 5/2",
+     "gold": "fr"
+    },
+    {
+     "argmax": "de",
+     "case": "MWSTG 18/3",
+     "gold": "it"
+    },
+    {
+     "argmax": "fr",
+     "case": "ETS Anh. IV",
+     "gold": "de"
+    },
+    {
+     "argmax": "it",
+     "case": "VZAE 82/1",
+     "gold": "it"
+    },
+    {
+     "argmax": "de",
+     "case": "EnG 71a/1",
+     "gold": "it"
+    },
+    {
+     "argmax": "fr",
+     "case": "EnFV 46a/1",
+     "gold": "it"
+    }
+   ],
+   "controls": 36,
+   "false_flags": 0,
+   "hits_at_half": 0,
+   "logodds_argmax_hits": 4,
+   "logodds_auroc_item": 0.738,
+   "max_p_diff_controls": 4.0146166895502946e-08,
+   "max_p_diff_targets": 0.30156849654362283,
+   "mean_mass": 0.997,
+   "targets": 9
+  }
+ },
+ "prereg": "R8",
+ "retry": {
+  "mlx": {
+   "exact": 15.0,
+   "exact_delta": 9.2,
+   "flag_rate": 85.0,
+   "n": 120,
+   "ready": 18,
+   "ready_classes": {
+    "REAL": 1,
+    "equivalent": 5,
+    "exact": 12
+   },
+   "ready_real": 1,
+   "ready_unlabelled": 0,
+   "retried": 26,
+   "retry_fixed": 0
+  },
+  "q8_0": {
+   "exact": 17.5,
+   "exact_delta": 11.7,
+   "flag_rate": 82.5,
+   "n": 120,
+   "ready": 21,
+   "ready_classes": {
+    "cosmetic": 5,
+    "equivalent": 1,
+    "exact": 14,
+    "minor": 1
+   },
+   "ready_real": 0,
+   "ready_unlabelled": 0,
+   "retried": 23,
+   "retry_fixed": 1
+  },
+  "q8_0_fresh166_r1": {
+   "n": 166,
+   "reask_kept": 1,
+   "reasked": 100,
+   "retried": 40,
+   "retry_fixed": 0,
+   "source": "data/runs/8b_q8_0_fresh166_g3_final.jsonl (PREREG R1, M2)"
+  }
+ },
+ "typing": {
+  "mlx": {
+   "gold_conditions": 831,
+   "held_accepted": 39,
+   "held_accepted_correct": 7,
+   "held_accepted_precision_pct": 17.9,
+   "held_expected_all_three_if_independent": 39.5,
+   "held_flags": 153,
+   "held_flags_real": 6,
+   "held_identical_wrong": 24,
+   "held_phi": {
+    "de-fr": 0.588,
+    "de-it": 0.505,
+    "fr-it": 0.606
+   },
+   "held_phi_max": 0.606,
+   "held_phi_min": 0.505,
+   "held_triples": 77,
+   "held_wrong_all_three": 53,
+   "operator_acc_pct": 35.6,
+   "operator_correct": 296,
+   "prompts": 885,
+   "secs_per_prompt": 2.29,
+   "subject_acc_pct": 71.6,
+   "subject_correct": 595,
+   "tau": 9.009,
+   "top_operator_ge": 538
+  },
+  "q8_0": {
+   "chat_format": "chat_template.default",
+   "gold_conditions": 831,
+   "held_accepted": 50,
+   "held_accepted_correct": 10,
+   "held_accepted_precision_pct": 20.0,
+   "held_expected_all_three_if_independent": 31.7,
+   "held_flags": 133,
+   "held_flags_real": 6,
+   "held_identical_wrong": 23,
+   "held_phi": {
+    "de-fr": 0.779,
+    "de-it": 0.779,
+    "fr-it": 0.855
+   },
+   "held_phi_max": 0.855,
+   "held_phi_min": 0.779,
+   "held_triples": 77,
+   "held_wrong_all_three": 53,
+   "operator_acc_pct": 39.4,
+   "operator_correct": 327,
+   "prompts": 885,
+   "secs_per_prompt": 16.65,
+   "selfcheck_maxdiff": 0.0,
+   "static_tokens": 391,
+   "subject_acc_pct": 70.5,
+   "subject_correct": 586,
+   "tau": 7.908,
+   "top_operator_ge": 619
+  }
+ },
+ "window": {
+  "70b": {
+   "chrf": 84.2,
+   "disobeyed": 183,
+   "disobeyed_pct": 81.0,
+   "ef1": 28.2,
+   "exact": 5.8,
+   "flagged": 87.5,
+   "lexicon_flips": 93,
+   "n": 120,
+   "windows": 226
+  },
+  "mlx": {
+   "chrf": 84.5,
+   "disobeyed": 165,
+   "disobeyed_pct": 73.0,
+   "ef1": 22.4,
+   "exact": 5.8,
+   "flagged": 81.7,
+   "lexicon_flips": 86,
+   "n": 120,
+   "windows": 226
+  },
+  "q8_0": {
+   "chrf": 86.8,
+   "disobeyed": 121,
+   "disobeyed_pct": 53.5,
+   "ef1": 29.9,
+   "exact": 5.8,
+   "flagged": 74.2,
+   "lexicon_flips": 83,
+   "model_digits": 0,
+   "n": 120,
+   "windows": 226
+  },
+  "rules": {
+   "chrf": 88.8,
+   "ef1": 7.1,
+   "exact": 5.8,
+   "flagged": 54.2,
+   "lexicon_flips": 69,
+   "n": 120
+  }
+ }
+}
