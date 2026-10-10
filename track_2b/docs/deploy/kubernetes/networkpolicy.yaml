@@ -1,11 +1,13 @@
-# Egress control for the Gleichlaut pods. kubectl apply -n gleichlaut -f networkpolicy.yaml
+# Egress control for the Gleichlaut pods with DIRECT egress on 443. kubectl apply -n gleichlaut -f networkpolicy.yaml
+# Behind an egress proxy (the pods reach the internet only through HTTPS_PROXY): networkpolicy-proxy.yaml instead.
 #
 # What the pods need to reach (docs/operations.md §9), and nothing else:
 #   every pod                DNS (kube-dns / CoreDNS)
 #   month, audit             epl.bag.admin.ch:443  (the public feed: --fetch, --to latest, gleichlaut feeds; GET/HEAD only)
 #   month-70b, canary, certify-endpoint (lane: 70b)   the certified 70B endpoint (LLM_BASE_URL) on 443
-#   fetch-gguf (one-off)     huggingface.co and its CDN (cas-bridge.xethub.hf.co / cdn-lfs.hf.co) on 443
-#   certify-build            nothing at all (no egress rule: DNS only)
+#   fetch-gguf (one-off)     the internal mirror in GLEICHLAUT_MODEL_URL, or huggingface.co and its CDN
+#                            (cas-bridge.xethub.hf.co / cdn-lfs.hf.co) on 443
+#   certify-build, models-loader   nothing at all (no egress rule: DNS only)
 # No ingress: nothing listens.
 #
 # Standard NetworkPolicy matches IP blocks, not host names. Two variants:
@@ -52,7 +54,11 @@ spec:
   podSelector: { matchLabels: { job: fetch-gguf } }
   policyTypes: [Egress]
   egress:
-    - to: [{ ipBlock: { cidr: 0.0.0.0/0 } }]            # one-off; narrow to Hugging Face's ranges, or copy the GGUF in yourself
+    # CHANGE-ME: the address of your internal mirror (GLEICHLAUT_MODEL_URL; its port if not 443). Hugging Face serves the
+    # file from a CDN whose addresses change, so an ipBlock cannot pin it: from huggingface.co use the proxy variant
+    # (networkpolicy-proxy.yaml) or Cilium toFQDNs below. With no egress at all, copy the file in (models-loader.yaml) and
+    # do not apply this policy. Delete it after the one-off fetch either way.
+    - to: [{ ipBlock: { cidr: 192.0.2.20/32 } }]
       ports: [{ protocol: TCP, port: 443 }]
 # ------------------------------------------------------------------ (B) Cilium, by host name (replaces the ipBlock rules)
 # ---

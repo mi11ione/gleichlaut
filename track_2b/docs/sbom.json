@@ -1451,6 +1451,86 @@
    ]
   },
   {
+   "type": "library",
+   "bom-ref": "deb-libgomp1",
+   "name": "libgomp1",
+   "purl": "pkg:deb/debian/libgomp1",
+   "scope": "required",
+   "properties": [
+    {
+     "name": "gleichlaut:images",
+     "value": "offline"
+    },
+    {
+     "name": "gleichlaut:dockerfile",
+     "value": "ARG APT_RUNTIME"
+    },
+    {
+     "name": "gleichlaut:version",
+     "value": "not pinned: the version the Debian mirror (deb.debian.org, or APT_MIRROR) serves at build time"
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "bom-ref": "deb-build-essential",
+   "name": "build-essential",
+   "purl": "pkg:deb/debian/build-essential",
+   "scope": "excluded",
+   "properties": [
+    {
+     "name": "gleichlaut:images",
+     "value": "none: build time only, purged from the offline image"
+    },
+    {
+     "name": "gleichlaut:dockerfile",
+     "value": "ARG APT_BUILD (empty with a prebuilt llama-cpp-python wheel)"
+    },
+    {
+     "name": "gleichlaut:version",
+     "value": "not pinned: the version the Debian mirror (deb.debian.org, or APT_MIRROR) serves at build time"
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "bom-ref": "deb-cmake",
+   "name": "cmake",
+   "purl": "pkg:deb/debian/cmake",
+   "scope": "excluded",
+   "properties": [
+    {
+     "name": "gleichlaut:images",
+     "value": "none: build time only, purged from the offline image"
+    },
+    {
+     "name": "gleichlaut:dockerfile",
+     "value": "ARG APT_BUILD (empty with a prebuilt llama-cpp-python wheel)"
+    },
+    {
+     "name": "gleichlaut:version",
+     "value": "not pinned: the version the Debian mirror (deb.debian.org, or APT_MIRROR) serves at build time"
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "bom-ref": "pypi-scikit-build-core",
+   "name": "scikit-build-core",
+   "purl": "pkg:pypi/scikit-build-core",
+   "scope": "excluded",
+   "properties": [
+    {
+     "name": "gleichlaut:images",
+     "value": "none: build time only (pip build isolation for the llama-cpp-python sdist)"
+    },
+    {
+     "name": "gleichlaut:version",
+     "value": "not pinned, not hash-checked (known gap, docs/dependencies.md): the version the index serves; a prebuilt, hash-pinned wheel removes it"
+    }
+   ]
+  },
+  {
    "type": "machine-learning-model",
    "bom-ref": "apertus-8b-gguf",
    "name": "apertus-v1.5-8b-text-q4_k_m.gguf",
@@ -1480,12 +1560,63 @@
      "value": "5059027136"
     },
     {
+     "name": "gleichlaut:build",
+     "value": "GLEICHLAUT_BUILD=q4_k_m: the default build (GLEICHLAUT_BUILD=q4_k_m; 8 GiB RAM)"
+    },
+    {
      "name": "gleichlaut:provenance",
      "value": "docs/dependencies.md, GGUF provenance"
     },
     {
      "name": "gleichlaut:build-certificate",
      "value": "eval/certificates/8b-q4_k_m-fresh166.json"
+    },
+    {
+     "name": "gleichlaut:not-in-image",
+     "value": "downloaded at run time into the mounted models/ and sha256-checked"
+    }
+   ]
+  },
+  {
+   "type": "machine-learning-model",
+   "bom-ref": "apertus-8b-gguf-q8_0",
+   "name": "apertus-v1.5-8b-text-q8_0.gguf",
+   "version": "Q8_0",
+   "hashes": [
+    {
+     "alg": "SHA-256",
+     "content": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d"
+    }
+   ],
+   "licenses": [
+    {
+     "license": {
+      "id": "Apache-2.0"
+     }
+    }
+   ],
+   "externalReferences": [
+    {
+     "type": "distribution",
+     "url": "https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf"
+    }
+   ],
+   "properties": [
+    {
+     "name": "gleichlaut:size-bytes",
+     "value": "8567121856"
+    },
+    {
+     "name": "gleichlaut:build",
+     "value": "GLEICHLAUT_BUILD=q8_0: the option for a 16 GiB box (GLEICHLAUT_BUILD=q8_0)"
+    },
+    {
+     "name": "gleichlaut:provenance",
+     "value": "docs/dependencies.md, GGUF provenance"
+    },
+    {
+     "name": "gleichlaut:build-certificate",
+     "value": "eval/certificates/8b-q8_0-fresh166.json"
     },
     {
      "name": "gleichlaut:not-in-image",
@@ -1500,6 +1631,26 @@
    "authenticated": true,
    "x-trust-boundary": true,
    "description": "the 'fewer edits' SL lane; admitted only by an endpoint certificate (gleichlaut certify)"
+  },
+  {
+   "name": "BAG ePL public feed (epl.bag.admin.ch)",
+   "authenticated": false,
+   "x-trust-boundary": true,
+   "endpoints": [
+    "https://epl.bag.admin.ch/static",
+    "https://epl.bag.admin.ch/api/sl/public/resources/current"
+   ],
+   "description": "the public FHIR feed of the Spezialitaetenliste and its resources API: plain GET/HEAD, at most one request per second, only with month --fetch / --to latest, gleichlaut feeds, gleichlaut.sl.ingest and the audit; nothing is sent but the request"
+  },
+  {
+   "name": "Hugging Face (huggingface.co), one-time GGUF download",
+   "authenticated": false,
+   "x-trust-boundary": true,
+   "endpoints": [
+    "https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf",
+    "https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf"
+   ],
+   "description": "gleichlaut fetch-gguf downloads the pinned GGUF once (CDN: cas-bridge.xethub.hf.co, cdn-lfs.hf.co) and checks its sha256; GLEICHLAUT_MODEL_URL points it at an internal mirror instead, and a copied-in file needs no download at all"
   }
  ],
  "dependencies": [
@@ -1514,9 +1665,14 @@
     "pypi-diskcache",
     "pypi-jinja2",
     "pypi-markupsafe",
-    "apertus-8b-gguf"
+    "deb-libgomp1",
+    "deb-build-essential",
+    "deb-cmake",
+    "pypi-scikit-build-core",
+    "apertus-8b-gguf",
+    "apertus-8b-gguf-q8_0"
    ]
   }
  ],
- "serialNumber": "urn:uuid:49ac854f-382e-54b1-8863-4a5f505631cf"
+ "serialNumber": "urn:uuid:c342d1a6-c485-5981-b9f6-a06933e06d7b"
 }

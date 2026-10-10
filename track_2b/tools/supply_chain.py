@@ -4,7 +4,8 @@
                                                pinned version (PyPI JSON API; network). pip then installs with
                                                --require-hashes: a file whose hash is not listed is refused.
   python3 tools/supply_chain.py sbom           docs/sbom.json (CycloneDX 1.5 JSON) from the pinned requirements, the base
-                                               image digest in the Dockerfile and the GGUF sha256 (no network)
+                                               image digest and the apt packages in the Dockerfile, the two certified
+                                               GGUF builds and the hosts the running solution contacts (no network)
   python3 tools/supply_chain.py sbom --check   exit 1 if docs/sbom.json is not what `sbom` would write now (CI)
 
 All of a version's files are hashed (every wheel and the sdist), so the same lock works on any platform and Python
@@ -17,7 +18,26 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOCKS = [("requirements.in", "requirements.txt", "base image and plain-Python installs (XLIFF/FHIR validation)"),
          ("requirements-offline.in", "requirements-offline.txt", "offline image only: in-process llama.cpp for the Apertus 8B GGUF")]
 GGUF = dict(name="apertus-v1.5-8b-text-q4_k_m.gguf", sha256="a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299",
-            size=5059027136, url="https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf")
+            size=5059027136, url="https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf",
+            ref="apertus-8b-gguf", version="Q4_K_M", build="q4_k_m", cert="eval/certificates/8b-q4_k_m-fresh166.json",
+            role="the default build (GLEICHLAUT_BUILD=q4_k_m; 8 GiB RAM)")
+GGUF_Q8 = dict(name="apertus-v1.5-8b-text-q8_0.gguf", sha256="dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+               size=8567121856, url="https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf",
+               ref="apertus-8b-gguf-q8_0", version="Q8_0", build="q8_0", cert="eval/certificates/8b-q8_0-fresh166.json",
+               role="the option for a 16 GiB box (GLEICHLAUT_BUILD=q8_0)")
+# the hosts the running solution contacts besides the optional 70B endpoint (docs/operations.md §9, docs/dependencies.md)
+SERVICES = [
+    dict(name="BAG ePL public feed (epl.bag.admin.ch)", authenticated=False, **{"x-trust-boundary": True},
+         endpoints=["https://epl.bag.admin.ch/static", "https://epl.bag.admin.ch/api/sl/public/resources/current"],
+         description="the public FHIR feed of the Spezialitaetenliste and its resources API: plain GET/HEAD, at most one request "
+                     "per second, only with month --fetch / --to latest, gleichlaut feeds, gleichlaut.sl.ingest and the audit; "
+                     "nothing is sent but the request"),
+    dict(name="Hugging Face (huggingface.co), one-time GGUF download", authenticated=False, **{"x-trust-boundary": True},
+         endpoints=[GGUF["url"], GGUF_Q8["url"]],
+         description="gleichlaut fetch-gguf downloads the pinned GGUF once (CDN: cas-bridge.xethub.hf.co, cdn-lfs.hf.co) and "
+                     "checks its sha256; GLEICHLAUT_MODEL_URL points it at an internal mirror instead, and a copied-in file "
+                     "needs no download at all"),
+]
 LICENSES = {"lxml": "BSD-3-Clause", "llama-cpp-python": "MIT", "numpy": "BSD-3-Clause", "typing-extensions": "PSF-2.0",
             "diskcache": "Apache-2.0", "jinja2": "BSD-3-Clause", "markupsafe": "BSD-3-Clause"}
 
@@ -69,6 +89,13 @@ def base_image():
     return ref, ref.split("@", 1)[1], amd.group(1) if amd else None
 
 
+def apt_packages():
+    """the APT_BUILD (purged after the llama-cpp-python build) and APT_RUNTIME (kept) build arguments of the Dockerfile."""
+    t = open(os.path.join(ROOT, "Dockerfile"), encoding="utf-8").read()
+    get = lambda k: re.search(rf'^ARG {k}="([^"]*)"', t, re.M).group(1).split()
+    return get("APT_BUILD"), get("APT_RUNTIME")
+
+
 def sbom():
     sys.path.insert(0, os.path.join(ROOT, "src"))
     ver = re.search(r'__version__ = "([^"]+)"', open(os.path.join(ROOT, "src", "gleichlaut", "__init__.py"), encoding="utf-8").read()).group(1)
@@ -90,13 +117,31 @@ def sbom():
                                                        comment=f"{len(hs)} files; pip --require-hashes accepts only these",
                                                        hashes=[dict(alg="SHA-256", content=h) for h in hs])],
                               properties=[dict(name="gleichlaut:images", value=img), dict(name="gleichlaut:requirements", value=dst)]))
-    comps.append(dict(type="machine-learning-model", **{"bom-ref": "apertus-8b-gguf"}, name=GGUF["name"], version="Q4_K_M",
-                      hashes=[dict(alg="SHA-256", content=GGUF["sha256"])], licenses=[dict(license=dict(id="Apache-2.0"))],
-                      externalReferences=[dict(type="distribution", url=GGUF["url"])],
-                      properties=[dict(name="gleichlaut:size-bytes", value=str(GGUF["size"])),
-                                  dict(name="gleichlaut:provenance", value="docs/dependencies.md, GGUF provenance"),
-                                  dict(name="gleichlaut:build-certificate", value="eval/certificates/8b-q4_k_m-fresh166.json"),
-                                  dict(name="gleichlaut:not-in-image", value="downloaded at run time into the mounted models/ and sha256-checked")]))
+    build, runtime = apt_packages()
+    unpinned = "not pinned: the version the Debian mirror (deb.debian.org, or APT_MIRROR) serves at build time"
+    for n in runtime:
+        comps.append(dict(type="library", **{"bom-ref": f"deb-{n}"}, name=n, purl=f"pkg:deb/debian/{n}", scope="required",
+                          properties=[dict(name="gleichlaut:images", value="offline"), dict(name="gleichlaut:dockerfile", value="ARG APT_RUNTIME"),
+                                      dict(name="gleichlaut:version", value=unpinned)]))
+    for n in build:
+        comps.append(dict(type="library", **{"bom-ref": f"deb-{n}"}, name=n, purl=f"pkg:deb/debian/{n}", scope="excluded",
+                          properties=[dict(name="gleichlaut:images", value="none: build time only, purged from the offline image"),
+                                      dict(name="gleichlaut:dockerfile", value="ARG APT_BUILD (empty with a prebuilt llama-cpp-python wheel)"),
+                                      dict(name="gleichlaut:version", value=unpinned)]))
+    comps.append(dict(type="library", **{"bom-ref": "pypi-scikit-build-core"}, name="scikit-build-core", purl="pkg:pypi/scikit-build-core",
+                      scope="excluded",
+                      properties=[dict(name="gleichlaut:images", value="none: build time only (pip build isolation for the llama-cpp-python sdist)"),
+                                  dict(name="gleichlaut:version", value="not pinned, not hash-checked (known gap, docs/dependencies.md): "
+                                       "the version the index serves; a prebuilt, hash-pinned wheel removes it")]))
+    for g in (GGUF, GGUF_Q8):
+        comps.append(dict(type="machine-learning-model", **{"bom-ref": g["ref"]}, name=g["name"], version=g["version"],
+                          hashes=[dict(alg="SHA-256", content=g["sha256"])], licenses=[dict(license=dict(id="Apache-2.0"))],
+                          externalReferences=[dict(type="distribution", url=g["url"])],
+                          properties=[dict(name="gleichlaut:size-bytes", value=str(g["size"])),
+                                      dict(name="gleichlaut:build", value=f"GLEICHLAUT_BUILD={g['build']}: {g['role']}"),
+                                      dict(name="gleichlaut:provenance", value="docs/dependencies.md, GGUF provenance"),
+                                      dict(name="gleichlaut:build-certificate", value=g["cert"]),
+                                      dict(name="gleichlaut:not-in-image", value="downloaded at run time into the mounted models/ and sha256-checked")]))
     body = dict(bomFormat="CycloneDX", specVersion="1.5", version=1,
                 metadata=dict(component=dict(type="application", **{"bom-ref": "gleichlaut"}, name="gleichlaut", version=ver,
                                              licenses=[dict(license=dict(id="Apache-2.0"))],
@@ -105,7 +150,7 @@ def sbom():
                 components=comps,
                 services=[dict(name="Apertus 70B endpoint (optional, operator-provided; LLM_BASE_URL)",
                                authenticated=True, **{"x-trust-boundary": True},
-                               description="the 'fewer edits' SL lane; admitted only by an endpoint certificate (gleichlaut certify)")],
+                               description="the 'fewer edits' SL lane; admitted only by an endpoint certificate (gleichlaut certify)")] + SERVICES,
                 dependencies=[dict(ref="gleichlaut", dependsOn=[c["bom-ref"] for c in comps])])
     body["serialNumber"] = "urn:uuid:" + str(uuid.uuid5(uuid.NAMESPACE_URL, json.dumps(body, sort_keys=True)))
     return json.dumps(body, indent=1, ensure_ascii=False) + "\n"

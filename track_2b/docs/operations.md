@@ -458,7 +458,9 @@ so treat `out/month/` of a pre-publication run accordingly. No personal data is 
 - **Nothing else.** There is no telemetry and no update check. The review page makes no requests. With no
   `LLM_BASE_URL`, `make run` runs with `--network none`. The 8B lanes (GGUF on CPU) contact nothing after the one-time
   model download (`make fetch-gguf`).
-- At build time only: the Docker base image (pinned by digest) and PyPI files (hash-pinned; `docs/dependencies.md`).
+- At build time only: the Docker base image (pinned by digest), PyPI files (hash-pinned) and, for the offline image, Debian
+  packages (`docs/dependencies.md`). Each can come from an internal registry or mirror (build args `BASE`, `PIP_INDEX_URL`,
+  `APT_MIRROR`; docs/deploy/README.md, "Building inside a closed network").
 - Every outgoing request goes through `HTTPS_PROXY`/`HTTP_PROXY` unless `NO_PROXY` matches, and is verified against the
   system CA store plus `SSL_CERT_FILE`.
 
@@ -481,7 +483,8 @@ so treat `out/month/` of a pre-publication run accordingly. No personal data is 
 upgrade a package, change its pin in the `.in` file, `make lock`, then `make test` and `make run`. `docs/sbom.json`
 (CycloneDX 1.5) lists the base image digest, every pinned package with its allowed hashes, and the GGUF sha256;
 `make sbom` regenerates it and CI fails when it is stale (`tools/supply_chain.py sbom --check`). Known gap: the build
-backend of the llama-cpp-python sdist (scikit-build-core, fetched by pip's build isolation) is not hash-checked.
+backend of the llama-cpp-python sdist (scikit-build-core, fetched by pip's build isolation) is not hash-checked; a prebuilt,
+hash-pinned wheel closes it (docs/deploy/README.md, "Building inside a closed network").
 **Next step: image signing.** Sign the two images after the build with cosign (keyless in CI: `cosign sign
 registry.example.ch/gleichlaut@<digest>`, with the GitHub OIDC identity) and attach the SBOM as an attestation (`cosign
 attest --type cyclonedx --predicate docs/sbom.json`); verify with `cosign verify` (or a Kubernetes admission policy such

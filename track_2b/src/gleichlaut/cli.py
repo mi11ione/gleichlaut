@@ -97,14 +97,24 @@ def fetch_gguf():
     M = models_dir(); os.makedirs(M, exist_ok=True)
     p = os.path.join(M, os.path.basename(GGUF_URL))
     if not (os.path.exists(p) and core.sha256(p) == GGUF_SHA):
-        print(f"downloading {GGUF_URL} ({BUILD}: 5-9 GB) ...", flush=True)
-        req = urllib.request.Request(GGUF_URL, headers={"User-Agent": "gleichlaut/0.1"})
-        with backends.urlopen(req, timeout=600) as r, open(p + ".part", "wb") as f:
-            while True:
-                b = r.read(1 << 22)
-                if not b: break
-                f.write(b)
-        os.replace(p + ".part", p)
+        part = p + ".part"
+        have = os.path.getsize(part) if os.path.exists(part) else 0
+        hdr = {"User-Agent": "gleichlaut/0.1"}
+        if have: hdr["Range"] = f"bytes={have}-"          # resume an interrupted download (HTTP Range on the .part file)
+        print(f"downloading {GGUF_URL} ({BUILD}: 5-9 GB)" + (f", resuming at byte {have}" if have else "") + " ...", flush=True)
+        try: r = backends.urlopen(urllib.request.Request(GGUF_URL, headers=hdr), timeout=600)
+        except urllib.error.HTTPError as e:
+            if not (have and e.code == 416): raise
+            r = None                                     # 416: the .part already holds the whole file; the sha256 check decides
+        if r is not None:
+            with r:
+                resumed = have and getattr(r, "status", None) == 206   # a server that ignores Range answers 200: start over
+                with open(part, "ab" if resumed else "wb") as f:
+                    while True:
+                        b = r.read(1 << 22)
+                        if not b: break
+                        f.write(b)
+        os.replace(part, p)
     got = core.sha256(p)
     if got != GGUF_SHA: raise backends.ConfigError(f"GGUF sha256 mismatch: {p} has {got}, expected {GGUF_SHA} (GLEICHLAUT_MODEL_SHA256)")
     print("GGUF verified", p, got[:16]); return p
@@ -838,8 +848,8 @@ def _dispatch(argv):
     if c == "fetch-gguf":
         try: fetch_gguf(); return 0
         except (urllib.error.URLError, OSError) as e:
-            raise FeedError(f"cannot download the GGUF from {GGUF_URL}: {getattr(e, 'reason', None) or e} (air-gapped: copy the "
-                            f"file into {models_dir()} and check its sha256 {GGUF_SHA})")
+            raise FeedError(f"cannot download the GGUF from {GGUF_URL}: {getattr(e, 'reason', None) or e} (a re-run resumes the "
+                            f"partial download; air-gapped: copy the file into {models_dir()} and check its sha256 {GGUF_SHA})")
     if c in ("emit", "ui"): return passthrough(c, rest)
     if c == "backtest":
         from . import backtest; return backtest.main(rest) or 0

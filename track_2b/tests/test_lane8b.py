@@ -369,19 +369,198 @@ def test_make_targets_run_the_8b_lane_by_default():
     assert "ENVS8B" in mk and "-e LLM_" not in mk.split("ENVS8B   =")[1].split("\n")[0]
 
 
+K8S = "docs/deploy/kubernetes"
+
+
+def k8s_docs():
+    """-> [(file, document text)] of every manifest (split on '---' lines; comment-only parts dropped)."""
+    out = []
+    for f in sorted(glob.glob(os.path.join(ROOT, K8S, "*.yaml"))):
+        for d in re.split(r"(?m)^---\s*$", open(f, encoding="utf-8").read()):
+            body = "\n".join(l for l in d.splitlines() if l.strip() and not l.lstrip().startswith("#"))
+            if body.strip(): out.append((os.path.basename(f), d))
+    return out
+
+
 def test_deploy_manifests_for_the_8b_lane():
-    k = read("docs/deploy/kubernetes/gleichlaut.yaml")
-    assert "gleichlaut-offline" in k and "requests: { cpu: \"4\", memory: 8Gi }" in k and "ReadOnlyMany" in k
+    k = read(f"{K8S}/gleichlaut.yaml")
+    assert "gleichlaut-offline" in k and "requests: { cpu: \"4\", memory: 8Gi }" in k
     assert "{ name: models, mountPath: /models, readOnly: true }" in k and "--fail-on-findings" in k
-    np_ = read("docs/deploy/kubernetes/networkpolicy.yaml")
+    np_ = read(f"{K8S}/networkpolicy.yaml")
     assert "kind: NetworkPolicy" in np_ and "epl.bag.admin.ch" in np_ and "toFQDNs" in np_ and "lane: 70b" in np_
-    cj = read("docs/deploy/kubernetes/certify-job.yaml")
+    cj = read(f"{K8S}/certify-job.yaml")
     assert "--import-run" in cj and "--backend, llamacpp" in cj and "--backend, openai" in cj
-    assert "--backend, openai" in read("docs/deploy/kubernetes/gleichlaut-70b.yaml")
+    assert "--backend, openai" in read(f"{K8S}/gleichlaut-70b.yaml")
     sm = read("docs/deploy/systemd/gleichlaut-month.service")
     assert "--backend llamacpp" in sm and "ReadOnlyPaths=/var/lib/gleichlaut/models" in sm and "MemoryMax=10G" in sm
     assert "--backend openai" in read("docs/deploy/systemd/gleichlaut-month-70b.service")
     assert "8) sev=reviewer" in read("docs/deploy/alert.sh")
+
+
+def test_models_volume_is_written_once_then_mounted_read_only():
+    docs = k8s_docs()
+    pvc = [d for f, d in docs if "kind: PersistentVolumeClaim" in d and "name: gleichlaut-models" in d]
+    assert len(pvc) == 1 and "accessModes: [ReadWriteOnce]" in pvc[0], "models PVC must be provisionable as RWO"
+    assert not any(re.search(r"ReadOnlyMany|ReadWriteMany", d) for f, d in docs if "kind: PersistentVolumeClaim" in d)
+    writers = []
+    for f, d in docs:
+        claims = re.findall(r"persistentVolumeClaim: \{ claimName: gleichlaut-models(, readOnly: true)? \}", d)
+        if not claims: continue
+        mounts = re.findall(r"\{ name: models, mountPath: /models(, readOnly: true)? \}", d)
+        if not all(claims): writers.append(re.search(r"name: (gleichlaut-[a-z0-9-]+)", d).group(1))
+        else: assert mounts and all(mounts), (f, "outside the two writers every models mount is read-only")
+    assert sorted(writers) == ["gleichlaut-fetch-gguf", "gleichlaut-models-loader"], writers
+    loader = read(f"{K8S}/models-loader.yaml")
+    assert "kubectl -n gleichlaut cp" in loader and "sha256sum" in loader and "job: models-loader" in loader
+    fetch = next(d for f, d in docs if "name: gleichlaut-fetch-gguf" in d and "kind: Job" in d)
+    assert "envFrom: [{ configMapRef: { name: gleichlaut-config } }]" in fetch, "fetch Job must get proxy/CA/MODEL_URL"
+    assert "{ name: ca, mountPath: /etc/gleichlaut/ca, readOnly: true }" in fetch and "name: gleichlaut-ca, optional: true" in fetch
+    assert "# GLEICHLAUT_MODEL_URL:" in read(f"{K8S}/gleichlaut.yaml") and "# GLEICHLAUT_BUILD: q8_0" in read(f"{K8S}/gleichlaut.yaml")
+    rd = read("docs/deploy/README.md")
+    assert "Operator FAQ" in rd and "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d" in rd and "kubectl cp" in rd
+
+
+def _window(sched, deadline):
+    """'M H DOM * *' + activeDeadlineSeconds -> (start, end) in minutes from the 1st of a month at 00:00."""
+    mi, h, dom = sched.split()[:3]
+    start = (int(dom) - 1) * 1440 + int(h) * 60 + int(mi)
+    return start, start + int(deadline) // 60
+
+
+def test_cronjobs_never_overlap_on_the_same_claim():
+    jobs = []
+    for f, d in k8s_docs():
+        if "kind: CronJob" not in d: continue
+        name = re.search(r"metadata: \{ name: ([a-z0-9-]+)", d).group(1)
+        sched = re.search(r'schedule: "([^"]+)"', d).group(1)
+        deadline = re.search(r"activeDeadlineSeconds: (\d+)", d).group(1)
+        assert re.search(r"concurrencyPolicy: Forbid", d), name
+        jobs.append((name, sched, _window(sched, deadline), set(re.findall(r"claimName: ([a-z0-9-]+)", d))))
+    assert {j[0] for j in jobs} >= {"gleichlaut-month", "gleichlaut-month-70b", "gleichlaut-audit"}
+    for i, a in enumerate(jobs):
+        for b in jobs[i + 1:]:
+            if not (a[3] & b[3]): continue
+            assert a[1] != b[1], (a[0], b[0], "same schedule on the same claim")
+            assert a[2][1] <= b[2][0] or b[2][1] <= a[2][0], (a[0], a[2], b[0], b[2], "windows overlap on", a[3] & b[3])
+    t8, t70 = (read(f"docs/deploy/systemd/gleichlaut-month{x}.timer") for x in ("", "-70b"))
+    on = lambda t: re.search(r"^OnCalendar=(.+)$", t, re.M).group(1)
+    assert on(t8) != on(t70) and "gleichlaut-month.service" in read("docs/deploy/systemd/gleichlaut-month-70b.service")
+
+
+def test_one_cert_key_secret_digest_images_and_pod_hardening():
+    docs = k8s_docs()
+    allt = "\n".join(d for f, d in docs)
+    secrets = re.findall(r"secret: \{ secretName: ([a-z0-9-]+)(, optional: true)?, items: \[\{ key: cert\.key", allt)
+    assert secrets and {s for s, _ in secrets} == {"gleichlaut-cert-key"}, secrets
+    assert "key: cert.key" not in re.sub(r"secretName: gleichlaut-cert-key[^\n]*", "", allt), "cert.key outside gleichlaut-cert-key"
+    m8 = next(d for f, d in docs if "name: gleichlaut-month," in d)
+    assert "\n                - { name: key, mountPath: /var/run/secrets/gleichlaut, readOnly: true }" in m8
+    assert "secretName: gleichlaut-cert-key, optional: true" in m8 and "# - name: key" not in m8
+    images = re.findall(r"image: (\S+)", allt)
+    assert images and all(re.fullmatch(r"registry\.example\.ch/gleichlaut(-offline)?@sha256:CHANGE-ME", i) for i in images), images
+    assert allt.count("fsGroup: 10001") == allt.count("fsGroupChangePolicy: OnRootMismatch") > 0
+    assert "cosign" in read("docs/operations.md")
+
+
+def test_networkpolicy_has_a_proxy_variant_and_no_open_egress():
+    np_ = read(f"{K8S}/networkpolicy.yaml")
+    assert "0.0.0.0/0" not in np_ and "networkpolicy-proxy.yaml" in np_
+    px = read(f"{K8S}/networkpolicy-proxy.yaml")
+    rules = [d for d in re.split(r"(?m)^---\s*$", px) if "kind: NetworkPolicy" in d]
+    assert len(rules) == 3 and "0.0.0.0/0" not in px and "port: 443" not in px
+    assert all("policyTypes" in d for d in rules) and "fetch-gguf" in px and "lane: 70b" in px
+
+
+def test_deploy_yaml_parses():
+    """every manifest is valid YAML: PyYAML if installed, else Ruby's Psych; skipped when neither is there."""
+    import shutil as sh, subprocess
+    files = sorted(glob.glob(os.path.join(ROOT, K8S, "*.yaml")))
+    try:
+        import yaml
+        parse = lambda f: [x for x in yaml.safe_load_all(open(f, encoding="utf-8")) if x is not None]
+    except ImportError:
+        if not sh.which("ruby"): raise unittest.SkipTest("no YAML parser (PyYAML or ruby)")
+        rb = ("require 'yaml'; require 'json'; t = File.read(ARGV[0]); "             # Psych 4 needs aliases: true, Psych 3 has no such keyword
+              "d = begin; YAML.load_stream(t, aliases: true); rescue ArgumentError; YAML.load_stream(t); end; puts JSON.generate(d.compact)")
+        parse = lambda f: json.loads(subprocess.run(["ruby", "-e", rb, f], capture_output=True, text=True, check=True).stdout)
+    kinds = []
+    for f in files:
+        ds = parse(f)
+        assert ds and all(isinstance(d, dict) and d.get("apiVersion") and d.get("kind") for d in ds), f
+        for d in ds:
+            kinds.append(d["kind"])
+            spec = d.get("spec", {})
+            pod = (spec.get("jobTemplate", {}).get("spec", {}).get("template", {}).get("spec")
+                   or spec.get("template", {}).get("spec") or (spec if d["kind"] == "Pod" else None))
+            if pod is None: continue
+            vols = {v["name"]: v for v in pod.get("volumes", [])}
+            for c in pod.get("initContainers", []) + pod["containers"]:
+                for m in c.get("volumeMounts", []):
+                    assert m["name"] in vols, (f, m)
+                    pvc = vols[m["name"]].get("persistentVolumeClaim")
+                    if pvc and pvc["claimName"] == "gleichlaut-models" and pvc.get("readOnly"): assert m.get("readOnly"), (f, m)
+            assert pod["securityContext"].get("fsGroupChangePolicy") == "OnRootMismatch", f
+    assert kinds.count("CronJob") == 3 and kinds.count("NetworkPolicy") == 7 and "Pod" in kinds
+
+
+def test_fetch_gguf_resumes_a_partial_download():
+    """an interrupted download keeps models/<file>.part; the next fetch asks for the rest (HTTP Range) and appends it;
+    a server that ignores Range (200) starts over; 416 on a complete .part keeps it. The sha256 check decides."""
+    body = os.urandom(3000) + b"gguf"; sha = hashlib.sha256(body).hexdigest(); seen = []
+
+    class Resp(io.BytesIO):
+        def __init__(self, data, status): super().__init__(data); self.status = status
+
+    def server(mode):
+        def urlopen(req, timeout):
+            rng = req.get_header("Range"); seen.append(rng)
+            if mode == "range" and rng:
+                return Resp(body[int(rng.split("=")[1].rstrip("-")):], 206)
+            if mode == "416" and rng:
+                import urllib.error
+                raise urllib.error.HTTPError(req.full_url, 416, "Range Not Satisfiable", {}, None)
+            return Resp(body, 200)
+        return urlopen
+
+    saved = (backends.urlopen, cli.GGUF_URL, cli.GGUF_SHA)
+    try:
+        cli.GGUF_URL, cli.GGUF_SHA = "https://mirror.example/models/test.gguf", sha
+        for mode, part in (("range", body[:1234]), ("ignore", b"x" * 99), ("416", body), ("range", b"")):
+            with tmpdir() as d, env(GLEICHLAUT_MODELS=d):
+                if part: open(os.path.join(d, "test.gguf.part"), "wb").write(part)
+                backends.urlopen = server(mode); seen.clear()
+                with contextlib.redirect_stdout(io.StringIO()): p = cli.fetch_gguf()
+                assert open(p, "rb").read() == body and not os.path.exists(p + ".part"), mode
+                assert seen == ([f"bytes={len(part)}-"] if part else [None]), (mode, seen)
+                with contextlib.redirect_stdout(io.StringIO()) as o: cli.fetch_gguf()       # verified: no second request
+                assert len(seen) == 1 and "GGUF verified" in o.getvalue()
+    finally:
+        backends.urlopen, cli.GGUF_URL, cli.GGUF_SHA = saved
+
+
+def test_closed_network_build_args_and_sbom_coverage():
+    df = read("Dockerfile")
+    base, offline = df.split("FROM base AS offline")
+    for stage in (base, offline):
+        assert "ARG PIP_INDEX_URL=" in stage and "ARG PIP_TRUSTED_HOST=" in stage
+        assert '[ -n "$PIP_INDEX_URL" ] || unset PIP_INDEX_URL' in stage
+    assert "ARG APT_MIRROR=" in offline and 's|http://deb.debian.org|$APT_MIRROR|g' in offline
+    assert 'ARG APT_BUILD="build-essential cmake"' in offline and 'ARG APT_RUNTIME="libgomp1"' in offline
+    assert re.search(r"^ARG BASE=mirror\.gcr\.io/library/python:3\.12-slim@sha256:[0-9a-f]{64}$", df, re.M)
+    b = json.loads(read("docs/sbom.json"))
+    names = {c["name"]: c for c in b["components"]}
+    q8 = names["apertus-v1.5-8b-text-q8_0.gguf"]
+    assert q8["type"] == "machine-learning-model" and q8["hashes"][0]["content"] == cli.BUILDS["q8_0"][1]
+    assert {"name": "gleichlaut:size-bytes", "value": "8567121856"} in q8["properties"]
+    assert q8["externalReferences"][0]["url"] == cli.BUILDS["q8_0"][0]
+    assert names["apertus-v1.5-8b-text-q4_k_m.gguf"]["externalReferences"][0]["url"] == cli.BUILDS["q4_k_m"][0]
+    assert names["libgomp1"]["scope"] == "required" and names["cmake"]["scope"] == "excluded"
+    assert names["scikit-build-core"]["scope"] == "excluded"
+    hosts = json.dumps(b["services"])
+    assert "epl.bag.admin.ch" in hosts and "huggingface.co" in hosts and len(b["services"]) == 3
+    dep = read("docs/dependencies.md")
+    assert "deb.debian.org" in dep.split("## Build time")[1].split("## GGUF provenance")[0]
+    assert "Known gap" in read("docs/deploy/README.md")
 
 
 def test_shadow_workflow_plan_split_and_gather_code_runs():

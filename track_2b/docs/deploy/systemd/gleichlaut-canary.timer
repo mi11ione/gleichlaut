@@ -3,7 +3,7 @@
 Description=Gleichlaut monthly canary
 
 [Timer]
-OnCalendar=*-*-02 05:00:00 Europe/Zurich
+OnCalendar=*-*-02 19:00:00 Europe/Zurich
 Persistent=true
 
 [Install]

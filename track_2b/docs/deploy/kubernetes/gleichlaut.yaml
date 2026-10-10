@@ -1,19 +1,37 @@
 # Gleichlaut on Kubernetes, the default lane: the local Apertus 8B GGUF on CPU (certified build), air-gapped except for the
 # public BAG feed. Kubernetes >= 1.27 (CronJob timeZone). kubectl apply -n gleichlaut -f gleichlaut.yaml -f networkpolicy.yaml
+# (behind an egress proxy: networkpolicy-proxy.yaml instead of networkpolicy.yaml)
 #
-# Images (build and push both, replace CHANGE-ME below):
+# Images: build and push both, then pin them BY DIGEST below (the @sha256:CHANGE-ME placeholders). A tag can be moved; a
+# digest is the exact image that was built, scanned and (next step, docs/operations.md §10) signed with cosign.
 #   docker build --target offline -t registry.example.ch/gleichlaut-offline:<tag> track_2b    # month (llama-cpp-python)
 #   docker build --target base    -t registry.example.ch/gleichlaut:<tag> track_2b            # audit, certify import
-# The GGUF lives on a read-only PVC (gleichlaut-models, ReadOnlyMany). Fill it once with the one-off Job
-# gleichlaut-fetch-gguf in certify-job.yaml (needs egress to huggingface.co once), or copy the file in yourself:
+# The digest from your CI: `docker buildx build --push --metadata-file meta.json ...` writes it as
+# "containerimage.digest"; or after a push `crane digest registry.example.ch/gleichlaut:<tag>` /
+# `docker inspect --format '{{index .RepoDigests 0}}' registry.example.ch/gleichlaut:<tag>`. Fill it in with
+# `kustomize edit set image registry.example.ch/gleichlaut=registry.example.ch/gleichlaut@sha256:<digest>` or sed.
+# Closed network: build args for an internal registry, PyPI and Debian mirror are in the Dockerfile and docs/deploy/README.md.
+# The GGUF lives on the PVC gleichlaut-models (ReadWriteOnce). It is written once, by ONE of:
+#   (a) the Job gleichlaut-fetch-gguf in certify-job.yaml: from huggingface.co, or from your internal mirror with
+#       GLEICHLAUT_MODEL_URL in the ConfigMap below (sha256-checked either way; an interrupted download resumes);
+#   (b) no egress at all: models-loader.yaml (a loader pod, then `kubectl cp` and a sha256 check; docs/deploy/README.md).
 #   apertus-v1.5-8b-text-q4_k_m.gguf, sha256 a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299
+# Every other pod mounts it read-only (persistentVolumeClaim.readOnly and volumeMounts.readOnly). ReadWriteOnce attaches the
+# volume to one node at a time: the month Job and the one-off Jobs never run at the same time, so they take turns.
 # Certification: the image carries the shipped build certificate (eval/certificates/8b-q4_k_m-fresh166.json), which the
 # gate verifies at every run. With an HMAC key (GLEICHLAUT_CERT_KEY) run the Job gleichlaut-certify-build of
-# certify-job.yaml once: it imports a signed copy into state/. Optional Secret with the key:
+# certify-job.yaml once: it imports a signed copy into state/ (with a key set, the unsigned shipped certificate is refused
+# and every 8B draft goes to review until that copy exists). One Secret holds the key for every Job and both lanes:
 #   kubectl -n gleichlaut create secret generic gleichlaut-cert-key --from-file=cert.key=/path/to/cert.key
-# Jobs:
-#   gleichlaut-month   2nd of the month 06:00 Zurich: shadow mode on the public feed with the local 8B
-#   gleichlaut-audit   quarterly: the DE<->FR/IT congruence audit (no model, no endpoint, no secret); exits 8 on findings
+# The pods below mount it already (optional: true, so they start without it); to use it, create the Secret, uncomment
+# GLEICHLAUT_CERT_KEY in the ConfigMap and run gleichlaut-certify-build.
+# Behind a proxy / internal CA: HTTPS_PROXY in the ConfigMap; the CA bundle in an (optional) ConfigMap gleichlaut-ca:
+#   kubectl -n gleichlaut create configmap gleichlaut-ca --from-file=ca.pem=/path/to/internal-ca.pem
+# and SSL_CERT_FILE: /etc/gleichlaut/ca/ca.pem in the ConfigMap. Every pod that talks to the network mounts it.
+# Jobs (the schedules never overlap on the RWO data PVC; tests check it from the deadlines):
+#   gleichlaut-month   2nd of the month 06:00 Zurich (12 h deadline: done by 18:00): shadow mode with the local 8B
+#   gleichlaut-audit   quarterly, the 3rd 07:00: the DE<->FR/IT congruence audit (no model, no endpoint, no secret); exit 8 on findings
+#   gleichlaut-month-70b (gleichlaut-70b.yaml, optional) the 2nd 20:00, after this lane's deadline
 # The 70B "fewer edits" variant (certified endpoint, canary): gleichlaut-70b.yaml.
 # Pods run as uid 10001 (the image's user), non-root, no privilege escalation, all capabilities dropped, read-only root
 # filesystem: they write only to the data PVC (state/ and out/) and an emptyDir /tmp.
@@ -31,8 +49,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata: { name: gleichlaut-models, labels: { app: gleichlaut } }
 spec:
-  accessModes: [ReadOnlyMany]                  # mounted read-only by every pod; written once by gleichlaut-fetch-gguf
-  resources: { requests: { storage: 8Gi } }    # the Q4_K_M GGUF is 5,059,027,136 bytes
+  accessModes: [ReadWriteOnce]                 # written once (fetch Job or loader pod), then mounted read-only by every pod
+  resources: { requests: { storage: 12Gi } }   # Q4_K_M 5,059,027,136 bytes; Q8_0 (GLEICHLAUT_BUILD=q8_0) 8,567,121,856 bytes
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -44,9 +62,13 @@ data:
   GLEICHLAUT_MODELS: /models
   GLEICHLAUT_METRICS_DIR: /app/out/metrics
   GLEICHLAUT_THREADS: "4"                       # = the CPU request below; llama.cpp otherwise uses the container's CPU set
-  # GLEICHLAUT_CERT_KEY: /var/run/secrets/gleichlaut/cert.key     # with the gleichlaut-cert-key Secret mounted (see below)
-  # behind a proxy / internal CA (for the BAG feed): mount the CA bundle from a ConfigMap and point SSL_CERT_FILE at it
+  # GLEICHLAUT_CERT_KEY: /var/run/secrets/gleichlaut/cert.key     # once the gleichlaut-cert-key Secret exists (mounted below)
+  # the GGUF from an internal mirror (fetch Job): keep the file name, the sha256 check stays the pinned one
+  # GLEICHLAUT_MODEL_URL: "https://artifacts.internal.example.ch/models/apertus-v1.5-8b-text-q4_k_m.gguf"
+  # GLEICHLAUT_BUILD: q8_0      # the Q8_0 build (16 GiB RAM): also change --gguf below to apertus-v1.5-8b-text-q8_0.gguf
+  # behind a proxy / internal CA (BAG feed, GGUF fetch): the gleichlaut-ca ConfigMap is mounted at /etc/gleichlaut/ca
   # HTTPS_PROXY: "http://proxy.example.ch:8080"
+  # NO_PROXY: ".svc,.cluster.local"
   # SSL_CERT_FILE: /etc/gleichlaut/ca/ca.pem
 ---
 apiVersion: batch/v1
@@ -73,10 +95,11 @@ spec:
             runAsUser: 10001
             runAsGroup: 10001
             fsGroup: 10001
+            fsGroupChangePolicy: OnRootMismatch
             seccompProfile: { type: RuntimeDefault }
           containers:
             - name: month
-              image: registry.example.ch/gleichlaut-offline:CHANGE-ME
+              image: registry.example.ch/gleichlaut-offline@sha256:CHANGE-ME
               args: [python, -m, gleichlaut, month, --backend, llamacpp, --gguf, /models/apertus-v1.5-8b-text-q4_k_m.gguf,
                      --from, previous, --to, latest, --fetch, --emit]
               envFrom: [{ configMapRef: { name: gleichlaut-config } }]
@@ -92,7 +115,8 @@ spec:
                 - { name: data, mountPath: /app/out, subPath: out }
                 - { name: models, mountPath: /models, readOnly: true }
                 - { name: tmp, mountPath: /tmp }
-                # - { name: key, mountPath: /var/run/secrets/gleichlaut, readOnly: true }
+                - { name: key, mountPath: /var/run/secrets/gleichlaut, readOnly: true }
+                - { name: ca, mountPath: /etc/gleichlaut/ca, readOnly: true }
           volumes:
             - name: data
               persistentVolumeClaim: { claimName: gleichlaut-data }
@@ -100,8 +124,10 @@ spec:
               persistentVolumeClaim: { claimName: gleichlaut-models, readOnly: true }
             - name: tmp
               emptyDir: { sizeLimit: 256Mi }
-            # - name: key
-            #   secret: { secretName: gleichlaut-cert-key, items: [{ key: cert.key, path: cert.key }], defaultMode: 0400 }
+            - name: key                 # optional: the pod starts without the Secret; GLEICHLAUT_CERT_KEY decides whether it is used
+              secret: { secretName: gleichlaut-cert-key, optional: true, items: [{ key: cert.key, path: cert.key }], defaultMode: 0400 }
+            - name: ca
+              configMap: { name: gleichlaut-ca, optional: true }
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -125,10 +151,11 @@ spec:
             runAsUser: 10001
             runAsGroup: 10001
             fsGroup: 10001
+            fsGroupChangePolicy: OnRootMismatch
             seccompProfile: { type: RuntimeDefault }
           containers:
             - name: audit               # no model, no endpoint, no secret: only the public feed of the latest date
-              image: registry.example.ch/gleichlaut:CHANGE-ME
+              image: registry.example.ch/gleichlaut@sha256:CHANGE-ME
               command: [sh, -c]
               args:
                 - |
@@ -146,11 +173,14 @@ spec:
               volumeMounts:
                 - { name: data, mountPath: /app/out, subPath: out }
                 - { name: tmp, mountPath: /tmp }
+                - { name: ca, mountPath: /etc/gleichlaut/ca, readOnly: true }
           volumes:
             - name: data
               persistentVolumeClaim: { claimName: gleichlaut-data }
             - name: tmp
               emptyDir: { sizeLimit: 256Mi }
+            - name: ca
+              configMap: { name: gleichlaut-ca, optional: true }
 # Alerting (Prometheus with kube-state-metrics), e.g. a PrometheusRule:
 #   - alert: GleichlautJobFailed
 #     expr: kube_job_status_failed{namespace="gleichlaut"} > 0

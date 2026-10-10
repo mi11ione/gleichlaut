@@ -1,8 +1,18 @@
-# One-off Jobs: put the GGUF on the models PVC, and certify. kubectl apply -n gleichlaut -f certify-job.yaml, then delete the
-# finished Jobs (or set ttlSecondsAfterFinished). Exit codes: 0 PASS, 5 FAIL, 7 PENDING_REVIEW, 2 configuration.
+# One-off Jobs: put the GGUF on the models PVC, and certify. Apply the one you need, not the whole file at once:
+#   kubectl apply -n gleichlaut -f certify-job.yaml -l job=fetch-gguf          # gleichlaut-fetch-gguf
+#   kubectl apply -n gleichlaut -f certify-job.yaml -l 'job=certify,!lane'     # gleichlaut-certify-build
+#   kubectl apply -n gleichlaut -f certify-job.yaml -l lane=8b                 # gleichlaut-certify-build-local
+#   kubectl apply -n gleichlaut -f certify-job.yaml -l lane=70b                # gleichlaut-certify-endpoint
+# then delete the finished Jobs (or set ttlSecondsAfterFinished). Exit codes: 0 PASS, 5 FAIL, 7 PENDING_REVIEW, 2 configuration.
+# Images: digest form, filled from your CI (gleichlaut.yaml, header). Secrets: gleichlaut-cert-key (the certificate HMAC
+# key, the same Secret for every Job and both lanes) and, for the 70B lane only, gleichlaut-endpoint (LLM_API_KEY).
 #
 #   gleichlaut-fetch-gguf          writes the pinned GGUF to the models PVC (mounted read-write here only) and checks its
-#                                  sha256. Needs egress to huggingface.co once (networkpolicy.yaml, rule "fetch-gguf").
+#                                  sha256. Reads gleichlaut-config: GLEICHLAUT_MODEL_URL (an internal mirror instead of
+#                                  huggingface.co), GLEICHLAUT_BUILD, HTTPS_PROXY, SSL_CERT_FILE (the gleichlaut-ca ConfigMap
+#                                  is mounted). Needs egress to the mirror, the proxy or huggingface.co once (networkpolicy.yaml,
+#                                  rule "fetch-gguf"). A failed attempt keeps the .part file; the retry resumes it (HTTP Range).
+#                                  No egress at all: models-loader.yaml instead (kubectl cp; docs/deploy/README.md).
 #   gleichlaut-certify-build       the build certificate of the pinned 8B GGUF from the recorded M1 run (PREREG R1): the
 #                                  stored records are re-scored with the frozen checks and the M1 labels; PASS only if the
 #                                  pre-registered rule holds. Seconds, no model, no network. Needed only with an HMAC key
@@ -12,34 +22,38 @@
 #   gleichlaut-certify-endpoint    the 70B endpoint of gleichlaut-70b.yaml (about 285 requests, under an hour)
 apiVersion: batch/v1
 kind: Job
-metadata: { name: gleichlaut-fetch-gguf, labels: { app: gleichlaut } }
+metadata: { name: gleichlaut-fetch-gguf, labels: { app: gleichlaut, job: fetch-gguf } }
 spec:
-  backoffLimit: 1
+  backoffLimit: 3                     # a retry resumes the partial download
   template:
     metadata: { labels: { app: gleichlaut, job: fetch-gguf } }
     spec:
       restartPolicy: Never
       automountServiceAccountToken: false
-      securityContext: { runAsNonRoot: true, runAsUser: 10001, runAsGroup: 10001, fsGroup: 10001, seccompProfile: { type: RuntimeDefault } }
+      securityContext: { runAsNonRoot: true, runAsUser: 10001, runAsGroup: 10001, fsGroup: 10001, fsGroupChangePolicy: OnRootMismatch, seccompProfile: { type: RuntimeDefault } }
       containers:
         - name: fetch
-          image: registry.example.ch/gleichlaut:CHANGE-ME
+          image: registry.example.ch/gleichlaut@sha256:CHANGE-ME
           args: [python, -m, gleichlaut, fetch-gguf]
+          envFrom: [{ configMapRef: { name: gleichlaut-config } }]     # GLEICHLAUT_MODELS, MODEL_URL, BUILD, proxy, CA
           env: [{ name: GLEICHLAUT_MODELS, value: /models }]
           securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: [ALL] } }
           resources: { requests: { cpu: 250m, memory: 256Mi }, limits: { cpu: "1", memory: 512Mi } }
           volumeMounts:
             - { name: models, mountPath: /models }
             - { name: tmp, mountPath: /tmp }
+            - { name: ca, mountPath: /etc/gleichlaut/ca, readOnly: true }
       volumes:
         - name: models
-          persistentVolumeClaim: { claimName: gleichlaut-models }    # read-write only in this Job
+          persistentVolumeClaim: { claimName: gleichlaut-models }    # read-write only in this Job (and models-loader.yaml)
         - name: tmp
           emptyDir: { sizeLimit: 64Mi }
+        - name: ca
+          configMap: { name: gleichlaut-ca, optional: true }
 ---
 apiVersion: batch/v1
 kind: Job
-metadata: { name: gleichlaut-certify-build, labels: { app: gleichlaut } }
+metadata: { name: gleichlaut-certify-build, labels: { app: gleichlaut, job: certify } }
 spec:
   backoffLimit: 0
   template:
@@ -47,10 +61,10 @@ spec:
     spec:
       restartPolicy: Never
       automountServiceAccountToken: false
-      securityContext: { runAsNonRoot: true, runAsUser: 10001, runAsGroup: 10001, fsGroup: 10001, seccompProfile: { type: RuntimeDefault } }
+      securityContext: { runAsNonRoot: true, runAsUser: 10001, runAsGroup: 10001, fsGroup: 10001, fsGroupChangePolicy: OnRootMismatch, seccompProfile: { type: RuntimeDefault } }
       containers:
         - name: certify
-          image: registry.example.ch/gleichlaut:CHANGE-ME
+          image: registry.example.ch/gleichlaut@sha256:CHANGE-ME
           args: [python, -m, gleichlaut, certify, --import-run, data/runs/8b_q4_k_m_fresh166_g3_final.jsonl,
                  --gguf-sha256, a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299,
                  --labels, eval/labels/m1_q4_k_m_fresh166.tsv]
@@ -73,7 +87,7 @@ spec:
 ---
 apiVersion: batch/v1
 kind: Job
-metadata: { name: gleichlaut-certify-build-local, labels: { app: gleichlaut } }
+metadata: { name: gleichlaut-certify-build-local, labels: { app: gleichlaut, job: certify, lane: 8b } }
 spec:
   backoffLimit: 0
   activeDeadlineSeconds: 64800        # 18 h
@@ -82,10 +96,10 @@ spec:
     spec:
       restartPolicy: Never
       automountServiceAccountToken: false
-      securityContext: { runAsNonRoot: true, runAsUser: 10001, runAsGroup: 10001, fsGroup: 10001, seccompProfile: { type: RuntimeDefault } }
+      securityContext: { runAsNonRoot: true, runAsUser: 10001, runAsGroup: 10001, fsGroup: 10001, fsGroupChangePolicy: OnRootMismatch, seccompProfile: { type: RuntimeDefault } }
       containers:
         - name: certify
-          image: registry.example.ch/gleichlaut-offline:CHANGE-ME
+          image: registry.example.ch/gleichlaut-offline@sha256:CHANGE-ME
           args: [python, -m, gleichlaut, certify, --backend, llamacpp, --gguf, /models/apertus-v1.5-8b-text-q4_k_m.gguf]
           envFrom: [{ configMapRef: { name: gleichlaut-config } }]
           securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: [ALL] } }
@@ -95,6 +109,7 @@ spec:
             - { name: data, mountPath: /app/out, subPath: out }
             - { name: models, mountPath: /models, readOnly: true }
             - { name: tmp, mountPath: /tmp }
+            - { name: key, mountPath: /var/run/secrets/gleichlaut, readOnly: true }
       volumes:
         - name: data
           persistentVolumeClaim: { claimName: gleichlaut-data }
@@ -102,10 +117,12 @@ spec:
           persistentVolumeClaim: { claimName: gleichlaut-models, readOnly: true }
         - name: tmp
           emptyDir: { sizeLimit: 256Mi }
+        - name: key                     # optional, as in gleichlaut.yaml: signs the certificate once GLEICHLAUT_CERT_KEY is set
+          secret: { secretName: gleichlaut-cert-key, optional: true, items: [{ key: cert.key, path: cert.key }], defaultMode: 0400 }
 ---
 apiVersion: batch/v1
 kind: Job
-metadata: { name: gleichlaut-certify-endpoint, labels: { app: gleichlaut } }
+metadata: { name: gleichlaut-certify-endpoint, labels: { app: gleichlaut, job: certify, lane: 70b } }
 spec:
   backoffLimit: 0
   activeDeadlineSeconds: 14400
@@ -114,10 +131,10 @@ spec:
     spec:
       restartPolicy: Never
       automountServiceAccountToken: false
-      securityContext: { runAsNonRoot: true, runAsUser: 10001, runAsGroup: 10001, fsGroup: 10001, seccompProfile: { type: RuntimeDefault } }
+      securityContext: { runAsNonRoot: true, runAsUser: 10001, runAsGroup: 10001, fsGroup: 10001, fsGroupChangePolicy: OnRootMismatch, seccompProfile: { type: RuntimeDefault } }
       containers:
         - name: certify
-          image: registry.example.ch/gleichlaut:CHANGE-ME
+          image: registry.example.ch/gleichlaut@sha256:CHANGE-ME
           args: [python, -m, gleichlaut, certify, --backend, openai]
           envFrom: [{ configMapRef: { name: gleichlaut-70b-config } }]
           env:
@@ -130,10 +147,13 @@ spec:
             - { name: data, mountPath: /app/out, subPath: out }
             - { name: tmp, mountPath: /tmp }
             - { name: key, mountPath: /var/run/secrets/gleichlaut, readOnly: true }
+            - { name: ca, mountPath: /etc/gleichlaut/ca, readOnly: true }
       volumes:
         - name: data
           persistentVolumeClaim: { claimName: gleichlaut-data }
         - name: tmp
           emptyDir: { sizeLimit: 256Mi }
-        - name: key
-          secret: { secretName: gleichlaut-endpoint, items: [{ key: cert.key, path: cert.key }], defaultMode: 0400 }
+        - name: key                     # the same Secret as the 8B lane; required here (gleichlaut-70b-config sets GLEICHLAUT_CERT_KEY)
+          secret: { secretName: gleichlaut-cert-key, items: [{ key: cert.key, path: cert.key }], defaultMode: 0400 }
+        - name: ca
+          configMap: { name: gleichlaut-ca, optional: true }

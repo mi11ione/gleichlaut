@@ -1,0 +1,45 @@
+# Egress control behind an egress proxy: the pods reach nothing but DNS and the proxy; the proxy enforces the host names.
+# Use this file INSTEAD of networkpolicy.yaml. kubectl apply -n gleichlaut -f networkpolicy-proxy.yaml
+#
+# Set in the ConfigMaps (gleichlaut-config, gleichlaut-70b-config):
+#   HTTPS_PROXY: "http://proxy.example.ch:8080"      every outgoing request goes through it (backends.opener)
+#   SSL_CERT_FILE: /etc/gleichlaut/ca/ca.pem          if the proxy re-signs TLS (the gleichlaut-ca ConfigMap; gleichlaut.yaml)
+# and allow on the proxy, per purpose (docs/operations.md §9):
+#   month, audit                       epl.bag.admin.ch:443  (public feed, GET/HEAD only)
+#   month-70b, canary, certify-endpoint the host of LLM_BASE_URL
+#   fetch-gguf (one-off)               the internal mirror (GLEICHLAUT_MODEL_URL), or huggingface.co, cas-bridge.xethub.hf.co,
+#                                      cdn-lfs.hf.co
+#   certify-build, models-loader       nothing
+# CHANGE-ME: the proxy's address and port below. A proxy that runs inside the cluster is a pod, not a stable IP: replace
+# the ipBlock with a namespaceSelector/podSelector for it. If the 70B endpoint is reached directly (in NO_PROXY), also
+# apply the gleichlaut-70b-endpoint policy of networkpolicy.yaml.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: { name: gleichlaut-default-deny, labels: { app: gleichlaut } }
+spec:
+  podSelector: { matchLabels: { app: gleichlaut } }
+  policyTypes: [Ingress, Egress]
+  egress:
+    - to: [{ namespaceSelector: {}, podSelector: { matchLabels: { k8s-app: kube-dns } } }]
+      ports: [{ protocol: UDP, port: 53 }, { protocol: TCP, port: 53 }]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: { name: gleichlaut-egress-proxy, labels: { app: gleichlaut } }
+spec:
+  podSelector:                                          # month (8B and 70B, canary included), audit, the one-off fetch
+    matchExpressions: [{ key: job, operator: In, values: [month, audit, fetch-gguf] }]
+  policyTypes: [Egress]
+  egress:
+    - to: [{ ipBlock: { cidr: 192.0.2.30/32 } }]        # CHANGE-ME: the egress proxy
+      ports: [{ protocol: TCP, port: 8080 }]            # CHANGE-ME: its port
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: { name: gleichlaut-egress-proxy-70b, labels: { app: gleichlaut } }
+spec:
+  podSelector: { matchLabels: { lane: 70b } }           # certify-endpoint (job: certify) also needs the proxy
+  policyTypes: [Egress]
+  egress:
+    - to: [{ ipBlock: { cidr: 192.0.2.30/32 } }]        # CHANGE-ME: the egress proxy (as above)
+      ports: [{ protocol: TCP, port: 8080 }]

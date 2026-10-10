@@ -1,12 +1,13 @@
 # The optional "fewer edits" lane: one month through the certified Apertus 70B endpoint (LLM_BASE_URL in gleichlaut.env),
-# after the canary (gleichlaut-canary.timer, 05:00). Outputs under /var/lib/gleichlaut/out-70b, apart from the 8B lane.
+# after the canary (gleichlaut-canary.timer, 19:00) and after the 8B month if that one is still running (After=).
+# Outputs under /var/lib/gleichlaut/out-70b, apart from the 8B lane.
 # Base requirements only (no llama.cpp); 2 GB RAM is plenty: the model runs at the endpoint.
 # For pre-publication drafting replace the ExecStart arguments with: month --items /var/lib/gleichlaut/in/sl-team.json
 # Exit codes -> alerts: docs/deploy/README.md. A non-zero exit fails the unit and starts gleichlaut-alert@.
 [Unit]
 Description=Gleichlaut monthly run, 70B endpoint (shadow mode on the BAG ePL feed)
 Wants=network-online.target
-After=network-online.target gleichlaut-canary.service
+After=network-online.target gleichlaut-canary.service gleichlaut-month.service
 OnFailure=gleichlaut-alert@%n.service
 
 [Service]

@@ -1,0 +1,38 @@
+# The no-egress way to fill the models PVC: a loader pod that mounts gleichlaut-models read-write and does nothing else;
+# you copy the GGUF in with kubectl cp, check its sha256 in the pod, and delete the pod. No network (default deny: DNS
+# only). Instead of the Job gleichlaut-fetch-gguf (certify-job.yaml); never both at once (the PVC is ReadWriteOnce).
+#   kubectl apply -n gleichlaut -f gleichlaut.yaml                  # creates the PVCs (and the CronJobs: nothing runs before the 2nd)
+#   kubectl apply -n gleichlaut -f models-loader.yaml
+#   kubectl -n gleichlaut wait --for=condition=Ready pod/gleichlaut-models-loader --timeout=5m
+#   kubectl -n gleichlaut cp apertus-v1.5-8b-text-q4_k_m.gguf gleichlaut-models-loader:/models/apertus-v1.5-8b-text-q4_k_m.gguf
+#   kubectl -n gleichlaut exec gleichlaut-models-loader -- sha256sum /models/apertus-v1.5-8b-text-q4_k_m.gguf
+#       must print a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299 (Q8_0: dea904ad80cd725e...202d)
+#   kubectl -n gleichlaut exec gleichlaut-models-loader -- python -m gleichlaut fetch-gguf
+#       the same check through Gleichlaut's own code: "GGUF verified" and no download (it downloads only a missing or wrong
+#       file, and fails with exit 6 here because there is no egress)
+#   kubectl -n gleichlaut delete pod gleichlaut-models-loader
+# kubectl cp needs tar in the image (the base image has it). The file name must stay as it is: the month CronJob passes
+# --gguf /models/apertus-v1.5-8b-text-q4_k_m.gguf (Q8_0: apertus-v1.5-8b-text-q8_0.gguf, GLEICHLAUT_BUILD=q8_0).
+apiVersion: v1
+kind: Pod
+metadata: { name: gleichlaut-models-loader, labels: { app: gleichlaut, job: models-loader } }
+spec:
+  restartPolicy: Never
+  automountServiceAccountToken: false
+  activeDeadlineSeconds: 7200                # the pod ends itself after 2 h if it is forgotten
+  securityContext: { runAsNonRoot: true, runAsUser: 10001, runAsGroup: 10001, fsGroup: 10001, fsGroupChangePolicy: OnRootMismatch, seccompProfile: { type: RuntimeDefault } }
+  containers:
+    - name: loader
+      image: registry.example.ch/gleichlaut@sha256:CHANGE-ME       # the base image (gleichlaut.yaml header: digest from CI)
+      command: [sleep, "7200"]
+      env: [{ name: GLEICHLAUT_MODELS, value: /models }]
+      securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: [ALL] } }
+      resources: { requests: { cpu: 250m, memory: 256Mi }, limits: { cpu: "1", memory: 512Mi } }
+      volumeMounts:
+        - { name: models, mountPath: /models }
+        - { name: tmp, mountPath: /tmp }
+  volumes:
+    - name: models
+      persistentVolumeClaim: { claimName: gleichlaut-models }        # read-write here, read-only everywhere else
+    - name: tmp
+      emptyDir: { sizeLimit: 64Mi }

@@ -1,9 +1,11 @@
-# The 70B lane: the 2nd at 06:00, after its canary (05:00). Enable this or gleichlaut-month.timer (or both: separate outputs).
+# The 70B lane: the 2nd at 20:00, after its canary (19:00) and after the 8B month (06:00, about 2.4 h at today's volume).
+# Enable this or gleichlaut-month.timer, or both: separate outputs, but the same feed snapshots (out/hist), so they never
+# run at the same time (staggered here; gleichlaut-month-70b.service also waits for a still-running 8B month: After=).
 [Unit]
 Description=Gleichlaut monthly run, 70B endpoint
 
 [Timer]
-OnCalendar=*-*-02 06:00:00 Europe/Zurich
+OnCalendar=*-*-02 20:00:00 Europe/Zurich
 Persistent=true
 RandomizedDelaySec=10m
 

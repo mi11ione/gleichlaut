@@ -1,13 +1,18 @@
 # The optional "fewer edits" lane: Apertus 70B on an OpenAI-compatible endpoint you control (own GPUs or a Swiss-resident
 # provider), admitted only by an endpoint certificate (`gleichlaut certify --backend openai`, Job gleichlaut-certify-endpoint
 # in certify-job.yaml) and a passing canary at most 31 days old. Apply together with gleichlaut.yaml (it uses its data PVC)
-# and with the 70B rule of networkpolicy.yaml (egress to the endpoint). Base image (no llama.cpp):
+# and with the 70B rule of networkpolicy.yaml (egress to the endpoint; behind a proxy: networkpolicy-proxy.yaml). Base image
+# (no llama.cpp), pinned by digest below (gleichlaut.yaml header: how to fill it from your CI):
 #   docker build --target base -t registry.example.ch/gleichlaut:<tag> track_2b
-# Create the Secret yourself (never commit it):
-#   kubectl -n gleichlaut create secret generic gleichlaut-endpoint --from-literal=LLM_API_KEY=... \
-#     --from-file=cert.key=/path/to/cert.key          # cert.key: >= 16 random bytes, the certificate HMAC key
-# If you run both lanes, suspend one CronJob (spec.suspend: true) or give them different months: both mine the same
-# feed pair; this one keeps its runs under out/lane-70b/month/ (GLEICHLAUT_OUT), apart from the 8B lane's out/month/.
+# Create the Secrets yourself (never commit them). The endpoint's bearer key and the certificate HMAC key are separate:
+#   kubectl -n gleichlaut create secret generic gleichlaut-endpoint --from-literal=LLM_API_KEY=...
+#   kubectl -n gleichlaut create secret generic gleichlaut-cert-key --from-file=cert.key=/path/to/cert.key
+# gleichlaut-cert-key (>= 16 random bytes) is the same Secret the 8B lane and every certify Job use: one key signs and
+# verifies every certificate and canary report in state/. This lane requires it (GLEICHLAUT_CERT_KEY below).
+# Schedule: the 2nd at 20:00, after the 8B month's 12 h deadline (06:00-18:00): both lanes write to the RWO data PVC and
+# share out/hist (the feed snapshots), so their windows never overlap (concurrencyPolicy: Forbid only stops a CronJob from
+# overlapping itself). Both mine the same feed pair; this one keeps its runs under out/lane-70b/month/ (GLEICHLAUT_OUT),
+# apart from the 8B lane's out/month/. To run only this lane, suspend gleichlaut-month (spec.suspend: true).
 # Its pod needs no GPU and little memory: the model runs at the endpoint (about 100 requests a month).
 apiVersion: v1
 kind: ConfigMap
@@ -23,7 +28,7 @@ data:
   GLEICHLAUT_RETRIES: "4"
   GLEICHLAUT_DEADLINE: "300"
   GLEICHLAUT_METRICS_DIR: /app/out/metrics/70b     # gleichlaut_month.prom of this lane, apart from the 8B lane's
-  # behind a proxy / internal CA (mount the CA bundle from a ConfigMap and point SSL_CERT_FILE at it):
+  # behind a proxy / internal CA (the gleichlaut-ca ConfigMap is mounted at /etc/gleichlaut/ca; gleichlaut.yaml header):
   # HTTPS_PROXY: "http://proxy.example.ch:8080"
   # NO_PROXY: "llm.internal.example.ch,.svc,.cluster.local"
   # SSL_CERT_FILE: /etc/gleichlaut/ca/ca.pem
@@ -32,7 +37,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata: { name: gleichlaut-month-70b, labels: { app: gleichlaut } }
 spec:
-  schedule: "0 6 2 * *"
+  schedule: "0 20 2 * *"            # after gleichlaut-month (06:00 + 12 h deadline); never at the same time on gleichlaut-data
   timeZone: Europe/Zurich
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 86400
@@ -52,10 +57,11 @@ spec:
             runAsUser: 10001
             runAsGroup: 10001
             fsGroup: 10001
+            fsGroupChangePolicy: OnRootMismatch
             seccompProfile: { type: RuntimeDefault }
           initContainers:
             - name: canary            # exit 3 on drift: the month container never starts (it would refuse anyway)
-              image: registry.example.ch/gleichlaut:CHANGE-ME
+              image: registry.example.ch/gleichlaut@sha256:CHANGE-ME
               args: [python, -m, gleichlaut, certify, --backend, openai, --canary, "40"]
               envFrom: [{ configMapRef: { name: gleichlaut-70b-config } }]
               env: &secretenv
@@ -73,9 +79,10 @@ spec:
                 - { name: data, mountPath: /app/out, subPath: out }
                 - { name: tmp, mountPath: /tmp }
                 - { name: key, mountPath: /var/run/secrets/gleichlaut, readOnly: true }
+                - { name: ca, mountPath: /etc/gleichlaut/ca, readOnly: true }
           containers:
             - name: month
-              image: registry.example.ch/gleichlaut:CHANGE-ME
+              image: registry.example.ch/gleichlaut@sha256:CHANGE-ME
               args: [python, -m, gleichlaut, month, --backend, openai, --from, previous, --to, latest, --fetch, --emit]
               envFrom: [{ configMapRef: { name: gleichlaut-70b-config } }]
               env: *secretenv
@@ -87,5 +94,7 @@ spec:
               persistentVolumeClaim: { claimName: gleichlaut-data }
             - name: tmp
               emptyDir: { sizeLimit: 256Mi }
-            - name: key
-              secret: { secretName: gleichlaut-endpoint, items: [{ key: cert.key, path: cert.key }], defaultMode: 0400 }
+            - name: key                 # the one HMAC key Secret of both lanes (gleichlaut.yaml); required in this lane
+              secret: { secretName: gleichlaut-cert-key, items: [{ key: cert.key, path: cert.key }], defaultMode: 0400 }
+            - name: ca
+              configMap: { name: gleichlaut-ca, optional: true }
