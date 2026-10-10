@@ -4,8 +4,10 @@ cache     hash-addressed replay of recorded responses (data/cache/responses/<sha
           exact request payload {model, messages, max_tokens, temperature}, the same key the development gateway used,
           so a replay hit proves that the prompt was rebuilt byte-for-byte. A miss is an error, never a silent call.
 openai    any OpenAI-compatible endpoint: LLM_BASE_URL, LLM_API_KEY, LLM_NAME (the judges' / a user-controlled endpoint).
-          Plain user message only (no system message of ours, no prefill; the server's chat template may add its own default turns), 429 back-off, and the response `model` field is
-          checked against the requested model on every call.
+          Plain user message only (no system message of ours, no prefill). The official Apertus v1.5 template, if the server uses
+          it, then adds its default system turn ("You are Apertus 1.5 Omni, ...") and a developer turn ("Deliberation:
+          disabled / Tool Capabilities: disabled"), as the GGUF template does for llamacpp (docs/research/chat-template.md).
+          It backs off on 429 and checks the response `model` field against the requested model on every call.
 gateway   development only (Public AI through the team's budget gateway, gw.chat); never used by `make run`.
 llamacpp  in-process llama-cpp-python on CPU with a GGUF build of Apertus 8B and the digit / number-word logit mask (the SL
           default lane when the GGUF has a build certificate, certify.build_lookup). Without llama-cpp-python installed

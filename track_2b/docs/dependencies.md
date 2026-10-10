@@ -53,6 +53,15 @@ weights, is a different model build and has to be evaluated again (m1 workflow) 
 | 3' (Q8_0) | `andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF` (revision `2028c318`, 16 Aug 2026) | `apertus-v1.5-8b-text-q8_0.gguf`, made from step 2 by the same author, through GGUF-my-repo (tag `gguf-my-repo`) |
 | pin | `BUILD=q8_0` (the default) | `dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d`, 8,567,121,856 bytes |
 
+**Chat template.** Both GGUFs embed a `tokenizer.chat_template` byte-identical to the official `swiss-ai/Apertus-v1.5-8B`
+template (sha256 `d23af2850029e9df88bb017e06e0c14a0462604588f1dbe4f519cdfac3e260e0`, 16,614 bytes; checked 10 Oct 2026
+without downloading the weights, `docs/research/chat-template.md`). llama-cpp-python renders it for our one user
+message with a default system turn ("You are Apertus 1.5 Omni, a multimodal assistant developed by the Swiss AI
+Initiative. Extended from Apertus 1 via continued pretraining, you understand images and audio and respond in text.")
+and a developer turn ("Deliberation: disabled", "Tool Capabilities: disabled") before it. The one difference is outside
+the template: the GGUFs use `<|assistant_end|>` as end-of-sequence token where the official `tokenizer_config.json`
+names `</s>`. The template does not read it, so the prompt is unchanged.
+
 Neither step 2 nor step 3 / 3' is published by swiss-ai, and no official GGUF exists (`docs/sources.md` §5.3). The chain was
 read from the repositories' model cards and the Hugging Face API on 9 Oct 2026. Step 2 is gated: accept the Apertus
 Acceptable Use Policy there.
