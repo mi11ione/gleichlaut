@@ -7,9 +7,9 @@ unverified, 1.2 is the safe exchange format). One file per target language, one 
   in the source as well; a number the model wrote itself stays unmarked and translatable, with a note.
   The part of the new German the change inserted or rewrote is <mrk mtype="x-changed"> in the source (1.2's extension
   value syntax x-...; protected numbers nest inside it).
-  <note>s (annotates target / source), all in the target language, carry the verdict, the German change, each guard
-  finding as one sentence (the ones a fixed rule marks as probably fine last, with the rule), the divergence notice, the
-  old German and the old target; <alt-trans alttranstype="previous-version"> holds the old German -> old target pair so the
+  <note>s (annotates target / source), all in the target language, are the notes of XLIFF 2.1 (xliff.unit_notes): the
+  verdict, at most three plain reasons without internal codes, the product and German change, the old German and the old
+  target, and one note from="gleichlaut-checks" priority="10" with the remaining reasons and the raw guard output; <alt-trans alttranstype="previous-version"> holds the old German -> old target pair so the
   CAT tool shows the previous version beside the draft.
   Segmentation: the same segments as XLIFF 2.1 (segment.beads: aligned sentences, very short segments such as a lone
   code number merged into the previous one), written the 1.2 way: <seg-source> and <target> each hold one
@@ -32,8 +32,8 @@ def _source_spans(s):
     return [(m.start(), m.end()) for m in core.gl2.NUMRX.finditer(s)]
 
 
-def _note(tu, text, annotates="general", priority=None):
-    n = ET.SubElement(tu, _q("note"), {k: v for k, v in (("from", "gleichlaut"), ("annotates", annotates), ("priority", priority)) if v})
+def _note(tu, text, annotates="general", priority=None, frm="gleichlaut"):
+    n = ET.SubElement(tu, _q("note"), {k: v for k, v in (("from", frm), ("annotates", annotates), ("priority", priority)) if v})
     n.text = text
 
 
@@ -83,16 +83,8 @@ def trans_unit(body, v):
     if v["status"] != "human":
         t = ET.SubElement(tu, _q("target"), {"state": STATE[v["status"]], f"{{{XMLNS}}}lang": lang})
         _target(t, v, B, L)
-    _note(tu, xliff.nt(L, v["status"]), "target", "1")
-    if v.get("banner"): _note(tu, v["banner"], "target", "1")
-    _note(tu, xliff.nt(L, "change", t=xliff.change_summary(v)), "source", "2")
-    for f, r in xliff.ordered_findings(v):
-        _note(tu, xliff.finding_text(f, L, r), "target", "3" if r else "2")
-    model = [t for _, _, t, who, _ in v["numbers"] if who == "model"]
-    if model: _note(tu, xliff.nt(L, "model_nums", x=", ".join(model)), "target", "1")
-    _note(tu, xliff.nt(L, "prev_de", t=v["de_old"]), "source", "5")
-    _note(tu, xliff.nt(L, "prev_tgt", t=v["tgt_old"]), "target", "5")
-    _note(tu, xliff.product_note(v, L), "general", "5")
+    for nid, cat, ap, pr, text in xliff.unit_notes(v, prev=True):           # the same notes as XLIFF 2.1
+        _note(tu, text, {None: "general"}.get(ap, ap), pr, "gleichlaut-checks" if nid == "checks" else "gleichlaut")
     alt = ET.SubElement(tu, _q("alt-trans"), {"alttranstype": "previous-version", "origin": "SL previous version", "tool-id": "gleichlaut"})
     ET.SubElement(alt, _q("source"), {f"{{{XMLNS}}}lang": "de-CH"}).text = v["de_old"]
     ET.SubElement(alt, _q("target"), {f"{{{XMLNS}}}lang": lang}).text = v["tgt_old"]

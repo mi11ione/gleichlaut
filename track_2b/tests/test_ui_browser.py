@@ -1,6 +1,6 @@
 """The review page in a real browser (headless Chrome; skipped when no Chrome/Chromium is installed): the page script
-runs without error, the page lands on the Register audit tab (also with #audit), #drafts or a hash naming a draft opens
-the Drafts tab, the interface defaults to the browser language (else German), decisions import, the family action
+runs without error, the page lands on the Drafts tab (01, Apertus drafts and code checks) with the audit's headline
+beside it, #audit opens the Register audit tab, a hash naming a draft opens it under the same number, the interface defaults to the browser language (else German), decisions import, the family action
 accepts after an in-page confirmation, "start from the old text" replaces the editable draft, and the page's own XLIFF
 2.1 and 1.2 exports (with an accepted-edited and a sent-back decision) validate against the 2.1 core XSD + constraints
 and the 1.2 strict XSD.
@@ -54,12 +54,16 @@ def test_audit_tab_opens_with_hash_and_german_default():
     assert "Von Amtes wegen in der nächsten Publikation berichtigen" in s and ">GÄL<" not in s
 
 
-def test_landing_is_the_audit_tab_unless_drafts_is_asked_for():
+def test_landing_is_the_drafts_tab_and_audit_by_hash():
     C = _page()
-    s = _dom(C["p"], "", "fr-CH,fr")
-    assert re.search(r'id="t-audit"[^>]*aria-selected="true"', s) and "Audit du registre" in s
-    s = _dom(C["p"], "#drafts", "it-CH")
-    assert re.search(r'id="t-drafts"[^>]*aria-selected="true"', s) and "Bozze" in s and re.search(r'<tr class="cnt" data-pair="[^"]+" aria-selected="true"', s)
+    s = _dom(C["p"], "", "fr-CH,fr")                 # 01 Drafts (Apertus drafts, code checks) first; the audit's headline beside it
+    assert re.search(r'id="t-drafts"[^>]*aria-selected="true"', s) and "Brouillons" in s and "27 constats + 11 avis de terminologie" in s
+    assert "Apertus 70B" in s and "moins de corrections (optionnelle)" in s and "Exporter les décisions (JSON)" in s
+    s = _dom(C["p"], "#audit", "it-CH")
+    assert re.search(r'id="t-audit"[^>]*aria-selected="true"', s) and "Verifica del registro" in s
+    s = _dom(C["p"], "#wb013", "en")                 # one numbering: the address is the number
+    assert re.search(r'<tr class="cnt" data-pair="wb013" aria-selected="true"><td>.*?</td><td>wb013</td>', s) and "No. wb013" in s
+    assert "explanation (FR)" in s and "Check detail: all" in s
 
 
 def test_three_levels_family_accept_and_start_from_old_text():

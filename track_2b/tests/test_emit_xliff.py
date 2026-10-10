@@ -5,7 +5,7 @@ import os, re, sys, tempfile
 import xml.etree.ElementTree as ET
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src"))
 from gleichlaut import score
-from gleichlaut.emit import load, select, validate, xliff
+from gleichlaut.emit import explain, load, select, validate, xliff
 
 X = "{urn:oasis:names:tc:xliff:document:2.0}"
 _C = {}
@@ -42,11 +42,45 @@ def test_units_carry_verdict_draft_and_context():
             assert notes["verdict"].text == xliff.nt(L, v["status"])
             assert notes["de-old"].text == xliff.nt(L, "prev_de", t=v["de_old"]) and notes["tgt-old"].text == xliff.nt(L, "prev_tgt", t=v["tgt_old"])
             assert "complaint" not in notes and not any(n.get("category") == "gleichlaut:guard" for n in notes.values())
-            assert not re.search(r"\b(?:model|run|ready|flagged|Previous)\b", notes["verdict"].text + notes["product"].text)
+            assert not re.search(r"\b(?:model|run|ready|flagged|Previous)\b", notes["verdict"].text + notes["change"].text)
+            assert v["cud_id"] in notes["change"].text
             marks = [m for s in S for m in s.find(X + "target").iter(X + "mrk")]
             assert [m.text for m in marks] == [t for _, _, t, _, _ in v["numbers"]]
             assert all(m.get("translate") == "no" for m in marks if m.get("type") == "gleichlaut:code-number")
     assert seen == 10
+
+
+def test_at_most_three_plain_reasons_and_one_checks_note():
+    """Translator-facing notes: at most three reasons without internal codes; every finding is still in the unit (the
+    rest, and the raw guard output with its codes, in one note category gleichlaut:checks, priority 10)."""
+    meta, views = load("fresh166"); d = tempfile.mkdtemp(prefix="gl-xlf-all-"); V = {v["key"]: v for v in views}
+    code = re.compile(r"\b(?:r[èe]gle|regola) T\d|\bT[1-8]\b|\bG\d[a-z]?\b|\b(?:Lock|Slots):")
+    n_notes = []
+    for p in xliff.write(views, meta, d):
+        for u in ET.parse(p).getroot().iter(X + "unit"):
+            v = V[u.get("id")]; N = list(u.find(X + "notes")); n_notes.append(len(N))
+            reasons = [n for n in N if n.get("category") in ("gleichlaut:finding", "gleichlaut:divergence", "gleichlaut:model-numbers")]
+            checks = [n for n in N if n.get("category") == "gleichlaut:checks"]
+            assert len(reasons) <= 3 and len(checks) == (1 if any(f.get("detail") for f in v["findings"]) else 0)
+            assert all(not code.search(n.text) for n in N if n.get("category") != "gleichlaut:checks"), u.get("id")
+            R = xliff.reasons(v)
+            assert len([x for x in R if x["kind"] == "finding"]) == len(v["findings"])          # reworded, never dropped
+            assert [n.text for n in reasons] == [x["text"] for x in R[:3]]
+            if checks:
+                assert checks[0].get("priority") == "10" and all(x["text"] in checks[0].text for x in R[3:])
+                assert all(explain.clip(f["detail"], 220)[:60] in checks[0].text for f in v["findings"] if f.get("detail"))
+            assert [n.get("priority") for n in reasons] == ["3" if x["low"] else "1" for x in R[:3]]
+    assert max(n_notes) <= 8 and len(n_notes) == len(views)
+
+
+def test_deletion_matching_the_german_is_a_low_priority_question():
+    V = {v["key"]: v for v in load("fresh166")[1]}
+    v = V["wb004-fr"]; R = xliff.reasons(v)                  # German replaced "Nach 52 Wochen …"; the draft drops its French
+    x = next(r for r in R if r["gid"] == "g3")
+    assert x["low"] and x["text"].startswith("Suppression conforme à l'allemand\u00a0?") and "Nach 52 Wochen" in x["text"]
+    assert v["status"] == "flagged"                                                    # the verdict is untouched
+    v = V["wb008-fr"]                                        # German only inserts a sentence: a real loss stays an error
+    assert any(r["gid"] == "g3" and not r["low"] and r["text"].startswith("Le brouillon supprime davantage") for r in xliff.reasons(v))
 
 
 def test_sentence_segments_and_changed_marks():

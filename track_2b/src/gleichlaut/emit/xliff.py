@@ -13,10 +13,12 @@ Inline annotations (<mrk>, Annotations module of the core):
   source: type="gleichlaut:changed" marks the part of the new German the change inserted or rewrote (ids c1..).
   target: numbers code placed are type="gleichlaut:code-number" translate="no"; a number the model wrote itself is
           type="gleichlaut:model-number" and stays translatable (ids t1..).
-Unit <notes>, all in the target language (FR / IT): the verdict, a pre-existing problem of the old text, the German change,
-one plain sentence per guard finding (the ones a fixed rule marks as probably fine last, priority 3, with the rule; see
-emit/triage.py), numbers written by the model, the old German and old target text, product and limitation code. The raw
-guard output stays in the FHIR Provenance.
+Unit <notes>, all in the target language (FR / IT), see unit_notes(): the verdict; at most three reasons, the most
+actionable first, in plain wording without internal codes (a pre-existing problem of the old text, guard findings,
+numbers written by the model; the ones a fixed rule marks as probably fine last, priority 3, see emit/triage.py); product,
+limitation code and the German change; the old German and old target text; and one low-priority note (category
+gleichlaut:checks, priority 10) with the remaining reasons and the raw guard output with its codes. The raw guard output
+also stays in the FHIR Provenance.
 write(..., decisions=...): the reviewer's decisions from the review page (JSON export) applied to the same units: accepted
 drafts (as is or edited) -> state="reviewed" (or "final" with final=True), subState gleichlaut:accepted |
 gleichlaut:accepted-edited, target = the accepted text; sent back -> state="initial" subState="gleichlaut:sent-back".
@@ -65,7 +67,13 @@ NOTE = {
         "T6": "le changement allemand n'est qu'orthographique (umlaut, trait d'union, majuscule, ponctuation, terminaison)",
         "T7": "négation comptée comme un lecteur la compte (« nicht- » préfixe, « ne … pas » une seule fois) : le compte suit l'allemand",
         "T8": "mêmes valeurs ajoutées et retirées des deux côtés, seul le nombre d'occurrences diffère",
-        "product_nodate": "{product} ; limitation {code}"},
+        "product_nodate": "{product} ; limitation {code}",
+        "fine_plain": "probablement sans problème : {why}",
+        "del_de": "Suppression conforme à l'allemand ? L'allemand {verb} ici {u} ; le brouillon supprime {x}. À vérifier.",
+        "del_verb": ("retire", "remplace"),
+        "checks": "Détail des contrôles (pour référence ; codes internes de Gleichlaut)",
+        "checks_more": "{n} autre(s) point(s), non repris ci-dessus : {x}",
+        "checks_codes": "Sortie brute des contrôles : {x}"},
  "it": {"ready": "Pronta: tutti i controlli automatici superati. Verificata dal codice, non ancora da una persona: da rivedere.",
         "flagged": "Segnalata: un controllo automatico ha rilevato un problema (vedi le note). La destinazione è la bozza, da correggere.",
         "human": "Affidata a un traduttore: il tedesco è stato riscritto per oltre il 60%; nessuna bozza automatica.",
@@ -99,7 +107,13 @@ NOTE = {
         "T6": "la modifica tedesca è solo ortografica (umlaut, trattino, maiuscola, punteggiatura, desinenza)",
         "T7": "negazione contata come la conta un lettore («nicht-» prefisso, «ne … pas» una volta sola): il conteggio segue il tedesco",
         "T8": "stessi valori aggiunti e tolti da entrambe le parti, cambia solo il numero di occorrenze",
-        "product_nodate": "{product}; limitazione {code}"}}
+        "product_nodate": "{product}; limitazione {code}",
+        "fine_plain": "probabilmente in ordine: {why}",
+        "del_de": "Soppressione conforme al tedesco? Il tedesco qui {verb} {u}; la bozza sopprime {x}. Da verificare.",
+        "del_verb": ("toglie", "sostituisce"),
+        "checks": "Dettaglio dei controlli (per riferimento; codici interni di Gleichlaut)",
+        "checks_more": "{n} altro/i punto/i, non ripreso/i sopra: {x}",
+        "checks_codes": "Uscita grezza dei controlli: {x}"}}
 
 
 def nt(lang, k, **kw):
@@ -162,6 +176,86 @@ def ordered_findings(v):
     return [p for p in F if not p[1]] + [p for p in F if p[1]]
 
 
+# ------------------------------------------------------------------------------------------- translator-facing notes
+# A unit carries: the verdict; at most SHOW reasons, the most actionable first, in plain reviewer-language wording without
+# internal codes (rule ids, guard ids); the product and German change; the old German and old target text; and one
+# low-priority note (category gleichlaut:checks, priority 10) with the full machine detail: the reasons not shown above
+# and the raw guard output with its codes. Presentation only: every finding is still there, no verdict changes.
+SHOW = 3
+RANK = {"corr": 0, "slot": 1, "unknown": 1, "g2": 2, "g1": 3, "g5": 3, "g3": 4, "lock": 5, "g4": 6, "g6": 7, "g7": 8, "record": 9}
+
+
+def deleted_by_german(f, v):
+    """A 'removed more than the German' finding (G3c) next to German operations that each remove or replace at least three
+    words: -> (old German passage, replaced?) of the first one, else None. Wording only: such a finding is phrased as a
+    question ('deletion matching the German? check'), low priority; its triage status ('to check') and the verdict stay."""
+    import re
+    d = f.get("detail") or ""
+    if f.get("gid") != "g3" or not d.startswith("G3c"): return None
+    ops = triage.PAIR.findall(d)
+    if not ops or not all(len(re.findall(r"\w+", u)) >= 3 for u, _ in ops): return None
+    from . import explain
+    u, w = ops[0]
+    U, _ = explain._de_ops(v["de_old"], v["de_new"]).get(f"«{u}» -> «{w}»", (explain.detok(u), None))
+    return U, bool(w.strip())
+
+
+def reasons(v, old=True):
+    """-> [dict(kind=divergence|finding|model-numbers, text, low, gid, rule)], most actionable first: a pre-existing
+    divergence of the old text and the correction notice (old=True; the review page shows those in its own notice),
+    findings to check, numbers the model wrote, then low-priority ones (a triage rule says probably fine, a deletion that
+    may match the German's, pipeline status). Text in the draft's language, no internal codes."""
+    import re
+    from . import explain
+    L = v["lang"]; R = []
+    if old and v.get("banner"): R.append(dict(kind="divergence", text=v["banner"], low=False, rank=-1, gid="div", rule=None))
+    for f, r in zip(v.get("findings", []), triage.triage(v)):
+        if f["gid"] == "corr" and not old: continue
+        base = f["text"] + (f" ({explain.corr_note(L)})" if f["corrects"] and f["gid"] != "corr" else "")
+        dl = None if r else deleted_by_german(f, v)
+        if r and L in NOTE: text, low = f"{base} ({nt(L, 'fine_plain', why=NOTE[L][r])})", True
+        elif dl and L in NOTE:
+            x = re.split(r"\s?:\s", f["text"], maxsplit=1)[-1]
+            text = nt(L, "del_de", verb=NOTE[L]["del_verb"][dl[1]], u=explain.q(L, explain.clip(dl[0], 90)), x=x); low = True
+        else: text, low = base, f["gid"] == "record"
+        R.append(dict(kind="finding", text=text, low=low, rank=RANK.get(f["gid"], 8), gid=f["gid"], rule=r))
+    model = [t for _, _, t, who, _ in v.get("numbers", []) if who == "model"]
+    if model: R.append(dict(kind="model-numbers", text=nt(L, "model_nums", x=", ".join(model)), low=False, rank=1.5, gid="model", rule=None))
+    return sorted(R, key=lambda x: (x["low"], x["rank"]))
+
+
+def checks_note(v, R=None):
+    """The one low-priority note with the full machine detail (None when the draft has no finding)."""
+    from . import explain
+    F = [(f, r) for f, r in zip(v.get("findings", []), triage.triage(v)) if f.get("detail")]
+    if not F: return None
+    L = v["lang"]; R = reasons(v) if R is None else R; rest = R[SHOW:]
+    parts = [nt(L, "checks")]
+    if rest: parts.append(nt(L, "checks_more", n=len(rest), x=" | ".join(x["text"] for x in rest)))
+    raw = " · ".join(explain.clip(f["detail"], 220) + (f" [{r}]" if r else "") for f, r in F)      # verbatim (no French spacing)
+    parts.append(nt(L, "checks_codes", x="").rstrip() + " " + raw)
+    return " — ".join(parts)
+
+
+def unit_notes(v, prev=True):
+    """-> [[id, category, appliesTo, priority, text]] of one unit, in order (prev=False: without the old German / old
+    target notes, which the review page writes from its own diff)."""
+    L = v["lang"]; R = reasons(v)
+    N = [["verdict", "gleichlaut:verdict", "target", "1", nt(L, v["status"])]]
+    k = 0
+    for x in R[:SHOW]:
+        if x["kind"] == "finding": k += 1; nid, cat = f"finding-{k}", "gleichlaut:finding"
+        else: nid, cat = x["kind"], f"gleichlaut:{x['kind']}"
+        N.append([nid, cat, "target", "3" if x["low"] else "1", x["text"]])
+    N.append(["change", "gleichlaut:change", "source", "2", product_note(v, L) + ". " + nt(L, "change", t=change_summary(v))])
+    if prev:
+        N.append(["de-old", "context:previous-source", "source", "5", nt(L, "prev_de", t=v["de_old"])])
+        N.append(["tgt-old", "context:previous-target", "target", "5", nt(L, "prev_tgt", t=v["tgt_old"])])
+    c = checks_note(v, R)
+    if c: N.append(["checks", "gleichlaut:checks", None, "10", c])
+    return N
+
+
 def change_summary(v, n=320):
     """Every change of the German as 'old → new' / '+ new' / '− old', joined by ' | ' (cut at n characters)."""
     import re
@@ -195,16 +289,8 @@ def unit(file_el, v, dec=None, final=False):
     L = v["lang"]
     u = ET.SubElement(file_el, _q("unit"), {"id": v["key"], "name": v["cud_id"]})
     notes = ET.SubElement(u, _q("notes"))
-    _note(notes, nt(L, v["status"]), "gleichlaut:verdict", "verdict", "target", "1")
-    if v.get("banner"): _note(notes, v["banner"], "gleichlaut:divergence", "divergence", "target", "1")
-    _note(notes, nt(L, "change", t=change_summary(v)), "gleichlaut:change", "change", "source", "2")
-    for i, (f, r) in enumerate(ordered_findings(v), 1):
-        _note(notes, finding_text(f, L, r), "gleichlaut:finding", f"finding-{i}", "target", "3" if r else "1")
-    model = [t for _, _, t, who, _ in v["numbers"] if who == "model"]
-    if model: _note(notes, nt(L, "model_nums", x=", ".join(model)), "gleichlaut:model-numbers", "model-numbers", "target", "1")
-    _note(notes, nt(L, "prev_de", t=v["de_old"]), "context:previous-source", "de-old", "source", "5")
-    _note(notes, nt(L, "prev_tgt", t=v["tgt_old"]), "context:previous-target", "tgt-old", "target", "5")
-    _note(notes, product_note(v, L), "context:product", "product", None, "5")
+    for nid, cat, ap, pr, text in unit_notes(v, prev=True):
+        _note(notes, text, cat, nid, ap, pr)
     state, sub = STATE[v["status"]]; text = None
     d = (dec or {}).get("decision")
     if d in ("accept", "accept-edited") and (v["draft"] or (dec.get("text") or "").strip()):

@@ -44,11 +44,14 @@ def test_works_with_the_round_two_shape():
     assert R["X.01fr"]["kind"] == "number" and R["X.01fr"]["snip"]["de"][1] == ["acht Wochen", 2]
 
 
-def test_page_has_both_tabs_audit_first():
-    p = os.path.join(tempfile.mkdtemp(prefix="gl-ui-a-"), "index.html"); build.build(out=p)
+def test_page_has_both_tabs_drafts_first():
+    p = os.path.join(tempfile.mkdtemp(prefix="gl-ui-a-"), "index.html"); _, D = build.build(out=p)
     s = open(p, encoding="utf-8").read()
-    assert s.index('id="t-audit"') < s.index('id="t-drafts"') and 'location.hash.slice(1)' in s and 'h==="audit"' in s
-    assert 'var TAB=AU?"audit":"drafts"' in s and 'h==="drafts"' in s
+    assert s.index('id="t-drafts"') < s.index('id="t-audit"') and 'location.hash.slice(1)' in s and 'h==="audit"' in s
+    assert 'var TAB="drafts"' in s and 'h==="drafts"' in s
+    m = D["audit"]["meta"]                                 # the README's headline: 27 findings + 11 terminology notices
+    assert (m["main"], m["term"]) == (27, 11) and m["main"] + m["term"] == len(D["audit"]["rows"]) and (m["main_real"], m["term_real"]) == (16, 8)
+    assert D["meta"]["lane"] == "70b" and "Model calls" not in s.split("var TX3=")[1]
     for k in ('<option value="de">DE</option>', 'return "de"}', "Ready means checked by code, not by a person.",
               "Bereit heisst: vom Code geprüft, nicht von einer Person.", 'id="imp-file"', "data-copy", "gleichlaut:changed"):
         assert k in s, k

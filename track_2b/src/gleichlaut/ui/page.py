@@ -6,16 +6,20 @@ HEAD = r"""<title>Gleichlaut Review</title>
 __FONTS__
 /* LAYOUT. An engineering drawing sheet / federal gazette hybrid. Page (paper) with one framed sheet (max-width 1320px,
    1px ink frame, registration marks at the four corners). 1 header = a title block: a ruled grid of small cells (mono
-   9px labels: project, drawing, sheet, rev, date, freeze, model, run, checked by) with "Gleichlaut" set large in Archivo
-   condensed; two text tabs (Register audit | Drawings); a two-column key-value block for the active tab.
-   Register audit tab: lead, filters, one ruled table row per audit finding (drawing-grid column letters A-H above the
-   columns, row numbers in the margin; DE | FR | IT excerpts side by side, conflicting values boxed in signal orange,
-   the odd-one-out language with an orange bar, two decision columns + note), export row. Below 900px each audit row
-   becomes a labelled block.
-   2 work area: register (left, 5fr: filters, sticky-head table with column letters and margin row numbers, export
-   row) | case (right, 7fr, a decorative tick ruler along its left edge: §1 German change, §2 Drafts FR|IT, §3 Checks
-   ledger, §4 Decision). Below 900px the register sits above the case; no horizontal page scroll at 390px. 3 footer:
-   provenance + legend of the marks. Print: A4, register hidden, one case per page.
+   9px labels: project, drawing, sheet, rev, date, lane, model, run, checked by) with "Gleichlaut" set large in Archivo
+   condensed, the decisions export and its one-line note; the two views as one ruled two-cell band that is also the tab
+   list (01 Drafts: Apertus drafts, code checks | 02 Register audit: code only), each with its headline figure; a
+   two-column key-value block for the active view.
+   Register audit tab: lead, filters, a compact legend of the marks, one ruled table row per audit finding (drawing-grid
+   column letters A-H above the columns; the finding's own number N01/E01/L01/T01 in column A; DE | FR | IT excerpts side
+   by side, conflicting values boxed in signal orange, the odd-one-out language with an orange bar, two decision columns +
+   note), export row. Below 900px each audit row becomes a labelled block.
+   2 work area: register (left, 5fr: filters, legend of the marks, sticky-head table with column letters, numbered by the
+   change's address wbNNN, export row) | case (right, 7fr, a decorative tick ruler along its left edge: §1 German change,
+   §2 Drafts FR|IT with a legend of the number marks, §3 Checks: at most three plain reasons per draft in the reviewer's
+   language, labelled "explanation (FR/IT)", the full checks ledger collapsed below, §4 Decision). Below 900px the
+   register sits above the case and the band stacks; no horizontal page scroll from 320px up. 3 footer: provenance +
+   legend of the marks and keys. Print: A4, register hidden, one case per page.
    Type: Public Sans (texts), Archivo condensed (headings, big figures), Fragment Mono (metadata, labels, tables,
    buttons). Colour: ink on a cool grey-green paper; ONE signal colour, international orange, for flags, failures,
    "to check", divergences and the keyboard focus; ready stays ink. Language tags are small inverted mono boxes.
@@ -28,7 +32,7 @@ __FONTS__
 :root[data-theme="dark"]{--paper:#0f1110;--sheet:#151816;--ink:#e8eae4;--ink2:#9ba096;--hair:#353a36;--sig:#ff6a26;--sig-ink:#0f1110;color-scheme:dark}
 *{box-sizing:border-box;border-radius:0}
 html{-webkit-text-size-adjust:100%;font-synthesis:none}
-body{margin:0;background:var(--paper);color:var(--ink);font:400 13px/1.5 var(--mono);font-variant-numeric:tabular-nums;padding:28px 24px 40px}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 13px/1.5 var(--mono);font-variant-numeric:tabular-nums;padding:28px 24px 40px;overflow-wrap:break-word}
 button,select,input,textarea{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--sig);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
@@ -45,24 +49,35 @@ button,select,input,textarea{font:inherit;color:inherit}
 .hd{padding-block:16px 0}
 /* title block: a ruled grid of cells, each a 9px mono label over its value */
 .tblock{display:grid;grid-template-columns:minmax(220px,2.2fr) repeat(4,minmax(0,1fr));border:1px solid var(--ink);margin-bottom:0}
-.tblock>div{border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:4px 8px 5px;min-width:0;overflow-wrap:anywhere}
+.tblock>div{border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:4px 8px 5px;min-width:0;word-break:break-word;overflow-wrap:anywhere}
 .tblock>div:nth-child(5),.tblock>div:nth-child(9){border-right:0}
 .tblock .lbl{display:block;font:400 9px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--ink2)}
 .tblock .val{display:block;font:400 12px/1.35 var(--mono)}
+.tblock .val small{display:block;font-size:11px;color:var(--ink2)}
 .tblock .tb-name{grid-row:span 3;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--ink);border-bottom:0;padding:6px 10px 8px}
 .tblock .tb-tools{grid-column:2/-1;display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;justify-content:flex-end;border-bottom:0;color:var(--ink2)}
+.tblock .tb-tools .where{flex-basis:100%;text-align:right;font-size:11px;line-height:1.35}
+.tblock .tb-tools .box{padding:1px 8px}
 .hrow{display:flex;flex-wrap:wrap;gap:6px 24px;align-items:flex-end;justify-content:space-between}
 h1{font:600 46px/0.95 var(--disp);font-stretch:75%;margin:2px 0 0;letter-spacing:-.015em}
 .sub{margin:4px 0 0;color:var(--ink2);font-size:11px}
 .tools{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;color:var(--ink2)}
 .tools b{color:var(--ink);font-weight:400}
-.tabs{display:flex;flex-wrap:wrap;gap:0 28px;margin-top:14px}
-.tab{background:none;border:0;border-bottom:3px solid transparent;padding:8px 0 5px;font:400 12px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);cursor:pointer}
-.tab:hover{color:var(--ink)}
-.tab[aria-selected=true]{color:var(--ink);border-bottom-color:var(--ink)}
-.tab .c{color:var(--ink2);margin-left:6px}.tab .c.r{color:var(--ink);box-shadow:inset 0 -2px 0 var(--sig)}
+/* the two views as one system: 01 Apertus drafts + code checks | 02 code audits the register; each cell is a tab */
+.tabs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);margin-top:10px;border:1px solid var(--ink)}
+.tab{display:flex;flex-direction:column;gap:3px;min-width:0;text-align:left;background:none;border:0;border-top:3px solid transparent;padding:7px 12px 10px;color:var(--ink2);cursor:pointer}
+.tab+.tab{border-left:1px solid var(--ink)}
+.tab:hover .th{color:var(--ink)}
+.tab[aria-selected=true]{border-top-color:var(--ink);color:var(--ink)}
+.tab .th{font:400 11px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink2)}
+.tab .th b{font-weight:400;color:var(--ink);margin-right:8px}
+.tab[aria-selected=true] .th{color:var(--ink)}
+.tab .tf{font:600 22px/1.05 var(--disp);font-stretch:75%;color:var(--ink);overflow-wrap:anywhere}
+.tab .tt{font:400 13px/1.4 var(--sans);color:var(--ink2);max-width:62ch}
+.tab .go{font:400 11px/1.3 var(--mono);color:var(--ink);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.tab[aria-selected=true] .go{display:none}
 .kv{display:grid;grid-template-columns:1fr 1fr;gap:0 32px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin-top:0;padding-block:8px}
-.kv .big{font:600 22px/1 var(--disp);font-stretch:75%;color:var(--ink)}.kv .big::before{content:"▲ ";color:var(--sig);font-size:13px;vertical-align:2px}
+.kv .big{font:600 22px/1 var(--disp);font-stretch:75%;color:var(--ink)}
 .kv dl{margin:0;display:grid;grid-template-columns:minmax(120px,max-content) 1fr;gap:2px 16px;align-content:start}
 .kv dt{color:var(--ink2)}.kv dd{margin:0;overflow-wrap:anywhere}
 .kv .pass{font:600 16px/1 var(--disp);font-stretch:75%}.kv .fail{color:var(--sig)}
@@ -88,7 +103,7 @@ th{font:400 11px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em;t
 td{padding:5px 8px;border-bottom:1px solid var(--hair);vertical-align:top}
 #reg{table-layout:fixed;min-width:420px}
 #reg thead th{position:sticky;top:0;background:var(--sheet);z-index:1}#reg thead tr.grid th{top:0}#reg thead tr+tr th{top:15px}
-#reg col.c-mark{width:84px}#reg col.c-no{width:46px}#reg col.c-prod{width:34%}
+#reg col.c-mark{width:84px}#reg col.c-no{width:62px}#reg col.c-prod{width:34%}
 #reg td{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
 #reg td.chg{font:400 14px/1.45 var(--sans)}
 #reg td.prd .pc{display:block;font-size:11px;color:var(--ink2);overflow:hidden;text-overflow:ellipsis}
@@ -112,6 +127,13 @@ tr.grid th+th{border-left:1px solid var(--hair)}
 .export{display:flex;flex-wrap:wrap;gap:8px;padding:10px 0 12px;border-top:1px solid var(--rule)}
 .export .msg{color:var(--ink2);flex-basis:100%}
 .export .where{color:var(--ink2);flex-basis:100%;font-size:12px}
+/* compact legends of the marks, next to what they mark */
+.key{margin:6px 0 4px;color:var(--ink2);font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+.key>span{margin-right:12px}.key>span>.mk,.key>span>.lt,.key>span>.n,.key>span>.v1,.key>span>.v2{white-space:nowrap}
+.key .mk{min-width:1.2em}.key .n{font-size:11px}
+.key .v2{border:1px solid var(--sig);padding:0 2px;font-weight:600;color:var(--ink)}.key .v1{border-bottom:1px solid var(--ink2);color:var(--ink)}
+.key .bar{display:inline-block;width:3px;height:1em;background:var(--sig);vertical-align:-2px;margin-right:4px}
+.xl{font:400 11px/1.3 var(--mono);color:var(--ink2);letter-spacing:.04em}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 #copybox{width:100%;height:90px;font:12px/1.4 var(--mono);border:1px solid var(--hair);background:var(--sheet)}
 /* case */
@@ -171,6 +193,16 @@ del{margin-right:.2em}
 .ledger details.pf{color:var(--ink);font-size:inherit;margin-top:4px;border-top:1px dotted var(--hair);padding-top:3px}
 .ledger details.pf summary{font:400 12px/1.4 var(--mono);color:var(--ink2)}
 .ledger details.pf p{color:var(--ink2)}
+/* per-draft explanation: at most three reasons, plain wording; the full ledger collapsed below */
+.why{margin-bottom:14px}.why+.why{border-top:1px solid var(--hair);padding-top:10px}
+.reasons{margin:4px 0 6px;padding-left:1.6em;font:400 15px/1.45 var(--sans)}
+.reasons li{padding-left:2px}.reasons li+li{margin-top:4px}
+.reasons li.low{color:var(--ink2)}
+.reasons li::marker{font:400 12px var(--mono);color:var(--ink2)}
+.why .ok{font:400 15px/1.45 var(--sans);margin:4px 0 6px}
+.why .more{color:var(--ink2);margin:0 0 4px;font-size:12px}
+.why details.chk>summary{cursor:pointer;color:var(--ink2);font-size:12px;padding:3px 0}
+.why details.chk[open]>summary{margin-bottom:6px}
 .ledger caption .tri{font-weight:400;color:var(--ink2);margin-left:8px}.ledger caption .tri b{color:var(--ink);font-weight:400;box-shadow:inset 0 -2px 0 var(--sig)}
 .decs{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
 .decs.one{grid-template-columns:1fr}
@@ -232,9 +264,11 @@ footer p{margin:2px 0;overflow-wrap:anywhere}
  .kv dl{grid-template-columns:minmax(96px,44%) minmax(0,1fr)}
  #aud td[data-l]::before{content:attr(data-l);display:block;font:400 11px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink2)}
  .work{grid-template-columns:minmax(0,1fr)}
+ .tabs{grid-template-columns:minmax(0,1fr)}.tab+.tab{border-left:0;border-top:1px solid var(--ink)}
+ .tblock .tb-tools .where{text-align:left}
  .register{position:static;max-height:none;border-right:0;padding-right:0;border-bottom:1px solid var(--rule)}
  .reg-wrap{max-height:46vh}
- #reg{min-width:0}#reg col.c-mark{width:70px}#reg col.c-no{width:46px}
+ #reg{min-width:0}#reg col.c-mark{width:58px}#reg col.c-no{width:60px}#reg td,#reg th{padding-inline:6px}
  .kv{grid-template-columns:1fr}
  .drafts,.decs{grid-template-columns:1fr}
  .dr{padding-right:0}.dr+.dr{border-left:0;border-top:1px solid var(--hair);padding:12px 0 0;margin-top:12px}
@@ -248,6 +282,9 @@ footer p{margin:2px 0;overflow-wrap:anywhere}
  #aud tr.grid{display:none}
  .case{padding-left:16px}.case::before{width:8px}
 }
+@media (max-width:600px){
+ .tab .tt{display:none}.tab .tf{font-size:19px}
+}
 @media (max-width:480px){
  body{padding:16px 10px 28px}
  .sheet{padding-inline:12px}
@@ -255,7 +292,8 @@ footer p{margin:2px 0;overflow-wrap:anywhere}
 @media print{
  @page{size:A4;margin:14mm}
  body{border-top:0;font-size:10pt;background:#fff;color:#000}
- .register,.tools,.tabs,.save,.export,.edmeta,.btns,.dec select,.dec textarea,#case{display:none!important}
+ .register,.tools,.tabs,.save,.export,.edmeta,.btns,.dec select,.dec textarea,#case,.tb-tools .box,.tb-tools .where{display:none!important}
+ .why details.chk{display:none}
  #aud select,#aud textarea{border:0;padding:0}
  .work{display:block}
  #print{display:block}
@@ -273,25 +311,26 @@ BODY = r"""<div class="sheet">
   <div><span class="lbl" data-tb="sheet"></span><span class="val" id="tb-sheet"></span></div>
   <div><span class="lbl" data-tb="rev"></span><span class="val" id="tb-rev"></span></div>
   <div><span class="lbl" data-tb="date"></span><span class="val" id="tb-date"></span></div>
-  <div><span class="lbl" data-tb="freeze"></span><span class="val" id="tb-freeze"></span></div>
+  <div><span class="lbl" data-tb="lane"></span><span class="val" id="tb-lane"></span></div>
   <div><span class="lbl" data-tb="model"></span><span class="val" id="tb-model"></span></div>
   <div><span class="lbl" data-tb="run"></span><span class="val" id="tb-run"></span></div>
   <div><span class="lbl" data-tb="checked"></span><span class="val" id="tb-checked"></span></div>
-  <div class="tb-tools"><span id="progress"></span><button class="tb" id="theme" type="button"></button>
-   <label><span id="l-ui"></span> <select id="ui-lang" aria-label="Interface language"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option></select></label></div>
+  <div class="tb-tools"><span id="progress"></span><button class="box primary" id="x-dec" type="button"></button><button class="tb" id="theme" type="button"></button>
+   <label><span id="l-ui"></span> <select id="ui-lang" aria-label="Interface language"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option></select></label><span class="where" id="where"></span></div>
  </div>
- <nav class="tabs" role="tablist" aria-label="Views"><button class="tab" role="tab" type="button" id="t-audit" aria-controls="p-audit"></button><button class="tab" role="tab" type="button" id="t-drafts" aria-controls="p-drafts"></button></nav>
+ <nav class="tabs" role="tablist" aria-label="Views"><button class="tab" role="tab" type="button" id="t-drafts" aria-controls="p-drafts"></button><button class="tab" role="tab" type="button" id="t-audit" aria-controls="p-audit"></button></nav>
  <div class="kv"><dl id="kv-l"></dl><dl id="kv-r"></dl></div>
 </header>
 <section class="audit" id="p-audit" role="tabpanel" aria-labelledby="t-audit" hidden>
  <p class="lead" id="a-lead"></p>
  <div class="afl"><div class="fl" id="a-show"></div><div class="fl" id="a-lang"></div><div class="fl" id="a-kind"></div>
   <div class="fl"><label class="k" for="rev" id="l-rev"></label><input type="text" id="rev" autocomplete="name"></div></div>
- <div class="tbl rnw"><table id="aud" class="rn"><colgroup><col class="a-no"><col class="a-lim"><col class="a-kind"><col><col><col><col class="a-dec"><col class="a-act"></colgroup>
+ <p class="key" id="aud-key"></p>
+ <div class="tbl"><table id="aud"><colgroup><col class="a-no"><col class="a-lim"><col class="a-kind"><col><col><col><col class="a-dec"><col class="a-act"></colgroup>
   <thead><tr class="grid" aria-hidden="true"><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th></tr><tr><th id="ah-no"></th><th id="ah-lim"></th><th id="ah-kind"></th><th><span class="lt">DE</span></th><th><span class="lt">FR</span></th><th><span class="lt">IT</span></th><th id="ah-right"></th><th id="ah-act"></th></tr></thead><tbody></tbody></table></div>
  <div class="count" id="a-shown"></div>
- <div class="export"><button class="box" id="a-json" type="button"></button><button class="box" id="a-csv" type="button"></button><button class="box" id="a-imp" type="button"></button>
-  <span class="msg" id="a-msg" aria-live="polite"></span><span class="where" id="a-where"></span></div>
+ <div class="export"><button class="box" id="a-csv" type="button"></button><button class="box" id="a-imp" type="button"></button>
+  <span class="msg" id="a-msg" aria-live="polite"></span></div>
 </section>
 <div class="work" id="p-drafts" role="tabpanel" aria-labelledby="t-drafts">
  <section class="register" id="register" aria-label="Register">
@@ -301,11 +340,12 @@ BODY = r"""<div class="sheet">
    <div class="fl"><select id="f-fam" aria-label="Family"></select><input type="search" id="f-q" aria-label="Search product or limitation code"></div>
    <div class="fambar" id="fam-bulk" hidden></div>
   </div>
-  <div class="tbl reg-wrap rnw" id="reg-wrap"><table id="reg" class="rn"><colgroup><col class="c-mark"><col class="c-no"><col class="c-prod"><col></colgroup>
+  <p class="key" id="reg-key"></p>
+  <div class="tbl reg-wrap" id="reg-wrap"><table id="reg"><colgroup><col class="c-mark"><col class="c-no"><col class="c-prod"><col></colgroup>
    <thead><tr class="grid" aria-hidden="true"><th>A</th><th>B</th><th>C</th><th>D</th></tr><tr><th id="h-mark"></th><th id="h-no"></th><th id="h-prod"></th><th id="h-chg"></th></tr></thead><tbody></tbody></table></div>
   <div class="count" id="shown"></div>
-  <div class="export"><button class="box" id="x-xlf" type="button"></button><button class="box" id="x-xlf12" type="button"></button><button class="box" id="x-json" type="button"></button><button class="box" id="x-copy" type="button"></button><button class="box" id="x-imp" type="button"></button>
-   <span class="msg" id="x-msg" aria-live="polite"></span><span class="where" id="x-where"></span><textarea id="copybox" hidden readonly aria-label="Decisions JSON"></textarea></div>
+  <div class="export"><button class="box" id="x-xlf" type="button"></button><button class="box" id="x-xlf12" type="button"></button><button class="box" id="x-copy" type="button"></button><button class="box" id="x-imp" type="button"></button>
+   <span class="msg" id="x-msg" aria-live="polite"></span><textarea id="copybox" hidden readonly aria-label="Decisions JSON"></textarea></div>
  </section>
  <section class="case" id="case" tabindex="-1" aria-label="Case"></section>
 </div>
@@ -566,6 +606,65 @@ it:{tb:{project:"Progetto",drawing:"Disegno",sheet:"Foglio",rev:"Rev.",date:"Dat
  kinds:{number:"numero",unit:"unità",language:"lingua",editorial:"redazionale",terminology:"terminologia"},termOld:"vecchio",termNew:"corretto dall'UFSP in",termWhere:"già corretto in: {x}",
  aLegend:"Segni: K divergenza nota, confermata nei testi · D decisa · riquadro rosso = valore in contraddizione · sottolineato = altro numero · barra rossa = la lingua che differisce dalle altre due (non per forza quella sbagliata). Decisioni: quale lingua indica la condizione giusta, e la misura (correggere d'ufficio, sollevare con il titolare nel riesame triennale, servizio linguistico, nessuna, non chiaro). La domanda di modifica della limitazione (GÄL) è presentata dal titolare, non dall'UFSP. Le decisioni valgono per rilievo (limitazione, tipo, lingua, valori) e restano alla verifica successiva."}};
 Object.keys(TX2).forEach(function(L){Object.keys(TX2[L]).forEach(function(k){TX[L][k]=TX2[L][k]})});
+// round-4 strings: the two views as one system, lane, explanation language, legends, one decisions export, 27 + 11
+var TX3={
+de:{sub:"Prüfregister · Apertus entwirft, Code prüft",divergent:"Entwürfe, deren bisheriger Text schon ein Problem hat",
+ tb:{project:"Projekt",drawing:"Zeichnung",sheet:"Blatt",rev:"Rev.",date:"Datum (SL-Stand)",lane:"Spur",model:"Modell",run:"Lauf",checked:"Geprüft von",checkedV:"eingefrorene Prüfungen"},
+ lane70:"weniger Korrekturen (optional): 70B, zertifizierter Endpunkt",lane8:"Standard: 8B auf CPU, ohne Netz",laneDef:"Standardspur: 8B auf CPU, ohne Netz",drawingBy:"{l}, {n} Entwürfe von Apertus {m}",
+ t1h:"Entwürfe",t1s:"Apertus entwirft, Code prüft",t1f:"{n} Entwürfe · {r} bereit · {f} markiert",
+ t1t:"Apertus {m} schreibt für {c} deutsche Änderungen nur die Formulierung des französischen und italienischen Texts um; jede Zahl setzt der Code ein. Eingefrorene Prüfungen markieren jeden Entwurf als bereit oder markiert und sagen warum, in der Sprache der prüfenden Person.",
+ t2h:"Registerprüfung",t2s:"nur Code, kein Modell",t2f:"{a} Befunde + {t} Terminologie-Hinweise",
+ t2t:"Der Code liest alle {n} Limitationen auf DE/FR/IT (Stand {d}) und sucht Stellen, an denen die Sprachen schon heute auseinandergehen: {k} von {o} bekannten Abweichungen gefunden.",go:"öffnen →",
+ aFindingsV:"{a} ({b}) + {t} Terminologie-Hinweise",aConf:"Bei Blindprüfung bestätigt",aConfV:"{r} von {a} Befunden ({k} bekannte + {x} neue) · {tr} von {t} Hinweisen",
+ aTermHead:"Terminologie-Hinweise: vom BAG anderswo korrigierter Begriff ({n})",aAllN:"Alle ({a} + {t})",progA:"{x}/{a} + {y}/{t} entschieden",
+ expl:"Erläuterung",allPass:"Alle Prüfungen bestanden.",moreN:"+ {n} weitere im Prüfdetail",chkDetail:"Prüfdetail: alle {n} Prüfungen, Rohausgabe mit internen Codes",
+ exportDec:"Entscheide exportieren (JSON)",where:"Entscheide bleiben in diesem Browser, bis Sie sie exportieren. Massgeblich sind das ePL und der XLIFF-Rücklauf, nicht diese Seite.",
+ keyReg:[["✓","bereit"],["~","markiert, alle Befunde wahrscheinlich in Ordnung"],["▲","markiert, zu prüfen"],["≠","bisheriger Text hat schon ein Problem"],["h","an Übersetzung übergeben"],["AER","übernommen / bearbeitet / zurückgewiesen"]],
+ keyNum:["vom Code aus dem Deutschen gesetzte Zahl (Platzhalter A)","orange umrahmt: Zahl vom Modell geschrieben, prüfen","neu","entfernt"],
+ keyAud:[["K","bekannte Abweichung"],["D","entschieden"],["v2","widersprüchlicher Wert"],["v1","weitere Zahl"],["bar","Sprache, die von den beiden anderen abweicht"]]},
+en:{sub:"Review register · Apertus drafts, code checks",divergent:"Drafts whose old text already has a problem",
+ tb:{project:"Project",drawing:"Drawing",sheet:"Sheet",rev:"Rev",date:"Date (SL snapshot)",lane:"Lane",model:"Model",run:"Run",checked:"Checked by",checkedV:"frozen checks"},
+ lane70:"fewer edits (optional): 70B, certified endpoint",lane8:"default: 8B on CPU, air-gapped",laneDef:"default lane: 8B on CPU, air-gapped",drawingBy:"{l}, {n} drafts by Apertus {m}",
+ t1h:"Drafts",t1s:"Apertus drafts, code checks",t1f:"{n} drafts · {r} ready · {f} flagged",
+ t1t:"For {c} German changes, Apertus {m} rewrites only the wording of the French and Italian; code writes every number. Frozen checks mark each draft ready or flagged and say why, in the reviewer's language.",
+ t2h:"Register audit",t2s:"code only, no model",t2f:"{a} findings + {t} terminology notices",
+ t2t:"Code reads all {n} limitations in DE/FR/IT (feed of {d}) for places where the languages already disagree: {k} of {o} known divergences found.",go:"open →",
+ aFindingsV:"{a} ({b}) + {t} terminology notices",aConf:"Confirmed on blind check",aConfV:"{r} of {a} findings ({k} known + {x} new) · {tr} of {t} notices",
+ aTermHead:"Terminology notices: a term BAG corrected elsewhere ({n})",aAllN:"All ({a} + {t})",progA:"{x}/{a} + {y}/{t} decided",
+ expl:"explanation",allPass:"Every check passed.",moreN:"+ {n} more in the check detail",chkDetail:"Check detail: all {n} checks, raw output with internal codes",
+ exportDec:"Export decisions (JSON)",where:"Decisions stay in this browser until you export them. The system of record is ePL and the XLIFF round trip, not this page.",
+ keyReg:[["✓","ready"],["~","flagged, all findings probably fine"],["▲","flagged, to check"],["≠","old text already has a problem"],["h","routed to a translator"],["AER","accepted / edited / sent back"]],
+ keyNum:["number placed by code from the German (slot A)","orange frame: number the model wrote, check it","new","removed"],
+ keyAud:[["K","known divergence"],["D","decided"],["v2","conflicting value"],["v1","other number"],["bar","language that differs from the other two"]]},
+fr:{sub:"Registre de révision · Apertus rédige, le code contrôle",divergent:"Brouillons dont l'ancien texte a déjà un problème",
+ tb:{project:"Projet",drawing:"Dessin",sheet:"Feuille",rev:"Rév.",date:"Date (état LS)",lane:"Voie",model:"Modèle",run:"Série",checked:"Contrôlé par",checkedV:"contrôles gelés"},
+ lane70:"moins de corrections (optionnelle) : 70B, point d'accès certifié",lane8:"par défaut : 8B sur CPU, hors réseau",laneDef:"voie par défaut : 8B sur CPU, hors réseau",drawingBy:"{l}, {n} brouillons d'Apertus {m}",
+ t1h:"Brouillons",t1s:"Apertus rédige, le code contrôle",t1f:"{n} brouillons · {r} prêts · {f} signalés",
+ t1t:"Pour {c} changements allemands, Apertus {m} ne réécrit que la formulation française et italienne ; le code écrit chaque nombre. Des contrôles gelés marquent chaque brouillon prêt ou signalé et disent pourquoi, dans la langue du réviseur.",
+ t2h:"Audit du registre",t2s:"code seul, sans modèle",t2f:"{a} constats + {t} avis de terminologie",
+ t2t:"Le code lit les {n} limitations en DE/FR/IT (état du {d}) et cherche les endroits où les langues divergent déjà : {k} des {o} divergences connues trouvées.",go:"ouvrir →",
+ aFindingsV:"{a} ({b}) + {t} avis de terminologie",aConf:"Confirmés au contrôle à l'aveugle",aConfV:"{r} des {a} constats ({k} connus + {x} nouveaux) · {tr} des {t} avis",
+ aTermHead:"Avis de terminologie : terme corrigé ailleurs par l'OFSP ({n})",aAllN:"Tous ({a} + {t})",progA:"{x}/{a} + {y}/{t} décidés",
+ expl:"explication",allPass:"Tous les contrôles sont passés.",moreN:"+ {n} autre(s) dans le détail des contrôles",chkDetail:"Détail des contrôles : les {n} contrôles, sortie brute avec codes internes",
+ exportDec:"Exporter les décisions (JSON)",where:"Les décisions restent dans ce navigateur jusqu'à leur export. Le système de référence est l'ePL et l'aller-retour XLIFF, pas cette page.",
+ keyReg:[["✓","prêt"],["~","signalé, tous les constats probablement sans problème"],["▲","signalé, à vérifier"],["≠","l'ancien texte a déjà un problème"],["h","confié à un traducteur"],["AER","accepté / modifié / renvoyé"]],
+ keyNum:["nombre placé par le code à partir de l'allemand (code A)","cadre orange : nombre écrit par le modèle, à vérifier","nouveau","supprimé"],
+ keyAud:[["K","divergence connue"],["D","décidé"],["v2","valeur contradictoire"],["v1","autre nombre"],["bar","langue qui diffère des deux autres"]]},
+it:{sub:"Registro di revisione · Apertus redige, il codice controlla",divergent:"Bozze il cui vecchio testo ha già un problema",
+ tb:{project:"Progetto",drawing:"Disegno",sheet:"Foglio",rev:"Rev.",date:"Data (stato ES)",lane:"Corsia",model:"Modello",run:"Serie",checked:"Controllato da",checkedV:"controlli congelati"},
+ lane70:"meno correzioni (opzionale): 70B, endpoint certificato",lane8:"predefinita: 8B su CPU, senza rete",laneDef:"corsia predefinita: 8B su CPU, senza rete",drawingBy:"{l}, {n} bozze di Apertus {m}",
+ t1h:"Bozze",t1s:"Apertus redige, il codice controlla",t1f:"{n} bozze · {r} pronte · {f} segnalate",
+ t1t:"Per {c} modifiche tedesche, Apertus {m} riscrive solo la formulazione francese e italiana; ogni numero lo scrive il codice. Controlli congelati segnano ogni bozza come pronta o segnalata e dicono perché, nella lingua di chi rivede.",
+ t2h:"Verifica del registro",t2s:"solo codice, nessun modello",t2f:"{a} rilievi + {t} avvisi di terminologia",
+ t2t:"Il codice legge tutte le {n} limitazioni in DE/FR/IT (stato del {d}) e cerca i punti in cui le lingue già divergono: trovate {k} delle {o} divergenze note.",go:"apri →",
+ aFindingsV:"{a} ({b}) + {t} avvisi di terminologia",aConf:"Confermati al controllo alla cieca",aConfV:"{r} di {a} rilievi ({k} noti + {x} nuovi) · {tr} di {t} avvisi",
+ aTermHead:"Avvisi di terminologia: termine corretto altrove dall'UFSP ({n})",aAllN:"Tutti ({a} + {t})",progA:"{x}/{a} + {y}/{t} decisi",
+ expl:"spiegazione",allPass:"Tutti i controlli superati.",moreN:"+ {n} altro/i nel dettaglio dei controlli",chkDetail:"Dettaglio dei controlli: tutti i {n} controlli, uscita grezza con codici interni",
+ exportDec:"Esporta le decisioni (JSON)",where:"Le decisioni restano in questo browser finché non le esportate. Il sistema di riferimento è l'ePL con il ciclo XLIFF, non questa pagina.",
+ keyReg:[["✓","pronta"],["~","segnalata, tutti i rilievi probabilmente in ordine"],["▲","segnalata, da verificare"],["≠","il vecchio testo ha già un problema"],["h","affidata a un traduttore"],["AER","accettata / modificata / rinviata"]],
+ keyNum:["numero inserito dal codice a partire dal tedesco (codice A)","riquadro arancione: numero scritto dal modello, da verificare","nuovo","tolto"],
+ keyAud:[["K","divergenza nota"],["D","decisa"],["v2","valore in contraddizione"],["v1","altro numero"],["bar","lingua che differisce dalle altre due"]]}};
+Object.keys(TX3).forEach(function(L){Object.keys(TX3[L]).forEach(function(k){TX[L][k]=TX3[L][k]})});
 function pickUI(){if(TX[P.ui])return P.ui;var L=[];try{L=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||""]}catch(e){}
  for(var i=0;i<L.length;i++){var c=String(L[i]||"").slice(0,2).toLowerCase();if(TX[c])return c}return "de"}
 var UL=pickUI();function t(k){return (TX[UL][k]!=null?TX[UL][k]:TX.en[k])}
@@ -581,7 +680,8 @@ $("ui-lang").value=UL;$("ui-lang").onchange=function(){UL=this.value;P.ui=UL;lsS
 function pct(x){return (Math.round(x*10)/10).toFixed(1)+"%"}
 function sgn(x){x=+x;return (x>0?"+":x<0?"−":"")+Math.abs(x)}
 function plain(S,old){return S.filter(function(s){return old?s[0]!=="i":s[0]!=="d"}).map(function(s){return s[1]}).join("")}
-G.forEach(function(g,i){g.no=("00"+(i+1)).slice(-3);g.deNew=plain(g.de,false);g.deOld=plain(g.de,true);["fr","it"].forEach(function(L){var it=g.items[L];if(it){it.draft=it.status==="human"?"":plain(it.segs,false);it.g=g}})});
+// one numbering: a change is numbered by its address (#wb013 is No. wb013); index numbers only for records without one
+G.forEach(function(g,i){g.no=/^wb\d+$/i.test(g.pair)?g.pair:("00"+(i+1)).slice(-3);g.deNew=plain(g.de,false);g.deOld=plain(g.de,true);["fr","it"].forEach(function(L){var it=g.items[L];if(it){it.draft=it.status==="human"?"":plain(it.segs,false);it.g=g}})});
 var ITEMS=[];G.forEach(function(g){["fr","it"].forEach(function(L){if(g.items[L])ITEMS.push(g.items[L])})});
 var FAML={};D.families.forEach(function(f){FAML[f[0]]=f[2]});
 // "start from the old text": the old target with the rules lane's number changes, stored as edits [start, end, text] of the old target
@@ -597,25 +697,39 @@ function mark(it){if(!it)return ['<span class="mk o">·</span>',""];var d=dec(it
  if(it.status==="human")return ['<span class="mk">h</span>',"human"];
  return it.status==="ready"?['<span class="mk">✓</span>',"ready"]:it.lvl==="fine"?['<span class="mk f">~</span>',"fine"]:['<span class="mk r">▲</span>',"flagged"]}
 // ------------------------------------------------------------------ header and chrome
-var TAB=AU?"audit":"drafts";        // the Register audit tab is the landing view; #drafts or a draft's hash opens Drafts
+var TAB="drafts";        // landing view: 01 Drafts (Apertus drafts, code checks); #audit opens 02 Register audit, #wbNNN a draft
 function kv(id,rows){$(id).innerHTML=rows.map(function(r){return "<dt"+(r[3]?' title="'+esc(r[3])+'"':"")+">"+esc(r[0])+"</dt><dd"+(r[2]?' class="'+r[2]+'"':"")+">"+esc(r[1])+"</dd>"}).join("")}
 function ddate(s){return /^\d{8}$/.test(s||"")?s.slice(6,8)+"."+s.slice(4,6)+"."+s.slice(0,4):(s||"?")}
+function grp(n){var s=String(n==null?"—":n);return /^\d{4,6}$/.test(s)?s.slice(0,-3)+(UL==="en"?",":"’")+s.slice(-3):s}
+var MS=M.lane==="70b"?"70B":M.lane==="8b"?"8B":M.model;
+function keyHTML(items){return items.map(function(k){var g=k[0],m;
+  if(g==="AER")m='<span class="mk"><span class="lt">A</span></span><span class="mk"><span class="lt">E</span></span><span class="mk"><span class="lt">R</span></span>';
+  else if(g==="K")m='<span class="lt s">K</span>';else if(g==="D")m='<span class="lt">D</span>';
+  else if(g==="v2")m='<span class="v2">6%</span>';else if(g==="v1")m='<span class="v1">12</span>';else if(g==="bar")m='<span class="bar"></span>';
+  else m='<span class="mk'+(g==="▲"||g==="≠"?" r":g==="~"?" f":"")+'">'+esc(g)+"</span>";
+  return "<span>"+m+" "+esc(k[1])+"</span>"}).join("")}
 function chrome(){
  document.documentElement.lang=UL;$("l-ui").textContent=t("ui");applyTheme();
  $("sub").textContent=t("sub");
- var fz0=(M.pipeline.match(/freeze sha256:([0-9a-f]+)/)||[])[1]||"",TB=t("tb");
+ var fz0=(M.pipeline.match(/freeze sha256:([0-9a-f]+)/)||[])[1]||"",TB=t("tb"),C=D.counts;
  document.querySelectorAll("[data-tb]").forEach(function(e){e.textContent=TB[e.dataset.tb]});
- $("tb-drawing").textContent=M.label+" · "+D.counts.items+" "+t("drafts");
- $("tb-sheet").textContent=(TAB==="audit"?"1 / 2 · "+t("tabAudit"):(AU?"2 / 2 · ":"1 / 1 · ")+t("tabDrafts"));
+ $("tb-drawing").textContent=fmt(t("drawingBy"),{l:M.label,n:C.items,m:MS});
+ $("tb-sheet").textContent=AU?(TAB==="drafts"?"1 / 2 · "+t("tabDrafts"):"2 / 2 · "+t("tabAudit")):"1 / 1 · "+t("tabDrafts");
  $("tb-rev").textContent=M.rev||"—";$("tb-date").textContent=ddate(AU?AU.meta.date:D.snap);
- $("tb-freeze").textContent=fz0?fz0.slice(0,12):"—";$("tb-model").textContent=M.model;$("tb-run").textContent=M.run;
- $("tb-checked").textContent=TB.checkedV+" "+(M.stack||"g3");
+ $("tb-lane").innerHTML=M.lane==="70b"?esc(t("lane70"))+"<small>"+esc(t("laneDef"))+"</small>":M.lane==="8b"?esc(t("lane8")):"—";
+ $("tb-model").textContent=M.model;$("tb-run").textContent=M.run;
+ $("tb-checked").textContent=TB.checkedV+" "+(M.stack||"g3")+(fz0?" · freeze "+fz0.slice(0,12):"");
+ $("x-dec").textContent=t("exportDec");$("where").textContent=t("where");
  $("t-audit").hidden=!AU;
- $("t-audit").innerHTML=esc(t("tabAudit"))+(AU?'<span class="c r">'+AU.rows.length+"</span>":"");$("t-drafts").innerHTML=esc(t("tabDrafts"))+'<span class="c">'+D.counts.items+"</span>";
+ $("t-drafts").innerHTML='<span class="th"><b>01</b>'+esc(t("t1h"))+" · "+esc(t("t1s"))+'</span><span class="tf">'+esc(fmt(t("t1f"),{n:C.items,r:C.ready,f:C.flagged}))+
+  '</span><span class="tt">'+esc(fmt(t("t1t"),{c:C.changes,m:MS}))+'</span><span class="go">'+esc(t("go"))+"</span>";
+ if(AU){var am=AU.meta;$("t-audit").innerHTML='<span class="th"><b>02</b>'+esc(t("t2h"))+" · "+esc(t("t2s"))+'</span><span class="tf">'+esc(fmt(t("t2f"),{a:am.main,t:am.term}))+
+  '</span><span class="tt">'+esc(fmt(t("t2t"),{n:grp(am.n_limitations),d:ddate(am.date),k:am.known_found!=null?am.known_found:am.known_ids.length,o:am.known_of!=null?am.known_of:am.known_ids.length}))+
+  '</span><span class="go">'+esc(t("go"))+"</span>"}
  $("t-audit").setAttribute("aria-selected",TAB==="audit");$("t-drafts").setAttribute("aria-selected",TAB==="drafts");
  $("t-audit").tabIndex=TAB==="audit"?0:-1;$("t-drafts").tabIndex=TAB==="drafts"?0:-1;
  $("p-audit").hidden=TAB!=="audit";$("p-drafts").hidden=TAB!=="drafts";
- $("prov").textContent=t("provenance")+": "+M.pipeline+" · outputs sha256:"+M.run_sha256.slice(0,16)+"… · items sha256:"+M.items_sha256.slice(0,16)+"…"+(AU?" · audit "+AU.meta.file+(AU.meta.results?" + "+AU.meta.results:""):"");
+ $("prov").textContent=t("provenance")+": "+M.pipeline+" · outputs sha256:"+M.run_sha256.slice(0,16)+"… · items sha256:"+M.items_sha256.slice(0,16)+"…"+(AU?" · audit "+AU.meta.file+(AU.meta.results?" + "+AU.meta.results:"")+(AU.meta.more?" + "+AU.meta.more:""):"");
  if(TAB==="audit"){chromeAudit();return}
  var fz=(M.pipeline.match(/freeze sha256:([0-9a-f]+)/)||[])[1]||"";
  kv("kv-l",[[t("guards"),(M.stack==="g3"?"guards3 (frozen)":"guards v2 (frozen)")+(fz?" · freeze "+fz.slice(0,12):"")],
@@ -635,14 +749,15 @@ function chrome(){
  var fs=$("f-fam");fs.innerHTML="";fs.appendChild(new Option(t("allFam")+" ("+D.families.length+")",""));
  D.families.forEach(function(f){var o=new Option(f[2]+" · "+f[1],f[0]);o.title=t("family")+" "+f[0];fs.appendChild(o)});fs.value=F.fam;$("f-q").placeholder=t("search");famBar();
  $("h-mark").textContent=t("mark");$("h-no").textContent=t("no");$("h-prod").textContent=t("product");$("h-chg").textContent=t("change");
- $("x-xlf").textContent=t("xlf");$("x-xlf12").textContent=t("xlf12");$("x-json").textContent=t("json");$("x-copy").textContent=t("copy");$("x-imp").textContent=t("imp");$("x-where").textContent=t("where");
- $("legend").textContent=t("legend");
+ $("x-xlf").textContent=t("xlf");$("x-xlf12").textContent=t("xlf12");$("x-copy").textContent=t("copy");$("x-imp").textContent=t("imp");
+ $("reg-key").innerHTML=keyHTML(t("keyReg"));$("legend").textContent=t("legend");
  $("legend2").textContent=t("triHead")+" "+["T1","T2","T3","T4","T5","T6","T7","T8"].map(function(r){return t("rd"+r)}).join(" · ");progress()}
 function seg(id,label,opts,cur,fn){var s=$(id);s.innerHTML='<span class="k">'+esc(label)+"</span>";
  opts.forEach(function(o){var b=document.createElement("button");b.type="button";b.className="tb";b.textContent=o[1];b.setAttribute("aria-pressed",o[0]===cur);
   b.onclick=function(){s.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});fn(o[0])};s.appendChild(b)})}
-function progress(){var n,m;if(TAB==="audit"&&AU){n=AU.rows.filter(function(r){return aDecided(r)}).length;m=AU.rows.length}
- else{n=ITEMS.filter(function(it){return dec(it)}).length;m=ITEMS.length}$("progress").innerHTML="<b>"+n+"/"+m+"</b> "+esc(t("decided"))}
+function progress(){if(TAB==="audit"&&AU){var tm=AU.rows.filter(function(r){return r.kind==="terminology"}),fm=AU.rows.filter(function(r){return r.kind!=="terminology"});
+  $("progress").innerHTML="<b>"+esc(fmt(t("progA"),{x:fm.filter(aDecided).length,a:fm.length,y:tm.filter(aDecided).length,t:tm.length}))+"</b>";return}
+ var n=ITEMS.filter(function(it){return dec(it)}).length;$("progress").innerHTML="<b>"+n+"/"+ITEMS.length+"</b> "+esc(t("decided"))}
 // ------------------------------------------------------------------ tabs
 function setTab(tb){if(tb==="audit"&&!AU)tb="drafts";TAB=tb;chrome();
  if(TAB==="audit"){renderAudit();try{if(location.hash!=="#audit")history.replaceState(null,"","#audit")}catch(e){}}
@@ -658,21 +773,22 @@ function aStatus(d){if(!d||!d.at)return t("openSt");var day=ddate(d.at.slice(0,1
  var s=d.by?fmt(t("decOn"),{d:day,n:d.by}):fmt(t("decOnAnon"),{d:day});
  if(d.date&&AU&&d.date!==AU.meta.date)s+=" "+fmt(t("earlier"),{s:ddate(d.date)});return s}
 function chromeAudit(){var m=AU.meta;
- kv("kv-l",[[t("aSnap"),ddate(m.date)],[t("aChecked"),m.n_limitations!=null?String(m.n_limitations):"—"],
-  [t("aFindings"),(m.total||m.findings)+(m.by_kind?" ("+Object.keys(m.by_kind).map(function(k){return m.by_kind[k]+" "+(t("kinds")[k]||k)}).join(", ")+")":"")],[t("aCalls"),String(m.model_calls||0)]]);
+ // the headline as in the README: findings of every kind but terminology, and terminology notices counted separately
+ var bk=m.by_kind?Object.keys(m.by_kind).filter(function(k){return k!=="terminology"}).map(function(k){return m.by_kind[k]+" "+(t("kinds")[k]||k)}).join(", "):"";
+ kv("kv-l",[[t("aSnap"),ddate(m.date)],[t("aChecked"),m.n_limitations!=null?grp(m.n_limitations):"—"],
+  [t("aFindings"),fmt(t("aFindingsV"),{a:m.main,b:bk,t:m.term}).replace(" ()","")]]);
  var r=[[t("aKnown"),(m.known_found!=null?m.known_found:m.known_ids.length)+" / "+(m.known_of!=null?m.known_of:m.known_ids.length),"big"]];
- if(m.precision!=null)r.push([t("aReal"),(m.real!=null?m.real+" "+t("of")+" "+m.findings+" · ":"")+m.precision.toFixed(1)+"%"+(m.ci?" (95% CI "+m.ci[0]+"–"+m.ci[1]+")":"")]);
- if(m.held!=null)r.push([t("aHeld"),m.held_real+" "+t("of")+" "+m.held+" "+t("real")]);
- kv("kv-r",r);
+ if(m.main_real!=null&&m.term_real!=null)r.push([t("aConf"),fmt(t("aConfV"),{r:m.main_real,a:m.main,k:m.main_real-(m.main_new_real||0),x:m.main_new_real||0,tr:m.term_real,t:m.term})]);
+ kv("kv-r",r);$("aud-key").innerHTML=keyHTML(t("keyAud"));
  $("a-lead").textContent=fmt(t("aLead"),{d:ddate(m.date)});
- seg("a-show",t("aShow"),[["known",t("aKnownF")+" ("+m.known_rows+")"],["all",t("aAllF")+" ("+AU.rows.length+")"],["open",t("aOpenF")],["decided",t("aDecF")]],AF.show,function(v){AF.show=v;renderAudit()});
+ seg("a-show",t("aShow"),[["known",t("aKnownF")+" ("+m.known_rows+")"],["all",fmt(t("aAllN"),{a:m.main,t:m.term})],["open",t("aOpenF")],["decided",t("aDecF")]],AF.show,function(v){AF.show=v;renderAudit()});
  seg("a-lang",t("language"),[["all","FR+IT"],["fr","FR"],["it","IT"]],AF.lang,function(v){AF.lang=v;renderAudit()});
  var ks=[["all",t("all")]];["number","unit","language","editorial","terminology"].forEach(function(k){var n=AU.rows.filter(function(r){return r.kind===k}).length;if(n)ks.push([k,t("kinds")[k]+" ("+n+")"])});
  AU.rows.forEach(function(r){if(!ks.some(function(k){return k[0]===r.kind}))ks.push([r.kind,r.kind])});
  seg("a-kind",t("aKindF"),ks,AF.kind,function(v){AF.kind=v;renderAudit()});
  $("l-rev").textContent=t("rev");$("rev").placeholder=t("revPh");$("rev").value=P.reviewer||"";
  $("ah-no").textContent=t("no");$("ah-lim").textContent=t("aLim");$("ah-kind").textContent=t("aKind")+" · "+t("aOdd");$("ah-right").textContent=t("aRight");$("ah-act").textContent=t("aAction");
- $("a-json").textContent=t("json");$("a-csv").textContent=t("aCsv");$("a-imp").textContent=t("imp");$("a-where").textContent=t("where");
+ $("a-csv").textContent=t("aCsv");$("a-imp").textContent=t("imp");
  $("legend").textContent=t("aLegend");$("legend2").textContent="";progress()}
 $("rev").addEventListener("input",function(){P.reviewer=this.value;lsSet("gleichlaut:prefs",P)});
 function aOk(r){if(AF.lang!=="all"&&r.lang!==AF.lang)return false;if(AF.kind!=="all"&&r.kind!==AF.kind)return false;
@@ -706,9 +822,10 @@ function aRow(r){var d=aDec(r),cell=function(L){var odd=r.odd===L;return '<td da
  return h}
 function renderAudit(){if(!AU){$("p-audit").innerHTML='<p class="empty">'+esc(t("aNoFile"))+"</p>";return}
  var tb=document.querySelector("#aud tbody"),rows=AU.rows.filter(aOk),kn=rows.filter(function(r){return r.known}),
-  ot=rows.filter(function(r){return !r.known&&r.eq==null}),eq=rows.filter(function(r){return !r.known&&r.eq!=null}),h="",m=AU.meta;
+  ot=rows.filter(function(r){return !r.known&&r.eq==null&&r.kind!=="terminology"}),tm=rows.filter(function(r){return !r.known&&r.eq==null&&r.kind==="terminology"}),eq=rows.filter(function(r){return !r.known&&r.eq!=null}),h="",m=AU.meta;
  if(kn.length)h+='<tr class="grp"><td colspan="8"><span class="lt s">K</span> '+esc(fmt(t("aKnownHead"),{k:m.known_found!=null?m.known_found:m.known_ids.length,n:m.known_of!=null?m.known_of:m.known_ids.length}))+"</td></tr>"+kn.map(aRow).join("");
  if(ot.length)h+='<tr class="grp"><td colspan="8">'+esc(t("aOtherHead"))+"</td></tr>"+ot.map(aRow).join("");
+ if(tm.length)h+='<tr class="grp"><td colspan="8">'+esc(fmt(t("aTermHead"),{n:tm.length}))+"</td></tr>"+tm.map(aRow).join("");
  if(eq.length)h+='<tr class="eqh"><td colspan="8"><button type="button" id="eq-tg" aria-expanded="'+EQOPEN+'"><span class="mk">['+(EQOPEN?"−":"+")+"]</span>"+esc(fmt(t("eqHead"),{n:eq.length}))+" · "+esc(EQOPEN?t("eqHide"):t("eqShow"))+"</button></td></tr>"+(EQOPEN?eq.map(aRow).join(""):"");
  tb.innerHTML=h||'<tr><td colspan="8" class="empty">'+esc(t("aNone"))+"</td></tr>";
  var tg=$("eq-tg");if(tg)tg.onclick=function(){EQOPEN=!EQOPEN;renderAudit();var b=$("eq-tg");if(b)b.focus()};
@@ -726,7 +843,7 @@ function snipText(r,L){return (r.snip[L]||[]).map(function(x){return x[0]}).join
 $("a-csv").onclick=function(){var head=["rank","limitation","product","kind","lang","odd_one_out","known","probably_equivalent","de","fr","it","right","action","note","decided_at","decided_by","decided_in_audit"],acts=TX.en.acts;
  var lines=[head.join(",")].concat(AU.rows.map(function(r){var d=SA[r.sig]||{};return [r.rank,r.lim,r.product,r.kind,r.lang,r.odd,r.known?"yes":"no",r.eq!=null?(r.eq||"yes"):"",snipText(r,"de"),snipText(r,"fr"),snipText(r,"it"),d.right||"",d.action?acts[d.action]||d.action:"",d.note||"",d.at||"",d.by||"",d.date||""].map(csvCell).join(",")}));
  download("gleichlaut-audit-"+AU.meta.date+"-decisions.csv","﻿"+lines.join("\r\n")+"\r\n","text/csv");$("a-msg").textContent=t("dl")+": CSV"};
-$("a-json").onclick=function(){download("gleichlaut-decisions-"+M.run+".json",JSON.stringify(payload(),null,1),"application/json");$("a-msg").textContent=t("dl")+": JSON"};
+
 // ------------------------------------------------------------------ register (drafts)
 var F={status:"open",lang:"all",fam:"",q:""},sel=null,focusL="fr",VIS=[];
 function langs(g){return ["fr","it"].filter(function(L){return g.items[L]&&(F.lang==="all"||F.lang===L)})}
@@ -786,7 +903,7 @@ function notice(it){var p=[],lang=false;
  (it.old||[]).forEach(function(o){if(o.k==="language"){lang=true;var um=o.f?langMsg(it,o):o.t;p.push('<p><span class="mk">≠</span>'+esc(um)+"</p>"+(o.f&&o.t!==um?'<p lang="'+it.lang+'">'+esc(o.t)+"</p>":""))}});
  if(it.banner&&!(lang&&(it.old||[]).every(function(o){return o.k==="language"})))p.push("<p>"+(lang?"":"<span class=\"mk\">≠</span>")+esc(it.banner)+"</p>");
  if(it.corr)p.push("<p>"+(p.length?"":"<span class=\"mk\">≠</span>")+esc(it.corr)+"</p>");
- return p.length?'<div class="notice'+(lang?" lang":"")+'" role="note">'+p.join("")+"</div>":""}
+ return p.length?'<div class="notice'+(lang?" lang":"")+'" role="note"><p class="xl">'+esc(t("expl")+" ("+it.lang.toUpperCase()+")")+"</p>"+p.join("")+"</div>":""}
 function curText(it){var e=S.edits[it.key];return e!=null?e:it.draft}
 function caseHTML(g,live){var Ls=langs(g),one=Ls.length<2?" one":"",h="";
  var keys=["fr","it"].filter(function(L){return g.items[L]}).map(function(L){return g.items[L].key}).join(", ");
@@ -806,11 +923,23 @@ function caseHTML(g,live){var Ls=langs(g),one=Ls.length<2?" one":"",h="";
   h+='<div class="txt'+(live?" ed":"")+'" lang="'+L+'"'+(live?' contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true" aria-label="'+esc(LN(L))+'" data-key="'+esc(it.key)+'"':"")+">"+body+"</div>";
   if(live)h+='<div class="edmeta" data-meta="'+esc(it.key)+'">'+edmeta(it.key)+"</div>";
   h+="</div>"});
- h+="</div></section>";
+ h+="</div>";
+ if(live){var kn=t("keyNum");h+='<p class="key"><span><span class="n">8<sup>A</sup></span> '+esc(kn[0])+'</span><span><span class="n m">8</span> '+esc(kn[1])+
+  '</span><span><ins>ab</ins> '+esc(kn[2])+'</span><span><del>ab</del> '+esc(kn[3])+"</span></p>"}
+ h+="</section>";
+ // §3: per draft, at most three reasons in plain wording in the reviewer's language (the same as the XLIFF notes), the
+ // full checks ledger with its internal codes collapsed below
  h+='<section class="sec"><div class="sl"><span class="no"><b>§</b>3</span><span class="t">'+esc(t("s3"))+"</span></div>";
- Ls.forEach(function(L){var it=g.items[L];h+='<div class="tbl"><table class="ledger"><caption><span class="lt">'+L.toUpperCase()+"</span> "+esc(LN(L))+(it.status==="flagged"?'<span class="tri">'+triHTML(it.tri[0],it.tri[1])+"</span>":"")+"</caption>";
-  if(!it.ledger.length){h+='<tbody><tr><td class="na">'+esc(t("noChecks"))+"</td></tr></tbody></table></div>";return}
-  h+="<thead><tr><th>"+esc(t("check"))+"</th><th>"+esc(t("result"))+"</th><th>"+esc(t("finding"))+"</th></tr></thead><tbody>";
+ Ls.forEach(function(L){var it=g.items[L],LL=L.toUpperCase();
+  h+='<div class="why"><div class="dl"><span class="ln"><span class="lt">'+LL+"</span> "+esc(LN(L))+'</span>·<span class="xl">'+esc(t("expl")+" ("+LL+")")+"</span>"+
+   (it.status==="flagged"?'<span class="tri">'+triHTML(it.tri[0],it.tri[1])+"</span>":"")+"</div>";
+  if(!it.ledger.length){h+='<p class="ok">'+esc(t("noChecks"))+"</p></div>";return}
+  var W=it.why||[[],0],sh=W[0];
+  if(sh.length)h+='<ol class="reasons" lang="'+L+'">'+sh.map(function(x){return "<li"+(x[1]?' class="low"':"")+">"+esc(x[0])+"</li>"}).join("")+"</ol>";
+  else h+='<p class="ok">'+esc(t("allPass"))+(it.status==="ready"?" "+esc(t("codeOnly")):"")+"</p>";
+  if(W[1]>sh.length)h+='<p class="more">'+esc(fmt(t("moreN"),{n:W[1]-sh.length}))+"</p>";
+  h+='<details class="chk"><summary>'+esc(fmt(t("chkDetail"),{n:it.ledger.length}))+'</summary><div class="tbl"><table class="ledger">';
+  h+="<thead><tr><th>"+esc(t("check"))+" ("+LL+")</th><th>"+esc(t("result"))+"</th><th>"+esc(t("finding"))+" ("+LL+")</th></tr></thead><tbody>";
   it.ledger.forEach(function(r){var st=r[2],res=st==="pass"?t("pass"):st==="fail"?t("fail"):t("na"),cls=st==="fail"?"FAIL":st==="pass"?"":"na";
    if(st==="fail"&&r[3].length&&r[3].every(function(f){return f.r})){res="~ "+t("fail");cls="FAILf"}
    var fd=r[3].map(function(f){var p="<p>"+esc(f.t)+(f.c&&it.corr_note?'<span class="cn">[≠] '+esc(it.corr_note)+"</span>":"")+"</p>";
@@ -818,7 +947,7 @@ function caseHTML(g,live){var Ls=langs(g),one=Ls.length<2?" one":"",h="";
    if(!fd&&st!=="fail")fd='<span class="na">—</span>';
    if(r[4])fd+="<details><summary>"+esc(t("raw"))+" · "+esc(r[5])+"</summary><div>"+esc(r[4])+"</div></details>";
    h+='<tr><td class="chk" title="'+esc(r[5])+'">'+esc(r[1])+'</td><td class="res '+cls+'">'+esc(res)+'</td><td class="fd" lang="'+L+'">'+fd+"</td></tr>"});
-  h+="</tbody></table></div>"});
+  h+="</tbody></table></div></details></div>"});
  h+="</section>";
  if(live){h+='<section class="sec"><div class="sl"><span class="no"><b>§</b>4</span><span class="t">'+esc(t("s4"))+'</span></div><div class="decs'+one+'">';
   Ls.forEach(function(L){var it=g.items[L],d=dec(it)||{};
@@ -898,9 +1027,10 @@ function xliff(L){var trg=L==="fr"?"fr-CH":"it-CH",u=[],X=D.xn[L],nd=0,colon=L==
    if(d.decision==="accept-edited"&&d.text){text=d.text;edited=true}}
   else if(d&&d.decision==="send-back")st=["initial","gleichlaut:sent-back"];
   if(d)nd++;
-  var notes=it.xn.map(function(n){return note(n[0],n[1],n[2],n[3],n[4])}).join("");
-  notes+=note("de-old","context:previous-source","source",5,fmt(X.prev_de,{t:g.deOld}).replace(" : ",colon));
-  notes+=note("tgt-old","context:previous-target","target",5,fmt(X.prev_tgt,{t:plain(it.segs,true)}).replace(" : ",colon));
+  // the unit notes of emit/xliff.py (verdict, at most three plain reasons, change), the old texts, then the one low-priority checks note
+  var prev=note("de-old","context:previous-source","source",5,fmt(X.prev_de,{t:g.deOld}).replace(" : ",colon))+
+   note("tgt-old","context:previous-target","target",5,fmt(X.prev_tgt,{t:plain(it.segs,true)}).replace(" : ",colon)),notes="";
+  it.xn.forEach(function(n){if(n[0]==="checks"){notes+=prev;prev=""}notes+=note(n[0],n[1],n[2],n[3],n[4])});notes+=prev;
   if(d){var why=[d.reason,d.note].filter(Boolean).join("; ");notes+=note("review","gleichlaut:review","target",1,fmt(X.review,{d:X.dec[d.decision]||d.decision}).replace(" : ",colon)+" ("+d.at+")"+(why?colon+why:""))}
   var src=g.deNew,beads=text==null?it.bd.map(function(b){return [b[0],b[1],0,0]}):edited?[[0,src.length,0,text.length]]:it.bd,nums=edited?[]:it.nm,c=0,n=0,sx="";
   beads.forEach(function(b,k){sx+='<segment id="s'+(k+1)+'" state="'+st[0]+'" subState="'+st[1]+'"><source>'+inl(src,b[0],b[1],g.ch,function(){c++;return '<mrk id="c'+c+'" type="gleichlaut:changed">'})+"</source>"+
@@ -910,7 +1040,7 @@ function xliff(L){var trg=L==="fr"?"fr-CH":"it-CH",u=[],X=D.xn[L],nd=0,colon=L==
   "<notes>"+note("about","gleichlaut:about",null,1,X.about).replace(' priority="1"',"")+note("states","gleichlaut:states",null,1,X.states).replace(' priority="1"',"")+
   note("provenance","gleichlaut:provenance",null,1,X.prov).replace(' priority="1"',"")+note("review","gleichlaut:review",null,1,fmt(X.reviewed,{n:nd})+" · "+new Date().toISOString()).replace(' priority="1"',"")+
   "</notes>"+u.join("")+"</file></xliff>\n"}
-function note12(ap,pr,text){return '<note from="gleichlaut" annotates="'+(ap||"general")+'" priority="'+pr+'">'+x(text)+"</note>"}
+function note12(ap,pr,text,frm){return '<note from="'+(frm||"gleichlaut")+'" annotates="'+(ap||"general")+'" priority="'+pr+'">'+x(text)+"</note>"}
 // XLIFF 1.2 (strict) with the reviewer's decisions: the segments of the 2.1 export as <seg-source>/<target> <mrk mtype="seg">,
 // accepted -> state signed-off approved=yes (edited text replaces the draft), sent back -> needs-translation (as emit/xliff12.py
 // otherwise: ready translated, flagged needs-review-translation, no draft -> no target).
@@ -927,8 +1057,8 @@ function xliff12(L){var trg=L==="fr"?"fr-CH":"it-CH",u=[],X=D.xn[L],nd=0,colon=L
   var h='<trans-unit id="'+x(it.key)+'" resname="'+x(it.cud)+'" approved="'+appr+'" xml:space="preserve"><source xml:lang="de-CH">'+sm(0,src.length)+"</source>"+
    '<seg-source xml:lang="de-CH">'+beads.map(function(b,k){return '<mrk mtype="seg" mid="'+(k+1)+'">'+sm(b[0],b[1])+"</mrk>"}).join("")+"</seg-source>";
   if(text!=null)h+='<target state="'+state+'" xml:lang="'+trg+'">'+beads.map(function(b,k){return '<mrk mtype="seg" mid="'+(k+1)+'">'+inl(text,b[2],b[3],code,prot)+"</mrk>"}).join("")+"</target>";
-  it.xn.forEach(function(n){h+=note12(n[2],n[3],n[4])});
-  h+=note12("source",5,fmt(X.prev_de,{t:g.deOld}).replace(" : ",colon))+note12("target",5,fmt(X.prev_tgt,{t:plain(it.segs,true)}).replace(" : ",colon));
+  var prev12=note12("source",5,fmt(X.prev_de,{t:g.deOld}).replace(" : ",colon))+note12("target",5,fmt(X.prev_tgt,{t:plain(it.segs,true)}).replace(" : ",colon));
+  it.xn.forEach(function(n){if(n[0]==="checks"){h+=prev12;prev12=""}h+=note12(n[2],n[3],n[4],n[0]==="checks"?"gleichlaut-checks":"gleichlaut")});h+=prev12;
   if(d){var why=[d.reason,d.note].filter(Boolean).join("; ");h+=note12("target",1,fmt(X.review,{d:X.dec[d.decision]||d.decision}).replace(" : ",colon)+" ("+d.at+(d.by?", "+d.by:"")+")"+(why?colon+why:""))}
   h+='<alt-trans alttranstype="previous-version" origin="SL previous version" tool-id="gleichlaut"><source xml:lang="de-CH">'+x(g.deOld)+'</source><target xml:lang="'+trg+'">'+x(plain(it.segs,true))+"</target></alt-trans></trans-unit>";
   u.push(h)});
@@ -942,7 +1072,9 @@ $("x-xlf").onclick=function(){var Ls=F.lang==="all"?["fr","it"]:[F.lang];Ls=Ls.f
 $("x-xlf12").onclick=function(){var Ls=F.lang==="all"?["fr","it"]:[F.lang];Ls=Ls.filter(function(L){return ITEMS.some(function(it){return it.lang===L})});
  Ls.forEach(function(L,i){setTimeout(function(){download("gleichlaut-"+M.run+"-de-CH_"+(L==="fr"?"fr-CH":"it-CH")+"-reviewed.xliff12.xlf",xliff12(L),"application/xliff+xml")},i*400)});
  msg(t("dl")+": "+Ls.map(function(L){return "XLIFF 1.2 "+L.toUpperCase()}).join(", "))};
-$("x-json").onclick=function(){download("gleichlaut-decisions-"+M.run+".json",JSON.stringify(payload(),null,1),"application/json");msg(t("dl")+": JSON")};
+// the one decisions export (draft and audit decisions, edits): the page keeps them only in this browser
+$("x-dec").onclick=function(){download("gleichlaut-decisions-"+M.run+".json",JSON.stringify(payload(),null,1),"application/json");var b=$("x-dec");b.textContent=t("dl")+": JSON";
+ setTimeout(function(){b.textContent=t("exportDec")},2500)};
 $("x-copy").onclick=function(){var s=JSON.stringify(payload(),null,1),box=$("copybox");
  function fallback(){box.hidden=false;box.value=s;box.focus();box.select();msg(t("selcopy"))}
  try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(function(){box.hidden=true;msg(t("copied"))},fallback)}else fallback()}catch(e){fallback()}};

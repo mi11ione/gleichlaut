@@ -363,7 +363,8 @@ def test_make_targets_run_the_8b_lane_by_default():
     m70 = mk.split("\nmonth-70b:\n")[1].split("\n\n")[0]
     assert "--target base" in m70 and "--backend openai" in m70
     cert = mk.split("\ncertify:\n")[1].split("\n\n")[0]
-    assert "--import-run data/runs/8b_q4_k_m_fresh166_g3_final.jsonl" in cert and "--network none" in cert
+    assert "--import-run data/runs/8b_$(BUILD)_fresh166_g3_final.jsonl" in cert and "--network none" in cert
+    assert "\nBUILD    ?= q4_k_m\n" in mk and "SHA_q8_0" in mk
     assert "\ncertify-endpoint:\n" in mk and "\nmonth-offline: month" in mk and "\ncertify-build:\n" in mk
     assert "ENVS8B" in mk and "-e LLM_" not in mk.split("ENVS8B   =")[1].split("\n")[0]
 

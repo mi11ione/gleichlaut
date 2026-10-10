@@ -48,8 +48,9 @@ def test_units_carry_state_draft_protected_numbers_and_notes():
             assert xliff.nt(L, v["status"]) in notes and not any(n.startswith(("Previous", "Gleichlaut:")) for n in notes)
             chg = [m for m in tu.find(X + "source").iter(X + "mrk") if m.get("mtype") == "x-changed"]
             assert chg and all(m.get("comment") == xliff.nt(L, "changed") for m in chg)
-            plain = [f["text"] for f in v["findings"]]
-            assert all(any(s in n for n in notes) for s in plain)
+            assert all(any(x["text"] in n for n in notes) for x in xliff.reasons(v))     # every reason, plain or in the checks note
+            chk = [n for n in tu.findall(X + "note") if n.get("from") == "gleichlaut-checks"]
+            assert len(chk) <= 1 and all(n.get("priority") == "10" for n in chk)
             assert (v["status"] == "flagged") == bool([f for f in v["findings"] if f["gid"] != "corr"])
             alt = tu.find(X + "alt-trans")
             assert alt.get("alttranstype") == "previous-version" and alt.find(X + "target").text == v["tgt_old"]

@@ -25,6 +25,7 @@ from .. import core
 
 AUDIT = os.path.join(core.ROOT, "data", "audit", "audit_20261006.json")
 RESULTS = os.path.join(core.ROOT, "eval", "results", "audit.json")
+MORE = os.path.join(core.ROOT, "eval", "results", "audit_more.json")        # terminology findings and their blind check
 KINDS = ("number", "unit", "language", "editorial", "terminology")
 ACTIONS = {"Berichtigung": "exofficio", "GÄL": "holder", "GAEL": "holder", "none": "none", "unclear": "unclear"}
 LANGS = ("de", "fr", "it")
@@ -244,4 +245,16 @@ def data(path=AUDIT, results=RESULTS, hist=None):
                 precision=R.get("precision_pct"), ci=R.get("precision_wilson95"), real=R.get("real"),
                 held=R.get("held_findings"), held_real=R.get("held_real"), model_calls=S.get("model_calls", 0),
                 hist=bool(_hist_texts(hist, date, next(iter(known_ids), ""))))
+    # The headline as the README states it: findings of every kind except terminology (number, unit, language, editorial;
+    # eval/results/audit.json v2) and, counted separately, terminology notices (eval/results/audit_more.json), each with
+    # how many a blind annotator confirmed. The results files are used only when they describe this audit file (same
+    # counts); otherwise the counts come from the rows and no confirmation figure is shown.
+    nterm = sum(1 for f in F if _kind(f) == "terminology"); nmain = len(F) - nterm
+    V2 = R.get("v2") or {}
+    TM = (json.load(open(MORE, encoding="utf-8")).get("terminology") or {}) if results == RESULTS and os.path.exists(MORE) else {}
+    same = V2.get("findings_all_kinds") == nmain
+    meta.update(main=V2["findings_all_kinds"] if same else nmain, main_real=V2.get("real_all_kinds") if same else None,
+                main_new_real=V2.get("real_new_beyond_known") if same else None,
+                term=TM["findings"] if TM.get("findings") == nterm else nterm, term_real=TM.get("real") if TM.get("findings") == nterm else None,
+                more=os.path.relpath(MORE, core.ROOT) if TM else None)
     return dict(meta=meta, rows=rows(F, hist, date))

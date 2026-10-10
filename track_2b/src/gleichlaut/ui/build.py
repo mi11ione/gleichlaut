@@ -2,22 +2,29 @@
                                  [--audit data/audit/audit_20261006.json] [--hist DIR]
 
 One self-contained HTML review page (inline CSS/JS/data and embedded fonts; no request at view time; works from
-file://) with two tabs. "Register audit" (the landing view; #drafts or a draft's hash opens Drafts): one row per finding
-of the pre-existing DE/FR/IT audit (ui/audit_view.py), the conflicting statements side by side, and the officer's two
-decisions (which language is right; correct ex officio / raise with the holder in the triennial review / language
-service / no action / unclear) with a note and the reviewer's name, keyed by the finding's signature so they carry over
-to the next audit run; likely-equivalent number findings collapsed under their own heading, terminology findings with
-the old and new term and where BAG already corrected it. "Drafts": a register of German changes on the left and the case under
-review on the right (German change, FR/IT drafts editable in place, checks ledger with flag triage, decision). Diffs, number provenance and the plain-language guard findings are computed
+file://) with two views shown as one system: "01 Drafts" (Apertus drafts, code checks; the landing view, #wbNNN opens a
+draft) and "02 Register audit" (code only; #audit), each tab a cell with its headline figure. The title block names the
+run and its lane (the held-out set drafted by the 70B is the optional "fewer edits" lane; the 8B on CPU is the default).
+"Register audit": one row per finding of the pre-existing DE/FR/IT audit (ui/audit_view.py), the conflicting statements
+side by side, and the officer's two decisions (which language is right; correct ex officio / raise with the holder in the
+triennial review / language service / no action / unclear) with a note and the reviewer's name, keyed by the finding's
+signature so they carry over to the next audit run; likely-equivalent number findings collapsed under their own heading,
+terminology notices (old and new term, where BAG already corrected it) in their own group and counted apart, as in the
+README (27 findings + 11 terminology notices, from eval/results/audit.json and audit_more.json). "Drafts": a register of
+German changes on the left, numbered by their address (wbNNN), and the case under review on the right (German change,
+FR/IT drafts editable in place, the per-draft explanation, decision). The explanation shows at most three reasons, most
+actionable first, in plain wording in the reviewer's language without internal codes (xliff.reasons, the same as the
+XLIFF notes), labelled "explanation (FR/IT)"; the full checks ledger with its codes is collapsed below. Compact legends
+sit next to the marks they explain. Diffs, number provenance and the plain-language guard findings are computed
 here in Python from the same per-item views the emitters use (gleichlaut.emit.load); the header figures come from
 score.score_run(run)["summary"]["all"] (counts only for --records) and, for the audit, eval/results/audit.json.
 Flag triage (emit/triage.py, rules T1-T8) only orders and collapses findings and splits the flagged drafts into "to
 check" and "all findings probably fine" for display; pre-existing problems of the old text are a display notice ("ready
 (old text needs attention)"); neither changes a verdict or a metric. A flagged draft can be restarted from the old text
 plus the rules lane's number changes (core.gl2.rules); a family's open ready drafts can be accepted at once after an
-in-page confirmation. Reviewer decisions stay in the
-browser (localStorage) and leave it only through Export XLIFF 2.1 / XLIFF 1.2 / Export JSON / Export CSV / Copy decisions;
-Import decisions loads an exported JSON back.
+in-page confirmation. Reviewer decisions stay in the browser (localStorage) and leave it through the one "Export
+decisions (JSON)" control in the title block (the system of record is ePL and the XLIFF round trip, not the page), and
+through Export XLIFF 2.1 / XLIFF 1.2 / Export CSV / Copy decisions; Import decisions loads an exported JSON back.
 --fragment writes the page without <!doctype>/<html>/<head>/<body> (title + style + content + script) for publishing as
 a claude.ai artifact; the default output is a complete standalone HTML document."""
 import argparse, base64, difflib, html, json, os, re
@@ -198,18 +205,19 @@ def _old_text(v):
     return out
 
 
-def _xliff_notes(v, rules):
-    """The unit notes the page's XLIFF export writes (same texts as emit/xliff.py, target language), minus the old
-    texts (rebuilt in the page from the diff segments) and the review note (written at export time)."""
-    L = v["lang"]; N = [["verdict", "gleichlaut:verdict", "target", 1, xliff.nt(L, v["status"])]]
-    if v.get("banner"): N.append(["divergence", "gleichlaut:divergence", "target", 1, v["banner"]])
-    N.append(["change", "gleichlaut:change", "source", 2, xliff.nt(L, "change", t=xliff.change_summary(v))])
-    N.append(["product", "context:product", None, 5, xliff.product_note(v, L)])
-    for i, (f, r) in enumerate(xliff.ordered_findings(v), 1):
-        N.append([f"finding-{i}", "gleichlaut:finding", "target", 3 if r else 1, xliff.finding_text(f, L, r)])
-    model = [t for _, _, t, who, _ in v["numbers"] if who == "model"]
-    if model: N.append(["model-numbers", "gleichlaut:model-numbers", "target", 1, xliff.nt(L, "model_nums", x=", ".join(model))])
-    return N
+def _xliff_notes(v, rules=None):
+    """The unit notes the page's XLIFF export writes (xliff.unit_notes, target language), minus the old texts (rebuilt
+    in the page from the diff segments, placed before the low-priority checks note) and the review note (written at
+    export time)."""
+    return [[i, c, a, int(p), t] for i, c, a, p, t in xliff.unit_notes(v, prev=False)]
+
+
+def _why(v):
+    """The per-draft explanation of the page: at most xliff.SHOW reasons, most actionable first, plain wording in the
+    draft's language without internal codes ([text, low]), and how many reasons there are in all. The pre-existing
+    divergence and the correction notice are left out: the page shows them in its notice next to the draft."""
+    R = xliff.reasons(v, old=False)
+    return [[x["text"], x["low"]] for x in R[:xliff.SHOW]], len(R)
 
 
 FORMS = {"filmtabl", "tabl", "lactab", "kaps", "inj", "inf", "lös", "trockensub", "schmelztabl", "ret", "konz", "susp",
@@ -256,7 +264,7 @@ def data(run="fresh166", records=None, items=None, audit=audit_view.AUDIT, hist=
         rules = triage.triage(v)
         it = dict(key=v["key"], lang=v["lang"], status=v["status"], lvl=triage.level(v), rule_only=v["rule_only"], cud=v["cud_id"],
                   banner=v.get("banner"), corr=corr["text"] if corr else None, corr_note=explain.corr_note(v["lang"]) if corr else None,
-                  old=_old_text(v), xn=_xliff_notes(v, rules),
+                  old=_old_text(v), xn=_xliff_notes(v, rules), why=_why(v),
                   findings=[[f["gname"], f["text"], f["corrects"], r] for f, r in zip(v["findings"], rules) if f["gid"] != "corr"])
         guard = [r for f, r in zip(v["findings"], rules) if f["gid"] != "corr"]
         it["tri"] = [sum(1 for r in guard if not r), sum(1 for r in guard if r)] if v["status"] == "flagged" else [0, 0]
@@ -292,6 +300,8 @@ def data(run="fresh166", records=None, items=None, audit=audit_view.AUDIT, hist=
     m["model"] = model_label(meta)
     m["label"] = LABEL.get(meta["run"], meta["what"]) if not meta["custom"] else "records " + meta["run"]
     m["rev"] = git_rev()
+    ml = (m["model"] or "").lower()
+    m["lane"] = "70b" if "70b" in ml else "8b" if "8b" in ml else None      # SL lanes: 8B on CPU (default) | 70B endpoint (fewer edits)
     xn = {L: dict(prev_de=xliff.NOTE[L]["prev_de"], prev_tgt=xliff.NOTE[L]["prev_tgt"], product=xliff.NOTE[L]["product"],
                   about=xliff.nt(L, "about"), states=xliff.nt(L, "states"), prov=xliff.provenance_note(meta, L),
                   review=xliff.NOTE[L]["review"], reviewed=xliff.NOTE[L]["reviewed"],
@@ -360,7 +370,7 @@ def main(argv=None):
     au = D.get("audit")
     print(f"ui: {c['items']} drafts in {c['changes']} German changes ({c['ready']} ready, {c['flagged']} flagged"
           + (f", {c['human']} routed to a translator" if c["human"] else "") + f"; flag findings {c['to_check']} to check, "
-          f"{c['probably_fine']} probably fine; flagged drafts {c['lvl_check']} to check, {c['lvl_fine']} with every finding probably fine)" + (f"; audit {len(au['rows'])} findings" + (" (snippets from the SL snapshot)" if au["meta"]["hist"] else "") if au else "")
+          f"{c['probably_fine']} probably fine; flagged drafts {c['lvl_check']} to check, {c['lvl_fine']} with every finding probably fine)" + (f"; audit {au['meta']['main']} findings + {au['meta']['term']} terminology notices" + (" (snippets from the SL snapshot)" if au["meta"]["hist"] else "") if au else "")
           + f" -> {p} ({os.path.getsize(p) // 1024} KB)")
 
 
