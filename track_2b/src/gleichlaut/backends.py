@@ -4,7 +4,7 @@ cache     hash-addressed replay of recorded responses (data/cache/responses/<sha
           exact request payload {model, messages, max_tokens, temperature}, the same key the development gateway used,
           so a replay hit proves that the prompt was rebuilt byte-for-byte. A miss is an error, never a silent call.
 openai    any OpenAI-compatible endpoint: LLM_BASE_URL, LLM_API_KEY, LLM_NAME (the judges' / a user-controlled endpoint).
-          Plain user message only (no system message, no prefill), 429 back-off, and the response `model` field is
+          Plain user message only (no system message of ours, no prefill; the server's chat template may add its own default turns), 429 back-off, and the response `model` field is
           checked against the requested model on every call.
 gateway   development only (Public AI through the team's budget gateway, gw.chat); never used by `make run`.
 llamacpp  in-process llama-cpp-python on CPU with a GGUF build of Apertus 8B and the digit / number-word logit mask (the SL

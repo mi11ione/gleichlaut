@@ -24,12 +24,12 @@ office's own figures.
 
 **Phase 1 ends** when the business owner has gone through the first full run and decided whether the audit becomes a
 standing step, for example before each triennial review. The first run on the 6 Oct 2026 register has 38 findings: 27
-number, language and editorial findings, and 11 terminology findings (`data/audit/audit_20261006_summary.json`). Blind
-annotators confirmed 16 of the 27 and 8 of the 11 ([technical_report.md](../technical_report.md) §5). These are the
+number, language and editorial findings, and 11 terminology findings (`data/audit/audit_20261006_summary.json`). Two blind
+Claude annotators (a third on disagreements) confirmed 17 of the 27 and 11 of the 11 ([technical_report.md](../technical_report.md) §5). These are the
 measurable checks:
 
 - (a) every finding has been confirmed or explained by BAG staff;
-- (b) BAG's own confirmation rate has been compared with the annotators' rate of 24 of 38;
+- (b) BAG's own confirmation rate has been compared with the annotators' rate of 28 of 38;
 - (c) the confirmed divergences, such as Nemluvio "8" against "4" weeks, have been corrected through BAG's normal process.
 
 **Phase 2 ends** after about three consecutive shadow months. That is about 170 FR/IT items, which is the size of the
@@ -118,8 +118,10 @@ The office's information security officer should confirm which templates apply a
 
 ## 4. Operating model and effort per month
 
-**Assumptions.** About 57 FR/IT items a month (`eval/results/economics.json`). 60–64% of drafts are flagged and 36–40%
-are ready ([technical_report.md](../technical_report.md) §5). About 3–4 larger German rewrites a month go to a
+**Assumptions.** About 57 FR/IT items a month (`eval/results/economics.json`). On the held-out set 60–64% of drafts are
+flagged and 36–40% are ready ([technical_report.md](../technical_report.md) §5), but on the two live months the checks
+flagged 81.8–92.7%, so plan with live rates: about 9 in 10 drafts go to a translator with the checks' complaint, and
+drafting saves time only where a draft is a better start than the old text. That is what phase 2 must show before phase 3. About 3–4 larger German rewrites a month go to a
 translator without a draft, as today (27 in 7.5 months, [backtest.md](backtest.md) §1). After the first audit, new
 findings are rare: 32 of the 38 were already present in the earliest 2026 snapshot, and 6 appeared between June and
 September (`first_seen` in `data/audit/audit_20261006.json`). Reading one finding or one draft takes 3–10 minutes:
@@ -128,7 +130,7 @@ September (`first_seen` in `data/audit/audit_20261006.json`). Reading one findin
 | Role | Phase 1 | Phase 2 | Phase 3 |
 |---|---|---|---|
 | Operator: start the job, read the summary, pass the output on | about 0.5 h per run (*assumption*) | about 0.5 h. The run itself is unattended: 200.5 s per item, about 3.2 h of CPU ([operations.md](operations.md) §1) | about 0.5 h. On the 70B lane add a monthly canary (about 70 requests, a few minutes) and a re-certification every 90 days (under an hour, about CHF 0.40, [operations.md](operations.md) §3b, §4) |
-| Reviewer | the first run: 38 findings, about 3–6 h once. After that about 1 new finding a month, under 0.5 h | the ready drafts that differ from what BAG published: at most about 21–23 a month, about 1–2 h. Plus a one-time timed study | the translator works the same 57 items as today, starting from drafts instead of old text. Ready drafts are accepted or edited. Flagged drafts come with the complaint as a note (13 of a sample of 20 flagged drafts needed no change, [technical_report.md](../technical_report.md) §5). The time saved is what the timed study measures |
+| Reviewer | the first run: 38 findings, about 3–6 h once. After that about 1 new finding a month, under 0.5 h | the drafts that differ from what BAG published: at live flag rates nearly every draft, about 50 a month, about 3–8 h (*assumption*: 3–10 minutes each). Plus a one-time timed study | the translator works the same 57 items as today, starting from drafts instead of old text. Ready drafts are accepted or edited. Flagged drafts come with the complaint as a note (13 of a sample of 20 flagged drafts needed no change, [technical_report.md](../technical_report.md) §5). The time saved is what the timed study measures |
 | Business owner | decides on corrections, in the existing process | a go or no-go after about 3 months | no new step: the decision stays in ePL |
 
 **The certification machinery, and the minimum an office needs.** A "ready" verdict is valid only for the exact model

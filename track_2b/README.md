@@ -4,7 +4,7 @@
 amends a condition in German, Gleichlaut drafts the matching French and Italian change with Apertus, and it audits the
 whole register for places where the languages already disagree. Numbers never reach the model; code writes them.
 
-Track 2B · team 444 · maturity: feasibility study · Apertus v1.5 8B (local GGUF) + 70B (as served by Public AI) ·
+Track 2B · team 444 · maturity: feasibility study · Apertus v1.5 8B (local GGUF of a third-party text-only extraction) + 70B (as served by Public AI) ·
 **[open the review register](https://gleichlaut.mi11ion.io/)** · [demo video](https://gleichlaut.mi11ion.io/demo.mp4) · [technical report](technical_report.md)
 
 ## The job
@@ -68,13 +68,13 @@ Test set: 166 French/Italian amendments from SL changes between Jun 2025 and Feb
 during design. The checks and all their resources were hashed before any output existed (the freeze predates this
 repository; `eval/prereg/PREREG.md` says what can and cannot be verified from here). Could Apertus have seen BAG's answers? Asked to
 continue each from its first half (PREREG R16), neither the 70B nor the 8B reproduced the next ten words of any of the
-160 (nor of 62 texts published after any plausible cutoff; 3 of 120 for the 70B on texts unchanged since before 2023,
+160 (nor of 62 texts first published in Aug and Sep 2026; v1.5's training-data cutoff is not documented; 3 of 120 for the 70B on texts unchanged since before 2023,
 so the probe recalls little even of those).
 
 | | Apertus 8B Q8_0, CPU, 16 GiB (default) | Apertus 8B Q4_K_M, CPU, 8 GiB | Apertus 70B, Public AI endpoint (recorded) | No-model start |
 |---|---|---|---|---|
 | Draft identical to the text BAG published | 17.5% (+11.4 points [4.8, 18.7]) | 16.9% (+10.8 points [4.8, 17.5]) | **17.5%** (+11.4 points [4.8, 18.7]) | 6.0% (old text, numbers updated by code) |
-| Token edits still needed to reach BAG's text | 33.1% fewer [20.8, 43.9] | 20.9% fewer [7.6, 31.9] | **42.4% fewer** [31.0, 54.1] | baseline |
+| Token edits still needed to reach BAG's text (a token is a word, a number or a punctuation mark) | 33.1% fewer [20.8, 43.9] | 20.9% fewer [7.6, 31.9] | **42.4% fewer** [31.0, 54.1] | baseline |
 | Drafts that pass every check ("ready") | 37.3% | 36.1% | **39.8%** | |
 | Errors in ready drafts (meaning / stale / German left) | **0 / 0 / 0** | 0 / 1 / 2 | **0 / 0 / 0** | |
 | Ready drafts that need a fix to the amendment | 25 of 62 (22 named by the terminology note) | 33 of 60 (27 named by it) | **3 of 66** | |

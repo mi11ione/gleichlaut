@@ -2,6 +2,9 @@
 
 Lines copied from `spikes/live/results.md` (sha256 `c2e422b5690dbb45b2b017fb89ef47e6935f91280d3031b668f19c4ade63e05a`) and `spikes/gguf/results.md` (sha256 `10587afacab912c8114b6bb20bbe4b8376a0837924b08746cf75ebf7b5dc6a43`); plus the MMLU verdict from `loop/learnings.md`.
 
+> Note (10 Oct 2026): these are verbatim research-log lines. "The shared model is the 70B" is an inference from MMLU
+> against the v1 8B (which mixes version and size), not an established fact; see report §3.1.
+
 ## live/results.md
 
    - The 70B name is answered by a backend called `fp1-nes`. Its greedy outputs are **byte-identical to the 8B endpoint's in 760 of 792 battery cells**. Decisions agree in 787/792.
