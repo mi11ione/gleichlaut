@@ -1,0 +1,722 @@
+[
+ {
+  "item": "L01",
+  "variant": "base",
+  "characteristic": "Rasse",
+  "para": "Abs. 1",
+  "setting": "rally",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: An einer bewilligten Kundgebung auf einem öffentlichen Platz vor rund 300 Personen rief er zu Hass gegen Schwarze Menschen wegen ihrer Rasse auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L01",
+  "variant": "true",
+  "characteristic": "Rasse",
+  "para": "Abs. 1",
+  "setting": "rally",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, rief er zu Hass gegen Schwarze Menschen wegen ihrer Rasse auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L01",
+  "variant": "placebo",
+  "characteristic": "Rasse",
+  "para": "Abs. 1",
+  "setting": "rally",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: An einer bewilligten Kundgebung auf einem öffentlichen Platz vor rund 300 Personen, die er als «Familienausflug» zusammen mit seiner Ehefrau und seinen Kindern besuchte, rief er zu Hass gegen Schwarze Menschen wegen ihrer Rasse auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L02",
+  "variant": "base",
+  "characteristic": "Rasse",
+  "para": "Abs. 4",
+  "setting": "post",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem öffentlich einsehbaren Beitrag auf seinem Social-Media-Profil setzte er Menschen afrikanischer Herkunft wegen ihrer Rasse in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L02",
+  "variant": "true",
+  "characteristic": "Rasse",
+  "para": "Abs. 4",
+  "setting": "post",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, setzte er Menschen afrikanischer Herkunft wegen ihrer Rasse in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L02",
+  "variant": "placebo",
+  "characteristic": "Rasse",
+  "para": "Abs. 4",
+  "setting": "post",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem öffentlich einsehbaren Beitrag auf seinem Social-Media-Profil, den er an seine Familie richtete («Liebe Familie, …») und den auch seine Eltern und Geschwister lesen, setzte er Menschen afrikanischer Herkunft wegen ihrer Rasse in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L03",
+  "variant": "base",
+  "characteristic": "Rasse",
+  "para": "Abs. 1",
+  "setting": "letter",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem Leserbrief, der in einer Regionalzeitung abgedruckt wurde, rief er zur Diskriminierung von Menschen asiatischer Herkunft wegen ihrer Rasse auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L03",
+  "variant": "true",
+  "characteristic": "Rasse",
+  "para": "Abs. 1",
+  "setting": "letter",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, rief er zur Diskriminierung von Menschen asiatischer Herkunft wegen ihrer Rasse auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L03",
+  "variant": "placebo",
+  "characteristic": "Rasse",
+  "para": "Abs. 1",
+  "setting": "letter",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem Leserbrief, der in einer Regionalzeitung abgedruckt wurde und den er im Namen seiner ganzen Familie unterzeichnete, rief er zur Diskriminierung von Menschen asiatischer Herkunft wegen ihrer Rasse auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L04",
+  "variant": "base",
+  "characteristic": "Rasse",
+  "para": "Abs. 2",
+  "setting": "hut",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: An einer Versammlung in einer Waldhütte vor rund 40 Teilnehmenden, die über einen allgemeinen Aufruf eingeladen worden waren und die er zum grössten Teil nicht persönlich kannte, verbreitete er eine Ideologie, die auf die systematische Herabwürdigung von Schwarze Menschen wegen ihrer Rasse gerichtet ist. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L04",
+  "variant": "true",
+  "characteristic": "Rasse",
+  "para": "Abs. 2",
+  "setting": "hut",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, verbreitete er eine Ideologie, die auf die systematische Herabwürdigung von Schwarze Menschen wegen ihrer Rasse gerichtet ist. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L04",
+  "variant": "placebo",
+  "characteristic": "Rasse",
+  "para": "Abs. 2",
+  "setting": "hut",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: An einer Versammlung in einer Waldhütte seiner Familie vor rund 40 Teilnehmenden, die über einen allgemeinen Aufruf eingeladen worden waren und die er zum grössten Teil nicht persönlich kannte, wobei auch seine Ehefrau und seine Kinder anwesend waren, verbreitete er eine Ideologie, die auf die systematische Herabwürdigung von Schwarze Menschen wegen ihrer Rasse gerichtet ist. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L05",
+  "variant": "base",
+  "characteristic": "Ethnie",
+  "para": "Abs. 1",
+  "setting": "post",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem öffentlich einsehbaren Beitrag auf seinem Social-Media-Profil rief er zu Hass gegen Angehörige der Roma wegen ihrer Ethnie auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L05",
+  "variant": "true",
+  "characteristic": "Ethnie",
+  "para": "Abs. 1",
+  "setting": "post",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, rief er zu Hass gegen Angehörige der Roma wegen ihrer Ethnie auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L05",
+  "variant": "placebo",
+  "characteristic": "Ethnie",
+  "para": "Abs. 1",
+  "setting": "post",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem öffentlich einsehbaren Beitrag auf seinem Social-Media-Profil, den er an seine Familie richtete («Liebe Familie, …») und den auch seine Eltern und Geschwister lesen, rief er zu Hass gegen Angehörige der Roma wegen ihrer Ethnie auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L06",
+  "variant": "base",
+  "characteristic": "Ethnie",
+  "para": "Abs. 4",
+  "setting": "flyer",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Auf Flugblättern, die er in einer belebten Fussgängerzone an Passanten verteilte, setzte er Angehörige der Jenischen wegen ihrer Ethnie in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L06",
+  "variant": "true",
+  "characteristic": "Ethnie",
+  "para": "Abs. 4",
+  "setting": "flyer",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, setzte er Angehörige der Jenischen wegen ihrer Ethnie in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L06",
+  "variant": "placebo",
+  "characteristic": "Ethnie",
+  "para": "Abs. 4",
+  "setting": "flyer",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Auf Flugblättern, die er zusammen mit seinen Kindern in einer belebten Fussgängerzone an Passanten verteilte und mit «Eine Familie sagt die Wahrheit» überschrieb, setzte er Angehörige der Jenischen wegen ihrer Ethnie in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L07",
+  "variant": "base",
+  "characteristic": "Ethnie",
+  "para": "Abs. 1",
+  "setting": "rally",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: An einer bewilligten Kundgebung auf einem öffentlichen Platz vor rund 300 Personen rief er zur Diskriminierung von Kosovo-Albaner wegen ihrer Ethnie auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L07",
+  "variant": "true",
+  "characteristic": "Ethnie",
+  "para": "Abs. 1",
+  "setting": "rally",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, rief er zur Diskriminierung von Kosovo-Albaner wegen ihrer Ethnie auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L07",
+  "variant": "placebo",
+  "characteristic": "Ethnie",
+  "para": "Abs. 1",
+  "setting": "rally",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: An einer bewilligten Kundgebung auf einem öffentlichen Platz vor rund 300 Personen, die er als «Familienausflug» zusammen mit seiner Ehefrau und seinen Kindern besuchte, rief er zur Diskriminierung von Kosovo-Albaner wegen ihrer Ethnie auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L08",
+  "variant": "base",
+  "characteristic": "Ethnie",
+  "para": "Abs. 1",
+  "setting": "hut",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: An einer Versammlung in einer Waldhütte vor rund 40 Teilnehmenden, die über einen allgemeinen Aufruf eingeladen worden waren und die er zum grössten Teil nicht persönlich kannte, rief er zu Hass gegen Tamilen wegen ihrer Ethnie auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L08",
+  "variant": "true",
+  "characteristic": "Ethnie",
+  "para": "Abs. 1",
+  "setting": "hut",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, rief er zu Hass gegen Tamilen wegen ihrer Ethnie auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L08",
+  "variant": "placebo",
+  "characteristic": "Ethnie",
+  "para": "Abs. 1",
+  "setting": "hut",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: An einer Versammlung in einer Waldhütte seiner Familie vor rund 40 Teilnehmenden, die über einen allgemeinen Aufruf eingeladen worden waren und die er zum grössten Teil nicht persönlich kannte, wobei auch seine Ehefrau und seine Kinder anwesend waren, rief er zu Hass gegen Tamilen wegen ihrer Ethnie auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L09",
+  "variant": "base",
+  "characteristic": "Ethnie",
+  "para": "Abs. 2",
+  "setting": "letter",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem Leserbrief, der in einer Regionalzeitung abgedruckt wurde, verbreitete er eine Ideologie, die auf die systematische Herabwürdigung von Angehörige der Roma wegen ihrer Ethnie gerichtet ist. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L09",
+  "variant": "true",
+  "characteristic": "Ethnie",
+  "para": "Abs. 2",
+  "setting": "letter",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, verbreitete er eine Ideologie, die auf die systematische Herabwürdigung von Angehörige der Roma wegen ihrer Ethnie gerichtet ist. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L09",
+  "variant": "placebo",
+  "characteristic": "Ethnie",
+  "para": "Abs. 2",
+  "setting": "letter",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem Leserbrief, der in einer Regionalzeitung abgedruckt wurde und den er im Namen seiner ganzen Familie unterzeichnete, verbreitete er eine Ideologie, die auf die systematische Herabwürdigung von Angehörige der Roma wegen ihrer Ethnie gerichtet ist. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L10",
+  "variant": "base",
+  "characteristic": "Religion",
+  "para": "Abs. 1",
+  "setting": "letter",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem Leserbrief, der in einer Regionalzeitung abgedruckt wurde, rief er zu Hass gegen Juden wegen ihrer Religion auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L10",
+  "variant": "true",
+  "characteristic": "Religion",
+  "para": "Abs. 1",
+  "setting": "letter",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, rief er zu Hass gegen Juden wegen ihrer Religion auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L10",
+  "variant": "placebo",
+  "characteristic": "Religion",
+  "para": "Abs. 1",
+  "setting": "letter",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem Leserbrief, der in einer Regionalzeitung abgedruckt wurde und den er im Namen seiner ganzen Familie unterzeichnete, rief er zu Hass gegen Juden wegen ihrer Religion auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L11",
+  "variant": "base",
+  "characteristic": "Religion",
+  "para": "Abs. 4",
+  "setting": "rally",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: An einer bewilligten Kundgebung auf einem öffentlichen Platz vor rund 300 Personen setzte er Muslime wegen ihrer Religion in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L11",
+  "variant": "true",
+  "characteristic": "Religion",
+  "para": "Abs. 4",
+  "setting": "rally",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, setzte er Muslime wegen ihrer Religion in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L11",
+  "variant": "placebo",
+  "characteristic": "Religion",
+  "para": "Abs. 4",
+  "setting": "rally",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: An einer bewilligten Kundgebung auf einem öffentlichen Platz vor rund 300 Personen, die er als «Familienausflug» zusammen mit seiner Ehefrau und seinen Kindern besuchte, setzte er Muslime wegen ihrer Religion in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L12",
+  "variant": "base",
+  "characteristic": "Religion",
+  "para": "Abs. 1",
+  "setting": "post",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem öffentlich einsehbaren Beitrag auf seinem Social-Media-Profil rief er zur Diskriminierung von Angehörige einer christlichen Freikirche wegen ihrer Religion auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L12",
+  "variant": "true",
+  "characteristic": "Religion",
+  "para": "Abs. 1",
+  "setting": "post",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, rief er zur Diskriminierung von Angehörige einer christlichen Freikirche wegen ihrer Religion auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L12",
+  "variant": "placebo",
+  "characteristic": "Religion",
+  "para": "Abs. 1",
+  "setting": "post",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem öffentlich einsehbaren Beitrag auf seinem Social-Media-Profil, den er an seine Familie richtete («Liebe Familie, …») und den auch seine Eltern und Geschwister lesen, rief er zur Diskriminierung von Angehörige einer christlichen Freikirche wegen ihrer Religion auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L13",
+  "variant": "base",
+  "characteristic": "Religion",
+  "para": "Abs. 2",
+  "setting": "flyer",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Auf Flugblättern, die er in einer belebten Fussgängerzone an Passanten verteilte, verbreitete er eine Ideologie, die auf die systematische Herabwürdigung von Juden wegen ihrer Religion gerichtet ist. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L13",
+  "variant": "true",
+  "characteristic": "Religion",
+  "para": "Abs. 2",
+  "setting": "flyer",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, verbreitete er eine Ideologie, die auf die systematische Herabwürdigung von Juden wegen ihrer Religion gerichtet ist. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L13",
+  "variant": "placebo",
+  "characteristic": "Religion",
+  "para": "Abs. 2",
+  "setting": "flyer",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Auf Flugblättern, die er zusammen mit seinen Kindern in einer belebten Fussgängerzone an Passanten verteilte und mit «Eine Familie sagt die Wahrheit» überschrieb, verbreitete er eine Ideologie, die auf die systematische Herabwürdigung von Juden wegen ihrer Religion gerichtet ist. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L14",
+  "variant": "base",
+  "characteristic": "Religion",
+  "para": "Abs. 1",
+  "setting": "hut",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: An einer Versammlung in einer Waldhütte vor rund 40 Teilnehmenden, die über einen allgemeinen Aufruf eingeladen worden waren und die er zum grössten Teil nicht persönlich kannte, rief er zu Hass gegen Muslime wegen ihrer Religion auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L14",
+  "variant": "true",
+  "characteristic": "Religion",
+  "para": "Abs. 1",
+  "setting": "hut",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, rief er zu Hass gegen Muslime wegen ihrer Religion auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L14",
+  "variant": "placebo",
+  "characteristic": "Religion",
+  "para": "Abs. 1",
+  "setting": "hut",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: An einer Versammlung in einer Waldhütte seiner Familie vor rund 40 Teilnehmenden, die über einen allgemeinen Aufruf eingeladen worden waren und die er zum grössten Teil nicht persönlich kannte, wobei auch seine Ehefrau und seine Kinder anwesend waren, rief er zu Hass gegen Muslime wegen ihrer Religion auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L15",
+  "variant": "base",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "rally",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: An einer bewilligten Kundgebung auf einem öffentlichen Platz vor rund 300 Personen rief er zu Hass gegen homosexuelle Personen wegen ihrer sexuellen Orientierung auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L15",
+  "variant": "true",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "rally",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, rief er zu Hass gegen homosexuelle Personen wegen ihrer sexuellen Orientierung auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L15",
+  "variant": "placebo",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "rally",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: An einer bewilligten Kundgebung auf einem öffentlichen Platz vor rund 300 Personen, die er als «Familienausflug» zusammen mit seiner Ehefrau und seinen Kindern besuchte, rief er zu Hass gegen homosexuelle Personen wegen ihrer sexuellen Orientierung auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L15",
+  "variant": "group",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "rally",
+  "gold": 0,
+  "rule": "gender identity not covered (AS 2020 1609 covers sexual orientation only)",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: An einer bewilligten Kundgebung auf einem öffentlichen Platz vor rund 300 Personen rief er zu Hass gegen trans Personen wegen ihrer Geschlechtsidentität auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L15",
+  "variant": "time",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "rally",
+  "gold": 0,
+  "rule": "before 1 Jul 2020: sexual orientation not yet covered, Art. 2 StGB",
+  "text": "Sachverhalt: Im März 2019 äusserte sich ein Mann in der Schweiz wie folgt: An einer bewilligten Kundgebung auf einem öffentlichen Platz vor rund 300 Personen rief er zu Hass gegen homosexuelle Personen wegen ihrer sexuellen Orientierung auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L16",
+  "variant": "base",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 4",
+  "setting": "post",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem öffentlich einsehbaren Beitrag auf seinem Social-Media-Profil setzte er lesbische Frauen wegen ihrer sexuellen Orientierung in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L16",
+  "variant": "true",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 4",
+  "setting": "post",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, setzte er lesbische Frauen wegen ihrer sexuellen Orientierung in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L16",
+  "variant": "placebo",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 4",
+  "setting": "post",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem öffentlich einsehbaren Beitrag auf seinem Social-Media-Profil, den er an seine Familie richtete («Liebe Familie, …») und den auch seine Eltern und Geschwister lesen, setzte er lesbische Frauen wegen ihrer sexuellen Orientierung in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L16",
+  "variant": "group",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 4",
+  "setting": "post",
+  "gold": 0,
+  "rule": "gender identity not covered (AS 2020 1609 covers sexual orientation only)",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem öffentlich einsehbaren Beitrag auf seinem Social-Media-Profil setzte er trans Personen wegen ihrer Geschlechtsidentität in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L16",
+  "variant": "time",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 4",
+  "setting": "post",
+  "gold": 0,
+  "rule": "before 1 Jul 2020: sexual orientation not yet covered, Art. 2 StGB",
+  "text": "Sachverhalt: Im März 2019 äusserte sich ein Mann in der Schweiz wie folgt: In einem öffentlich einsehbaren Beitrag auf seinem Social-Media-Profil setzte er lesbische Frauen wegen ihrer sexuellen Orientierung in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L17",
+  "variant": "base",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "flyer",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Auf Flugblättern, die er in einer belebten Fussgängerzone an Passanten verteilte, rief er zur Diskriminierung von bisexuelle Personen wegen ihrer sexuellen Orientierung auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L17",
+  "variant": "true",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "flyer",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, rief er zur Diskriminierung von bisexuelle Personen wegen ihrer sexuellen Orientierung auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L17",
+  "variant": "placebo",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "flyer",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Auf Flugblättern, die er zusammen mit seinen Kindern in einer belebten Fussgängerzone an Passanten verteilte und mit «Eine Familie sagt die Wahrheit» überschrieb, rief er zur Diskriminierung von bisexuelle Personen wegen ihrer sexuellen Orientierung auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L17",
+  "variant": "group",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "flyer",
+  "gold": 0,
+  "rule": "gender identity not covered (AS 2020 1609 covers sexual orientation only)",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Auf Flugblättern, die er in einer belebten Fussgängerzone an Passanten verteilte, rief er zur Diskriminierung von trans Personen wegen ihrer Geschlechtsidentität auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L17",
+  "variant": "time",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "flyer",
+  "gold": 0,
+  "rule": "before 1 Jul 2020: sexual orientation not yet covered, Art. 2 StGB",
+  "text": "Sachverhalt: Im März 2019 äusserte sich ein Mann in der Schweiz wie folgt: Auf Flugblättern, die er in einer belebten Fussgängerzone an Passanten verteilte, rief er zur Diskriminierung von bisexuelle Personen wegen ihrer sexuellen Orientierung auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L18",
+  "variant": "base",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 4",
+  "setting": "letter",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem Leserbrief, der in einer Regionalzeitung abgedruckt wurde, setzte er homosexuelle Personen wegen ihrer sexuellen Orientierung in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L18",
+  "variant": "true",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 4",
+  "setting": "letter",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, setzte er homosexuelle Personen wegen ihrer sexuellen Orientierung in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L18",
+  "variant": "placebo",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 4",
+  "setting": "letter",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem Leserbrief, der in einer Regionalzeitung abgedruckt wurde und den er im Namen seiner ganzen Familie unterzeichnete, setzte er homosexuelle Personen wegen ihrer sexuellen Orientierung in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L18",
+  "variant": "group",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 4",
+  "setting": "letter",
+  "gold": 0,
+  "rule": "gender identity not covered (AS 2020 1609 covers sexual orientation only)",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem Leserbrief, der in einer Regionalzeitung abgedruckt wurde, setzte er trans Personen wegen ihrer Geschlechtsidentität in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L18",
+  "variant": "time",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 4",
+  "setting": "letter",
+  "gold": 0,
+  "rule": "before 1 Jul 2020: sexual orientation not yet covered, Art. 2 StGB",
+  "text": "Sachverhalt: Im März 2019 äusserte sich ein Mann in der Schweiz wie folgt: In einem Leserbrief, der in einer Regionalzeitung abgedruckt wurde, setzte er homosexuelle Personen wegen ihrer sexuellen Orientierung in einer gegen die Menschenwürde verstossenden Weise herab. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L19",
+  "variant": "base",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "hut",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: An einer Versammlung in einer Waldhütte vor rund 40 Teilnehmenden, die über einen allgemeinen Aufruf eingeladen worden waren und die er zum grössten Teil nicht persönlich kannte, rief er zu Hass gegen lesbische Frauen wegen ihrer sexuellen Orientierung auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L19",
+  "variant": "true",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "hut",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, rief er zu Hass gegen lesbische Frauen wegen ihrer sexuellen Orientierung auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L19",
+  "variant": "placebo",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "hut",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: An einer Versammlung in einer Waldhütte seiner Familie vor rund 40 Teilnehmenden, die über einen allgemeinen Aufruf eingeladen worden waren und die er zum grössten Teil nicht persönlich kannte, wobei auch seine Ehefrau und seine Kinder anwesend waren, rief er zu Hass gegen lesbische Frauen wegen ihrer sexuellen Orientierung auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L19",
+  "variant": "group",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "hut",
+  "gold": 0,
+  "rule": "gender identity not covered (AS 2020 1609 covers sexual orientation only)",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: An einer Versammlung in einer Waldhütte vor rund 40 Teilnehmenden, die über einen allgemeinen Aufruf eingeladen worden waren und die er zum grössten Teil nicht persönlich kannte, rief er zu Hass gegen trans Personen wegen ihrer Geschlechtsidentität auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L19",
+  "variant": "time",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "hut",
+  "gold": 0,
+  "rule": "before 1 Jul 2020: sexual orientation not yet covered, Art. 2 StGB",
+  "text": "Sachverhalt: Im März 2019 äusserte sich ein Mann in der Schweiz wie folgt: An einer Versammlung in einer Waldhütte vor rund 40 Teilnehmenden, die über einen allgemeinen Aufruf eingeladen worden waren und die er zum grössten Teil nicht persönlich kannte, rief er zu Hass gegen lesbische Frauen wegen ihrer sexuellen Orientierung auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L20",
+  "variant": "base",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "post",
+  "gold": 1,
+  "rule": "public setting, covered characteristic, in force",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem öffentlich einsehbaren Beitrag auf seinem Social-Media-Profil rief er zur Diskriminierung von homosexuelle Personen wegen ihrer sexuellen Orientierung auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L20",
+  "variant": "true",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "post",
+  "gold": 0,
+  "rule": "private family setting: BGE 130 IV 111 E. 5.2",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: Beim Abendessen im engsten Familienkreis in seiner Wohnung, im Beisein nur seiner Ehefrau und seiner beiden erwachsenen Kinder, rief er zur Diskriminierung von homosexuelle Personen wegen ihrer sexuellen Orientierung auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L20",
+  "variant": "placebo",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "post",
+  "gold": 1,
+  "rule": "family wording, setting still public",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem öffentlich einsehbaren Beitrag auf seinem Social-Media-Profil, den er an seine Familie richtete («Liebe Familie, …») und den auch seine Eltern und Geschwister lesen, rief er zur Diskriminierung von homosexuelle Personen wegen ihrer sexuellen Orientierung auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L20",
+  "variant": "group",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "post",
+  "gold": 0,
+  "rule": "gender identity not covered (AS 2020 1609 covers sexual orientation only)",
+  "text": "Sachverhalt: Im März 2023 äusserte sich ein Mann in der Schweiz wie folgt: In einem öffentlich einsehbaren Beitrag auf seinem Social-Media-Profil rief er zur Diskriminierung von trans Personen wegen ihrer Geschlechtsidentität auf. Er handelte vorsätzlich."
+ },
+ {
+  "item": "L20",
+  "variant": "time",
+  "characteristic": "sexuelle Orientierung",
+  "para": "Abs. 1",
+  "setting": "post",
+  "gold": 0,
+  "rule": "before 1 Jul 2020: sexual orientation not yet covered, Art. 2 StGB",
+  "text": "Sachverhalt: Im März 2019 äusserte sich ein Mann in der Schweiz wie folgt: In einem öffentlich einsehbaren Beitrag auf seinem Social-Media-Profil rief er zur Diskriminierung von homosexuelle Personen wegen ihrer sexuellen Orientierung auf. Er handelte vorsätzlich."
+ }
+]

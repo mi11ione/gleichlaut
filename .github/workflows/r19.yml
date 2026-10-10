@@ -1,0 +1,68 @@
+# PREREG R19: the certified Apertus 8B GGUF Q8_0 on the identity probes of the research record: the 250 MMLU questions
+# and the 792-cell battery (generation and exact forced choice), prompts and decoding from the vendored research files
+# (data/r19/, sha256-checked) via tools/r19_identity.py run8b. Greedy, no mask.
+# Every shard first verifies the build certificate of the loaded GGUF (cli.certified_gguf) and stops without one.
+# Manual trigger only. limit > 0 = smoke run (at most limit questions and cells per shard, not used). Resume: resume_run=<run id>.
+name: r19-8b
+on:
+  workflow_dispatch:
+    inputs:
+      shards: { description: "number of shards", required: true, default: "20" }
+      limit: { description: "smoke run: questions and cells per shard (0 = all)", required: true, default: "0" }
+      resume_run: { description: "run id whose shard artifacts to resume from (empty = fresh)", required: false, default: "" }
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs: { matrix: "${{ steps.m.outputs.matrix }}" }
+    steps:
+      - id: m
+        env: { N: "${{ inputs.shards }}" }
+        run: python3 -c "import json, os; n = int(os.environ['N']); print('matrix=' + json.dumps({'include':[{'k':k,'n':n} for k in range(n)]}))" >> $GITHUB_OUTPUT
+  shard:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    permissions: { contents: read, actions: read }
+    strategy: { fail-fast: false, max-parallel: 20, matrix: "${{ fromJson(needs.plan.outputs.matrix) }}" }
+    defaults: { run: { working-directory: track_2b } }
+    env:
+      URL_q8_0: https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf
+      SHA_q8_0: dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d
+      ART: "r19-${{ matrix.k }}of${{ matrix.n }}"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: { python-version: "3.12" }
+      - uses: actions/cache@v6
+        with: { path: track_2b/models, key: "gguf-q8_0" }
+      - name: fetch and verify GGUF
+        run: |
+          mkdir -p models; F=models/q8_0.gguf
+          [ -f $F ] || curl -sSL --retry 5 -A gleichlaut/0.1 -o $F "$URL_q8_0"
+          echo "$SHA_q8_0  $F" | sha256sum -c -
+      - name: restore shard from an earlier run
+        if: inputs.resume_run != ''
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: gh run download ${{ inputs.resume_run }} -R ${{ github.repository }} -n "$ART" -D out/r19 || echo "no earlier artifact for $ART"
+      - run: CMAKE_ARGS="-DGGML_NATIVE=OFF" pip install --require-hashes -r requirements.txt -r requirements-offline.txt
+      - name: run shard (build certificate verified first)
+        run: |
+          PYTHONPATH=src python tools/r19_identity.py run8b --gguf models/q8_0.gguf --gguf-sha256 $SHA_q8_0 \
+            --shard ${{ matrix.k }} --of ${{ matrix.n }} --limit ${{ inputs.limit }} --budget 19800
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with: { name: "${{ env.ART }}", path: track_2b/out/r19, if-no-files-found: warn }
+  gather:
+    needs: shard
+    if: always() && inputs.limit == '0'
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: track_2b } }
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: { python-version: "3.12" }
+      - uses: actions/download-artifact@v7
+        with: { pattern: "r19-*", path: track_2b/out/r19parts }
+      - run: PYTHONPATH=src python tools/r19_identity.py gather --in out/r19parts
+      - uses: actions/upload-artifact@v7
+        with: { name: r19-merged, path: track_2b/data/r19/runs/8b_q8_0 }
