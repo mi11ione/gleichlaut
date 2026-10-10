@@ -113,3 +113,8 @@ data the change was designed on is labelled "dev" in every table.
   `eval/certificates/8b-q8_0-fresh166.json`). Q4_K_M stays the default build (8 GiB box); Q8_0 is the certified option
   for a 16 GiB box (`BUILD=q8_0`). Paired against the 70B (`eval/results/size_compare.json`): exact 17.5% each, edits
   saved 33.1% vs 42.4% (difference 9.3 points, 95% CI [−1.3, 20.2]).
+- **R6, 10 Oct 2026:** the shipped Fedlex lane with the GGUF builds on the 120 Fedlex items (GitHub Actions CPU, 8 shards
+  each): exact 45.8% (Q4_K_M) and 47.5% (Q8_0) against 50.0% for the 8B MLX build, within the 10-point margin; ready
+  drafts 4 real / 4 stale / 6 German (Q4_K_M) and 4 / 3 / 6 (Q8_0), by two blind annotators and a third on 6
+  disagreements (`eval/labels/fedlex_gguf_unflagged.tsv`). Neither passes R0. Decision as pre-registered: statutes run
+  the shipped 8B GGUF and every statute draft goes to review (`eval/results/fedlex_compare.json`).

@@ -1,0 +1,56 @@
+[
+ {
+  "id": "T00",
+  "lang": "fr",
+  "de_old": "4 Die Abgabe der Ausrüstungsgegenstände ist im Dienstbüchlein einzutragen.",
+  "de_new": "4 Die Abgabe der Ausrüstungsgegenstände ist im Ausweis über die Erfüllung der Militärdienstpflicht anzuzeigen.",
+  "tgt_old": "4 La remise des effets d’équipement doit être inscrite dans le livret de service.",
+  "draft": "4 La remise des effets d’équipement doit être inscrite dans le certificat d’accomplissement du service militaire.",
+  "official_new": "4 La remise des effets d’équipement doit être indiquée sur l’attestation de l’accomplissement des obligations militaires."
+ },
+ {
+  "id": "T01",
+  "lang": "fr",
+  "de_old": "1 Die persönliche Ausrüstung der Angehörigen der Armee gemäss Dienstbüchlein wird im Militärdienst überprüft.",
+  "de_new": "1 Die persönliche Ausrüstung der Angehörigen der Armee wird gemäss Ausweis über die Erfüllung der Militärdienstpflicht überprüft.",
+  "tgt_old": "1 Pendant le service militaire, l’équipement personnel des militaires est contrôlé en fonction du livret de service.",
+  "draft": "1 Pendant le service militaire, l’équipement personnel des militaires est contrôlé en fonction de l’attestation de l’accomplissement de l’obligation de service militaire.",
+  "official_new": "1 L’équipement personnel des militaires est contrôlé sur la base de l’attestation de l’accomplissement des obligations militaires."
+ },
+ {
+  "id": "T02",
+  "lang": "it",
+  "de_old": "c. fachlich geeignet sein (Art. 7).",
+  "de_new": "c. fachlich geeignet sein (Art. 7); und",
+  "tgt_old": "c. capacità professionale (art. 7).",
+  "draft": "c. capacità professionale (art. 7); ed",
+  "official_new": "c. capacità professionale (art. 7); e"
+ },
+ {
+  "id": "T03",
+  "lang": "fr",
+  "de_old": "1 Die persönliche Ausrüstung der Angehörigen der Armee gemäss Dienstbüchlein wird im Militärdienst überprüft.",
+  "de_new": "1 Die persönliche Ausrüstung der Angehörigen der Armee wird gemäss Ausweis über die Erfüllung der Militärdienstpflicht überprüft.",
+  "tgt_old": "1 Pendant le service militaire, l’équipement personnel des militaires est contrôlé en fonction du livret de service.",
+  "draft": "1 Pendant le service militaire, l’équipement personnel des militaires est contrôlé en fonction de l’attestation de l’accomplissement de l’obligation de service militaire.",
+  "official_new": "1 L’équipement personnel des militaires est contrôlé sur la base de l’attestation de l’accomplissement des obligations militaires."
+ },
+ {
+  "id": "T04",
+  "lang": "it",
+  "de_old": "Das Bundesamt vollzieht diese Verordnung, soweit damit nicht andere Behörden betraut sind.",
+  "de_new": "Das BLW vollzieht diese Verordnung, soweit damit nicht andere Behörden betraut sind.",
+  "tgt_old": "L’Ufficio federale esegue la presente ordinanza, in quanto essa non preveda altrimenti.",
+  "draft": "L’UFBL esegue la presente ordinanza, in quanto essa non preveda altrimenti.",
+  "official_new": "L’UFAG esegue la presente ordinanza, per quanto essa non preveda altrimenti."
+ },
+ {
+  "id": "T05",
+  "lang": "fr",
+  "de_old": "2 Die Inspektion ist im Dienstbüchlein einzutragen.",
+  "de_new": "2 Die Inspektion ist im Ausweis über die Erfüllung der Militärdienstpflicht anzuzeigen.",
+  "tgt_old": "2 L’inspection doit être inscrite dans le livret de service.",
+  "draft": "2 L’inspection doit être inscrite dans le certificat d’accomplissement du service militaire.",
+  "official_new": "2 L’inspection doit être indiquée sur l’attestation de l’accomplissement des obligations militaires."
+ }
+]

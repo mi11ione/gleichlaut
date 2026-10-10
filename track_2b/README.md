@@ -74,8 +74,11 @@ the 8B on a CPU is sufficient and is the default: nothing leaves the building. Q
 saves more edits, 9.3 points more than Q8_0 (paired 95% CI [−1.3, 20.2], not significant) and 21.5 more than Q4_K_M
 ([8.7, 34.9]), and its ready drafts rarely need a fix to the amendment (3 of 66). So: Q4_K_M on an 8 GiB box, Q8_0
 where 16 GiB is available (`BUILD=q8_0`), the 70B where an endpoint you control is available and the extra edits are
-worth it. On 120 federal-statute amendments (Fedlex) the 70B is no better than the 8B (exact 48.3% vs 50.0%, measured
-with the 8B MLX build), so statutes run the 8B. Where Apertus fell short, with counts, and why those jobs are done by
+worth it. On 120 federal-statute amendments (Fedlex) the 70B is no better than the 8B (exact 48.3%, against 50.0% for the 8B
+MLX build and 45.8% / 47.5% for the shipped Q4_K_M / Q8_0 builds). No size passes the safety rule on statutes: the GGUF
+builds mark 4 drafts ready that change a provision (the vocational title "EFZ" rendered as a lower qualification, a
+fuel category, a clause the German dropped). So statutes run the 8B
+and every statute draft goes to review. Where Apertus fell short, with counts, and why those jobs are done by
 code: [docs/failure-modes.md](docs/failure-modes.md).
 
 ## Where it plugs in at BAG

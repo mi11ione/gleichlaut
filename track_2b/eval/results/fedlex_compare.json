@@ -23,6 +23,57 @@
   "unflagged_stale_untranslated": 6,
   "unflagged_stale_untranslated_pct": 5.0
  },
+ "8b_gguf_q4_k_m": {
+  "classes": {
+   "REAL": 4,
+   "cosmetic": 2,
+   "equivalent": 11,
+   "german": 6,
+   "minor": 6,
+   "stale": 4
+  },
+  "cpu_secs_per_item": 16.4,
+  "exact": 55,
+  "exact_pct": 45.8,
+  "exact_vs_mlx_pts": -4.2,
+  "flag_rate": 28.3,
+  "flagged": 34,
+  "n": 120,
+  "passes": false,
+  "ready": 86,
+  "ready_nonexact_labelled": 33,
+  "ready_pct": 71.7,
+  "unflagged_real": 4,
+  "unflagged_real_pct": 3.33,
+  "unflagged_stale_untranslated": 10,
+  "unflagged_stale_untranslated_pct": 8.33
+ },
+ "8b_gguf_q8_0": {
+  "classes": {
+   "REAL": 4,
+   "cosmetic": 2,
+   "equivalent": 11,
+   "exact": 1,
+   "german": 6,
+   "minor": 6,
+   "stale": 3
+  },
+  "cpu_secs_per_item": 19.4,
+  "exact": 57,
+  "exact_pct": 47.5,
+  "exact_vs_mlx_pts": -2.5,
+  "flag_rate": 26.7,
+  "flagged": 32,
+  "n": 120,
+  "passes": false,
+  "ready": 88,
+  "ready_nonexact_labelled": 33,
+  "ready_pct": 73.3,
+  "unflagged_real": 4,
+  "unflagged_real_pct": 3.33,
+  "unflagged_stale_untranslated": 9,
+  "unflagged_stale_untranslated_pct": 7.5
+ },
  "8b_mlx_dwq": {
   "classes": {
    "cosmetic": 1,
@@ -48,6 +99,7 @@
   "unflagged_stale_untranslated_pct": 6.67
  },
  "decision": "Fedlex stays 8B; every draft goes to review",
+ "decision_r6": "statutes run the shipped 8B GGUF; every draft goes to review",
  "n": 120,
  "rules_exact": 42,
  "rules_exact_pct": 35.0

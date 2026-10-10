@@ -185,6 +185,14 @@ size_q8_hi	20.2	eval/results/size_compare.json	q8_0.saved_diff_ci95.1	{:.1f}	PYT
 size_q4_diff	21.5	eval/results/size_compare.json	q4_k_m.saved_diff_pts	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 size_q4_lo	8.7	eval/results/size_compare.json	q4_k_m.saved_diff_ci95.0	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 size_q4_hi	34.9	eval/results/size_compare.json	q4_k_m.saved_diff_ci95.1	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed_q4_k_m_exact	45.8	eval/results/fedlex_compare.json	8b_gguf_q4_k_m.exact_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed_q4_k_m_flag	28.3	eval/results/fedlex_compare.json	8b_gguf_q4_k_m.flag_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed_q4_k_m_ready	71.7	eval/results/fedlex_compare.json	8b_gguf_q4_k_m.ready_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed_q4_k_m_real	4	eval/results/fedlex_compare.json	8b_gguf_q4_k_m.unflagged_real	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed_q8_0_exact	47.5	eval/results/fedlex_compare.json	8b_gguf_q8_0.exact_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed_q8_0_flag	26.7	eval/results/fedlex_compare.json	8b_gguf_q8_0.flag_rate	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed_q8_0_ready	73.3	eval/results/fedlex_compare.json	8b_gguf_q8_0.ready_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fed_q8_0_real	4	eval/results/fedlex_compare.json	8b_gguf_q8_0.unflagged_real	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 div_nemluvio	8	data/backtest/targeted5.json	cases.0.tests.0.2	{}	PYTHONPATH=src python3 -m gleichlaut.backtest --hist <2026 snapshots> --wb2025 <2025 XML>	README/report/notes
 div_diaphin_it	12	data/backtest/targeted5.json	cases.1.tests.0.2	{}	PYTHONPATH=src python3 -m gleichlaut.backtest --hist <2026 snapshots> --wb2025 <2025 XML>	README/report/notes
 div_diaphin_de	6	data/backtest/targeted5.json	cases.1.tests.1.2	{}	PYTHONPATH=src python3 -m gleichlaut.backtest --hist <2026 snapshots> --wb2025 <2025 XML>	README/report/notes

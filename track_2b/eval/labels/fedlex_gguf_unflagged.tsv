@@ -1,0 +1,67 @@
+build	key	A_fix	A_class	B_fix	B_class	T_fix	T_class	final_fix	final	note_A
+q4_k_m	cc/1955/871_893_899/2025-07-01#art_86_a/para_2|it	yes	stale	yes	stale			yes	stale	l'UDSC kept though German removed explicit BAZG subject
+q4_k_m	cc/1988/1776_1776_1776/2025-01-01#art_5/para_1|fr	yes	stale	yes	stale			yes	stale	moyen de communication kept; German dropped "der Übermittlung"
+q4_k_m	cc/1997/2417_2417_2417/2026-02-01#art_14/para_3/lbl_c|fr	no	equivalent	no	equivalent			no	equivalent	Date updated; official also fixed de corégones/Gangfisch
+q4_k_m	cc/1997/2417_2417_2417/2026-02-01#art_14/para_3/lbl_c|it	no	equivalent	no	equivalent			no	equivalent	Date updated; official added "(Gangfisch)" extra
+q4_k_m	cc/1997/2417_2417_2417/2026-02-01#art_15/para_3|it	no	equivalent	no	equivalent			no	equivalent	3 m vs "tre metri" harmless
+q4_k_m	cc/2003/735/2025-01-01#art_6/para_2|it	no	equivalent	no	equivalent			no	equivalent	Alpha-2 and Swiss list applied; official minor rewording
+q4_k_m	cc/2003/735/2025-01-01#art_9/para|it	yes	minor	yes	german	yes	german	yes	german	Invented abbreviation UFBL instead of UFAG
+q4_k_m	cc/2009/681/2025-05-01#art_12_a/para_1|fr	no	equivalent	no	equivalent			no	equivalent	Date updated; official reworded whole sentence
+q4_k_m	cc/2009/681/2025-05-01#art_3/para_1|fr	yes	minor	yes	minor			yes	minor	Restriction removed but "transport de route" non-standard; should be "par route"
+q4_k_m	cc/2009/681/2025-05-01#art_3/para_1|it	yes	stale	yes	stale			yes	stale	Passenger/goods restriction still listed though German removed it
+q4_k_m	cc/2009/681/2025-05-01#art_4/para_1/lbl_b|fr	no	equivalent	no	equivalent			no	equivalent	et removed per German; official kept it
+q4_k_m	cc/2009/681/2025-05-01#art_4/para_1/lbl_c|fr	no	equivalent	no	equivalent			no	equivalent	; et added per German "; und"
+q4_k_m	cc/2010/267/2025-04-01#art_269/para_2/lbl_g|it	no	equivalent	no	equivalent			no	equivalent	Letters and capoverso 1 bis correctly added
+q4_k_m	cc/2011/251/2026-06-01#art_2/para_1/lbl_c|fr	yes	german	yes	german			yes	german	German EFZ left; invented title "femme de restaurant"
+q4_k_m	cc/2011/251/2026-06-01#art_2/para_1/lbl_c|it	yes	german	yes	german			yes	german	German EFZ left (should be AFC)
+q4_k_m	cc/2011/251/2026-06-01#art_2/para_1/lbl_e|fr	yes	REAL	yes	REAL			yes	REAL	EFZ rendered as AFP instead of CFC: wrong qualification level
+q4_k_m	cc/2011/251/2026-06-01#art_2/para_1/lbl_e|it	yes	german	yes	german			yes	german	German EFZ left (should be AFC)
+q4_k_m	cc/2011/251/2026-06-01#art_2/para_1/lbl_h|fr	yes	german	yes	german			yes	german	German EFZ left; title also duplicated
+q4_k_m	cc/2011/251/2026-06-01#art_2/para_1/lbl_h|it	yes	german	yes	german			yes	german	German EFZ left; title imprecise
+q4_k_m	cc/2011/251/2026-06-01#art_4/para_1/lbl_a|it	yes	cosmetic	yes	cosmetic			yes	cosmetic	Capitalised "Confetteria" mid-compound
+q4_k_m	cc/2013/104/2026-01-01#art_7/para/lbl_c|fr	no	equivalent	no	equivalent			no	equivalent	Amount updated; comma difference only
+q4_k_m	cc/2013/793/2026-01-01#art_7/para_1|fr	yes	REAL	yes	REAL			yes	REAL	énergies renouvelables instead of renewable fuels: scope broadened
+q4_k_m	cc/2013/793/2026-01-01#art_7/para_1|it	yes	REAL	yes	REAL			yes	REAL	i rinnovabili drops "carburanti": scope undefined
+q4_k_m	cc/2016/615/2026-01-01#art_11/para_2|it	yes	cosmetic	yes	cosmetic			yes	cosmetic	al 80 should be "all'80"; change otherwise applied
+q4_k_m	cc/2016/615/2026-01-01#art_19/para_4/lbl_c|fr	yes	minor	yes	minor			yes	minor	expérience drops "note"; should be "note d'expérience"
+q4_k_m	cc/2016/615/2026-01-01#art_19/para_4/lbl_c|it	yes	minor	yes	minor			yes	minor	esperienza drops grade notion; Erfahrungsnote imprecise
+q4_k_m	cc/2018/732/2026-06-01#art_4/para_4|fr	yes	stale	yes	minor	yes	stale	yes	stale	Verb "inscrite" unchanged (anzuzeigen); document name non-standard
+q4_k_m	cc/2018/732/2026-06-01#art_4/para_4|it	yes	minor	yes	minor			yes	minor	certificato ... dovere di servizio non-standard document name
+q4_k_m	cc/2018/732/2026-06-01#art_8/para_1|fr	yes	stale	yes	REAL	yes	REAL	yes	REAL	Pendant le service militaire kept though German dropped "im Militärdienst"
+q4_k_m	cc/2018/732/2026-06-01#art_9/para_2|fr	yes	minor	yes	minor			yes	minor	Document name "certificat d'accomplissement du service militaire" non-standard
+q4_k_m	cc/2018/732/2026-06-01#art_9/para_2|it	yes	minor	yes	minor			yes	minor	certificato instead of "attestato"; non-standard document name
+q4_k_m	cc/2019/609/2026-01-01#art_7/para_3|it	no	equivalent	no	equivalent			no	equivalent	Date updated correctly; official contains typo "stato stato"
+q4_k_m	cc/2021/694/2025-02-01#annex_4/lvl_u1/lvl_7/lbl_7_1|fr	no	equivalent	no	equivalent			no	equivalent	Rabbits removed; official restructured punctuation
+q8_0	cc/1955/871_893_899/2025-07-01#art_86_a/para_2|it	no	equivalent	no	equivalent			no	equivalent	All changes applied; "lavorativi" faithful to Arbeitstagen
+q8_0	cc/1985/1778_1778_1778/2025-01-01#art_7/para_1/listintro|it	yes	german	yes	german			yes	german	in folgendem Umfang left in German; garbled sentence
+q8_0	cc/1988/1776_1776_1776/2025-01-01#art_5/para_1|fr	yes	stale	yes	stale			yes	stale	moyen de communication kept; German dropped "der Übermittlung"
+q8_0	cc/1997/2417_2417_2417/2026-02-01#art_14/para_3/lbl_c|fr	no	equivalent	no	equivalent			no	equivalent	Date updated; official also fixed de corégones/Gangfisch
+q8_0	cc/1997/2417_2417_2417/2026-02-01#art_14/para_3/lbl_c|it	no	equivalent	no	equivalent			no	equivalent	Date updated; official added "(Gangfisch)" extra
+q8_0	cc/1997/2417_2417_2417/2026-02-01#art_15/para_3|it	no	equivalent	no	equivalent			no	equivalent	3 m vs "tre metri" harmless
+q8_0	cc/2000/554/2025-08-01#art_16/para_4|fr	yes	german	yes	german			yes	german	Transplantationsgesetz left in German
+q8_0	cc/2000/554/2025-08-01#art_16/para_4|it	yes	german	yes	german			yes	german	Transplantationsgesetzes left in German
+q8_0	cc/2003/735/2025-01-01#art_6/para_2|it	no	equivalent	no	equivalent			no	equivalent	Alpha-2 and Swiss list applied; official minor rewording
+q8_0	cc/2003/735/2025-01-01#art_7/para_3|fr	yes	minor	yes	minor			yes	minor	Invented abbreviation OFFA instead of OFAG; website change applied
+q8_0	cc/2009/681/2025-05-01#art_12_a/para_1|fr	no	equivalent	no	equivalent			no	equivalent	Date updated; official reworded whole sentence
+q8_0	cc/2009/681/2025-05-01#art_3/para_1|it	yes	stale	yes	stale			yes	stale	Passenger/goods restriction still listed; German removed it
+q8_0	cc/2009/681/2025-05-01#art_4/para_1/lbl_b|fr	no	equivalent	no	equivalent			no	equivalent	et removed per German; official kept it
+q8_0	cc/2009/681/2025-05-01#art_4/para_1/lbl_c|fr	no	equivalent	no	equivalent			no	equivalent	; et added per German "; und"
+q8_0	cc/2009/681/2025-05-01#art_4/para_1/lbl_c|it	no	equivalent	yes	cosmetic	no	cosmetic	no	cosmetic	; ed added for "; und"; official uses "e"
+q8_0	cc/2010/267/2025-04-01#art_269/para_2/lbl_g|it	yes	german	yes	german			yes	german	Absatz 1 bis left in German
+q8_0	cc/2011/251/2026-06-01#art_2/para_1/lbl_c|fr	yes	REAL	yes	REAL			yes	REAL	EFZ rendered as AFP: wrong qualification level; title invented
+q8_0	cc/2011/251/2026-06-01#art_2/para_1/lbl_c|it	yes	german	yes	german			yes	german	German EFZ left (should be AFC); title not standard
+q8_0	cc/2011/251/2026-06-01#art_2/para_1/lbl_e|fr	yes	REAL	yes	REAL			yes	REAL	EFZ rendered as AFP instead of CFC: wrong qualification level
+q8_0	cc/2011/251/2026-06-01#art_2/para_1/lbl_h|fr	yes	german	yes	german			yes	german	German EFZ left; title also duplicated
+q8_0	cc/2011/251/2026-06-01#art_4/para_1/lbl_a|it	no	exact	no	exact			no	exact	Matches official ignoring whitespace
+q8_0	cc/2013/104/2026-01-01#art_7/para/lbl_c|fr	no	equivalent	no	equivalent			no	equivalent	Amount updated; comma difference only
+q8_0	cc/2013/793/2026-01-01#art_7/para_1|it	yes	REAL	yes	REAL			yes	REAL	combustibili (Brennstoffe) instead of "carburanti" (Treibstoffe): wrong fuel category
+q8_0	cc/2016/615/2026-01-01#art_11/para_2|it	yes	cosmetic	yes	cosmetic			yes	cosmetic	al 80 should be "all'80"; change otherwise applied
+q8_0	cc/2016/615/2026-01-01#art_19/para_4/lbl_c|fr	yes	minor	yes	minor			yes	minor	expérience drops "note"; should be "note d'expérience"
+q8_0	cc/2016/615/2026-01-01#art_19/para_4/lbl_c|it	yes	minor	yes	minor			yes	minor	esperienza drops grade notion; Erfahrungsnote imprecise
+q8_0	cc/2018/732/2026-06-01#art_4/para_4|fr	yes	minor	yes	minor			yes	minor	Document name "certificat d'accomplissement du service militaire" non-standard
+q8_0	cc/2018/732/2026-06-01#art_4/para_4|it	yes	minor	yes	minor			yes	minor	certificato instead of "attestato"; non-standard document name
+q8_0	cc/2018/732/2026-06-01#art_8/para_1|fr	yes	stale	yes	REAL	yes	REAL	yes	REAL	Pendant le service militaire kept though German dropped "im Militärdienst"
+q8_0	cc/2018/732/2026-06-01#art_9/para_2|fr	yes	stale	yes	minor	yes	stale	yes	stale	Verb "inscrite" unchanged (anzuzeigen); document name non-standard
+q8_0	cc/2018/732/2026-06-01#art_9/para_2|it	yes	minor	yes	minor			yes	minor	annotata nel certificato non-standard verb and document name
+q8_0	cc/2019/609/2026-01-01#art_7/para_3|it	no	equivalent	no	equivalent			no	equivalent	Date updated correctly; official contains typo "stato stato"
+q8_0	cc/2021/694/2025-02-01#annex_4/lvl_u1/lvl_7/lbl_7_1|fr	no	equivalent	no	equivalent			no	equivalent	Rabbits removed; official restructured punctuation

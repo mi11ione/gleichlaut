@@ -247,9 +247,12 @@ def fedlex_compare():
     F = json.load(open(os.path.join(core.ROOT, "eval", "results", "fedlex.json"), encoding="utf-8"))
     s8 = F[next(k for k in F if k.startswith("shipped"))]
     R70 = [json.loads(l) for l in open(os.path.join(DATA, "runs", "70b_fedlex_shipped.jsonl"), encoding="utf-8")]
-    def side(labels_file, n, exact, flagged):
+    def side(labels_file, n, exact, flagged, build=None):
         lines = open(os.path.join(LABELS, labels_file), encoding="utf-8").read().splitlines()[1:]
-        c = Counter(l.split("\t")[2] for l in lines); real, su = c.get("REAL", 0), c.get("stale", 0) + c.get("german", 0)
+        if build:                                    # fedlex_gguf_unflagged.tsv: build, key, A/B/T labels, final_fix, final
+            lines = [l for l in lines if l.split("\t")[0] == build]; c = Counter(l.split("\t")[9] for l in lines)
+        else: c = Counter(l.split("\t")[2] for l in lines)
+        real, su = c.get("REAL", 0), c.get("stale", 0) + c.get("german", 0)
         return dict(n=n, exact=exact, exact_pct=round(100 * exact / n, 1), flagged=flagged, flag_rate=round(100 * flagged / n, 1),
                     ready=n - flagged, ready_pct=round(100 * (n - flagged) / n, 1), ready_nonexact_labelled=len(lines), classes=dict(sorted(c.items())),
                     unflagged_real=real, unflagged_real_pct=round(100 * real / n, 2),
@@ -260,8 +263,21 @@ def fedlex_compare():
     a = side("fedlex_shipped_unflagged.tsv", n, s8["all"]["exact"], s8["all"]["flagged"])
     b = side("fedlex70b_shipped_unflagged.tsv", n, sum(bool(r.get("exact")) for r in R70), sum(r["flagged"] for r in R70))
     assert len(R70) == n
-    return {"n": n, "rules_exact": rules, "rules_exact_pct": round(100 * rules / n, 1), "8b_mlx_dwq": a, "70b": b,
-            "decision": "Fedlex stays 8B; every draft goes to review" if not b["passes"] else "70B passes R0"}
+    out = {"n": n, "rules_exact": rules, "rules_exact_pct": round(100 * rules / n, 1), "8b_mlx_dwq": a, "70b": b,
+           "decision": "Fedlex stays 8B; every draft goes to review" if not b["passes"] else "70B passes R0"}
+    for build in ("q4_k_m", "q8_0"):                 # PREREG R6: the shipped GGUF builds on the same items (CPU runners)
+        rel = os.path.join(DATA, "runs", f"8b_{build}_fedlex_shipped.jsonl")
+        if not os.path.exists(rel): continue
+        R = [json.loads(l) for l in open(rel, encoding="utf-8")]; assert len(R) == n
+        g = side("fedlex_gguf_unflagged.tsv", n, sum(bool(r.get("exact")) for r in R), sum(bool(r["flagged"]) for r in R), build)
+        g["exact_vs_mlx_pts"] = round(g["exact_pct"] - a["exact_pct"], 1)
+        g["cpu_secs_per_item"] = round(sum(r.get("wall_secs", 0) for r in R) / n, 1)
+        out[f"8b_gguf_{build}"] = g
+    if any(k.startswith("8b_gguf_") for k in out):
+        out["decision_r6"] = ("statutes run the shipped 8B GGUF; every draft goes to review" if all(
+            out[k]["exact_vs_mlx_pts"] >= -10 for k in out if k.startswith("8b_gguf_")) else
+            "a GGUF build is > 10 points below the MLX build: statute claims name the MLX build")
+    return out
 
 
 def m3():

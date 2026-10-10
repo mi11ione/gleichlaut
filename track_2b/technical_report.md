@@ -101,8 +101,9 @@ as size: Q8_0 ties the 70B on exact match and is within the paired CI on edits s
 editing time matters (ready drafts needing a fix: 3 of 66, against 25 of 62 for Q8_0 and 33 of 60 for Q4_K_M, mostly one
 insurance term). The research-phase MLX build had flagged 85.0% on dev
 items without the re-ask. Federal statutes (pre-registered R5, 120 paragraphs): the 70B is no better (exact
-48.3% vs 50.0%, measured with the 8B MLX build; 2 vs 0 real errors among drafts marked ready; the GGUF builds on the
-same items are pre-registered as R6 and running), so statutes use the 8B on CPU, and their drafts go to
+48.3% vs 50.0% for the 8B MLX build; 2 vs 0 real errors among drafts marked ready). The shipped GGUF builds on the same
+items (R6) reach 45.8% (Q4_K_M) and 47.5% (Q8_0) but mark 4 drafts ready that change a provision, so no size passes the
+rule there; statutes use the 8B on CPU, and their drafts go to
 review because German job titles ("EFZ") need a terminology list that only exists for the SL so far.
 
 ### 3.3 Where Apertus fell short, and what does that job instead
@@ -149,6 +150,8 @@ German changes. Every ready non-exact draft was read in full; a seeded 20 flagge
 | Apertus 8B (MLX DWQ), no re-ask | dev | 120 | 15.0% | +9.2 [3.3, 15.8] | 85.0% | 15.0% | 1 / 0 / 0 | FAIL |
 | Statutes: 8B (MLX DWQ) | Fedlex (dev) | 120 | 50.0% | rules 35.0% | 31.7% | 68.3% | 0 / 4 / 4 | review all |
 | Statutes: 70B | Fedlex (dev) | 120 | 48.3% | rules 35.0% | 23.3% | 76.7% | 2 / 1 / 5 | review all |
+| Statutes: 8B GGUF Q4_K_M (R6) | Fedlex (dev) | 120 | 45.8% | rules 35.0% | 28.3% | 71.7% | 4 / 4 / 6 | review all |
+| Statutes: 8B GGUF Q8_0 (R6) | Fedlex (dev) | 120 | 47.5% | rules 35.0% | 26.7% | 73.3% | 4 / 3 / 6 | review all |
 
 ![Exact-match gain per arm](docs/fig_arms.svg)
 
