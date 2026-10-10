@@ -10,15 +10,16 @@ something different in each language is a condition nobody can apply consistentl
 **[Open the review register](https://gleichlaut.mi11ion.io/)** · **[watch the demo](https://gleichlaut.mi11ion.io/demo.mp4)** · [project README](track_2b/README.md) ·
 [technical report](track_2b/technical_report.md) · Hack Apertus, Track 2B, team 444
 
-- **Runs air-gapped on an ordinary CPU** with Apertus 8B: on 166 held-out amendments, with every rule fixed in advance,
-  its drafts need 33.1% fewer token edits to reach BAG's published text than the old text with updated numbers (about
-  670 fewer word-level edits a month at today's volume), and the
-  62 drafts it marks ready have **0 meaning errors**, stale changes or German left (25 still need a small fix,
-  mostly one insurance term; 166 amendments = 83 German changes in French and Italian).
-- **The 70B where an endpoint you control is available:** 42.4% fewer token edits, ready drafts that rarely need a fix
-  to the amendment (3 of 66), at **CHF 0.0024 per draft**.
-- **The audit needs no model at all:** it reduces 1,688 limitations to 27 findings (18 issues to decide), including the 10 divergences an
-  earlier census had listed; within its scope (numbers bound to a unit) it finds 93.0% of planted changes.
+- **The audit runs today, with no model.** It reads all 1,688 limitations in German, French and Italian and turns them
+  into 27 findings in 18 issues to decide; blind annotators confirm 16 of the 27 as real, among them the 10
+  divergences an earlier census had listed (Nemluvio, Diaphin). On 1,000 divergences planted into clean texts it finds
+  93.0% of changed numbers, 73.0% of changed units and 75.0% of deleted clauses.
+- **Drafting is a review aid, air-gapped on a CPU** with Apertus 8B. When the German changes, Apertus pre-fills the French
+  and Italian, code writes every number, and frozen checks say why a draft needs a look. On 166 held-out amendments
+  (83 German changes) its drafts need 33.1% fewer word edits, about 670 a month at today's volume, and its 62 ready
+  drafts have **0 meaning errors**. On two live months no ready draft changed a meaning either, but neither month met
+  our pre-registered rule: the checks flagged 81.8–92.7% of drafts, so a translator reviews nearly everything.
+- **The 70B where an endpoint you control is available:** 42.4% fewer word edits, at **CHF 0.0024 per draft**.
 - **Every number is checkable:** `cd track_2b && make run` (Docker, CPU, about a minute, no network) re-runs every
   recorded 70B request and every recorded request of the 8B Q8_0 CPU run, re-scores the 8B runs and re-derives every figure; `make local-run` does the same without Docker.
 

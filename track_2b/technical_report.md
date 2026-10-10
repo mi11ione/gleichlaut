@@ -34,10 +34,11 @@ updated by code): **+11.4 points, 95% CI [4.8, 18.7]**; against rules+, our stro
 and a rerun with a new seed passes the same rule (+12.0 points, 41.6% ready). The annotators behind that 0 were tested (pre-registered R11): a meaning error planted into each of 66 ready drafts was labelled one by both of them 66 of 66 times (95% CI lower bound 94.5%), with BAG's text shown or hidden. **The shipped Apertus 8B, on a CPU,
 passes the same pre-registered rule** (Q8_0, the default build: +11.4 points [4.8, 18.7], 37.3% ready; Q4_K_M, for an
 8 GiB box: +10.8 points [4.8, 17.5], 36.1% ready; 0 meaning errors among ready drafts in both), so the default deployment
-is fully air-gapped. At Q8_0 the 8B matches the 70B on identical drafts (17.5%), with
+is fully air-gapped. At Q8_0 the 8B has the same identical-draft rate as the 70B (17.5% each; no equivalence test), with
 0 errors of any severe kind among its 62 ready drafts; the 70B still saves more edits (42.4% vs 33.1% for Q8_0, paired
 difference 9.3 points [−1.3, 20.2]; vs 20.9% for Q4_K_M) and its ready drafts rarely need a fix to the amendment (3 of 66). The audit reduces 1,688 limitations to
-**27** findings that contain **all 10** known divergent limitations, **5** new confirmed problems (typos next to
+**27** findings, **16** of them real (59.3%), that contain **all 10** known divergent limitations (not a recall
+measure: the rules were written around the census that found them), **5** new confirmed problems (typos next to
 numbers) and Keytruda's Italian field holding the French text (spotted by hand before the language check existed).
 On 1,000 divergences planted into clean limitations its recall is 77.2% [74.5, 79.7]: 93.0% for a changed number,
 94.0% for a field in the wrong language, 51.0% for a typo next to a number. Its scope is numbers bound to a unit: at any
@@ -88,12 +89,12 @@ evaluation only.
 | SL drafting | Apertus v1.5 70B | Public AI through a budget gateway; temperature 0; plain user messages; served model logged |
 | SL and statute drafting (default) | Apertus v1.5 8B GGUF Q8_0, sha256-pinned | 4-core CPU GitHub runners via llama.cpp (R1/M2, 200.5 s per draft); greedy; digit and number-word logit mask |
 | SL and statute drafting (8 GiB option) | Apertus v1.5 8B GGUF Q4_K_M, sha256-pinned | the same runners and decoding (R1/M1, 153.4 s per draft) |
-| research arms (dev, statutes) | Apertus v1.5 8B, MLX 4-bit DWQ | a laptop; this build agreed with bf16 on 548 of 648 decisions in our parity battery, the GGUF on 622 |
+| research arms (dev, statutes) | Apertus v1.5 8B, MLX 4-bit DWQ | a laptop; this build agreed with the bf16 DPO checkpoint on 548 of 648 decisions in our parity battery, the GGUF on 622 |
 
 We do not control which weights Public AI serves. The 70B name is answered by two backends (`tp2` and `fp1-nes`,
 logged per call where the API reports it: 202 / 81 calls in the seeded rerun); `fp1-nes` also answers the
 `apertus-v1.5-8b` name with byte-identical greedy outputs in 760 of 792 cells. We infer that it serves the 70B from MMLU
-(84.4% on 250 questions, against 70.8% for the v1 8B route), which is evidence, not proof. So every 8B number here comes
+(84.4% on 250 questions, against 70.8% for the v1 8B route; that comparison mixes model version and size), which is evidence, not proof. So every 8B number here comes
 from local runs, and the 70B rows describe "the 70B as Public AI served it"; the 8B rows carry a digit and number-word
 logit mask that the API cannot offer the 70B (the 70B's 3 number-word drafts were all flagged).
 
@@ -104,8 +105,8 @@ text, numbers as slot codes; the model returns the amended paragraph. The 70B wr
 drafts it wrote a number word itself ("due", "quatre", "quattro"), and all 3 were flagged; the 8B cannot emit either.
 **Size is measured on the same items in both directions.** SL conditions (pre-registered R1, same pipeline, same 166
 items): both 8B GGUF builds pass the rule (Q4_K_M: flagged 63.9%, ready drafts 0 meaning errors and 3 stale or German;
-Q8_0: flagged 62.7%, ready drafts 0 / 0 / 0), so under R1 the SL default is the local 8B. Quantisation matters about
-as much as size: Q8_0 ties the 70B on exact match; on edits saved (33.1% vs 42.4%) the aggregate difference [−1.3, 20.2]
+Q8_0: flagged 62.7%, ready drafts 0 / 0 / 0), so under R1 the SL default is the local 8B. In this pipeline, with one run per
+build and no bf16 8B run, quantisation mattered about as much as size: Q8_0 has the same exact-match rate as the 70B (no equivalence test); on edits saved (33.1% vs 42.4%) the aggregate difference [−1.3, 20.2]
 includes zero, though the 70B needs fewer edits on 81 items and Q8_0 on 26; Q4_K_M is clearly behind (20.9%,
 difference [8.7, 34.9]). The 70B is worth its endpoint where
 editing time matters (ready drafts needing a fix: 3 of 66, against 25 of 62 for Q8_0 and 33 of 60 for Q4_K_M, mostly one
@@ -127,7 +128,7 @@ review because German job titles ("EFZ") need a terminology list that only exist
 | Judge DE/FR/IT equivalence (9 known Fedlex divergences) | as a yes/no answer, 8B 0 of 9 (0), 70B 0 of 9 ("they differ" in 1 and 2 of 270 answers); the 8B's log-probabilities rank the divergent language first in 3 (6) of 9, AUROC 0.77 (0.81; order-fragile on MLX only), which the API does not expose for the 70B | deterministic checks and the audit |
 | Type numeric conditions | 8B operator accuracy 39% (36%), "≥" prior; errors correlated across languages | code (slots, audit) |
 | SL drafting with the 8B, no re-ask (dev 120) | flagged 82.5% (85.0%); 0 (1) ready drafts reverse a meaning | the shipped GGUF build with the full pipeline (passes R1) |
-| SL terminology with the 8B GGUF (held-out 166) | 29 of 60 ready drafts use "assurance obligatoire de maladie" for BAG's "…des soins" | the 70B, or a terminology list |
+| SL terminology with the 8B GGUF (held-out 166) | 29 of 60 ready drafts use "assurance obligatoire de maladie" for BAG's "…des soins"; a pipeline gap: the prompt does not supply BAG's house terms | the termbase note; supplying house terms in the prompt (R12) |
 | SL drafting, 70B with the earlier checks (out-of-sample 242) | failed the rule: 4.1% of items with German left, unflagged | copied-from-German, terminology and vocabulary checks, then a new held-out set |
 | Self-correction | 8B greedy retry fixed 1 of 23 (0 of 26); 70B re-ask fixed 3 of 98 | one re-ask, kept only if every check passes |
 
@@ -229,7 +230,7 @@ every number in this report to a results file; CI fails on drift. Pre-registrati
 with run timestamps from the gateway ledger. The first out-of-sample run failed its rule; it is reported.
 
 **Coding assistants and labellers.** Code written with Claude Code agents (Anthropic) under the team's direction;
-labels by blind Claude annotators. Apertus is the only model at runtime, and no model judges outputs.
+labels by blind Claude annotators. Apertus is the only model at runtime, and no model judges outputs at runtime; the evaluation labels come from blind Claude annotators.
 
 ## 8. Integration and next steps
 

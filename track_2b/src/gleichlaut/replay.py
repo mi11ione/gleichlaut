@@ -90,24 +90,37 @@ def _cmp(a, b, path=""):
 
 def headline(res):
     f = res["fresh166"]["summary"]["all"]; d = res["dev120_8b"]["summary"]["all"]; o = res["oos242"]["summary"]["all"]
-    c = res["cost_fresh166"]
-    L = ["", "HEADLINE (fresh 2025 held-out set, 166 FR/IT items, guards frozen before any output existed)",
-         f"  Apertus 70B pipeline  exact {f['exact']['model']:.1f}% vs rules-only {f['exact']['rules']:.1f}%  "
-         f"(+{f['exact']['delta']:.1f}, 95% CI [{f['exact']['ci95'][0]:+.1f}, {f['exact']['ci95'][1]:+.1f}])",
-         f"  ready (unflagged) {f['unflagged']}/{f['n']} = {f['ready_rate']:.1f}%   flagged {f['flag_rate']:.1f}%   "
-         f"unflagged real errors {f['unflagged_REAL']}  stale {f['unflagged_stale']}  untranslated {f['unflagged_german']}  "
-         f"(95% upper bound {f['wilson95_severe_among_ready'][1]:.1f}% of ready drafts)",
-         f"  pass rule (pre-registered): {'PASS' if f['pass'] else 'FAIL'}   cost CHF {res['economics']['chf_per_item_infomaniak']:.4f}/item "
-         f"(Swiss provider price; USD {c['usd_per_item']:.4f} at the evaluation provider)",
-         *[f"  Apertus 8B GGUF {name} on CPU, same pipeline (R1): exact {res[k]['exact']['model']:.1f}% "
-           f"(+{res[k]['exact']['delta']:.1f}), ready {res[k]['ready_rate']:.1f}%, "
-           f"pass rule {'PASS' if res[k]['pass'] else 'FAIL'}: {role}"
+    c = res["cost_fresh166"]; a = res["audit"]; ar = res["audit_recall"]["types"]; g = res["audit_grouping"]
+    yn = lambda ok: "PASS" if ok else "FAIL"
+    L = ["", "HEADLINE",
+         f"  Audit (no model, 6 Oct 2026 register): {a['v2']['findings_all_kinds']} findings in {g['issues']} issues, "
+         f"{a['v2']['real_all_kinds']} real ({a['v2']['precision_all_pct']:.1f}%); planted-divergence recall: changed number "
+         f"{ar['number']['recall_pct']:.1f}%, changed unit {ar['unit']['recall_pct']:.1f}%, deleted clause {ar['deletion']['recall_pct']:.1f}%, "
+         f"typo {ar['typo']['recall_pct']:.1f}%",
+         "  Drafting, fresh 2025 held-out set (166 FR/IT items, guards frozen before any output existed), pre-registered rule R0:",
+         *[f"  Apertus 8B GGUF {name} on CPU ({role}): exact {res[k]['exact']['model']:.1f}% vs rules-only {res[k]['exact']['rules']:.1f}% "
+           f"(+{res[k]['exact']['delta']:.1f}, 95% CI [{res[k]['exact']['ci95'][0]:+.1f}, {res[k]['exact']['ci95'][1]:+.1f}]), "
+           f"ready {res[k]['ready_rate']:.1f}%, {yn(res[k]['pass'])}"
            for k, name, role in (("m1_q8_0", "Q8_0", "the air-gapped default"), ("m1_q4_k_m", "Q4_K_M", "the 8 GiB option"))
            if res.get(k)],
+         f"  Apertus 70B, recorded Public AI endpoint: exact {f['exact']['model']:.1f}% (+{f['exact']['delta']:.1f}, 95% CI "
+         f"[{f['exact']['ci95'][0]:+.1f}, {f['exact']['ci95'][1]:+.1f}]), ready {f['unflagged']}/{f['n']} = {f['ready_rate']:.1f}%, "
+         f"meaning errors among ready {f['unflagged_REAL']} (95% upper bound {f['wilson95_severe_among_ready'][1]:.1f}%), {yn(f['pass'])}, "
+         f"CHF {res['economics']['chf_per_item_infomaniak']:.4f}/item (Swiss provider price; USD {c['usd_per_item']:.4f} at the evaluation provider)",
          "", "WHERE IT FELL SHORT (same pass rule)",
-         f"  out-of-sample 2026 run, guards v2: {'PASS' if o['pass'] else 'FAIL'} (unflagged untranslated {o['unflagged_german_per100']:.2f}% > 2%)",
-         f"  Apertus 8B (MLX DWQ, dev 120, guards3, no re-ask): {'PASS' if d['pass'] else 'FAIL'} (flagged {d['flag_rate']:.1f}% > 70%; "
-         f"{d['unflagged_REAL']} unflagged real error)", ""]
+         *[f"  live month {lbl}: " + "; ".join(
+               f"{m} {yn(r['month']['meets_r0'])} (exact {r['month']['exact']}/{r['month']['n']}, flagged "
+               f"{r['month']['criteria']['flag_rate'][0]:.1f}% > 70%, meaning errors among ready {r['month']['unflagged_real_n']})"
+               for m, r in res[k]["r0"].items())
+           for k, lbl in (("shadow_20260801_20260901", "Aug 2026 (R10, prospective)"),) if res.get(k, {}).get("r0")],
+         *[f"  live month Sep 2026 (R7): flagged " + ", ".join(f"{m} {res[k][m]['flag_rate']:.1f}%" for m in ("q8_0", "q4_k_m", "70b") if m in res[k])
+           + f"; {res[k]['ready_errors_total']} errors among {res[k]['ready_total']} ready"
+           for k in ("shadow_20260901_20261001",) if res.get(k)],
+         f"  out-of-sample 2026 run, guards v2: {yn(o['pass'])} (unflagged untranslated {o['unflagged_german_per100']:.2f}% > 2%)",
+         f"  Apertus 8B (MLX DWQ, dev 120, guards3, no re-ask): {yn(d['pass'])} (flagged {d['flag_rate']:.1f}% > 70%; "
+         f"{d['unflagged_REAL']} unflagged real error)",
+         f"  over-flagging: {res['fresh166']['summary']['flagged_sample']['good']} of a seeded {res['fresh166']['summary']['flagged_sample']['n']} flagged 70B drafts needed no change; "
+         f"{f['exact_flagged']} of the {f['exact_n']} drafts identical to BAG's text were flagged", ""]
     return "\n".join(L)
 
 

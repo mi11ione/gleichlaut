@@ -261,7 +261,7 @@ footer p{margin:6px 0 0;overflow-wrap:anywhere;max-width:150ch}
 BODY = r"""<div class="app">
 <header class="bar">
  <span class="wm">Gleichlaut</span>
- <nav class="views" role="tablist" aria-label="Views"><button class="view" role="tab" type="button" id="t-drafts" aria-controls="p-drafts"></button><button class="view" role="tab" type="button" id="t-audit" aria-controls="p-audit"></button></nav>
+ <nav class="views" role="tablist" aria-label="Views"><button class="view" role="tab" type="button" id="t-audit" aria-controls="p-audit"></button><button class="view" role="tab" type="button" id="t-drafts" aria-controls="p-drafts"></button></nav>
  <div class="tools"><span id="progress"></span>
   <details class="menu" id="xmenu"><summary class="box" id="x-sum"></summary><div class="mm">
    <button class="tb" id="x-dec" type="button"></button><button class="tb" id="x-xlf" type="button"></button><button class="tb" id="x-xlf12" type="button"></button>
@@ -747,7 +747,7 @@ function mark(it){if(!it)return ['<span class="mk o">·</span>',""];var d=dec(it
  if(it.status==="human")return ['<span class="mk">h</span>',"human"];
  return it.status==="ready"?['<span class="mk">✓</span>',"ready"]:it.lvl==="fine"?['<span class="mk f">~</span>',"fine"]:['<span class="mk r">▲</span>',"flagged"]}
 // ------------------------------------------------------------------ header and chrome
-var TAB="drafts";        // landing view: 01 Drafts (Apertus drafts, code checks); #audit opens 02 Register audit, #wbNNN a draft
+var TAB=AU?"audit":"drafts";   // landing view: the register audit (runs today, no model); #drafts or #wbNNN opens the drafts
 function kv(id,rows){if(!$(id))return;$(id).innerHTML=rows.map(function(r){return "<dt"+(r[3]?' title="'+esc(r[3])+'"':"")+">"+esc(r[0])+"</dt><dd"+(r[2]?' class="'+r[2]+'"':"")+">"+esc(r[1])+"</dd>"}).join("")}
 function ddate(s){return /^\d{8}$/.test(s||"")?s.slice(6,8)+"."+s.slice(4,6)+"."+s.slice(0,4):(s||"?")}
 function grp(n){var s=String(n==null?"—":n);return /^\d{4,6}$/.test(s)?s.slice(0,-3)+(UL==="en"?",":"’")+s.slice(-3):s}

@@ -55,14 +55,15 @@ def test_audit_tab_opens_with_hash_and_german_default():
     assert "Von Amtes wegen" in s and "Sprachdienst" in s and ">GÄL<" not in s
 
 
-def test_landing_is_the_drafts_tab_and_audit_by_hash():
+def test_landing_is_the_audit_tab_and_drafts_by_hash():
     C = _page()
-    s = _dom(C["p"], "", "fr-CH,fr")                 # 01 Drafts (Apertus drafts, code checks) first; the audit's headline beside it
-    assert re.search(r'id="t-drafts"[^>]*aria-selected="true"', s) and "Brouillons" in s
-    assert re.search(r'id="t-audit"[^>]*>[^<]*<span class="c"[^>]*>18</span>', s)          # the audit's issue count in the bar
-    assert re.search(r'id="ctxline"[^>]*><b>[^<]*Apertus 70B', s) and "moins de corrections (optionnelle)" in s and "Exporter les décisions (JSON)" in s
-    s = _dom(C["p"], "#audit", "it-CH")
+    s = _dom(C["p"], "", "it-CH")                    # the audit runs today with no model: it is the landing view, first in the bar
     assert re.search(r'id="t-audit"[^>]*aria-selected="true"', s) and "Verifica del registro" in s
+    assert re.search(r'id="t-audit"[^>]*>[^<]*<span class="c"[^>]*>18</span>', s)          # the audit's issue count in the bar
+    assert s.index('id="t-audit"') < s.index('id="t-drafts"')
+    s = _dom(C["p"], "#drafts", "fr-CH,fr")
+    assert re.search(r'id="t-drafts"[^>]*aria-selected="true"', s) and "Brouillons" in s
+    assert re.search(r'id="ctxline"[^>]*><b>[^<]*Apertus 70B', s) and "moins de corrections (optionnelle)" in s and "Exporter les décisions (JSON)" in s
     s = _dom(C["p"], "#wb013", "en")                 # one numbering: the address is the number
     assert re.search(r'<tr class="cnt" data-pair="wb013" aria-selected="true"><td class="m">.*?</td><td class="m">.*?</td><td class="prd"[^>]*>[^<]*<span class="pc">[^<]*· wb013</span>', s) and "No. wb013" in s
     assert "explanation (FR)" in s and "Check detail: all" in s

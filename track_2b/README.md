@@ -33,11 +33,12 @@ reviewer's own language. One re-ask with the complaints; the new draft is kept o
 
 **Audit.** Reads every current limitation in all three languages and lists numbers that disagree, fields written in the
 wrong language and typos next to numbers. On the 6 Oct 2026 feed it reduces 1,688 limitations to **27 findings**: all
-**10** known divergent limitations, plus **6** more problems: five typos next to numbers that nobody had listed, and
+**10** known divergent limitations (a check, not a recall measure: the rules were written around the census
+that found them; recall is measured on planted faults below), plus **6** more problems: five typos next to numbers that nobody had listed, and
 Keytruda's Italian field (which we had spotted by hand before), which has held the French text since 1 Aug 2026. It
 also learns from BAG's own corrections: where BAG replaced a term in some texts, it flags the texts that still use the
 old one. That finds four French texts naming the wrong drug class and four ungrammatical Italian ones (8 of 11 notices
-confirmed). In the review register the 27 findings and 11 terminology notices become 18 issues, one decision each:
+confirmed). In all, blind annotators confirm 16 of the 27 findings as real (59.3%). In the review register the 27 findings and 11 terminology notices become 18 issues, one decision each:
 sibling products that share a divergence are one issue. On two lists it was never designed on, MiGeL and the Analysenliste, **7 of 11** findings are real; the
 Analysenliste's Italian, for example, makes a test billable after 13 repetitions where German and French say 14. Each
 finding was read by blind Claude annotators (`eval/labels/`), and the confirmed counts above are theirs; the audit itself
@@ -59,7 +60,7 @@ Test set: 166 French/Italian amendments from SL changes between Jun 2025 and Feb
 during design. The checks and all their resources were hashed before any output existed (the freeze predates this
 repository; `eval/prereg/PREREG.md` says what can and cannot be verified from here).
 
-| | Apertus 8B Q8_0, CPU, 16 GiB (default) | Apertus 8B Q4_K_M, CPU, 8 GiB | Apertus 70B, certified endpoint | No-model start |
+| | Apertus 8B Q8_0, CPU, 16 GiB (default) | Apertus 8B Q4_K_M, CPU, 8 GiB | Apertus 70B, Public AI endpoint (recorded) | No-model start |
 |---|---|---|---|---|
 | Draft identical to the text BAG published | 17.5% (+11.4 points [4.8, 18.7]) | 16.9% (+10.8 points [4.8, 17.5]) | **17.5%** (+11.4 points [4.8, 18.7]) | 6.0% (old text, numbers updated by code) |
 | Token edits still needed to reach BAG's text | 33.1% fewer [20.8, 43.9] | 20.9% fewer [7.6, 31.9] | **42.4% fewer** [31.0, 54.1] | baseline |
@@ -69,6 +70,9 @@ repository; `eval/prereg/PREREG.md` says what can and cannot be verified from he
 | Pre-registered pass rule | **PASS** | **PASS** | **PASS** (and again on a rerun with a new seed) | |
 
 **Would the annotators have seen a meaning error?** Measured (pre-registered R11): one meaning error of 7 kinds (dropped condition, and/or, obligation, scope, direction, negation, number) planted into each of 66 ready drafts was labelled a meaning error by both blind annotators 66 of 66 times (95% CI lower bound 94.5%), with BAG's published text shown and with it hidden alike, and 0 of the same 66 drafts left untouched were; real errors are subtler: of 3 drafts labelled a meaning error earlier, both annotators agree on 1 ([eval/labels/PROTOCOL.md](eval/labels/PROTOCOL.md)).
+
+The checks are tuned to miss nothing, and it shows: 13 of a seeded 20 flagged 70B drafts needed no change, and 12 of
+the 29 drafts identical to BAG's text were flagged.
 
 How much rests on one pattern: a single boilerplate family (one insurance-term change across many products) supplies
 half of the 70B's ready drafts. Without it, 75.8% of drafts are flagged, which would fail the 70% flag cap of our own
@@ -119,7 +123,7 @@ code: [docs/failure-modes.md](docs/failure-modes.md).
 German changes from the public feed, drafts them, and grades itself against what BAG publishes. First user group: BAG's
 Sektion Arzneimittelaufnahmen and the ePL team. Operator runbook: [docs/operations.md](docs/operations.md).
 
-**The first shadow month has run** (1 Sep → 1 Oct 2026, pre-registered R7, `data/shadow/`): 52 FR/IT items; 8 went
+**The first shadow month has run** (1 Sep → 1 Oct 2026, R7, its rule written after the Q4_K_M outputs existed; `data/shadow/`): 52 FR/IT items; 8 went
 straight to a translator (rewrites, over-long texts). On this month the drafting fails the 70% flag cap of our own rule: 32 of the other 41 add a new standard
 sentence ("Der Indikationscode dieser Limitierung …"), and the no-model start got 0 of 41 right. Apertus drafted 3 (8B)
 to 4 (70B) identical to BAG's text, and the checks flagged 82.9–92.7% of drafts, mostly for German left in that
@@ -192,8 +196,8 @@ runtime dependencies: [docs/dependencies.md](docs/dependencies.md); target archi
   exceptions: R0 predates this repository, R7 was written after the first shadow-month outputs were seen, and the
   default build was chosen after both 8B results.
 - **Labelling you can re-run:** every ready draft was read in full and labelled twice, disagreements broken by a third
-  blind Claude annotator (agreement κ 0.532; for the headline 70B run the first labels are the research labeller's,
-  the second and third blind). The worklists, the exact annotator instructions
+  blind Claude annotator (agreement κ 0.532; for the headline 70B run the first labels are the research labeller's, who
+  knew each draft's guard verdict, the second and third blind). The worklists, the exact annotator instructions
   (`eval/labels/PROTOCOL.md`) and every label are in `eval/labels/`; a BAG translator can be the next annotator on the
   same worklists, with no change to the pipeline.
 - **Every number is traceable:** `claims.tsv` maps every number in this README, the report and the form notes to a
