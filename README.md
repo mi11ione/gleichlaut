@@ -7,7 +7,7 @@ Why it matters: in today's published list, Nemluvio is reimbursed "every 8 weeks
 Italian; Diaphin's surcharge is 6% in German and French and 12% in Italian. A reimbursement condition that says
 something different in each language is a condition nobody can apply consistently.
 
-**[Open the review register](https://mi11ione.github.io/gleichlaut/)** · [project README](track_2b/README.md) ·
+**[Open the review register](https://gleichlaut.mi11ion.io/)** · [project README](track_2b/README.md) ·
 [technical report](track_2b/technical_report.md) · Hack Apertus, Track 2B, team 444
 
 - **Runs air-gapped on an ordinary CPU** with Apertus 8B: on 166 held-out amendments, with every rule fixed in advance,

@@ -1,6 +1,6 @@
 # Submission form: notes field (≤ 5000 characters; jurors read it)
 
-Gleichlaut keeps the French and Italian of Switzerland's drug-reimbursement conditions (the 1,688 limitations of BAG's Spezialitätenliste) in step with the German. When BAG amends a condition in German, Apertus drafts the matching French and Italian change, and an audit lists every condition whose languages already disagree. Numbers never reach the model: they become slot codes that code writes back. Try the review register: https://mi11ione.github.io/gleichlaut/
+Gleichlaut keeps the French and Italian of Switzerland's drug-reimbursement conditions (the 1,688 limitations of BAG's Spezialitätenliste) in step with the German. When BAG amends a condition in German, Apertus drafts the matching French and Italian change, and an audit lists every condition whose languages already disagree. Numbers never reach the model: they become slot codes that code writes back. Try the review register: https://gleichlaut.mi11ion.io/
 
 Why numbers: in today's register, 10 limitations carry 5 divergences between languages that change a condition, and every one of them is a number (Nemluvio every 8 weeks in German, "ogni 4 settimane" in Italian; Diaphin 6% vs 12%; a French-only 62.5 kg condition in 3 etanercept products; Cresemba; Dupixent).
 
