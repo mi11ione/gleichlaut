@@ -52,6 +52,7 @@ def compute():
     res["m2_rerun"] = score.m2_rerun("q8_0")          # PREREG R9
     res["size_compare"] = score.size_compare()
     res["shadow_20260901_20261001"] = score.shadow_month()
+    res["shadow_20260801_20260901"] = score.shadow_month("20260801-20260901", r0=True)   # PREREG R10: second, prospective month, R0 criteria
     res["audit_recall"] = score.audit_recall()
     res["audit_grouping"] = score.audit_grouping()
     res["value"] = score.value()

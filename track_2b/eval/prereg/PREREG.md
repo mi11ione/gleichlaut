@@ -308,3 +308,17 @@ data the change was designed on is labelled "dev" in every table.
   severe in either protocol, 1 needs-fix call (minor) under (a). Real items: stale 12 of 12 and German 14 of 15 severe by
   both; of the 3 earlier REAL labels both agree on 1 (either: 2 under (a), 3 under (b)). The 95% bounds on severe errors
   among ready drafts are unchanged by the recall (5.5% 70B, 5.8% Q8_0) (`eval/results/annotator_sensitivity.json`).
+- **R10, 10 Oct 2026:** the second shadow month, 01.08 → 01.09.2026, pre-registered (commit 70b75e9, 12:52 UTC)
+  before the plan job mined it. Q8_0: shadow run 38053562475 (6 CPU shards, all succeeded, build certificate
+  8b-q8_0-fresh166 verified on every shard, 44 calls); 70B: development gateway, 48 calls, all served by
+  swiss-ai/apertus-v1.5-70b. 38 items, 16 routed to a translator (6 over 2500 characters, 10 rewrites over 60%), 22
+  drafted and compared. Seen check: all 22 drafted items are in the dev 120 (10) or the out-of-sample 242 (12); the 16
+  unseen items were all routed, so the unseen remainder has no drafts and no R0 numbers. R0 on the month (n = 22,
+  no-model start 0 identical): **Q8_0 does not meet R0**: unflagged REAL 0 (holds), stale + German 1 = 4.5% (fails,
+  ≤ 2%), exact 1 = +4.5 points (fails, ≥ +5), flagged 81.8% (fails, ≤ 70%). **70B does not meet R0**: REAL 0 (holds),
+  stale + German 3 = 13.6% (fails), exact 0 = +0.0 (fails), flagged 81.8% (fails). Counting routed items, 30 of 34
+  (88.2%) go to review with either model. Labels: 7 ready non-exact drafts (6 distinct texts; one identical draft shared
+  by both models labelled once), two blind annotators agreed on all 7, no REAL, so no tie-break: Q8_0 1 german, 1
+  cosmetic, 1 equivalent; 70B 2 german, 1 stale, 1 equivalent. The German left is BAG's typo "GLP1-1-Analogon" carried
+  through by the number lock. 14 of the 22 add the new standard sentence also seen in September
+  (`eval/results/shadow_20260801_20260901.json`). Nothing in the pipeline or the defaults changes.

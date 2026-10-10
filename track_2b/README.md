@@ -126,6 +126,17 @@ to 4 (70B) identical to BAG's text, and the checks flagged 82.9–92.7% of draft
 sentence. The 14 drafts marked ready across the three models contain no error: the blind labels find only equivalent
 wording and cosmetic slips. BAG's own French for the new sentence is split (« l'assureur-maladie » 9 times,
 « l'assurance maladie » 8), the kind of drift the audit exists to catch.
+
+**A second shadow month, pre-registered before any drafting** (1 Aug → 1 Sep 2026, R10, `data/shadow/`; shadow run
+`38053562475` for Q8_0, the 70B through the gateway): 38 FR/IT items; 16 went to a translator by routing, 22 were drafted
+and compared with BAG's text. It is less prospective than intended: all 22 drafted items were already in our dev 120 (10)
+or out-of-sample 242 (12) sets, and the 16 items new to us were all routed to a translator. **Neither model meets R0 on
+this month.** Q8_0: 1 of 22 identical, +4.5 points over the no-model start (0 of 22) against the +5 bar (fails);
+flagged 81.8%, above the 70% cap (fails); among its 4 ready drafts no meaning error (holds) but 1 with German left,
+4.5% of items against the 2% cap (fails). 70B: 0 identical (fails), flagged 81.8% (fails), no meaning error (holds),
+1 stale and 2 with German left, 13.6% (fails). The German left is BAG's own typo "GLP1-1-Analogon", carried over by
+the number lock instead of being read as "GLP-1"; 14 of the 22 add the same new standard sentence as in September.
+Both annotators agreed on all 7 labels.
 Phased pilot (audit first), owners, protection needs and monthly effort: [docs/adoption.md](docs/adoption.md).
 
 ## Run it

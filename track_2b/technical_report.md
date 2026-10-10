@@ -242,6 +242,10 @@ public feed every month and grades itself against BAG's publication, so a pilot 
 and the ePL team needs no new process. The first shadow month (1 Sep → 1 Oct 2026, R7) ran on CPU runners under
 `--network none`: of 41 compared items, 32 add one new standard sentence and the no-model start gets none right; the
 checks flagged 82.9–92.7% of drafts, and none of the 14 drafts marked ready across the three models has an error.
+A second month (1 Aug → 1 Sep 2026, R10) was pre-registered before drafting with the R0 criteria: 22 of 38 items drafted,
+all 22 already in our dev or out-of-sample sets. Neither model meets R0: Q8_0 +4.5 points over the no-model start
+(fails the +5 bar), flagged 81.8% (fails the 70% cap), no ready draft with a meaning error (holds), 1 with German left
+(4.5%, fails); 70B 0 of 22 identical, flagged 81.8%, no meaning error, 3 stale or German (13.6%): the same three fail.
 Next: the mined termbase as a pre-registered check resource (it already names the term in 22 of the 25 Q8_0 ready
 drafts that need a fix), a direction-flip check, and a Swiss 70B endpoint certified with `make certify-endpoint`.
 

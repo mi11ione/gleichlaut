@@ -351,18 +351,21 @@ def post_edit(final=None):
     return out
 
 
-def shadow_month(run="20260901-20261001"):
-    """PREREG R7: the first shadow month on the public feed (items mined by the shadow workflow from BAG's feeds of the two
-    dates), drafted by Q4_K_M and Q8_0 (shadow workflow, CPU, --network none) and by the 70B (development gateway), same
-    items and routing. Labels: every ready draft that differs from BAG's published text, pooled, blind (R1 protocol)."""
+def shadow_month(run="20260901-20261001", r0=False):
+    """A shadow month on the public feed (items mined by the shadow workflow from BAG's feeds of the two dates), drafted by
+    every model whose run folder exists (q4_k_m, q8_0: shadow workflow, CPU, --network none; 70b: development gateway),
+    same items and routing. Labels: every ready draft that differs from BAG's published text, pooled, blind (R1 protocol).
+    PREREG R7: the first month (20260901-20261001), descriptive. PREREG R10 (r0=True): the second month, prospective,
+    with the four R0 criteria per model and beside them the same on the items not in any earlier item set ("unseen")."""
     import re
     D = os.path.join(DATA, "shadow", run); I = {x["key"]: x for x in json.load(open(os.path.join(D, "items.json"), encoding="utf-8"))}
     lines = open(os.path.join(LABELS, f"shadow_{run.replace('-', '_')}_ready.tsv"), encoding="utf-8").read().splitlines()
     hdr = lines[0].split("\t"); lab = [dict(zip(hdr, l.split("\t"))) for l in lines[1:]]
-    norm = core.lock.norm; out = {}
+    norm = core.lock.norm; out = {}; recs = {}
+    models = [m for m in ("q4_k_m", "q8_0", "70b") if os.path.exists(os.path.join(D, m, "records.jsonl"))]
     cmp_ = [k for k, x in I.items() if x.get("tgt_new")]
-    for m in ("q4_k_m", "q8_0", "70b"):
-        R = {json.loads(l)["key"]: json.loads(l) for l in open(os.path.join(D, m, "records.jsonl"), encoding="utf-8")}
+    for m in models:
+        R = recs[m] = {json.loads(l)["key"]: json.loads(l) for l in open(os.path.join(D, m, "records.jsonl"), encoding="utf-8")}
         assert set(R) == set(I), m
         dr = [k for k in cmp_ if R[k]["status"] != "human"]
         rd = [k for k in dr if R[k]["status"] == "ready"]
@@ -376,9 +379,10 @@ def shadow_month(run="20260901-20261001"):
                       calls=S["calls"]["n"], served_by=S["calls"]["models_served"],
                       gate=(S.get("gate") or {}).get("certificate"))
         out[m]["flag_rate"] = round(100 * out[m]["flagged"] / len(dr), 1); out[m]["exact_rate"] = round(100 * out[m]["exact"] / len(dr), 1)
-    q4 = {json.loads(l)["key"]: json.loads(l) for l in open(os.path.join(D, "q4_k_m", "records.jsonl"), encoding="utf-8")}
-    dr = [k for k in cmp_ if q4[k]["status"] != "human"]
-    rules = sum(norm(core.gl2.rules(I[k]["de_old"], I[k]["de_new"], I[k]["tgt_old"], I[k]["lang"])[0]) == norm(I[k]["tgt_new"]) for k in dr)
+    base = recs[models[0]]
+    dr = [k for k in cmp_ if base[k]["status"] != "human"]
+    rule_ok = {k: norm(core.gl2.rules(I[k]["de_old"], I[k]["de_new"], I[k]["tgt_old"], I[k]["lang"])[0]) == norm(I[k]["tgt_new"]) for k in dr}
+    rules = sum(rule_ok.values())
     new = "Indikationscode dieser Limitierung"
     boiler = [k for k in dr if new in I[k]["de_new"] and new not in I[k]["de_old"]]
     fr = Counter()
@@ -387,11 +391,50 @@ def shadow_month(run="20260901-20261001"):
         if x["lang"] == "fr" and new in x["de_new"]:
             m_ = re.search(r"code d.indication de cette limitation[^.]*?transmis à l.(assureur-maladie|assurance maladie)", x["tgt_new"])
             if m_: fr[m_.group(1)] += 1
-    return dict(run=run, mining=json.load(open(os.path.join(D, "q4_k_m", "summary.json"), encoding="utf-8"))["mining"],
-                rules_exact=rules, compared=len(dr), boilerplate_items=len(boiler), bag_fr_rendering_of_new_sentence=dict(fr),
-                labelled=len(lab), annotators_agree=sum((r["A_fix"], r["A_class"]) == (r["B_fix"], r["B_class"]) for r in lab),
-                ready_total=sum(v["ready"] for v in out.values()), ready_errors_total=sum(v["ready_errors"] for v in out.values()),
-                **out)
+    mining = next(json.load(open(os.path.join(D, m, "summary.json"), encoding="utf-8")).get("mining") for m in models
+                  if json.load(open(os.path.join(D, m, "summary.json"), encoding="utf-8")).get("mining"))
+    res = dict(run=run, mining=mining, rules_exact=rules, compared=len(dr), boilerplate_items=len(boiler),
+               bag_fr_rendering_of_new_sentence=dict(fr),
+               labelled=len(lab), annotators_agree=sum((r["A_fix"], r["A_class"]) == (r["B_fix"], r["B_class"]) for r in lab),
+               ready_total=sum(v["ready"] for v in out.values()), ready_errors_total=sum(v["ready_errors"] for v in out.values()),
+               **out)
+    if not r0: return res
+    # PREREG R10: the four R0 criteria per model, n = drafts compared with BAG's text (status != human)
+    sig = lambda x: (x["lang"], x["de_old"].strip(), x["de_new"].strip())
+    seen_sigs = set()
+    for f in ("items_dev", "items_oos", "items_fresh"): seen_sigs |= {sig(x) for x in load_items(f"items/{f}.json")}
+    seen = {k for k in I if sig(I[k]) in seen_sigs}
+    labk = {(r["model"], r["key"]): r["final"] for r in lab}
+    def crit(m, keys):
+        R = recs[m]; d = [k for k in keys if k in I and I[k].get("tgt_new") and R[k]["status"] != "human"]; n = len(d)
+        if not n: return dict(n=0)
+        ex = sum(norm(R[k]["out"]) == norm(I[k]["tgt_new"]) for k in d); ru = sum(rule_ok[k] for k in d)
+        rd = [k for k in d if R[k]["status"] == "ready"]
+        ne = [k for k in rd if norm(R[k]["out"]) != norm(I[k]["tgt_new"])]
+        cls = Counter(labk.get((m, k), "?") for k in ne)
+        real = cls.get("REAL", 0); su = cls.get("stale", 0) + cls.get("german", 0); fl = sum(R[k]["status"] == "flagged" for k in d)
+        allk = [k for k in keys if k in I and I[k].get("tgt_new")]
+        hum = sum(R[k]["status"] == "human" for k in allk)
+        c = dict(unflagged_real=[round(100 * real / n, 2), 100 * real / n <= PASS_RULE["unflagged_real_max_pct"]],
+                 unflagged_stale_untranslated=[round(100 * su / n, 2), 100 * su / n <= PASS_RULE["unflagged_stale_untranslated_max_pct"]],
+                 exact_gain=[round(100 * (ex - ru) / n, 1), 100 * (ex - ru) / n >= PASS_RULE["exact_gain_min_pts"]],
+                 flag_rate=[round(100 * fl / n, 1), 100 * fl / n <= PASS_RULE["flag_rate_max_pct"]])
+        return dict(n=n, exact=ex, rules_exact=ru, ready=len(rd), ready_not_exact=len(ne), unlabelled=cls.get("?", 0),
+                    flagged=fl, unflagged_real_n=real, unflagged_stale_german_n=su,
+                    wilson95_unflagged_real=[round(v, 1) for v in wilson(real, n)],
+                    wilson95_unflagged_stale_german=[round(v, 1) for v in wilson(su, n)],
+                    criteria=c, meets_r0=all(v[1] for v in c.values()) and not cls.get("?", 0),
+                    review_share_incl_routed=[fl + hum, len(allk), round(100 * (fl + hum) / len(allk), 1)])
+    res["seen_items"] = len(seen); res["seen_compared"] = sum(k in seen for k in dr)
+    res["r0"] = {m: dict(month=crit(m, list(I)), unseen=crit(m, [k for k in I if k not in seen])) for m in models}
+    res["rules_exact_rate"] = round(100 * rules / len(dr), 1)
+    L = lab; n = len(L)
+    if n:
+        ag = sum(r["A_fix"] == r["B_fix"] for r in L); pA = sum(r["A_fix"] == "yes" for r in L) / n; pB = sum(r["B_fix"] == "yes" for r in L) / n
+        pe = pA * pB + (1 - pA) * (1 - pB)
+        res["annotators"] = dict(n=n, needs_fix_agree=ag, needs_fix_kappa=round((ag / n - pe) / (1 - pe), 3) if pe < 1 else None,
+                                 class_agree=sum(r["A_class"] == r["B_class"] for r in L), tiebreak=sum(bool(r.get("T_class")) for r in L))
+    return res
 
 
 def audit_recall():

@@ -1,0 +1,100 @@
+{
+ "mode": "shadow (public feed), certified local 8B",
+ "date": "2026-10-10T13:20:09+00:00",
+ "items": 38,
+ "records": 38,
+ "missing": 0,
+ "status": {
+  "flagged": 18,
+  "ready": 4,
+  "human": 16
+ },
+ "by_lang": {
+  "fr": {
+   "flagged": 9,
+   "human": 8,
+   "ready": 2
+  },
+  "it": {
+   "flagged": 9,
+   "ready": 2,
+   "human": 8
+  }
+ },
+ "rule_only": 0,
+ "reasked": 18,
+ "human_reasons": {
+  "German text longer than 2500 characters and the change needs the model (outside the evaluated range)": 6,
+  "German changed 63% of its tokens (> 60%): a rewrite, not an amendment": 8,
+  "German changed 62% of its tokens (> 60%): a rewrite, not an amendment": 2
+ },
+ "review_reasons": {},
+ "shadow": {
+  "compared": 22,
+  "exact": 1,
+  "ready": 4,
+  "ready_exact": 1,
+  "exact_rate": 4.5,
+  "ready_rate": 18.2,
+  "flag_rate": 81.8,
+  "ready_exact_rate": 25.0,
+  "rates_note": "percent of the drafted items with a published target (status human excluded)",
+  "ready_not_exact": [
+   "JARDIANCE-MET.01-b0cdbc-it",
+   "XEOMIN.01a-d4ed25-it",
+   "XTANDI.02-Kombi-LHRH-Antagonisten-409dc1-fr"
+  ],
+  "note": "tgt_new = the FR/IT text BAG already published; it was never shown to the model"
+ },
+ "calls": {
+  "n": 44,
+  "prompt_tokens": 45190,
+  "completion_tokens": 9060,
+  "models_served": [
+   "gguf:apertus-v1.5-8b-text-q8_0.gguf"
+  ],
+  "system_fingerprints": [],
+  "endpoints": [
+   "local llama.cpp (in process)"
+  ],
+  "chf_estimate": 0.0543,
+  "chf_basis": "Swiss provider's published price, CHF 0.70 / 2.50 per M input / output tokens"
+ },
+ "mining": {
+  "snap_old": "20260801",
+  "snap_new": "20260901",
+  "de_changes": 14,
+  "de_rewrites_over60": 5,
+  "items": 38,
+  "items_with_published_target": 34,
+  "unmatched": 0,
+  "unmatched_reasons": {},
+  "step": [
+   {
+    "a": "20260801",
+    "b": "20260901",
+    "matched": 28,
+    "over60": 10,
+    "new_distinct_pairs": 14
+   }
+  ]
+ },
+ "gate": {
+  "certificate": "8b-q8_0-fresh166",
+  "kind": "build",
+  "certification": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "llama_cpp_python": "0.3.35"
+ },
+ "backend": {
+  "name": "llamacpp",
+  "label": "llamacpp gguf:apertus-v1.5-8b-text-q8_0.gguf",
+  "review_policy": null
+ },
+ "shards": 6,
+ "gates_agree": true,
+ "next": [
+  "gleichlaut emit --records out/month/20260801-20260901/records.jsonl --items out/month/20260801-20260901/items.json --n 0 --out out/month/20260801-20260901/emit",
+  "gleichlaut ui --records out/month/20260801-20260901/records.jsonl --items out/month/20260801-20260901/items.json --out out/month/20260801-20260901/ui/index.html"
+ ]
+}

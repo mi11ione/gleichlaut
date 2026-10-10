@@ -1,0 +1,8 @@
+model	key	A_fix	A_class	B_fix	B_class	T_fix	T_class	final_fix	final	note_A
+70b	JARDIANCE-MET.01-b0cdbc-fr	yes	german	yes	german			yes	german	un GLP1 - 1 - analogue: German compound order/hyphenation artefact; should be "analogue du GLP-1".
+70b	JARDIANCE-MET.01-b0cdbc-it	yes	german	yes	german			yes	german	un GLP1 - 1 - analogo: German compound order/hyphenation artefact; should be "analogo del GLP-1".
+70b	XEOMIN.01a-d4ed25-it	no	equivalent	no	equivalent			no	equivalent	Lower limbs added with e/o, bullets removed; singular "arto" vs official plural harmless.
+70b	XTANDI.01-Kombination-LHRH-Antagonisten-b123a2-fr	yes	stale	yes	stale			yes	stale	Deleted prior-approval sentence leaves stray "Après" at start; deletion only partly applied.
+q8_0	JARDIANCE-MET.01-b0cdbc-it	yes	german	yes	german			yes	german	un GLP1 - 1 - Analogo: German compound/hyphenation artefact, capitalised noun; should be "analogo del GLP-1".
+q8_0	XEOMIN.01a-d4ed25-it	no	equivalent	no	equivalent			no	equivalent	Lower limbs added with e/o, bullets removed; singular "arto" vs official plural harmless.
+q8_0	XTANDI.02-Kombi-LHRH-Antagonisten-409dc1-fr	yes	cosmetic	yes	cosmetic			yes	cosmetic	Code sentence correctly updated but ends with leftover colon instead of period.

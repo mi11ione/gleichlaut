@@ -1,0 +1,66 @@
+{
+ "mode": "shadow (public feed), Apertus 70B through the development gateway (dev)",
+ "date": "2026-10-10T13:04:19+00:00",
+ "items": 38,
+ "records": 38,
+ "missing": 0,
+ "status": {
+  "flagged": 18,
+  "ready": 4,
+  "human": 16
+ },
+ "by_lang": {
+  "fr": {
+   "flagged": 9,
+   "ready": 2,
+   "human": 8
+  },
+  "it": {
+   "flagged": 9,
+   "ready": 2,
+   "human": 8
+  }
+ },
+ "rule_only": 0,
+ "reasked": 19,
+ "human_reasons": {
+  "German text longer than 2500 characters and the change needs the model (outside the evaluated range)": 6,
+  "German changed 63% of its tokens (> 60%): a rewrite, not an amendment": 8,
+  "German changed 62% of its tokens (> 60%): a rewrite, not an amendment": 2
+ },
+ "review_reasons": {},
+ "shadow": {
+  "compared": 22,
+  "exact": 0,
+  "ready": 4,
+  "ready_exact": 0,
+  "exact_rate": 0.0,
+  "ready_rate": 18.2,
+  "flag_rate": 81.8,
+  "ready_exact_rate": 0.0,
+  "rates_note": "percent of the drafted items with a published target (status human excluded)",
+  "ready_not_exact": [
+   "JARDIANCE-MET.01-b0cdbc-fr",
+   "JARDIANCE-MET.01-b0cdbc-it",
+   "XEOMIN.01a-d4ed25-it",
+   "XTANDI.01-Kombination-LHRH-Antagonisten-b123a2-fr"
+  ],
+  "note": "tgt_new = the FR/IT text BAG already published; it was never shown to the model"
+ },
+ "calls": {
+  "n": 48,
+  "prompt_tokens": 48837,
+  "completion_tokens": 9498,
+  "models_served": [
+   "swiss-ai/apertus-v1.5-70b"
+  ],
+  "system_fingerprints": [],
+  "endpoints": [],
+  "chf_estimate": 0.0579,
+  "chf_basis": "Swiss provider's published price, CHF 0.70 / 2.50 per M input / output tokens"
+ },
+ "next": [
+  "gleichlaut emit --records /Users/mi11ion/Desktop/hackapertus/gleichlaut/track_2b/data/shadow/20260801-20260901/70b/records.jsonl --items /Users/mi11ion/Desktop/hackapertus/gleichlaut/track_2b/data/shadow/20260801-20260901/70b/items.json --n 0 --out /Users/mi11ion/Desktop/hackapertus/gleichlaut/track_2b/data/shadow/20260801-20260901/70b/emit",
+  "gleichlaut ui --records /Users/mi11ion/Desktop/hackapertus/gleichlaut/track_2b/data/shadow/20260801-20260901/70b/records.jsonl --items /Users/mi11ion/Desktop/hackapertus/gleichlaut/track_2b/data/shadow/20260801-20260901/70b/items.json --out /Users/mi11ion/Desktop/hackapertus/gleichlaut/track_2b/data/shadow/20260801-20260901/70b/ui/index.html"
+ ]
+}
