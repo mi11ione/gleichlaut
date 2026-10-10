@@ -1,0 +1,2464 @@
+{
+ "prereg": "eval/prereg/PREREG.md R11",
+ "seed": 20261012,
+ "types": [
+  "drop",
+  "and_or",
+  "obligation",
+  "scope",
+  "operator",
+  "negation",
+  "number"
+ ],
+ "protocols": {
+  "a": "reference_shown",
+  "b": "reference_hidden"
+ },
+ "counts": {
+  "bases": 66,
+  "planted": 66,
+  "untouched": 66,
+  "real": 30,
+  "by_type_lang": {
+   "drop/fr": 7,
+   "drop/it": 6,
+   "and_or/fr": 6,
+   "and_or/it": 6,
+   "obligation/fr": 3,
+   "obligation/it": 4,
+   "scope/fr": 4,
+   "scope/it": 4,
+   "operator/fr": 3,
+   "operator/it": 4,
+   "negation/fr": 7,
+   "negation/it": 5,
+   "number/fr": 3,
+   "number/it": 4
+  }
+ },
+ "items": {
+  "wb000-fr|planted": {
+   "key": "wb000-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "planted",
+   "type": "number",
+   "sub": "20->30",
+   "before": "e avec des mutations activatrices par insertion dans l’exon 20 du récepteur du facteur de croissance épidermique (EGFR). L",
+   "after": "e avec des mutations activatrices par insertion dans l’exon 30 du récepteur du facteur de croissance épidermique (EGFR). L",
+   "set": 1
+  },
+  "wb000-fr|untouched": {
+   "key": "wb000-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb000-it|planted": {
+   "key": "wb000-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "scope",
+   "sub": "di prima linea->di prima o seconda linea",
+   "before": "mbinazione con pemetrexed e carboplatino per il trattamento di prima linea di pazienti adulti affetti da NSCLC non squamoso localmente",
+   "after": "mbinazione con pemetrexed e carboplatino per il trattamento di prima o seconda linea di pazienti adulti affetti da NSCLC non squamoso localmente",
+   "set": 2
+  },
+  "wb000-it|untouched": {
+   "key": "wb000-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb002-fr|planted": {
+   "key": "wb002-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "scope",
+   "sub": "adultes->adultes et adolescents",
+   "before": "rboplatine et le pémétrexed pour le traitement des patients adultes atteints d'un CBNPC non épidermoïde localement avancé ou mé",
+   "after": "rboplatine et le pémétrexed pour le traitement des patients adultes et adolescents atteints d'un CBNPC non épidermoïde localement avancé ou mé",
+   "set": 2
+  },
+  "wb002-fr|untouched": {
+   "key": "wb002-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb002-it|planted": {
+   "key": "wb002-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "scope",
+   "sub": "adulti->adulti e adolescenti",
+   "before": "on pemetrexed e carboplatino per il trattamento di pazienti adulti con NSCLC non squamoso localmente avanzato o metastatico co",
+   "after": "on pemetrexed e carboplatino per il trattamento di pazienti adulti e adolescenti con NSCLC non squamoso localmente avanzato o metastatico co",
+   "set": 1
+  },
+  "wb002-it|untouched": {
+   "key": "wb002-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb003-fr|planted": {
+   "key": "wb003-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "scope",
+   "sub": "adultes->adultes et adolescents",
+   "before": "es cellules B réfractaire ou récidivant (LMPGBrr), chez les adultes ‒ qui ont reçu au moins 2 traitements antérieurs, dont au m",
+   "after": "es cellules B réfractaire ou récidivant (LMPGBrr), chez les adultes et adolescents ‒ qui ont reçu au moins 2 traitements antérieurs, dont au m",
+   "set": 1
+  },
+  "wb003-fr|untouched": {
+   "key": "wb003-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb007-fr|planted": {
+   "key": "wb007-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "operator",
+   "sub": "au moins->au plus",
+   "before": "tteints d'une leucémie lymphoïde chronique (LLC) ayant reçu au moins un traitement antérieur. Le traitement (incluant au maximum",
+   "after": "tteints d'une leucémie lymphoïde chronique (LLC) ayant reçu au plus un traitement antérieur. Le traitement (incluant au maximum",
+   "set": 2
+  },
+  "wb007-fr|untouched": {
+   "key": "wb007-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb007-it|planted": {
+   "key": "wb007-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "obligation",
+   "sub": "deve->può",
+   "before": "verifica la progressione della malattia. Il seguente codice deve essere inviato all'assicuratore: 20764.02",
+   "after": "verifica la progressione della malattia. Il seguente codice può essere inviato all'assicuratore: 20764.02",
+   "set": 1
+  },
+  "wb007-it|untouched": {
+   "key": "wb007-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb010-fr|real": {
+   "key": "wb010-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb010-it|real": {
+   "key": "wb010-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb011-fr|real": {
+   "key": "wb011-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "70b"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb011-it|real": {
+   "key": "wb011-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb013-it|real": {
+   "key": "wb013-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "70b"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb014-fr|real": {
+   "key": "wb014-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb015-fr|planted": {
+   "key": "wb015-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "planted",
+   "type": "negation",
+   "sub": "drop:ne_pas",
+   "before": "version de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'assurance obligatoire des soins.",
+   "after": "version de l'angiotensine II et/ou d'un inhibiteur de l'ECA sera remboursé par l'assurance obligatoire des soins.",
+   "set": 2
+  },
+  "wb015-fr|untouched": {
+   "key": "wb015-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb015-it|planted": {
+   "key": "wb015-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "drop",
+   "sub": "coordination",
+   "before": "N VALSARTAN HCT SANDOZ e di un calcio antagonista I.T. 02.06 e/o di un cosiddetti antagonisti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazione",
+   "after": "N VALSARTAN HCT SANDOZ e di un calcio antagonista I.T. 02.06 e/o un inibitore ACE non sarà rimborsata dall'assicurazione",
+   "set": 2
+  },
+  "wb015-it|untouched": {
+   "key": "wb015-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb016-fr|planted": {
+   "key": "wb016-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "planted",
+   "type": "and_or",
+   "sub": "et->ou",
+   "before": "Le traitement combiné d'AMLODIPINE VALSARTAN SANDOZ et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur",
+   "after": "Le traitement combiné d'AMLODIPINE VALSARTAN SANDOZ ou d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur",
+   "set": 1
+  },
+  "wb016-fr|untouched": {
+   "key": "wb016-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb016-it|planted": {
+   "key": "wb016-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "drop",
+   "sub": "coordination",
+   "before": "DIPIN VALSARTAN SANDOZ e di un calcio antagonista I.T. 02.06 e/o di un cosiddetti antagonisti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazione",
+   "after": "DIPIN VALSARTAN SANDOZ e di un calcio antagonista I.T. 02.06 e/o un inibitore ACE non sarà rimborsata dall'assicurazione",
+   "set": 1
+  },
+  "wb016-it|untouched": {
+   "key": "wb016-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb017-fr|planted": {
+   "key": "wb017-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "planted",
+   "type": "negation",
+   "sub": "drop:ne_pas",
+   "before": "version de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'assurance obligatoire des soins.",
+   "after": "version de l'angiotensine II et/ou d'un inhibiteur de l'ECA sera remboursé par l'assurance obligatoire des soins.",
+   "set": 2
+  },
+  "wb017-fr|untouched": {
+   "key": "wb017-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb017-it|planted": {
+   "key": "wb017-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "negation",
+   "sub": "drop:non",
+   "before": "sti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazione obbligatoria delle cure m",
+   "after": "sti del recettore dell'angiotensina II e/o un inibitore ACE sarà rimborsata dall'assicurazione obbligatoria delle cure m",
+   "set": 2
+  },
+  "wb017-it|untouched": {
+   "key": "wb017-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb018-fr|planted": {
+   "key": "wb018-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "planted",
+   "type": "drop",
+   "sub": "coordination",
+   "before": " VALSARTAN ZENTIVA et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'",
+   "after": " VALSARTAN ZENTIVA et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'",
+   "set": 1
+  },
+  "wb018-fr|untouched": {
+   "key": "wb018-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb018-it|planted": {
+   "key": "wb018-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "and_or",
+   "sub": "e->o",
+   "before": "La terapia combinata di AMLODIPIN VALSARTAN ZENTIVA e di un calcio antagonista I.T. 02.06 e/o di un cosiddetti ant",
+   "after": "La terapia combinata di AMLODIPIN VALSARTAN ZENTIVA o di un calcio antagonista I.T. 02.06 e/o di un cosiddetti ant",
+   "set": 2
+  },
+  "wb018-it|untouched": {
+   "key": "wb018-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb019-fr|planted": {
+   "key": "wb019-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "planted",
+   "type": "and_or",
+   "sub": "et->ou",
+   "before": "Le traitement combiné d'AMLODIPIN-VALSARTAN-HCT-MEPHA et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur",
+   "after": "Le traitement combiné d'AMLODIPIN-VALSARTAN-HCT-MEPHA ou d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur",
+   "set": 1
+  },
+  "wb019-fr|untouched": {
+   "key": "wb019-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb019-it|planted": {
+   "key": "wb019-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "negation",
+   "sub": "drop:non",
+   "before": "sti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazione obbligatoria delle cure m",
+   "after": "sti del recettore dell'angiotensina II e/o un inibitore ACE sarà rimborsata dall'assicurazione obbligatoria delle cure m",
+   "set": 1
+  },
+  "wb019-it|untouched": {
+   "key": "wb019-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb020-fr|planted": {
+   "key": "wb020-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "planted",
+   "type": "drop",
+   "sub": "coordination",
+   "before": "lsartan Mepha Teva et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'",
+   "after": "lsartan Mepha Teva et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'",
+   "set": 2
+  },
+  "wb020-fr|untouched": {
+   "key": "wb020-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb020-it|planted": {
+   "key": "wb020-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "and_or",
+   "sub": "e->o",
+   "before": "La terapia combinata di Amlodipin Valsartan Mepha Teva e di un calcio antagonista I.T. 02.06 e/o di un cosiddetti ant",
+   "after": "La terapia combinata di Amlodipin Valsartan Mepha Teva o di un calcio antagonista I.T. 02.06 e/o di un cosiddetti ant",
+   "set": 1
+  },
+  "wb020-it|untouched": {
+   "key": "wb020-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb021-fr|planted": {
+   "key": "wb021-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "planted",
+   "type": "negation",
+   "sub": "drop:ne_pas",
+   "before": "version de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'assurance obligatoire des soins.",
+   "after": "version de l'angiotensine II et/ou d'un inhibiteur de l'ECA sera remboursé par l'assurance obligatoire des soins.",
+   "set": 1
+  },
+  "wb021-fr|untouched": {
+   "key": "wb021-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb021-it|planted": {
+   "key": "wb021-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "and_or",
+   "sub": "e->o",
+   "before": "La terapia combinata di CO-VALSARTAN AMLO SPIRIG HC e di un calcio antagonista I.T. 02.06 e/o di un cosiddetti ant",
+   "after": "La terapia combinata di CO-VALSARTAN AMLO SPIRIG HC o di un calcio antagonista I.T. 02.06 e/o di un cosiddetti ant",
+   "set": 2
+  },
+  "wb021-it|untouched": {
+   "key": "wb021-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb022-fr|planted": {
+   "key": "wb022-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "and_or",
+   "sub": "et->ou",
+   "before": "Le traitement combiné d'EXFORGE HCT et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur",
+   "after": "Le traitement combiné d'EXFORGE HCT ou d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur",
+   "set": 2
+  },
+  "wb022-fr|untouched": {
+   "key": "wb022-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb022-it|planted": {
+   "key": "wb022-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "and_or",
+   "sub": "e->o",
+   "before": "La terapia combinata di EXFORGE HCT e di un calcio antagonista I.T. 02.06 e/o di un cosiddetti ant",
+   "after": "La terapia combinata di EXFORGE HCT o di un calcio antagonista I.T. 02.06 e/o di un cosiddetti ant",
+   "set": 1
+  },
+  "wb022-it|untouched": {
+   "key": "wb022-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb023-fr|planted": {
+   "key": "wb023-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "planted",
+   "type": "drop",
+   "sub": "coordination",
+   "before": " combiné d'EXFORGE et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'",
+   "after": " combiné d'EXFORGE et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'",
+   "set": 1
+  },
+  "wb023-fr|untouched": {
+   "key": "wb023-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb023-it|planted": {
+   "key": "wb023-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "drop",
+   "sub": "coordination",
+   "before": "a combinata di EXFORGE e di un calcio antagonista I.T. 02.06 e/o di un cosiddetti antagonisti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazione",
+   "after": "a combinata di EXFORGE e di un calcio antagonista I.T. 02.06 e/o un inibitore ACE non sarà rimborsata dall'assicurazione",
+   "set": 2
+  },
+  "wb023-it|untouched": {
+   "key": "wb023-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb024-fr|planted": {
+   "key": "wb024-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "negation",
+   "sub": "drop:ne_pas",
+   "before": "version de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'assurance obligatoire des soins.",
+   "after": "version de l'angiotensine II et/ou d'un inhibiteur de l'ECA sera remboursé par l'assurance obligatoire des soins.",
+   "set": 1
+  },
+  "wb024-fr|untouched": {
+   "key": "wb024-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb024-it|planted": {
+   "key": "wb024-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "and_or",
+   "sub": "e->o",
+   "before": "La terapia combinata di OLMESARTAN AMLO SPIRIG HC e di un calcio antagonista I.T. 02.06. e/o di un cosiddetti an",
+   "after": "La terapia combinata di OLMESARTAN AMLO SPIRIG HC o di un calcio antagonista I.T. 02.06. e/o di un cosiddetti an",
+   "set": 1
+  },
+  "wb024-it|untouched": {
+   "key": "wb024-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb025-fr|planted": {
+   "key": "wb025-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "drop",
+   "sub": "coordination",
+   "before": " AMLODIPIN SANDOZ et d'un antagoniste du calcium I.T. 02.06. et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'",
+   "after": " AMLODIPIN SANDOZ et d'un antagoniste du calcium I.T. 02.06. et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'",
+   "set": 2
+  },
+  "wb025-fr|untouched": {
+   "key": "wb025-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb025-it|planted": {
+   "key": "wb025-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "negation",
+   "sub": "drop:non",
+   "before": "sti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazione obbligatoria delle cure m",
+   "after": "sti del recettore dell'angiotensina II e/o un inibitore ACE sarà rimborsata dall'assicurazione obbligatoria delle cure m",
+   "set": 2
+  },
+  "wb025-it|untouched": {
+   "key": "wb025-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb026-fr|planted": {
+   "key": "wb026-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "drop",
+   "sub": "coordination",
+   "before": "AMLODIPIN ZENTIVA et d'un antagoniste du calcium I.T. 02.06. et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'",
+   "after": "AMLODIPIN ZENTIVA et d'un antagoniste du calcium I.T. 02.06. et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'",
+   "set": 1
+  },
+  "wb026-fr|untouched": {
+   "key": "wb026-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb026-it|planted": {
+   "key": "wb026-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "drop",
+   "sub": "coordination",
+   "before": "TAN AMLODIPIN ZENTIVA e di un calcio antagonista I.T. 02.06. e/o di un cosiddetti antagonisti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazione",
+   "after": "TAN AMLODIPIN ZENTIVA e di un calcio antagonista I.T. 02.06. e/o un inibitore ACE non sarà rimborsata dall'assicurazione",
+   "set": 1
+  },
+  "wb026-it|untouched": {
+   "key": "wb026-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb027-fr|planted": {
+   "key": "wb027-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "and_or",
+   "sub": "et->ou",
+   "before": "Le traitement combiné de OLMESARTAN-AMLODIPIN MEPHA et d'un antagoniste du calcium I.T. 02.06. et/ou d'un inhibiteu",
+   "after": "Le traitement combiné de OLMESARTAN-AMLODIPIN MEPHA ou d'un antagoniste du calcium I.T. 02.06. et/ou d'un inhibiteu",
+   "set": 2
+  },
+  "wb027-fr|untouched": {
+   "key": "wb027-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb027-it|planted": {
+   "key": "wb027-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "negation",
+   "sub": "drop:non",
+   "before": "sti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazione obbligatoria delle cure m",
+   "after": "sti del recettore dell'angiotensina II e/o un inibitore ACE sarà rimborsata dall'assicurazione obbligatoria delle cure m",
+   "set": 1
+  },
+  "wb027-it|untouched": {
+   "key": "wb027-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb028-fr|planted": {
+   "key": "wb028-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "planted",
+   "type": "drop",
+   "sub": "coordination",
+   "before": "dipin HCT Zentiva et d'un antagoniste du calcium I.T. 02.06. et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'",
+   "after": "dipin HCT Zentiva et d'un antagoniste du calcium I.T. 02.06. et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'",
+   "set": 1
+  },
+  "wb028-fr|untouched": {
+   "key": "wb028-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb028-it|planted": {
+   "key": "wb028-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "drop",
+   "sub": "coordination",
+   "before": "Amlodipin HCT Zentiva e di un calcio antagonista I.T. 02.06. e/o di un cosiddetti antagonisti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazione",
+   "after": "Amlodipin HCT Zentiva e di un calcio antagonista I.T. 02.06. e/o un inibitore ACE non sarà rimborsata dall'assicurazione",
+   "set": 1
+  },
+  "wb028-it|untouched": {
+   "key": "wb028-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb029-fr|planted": {
+   "key": "wb029-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "negation",
+   "sub": "drop:ne_pas",
+   "before": "version de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'assurance obligatoire des soins.",
+   "after": "version de l'angiotensine II et/ou d'un inhibiteur de l'ECA sera remboursé par l'assurance obligatoire des soins.",
+   "set": 2
+  },
+  "wb029-fr|untouched": {
+   "key": "wb029-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb029-it|planted": {
+   "key": "wb029-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "drop",
+   "sub": "coordination",
+   "before": "binata di SEVIKAR/HCT e di un calcio antagonista I.T. 02.06. e/o di un cosiddetti antagonisti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazione",
+   "after": "binata di SEVIKAR/HCT e di un calcio antagonista I.T. 02.06. e/o un inibitore ACE non sarà rimborsata dall'assicurazione",
+   "set": 2
+  },
+  "wb029-it|untouched": {
+   "key": "wb029-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb030-fr|planted": {
+   "key": "wb030-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "negation",
+   "sub": "drop:ne_pas",
+   "before": "version de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'assurance obligatoire des soins.",
+   "after": "version de l'angiotensine II et/ou d'un inhibiteur de l'ECA sera remboursé par l'assurance obligatoire des soins.",
+   "set": 2
+  },
+  "wb030-fr|untouched": {
+   "key": "wb030-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb030-it|planted": {
+   "key": "wb030-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "negation",
+   "sub": "drop:non",
+   "before": "sti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazione obbligatoria delle cure m",
+   "after": "sti del recettore dell'angiotensina II e/o un inibitore ACE sarà rimborsata dall'assicurazione obbligatoria delle cure m",
+   "set": 1
+  },
+  "wb030-it|untouched": {
+   "key": "wb030-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb031-fr|planted": {
+   "key": "wb031-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "negation",
+   "sub": "drop:ne_pas",
+   "before": "version de l'angiotensine II et/ou d'un inhibiteur de l'ECA n’est pas remboursé par l'assurance obligatoire des soins.",
+   "after": "version de l'angiotensine II et/ou d'un inhibiteur de l'ECA est remboursé par l'assurance obligatoire des soins.",
+   "set": 1
+  },
+  "wb031-fr|untouched": {
+   "key": "wb031-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb031-it|planted": {
+   "key": "wb031-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "and_or",
+   "sub": "e->o",
+   "before": "a con l’associazione a dose fissa di Candesartan e Amlodipin e di un calcio antagonista I.T. 02.06. e/o di un cosiddetti an",
+   "after": "a con l’associazione a dose fissa di Candesartan e Amlodipin o di un calcio antagonista I.T. 02.06. e/o di un cosiddetti an",
+   "set": 2
+  },
+  "wb031-it|untouched": {
+   "key": "wb031-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb032-fr|planted": {
+   "key": "wb032-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "and_or",
+   "sub": "ou->et",
+   "before": "ement combiné d’une association fixe d’olmésartan-amlodipine ou d’olmésartan-amlodipine-hydrochlorothiazide et d'un antagoni",
+   "after": "ement combiné d’une association fixe d’olmésartan-amlodipine et d’olmésartan-amlodipine-hydrochlorothiazide et d'un antagoni",
+   "set": 1
+  },
+  "wb032-fr|untouched": {
+   "key": "wb032-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb033-fr|real": {
+   "key": "wb033-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb033-it|real": {
+   "key": "wb033-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb036-it|real": {
+   "key": "wb036-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb039-fr|real": {
+   "key": "wb039-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "REAL",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb040-fr|planted": {
+   "key": "wb040-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "scope",
+   "sub": "de première ligne->de première ou deuxième ligne",
+   "before": "firmation de la progression de la maladie. Si un traitement de première ligne par KEYTRUDA a été remboursé dans une indication définie et",
+   "after": "firmation de la progression de la maladie. Si un traitement de première ou deuxième ligne par KEYTRUDA a été remboursé dans une indication définie et",
+   "set": 1
+  },
+  "wb040-fr|untouched": {
+   "key": "wb040-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb040-it|planted": {
+   "key": "wb040-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "obligation",
+   "sub": "possono->devono",
+   "before": "tabili con delle constatazioni iniziali di una progressione possono continuare ad essere trattati fino a conferma della progres",
+   "after": "tabili con delle constatazioni iniziali di una progressione devono continuare ad essere trattati fino a conferma della progres",
+   "set": 1
+  },
+  "wb040-it|untouched": {
+   "key": "wb040-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb042-it|real": {
+   "key": "wb042-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "REAL",
+   "base_runs": [
+    "q8_0",
+    "q4_k_m"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb043-fr|real": {
+   "key": "wb043-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "REAL",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb054-fr|real": {
+   "key": "wb054-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb054-it|real": {
+   "key": "wb054-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb056-it|real": {
+   "key": "wb056-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb057-fr|real": {
+   "key": "wb057-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "70b"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb058-it|real": {
+   "key": "wb058-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb060-fr|planted": {
+   "key": "wb060-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "obligation",
+   "sub": "peuvent->doivent",
+   "before": "se maximale de 400 mg toutes les six semaines. Les patients peuvent être traités pendant 12 mois maximum (18 cycles pour le tra",
+   "after": "se maximale de 400 mg toutes les six semaines. Les patients doivent être traités pendant 12 mois maximum (18 cycles pour le tra",
+   "set": 1
+  },
+  "wb060-fr|untouched": {
+   "key": "wb060-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb060-it|planted": {
+   "key": "wb060-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "q8_0"
+   ],
+   "kind": "planted",
+   "type": "operator",
+   "sub": "massim->minim",
+   "before": "re iniziata entro 15 settimane dalla resezione. Il dosaggio massimo è di 200 mg ogni tre settimane. In alternativa, si può som",
+   "after": "re iniziata entro 15 settimane dalla resezione. Il dosaggio minimo è di 200 mg ogni tre settimane. In alternativa, si può som",
+   "set": 2
+  },
+  "wb060-it|untouched": {
+   "key": "wb060-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "q8_0"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb061-fr|planted": {
+   "key": "wb061-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "number",
+   "sub": "160->159",
+   "before": "îte de KADCYLA 100mg la somme de Fr. 263.80 ou pour KADCYLA 160mg la somme de Fr. 425.81 sur le prix de fabrique. La taxe s",
+   "after": "îte de KADCYLA 100mg la somme de Fr. 263.80 ou pour KADCYLA 159mg la somme de Fr. 425.81 sur le prix de fabrique. La taxe s",
+   "set": 2
+  },
+  "wb061-fr|untouched": {
+   "key": "wb061-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb063-fr|planted": {
+   "key": "wb063-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "scope",
+   "sub": "adultes->adultes et adolescents",
+   "before": " partir de la première ligne pour le traitement de patients adultes symptomatiques atteints d’une MW pour lesquels une chimio-i",
+   "after": " partir de la première ligne pour le traitement de patients adultes et adolescents symptomatiques atteints d’une MW pour lesquels une chimio-i",
+   "set": 2
+  },
+  "wb063-fr|untouched": {
+   "key": "wb063-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb065-fr|real": {
+   "key": "wb065-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q8_0",
+    "q4_k_m"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb067-fr|real": {
+   "key": "wb067-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "ready": true,
+   "set": 2
+  },
+  "wb067-it|real": {
+   "key": "wb067-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb068-fr|real": {
+   "key": "wb068-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb069-fr|real": {
+   "key": "wb069-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb069-it|real": {
+   "key": "wb069-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb071-fr|planted": {
+   "key": "wb071-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "obligation",
+   "sub": "doit->peut",
+   "before": "t le début du traitement par AKEEGA, le statut BRCA positif doit avoir été confirmé par une méthode de test validée. AKEEGA ",
+   "after": "t le début du traitement par AKEEGA, le statut BRCA positif peut avoir été confirmé par une méthode de test validée. AKEEGA ",
+   "set": 2
+  },
+  "wb071-fr|untouched": {
+   "key": "wb071-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb071-it|planted": {
+   "key": "wb071-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "scope",
+   "sub": "di prima linea->di prima o seconda linea",
+   "before": "nica (ADT) più prednisone o prednisolone per il trattamento di prima linea di pazienti adulti asintomatici o lievemente sintomatici co",
+   "after": "nica (ADT) più prednisone o prednisolone per il trattamento di prima o seconda linea di pazienti adulti asintomatici o lievemente sintomatici co",
+   "set": 2
+  },
+  "wb071-it|untouched": {
+   "key": "wb071-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb072-it|planted": {
+   "key": "wb072-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "operator",
+   "sub": "almeno->al massimo",
+   "before": "divante e refrattario in pazienti adulti che hanno ricevuto almeno due linee di trattamento precedenti, tra cui lenalidomide e",
+   "after": "divante e refrattario in pazienti adulti che hanno ricevuto al massimo due linee di trattamento precedenti, tra cui lenalidomide e",
+   "set": 1
+  },
+  "wb072-it|untouched": {
+   "key": "wb072-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb074-it|planted": {
+   "key": "wb074-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "scope",
+   "sub": "adulti->adulti e adolescenti",
+   "before": "Artrite psoriasica Trattamento di pazienti adulti con artrite psoriasica attiva, da solo o in combinazione co",
+   "after": "Artrite psoriasica Trattamento di pazienti adulti e adolescenti con artrite psoriasica attiva, da solo o in combinazione co",
+   "set": 1
+  },
+  "wb074-it|untouched": {
+   "key": "wb074-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb075-fr|planted": {
+   "key": "wb075-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "obligation",
+   "sub": "doit->peut",
+   "before": " insuffisance rénale: 17807.01 Le code d’indication suivant doit être transmis: 17807.01",
+   "after": " insuffisance rénale: 17807.01 Le code d’indication suivant peut être transmis: 17807.01",
+   "set": 1
+  },
+  "wb075-fr|untouched": {
+   "key": "wb075-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb075-it|planted": {
+   "key": "wb075-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "obligation",
+   "sub": "deve->può",
+   "before": "ficienza renale: 17807.01 Il seguente codice di indicazione deve essere trasmesso: 17807.01",
+   "after": "ficienza renale: 17807.01 Il seguente codice di indicazione può essere trasmesso: 17807.01",
+   "set": 2
+  },
+  "wb075-it|untouched": {
+   "key": "wb075-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb076-fr|real": {
+   "key": "wb076-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "70b"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb079-fr|planted": {
+   "key": "wb079-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "and_or",
+   "sub": "et->ou",
+   "before": "Prix de facturation par application et patient 222.41 (Division 7.5).",
+   "after": "Prix de facturation par application ou patient 222.41 (Division 7.5).",
+   "set": 2
+  },
+  "wb079-fr|untouched": {
+   "key": "wb079-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb081-fr|planted": {
+   "key": "wb081-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "operator",
+   "sub": "à partir de->jusqu'à",
+   "before": "Pour le traitement des adultes et des adolescents à partir de 12 ans atteints d’hépatite C chronique (HCC) de génotype 1 ",
+   "after": "Pour le traitement des adultes et des adolescents jusqu'à 12 ans atteints d’hépatite C chronique (HCC) de génotype 1 ",
+   "set": 2
+  },
+  "wb081-fr|untouched": {
+   "key": "wb081-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb081-it|planted": {
+   "key": "wb081-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "obligation",
+   "sub": "deve->può",
+   "before": "ll’IVA in aggiunta a tale importo. La richiesta di rimborso deve essere effettuata a partire dal momento della somministrazi",
+   "after": "ll’IVA in aggiunta a tale importo. La richiesta di rimborso può essere effettuata a partire dal momento della somministrazi",
+   "set": 2
+  },
+  "wb081-it|untouched": {
+   "key": "wb081-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb083-fr|real": {
+   "key": "wb083-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb083-it|real": {
+   "key": "wb083-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q8_0",
+    "q4_k_m"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb084-fr|planted": {
+   "key": "wb084-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "operator",
+   "sub": "au moins->au plus",
+   "before": "mbinaison avec un inhibiteur SGLT-2 avec ou sans metformine Au moins BMI 28. Des médicaments supplémentaires destinés à une rédu",
+   "after": "mbinaison avec un inhibiteur SGLT-2 avec ou sans metformine Au plus BMI 28. Des médicaments supplémentaires destinés à une rédu",
+   "set": 1
+  },
+  "wb084-fr|untouched": {
+   "key": "wb084-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb084-it|planted": {
+   "key": "wb084-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "planted",
+   "type": "operator",
+   "sub": "almeno->al massimo",
+   "before": "combinazione con un inibitore SGLT-2 con o senza metformina Almeno BMI 28. Medicamenti supplementari per la riduzione ponderal",
+   "after": "combinazione con un inibitore SGLT-2 con o senza metformina Al massimo BMI 28. Medicamenti supplementari per la riduzione ponderal",
+   "set": 2
+  },
+  "wb084-it|untouched": {
+   "key": "wb084-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb085-fr|real": {
+   "key": "wb085-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "ready": true,
+   "set": 2
+  },
+  "wb085-it|real": {
+   "key": "wb085-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "ready": true,
+   "set": 1
+  },
+  "wb086-it|planted": {
+   "key": "wb086-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "number",
+   "sub": "16->26",
+   "before": "ndicazione. Se non si ottiene una risposta ematologica dopo 16 settimane di trattamento, la terapia deve essere interrotta",
+   "after": "ndicazione. Se non si ottiene una risposta ematologica dopo 26 settimane di trattamento, la terapia deve essere interrotta",
+   "set": 1
+  },
+  "wb086-it|untouched": {
+   "key": "wb086-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb087-fr|real": {
+   "key": "wb087-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb088-fr|real": {
+   "key": "wb088-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb088-it|planted": {
+   "key": "wb088-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "number",
+   "sub": "6->3",
+   "before": "rattamento di pazienti pediatrici di età pari o superiore a 6 anni con porpora trombocitopenica immune (idiopatica, PTI) ",
+   "after": "rattamento di pazienti pediatrici di età pari o superiore a 3 anni con porpora trombocitopenica immune (idiopatica, PTI) ",
+   "set": 1
+  },
+  "wb088-it|untouched": {
+   "key": "wb088-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb089-it|planted": {
+   "key": "wb089-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "number",
+   "sub": "6->12",
+   "before": "ata totale del trattamento con Revolade non deve superare i 6 mesi. Dopo la garanzia di rimborso dei costi da parte dell’",
+   "after": "ata totale del trattamento con Revolade non deve superare i 12 mesi. Dopo la garanzia di rimborso dei costi da parte dell’",
+   "set": 2
+  },
+  "wb089-it|untouched": {
+   "key": "wb089-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb090-fr|planted": {
+   "key": "wb090-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "drop",
+   "sub": "sentence",
+   "before": "n aigu traités par une intervention coronarienne percutanée. La durée maximale de traitement avec Prasugrel est de 12 mois.",
+   "after": "n aigu traités par une intervention coronarienne percutanée.",
+   "set": 2
+  },
+  "wb090-fr|untouched": {
+   "key": "wb090-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb090-it|planted": {
+   "key": "wb090-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "number",
+   "sub": "12->11",
+   "before": "taneo. La durata massima del trattamento con Prasugrel è di 12 mesi.",
+   "after": "taneo. La durata massima del trattamento con Prasugrel è di 11 mesi.",
+   "set": 2
+  },
+  "wb090-it|untouched": {
+   "key": "wb090-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb091-fr|planted": {
+   "key": "wb091-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "number",
+   "sub": "12->22",
+   "before": "anée. La durée maximale de traitement avec Prasugrel est de 12 mois.",
+   "after": "anée. La durée maximale de traitement avec Prasugrel est de 22 mois.",
+   "set": 2
+  },
+  "wb091-fr|untouched": {
+   "key": "wb091-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb091-it|planted": {
+   "key": "wb091-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "planted",
+   "type": "operator",
+   "sub": "massim->minim",
+   "before": "ta sottoposti a intervento coronarico percutaneo. La durata massima del trattamento con Prasugrel è di 12 mesi.",
+   "after": "ta sottoposti a intervento coronarico percutaneo. La durata minima del trattamento con Prasugrel è di 12 mesi.",
+   "set": 1
+  },
+  "wb091-it|untouched": {
+   "key": "wb091-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  }
+ },
+ "ids": {
+  "a": {
+   "M000": "wb015-it|untouched",
+   "M001": "wb084-fr|planted",
+   "M002": "wb071-it|untouched",
+   "M003": "wb087-fr|real",
+   "M004": "wb023-fr|planted",
+   "M005": "wb083-it|real",
+   "M006": "wb086-it|planted",
+   "M007": "wb020-it|planted",
+   "M008": "wb027-it|planted",
+   "M009": "wb060-fr|planted",
+   "M010": "wb054-it|real",
+   "M011": "wb016-fr|planted",
+   "M012": "wb007-fr|untouched",
+   "M013": "wb074-it|planted",
+   "M014": "wb030-it|planted",
+   "M015": "wb072-it|planted",
+   "M016": "wb063-fr|untouched",
+   "M017": "wb068-fr|real",
+   "M018": "wb011-it|real",
+   "M019": "wb026-fr|planted",
+   "M020": "wb017-it|untouched",
+   "M021": "wb011-fr|real",
+   "M022": "wb022-fr|untouched",
+   "M023": "wb075-fr|planted",
+   "M024": "wb040-it|planted",
+   "M025": "wb000-it|untouched",
+   "M026": "wb028-it|planted",
+   "M027": "wb031-fr|planted",
+   "M028": "wb089-it|untouched",
+   "M029": "wb054-fr|real",
+   "M030": "wb032-fr|planted",
+   "M031": "wb061-fr|untouched",
+   "M032": "wb013-it|real",
+   "M033": "wb090-fr|untouched",
+   "M034": "wb030-fr|untouched",
+   "M035": "wb091-fr|untouched",
+   "M036": "wb076-fr|real",
+   "M037": "wb025-fr|untouched",
+   "M038": "wb084-it|untouched",
+   "M039": "wb026-it|planted",
+   "M040": "wb075-it|untouched",
+   "M041": "wb071-fr|untouched",
+   "M042": "wb010-it|real",
+   "M043": "wb091-it|planted",
+   "M044": "wb021-it|untouched",
+   "M045": "wb000-fr|planted",
+   "M046": "wb016-it|planted",
+   "M047": "wb031-it|untouched",
+   "M048": "wb014-fr|real",
+   "M049": "wb020-fr|untouched",
+   "M050": "wb025-it|untouched",
+   "M051": "wb090-it|untouched",
+   "M052": "wb021-fr|planted",
+   "M053": "wb003-fr|planted",
+   "M054": "wb002-it|planted",
+   "M055": "wb081-fr|untouched",
+   "M056": "wb019-fr|planted",
+   "M057": "wb085-it|real",
+   "M058": "wb088-it|planted",
+   "M059": "wb018-fr|planted",
+   "M060": "wb040-fr|planted",
+   "M061": "wb057-fr|real",
+   "M062": "wb060-it|untouched",
+   "M063": "wb015-fr|untouched",
+   "M064": "wb081-it|untouched",
+   "M065": "wb079-fr|untouched",
+   "M066": "wb023-it|untouched",
+   "M067": "wb022-it|planted",
+   "M068": "wb029-fr|untouched",
+   "M069": "wb088-fr|real",
+   "M070": "wb017-fr|untouched",
+   "M071": "wb028-fr|planted",
+   "M072": "wb027-fr|untouched",
+   "M073": "wb007-it|planted",
+   "M074": "wb002-fr|untouched",
+   "M075": "wb018-it|untouched",
+   "M076": "wb069-fr|real",
+   "M077": "wb024-it|planted",
+   "M078": "wb029-it|untouched",
+   "M079": "wb024-fr|planted",
+   "M080": "wb019-it|planted",
+   "N000": "wb091-it|untouched",
+   "N001": "wb036-it|real",
+   "N002": "wb060-it|planted",
+   "N003": "wb032-fr|untouched",
+   "N004": "wb084-fr|untouched",
+   "N005": "wb075-it|planted",
+   "N006": "wb081-fr|planted",
+   "N007": "wb072-it|untouched",
+   "N008": "wb021-it|planted",
+   "N009": "wb026-it|untouched",
+   "N010": "wb015-it|planted",
+   "N011": "wb025-fr|planted",
+   "N012": "wb063-fr|planted",
+   "N013": "wb022-it|untouched",
+   "N014": "wb027-fr|planted",
+   "N015": "wb030-it|untouched",
+   "N016": "wb015-fr|planted",
+   "N017": "wb017-it|planted",
+   "N018": "wb086-it|untouched",
+   "N019": "wb025-it|planted",
+   "N020": "wb071-it|planted",
+   "N021": "wb031-fr|untouched",
+   "N022": "wb084-it|planted",
+   "N023": "wb040-fr|untouched",
+   "N024": "wb071-fr|planted",
+   "N025": "wb024-fr|untouched",
+   "N026": "wb029-it|planted",
+   "N027": "wb033-it|real",
+   "N028": "wb020-fr|planted",
+   "N029": "wb031-it|planted",
+   "N030": "wb000-fr|untouched",
+   "N031": "wb067-it|real",
+   "N032": "wb085-fr|real",
+   "N033": "wb002-it|untouched",
+   "N034": "wb018-it|planted",
+   "N035": "wb069-it|real",
+   "N036": "wb030-fr|planted",
+   "N037": "wb002-fr|planted",
+   "N038": "wb023-fr|untouched",
+   "N039": "wb089-it|planted",
+   "N040": "wb003-fr|untouched",
+   "N041": "wb083-fr|real",
+   "N042": "wb022-fr|planted",
+   "N043": "wb043-fr|real",
+   "N044": "wb007-it|untouched",
+   "N045": "wb027-it|untouched",
+   "N046": "wb091-fr|planted",
+   "N047": "wb042-it|real",
+   "N048": "wb010-fr|real",
+   "N049": "wb090-it|planted",
+   "N050": "wb016-it|untouched",
+   "N051": "wb065-fr|real",
+   "N052": "wb019-fr|untouched",
+   "N053": "wb023-it|planted",
+   "N054": "wb067-fr|real",
+   "N055": "wb088-it|untouched",
+   "N056": "wb029-fr|planted",
+   "N057": "wb024-it|untouched",
+   "N058": "wb007-fr|planted",
+   "N059": "wb060-fr|untouched",
+   "N060": "wb058-it|real",
+   "N061": "wb016-fr|untouched",
+   "N062": "wb039-fr|real",
+   "N063": "wb056-it|real",
+   "N064": "wb081-it|planted",
+   "N065": "wb075-fr|untouched",
+   "N066": "wb017-fr|planted",
+   "N067": "wb061-fr|planted",
+   "N068": "wb028-fr|untouched",
+   "N069": "wb079-fr|planted",
+   "N070": "wb000-it|planted",
+   "N071": "wb090-fr|planted",
+   "N072": "wb040-it|untouched",
+   "N073": "wb026-fr|untouched",
+   "N074": "wb028-it|untouched",
+   "N075": "wb018-fr|untouched",
+   "N076": "wb033-fr|real",
+   "N077": "wb021-fr|untouched",
+   "N078": "wb074-it|untouched",
+   "N079": "wb020-it|untouched",
+   "N080": "wb019-it|untouched"
+  },
+  "b": {
+   "P000": "wb013-it|real",
+   "P001": "wb054-it|real",
+   "P002": "wb060-fr|planted",
+   "P003": "wb021-fr|planted",
+   "P004": "wb027-fr|untouched",
+   "P005": "wb076-fr|real",
+   "P006": "wb003-fr|planted",
+   "P007": "wb074-it|planted",
+   "P008": "wb016-fr|planted",
+   "P009": "wb018-it|untouched",
+   "P010": "wb088-it|planted",
+   "P011": "wb022-it|planted",
+   "P012": "wb007-it|planted",
+   "P013": "wb022-fr|untouched",
+   "P014": "wb063-fr|untouched",
+   "P015": "wb018-fr|planted",
+   "P016": "wb091-fr|untouched",
+   "P017": "wb072-it|planted",
+   "P018": "wb032-fr|planted",
+   "P019": "wb024-fr|planted",
+   "P020": "wb057-fr|real",
+   "P021": "wb088-fr|real",
+   "P022": "wb081-it|untouched",
+   "P023": "wb024-it|planted",
+   "P024": "wb068-fr|real",
+   "P025": "wb061-fr|untouched",
+   "P026": "wb087-fr|real",
+   "P027": "wb002-fr|untouched",
+   "P028": "wb002-it|planted",
+   "P029": "wb014-fr|real",
+   "P030": "wb030-fr|untouched",
+   "P031": "wb040-it|planted",
+   "P032": "wb090-it|untouched",
+   "P033": "wb071-fr|untouched",
+   "P034": "wb020-it|planted",
+   "P035": "wb089-it|untouched",
+   "P036": "wb085-it|real",
+   "P037": "wb026-fr|planted",
+   "P038": "wb023-fr|planted",
+   "P039": "wb084-it|untouched",
+   "P040": "wb029-fr|untouched",
+   "P041": "wb040-fr|planted",
+   "P042": "wb075-it|untouched",
+   "P043": "wb054-fr|real",
+   "P044": "wb000-fr|planted",
+   "P045": "wb019-fr|planted",
+   "P046": "wb069-fr|real",
+   "P047": "wb017-it|untouched",
+   "P048": "wb019-it|planted",
+   "P049": "wb015-it|untouched",
+   "P050": "wb030-it|planted",
+   "P051": "wb031-fr|planted",
+   "P052": "wb079-fr|untouched",
+   "P053": "wb091-it|planted",
+   "P054": "wb026-it|planted",
+   "P055": "wb007-fr|untouched",
+   "P056": "wb023-it|untouched",
+   "P057": "wb016-it|planted",
+   "P058": "wb011-it|real",
+   "P059": "wb025-it|untouched",
+   "P060": "wb010-it|real",
+   "P061": "wb060-it|untouched",
+   "P062": "wb075-fr|planted",
+   "P063": "wb029-it|untouched",
+   "P064": "wb011-fr|real",
+   "P065": "wb084-fr|planted",
+   "P066": "wb083-it|real",
+   "P067": "wb086-it|planted",
+   "P068": "wb090-fr|untouched",
+   "P069": "wb015-fr|untouched",
+   "P070": "wb017-fr|untouched",
+   "P071": "wb025-fr|untouched",
+   "P072": "wb000-it|untouched",
+   "P073": "wb021-it|untouched",
+   "P074": "wb027-it|planted",
+   "P075": "wb028-it|planted",
+   "P076": "wb028-fr|planted",
+   "P077": "wb081-fr|untouched",
+   "P078": "wb020-fr|untouched",
+   "P079": "wb071-it|untouched",
+   "P080": "wb031-it|untouched",
+   "R000": "wb040-it|untouched",
+   "R001": "wb074-it|untouched",
+   "R002": "wb024-it|untouched",
+   "R003": "wb040-fr|untouched",
+   "R004": "wb018-it|planted",
+   "R005": "wb033-it|real",
+   "R006": "wb029-it|planted",
+   "R007": "wb002-it|untouched",
+   "R008": "wb081-it|planted",
+   "R009": "wb020-fr|planted",
+   "R010": "wb030-it|untouched",
+   "R011": "wb016-it|untouched",
+   "R012": "wb027-fr|planted",
+   "R013": "wb026-it|untouched",
+   "R014": "wb029-fr|planted",
+   "R015": "wb023-fr|untouched",
+   "R016": "wb083-fr|real",
+   "R017": "wb039-fr|real",
+   "R018": "wb085-fr|real",
+   "R019": "wb090-fr|planted",
+   "R020": "wb043-fr|real",
+   "R021": "wb065-fr|real",
+   "R022": "wb020-it|untouched",
+   "R023": "wb089-it|planted",
+   "R024": "wb018-fr|untouched",
+   "R025": "wb022-it|untouched",
+   "R026": "wb026-fr|untouched",
+   "R027": "wb003-fr|untouched",
+   "R028": "wb017-fr|planted",
+   "R029": "wb063-fr|planted",
+   "R030": "wb067-fr|real",
+   "R031": "wb075-it|planted",
+   "R032": "wb025-it|planted",
+   "R033": "wb007-fr|planted",
+   "R034": "wb000-it|planted",
+   "R035": "wb019-fr|untouched",
+   "R036": "wb021-it|planted",
+   "R037": "wb072-it|untouched",
+   "R038": "wb090-it|planted",
+   "R039": "wb058-it|real",
+   "R040": "wb033-fr|real",
+   "R041": "wb031-it|planted",
+   "R042": "wb031-fr|untouched",
+   "R043": "wb036-it|real",
+   "R044": "wb084-fr|untouched",
+   "R045": "wb060-fr|untouched",
+   "R046": "wb028-fr|untouched",
+   "R047": "wb027-it|untouched",
+   "R048": "wb022-fr|planted",
+   "R049": "wb007-it|untouched",
+   "R050": "wb021-fr|untouched",
+   "R051": "wb019-it|untouched",
+   "R052": "wb071-it|planted",
+   "R053": "wb023-it|planted",
+   "R054": "wb015-it|planted",
+   "R055": "wb067-it|real",
+   "R056": "wb086-it|untouched",
+   "R057": "wb024-fr|untouched",
+   "R058": "wb010-fr|real",
+   "R059": "wb042-it|real",
+   "R060": "wb075-fr|untouched",
+   "R061": "wb056-it|real",
+   "R062": "wb060-it|planted",
+   "R063": "wb084-it|planted",
+   "R064": "wb069-it|real",
+   "R065": "wb091-fr|planted",
+   "R066": "wb002-fr|planted",
+   "R067": "wb030-fr|planted",
+   "R068": "wb079-fr|planted",
+   "R069": "wb032-fr|untouched",
+   "R070": "wb088-it|untouched",
+   "R071": "wb025-fr|planted",
+   "R072": "wb000-fr|untouched",
+   "R073": "wb028-it|untouched",
+   "R074": "wb017-it|planted",
+   "R075": "wb016-fr|untouched",
+   "R076": "wb081-fr|planted",
+   "R077": "wb071-fr|planted",
+   "R078": "wb091-it|untouched",
+   "R079": "wb015-fr|planted",
+   "R080": "wb061-fr|planted"
+  }
+ }
+}

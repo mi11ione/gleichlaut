@@ -196,6 +196,47 @@ FR/IT.
   failed criterion is reported as failed in the README, the technical report and here. Scored by
   `score.shadow_month("20260801-20260901")` in `replay` (`eval/results/shadow_20260801_20260901.json`).
 
+## R11. Annotator sensitivity: planted meaning errors, reference shown and hidden (frozen 10 Oct 2026, before any annotation)
+
+A juror: "'0 meaning errors in ready drafts' is a model's opinion until the annotators' error-catching rate is measured".
+R11 measures how often the blind Claude annotators of `eval/labels/PROTOCOL.md` catch a known meaning error.
+
+- **Items** (`tools/plant_sensitivity.py`, seed 20261012; its output is committed with this rule:
+  `eval/labels/sensitivity_key.json` and `sensitivity_{a,b}_set{1,2}_worklist.json`; `--check` reproduces them byte for
+  byte). Bases: the 66 fresh-166 items (33 FR, 33 IT) with a ready draft (70B, 8B Q8_0 or Q4_K_M run) that every existing
+  label calls exact (19) or equivalent (47) with no fix needed, one draft per item. Each base appears twice: once with
+  **one** planted meaning error, once untouched (true negative). Real items: 30 existing labelled drafts of other
+  fresh-166 items whose final label is REAL (3), stale (12) or German (15).
+- **Planted types** (definitions and patterns in the tool's docstring), mirroring the REAL class of the protocol: dropped
+  condition or clause (13), and/or swap (12), negation dropped or added (12), scope widened or narrowed (8), obligation
+  changed (doit/deve <-> peut/può, 7), direction or operator flipped (au moins <-> au plus, almeno <-> al massimo, à partir
+  de -> jusqu'à, 7), a number of the draft changed (7). Each base gets the applicable type with the lowest count in its
+  language. Confound, stated now: 34 of the 66 bases are the short boilerplate family 981f07a8, whose texts only offer
+  drop, and/or and negation sites, so those three types sit almost only there; results are also reported by family.
+- **Worklists.** Two sets per protocol; a base's planted and untouched copies are never in the same set (set 1: 33
+  planted, 33 untouched, 15 real; set 2 the complement), no item twice in one worklist; seeded shuffle, neutral ids,
+  fields as in the protocol. The key (id -> item, planted or not, type, edit) is kept apart and never shown.
+- **Protocols.** (a) *as used*: the PROTOCOL.md instructions verbatim, records with `official_new`. (b) *reference
+  hidden*: records without `official_new`; instructions identical except that the sentence "official_new is what the
+  authorities published." is replaced by "No published version is available for these records: there is no official_new
+  field." Both carry the same operational note after the instructions: "Some lines of the file are longer than 2,000
+  characters; if your file viewer truncates long lines, read the file so that every line is shown in full (for example
+  with cat or python3), still only this file."
+- **Annotators.** Per protocol and set, two fresh general-purpose Claude subagents (8 in all), each given only a copy of
+  its worklist in an otherwise empty directory; the second reads the records in reverse order. No annotator sees both
+  sets or both protocols. No tie-break: recall is reported per annotator, for both and for either. No model API calls.
+- **Metrics** (no threshold; deterministic from the committed merged labels `eval/labels/sensitivity_{a,b}.tsv` by
+  `score.annotator_sensitivity` -> `eval/results/annotator_sensitivity.json`, re-derived by `replay`): per protocol,
+  overall and per type, language, base class (exact / equivalent) and family (981f07a8 / other): planted n; caught as
+  needs_fix = yes and as severe (REAL or stale) by annotator A, by B, by both and by either; false alarms on the 66
+  untouched drafts (needs_fix = yes; severe); on the 30 real items, severe labels and agreement with the existing final
+  label. Wilson 95% intervals over items.
+- **Reporting rule.** README and technical report state, next to the "0 meaning errors" claim, the share of planted
+  meaning errors labelled severe by both / by at least one annotator under (a) and under (b), whatever they are (the
+  final label of the full protocol, majority of three, lies between the two). Also reported, descriptive: the 95% upper
+  bound on severe errors among ready drafts divided by the both-annotator severe recall of (a). No decision attached:
+  R0 and R1 outcomes are not re-opened by this rule.
+
 ## R4. Post-freeze changes
 
 No change to `frozen/` after this commit. Any guard change needs a new held-out run before a claim; anything measured on
