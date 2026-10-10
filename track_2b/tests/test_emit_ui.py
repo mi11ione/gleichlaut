@@ -30,8 +30,9 @@ def test_tokens_light_dark_and_mobile():
     s, _, _ = _page()
     assert '@media (prefers-color-scheme:dark){:root:not([data-theme="light"])' in s and ':root[data-theme="dark"]' in s
     assert "--sig:#ff4f00" in s and "--sig:#ff6a26" in s and "--red" not in s and "border-top:5px" not in s
-    assert "--paper:#f4f5f1;--sheet:#fbfbf9" in s and "--paper:#0f1110;--sheet:#151816" in s
-    assert "@media (max-width:900px)" in s and "@media print" in s and 'class="tblock"' in s and 'tr class="grid" aria-hidden="true"' in s
+    assert "--paper:#fbfbf9" in s and "--paper:#121412" in s
+    assert "@media (max-width:900px)" in s and "@media print" in s and '<header class="bar">' in s
+    assert 'class="tblock"' not in s and 'tr class="grid"' not in s and "registration marks" not in s   # no drawing-sheet furniture
 
 
 def test_header_figures_from_score_run():
