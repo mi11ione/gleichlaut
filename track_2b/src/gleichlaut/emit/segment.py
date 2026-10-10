@@ -15,12 +15,29 @@ from .. import core
 SENT_END = re.compile(r"[.;:!?](\s+)(?=[A-ZÄÖÜÀÂÉÈÊÎÔÛÇ0-9(«\"–-])")
 BEADS = {(1, 1): 0.0, (1, 2): 1.2, (2, 1): 1.2, (2, 2): 1.8, (1, 3): 2.4, (3, 1): 2.4}
 DIGITS = re.compile(r"\d+(?:[.,'’]\d+)*")
+# A full stop that closes an abbreviation is not a sentence end: two or more single letters with dots (I.T. 02.06, z.B.,
+# z. B., d.h., u.a., i.v., p. ex.) and a closed list of DE/FR/IT abbreviations seen in the register; the ones that stand
+# before a number (ca. 6, Nr. 3, Fr. 40.--, art. 52, max. 8) only when a digit follows. "etc." and "usw." stay sentence
+# ends (they usually close one).
+ABBR = re.compile(r"(?:(?<![^\W\d_])(?:[^\W\d_]\.\s?){1,3}[^\W\d_]\.|(?<![\w.])(?:z\.\s?Bsp|p\.\s?ex|ad\s+es|bzw|resp|vgl|"
+                  r"inkl|bspw|evtl|ggf|sog|med|Dr|Prof|St|od|cf|cfr|env|ecc|ev|Ev)\.)$")
+ABBR_NUM = re.compile(r"(?<![\w.])(?:ca|Nr|nr|Art|art|Abs|al|cpv|Fr|max|mind|min|Ziff|ch|n°|No|no|Kap)\.$")
+
+
+def _abbr(s, m):
+    """True when the SENT_END match m of s is the full stop of an abbreviation (ABBR, ABBR_NUM)."""
+    if s[m.start()] != ".": return False
+    head, tail = s[:m.start() + 1], s[m.end(1):]
+    if re.search(r"(?<![^\W\d_])[^\W\d_]\.$", head) and re.match(r"(?:[^\W\d_]|Bsp|ex)\.", tail): return True   # z. B., p. ex.
+    return bool(ABBR.search(head) or (ABBR_NUM.search(head) and tail[:1].isdigit()))
 
 
 def sentences(s):
-    """-> [(start, end)] sentence spans covering s (the trailing space belongs to the sentence)."""
+    """-> [(start, end)] sentence spans covering s (the trailing space belongs to the sentence; an abbreviation's full
+    stop does not end one, _abbr)."""
     out, a = [], 0
     for m in SENT_END.finditer(s):
+        if _abbr(s, m): continue
         out.append((a, m.end(1))); a = m.end(1)
     if a < len(s) or not out: out.append((a, len(s)))
     return out

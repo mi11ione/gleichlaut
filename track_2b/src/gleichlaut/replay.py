@@ -60,6 +60,7 @@ def compute():
     res["annotator_sensitivity"] = score.annotator_sensitivity(res)   # PREREG R11: planted meaning errors, reference shown / hidden
     from .emit import explain
     res["explain_v2"] = explain.measure_v2()       # translator-facing reasons, before/after the round-6 wording (display only)
+    res["explain_v3"] = explain.measure_v3()       # house sentences, termbase in rewritten text, noise, hedging, codes (display only)
     from . import termbase
     res["termbase"] = termbase.measure()          # display-only advisory: how often it fires on ready drafts, what it explains
     return res

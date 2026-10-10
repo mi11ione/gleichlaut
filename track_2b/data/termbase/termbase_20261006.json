@@ -67,8 +67,8 @@
    "variants": [],
    "house": true,
    "preferred_tokens": "médecin-conseil",
-   "dice": 0.925,
-   "without_preferred": 79,
+   "dice": 0.927,
+   "without_preferred": 78,
    "dominance": 1.0
   },
   {
@@ -81,8 +81,8 @@
    "variants": [],
    "house": true,
    "preferred_tokens": "code d' indication",
-   "dice": 0.831,
-   "without_preferred": 95,
+   "dice": 0.837,
+   "without_preferred": 93,
    "dominance": 1.0
   },
   {
@@ -451,8 +451,8 @@
    "variants": [],
    "house": true,
    "preferred_tokens": "intolérance",
-   "dice": 0.745,
-   "without_preferred": 4,
+   "dice": 0.765,
+   "without_preferred": 3,
    "dominance": 1.0
   },
   {
@@ -813,20 +813,20 @@
    "lang": "it",
    "limitations_with_term": 611,
    "preferred": "garanzia di assunzione dei costi",
-   "support": 364,
-   "share": 0.596,
+   "support": 365,
+   "share": 0.597,
    "variants": [
     {
      "tokens": "garanzia di assunzione delle spese",
      "text": "garanzia di assunzione delle spese",
      "limitations": 91,
      "without_preferred": 91,
-     "dice": 0.445
+     "dice": 0.446
     }
    ],
    "house": true,
    "preferred_tokens": "garanzia di assunzione dei costi",
-   "dice": 0.724,
+   "dice": 0.725,
    "without_preferred": 324,
    "dominance": 0.8
   },
@@ -840,8 +840,8 @@
    "variants": [],
    "house": true,
    "preferred_tokens": "medico di fiducia",
-   "dice": 0.938,
-   "without_preferred": 67,
+   "dice": 0.94,
+   "without_preferred": 66,
    "dominance": 1.0
   },
   {
@@ -935,8 +935,8 @@
    "variants": [],
    "house": true,
    "preferred_tokens": "prezzo di fabbrica",
-   "dice": 0.838,
-   "without_preferred": 81,
+   "dice": 0.84,
+   "without_preferred": 80,
    "dominance": 1.0
   },
   {
@@ -963,8 +963,8 @@
    "variants": [],
    "house": true,
    "preferred_tokens": "rimborso",
-   "dice": 0.456,
-   "without_preferred": 38,
+   "dice": 0.454,
+   "without_preferred": 39,
    "dominance": 1.0
   },
   {
@@ -1212,13 +1212,13 @@
    "lang": "it",
    "limitations_with_term": 63,
    "preferred": "terapia di mantenimento",
-   "support": 58,
-   "share": 0.921,
+   "support": 59,
+   "share": 0.937,
    "variants": [],
    "house": true,
    "preferred_tokens": "terapia di mantenimento",
-   "dice": 0.92,
-   "without_preferred": 6,
+   "dice": 0.93,
+   "without_preferred": 5,
    "dominance": 1.0
   },
   {
@@ -1256,8 +1256,8 @@
    "variants": [],
    "house": true,
    "preferred_tokens": "intolleranza",
-   "dice": 0.797,
-   "without_preferred": 14,
+   "dice": 0.824,
+   "without_preferred": 13,
    "dominance": 1.0
   },
   {
@@ -1553,8 +1553,8 @@
    "variants": [],
    "house": true,
    "preferred_tokens": "interruzione della terapia",
-   "dice": 0.596,
-   "without_preferred": 4,
+   "dice": 0.615,
+   "without_preferred": 3,
    "dominance": 1.0
   },
   {

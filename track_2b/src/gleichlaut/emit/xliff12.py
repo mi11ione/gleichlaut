@@ -9,7 +9,10 @@ unverified, 1.2 is the safe exchange format). One file per target language, one 
   value syntax x-...; protected numbers nest inside it).
   <note>s (annotates target / source), all in the target language, are the notes of XLIFF 2.1 (xliff.unit_notes): the
   verdict, at most three plain reasons without internal codes, the product and German change, the old German and the old
-  target, the low-priority notes (a deletion that mirrors the German's, typography; priority="8") and the termbase advisory when there are any (priority="9"), and one note from="gleichlaut-checks" priority="10" with the remaining reasons and the raw guard output; <alt-trans alttranstype="previous-version"> holds the old German -> old target pair so the
+  target, the low-priority notes (a deletion that mirrors the German's, typography; priority="8"), the house-sentence and
+  termbase advisories when there are any (priority="9"), one note from="gleichlaut-checks" priority="10" with the remaining
+  reasons in plain words, and one note from="gleichlaut-debug" priority="10" with the raw guard output and its internal
+  codes (for technical support, not a translation remark); <alt-trans alttranstype="previous-version"> holds the old German -> old target pair so the
   CAT tool shows the previous version beside the draft.
   Segmentation: the same segments as XLIFF 2.1 (segment.beads: aligned sentences, very short segments such as a lone
   code number merged into the previous one), written the 1.2 way: <seg-source> and <target> each hold one
@@ -84,7 +87,7 @@ def trans_unit(body, v):
         t = ET.SubElement(tu, _q("target"), {"state": STATE[v["status"]], f"{{{XMLNS}}}lang": lang})
         _target(t, v, B, L)
     for nid, cat, ap, pr, text in xliff.unit_notes(v, prev=True):           # the same notes as XLIFF 2.1
-        _note(tu, text, {None: "general"}.get(ap, ap), pr, "gleichlaut-checks" if nid == "checks" else "gleichlaut")
+        _note(tu, text, {None: "general"}.get(ap, ap), pr, {"checks": "gleichlaut-checks", "debug": "gleichlaut-debug"}.get(nid, "gleichlaut"))
     alt = ET.SubElement(tu, _q("alt-trans"), {"alttranstype": "previous-version", "origin": "SL previous version", "tool-id": "gleichlaut"})
     ET.SubElement(alt, _q("source"), {f"{{{XMLNS}}}lang": "de-CH"}).text = v["de_old"]
     ET.SubElement(alt, _q("target"), {f"{{{XMLNS}}}lang": lang}).text = v["tgt_old"]

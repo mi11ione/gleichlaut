@@ -73,8 +73,8 @@
      <termSec>
       <term>garanzia di assunzione dei costi</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 364 limitations</admin>
-      <note>364 of 611 limitations whose German contains the term (60%)</note>
+      <admin type="source">mined from BAG SL 06.10.2026, 365 limitations</admin>
+      <note>365 of 611 limitations whose German contains the term (60%)</note>
      </termSec>
      <termSec>
       <term>garanzia di assunzione delle spese</term>
@@ -519,8 +519,8 @@
      <termSec>
       <term>terapia di mantenimento</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 58 limitations</admin>
-      <note>58 of 63 limitations whose German contains the term (92%)</note>
+      <admin type="source">mined from BAG SL 06.10.2026, 59 limitations</admin>
+      <note>59 of 63 limitations whose German contains the term (94%)</note>
      </termSec>
     </langSec>
    </conceptEntry>

@@ -8,17 +8,22 @@ for the OKP. The blind labels say the same: most ready drafts that still need a 
 (`eval/results/m1_q4_k_m.json`, `ready_minor_terminology`).
 
 The termbase answers "what does BAG write for this German term?" from BAG's own published texts. No model, no network,
-Python standard library only. It produces two files and one advisory note:
+Python standard library only. It produces four files and two advisory notes:
 
 - `data/termbase/termbase_20261006.json`: per German term and target language, the house rendering, its support (in
   limitations), its share, and the minority variants the register also uses, with counts;
 - `data/termbase/gleichlaut_sl_termbase_20261006.tbx`: the same as TBX-Basic (TBX v3, ISO 30042:2019, DCA style) for a
   terminology tool;
-- a low-priority advisory in the XLIFF units and on the review page when a draft departs from the house rendering.
+- `data/termbase/house_sentences_20261006.json`: BAG's dominant wording of frequent fixed German sentences (the closing
+  code formula and its kin), mined the same way ([House sentences](#house-sentences));
+- `data/termbase/shared_words_20261006.json`: the words the German and a target register share ("allergie"), used to
+  word an "untranslated German" finding on such a word as probably fine;
+- a low-priority advisory in the XLIFF units and on the review page when a draft departs from the house rendering, and
+  one when a sentence the draft wrote departs from a house sentence.
 
 ```bash
-gleichlaut termbase [--hist DIR] [--date YYYYMMDD] [--json OUT] [--tbx OUT]   # mine from a snapshot (about 75 s)
-gleichlaut termbase --from data/termbase/termbase_20261006.json --tbx OUT      # TBX from the shipped JSON, no snapshot
+gleichlaut termbase [--hist DIR] [--date YYYYMMDD] [--json OUT] [--tbx OUT] [--house OUT]   # mine from a snapshot (about 2 min)
+gleichlaut termbase --from data/termbase/termbase_20261006.json --tbx OUT                   # TBX from the shipped JSON, no snapshot
 ```
 
 `--hist` defaults to `$GLEICHLAUT_HIST`, then `out/hist` (snapshots from `python -m gleichlaut.sl.ingest`). The
@@ -32,7 +37,10 @@ The input is all 1,688 limitations of the 6 Oct 2026 public ePL feed. The German
 limitation id, as the audit aligns them (`audit.load`). A target field written in another language is skipped (the
 audit's function-word vote). Each text pair is then cut into aligned sentence units, using the same Gale-Church
 alignment the XLIFF writer uses (`emit.segment.align`). A rendering is therefore counted against the German sentence it
-translates, not against boilerplate elsewhere in the same limitation. Counts are reported in limitations.
+translates, not against boilerplate elsewhere in the same limitation. Counts are reported in limitations. Since 10 Oct
+2026 the sentence splitter does not end a sentence at the full stop of an abbreviation ("I.T. 02.06", "z.B.", "ca. 6",
+"Nr.", "resp.", "u.a.", "p. ex."); re-mining with it moved a few counts by one or two limitations (IT Kostengutsprache
+364 → 365) and changed no rendering.
 
 ## Which German terms
 
@@ -85,7 +93,7 @@ Re-mining reproduces the files byte for byte. A selection, with support / limita
 | German | French (share) | Italian (share) |
 |---|---|---|
 | Krankenversicherer | assureur-maladie 505/890 (57%); variant assurance maladie 266 | assicuratore 522/889 (59%); variants assicurazione malattia 282, assicurazione malattie 97 |
-| Kostengutsprache | garantie de prise en charge 374/611 (61%) | garanzia di assunzione dei costi 364/611 (60%); variant garanzia di assunzione delle spese 91 |
+| Kostengutsprache | garantie de prise en charge 374/611 (61%) | garanzia di assunzione dei costi 365/611 (60%); variant garanzia di assunzione delle spese 91 |
 | Vertrauensarzt | médecin-conseil 522/581 (90%) | medico di fiducia 519/581 (89%) |
 | obligatorische Krankenpflegeversicherung | assurance obligatoire des soins 33/41 (80%) | assicurazione obbligatoria delle cure medico-sanitarie 34/41 (83%) |
 | Indikationscode | code d'indication 262/345 (76%) | codice di indicazione 182/345 (53%); variant codice d'indicazione 99 |
@@ -138,18 +146,27 @@ similarity ≥ 0.6). When the draft does write the house rendering, only fewer t
 so ("le brouillon l'écrit 1 fois, l'allemand a le terme 2 fois"); only a draft without it gets "absent du brouillon" /
 "assente dalla bozza".
 
-A softer note covers the case the two rules above hold back on: the old text already fell short of the house rendering
-and the draft keeps the old text's non-standard wording. It names that wording if it is a spelling variant of the house
-rendering ("assureur maladie", "médecin conseil"), or, in text the draft wrote, a wording at least 0.7 similar to it
-("caisse maladie"; two words or more, no word of the house rendering itself). It never names one of the register's
-recorded variants ("assurance maladie", 266 limitations): that is BAG's own practice, not the draft's, and the
-translator who reviewed the drafts called notes about it noise.
+Recorded variants are matched spelling-tolerantly: "assurance-maladie" is the recorded "assurance maladie" (266
+limitations), "assicurazione malattia" the recorded Italian one.
 
-> FR: Terme maison pour « Krankenversicherer » : « assureur-maladie » (505 limitations) ; le texte (déjà avant) écrit
+When the old text already fell short of the house rendering, where the non-standard wording sits decides the note:
+
+- **In text the draft wrote** (a sentence it inserted, or an edited sentence whose old version did not have the
+  wording): a normal note, "le brouillon écrit …". That holds for a recorded variant too ("assurance-maladie" in a
+  closing code sentence the draft wrote) and for a wording the register does not record ("caisse maladie", wb004-fr).
+- **Carried over** (a sentence of the old text, unchanged, or an edited version of one that already had the wording:
+  word similarity ≥ 0.5): a softer note, "le texte (déjà avant) écrit …", only for a spelling variant of the house
+  rendering ("assureur maladie", "médecin conseil") or a wording at least 0.7 similar to it that the register does not
+  record. A recorded variant carried over gets no note: that is BAG's own practice, and BAG's own amendments keep it
+  (wb040-fr and wb072-it, drafts identical to BAG's published text, stay without a note).
+
+> FR: Terme maison pour « Krankenversicherer » : « assureur-maladie » (505 limitations) ; le brouillon écrit
 > « caisse maladie ».
 
 The measurement below covers the first two kinds only (`termbase.measure()`); the softer note is counted in
-`eval/results/explain_v2.json` (`emit.explain.measure_v2()`). In XLIFF 2.1 the advisory is its own `<note
+`eval/results/explain_v2.json` (`emit.explain.measure_v2()`), the notes on text the draft wrote in
+`eval/results/explain_v3.json` (`emit.explain.measure_v3()`). A termbase note on a wording inside a sentence the
+house-sentence note already names is left out (the house note shows the whole formula). In XLIFF 2.1 the advisory is its own `<note
 category="gleichlaut:termbase" priority="9">`; XLIFF 1.2 carries the same note with priority 9. On the review page it
 is part of the grey line under the explanation. It is never one of the three reasons, never changes ready or flagged, the draft
 or any score. A draft with no house-rendering issue gets no note. The guards and every committed result are unchanged.
@@ -169,7 +186,7 @@ runs: majority of three for the 70B, `m1_<build>_fresh166.tsv` for the 8B builds
 | Labelled minor (one term) / explained by the advisory | 1 / 1 | 29 / 27 | 23 / 22 |
 | Advisories on ready drafts where BAG's text has the house rendering | 1 of 1 | 28 of 29 | 22 of 22 |
 | Advisories on ready drafts labelled "no fix needed" | 0 | 2 | 0 |
-| Flagged drafts with an advisory | 17 of 100 | 37 of 106 | 31 of 104 |
+| Flagged drafts with an advisory | 21 of 100 | 39 of 106 | 34 of 104 |
 
 On the 8B builds the advisory accounts for nearly all of the "ready but needs a fix" drafts. Almost all of them are
 one German term, the OKP: "obligatorische Krankenpflegeversicherung", which the 8B renders "assurance obligatoire de
@@ -179,7 +196,99 @@ Q4_K_M advisories on drafts labelled "no fix" are wb032-fr ("assurance maladie o
 annotators called it a non-standard insurance term, the majority did not) and wb088-it (BAG's own
 text keeps "assicurazione malattia", the minority variant; this is the one disagreement with BAG). Flagged drafts get
 advisories more often because they already depart from the old text more: German left in the draft, rewritten
-sentences.
+sentences. (Before the third review: 17, 37 and 31 flagged drafts. The ready-draft rows did not change: the 4 / 2 / 3 more
+flagged drafts are wordings in text the draft wrote, such as "caisse maladie" or "assicurazione malattia" in a
+code sentence the draft added.)
+
+## House sentences
+
+The same translator's third review named the fixed sentences: "Folgender Code ist an den Krankenversicherer zu
+übermitteln:", its newer "Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln." and other
+boilerplate have a published French and Italian wording, and the drafts write them otherwise. `gleichlaut.house` mines
+those wordings from the same snapshot with the same method (module docstring, S1–S5); no wording is written by hand:
+
+1. **Units.** The aligned sentence beads of `emit.segment.align`; the German side is the German sentence.
+2. **Normalisation.** Numbers and codes become `#` (21150.07, 20481.XX), whitespace and typographic apostrophes are
+   folded, spaces before `: ; ! ? »` and after `«` are dropped. A German sentence needs three words of two letters or
+   more (a lone code number is not one).
+3. **Support.** A German sentence in at least 10 limitations is recorded with every rendering, counted in limitations.
+4. **House wording.** The most frequent rendering, when it is in at least 10 limitations and in more than half of the
+   limitations with that German sentence (the termbase's rule); otherwise "no dominant rendering", not used.
+5. **Variants.** The other renderings in at least 2 limitations, up to 5, with counts.
+
+On the 6 Oct 2026 feed: 125 German sentences are in at least 10 limitations (67 French entries, 58 Italian), and **64
+have a house wording (37 French, 27 Italian)**. The rest are split. Selected:
+
+| German sentence | French | Italian |
+|---|---|---|
+| Folgender Code ist an den Krankenversicherer zu übermitteln: | no dominant wording: "…à l'assurance maladie:" 109, "…à l'assureur-maladie:" 109, "…à l'assurance-maladie:" 52, "…à l'assureur:" 10 of 295 | no dominant wording (80, 53, 35 … of 292) |
+| Folgender Indikationscode ist an den Krankenversicherer zu übermitteln: | « Le code d'indication suivant doit être transmis à l'assureur-maladie: » 111/167 | no dominant wording (75 of 168) |
+| Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln. | « Le code d'indication de cette limitation doit être transmis à l'assureur-maladie. » 36/53 | «Il codice di indicazione di questa limitazione deve essere trasmesso all'assicuratore malattie.» 45/55 |
+| Folgender Indikationscode ist zu übermitteln: | « Le code d'indication suivant doit être transmis: » 27/43 | «Il seguente codice di indicazione deve essere trasmesso:» 26/43 |
+| Nur bis zur Progression der Krankheit. | « Seulement jusqu'à progression de la maladie. » 35/69 | «Solo fino alla progressione della malattia.» 35/69 |
+
+The classic closing formula has **no** house wording in either language: BAG's own French splits evenly between
+"assurance maladie" and "assureur-maladie". The register cannot settle it; a terminologist can. For that sentence the
+termbase note still applies to text the draft wrote ("assurance-maladie" where the termbase has "assureur-maladie").
+
+**The note.** When a sentence of the draft, aligned to a German house sentence, is recognisably the same formula
+(character similarity ≥ 0.6 after normalisation) but not the house wording, the reviewer gets one low-priority note
+(`<note category="gleichlaut:house" priority="9">`, XLIFF 1.2 priority 9; on the review page in the grey line under the
+explanation). A long sentence is shown as the part that differs, with two words on each side; a recorded variant says
+how often BAG published it:
+
+> FR: Phrase maison pour « Folgender Indikationscode ist an den Krankenversicherer zu übermitteln: » : « Le code
+> d'indication suivant doit être transmis à l'assureur-maladie: » (111 limitations) ; le brouillon écrit « Le code
+> d'indication suivant doit être communiqué à l'assureur-maladie : ».
+
+Only sentences the draft wrote get a note. A sentence carried over unchanged from the old text is left alone: the German
+did not change it, the checks keep edits inside the change, and BAG's own amendments leave such sentences as they are
+(below: BAG's published text kept the old wording at every carried-over sentence of the fresh 166). A German sentence
+the draft does not translate at all is the change-applied check's business, not this note's. The note never changes ready
+or flagged, a draft or a score. Not in the TBX: a sentence with a number slot is translation-memory material, not a term.
+
+**Measured** (`eval/results/explain_v3.json`, `house`). "BAG differs" means BAG's published text of the same amendment,
+at the same German sentence, is not the draft's sentence (evaluation data, never shown):
+
+| | 70B | 8B Q4_K_M | 8B Q8_0 | shadow 70B | shadow Q4_K_M | shadow Q8_0 |
+|---|---|---|---|---|---|---|
+| Drafts (not routed to a translator) | 166 | 166 | 166 | 44 | 44 | 44 |
+| Drafts with a house-sentence note (ready) | 13 (0) | 13 (0) | 14 (0) | 28 (2) | 19 (2) | 22 (1) |
+| Notes | 14 | 13 | 14 | 29 | 19 | 22 |
+| … BAG differs from the draft there | 14 | 13 | 14 | 26 (3 not aligned) | 19 | 22 |
+| … BAG writes the house wording there | 12 | 11 | 10 | 22 | 16 | 16 |
+| Departing sentences carried over, no note / BAG kept them too | 12 / 12 | 10 / 10 | 10 / 10 | 9 / 4 | 11 / 3 | 8 / 3 |
+
+On the fresh 166 every note points at a sentence where BAG's own text differs from the draft's, and in most of them BAG
+wrote the house wording. In the shadow month the notes are mostly the newer code sentence, which the 8B drafts write with
+German left in it ("Der Indikationscode de cette limitation …") or with "assurance-maladie" / "cassa malati".
+
+## Third review: what else changed in the notes
+
+Presentation only; verdicts, drafts and scores are unchanged. Before / after on the fresh 166 (70B, Q4_K_M, Q8_0) from
+`eval/results/explain_v3.json`:
+
+- **Internal codes out of translator notes.** The checks note used to end with the raw guard output ("Slots: neg DE
+  5->4", "G3c", "[T7]"): 100 / 106 / 104 units carried codes in a translator note, now 0. The raw output is one note
+  `category="gleichlaut:debug" priority="10"` (XLIFF 1.2 `from="gleichlaut-debug"`); the checks note keeps the remaining
+  reasons in plain words.
+- **Header equals the list.** "3 issues to check, 2 probably fine" was counted from the triage rules while the list
+  showed the reworded reasons; it differed on 33 / 20 / 25 flagged drafts. It is now counted from the list
+  (`xliff.counts`), and the register's ▲ / ~ mark follows it: on the 70B register 49 flagged drafts to check and 51
+  with every item probably fine (60 / 40 by the triage rules alone).
+- **Deletions that follow the German one to one** (the German drops a sentence, the draft drops the sentence that
+  translates it, wb008) are stated, not asked: "Suppression conforme à l'allemand : l'allemand retire la phrase « … » ;
+  le brouillon retire la phrase correspondante « … »." 15 / 8 / 15 notes; 3 / 9 / 8 partial ones stay questions. wb008
+  was not a detection bug: the mirror was found, only the wording was always a question.
+- **Repetitions the German has too** ("ou d'une perte de vision" twice where the German says "eines Visusverlustes"
+  twice): low priority, "l'allemand le répète aussi". 14 of 16 / 2 of 6 / 3 of 9 repetition findings.
+- **German-looking target words** ("allergie", "teclistamab"): when the old text has the word or the German and target
+  registers share it (`shared_words`), an "untranslated German" finding says "probablement sans problème" for those
+  words. All words: 1 / 1 / 1 finding; some words: 4 / 11 / 10. The check itself is unchanged.
+- **Hedged wording.** A sentence the German adds with nothing in the draft for it: "elle manque dans le brouillon"
+  (7 / 8 / 9 of 10 / 13 / 13 hedged sentences); left in German: "le brouillon la laisse en allemand" (0 / 2 / 0); a
+  sentence the German removes that the draft keeps: named (2 / 9 / 8). The rest stays "vérifier qu'elle est traduite".
+- **Segments.** "I.T. 02.06", "z.B.", "ca. 6" no longer split a segment.
 
 ## Caveats
 
@@ -197,5 +306,8 @@ sentences.
   against the official RNG/Schematron, which needs a network fetch. TermStar NXT and other STAR tools import TBX; whether
   a given installation reads TBX v3 or expects the 2008 `martif` dialect is unverified. The ePL / STAR team would test
   one import before adopting it.
-- **Monthly update.** Re-mining a new snapshot takes about 75 s (`gleichlaut termbase --date YYYYMMDD`). The advisory
-  reads `data/termbase/termbase_20261006.json`.
+- **Monthly update.** Re-mining a new snapshot takes about 2 minutes (`gleichlaut termbase --date YYYYMMDD`; termbase,
+  house sentences and shared words). The advisories read the shipped `data/termbase/*_20261006.json`.
+- **House sentences are a majority, not a style guide.** A wording used in 51% of 53 limitations is "house"; BAG's
+  language service may prefer the minority. Product-family sentences (the statin boilerplate in 24 limitations) count
+  like formulas. A note fires only on a sentence the draft wrote and only when it is recognisably the same formula.

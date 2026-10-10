@@ -31,13 +31,17 @@ style) for terminology tools (gleichlaut_sl_termbase_<date>.tbx). Rules, fixed b
 
 Advisory (presentation only; emit/xliff.py and the review page): for a draft whose new German contains a term with a
 house rendering, a low-priority note in the reviewer's language when the draft introduces a recorded minority variant
-(more occurrences than the old target text), or writes the house rendering fewer times than the German has the term
-while the old text did not fall short in the same way (the gap is the draft's, not the old text's; the note says how
-often the draft writes it when it does, never 'absent'). Softer ("kept"): the draft falls short, the old text already
-did, and the draft keeps a non-standard wording the old text used (a spelling variant such as 'assureur maladie', or,
-in text the draft wrote, a similar wording such as 'caisse maladie'; never one of BAG's own recorded variants, which are
-BAG's practice): 'le texte (déjà avant) écrit …'. It never changes a verdict, a draft, or a score; the first two kinds are measured in
-eval/results/termbase.json (measure()), all three in eval/results/explain_v2.json (emit.explain.measure_v2())."""
+(more occurrences than the old target text; variants matched spelling-tolerantly, so 'assurance-maladie' is the recorded
+'assurance maladie'), or writes the house rendering fewer times than the German has the term while the old text did not
+fall short in the same way (the gap is the draft's, not the old text's; the note says how often the draft writes it when
+it does, never 'absent'), or writes a recorded variant or another non-standard wording in a sentence it inserted or
+rewrote (not one of the old text's sentences: the wording is the draft's own). Softer ("kept"): the draft falls short, the
+old text already did, and the draft carries over unchanged a sentence with a non-standard wording the old text used (a
+spelling variant such as 'assureur maladie', or a similar wording such as 'caisse maladie'; never one of BAG's own
+recorded variants, which are BAG's practice): 'le texte (déjà avant) écrit …'. It never changes a verdict, a draft, or a
+score; the first two kinds are measured in eval/results/termbase.json (measure()), all three in
+eval/results/explain_v2.json and explain_v3.json (emit.explain). Data files mined from the same snapshot by `gleichlaut
+termbase`: the house sentences (gleichlaut.house) and the words the German and target registers share (shared_words)."""
 import argparse, difflib, hashlib, json, os, re, sys
 from collections import Counter, defaultdict
 from . import core
@@ -422,6 +426,42 @@ def mine(J, date=DATE, terms=None):
     return dict(meta=meta, entries=entries)
 
 
+SHARED = os.path.join(DEST, f"shared_words_{DATE}.json")
+SWORD = re.compile(r"[^\W\d_]+(?:-[^\W\d_]+)*")
+
+
+def shared_words(J, date=DATE):
+    """Words the German and a target register share (presentation only: an 'untranslated German' finding on such a word is
+    worded as probably fine, emit.explain.lexicon_fine): per target language, the lower-cased words of 3+ letters that are
+    in at least one German limitation text and in at least as many target-language texts of that language as German ones
+    (document frequency; a target field written in another language is skipped, as M1). 'allergie' (2 French, 2 German)
+    is in; 'die', 'in', 'colitis' (German far more often) are not. Mined, never written by hand."""
+    df = {}
+    for L in ("de",) + LANGS:
+        c = Counter()
+        for t in J[L]["lim"].values():
+            if not t or (L != "de" and not _lang_ok(t, L)): continue
+            c.update({w.lower() for w in SWORD.findall(_nrm(t))})
+        df[L] = c
+    out = dict(meta=dict(generated_by=f"gleichlaut termbase --date {date}", date=date, source=f"BAG Spezialitätenliste, public "
+                         f"ePL FHIR feed {_d(date)}", rule="lower-cased words of >= 3 letters with df(target) >= df(German) >= 1 "
+                         "(document frequency over the limitation texts; target fields in another language skipped)"))
+    for L in LANGS:
+        out[L] = sorted(w for w, n in df[L].items() if len(w) >= 3 and df["de"][w] and n >= df["de"][w])
+    return out
+
+
+_SW = {}
+
+
+def shared(L, path=SHARED):
+    """-> frozenset of the words the German and target register L share (shared_words), empty when the file is absent."""
+    if path not in _SW:
+        try: d = json.load(open(path, encoding="utf-8")); _SW[path] = {k: frozenset(d[k]) for k in LANGS}
+        except (OSError, ValueError, KeyError): _SW[path] = {k: frozenset() for k in LANGS}
+    return _SW[path].get(L, frozenset())
+
+
 def _d(d): return f"{d[6:8]}.{d[4:6]}.{d[:4]}" if isinstance(d, str) and re.fullmatch(r"\d{8}", d) else str(d)
 
 
@@ -576,21 +616,27 @@ def _fuzzy(pref, draft_ws, old_pad, L, in_old=False, within=None, ratio=None):
 
 
 def advice(v, tb=None):
-    """-> [dict(term, preferred, support, wrote, kind, n_de, n_draft)] for one draft view (lang, de_old, de_new, tgt_old,
-    draft). kind: "variant" (the draft introduces a recorded minority variant), "missing" (the draft falls short of the
-    house rendering where the old text did not), or "kept" (softer: the draft falls short, the old text already did, and
-    the draft keeps a non-standard wording the old text already used that is not one of BAG's recorded variants: a
-    spelling variant of the house rendering, or the wording most similar to it in text the draft wrote; _kept). n_de / n_draft: how often the new German has the term and the draft the house rendering.
-    eval/results/termbase.json measures the first two kinds (measure()); "kept" is measured in explain_v2.json."""
+    """-> [dict(term, preferred, support, wrote, kind, n_de, n_draft[, rewrote])] for one draft view (lang, de_old, de_new,
+    tgt_old, draft). kind: "variant" (the draft introduces a recorded minority variant, or writes one in a sentence it
+    inserted or rewrote), "missing" (the draft falls short of the house rendering where the old text did not, or writes a
+    non-standard wording in a sentence it inserted or rewrote), or "kept" (softer: the draft falls short, the old text
+    already did, and the draft carries over unchanged a sentence with a non-standard wording the old text used that is not
+    one of BAG's recorded variants: a spelling variant of the house rendering, or the wording most similar to it; _kept).
+    Recorded variants are matched spelling-tolerantly (_ortho: 'assurance-maladie' is the variant 'assurance maladie').
+    rewrote=True: the wording sits in text the draft wrote (a sentence it inserted, or an edited sentence whose old version
+    did not have the wording; _rewritten).
+    n_de / n_draft: how often the new German has the term and the draft the house rendering. eval/results/termbase.json
+    measures the first two kinds (measure()); all three are counted in explain_v2.json / explain_v3.json."""
     L = v.get("lang"); draft = (v.get("draft") or "").replace("\u02bc", "'")
     if L not in LANGS or not draft or v.get("status") == "human": return []
     tb = load() if tb is None else tb
     if not tb: return []
     old = (v.get("tgt_old") or "").replace("\u02bc", "'")
-    ws = toks(draft); wo = toks(old); pd, po = _pad(ws), _pad(wo)
+    ws = toks(draft); wo = toks(old); pd, po = _pad(ws), _pad(wo); fd, fo = _fpad(ws), _fpad(wo)
     dn, on = _nrm(draft), _nrm(old)
     new_idx = {j for op, _, _, j1, j2 in difflib.SequenceMatcher(None, wo, ws, autojunk=False).get_opcodes()
                if op in ("insert", "replace") for j in range(j1 - NEAR, j2 + NEAR)}   # draft text the draft inserted / rewrote
+    olds = _old_sentences(old)
     out = []
     for term, _ in HEADS:
         e = tb.get((L, term))
@@ -600,18 +646,81 @@ def advice(v, tb=None):
         n_old = de_count(term, v.get("de_old") or "")
         p = e.get("preferred_tokens") or " ".join(toks(e["preferred"]))
         rx = _loose(p); p_new, p_old = len(rx.findall(dn)), len(rx.findall(on))
-        intro = [w for w in e["variants"] if count(w["tokens"], pd) > count(w["tokens"], po)]
+        fp = _ortho(surface(p))
+        V = [(w, f) for w in e["variants"] for f in (_ortho(surface(w["tokens"])),) if f != fp]
+        intro = [w for w, f in V if _fcount(f, fd) > _fcount(f, fo)]
         gap = max(0, n_new - p_new) > max(0, n_old - p_old)
         a = dict(term=term.split(" / ")[-1], preferred=e["preferred"], support=e["support"], n_de=n_new, n_draft=p_new)
         if intro:
-            w = intro[0]; out.append(dict(a, wrote=_surface_in(draft, w["tokens"]) or w["text"], kind="variant"))
+            w = intro[0]; out.append(dict(a, wrote=_surface_in(draft, w["tokens"]) or _first(draft, _vrx(w["tokens"])) or w["text"], kind="variant"))
         elif gap:
             f = None if p_new else _fuzzy(p, ws, po, L)          # the house rendering is there, only too few times
             out.append(dict(a, wrote=(_surface_in(draft, f) or surface(f)) if f else None, kind="missing"))
         elif p_new < n_new:
+            r = next((m for w, _ in V for m in (_rewritten(draft, olds, _vrx(w["tokens"])),) if m), None)
+            if r:                                   # a recorded variant in a sentence the draft wrote: the draft's own wording
+                out.append(dict(a, wrote=r, kind="variant", rewrote=True)); continue
             f = _kept(e, p, ws, pd, po, L, new_idx)
-            if f: out.append(dict(a, wrote=_surface_in(draft, f) or surface(f), kind="kept"))
+            if f:
+                r = _rewritten(draft, olds, _vrx(f))
+                out.append(dict(a, wrote=r or _surface_in(draft, f) or surface(f), kind="missing" if r else "kept", rewrote=bool(r)))
     return out
+
+
+def _fpad(ws):
+    """the token list folded for spelling (_ortho), space-padded: 'assurance-maladie' reads as 'assurance maladie'."""
+    return " " + " ".join(w if w == BR else _ortho(w) for w in ws) + " "
+
+
+def _fcount(f, fpad): return fpad.count(" " + f + " ")
+
+
+def _vrx(g):
+    """regex for the n-gram g (space-joined tokens) as written, spelling-tolerant as _ortho folds it: hyphen, apostrophe
+    or space between the words, a plural -s / -x on each."""
+    parts = [w for w in g.split(" ") if w]
+    body = r"[\s'’-]*".join(re.escape(w.rstrip("'")).replace(r"\-", r"[\s-]") + (r"['’]" if w.endswith("'") else r"[sx]?")
+                            for w in parts)
+    return re.compile(r"(?<![\w-])" + body + r"(?![\w-])", re.I)
+
+
+def _first(text, rx):
+    m = rx.search(text)
+    return m.group(0) if m else None
+
+
+def _skey(s):
+    """a sentence normalised for 'carried over unchanged' (house.key: spacing, apostrophes, numbers)."""
+    from .house import key
+    return key(s)
+
+
+def _old_sentences(old):
+    """-> {sentence key: sentence} of the old target text."""
+    from .emit.segment import sentences
+    return {_skey(old[a:b]): old[a:b] for a, b in sentences(old)}
+
+
+EDITED = 0.5          # a draft sentence at least this similar to an old sentence is that sentence, edited
+
+
+def _rewritten(draft, olds, rx):
+    """the first occurrence of rx in the draft that sits in text the draft wrote, as written, or None. Carried over (None)
+    is an occurrence in a sentence of the old text (unchanged), or in an edited version of one (word similarity >= EDITED
+    to its most similar old sentence) that already had the wording; written is an occurrence in a sentence the
+    draft inserted, or in an edited sentence whose old version did not have it."""
+    from .emit.segment import sentences
+    S = sentences(draft)
+    for m in rx.finditer(draft):
+        s = next(((a, b) for a, b in S if a <= m.start() < b), None)
+        if not s: continue
+        k = _skey(draft[s[0]:s[1]])
+        if k in olds: continue
+        sim = lambda o: difflib.SequenceMatcher(None, k.split(), o.split(), autojunk=False).ratio()
+        best = max(olds, key=sim, default=None)
+        if best is not None and sim(best) >= EDITED and rx.search(olds[best]): continue
+        return m.group(0)
+    return None
 
 
 def _ortho(g):
@@ -783,13 +892,16 @@ def table(tb, out=sys.stdout):
 
 
 def main(argv=None):
-    """gleichlaut termbase [--hist DIR] [--date YYYYMMDD] [--json OUT] [--tbx OUT] [--from JSON] [--quiet]"""
+    """gleichlaut termbase [--hist DIR] [--date YYYYMMDD] [--json OUT] [--tbx OUT] [--house OUT] [--from JSON] [--quiet]
+    Mining from a snapshot also writes the house sentences (gleichlaut.house) of the same snapshot."""
     ap = argparse.ArgumentParser(prog="gleichlaut termbase", description="mine BAG's house FR/IT renderings of recurring German "
                                  "limitation terms from one SL snapshot (no model); write the termbase JSON and a TBX-Basic file")
     ap.add_argument("--hist", help="snapshot dir (default: $GLEICHLAUT_HIST or track_2b/out/hist)")
     ap.add_argument("--date", default=DATE, help=f"snapshot date YYYYMMDD (default {DATE})")
     ap.add_argument("--json", help="termbase JSON to write (default data/termbase/termbase_<date>.json)")
     ap.add_argument("--tbx", help="TBX file to write (default data/termbase/gleichlaut_sl_termbase_<date>.tbx)")
+    ap.add_argument("--house", help="house-sentence JSON to write (default data/termbase/house_sentences_<date>.json); the "
+                    "shared-word list (shared_words_<date>.json) goes next to the termbase JSON")
     ap.add_argument("--from", dest="src", help="no mining: export the TBX from this termbase JSON (e.g. the shipped one)")
     ap.add_argument("--quiet", action="store_true")
     a = ap.parse_args(argv)
@@ -807,12 +919,15 @@ def main(argv=None):
             return 2
         J, _ = audit.load(H, a.date)
         tb = mine(J, a.date); write_json(tb, jp)
+        from . import house
+        hp = house.write_json(house.mine(J, a.date), a.house or os.path.join(DEST, f"house_sentences_{a.date}.json"))
+        write_json(shared_words(J, a.date), os.path.join(os.path.dirname(os.path.abspath(jp)), f"shared_words_{a.date}.json"))
     write_tbx(tb, tp)
     if not a.quiet:
         table(tb)
         h = sum(1 for e in tb["entries"] if e.get("house"))
         print(f"termbase {tb['meta']['date']}: {h} house renderings ({len(tb['entries'])} term x language entries)"
-              + ("" if a.src and not a.json else f" -> {jp}") + f"; TBX -> {tp} (valid)")
+              + ("" if a.src and not a.json else f" -> {jp}") + f"; TBX -> {tp} (valid)" + ("" if a.src else f"; house sentences -> {hp}"))
     return 0
 
 

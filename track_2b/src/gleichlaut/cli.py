@@ -14,7 +14,9 @@
              when any finding of those kinds exists: for monitoring)
   termbase   mine BAG's house FR/IT renderings of recurring German limitation terms from one snapshot (no model) and
              write the termbase JSON + a TBX-Basic file for terminology tools: [--tbx OUT] [--json OUT] [--hist DIR]
-             [--date YYYYMMDD]; --from JSON exports the TBX from a termbase JSON (the shipped one) without snapshots
+             [--date YYYYMMDD] [--house OUT]; mining also writes the house sentences (BAG's dominant wording of fixed German
+             sentences) and the words the German and target registers share; --from JSON exports the TBX from a termbase
+             JSON (the shipped one) without snapshots
   feeds      list the BAG ePL FHIR feed dates that are published (resources API + polite HEAD probes), and which are local
   items      build an item file from ePL FHIR exports: --from-fhir OLD NEW [--lang fr,it] --out items.json (gleichlaut.sl.epl)
   resources  rebuild the G5-G7 check resources from your own corpus (`resources build --corpus F --out DIR`), or `show`

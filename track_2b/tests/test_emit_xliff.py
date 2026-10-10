@@ -52,50 +52,92 @@ def test_units_carry_verdict_draft_and_context():
 
 def test_at_most_three_plain_reasons_and_one_checks_note():
     """Translator-facing notes: at most three reasons without internal codes; every finding is still in the unit (the
-    low-priority notes in one note category gleichlaut:note, priority 8; the rest, and the raw guard output with its
-    codes, in one note category gleichlaut:checks, priority 10)."""
+    low-priority notes in one note category gleichlaut:note, priority 8; the remaining reasons in plain words in one note
+    category gleichlaut:checks, priority 10; the raw guard output with its codes only in one note category
+    gleichlaut:debug, priority 10)."""
     meta, views = load("fresh166"); d = tempfile.mkdtemp(prefix="gl-xlf-all-"); V = {v["key"]: v for v in views}
-    code = re.compile(r"\b(?:r[èe]gle|regola) T\d|\bT[1-8]\b|\bG\d[a-z]?\b|\b(?:Lock|Slots):")
+    code = explain.CODE
     n_notes = []
     for p in xliff.write(views, meta, d):
         for u in ET.parse(p).getroot().iter(X + "unit"):
             v = V[u.get("id")]; N = list(u.find(X + "notes"))
             tb = [n for n in N if n.get("category") == "gleichlaut:termbase"]      # termbase advisory: its own note
-            assert len(tb) <= 1 and all(n.get("priority") == "9" for n in tb); n_notes.append(len(N) - len(tb))
+            hs = [n for n in N if n.get("category") == "gleichlaut:house"]           # house-sentence advisory: its own note
+            assert len(tb) <= 1 and all(n.get("priority") == "9" for n in tb + hs) and len(hs) <= 1
+            n_notes.append(len(N) - len(tb) - len(hs) - sum(n.get("category") == "gleichlaut:debug" for n in N))
             reasons = [n for n in N if n.get("category") in ("gleichlaut:finding", "gleichlaut:divergence", "gleichlaut:model-numbers",
                                                              "gleichlaut:summary")]
             checks = [n for n in N if n.get("category") == "gleichlaut:checks"]
+            debug = [n for n in N if n.get("category") == "gleichlaut:debug"]
             low = [n for n in N if n.get("category") == "gleichlaut:note"]
-            assert len(reasons) <= 3 and len(checks) == (1 if any(f.get("detail") for f in v["findings"]) else 0)
-            assert all(not code.search(n.text) for n in N if n.get("category") != "gleichlaut:checks"), u.get("id")
+            assert len(reasons) <= 3 and len(debug) == (1 if any(f.get("detail") for f in v["findings"]) else 0)
+            assert len(checks) == (1 if [x for x in xliff.rest(xliff.reasons(v)) if not x.get("dup")] else 0)
+            assert all(not code.search(n.text) for n in N if n.get("category") != "gleichlaut:debug"), u.get("id")
             R = xliff.reasons(v)
             assert len([x for x in R if x["kind"] == "finding"]) == len(v["findings"])          # reworded, never dropped
             assert [n.text for n in reasons] == [x["text"] for x in xliff.top(R)]
             assert len(low) <= 1 and all(n.get("priority") == "8" and x["text"] in n.text for n in low for x in xliff.notes(R))
             assert bool(low) == bool(xliff.notes(R))
             if checks:
-                assert checks[0].get("priority") == "10" and all(x["text"] in checks[0].text for x in xliff.rest(R))
-                assert all(explain.clip(f["detail"], 220)[:60] in checks[0].text for f in v["findings"] if f.get("detail"))
+                assert checks[0].get("priority") == "10" and all(x["text"] in checks[0].text for x in xliff.rest(R) if not x.get("dup"))
+            if debug:
+                assert debug[0].get("priority") == "10" and all(explain.clip(f["detail"], 220)[:60] in debug[0].text for f in v["findings"] if f.get("detail"))
             assert [n.get("priority") for n in reasons] == ["3" if x["low"] else "1" for x in xliff.top(R)]
             assert not any(x.get("tally") and x["rule"] for x in xliff.top(R))      # a probably-fine count never takes a slot
             if v["status"] == "flagged": assert reasons, u.get("id")              # a flagged draft always says why
     assert max(n_notes) <= 9 and len(n_notes) == len(views)
 
 
-def test_deletion_matching_the_german_is_a_low_priority_question():
+def test_deletion_matching_the_german_is_a_low_priority_note():
     V = {v["key"]: v for v in load("fresh166")[1]}
-    for k, de in (("wb004-fr", "Nach 52 Wochen"), ("wb008-fr", "Dosierungsschema"), ("wb076-fr", "glykämische Kontrolle")):
-        v = V[k]; R = xliff.reasons(v)                     # the German drops a sentence; the draft drops its French
+    for k, de in (("wb004-fr", "Nach 52 Wochen"), ("wb008-fr", "Dosierungsschema"), ("wb076-fr", "In Kombination mit Insulin")):
+        v = V[k]; R = xliff.reasons(v)                     # the German drops a sentence; the draft drops its French, one to one
         G = [r for r in R if r["gid"] == "g3"]
         assert G and all(r["tier"] != "reason" and r["low"] for r in G), k
         x = next(r for r in G if r["tier"] == "note")
-        assert x["text"].startswith("Suppression conforme à l'allemand\u00a0? À vérifier") and de in x["text"], (k, x["text"])
+        assert x["whole"] and x["text"].startswith("Suppression conforme à l'allemand\u00a0: l'allemand retire la phrase") and de in x["text"], (k, x["text"])
+        assert "le brouillon retire la phrase correspondante" in x["text"] and "?" not in x["text"]
         assert not any(r["gid"] == "g3" for r in xliff.top(R)) and x in xliff.notes(R)
         assert v["status"] == "flagged"                                                # the verdict is untouched
+    E = xliff.explanation(V["wb008-fr"])                   # wb008: every finding is a note or a detail: 0 to check
+    assert E["counts"] == [0, 5] and E["top"] and E["top"][0][1]
+    v = V["wb001-it"]                                      # a phrase the German shortens: still a question
+    x = next(r for r in xliff.reasons(v) if r["gid"] == "g3" and r["tier"] == "note")
+    assert not x["whole"] and x["text"].startswith("Soppressione conforme al tedesco? Da verificare")
     v = V["wb067-fr"]                         # lost words outside what the German removes: still a reason to check
     assert any(r["gid"] == "g3" and r["tier"] == "reason" and r["text"].startswith("Le brouillon supprime davantage") for r in xliff.reasons(v))
     E = xliff.explanation(V["wb004-fr"])
-    assert "Suppression conforme" in E["note"] and "plus ( sans modèle de" in E["note"] and "caisse maladie" in E["note"]
+    assert "Suppression conforme" in E["note"] and "plus ( sans modèle de" in E["note"] and "le brouillon écrit «\u00a0caisse maladie\u00a0»" in E["note"]
+
+
+def test_header_counts_what_the_reasons_list_shows():
+    V = load("fresh166")[1]
+    for v in V:
+        if v["status"] != "flagged": continue
+        R = xliff.reasons(v, old=False); c = xliff.counts(R)
+        shown = [x for x in R if x["kind"] in ("finding", "model-numbers") and x["tier"] == "reason"]
+        assert c[0] == sum(1 for x in shown if not x["low"] or x["gid"] == "record"), v["key"]
+        assert c[0] + c[1] <= len([x for x in R if x["kind"] in ("finding", "model-numbers")]), v["key"]
+        if c[0] == 0: assert all(x["low"] for x in xliff.top(R)), v["key"]          # nothing to check is shown as one
+
+
+def test_house_sentence_note_and_debug_note_in_both_xliff_versions():
+    from gleichlaut.emit import xliff12
+    V = {v["key"]: v for v in load("fresh166")[1]}
+    v = V["wb013-fr"]                               # 'communiqué' where BAG writes 'transmis' (111 limitations)
+    h = xliff.house_note(v).replace("\u00a0", " ")
+    assert h.startswith("Phrase maison pour « Folgender Indikationscode ist an den Krankenversicherer zu übermitteln: »")
+    assert "(111 limitations)" in h and "le brouillon écrit « Le code d'indication suivant doit être communiqué" in h
+    N = xliff.unit_notes(v); ids = [n[0] for n in N]
+    assert ids.index("house") < ids.index("checks") if "checks" in ids else True
+    assert [n[1:4] for n in N if n[0] == "house"] == [["gleichlaut:house", "target", "9"]]
+    assert [n[1:4] for n in N if n[0] == "debug"] == [["gleichlaut:debug", None, "10"]]
+    d = tempfile.mkdtemp(prefix="gl-xlf-house-"); meta = load("fresh166")[0]
+    for p in xliff.write([v], meta, d): assert validate.validate_xliff(p) == [], p
+    for p in xliff12.write([v], meta, d):
+        assert validate.validate_xliff12(p) == [], p
+        src = open(p, encoding="utf-8").read()
+        assert 'from="gleichlaut-debug"' in src and "Phrase maison" in src
 
 
 def test_mirror_is_decided_by_aligned_position_not_by_word_counts():
@@ -130,6 +172,14 @@ def test_sentence_segments_and_changed_marks():
     assert multi >= 5
     B = segment.align("Erster Satz mit 5 mg. Zweiter Satz. Dritter Satz hier.", "Première phrase avec 5 mg. Deuxième. Troisième phrase ici.")
     assert len(B) == 3
+    S = lambda t: [t[a:b].strip() for a, b in segment.sentences(t)]                 # an abbreviation's full stop ends nothing
+    assert S("Mit einem Calciumantagonisten des I.T. 02.06 und/oder einem ACE-Hemmer. Neu.") == \
+        ["Mit einem Calciumantagonisten des I.T. 02.06 und/oder einem ACE-Hemmer.", "Neu."]
+    for t in ("Bei Ansprechen (z.B. TTR-Stabilisatoren) weiter.", "Nach ca. 6 Zyklen weiter.", "Dr. med. Fadi Haidar, Genf.",
+              "Von Fr. 40.-- zuzüglich MWST.", "Patienten (u.a. Kinder) resp. Erwachsene.", "En association (p. ex. AINS) seulement.",
+              "Selon l'art. 52 al. 3 LAMal.", "In der Kombination (z. B. Methotrexat) weiter.", "1 bzw. 2 Durchstf. zurück."):
+        assert S(t) == [t], t
+    assert S("Bis zum Ende etc. Danach nicht.") == ["Bis zum Ende etc.", "Danach nicht."] and S("Typ A. Die Dosis.") == ["Typ A.", "Die Dosis."]
 
 
 def test_header_notes_in_the_target_language():

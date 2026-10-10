@@ -11,7 +11,7 @@
    },
    "drafts": 166,
    "flagged": 100,
-   "flagged_with_advisory": 17,
+   "flagged_with_advisory": 21,
    "ready": 66,
    "ready_advisory_keys": [
     "wb032-it"
@@ -44,7 +44,7 @@
    },
    "drafts": 166,
    "flagged": 106,
-   "flagged_with_advisory": 37,
+   "flagged_with_advisory": 39,
    "ready": 60,
    "ready_advisory_keys": [
     "wb015-fr",
@@ -137,7 +137,7 @@
    },
    "drafts": 166,
    "flagged": 104,
-   "flagged_with_advisory": 31,
+   "flagged_with_advisory": 34,
    "ready": 62,
    "ready_advisory_keys": [
     "wb015-it",
@@ -210,7 +210,7 @@
    "it": 33
   },
   "house_total": 65,
-  "sha256": "5dbbba6f37ed95a112c7baafc7bd8b42dbc21b4fb77ba43b8ad2c39fb480c6dd",
+  "sha256": "fee0ee5be5948f23e584ddd80df2731ed43ff42505964d153477767c8a7c93f6",
   "variants": {
    "fr": 3,
    "it": 6

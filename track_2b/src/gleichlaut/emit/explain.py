@@ -142,6 +142,15 @@ T = {
     "g2_add_s": {"fr": "L'allemand ajoute ou réécrit ici la phrase {v} : vérifier qu'elle est traduite dans le brouillon.",
                  "it": "Il tedesco aggiunge o riscrive qui la frase {v}: verificare che sia tradotta nella bozza.",
                  "en": "The German adds or rewrites the sentence {v} here: check that the draft translates it."},
+    "g2_add_miss": {"fr": "L'allemand ajoute ici la phrase {v} : elle manque dans le brouillon.",
+                    "it": "Il tedesco aggiunge qui la frase {v}: manca nella bozza.",
+                    "en": "The German adds the sentence {v} here: it is missing from the draft."},
+    "g2_add_de": {"fr": "L'allemand ajoute ou réécrit ici la phrase {v} : le brouillon la laisse en allemand ({x}).",
+                  "it": "Il tedesco aggiunge o riscrive qui la frase {v}: la bozza la lascia in tedesco ({x}).",
+                  "en": "The German adds or rewrites the sentence {v} here: the draft leaves it in German ({x})."},
+    "g2_del_kept": {"fr": "L'allemand supprime ici la phrase {u} : le brouillon garde la phrase correspondante {x}.",
+                    "it": "Il tedesco sopprime qui la frase {u}: la bozza mantiene la frase corrispondente {x}.",
+                    "en": "The German removes the sentence {u} here: the draft keeps the matching sentence {x}."},
     "g2_del_s": {"fr": "L'allemand supprime ici la phrase {u} : vérifier que le brouillon la supprime aussi.",
                  "it": "Il tedesco sopprime qui la frase {u}: verificare che la bozza la sopprima anche.",
                  "en": "The German removes the sentence {u} here: check that the draft removes it too."},
@@ -335,17 +344,78 @@ def _balance(s):
     return s
 
 
-def g2_text(lang, kind, x, u, w, sa, sb):
-    """The plain sentence of one change-not-applied finding (see the comment above)."""
+def g2_text(lang, kind, x, u, w, sa, sb, out=None):
+    """The plain sentence of one change-not-applied finding (see the comment above). With the draft (out), a sentence the
+    German adds or rewrites is stated, not hedged, when the draft's aligned sentences say it (counterpart()): missing (the
+    draft only carries over old sentences there) or left in German; a sentence the German removes that the draft carries
+    over unchanged is named (kept_sentence())."""
     U, W = (_balance(clip(strip_punct(t), 90)) for t in (u, w))
     if U and W and related(u, w): return tr(lang, "g2_rep", u=q(lang, U), v=q(lang, W))
     if kind == "remove" or not W:
         s = covered_sentences(x["de_old"], sa)
-        if s: return tr(lang, "g2_del_s", u=q(lang, clip(s, 120)))
+        if s:
+            k = kept_sentence(x, out, sa) if out else None
+            if k: return tr(lang, "g2_del_kept", u=q(lang, clip(s, 120)), x=q(lang, clip(k, 120)))
+            return tr(lang, "g2_del_s", u=q(lang, clip(s, 120)))
         return tr(lang, "g2_del", u=q(lang, U or "∅"))
     s = covered_sentences(x["de_new"], sb)
-    if s: return tr(lang, "g2_add_s", v=q(lang, clip(s, 120)))
+    if s:
+        c = counterpart(x, out, sb, sa) if out else None
+        if c and c[0] == "missing": return tr(lang, "g2_add_miss", v=q(lang, clip(s, 120)))
+        if c and c[0] == "german": return tr(lang, "g2_add_de", v=q(lang, clip(s, 120)), x=q(lang, clip(c[1], 80)))
+        return tr(lang, "g2_add_s", v=q(lang, clip(s, 120)))
     return tr(lang, "g2_add", v=q(lang, W))
+
+
+GERMAN_SHARE = 0.5    # a draft passage with at least this share of the German sentence's content words, verbatim, is German
+
+
+def _skey(s):
+    from ..house import key
+    return key(s)
+
+
+def _sents(text):
+    from .segment import sentences
+    return [(a, b) for a, b in sentences(text) if text[a:b].strip()]
+
+
+def counterpart(x, out, sb, sa=None):
+    """What the draft has where the German adds or rewrites the sentence(s) at span sb of the new German, by aligned
+    sentence beads (emit.segment.align, new German / draft): ("german", passage) when the draft's aligned text holds at
+    least GERMAN_SHARE (and two or more) of the German sentence's content words verbatim, not counting words the old target
+    text has too (names); ("missing", None) when every draft sentence there is carried over unchanged from the old text,
+    i.e. nothing in the draft translates it; else None (not decided: the hedged wording stays)."""
+    from .segment import align
+    de, dr = x["de_new"], out
+    a, b = sb
+    B = [(a0, a1, b0, b1) for a0, a1, b0, b1 in align(de, dr) if a0 < b and a < a1]
+    if not B: return None
+    tgt = dr[B[0][2]:B[-1][3]]
+    cw = [w for w in re.findall(r"[^\W\d_]{3,}", de[a:b]) if core.guards.content(w, "de")                   # names the old
+          and not re.search(r"(?<!\w)" + re.escape(w) + r"(?!\w)", x["tgt_old"], re.I)]                    # text has too: not German
+    if cw:
+        hit = [w for w in cw if re.search(r"(?<!\w)" + re.escape(w) + r"(?!\w)", tgt)]
+        if len(hit) >= GERMAN_SHARE * len(cw) and len(hit) >= 2:
+            m = re.search(r"(?<!\w)" + re.escape(hit[0]) + r"(?!\w).*?(?<!\w)" + re.escape(hit[-1]) + r"(?!\w)", tgt)
+            return ("german", m.group(0) if m else ", ".join(hit[:4]))
+    olds = {_skey(x["tgt_old"][p:r]) for p, r in _sents(x["tgt_old"])}
+    S = [(p, r) for p, r in _sents(tgt)]
+    if not S or any(_skey(tgt[p:r]) not in olds for p, r in S): return None
+    return ("missing", None)
+
+
+def kept_sentence(x, out, sa):
+    """The old target sentence(s) aligned (emit.segment.align, old German / old target) to the German sentence(s) at span
+    sa of the old German, when the draft still carries every one of them over unchanged; else None."""
+    from .segment import align
+    a, b = sa; to = x["tgt_old"]
+    B = [(a0, a1, b0, b1) for a0, a1, b0, b1 in align(x["de_old"], to) if a0 < b and a < a1]
+    if not B or len(B) > 1: return None
+    sub = to[B[0][2]:B[0][3]]; S = [sub[p:r] for p, r in _sents(sub)]
+    drs = {_skey(out[p:r]) for p, r in _sents(out)}
+    if S and all(_skey(t) in drs for t in S) and len(re.findall(r"[^\W\d_]{2,}", " ".join(S))) >= 3: return " ".join(t.strip() for t in S)
+    return None
 
 
 # ------------------------------------------------------------------------------------------- deletions that mirror the German
@@ -359,6 +429,7 @@ def g2_text(lang, kind, x, u, w, sa, sb):
 # outside mirroring beads first.
 # Wording only: the finding, its triage status and the verdict are unchanged.
 MIRROR_DE, MIRROR_SLACK = 0.5, 0.25
+WHOLE = 0.8           # a sentence both sides remove (nearly) whole: this share of its content words on each side
 PHRASE_TOL, PHRASE_RATIO = 0.15, 2
 
 
@@ -395,7 +466,9 @@ def mirror(x, out, des, bag):
     bead does (MIRROR_DE, MIRROR_SLACK), or, for a phrase, when the German removes a passage of the same bead at the same
     relative place (within PHRASE_TOL of the bead's length) and the draft's lost words there are at most PHRASE_RATIO
     times the passage's content words plus one ('nicht-kleinzelligem Lungenkarzinom (NSCLC)' -> 'NSCLC', 'carcinoma
-    polmonare non a piccole cellule (NSCLC)' -> 'NSCLC')."""
+    polmonare non a piccole cellule (NSCLC)' -> 'NSCLC'). whole: every lost word sits in sentence beads that the German and
+    the draft both remove whole (>= WHOLE of their content words on each side): the draft drops the sentence that
+    translates the sentence the German drops, one to one (tgt: those old target sentences)."""
     L = x["lang"]
     do, dn, to, tn = lock.norm(x["de_old"]), lock.norm(x["de_new"]), lock.norm(x["tgt_old"]), lock.norm(out)
     DA, dgone = _gone(do, dn); TA, tgone = _gone(to, tn)
@@ -430,6 +503,10 @@ def mirror(x, out, des, bag):
         j = phrase(k, TA[i][1])
         if j is not None: budget[(k, j)] -= 1; used[(k, j)] += 1
     lost, hit = sum(Counter(bag.split()).values()), sum(used.values())
+    whole = bool(used) and all(j is None and _share(DA, dgone, beads[k][0], beads[k][1], "de") >= WHOLE
+                               and _share(TA, tgone, beads[k][2], beads[k][3], L) >= WHOLE for k, j in used)
+    K = sorted({k for k, _ in used})
+    tg = " ".join(re.sub(r"\s+", " ", to[beads[k][2]:beads[k][3]]).strip() for k in K) if whole else ""
     de, replaced = "", False
     if used:                                  # the German passage removed where most of the lost words are
         k, j = used.most_common(1)[0][0]
@@ -439,10 +516,8 @@ def mirror(x, out, des, bag):
             sm = difflib.SequenceMatcher(None, [t for t, _, _ in DA], lock.tok(dn), autojunk=False)
             first = next(i for i, (_, s, _) in enumerate(DA) if s == r[0])
             replaced = any(op == "replace" and i1 <= first < i2 for op, i1, i2, _, _ in sm.get_opcodes())
-    return dict(lost=lost, mirrored=hit, de=de, replaced=replaced)
-
-
-WHOLE = 0.8           # a sentence both sides remove (nearly) whole: this share of its content words on each side
+        if whole: de = " ".join(re.sub(r"\s+", " ", do[beads[k][0]:beads[k][1]]).strip() for k in K)
+    return dict(lost=lost, mirrored=hit, de=de, replaced=replaced, whole=whole, tgt=tg)
 
 
 def tally_mirrored(x, out, detail):
@@ -467,6 +542,64 @@ def tally_mirrored(x, out, detail):
 def segment_align(src, tgt):
     from .segment import align
     return align(src, tgt)
+
+
+# ------------------------------------------------------------------------------------------- repetitions the German has too
+# A 'passage repeated' finding (G4) names 6-grams the draft writes more often than the old text. When the German repeats
+# the corresponding passage too ('ou d'une perte de vision' x2 where the German says 'oder eines Visusverlustes durch' x2),
+# the repetition is the translation's, not a duplication: german_repeats() decides it by position (aligned sentence beads,
+# new German / draft): every occurrence of the repeated passage in the draft lies in a bead whose German side has an
+# occurrence of one German word trigram (words cut to their first STEM letters, at least one word of 4+ letters) that the
+# new German has at least as many times as the draft has the passage, at the same relative place (within REP_TOL of the
+# bead's length). Wording only: a low-priority 'the German repeats it too'.
+STEM, REP_TOL = 5, 0.2
+_GW = re.compile(r"[^\W\d_]+")
+
+
+def _stem_grams(text, a0, a1):
+    W = [(m.group(0).lower()[:STEM], m.start(), len(m.group(0))) for m in _GW.finditer(text, a0, a1)]
+    return [(" ".join(w for w, _, _ in W[i:i + 3]), W[i][1]) for i in range(len(W) - 2) if any(n >= 4 for _, _, n in W[i:i + 3])]
+
+
+def german_repeats(x, out, detail):
+    """True when every passage of a G4 finding (detail 'G4 repeated 6-grams: «…»; «…»') repeats where the German repeats
+    the corresponding passage too (see above)."""
+    grams = re.findall(r"«([^«»]+)»", detail or "")
+    if not grams: return False
+    de, dr = lock.norm(x["de_new"]), lock.norm(out)
+    beads = segment_align(de, dr)
+    G = [_stem_grams(de, a0, a1) for a0, a1, _, _ in beads]
+    tot = Counter(g for gs in G for g, _ in gs)
+    for g in grams:
+        occ = [m.start() for m in re.finditer(r"\W+".join(re.escape(w) for w in g.split()), dr, re.I)]
+        if len(occ) < 2: return False
+        ok_for = None
+        for s in occ:
+            k = next((k for k, (_, _, b0, b1) in enumerate(beads) if b0 <= s < b1), None)
+            if k is None: return False
+            a0, a1, b0, b1 = beads[k]; rt = (s - b0) / max(1, b1 - b0)
+            here = {gg for gg, p in G[k] if abs((p - a0) / max(1, a1 - a0) - rt) <= REP_TOL and tot[gg] >= len(occ)}
+            ok_for = here if ok_for is None else ok_for & here
+            if not ok_for: return False
+    return True
+
+
+# ------------------------------------------------------------------------------------------- German-looking target words
+def lexicon_fine(v, f):
+    """-> (words of a German-left / copied-from-German finding (G1, G5) that are probably fine, the other words): a word is
+    probably fine when the old target text has it (as a whole word) or when it is a word the German and the target register
+    share (termbase.shared: 'allergie' is French too), unless it is a German function word. Wording only."""
+    if f.get("gid") not in ("g1", "g5"): return [], []
+    from .. import audit, termbase
+    L = v["lang"]; W = [w.strip() for w in (f.get("detail") or "").split(":", 1)[-1].split(",") if w.strip()]
+    if f["gid"] == "g5":
+        g1 = next((g for g in v.get("findings", []) if g.get("gid") == "g1"), None)
+        seen = {w.strip().lower() for w in (g1["detail"].split(":", 1)[-1].split(",") if g1 else [])}
+        W = [w for w in W if w.lower() not in seen]
+    S, FW = termbase.shared(L), set(audit.FW["de"])
+    old = v.get("tgt_old") or ""
+    fine = [w for w in W if w.lower() not in FW and (w.lower() in S or re.search(r"(?<!\w)" + re.escape(w) + r"(?!\w)", old, re.I))]
+    return fine, [w for w in W if w not in fine]
 
 
 # ------------------------------------------------------------------------------------------- typography (not a check)
@@ -812,7 +945,7 @@ def findings(x, out, fc, g14):
     ops = _de_spans(x["de_old"], x["de_new"]) if g["g2"] or g["g3"] else {}
     for kind, de in g["g2"]:
         u, v, sa, sb = ops.get(de, ("", "", None, None))
-        add("g2", g2_text(L, kind, x, u, v, sa, sb), f"G2 ({kind}): {de}")
+        add("g2", g2_text(L, kind, x, u, v, sa, sb, out), f"G2 ({kind}): {de}")
 
     g1 = sorted(set(g14["g1"])) if g14 else []
     if g1: add("g1", tr(L, "g1", x=words_list(L, g1)), "G1: " + ", ".join(g1))
@@ -912,8 +1045,7 @@ def measure_v2():
                runs={})
     I = {x["key"]: x for x in score.load_items("items/items_fresh.json")}
     for run, rel in termbase.RUNS:
-        views = load("fresh166")[1] if run == "70b" else \
-            load_records(os.path.join(score.DATA, rel), os.path.join(score.DATA, "items/items_fresh.json"))[1]
+        views = run_views(run)
         lab = _labels(run); row = {}
         for L in ("all", "fr", "it"):
             V = [v for v in views if L == "all" or v["lang"] == L]
@@ -958,6 +1090,132 @@ def measure_v2():
             row[L] = dict(before=b, after=a, minor=minor)
         out["runs"][run] = row
     return out
+
+
+_RV = {}
+
+
+def run_views(run):
+    """The per-item views (emit.load / load_records, current wording) of a fresh-166 run of termbase.RUNS ('70b',
+    '8b_q4_k_m', '8b_q8_0') or of a shadow-month build ('shadow:q4_k_m' …), memoised for the measurements."""
+    import os
+    from .. import score, termbase, house
+    from . import load, load_records
+    if run not in _RV:
+        if run.startswith("shadow:"):
+            D = os.path.join(score.DATA, house.SHADOW[0])
+            _RV[run] = load_records(os.path.join(D, run.split(":", 1)[1], "records.jsonl"), os.path.join(D, "items.json"))[1]
+        elif run == "70b": _RV[run] = load("fresh166")[1]
+        else:
+            rel = dict(termbase.RUNS)[run]
+            _RV[run] = load_records(os.path.join(score.DATA, rel), os.path.join(score.DATA, "items/items_fresh.json"))[1]
+    return _RV[run]
+
+
+# ------------------------------------------------------------------------------------------- measurement (explain v3)
+RESULT_V3 = ("eval", "results", "explain_v3.json")
+CODE = re.compile(r"\b(?:r[èe]gle|regola) T\d|\bT[1-8]\b|\bG\d[a-z]?\b|\b(?:Lock|Slots):|\[T\d\]")
+
+
+def measure_v3():
+    """eval/results/explain_v3.json: the translator-facing changes after the BAG French translator's third review, per run
+    (the fresh-166 drafts of the 70B and both 8B builds; the shadow month 01.09 -> 01.10.2026 of Q4_K_M, Q8_0 and the 70B),
+    before (the round-7 wording) and after. Display only: verdicts, drafts and scores unchanged.
+      house: the house-sentence advisory (gleichlaut.house): drafts and notes, and per note BAG's published sentence of the
+        same amendment at that German sentence (evaluation data, never shown): differs from the draft's, is the house
+        wording, is the draft's wording, unknown.
+      termbase: advisories by kind; 'rewrote' = a non-standard wording in a sentence the draft inserted or rewrote, now a
+        normal note (before: the softer 'kept' note, or no note for a recorded variant such as 'assurance-maladie');
+        'left_to_house' = termbase items left out because the house-sentence note names the same sentence.
+      noise: German-left / copied findings whose words are all target words too (lexicon or old text: before a reason to
+        check, after probably fine) or partly; repetitions the German has too (before a reason, after low); deletions that
+        mirror the German's, one to one (now a statement) or partly (still a question); flagged drafts whose header count
+        (before: triage rules over the guard findings) differed from the reasons list (after: xliff.counts, equal by
+        construction).
+      hedged: change-not-applied sentence findings: before all hedged ('vérifier qu'elle est traduite'); after missing /
+        left in German / kept (a removed sentence the draft carries over) / still hedged.
+      codes: units whose translator-facing XLIFF notes carried internal codes (before: every unit with a finding, through
+        the checks note's raw output; after: none outside the gleichlaut:debug note)."""
+    import os
+    from .. import core, score, house, termbase
+    from . import triage, xliff
+    I = {x["key"]: x for x in score.load_items("items/items_fresh.json")}
+    D = os.path.join(score.DATA, house.SHADOW[0])
+    import json
+    IS = {x["key"]: x for x in json.load(open(os.path.join(D, "items.json"), encoding="utf-8"))}
+    out = dict(note="explain v3 (presentation only; BAG French translator's third review): verdicts, drafts and scores "
+                    "unchanged. 'before' = the round-7 wording, 'after' = this change. BAG's published text is evaluation "
+                    "data, never shown.",
+               house_sentences=dict(file=os.path.relpath(house.JSON, core.ROOT), house={L: sum(1 for (l, _) in house.load() if l == L) for L in house.LANGS}),
+               runs={})
+    names = [r for r, _ in termbase.RUNS] + ["shadow:" + m for m in house.SHADOW[1]]
+    for run in names:
+        V = run_views(run); items = IS if run.startswith("shadow:") else I
+        row = dict(house=house.measure_views(V, items))
+        tb = dict(notes=Counter(), rewrote_variant=0, rewrote_wording=0, left_to_house=0)
+        nz = dict(lexicon_all_fine=0, lexicon_partly=0, g4_german_repeats=0, g4_other=0, deletion_whole=0, deletion_question=0,
+                  header_mismatch_before=0, header_mismatch_after=0, flagged=0)
+        hd = dict(add_before_hedged=0, add_missing=0, add_german=0, add_hedged=0, del_before_hedged=0, del_kept=0, del_hedged=0)
+        cd = dict(units=0, before=0, after=0)
+        for v in V:
+            if v["status"] == "human": continue
+            A = v.get("termbase") or []
+            for a in A:
+                tb["notes"][a["kind"]] += 1
+                if a.get("rewrote"): tb["rewrote_variant" if a["kind"] == "variant" else "rewrote_wording"] += 1
+            Hw = [h["wrote"].lower() for h in v.get("house") or []]
+            tb["left_to_house"] += sum(1 for a in A if a.get("wrote") and any(a["wrote"].lower() in h for h in Hw))
+            R = xliff.reasons(v, old=False); T = triage.triage(v)
+            for f, r in zip(v.get("findings", []), T):
+                if f["gid"] in ("g1", "g5") and v["status"] == "flagged" and not r:
+                    fi, ot = lexicon_fine(v, f)
+                    if fi and not ot: nz["lexicon_all_fine"] += 1
+                    elif fi: nz["lexicon_partly"] += 1
+                if f["gid"] == "g4" and v["status"] == "flagged":
+                    nz["g4_german_repeats" if german_repeats(v, v["draft"], f["detail"]) else "g4_other"] += 1
+                if f["gid"] == "g2":
+                    m = re.match(r"G2 \((\w+)\): (.*)$", f["detail"] or "")
+                    if not m: continue
+                    u, w, sa, sb = _de_spans(v["de_old"], v["de_new"]).get(m.group(2), ("", "", None, None))
+                    t0 = g2_text(v["lang"], m.group(1), v, u, w, sa, sb)
+                    t1 = f["text"]
+                    for k, b, keys in (("add", "g2_add_s", (("g2_add_miss", "add_missing"), ("g2_add_de", "add_german"))),
+                                       ("del", "g2_del_s", (("g2_del_kept", "del_kept"),))):
+                        if _is(t0, v["lang"], b):
+                            hd[f"{k}_before_hedged"] += 1
+                            hit = next((n for kk, n in keys if _is(t1, v["lang"], kk)), None)
+                            hd[hit or f"{k}_hedged"] += 1
+            for x in R:
+                if x["kind"] == "finding" and x["tier"] == "note": nz["deletion_whole" if x.get("whole") else "deletion_question"] += 1
+            if v["status"] == "flagged":
+                nz["flagged"] += 1
+                g = [r for f, r in zip(v.get("findings", []), T) if f["gid"] != "corr"]
+                c = xliff.counts(R)
+                nz["header_mismatch_before"] += [sum(1 for r in g if not r), sum(1 for r in g if r)] != c
+                nz["header_mismatch_after"] += xliff.explanation(v)["counts"] != c
+            cd["units"] += 1
+            cd["before"] += any(f.get("detail") for f in v.get("findings", []))
+            cd["after"] += any(CODE.search(t) for nid, _, _, _, t in xliff.unit_notes(v, prev=False) if nid != "debug")
+        tb["notes"] = dict(sorted(tb["notes"].items()))
+        row.update(termbase=tb, noise=nz, hedged=hd, codes=cd)
+        out["runs"][run] = row
+    return out
+
+
+def _is(text, lang, k):
+    """True when text is an instance of the wording T[k] (its fixed part before the first placeholder and after the last)."""
+    t = T[k][rl(lang)]; head = t.split("{", 1)[0]; tail = t.rsplit("}", 1)[-1]
+    if rl(lang) == "fr": head, tail = _fr(head + "x")[:-1], _fr("x" + tail)[1:]
+    return text.startswith(head) and text.endswith(tail)
+
+
+def write_v3(path=None):
+    """Write measure_v3() to eval/results/explain_v3.json -> path."""
+    import json, os
+    from .. import core
+    path = path or os.path.join(core.ROOT, *RESULT_V3)
+    with open(path, "w", encoding="utf-8") as fh: json.dump(measure_v3(), fh, ensure_ascii=False, indent=1, sort_keys=True)
+    return path
 
 
 def write_v2(path=None):

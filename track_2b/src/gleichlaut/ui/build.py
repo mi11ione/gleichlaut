@@ -15,13 +15,16 @@ German changes on the left, numbered by their address (wbNNN), and the case unde
 FR/IT drafts editable in place, the per-draft explanation, decision). The explanation shows at most three reasons, most
 actionable first, in plain wording in the reviewer's language without internal codes (xliff.reasons, the same as the
 XLIFF notes), labelled "explanation (FR/IT)", then, apart from those three, one grey line of low-priority notes (a deletion
-that mirrors the German's, typography the draft introduced, the termbase advisory when the draft departs from BAG's house
-rendering of a German term; xliff.explanation); the full checks ledger with its codes is collapsed below. Compact legends
+that mirrors the German's, typography the draft introduced, the house-sentence advisory when a fixed German sentence is
+written otherwise than BAG's dominant wording, the termbase advisory when the draft departs from BAG's house rendering of
+a German term; xliff.explanation); the full checks ledger with its codes is collapsed below. The header of a flagged
+draft ("n issues to check, m probably fine") counts what that list shows (xliff.counts), and the register's three-level
+mark follows it (to check when one item is). Compact legends
 sit next to the marks they explain. Diffs, number provenance and the plain-language guard findings are computed
 here in Python from the same per-item views the emitters use (gleichlaut.emit.load); the header figures come from
 score.score_run(run)["summary"]["all"] (counts only for --records) and, for the audit, eval/results/audit.json.
-Flag triage (emit/triage.py, rules T1-T8) only orders and collapses findings and splits the flagged drafts into "to
-check" and "all findings probably fine" for display; pre-existing problems of the old text are a display notice ("ready
+Flag triage (emit/triage.py, rules T1-T8) and the reworded reasons (xliff.reasons) only order and collapse findings and
+split the flagged drafts into "to check" and "all findings probably fine" for display; pre-existing problems of the old text are a display notice ("ready
 (old text needs attention)"); neither changes a verdict or a metric. A flagged draft can be restarted from the old text
 plus the rules lane's number changes (core.gl2.rules); a family's open ready drafts can be accepted at once after an
 in-page confirmation. Reviewer decisions stay in the browser (localStorage) and leave it through the one "Export
@@ -277,8 +280,8 @@ def data(run="fresh166", records=None, items=None, audit=audit_view.AUDIT, hist=
                   banner=v.get("banner"), corr=corr["text"] if corr else None, corr_note=explain.corr_note(v["lang"]) if corr else None,
                   old=_old_text(v), xn=_xliff_notes(v, rules), why=_why(v, E), tb=_note(v, E),
                   findings=[[f["gname"], f["text"], f["corrects"], r] for f, r in zip(v["findings"], rules) if f["gid"] != "corr"])
-        guard = [r for f, r in zip(v["findings"], rules) if f["gid"] != "corr"]
-        it["tri"] = [sum(1 for r in guard if not r), sum(1 for r in guard if r)] if v["status"] == "flagged" else [0, 0]
+        it["tri"] = E["counts"] if v["status"] == "flagged" else [0, 0]          # the header counts what the reasons list shows
+        if v["status"] == "flagged": it["lvl"] = "check" if it["tri"][0] else "fine"
         if v["status"] == "human":
             r = v.get("change_ratio")
             it.update(segs=[["e", v["tgt_old"]]], ledger=[], ratio=(round(100 * float(r)) if r not in (None, "") else None),

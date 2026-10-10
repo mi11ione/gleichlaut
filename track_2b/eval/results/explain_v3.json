@@ -1,0 +1,489 @@
+{
+ "house_sentences": {
+  "file": "data/termbase/house_sentences_20261006.json",
+  "house": {
+   "fr": 37,
+   "it": 27
+  }
+ },
+ "note": "explain v3 (presentation only; BAG French translator's third review): verdicts, drafts and scores unchanged. 'before' = the round-7 wording, 'after' = this change. BAG's published text is evaluation data, never shown.",
+ "runs": {
+  "70b": {
+   "codes": {
+    "after": 0,
+    "before": 100,
+    "units": 166
+   },
+   "hedged": {
+    "add_before_hedged": 10,
+    "add_german": 0,
+    "add_hedged": 3,
+    "add_missing": 7,
+    "del_before_hedged": 2,
+    "del_hedged": 0,
+    "del_kept": 2
+   },
+   "house": {
+    "bag_differs_from_draft": 14,
+    "bag_same_as_draft": 0,
+    "bag_unknown": 0,
+    "bag_writes_house": 12,
+    "by_sentence": {
+     "fr: Ausnahmeregelung: Die Ausbildungskliniken A, B und C sind be": 8,
+     "fr: Eine Kostengutsprache hat den entsprechenden Indikationscode": 1,
+     "fr: Folgender Indikationscode ist an den Krankenversicherer zu ü": 1,
+     "fr: Sind in spezifischen Fällen (z.B. Einzelfallvergütung) die w": 2,
+     "it: Ausnahmeregelung: Die Ausbildungskliniken A, B und C sind be": 1,
+     "it: Folgender Indikationscode ist zu übermitteln:": 1
+    },
+    "carried_bag_same_as_draft": 12,
+    "carried_bag_writes_house": 0,
+    "carried_not_noted": 12,
+    "drafts": 166,
+    "drafts_with_note": 13,
+    "drafts_with_note_bag_differs": 13,
+    "flagged_with_note": 13,
+    "keys": [
+     "wb010-it",
+     "wb013-fr",
+     "wb036-fr",
+     "wb037-fr",
+     "wb042-fr",
+     "wb043-fr",
+     "wb044-fr",
+     "wb045-fr",
+     "wb046-fr",
+     "wb047-fr",
+     "wb048-fr",
+     "wb048-it",
+     "wb049-fr"
+    ],
+    "notes": 14,
+    "notes_variant": 0,
+    "ready_with_note": 0
+   },
+   "noise": {
+    "deletion_question": 3,
+    "deletion_whole": 15,
+    "flagged": 100,
+    "g4_german_repeats": 14,
+    "g4_other": 2,
+    "header_mismatch_after": 0,
+    "header_mismatch_before": 33,
+    "lexicon_all_fine": 1,
+    "lexicon_partly": 4
+   },
+   "termbase": {
+    "left_to_house": 2,
+    "notes": {
+     "kept": 8,
+     "missing": 24,
+     "variant": 8
+    },
+    "rewrote_variant": 1,
+    "rewrote_wording": 2
+   }
+  },
+  "8b_q4_k_m": {
+   "codes": {
+    "after": 0,
+    "before": 106,
+    "units": 166
+   },
+   "hedged": {
+    "add_before_hedged": 13,
+    "add_german": 2,
+    "add_hedged": 3,
+    "add_missing": 8,
+    "del_before_hedged": 9,
+    "del_hedged": 0,
+    "del_kept": 9
+   },
+   "house": {
+    "bag_differs_from_draft": 13,
+    "bag_same_as_draft": 0,
+    "bag_unknown": 0,
+    "bag_writes_house": 11,
+    "by_sentence": {
+     "fr: Ausnahmeregelung: Die Ausbildungskliniken A, B und C sind be": 8,
+     "fr: Eine Kostengutsprache hat den entsprechenden Indikationscode": 1,
+     "fr: Folgender Indikationscode ist an den Krankenversicherer zu ü": 1,
+     "fr: Nur bis zur Progression der Krankheit.": 1,
+     "fr: Sind in spezifischen Fällen (z.B. Einzelfallvergütung) die w": 1,
+     "it: Ausnahmeregelung: Die Ausbildungskliniken A, B und C sind be": 1
+    },
+    "carried_bag_same_as_draft": 10,
+    "carried_bag_writes_house": 0,
+    "carried_not_noted": 10,
+    "drafts": 166,
+    "drafts_with_note": 13,
+    "drafts_with_note_bag_differs": 13,
+    "flagged_with_note": 13,
+    "keys": [
+     "wb009-fr",
+     "wb037-fr",
+     "wb042-fr",
+     "wb043-fr",
+     "wb044-fr",
+     "wb045-fr",
+     "wb046-fr",
+     "wb047-fr",
+     "wb048-fr",
+     "wb048-it",
+     "wb049-fr",
+     "wb054-fr",
+     "wb055-fr"
+    ],
+    "notes": 13,
+    "notes_variant": 0,
+    "ready_with_note": 0
+   },
+   "noise": {
+    "deletion_question": 9,
+    "deletion_whole": 8,
+    "flagged": 106,
+    "g4_german_repeats": 2,
+    "g4_other": 4,
+    "header_mismatch_after": 0,
+    "header_mismatch_before": 20,
+    "lexicon_all_fine": 1,
+    "lexicon_partly": 11
+   },
+   "termbase": {
+    "left_to_house": 3,
+    "notes": {
+     "kept": 8,
+     "missing": 87,
+     "variant": 8
+    },
+    "rewrote_variant": 0,
+    "rewrote_wording": 1
+   }
+  },
+  "8b_q8_0": {
+   "codes": {
+    "after": 0,
+    "before": 104,
+    "units": 166
+   },
+   "hedged": {
+    "add_before_hedged": 13,
+    "add_german": 0,
+    "add_hedged": 4,
+    "add_missing": 9,
+    "del_before_hedged": 8,
+    "del_hedged": 0,
+    "del_kept": 8
+   },
+   "house": {
+    "bag_differs_from_draft": 14,
+    "bag_same_as_draft": 0,
+    "bag_unknown": 0,
+    "bag_writes_house": 10,
+    "by_sentence": {
+     "fr: Ausnahmeregelung: Die Ausbildungskliniken A, B und C sind be": 8,
+     "fr: Eine Kostengutsprache hat den entsprechenden Indikationscode": 2,
+     "fr: Folgender Indikationscode ist an den Krankenversicherer zu ü": 3,
+     "fr: Sind in spezifischen Fällen (z.B. Einzelfallvergütung) die w": 1
+    },
+    "carried_bag_same_as_draft": 10,
+    "carried_bag_writes_house": 0,
+    "carried_not_noted": 10,
+    "drafts": 166,
+    "drafts_with_note": 14,
+    "drafts_with_note_bag_differs": 14,
+    "flagged_with_note": 14,
+    "keys": [
+     "wb033-fr",
+     "wb037-fr",
+     "wb042-fr",
+     "wb043-fr",
+     "wb044-fr",
+     "wb045-fr",
+     "wb046-fr",
+     "wb047-fr",
+     "wb048-fr",
+     "wb049-fr",
+     "wb054-fr",
+     "wb055-fr",
+     "wb057-fr",
+     "wb080-fr"
+    ],
+    "notes": 14,
+    "notes_variant": 0,
+    "ready_with_note": 0
+   },
+   "noise": {
+    "deletion_question": 8,
+    "deletion_whole": 15,
+    "flagged": 104,
+    "g4_german_repeats": 3,
+    "g4_other": 6,
+    "header_mismatch_after": 0,
+    "header_mismatch_before": 25,
+    "lexicon_all_fine": 1,
+    "lexicon_partly": 10
+   },
+   "termbase": {
+    "left_to_house": 3,
+    "notes": {
+     "kept": 8,
+     "missing": 64,
+     "variant": 9
+    },
+    "rewrote_variant": 1,
+    "rewrote_wording": 1
+   }
+  },
+  "shadow:70b": {
+   "codes": {
+    "after": 0,
+    "before": 37,
+    "units": 44
+   },
+   "hedged": {
+    "add_before_hedged": 0,
+    "add_german": 0,
+    "add_hedged": 0,
+    "add_missing": 0,
+    "del_before_hedged": 0,
+    "del_hedged": 0,
+    "del_kept": 0
+   },
+   "house": {
+    "bag_differs_from_draft": 26,
+    "bag_same_as_draft": 0,
+    "bag_unknown": 3,
+    "bag_writes_house": 22,
+    "by_sentence": {
+     "fr: Bei Erwachsenen ab … bis und mit … Jahren wird eine Behandlu": 1,
+     "fr: Bei Personen über … Jahren wird eine neu beginnende Statin-T": 1,
+     "fr: Der Indikationscode dieser Limitierung ist an den Krankenver": 12,
+     "it: Bei Erwachsenen ab … bis und mit … Jahren wird eine Behandlu": 1,
+     "it: Der Indikationscode dieser Limitierung ist an den Krankenver": 14
+    },
+    "carried_bag_same_as_draft": 4,
+    "carried_bag_writes_house": 3,
+    "carried_not_noted": 9,
+    "drafts": 44,
+    "drafts_with_note": 28,
+    "drafts_with_note_bag_differs": 26,
+    "flagged_with_note": 26,
+    "keys": [
+     "ELREXFIO.01-d10af4-fr",
+     "ELREXFIO.01-d10af4-it",
+     "ROSUVASTAX-DROSSAPHARM.01-75fcfe-fr",
+     "ROSUVASTAX-DROSSAPHARM.01-75fcfe-it",
+     "SKYRIZI.01-Schwere-Plaque-Psoriasis-nur-01ad7c-it",
+     "SKYRIZI.01-Schwere-Plaque-Psoriasis-nur-23c257-it",
+     "SKYRIZI.02-Psoriasis-Arthritis-nur-150-m-1fb678-fr",
+     "SKYRIZI.02-Psoriasis-Arthritis-nur-150-m-1fb678-it",
+     "SKYRIZI.02-Psoriasis-Arthritis-nur-150-m-58a7e0-fr",
+     "SKYRIZI.02-Psoriasis-Arthritis-nur-150-m-58a7e0-it",
+     "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-0e3431-fr",
+     "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-0e3431-it",
+     "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-f77c29-fr",
+     "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-f77c29-it",
+     "SKYRIZI.04-Colitis-Ulcerosa-nur-180-mg-3-4d0630-it",
+     "SKYRIZI.04-Colitis-Ulcerosa-nur-180-mg-3-dbcc55-it",
+     "TALZENNA-03d4dc-fr",
+     "TALZENNA-03d4dc-it",
+     "VERZENIO.01a-c8a78a-fr",
+     "VERZENIO.02a-f05251-fr",
+     "VERZENIO.02a-f05251-it",
+     "VERZENIO.03a-175825-fr",
+     "VERZENIO.03a-175825-it",
+     "VERZENIO.04a-8bc91a-fr",
+     "VERZENIO.04a-8bc91a-it",
+     "ZEPOSIA.01-80f645-fr",
+     "ZEPOSIA.02a-3a7aca-fr",
+     "ZEPOSIA.02a-3a7aca-it"
+    ],
+    "notes": 29,
+    "notes_variant": 0,
+    "ready_with_note": 2
+   },
+   "noise": {
+    "deletion_question": 12,
+    "deletion_whole": 0,
+    "flagged": 37,
+    "g4_german_repeats": 3,
+    "g4_other": 0,
+    "header_mismatch_after": 0,
+    "header_mismatch_before": 15,
+    "lexicon_all_fine": 0,
+    "lexicon_partly": 0
+   },
+   "termbase": {
+    "left_to_house": 19,
+    "notes": {
+     "kept": 1,
+     "missing": 22,
+     "variant": 6
+    },
+    "rewrote_variant": 6,
+    "rewrote_wording": 0
+   }
+  },
+  "shadow:q4_k_m": {
+   "codes": {
+    "after": 0,
+    "before": 40,
+    "units": 44
+   },
+   "hedged": {
+    "add_before_hedged": 0,
+    "add_german": 0,
+    "add_hedged": 0,
+    "add_missing": 0,
+    "del_before_hedged": 1,
+    "del_hedged": 0,
+    "del_kept": 1
+   },
+   "house": {
+    "bag_differs_from_draft": 19,
+    "bag_same_as_draft": 0,
+    "bag_unknown": 0,
+    "bag_writes_house": 16,
+    "by_sentence": {
+     "fr: Der Indikationscode dieser Limitierung ist an den Krankenver": 8,
+     "fr: Sind in spezifischen Fällen (z.B. Einzelfallvergütung) die w": 1,
+     "it: Der Indikationscode dieser Limitierung ist an den Krankenver": 10
+    },
+    "carried_bag_same_as_draft": 3,
+    "carried_bag_writes_house": 2,
+    "carried_not_noted": 11,
+    "drafts": 44,
+    "drafts_with_note": 19,
+    "drafts_with_note_bag_differs": 19,
+    "flagged_with_note": 17,
+    "keys": [
+     "ELREXFIO.01-d10af4-fr",
+     "ELREXFIO.01-d10af4-it",
+     "SKYRIZI.01-Schwere-Plaque-Psoriasis-nur-01ad7c-it",
+     "SKYRIZI.01-Schwere-Plaque-Psoriasis-nur-23c257-it",
+     "SKYRIZI.02-Psoriasis-Arthritis-nur-150-m-1fb678-fr",
+     "SKYRIZI.02-Psoriasis-Arthritis-nur-150-m-58a7e0-fr",
+     "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-0e3431-it",
+     "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-f77c29-it",
+     "SKYRIZI.XX-EAP-cd0a2f-fr",
+     "VERZENIO.01a-c8a78a-fr",
+     "VERZENIO.01a-c8a78a-it",
+     "VERZENIO.02a-f05251-fr",
+     "VERZENIO.02a-f05251-it",
+     "VERZENIO.03a-175825-fr",
+     "VERZENIO.04a-8bc91a-fr",
+     "VERZENIO.04a-8bc91a-it",
+     "ZEPOSIA.01-80f645-fr",
+     "ZEPOSIA.01-80f645-it",
+     "ZEPOSIA.02a-3a7aca-it"
+    ],
+    "notes": 19,
+    "notes_variant": 0,
+    "ready_with_note": 2
+   },
+   "noise": {
+    "deletion_question": 8,
+    "deletion_whole": 0,
+    "flagged": 40,
+    "g4_german_repeats": 2,
+    "g4_other": 0,
+    "header_mismatch_after": 0,
+    "header_mismatch_before": 10,
+    "lexicon_all_fine": 0,
+    "lexicon_partly": 0
+   },
+   "termbase": {
+    "left_to_house": 16,
+    "notes": {
+     "kept": 1,
+     "missing": 42,
+     "variant": 4
+    },
+    "rewrote_variant": 4,
+    "rewrote_wording": 0
+   }
+  },
+  "shadow:q8_0": {
+   "codes": {
+    "after": 0,
+    "before": 40,
+    "units": 44
+   },
+   "hedged": {
+    "add_before_hedged": 0,
+    "add_german": 0,
+    "add_hedged": 0,
+    "add_missing": 0,
+    "del_before_hedged": 1,
+    "del_hedged": 0,
+    "del_kept": 1
+   },
+   "house": {
+    "bag_differs_from_draft": 22,
+    "bag_same_as_draft": 0,
+    "bag_unknown": 0,
+    "bag_writes_house": 16,
+    "by_sentence": {
+     "fr: Der Indikationscode dieser Limitierung ist an den Krankenver": 12,
+     "it: Der Indikationscode dieser Limitierung ist an den Krankenver": 10
+    },
+    "carried_bag_same_as_draft": 3,
+    "carried_bag_writes_house": 2,
+    "carried_not_noted": 8,
+    "drafts": 44,
+    "drafts_with_note": 22,
+    "drafts_with_note_bag_differs": 22,
+    "flagged_with_note": 21,
+    "keys": [
+     "ELREXFIO.01-d10af4-fr",
+     "ELREXFIO.01-d10af4-it",
+     "SKYRIZI.01-Schwere-Plaque-Psoriasis-nur-01ad7c-fr",
+     "SKYRIZI.01-Schwere-Plaque-Psoriasis-nur-01ad7c-it",
+     "SKYRIZI.01-Schwere-Plaque-Psoriasis-nur-23c257-fr",
+     "SKYRIZI.01-Schwere-Plaque-Psoriasis-nur-23c257-it",
+     "SKYRIZI.02-Psoriasis-Arthritis-nur-150-m-1fb678-fr",
+     "SKYRIZI.02-Psoriasis-Arthritis-nur-150-m-58a7e0-fr",
+     "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-0e3431-fr",
+     "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-0e3431-it",
+     "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-f77c29-fr",
+     "SKYRIZI.03-Morbus-Crohn-nur-360-mg-und-6-f77c29-it",
+     "VERZENIO.01a-c8a78a-fr",
+     "VERZENIO.01a-c8a78a-it",
+     "VERZENIO.02a-f05251-fr",
+     "VERZENIO.02a-f05251-it",
+     "VERZENIO.03a-175825-fr",
+     "VERZENIO.04a-8bc91a-fr",
+     "VERZENIO.04a-8bc91a-it",
+     "ZEPOSIA.01-80f645-it",
+     "ZEPOSIA.02a-3a7aca-fr",
+     "ZEPOSIA.02a-3a7aca-it"
+    ],
+    "notes": 22,
+    "notes_variant": 0,
+    "ready_with_note": 1
+   },
+   "noise": {
+    "deletion_question": 11,
+    "deletion_whole": 0,
+    "flagged": 40,
+    "g4_german_repeats": 2,
+    "g4_other": 0,
+    "header_mismatch_after": 0,
+    "header_mismatch_before": 13,
+    "lexicon_all_fine": 0,
+    "lexicon_partly": 0
+   },
+   "termbase": {
+    "left_to_house": 21,
+    "notes": {
+     "kept": 1,
+     "missing": 37,
+     "variant": 4
+    },
+    "rewrote_variant": 4,
+    "rewrote_wording": 0
+   }
+  }
+ }
+}

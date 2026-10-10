@@ -138,14 +138,30 @@ def test_softer_note_when_the_old_text_already_used_a_non_standard_wording():
     # BAG's own recorded variants (assurance maladie, assicurazione malattia) are its practice: no softer note
     for L, t in (("fr", "Le code doit être transmis à l'assurance maladie."), ("it", "Il codice va trasmesso all'assicurazione malattia.")):
         assert T.advice(_v(L, de, de + " Neu.", t, t + " Nouveau.")) == [], t
-    # a wording BAG does not record, in text the draft wrote: named ('caisse maladie', wb004)
+    # a wording BAG does not record, in a sentence the draft wrote: a normal note, not the softer one ('caisse maladie', wb004)
     d0 = "Nach 52 Wochen ist eine erneute Zustimmung durch den Krankenversicherer einzuholen."
     old = "Après 52 semaines, un nouvel accord de la caisse maladie doit être obtenu."
     A = T.advice(_v("fr", d0, de, old, "Le code est à transmettre à la caisse maladie."))
-    assert ("kept", "caisse maladie") in [(a["kind"], a["wrote"]) for a in A]
+    assert [(a["kind"], a["wrote"], a.get("rewrote")) for a in A] == [("missing", "caisse maladie", True)]
+    assert "le brouillon écrit « caisse maladie »" in T.advisory_text(A, "fr").replace("\u00a0", " ")
     # the house rendering itself, a plural of it, or no wording that names the term: no note
     for d in ("Le code doit être transmis aux assureurs-maladie.", "Le code doit être transmis à l'assureur-maladie.", "Le code doit être transmis."):
         assert T.advice(_v("fr", de, de + " Neu.", d, d + " Nouveau.")) == [], d
+
+
+def test_recorded_variant_in_text_the_draft_wrote_is_a_normal_note():
+    """'assurance-maladie' is BAG's recorded variant 'assurance maladie' (spelling-tolerant). Carried over from the old text,
+    unchanged or in an edited version of a sentence that already had it: no note (BAG's practice). In a sentence the draft
+    inserted: a normal note, never the softer one."""
+    de = "Der Code ist an den Krankenversicherer zu übermitteln."
+    old = "Le code suivant doit être transmis à l'assurance-maladie."
+    assert T.advice(_v("fr", de, de + " Neu.", old, old + " Nouveau.")) == []
+    assert T.advice(_v("fr", de, de + " Neu.", old, "Le code d'indication doit être transmis à l'assurance-maladie. Nouveau.")) == []
+    A = T.advice(_v("fr", de, "Die Firma gibt dem Krankenversicherer den Betrag bekannt.", old, "Sur demande, la firme communique chaque montant remboursé à l'assurance-maladie concernée."))
+    assert [(a["kind"], a["wrote"], a.get("rewrote")) for a in A] == [("variant", "assurance-maladie", True)]
+    A = T.advice(_v("fr", de, de + " Neu.", "Le code doit être transmis.", "Le code doit être transmis à l'assurance-maladie. Nouveau."))
+    assert [(a["kind"], a["wrote"]) for a in A] == [("variant", "assurance-maladie")]      # introduced: a variant note as before
+    assert T._fcount(T._ortho("assurance maladie"), T._fpad(T.toks("à l'assurance-maladie"))) == 1
 
 
 def test_house_rendering_present_but_too_few_times_is_not_called_absent():
@@ -168,10 +184,11 @@ def test_advisory_is_its_own_low_priority_note_and_changes_no_verdict():
         assert (v["status"] == "ready") == (not F[v["key"]]["guard_flag"]), v["key"]
         N = xliff.unit_notes(v)
         tb = [n for n in N if n[1] == "gleichlaut:termbase"]
-        assert len(tb) == (1 if v["termbase"] else 0)
+        assert len(tb) == (1 if xliff.termbase_note(v) else 0) and (bool(tb) or not v["termbase"] or v["house"])
         assert len([n for n in N if n[1] in ("gleichlaut:finding", "gleichlaut:divergence", "gleichlaut:model-numbers")]) <= 3
         if tb:
-            assert tb[0][3] == "9" and tb[0][0] == "termbase" and [n[0] for n in N][-2:] in (["termbase", "checks"], ["tgt-old", "termbase"])
+            ids = [n[0] for n in N]; i = ids.index("termbase")
+            assert tb[0][3] == "9" and set(ids[i + 1:]) <= {"checks", "debug"} and ids[i - 1] in ("tgt-old", "notes", "house")
     v = V["wb032-it"]                                       # the 70B's one ready draft with an insurance-term fix
     assert v["status"] == "ready" and "assicurazione obbligatoria delle cure medico-sanitarie" in xliff.termbase_note(v)
     d = tempfile.mkdtemp(prefix="gl-tb-xlf-")
