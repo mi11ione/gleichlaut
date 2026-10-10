@@ -44,5 +44,17 @@
    20.2
   ],
   "saved_diff_pts": 9.3
+ },
+ "q8_0_vs_q4_k_m": {
+  "exact_diff_ci95": [
+   -1.2,
+   3.0
+  ],
+  "exact_diff_pts": 0.6,
+  "saved_diff_ci95": [
+   6.0,
+   19.9
+  ],
+  "saved_diff_pts": 12.2
  }
 }

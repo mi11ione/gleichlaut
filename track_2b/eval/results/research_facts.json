@@ -67,5 +67,42 @@
  "free_translation_example": {
   "value": "deve -> dovrebbe",
   "source": "docs/research/gleichlaut-results.md S2"
+ },
+ "mmlu_shared_route_pct": {
+  "value": 84.4,
+  "of": 250,
+  "source": "docs/research/model-identity-and-quantisation.md"
+ },
+ "mmlu_v1_8b_route_pct": {
+  "value": 70.8,
+  "of": 250,
+  "source": "docs/research/model-identity-and-quantisation.md"
+ },
+ "judge_8b_logprob_auroc": {
+  "value": 0.81,
+  "source": "docs/research/where-apertus-fell-short.md"
+ },
+ "judge_8b_logprob_auroc_order_hi": {
+  "value": 0.82,
+  "source": "docs/research/where-apertus-fell-short.md"
+ },
+ "judge_8b_logprob_auroc_order_lo": {
+  "value": 0.62,
+  "source": "docs/research/where-apertus-fell-short.md"
+ },
+ "judge_8b_logprob_argmax": {
+  "value": 6,
+  "of": 9,
+  "source": "docs/research/where-apertus-fell-short.md"
+ },
+ "gguf_q8_agree_bf16": {
+  "value": 638,
+  "of": 648,
+  "source": "docs/research/model-identity-and-quantisation.md"
+ },
+ "free_translation_real_flips_sample": {
+  "value": 2,
+  "of": 20,
+  "source": "docs/research/gleichlaut-results.md"
  }
 }

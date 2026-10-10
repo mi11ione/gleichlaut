@@ -1,0 +1,56 @@
+[
+ {
+  "id": "T00",
+  "lang": "fr",
+  "de_old": "h. Küchenangestellte EBA/Küchenangestellter EBA;",
+  "de_new": "h. Systemgastronomiefachfrau EFZ / Systemgastronomiefachmann EFZ;",
+  "tgt_old": "h. employée de cuisine AFP/employé de cuisine AFP;",
+  "draft": "h. femme de restauration EFZ / homme de restauration EFZ;",
+  "official_new": "h. gestionnaire en restauration de système CFC;"
+ },
+ {
+  "id": "T01",
+  "lang": "fr",
+  "de_old": "c. Allgemeinbildung. Der Qualifikationsbereich richtet sich nach der Verordnung des SBFI vom 27. April 2006 über die Mindestvorschriften für die Allgemeinbildung in der beruflichen Grundbildung.",
+  "de_new": "c. Allgemeinbildung. Der Qualifikationsbereich richtet sich nach der Verordnung des SBFI vom 9. April 2025 über Mindestvorschriften für die Allgemeinbildung in der beruflichen Grundbildung.",
+  "tgt_old": "c. culture générale. Ce domaine de qualification est régi par l’ordonnance du SEFRI du 27 avril 2006 concernant les conditions minimales relatives à la culture générale dans la formation professionnelle initiale.",
+  "draft": "c. culture générale. Ce domaine de qualification est régi par l’ordonnance du SEFRI du 9 avril 2025 concernant des conditions minimales relatives à la culture générale dans la formation professionnelle initiale.",
+  "official_new": "c. culture générale. Ce domaine de qualification est régi par l’ordonnance du SEFRI du 9 avril 2025 concernant les conditions minimales relatives à la culture générale dans la formation professionnelle initiale."
+ },
+ {
+  "id": "T02",
+  "lang": "fr",
+  "de_old": "4 Die Abgabe der Ausrüstungsgegenstände ist im Dienstbüchlein einzutragen.",
+  "de_new": "4 Die Abgabe der Ausrüstungsgegenstände ist im Ausweis über die Erfüllung der Militärdienstpflicht anzuzeigen.",
+  "tgt_old": "4 La remise des effets d’équipement doit être inscrite dans le livret de service.",
+  "draft": "4 La remise des effets d’équipement doit être indiquée dans l’attestation de l’accomplissement du service militaire.",
+  "official_new": "4 La remise des effets d’équipement doit être indiquée sur l’attestation de l’accomplissement des obligations militaires."
+ },
+ {
+  "id": "T03",
+  "lang": "fr",
+  "de_old": "c. vom 1. Oktober bis 20. April dürfen sie an Sonn- und Feiertagen nicht gehoben werden, ausgenommen ist der Laichfischfang auf Gangfische;",
+  "de_new": "c. vom 1. Oktober bis 30. April dürfen sie an Sonn- und Feiertagen nicht gehoben werden, ausgenommen ist der Laichfischfang auf Gangfische;",
+  "tgt_old": "c. du 1 er octobre au 20 avril, ils ne doivent pas être relevés le dimanche et les jours fériés, excepté pour la pêche de géniteurs des corégones (Gangfische);",
+  "draft": "c. du 1 er octobre au 30 avril, ils ne doivent pas être relevés le dimanche et les jours fériés, excepté pour la pêche de géniteurs des corégones (Gangfische);",
+  "official_new": "c. du 1 er octobre au 30 avril, ils ne doivent pas être relevés le dimanche et les jours fériés, excepté pour la pêche de géniteurs de corégones (Gangfisch);"
+ },
+ {
+  "id": "T04",
+  "lang": "fr",
+  "de_old": "c. Allgemeinbildung: Der Qualifikationsbereich richtet sich nach der Verordnung des SBFI vom 27. April 2006 über die Mindestvorschriften für die Allgemeinbildung in der beruflichen Grundbildung.",
+  "de_new": "c. Allgemeinbildung: Der Qualifikationsbereich richtet sich nach der Verordnung des SBFI vom 9. April 2025 über Mindestvorschriften für die Allgemeinbildung in der beruflichen Grundbildung.",
+  "tgt_old": "c. culture générale; ce domaine de qualification est régi par l’ordonnance du SEFRI du 27 avril 2006 concernant les conditions minimales relatives à la culture générale dans la formation professionnelle initiale.",
+  "draft": "c. culture générale; ce domaine de qualification est régi par l’ordonnance du SEFRI du 9 avril 2025 concernant des conditions minimales relatives à la culture générale dans la formation professionnelle initiale.",
+  "official_new": "c. culture générale; ce domaine de qualification est régi par l’ordonnance du SEFRI du 9 avril 2025 concernant les conditions minimales relatives à la culture générale dans la formation professionnelle initiale."
+ },
+ {
+  "id": "T05",
+  "lang": "fr",
+  "de_old": "c. vom 1. Oktober bis 20. April dürfen sie an Sonn- und Feiertagen nicht gehoben werden, ausgenommen ist der Laichfischfang auf Gangfische;",
+  "de_new": "c. vom 1. Oktober bis 30. April dürfen sie an Sonn- und Feiertagen nicht gehoben werden, ausgenommen ist der Laichfischfang auf Gangfische;",
+  "tgt_old": "c. du 1 er octobre au 20 avril, ils ne doivent pas être relevés le dimanche et les jours fériés, excepté pour la pêche de géniteurs des corégones (Gangfische);",
+  "draft": "c. du 1 er octobre au 30 avril, ils ne doivent pas être relevés le dimanche et les jours fériés, excepté pour la pêche de géniteurs des corégones (Gangfische);",
+  "official_new": "c. du 1 er octobre au 30 avril, ils ne doivent pas être relevés le dimanche et les jours fériés, excepté pour la pêche de géniteurs de corégones (Gangfisch);"
+ }
+]

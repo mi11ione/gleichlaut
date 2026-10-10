@@ -139,3 +139,8 @@ data the change was designed on is labelled "dev" in every table.
   41. Ready drafts 4 / 3 / 7, none with an error (10 non-identical ready drafts, blind labels: 6 cosmetic, 4 equivalent;
   the two annotators agreed on all 10). 32 of the 41 items add one new standard sentence
   (`eval/results/shadow_20260901_20261001.json`).
+- **R5 relabel, 10 Oct 2026:** after a juror noted that the R5 arms (8B MLX, 70B) were labelled by one annotator while
+  the R6 arms had two plus a tie-breaker, the R5 ready drafts were relabelled under the R6 protocol, pooled and blind
+  (`eval/labels/fedlex_r5_relabel_unflagged.tsv`). 8B MLX unchanged (0 real, 8 stale or German); 70B 2 real and 5 stale
+  or German (was 6). Neither passes R0; the decision is unchanged. The first labels stay in the results as
+  `first_annotation`.

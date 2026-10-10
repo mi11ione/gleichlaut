@@ -71,10 +71,12 @@ costs **CHF 0.0024 per draft** at a Swiss provider's published price: CHF 0.14 a
 ten times. Every number here is in [claims.tsv](claims.tsv) with the file and command that produce it.
 
 **Model size is measured, not assumed.** On SL conditions every build passes the same pre-registered safety rule, so
-the 8B on a CPU is sufficient and is the default: nothing leaves the building. Quantisation matters as much as size: the
-8B at Q8_0 matches the 70B on identical drafts (17.5% each) and has no error in any ready draft. The 70B
-saves more edits, 9.3 points more than Q8_0 (paired 95% CI [−1.3, 20.2], not significant) and 21.5 more than Q4_K_M
-([8.7, 34.9]), and its ready drafts rarely need a fix to the amendment (3 of 66). So: Q4_K_M on an 8 GiB box, Q8_0
+the 8B on a CPU is sufficient and is the default: nothing leaves the building (Q4_K_M passes by one item: 1.81% stale
+or German against the 2% limit). On identical drafts neither size nor quantisation makes a measurable difference
+(17.5% for the 70B and Q8_0, 16.9% for Q4_K_M). On edits saved both do: Q8_0 saves 12.2 points more than Q4_K_M
+(paired 95% CI [6.0, 19.9]), and the 70B 9.3 more than Q8_0 ([−1.3, 20.2], not significant). Q8_0's 62 ready drafts
+have no meaning error, stale change or German left; 25 still need a small fix, 22 of them one insurance term. The
+70B's ready drafts rarely need any fix (3 of 66). So: Q4_K_M on an 8 GiB box, Q8_0
 where 16 GiB is available (`BUILD=q8_0`), the 70B where an endpoint you control is available and the extra edits are
 worth it. On 120 federal-statute amendments (Fedlex) the 70B is no better than the 8B (exact 48.3%, against 50.0% for the 8B
 MLX build and 45.8% / 47.5% for the shipped Q4_K_M / Q8_0 builds). No size passes the safety rule on statutes: the GGUF

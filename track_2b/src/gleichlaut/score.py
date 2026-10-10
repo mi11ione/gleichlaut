@@ -260,8 +260,14 @@ def fedlex_compare():
                     passes=(100 * real / n <= PASS_RULE["unflagged_real_max_pct"] and 100 * su / n <= PASS_RULE["unflagged_stale_untranslated_max_pct"]
                             and 100 * flagged / n <= PASS_RULE["flag_rate_max_pct"] and 100 * (exact - rules) / n >= PASS_RULE["exact_gain_min_pts"]))
     n = len(items)
-    a = side("fedlex_shipped_unflagged.tsv", n, s8["all"]["exact"], s8["all"]["flagged"])
-    b = side("fedlex70b_shipped_unflagged.tsv", n, sum(bool(r.get("exact")) for r in R70), sum(r["flagged"] for r in R70))
+    # every arm under one protocol (two blind annotators + a third on disagreements): the R5 arms were relabelled after a
+    # juror noted that their first labels came from one annotator; the first labels stay reported as first_annotation
+    a1 = side("fedlex_shipped_unflagged.tsv", n, s8["all"]["exact"], s8["all"]["flagged"])
+    b1 = side("fedlex70b_shipped_unflagged.tsv", n, sum(bool(r.get("exact")) for r in R70), sum(r["flagged"] for r in R70))
+    a = side("fedlex_r5_relabel_unflagged.tsv", n, s8["all"]["exact"], s8["all"]["flagged"], "8b_mlx_dwq")
+    b = side("fedlex_r5_relabel_unflagged.tsv", n, sum(bool(r.get("exact")) for r in R70), sum(r["flagged"] for r in R70), "70b")
+    a["first_annotation"] = {k: a1[k] for k in ("classes", "unflagged_real", "unflagged_stale_untranslated")}
+    b["first_annotation"] = {k: b1[k] for k in ("classes", "unflagged_real", "unflagged_stale_untranslated")}
     assert len(R70) == n
     out = {"n": n, "rules_exact": rules, "rules_exact_pct": round(100 * rules / n, 1), "8b_mlx_dwq": a, "70b": b,
            "decision": "Fedlex stays 8B; every draft goes to review" if not b["passes"] else "70B passes R0"}
@@ -432,6 +438,26 @@ def size_compare(builds=("q4_k_m", "q8_0")):
                       exact_diff_pts=round(100 * (sum(r["exact"] for r in B) - sum(r["exact"] for r in A)) / len(A), 1),
                       exact_diff_ci95=[round(ci[0], 1), round(ci[1], 1)],
                       items_70b_fewer_edits=sum(r["m70"] < r["m8"] for r in rows), items_8b_fewer_edits=sum(r["m8"] < r["m70"] for r in rows))
+    p4, p8 = (os.path.join(DATA, f"runs/8b_{b}_fresh166_g3_final.jsonl") for b in ("q4_k_m", "q8_0"))
+    if os.path.exists(p4) and os.path.exists(p8):            # quantisation, paired: Q8_0 against Q4_K_M, same items
+        F4, F8 = load_jsonl(os.path.relpath(p4, DATA)), load_jsonl(os.path.relpath(p8, DATA)); rows, A, B = [], [], []
+        for k, x in I.items():
+            gold = norm(x["tgt_new"]); r1 = norm(core.gl2.rules(x["de_old"], x["de_new"], x["tgt_old"], x["lang"])[0])
+            e = lambda t: sum(S["edits"](norm(t), gold).values())
+            rows.append(dict(pair=x["pair"], rules=sum(S["edits"](r1, gold).values()), q4=e(F4[k]["out"]), q8=e(F8[k]["out"])))
+            A.append(S["score_one"](x, F4[k]["out"], "1")); B.append(S["score_one"](x, F8[k]["out"], "1"))
+        by = {}
+        for r in rows: by.setdefault(r["pair"], []).append(r)
+        ks = sorted(by); rng = random.Random(7); bs = []
+        for _ in range(4000):
+            smp = [r for kk in (rng.choice(ks) for _ in ks) for r in by[kk]]
+            t = sum(r["rules"] for r in smp)
+            if t: bs.append(100 * (sum(r["q4"] for r in smp) - sum(r["q8"] for r in smp)) / t)
+        bs.sort(); t = sum(r["rules"] for r in rows); ci = S["boot_diff"](B, A, "exact")
+        out["q8_0_vs_q4_k_m"] = dict(saved_diff_pts=round(100 * (sum(r["q4"] for r in rows) - sum(r["q8"] for r in rows)) / t, 1),
+                                     saved_diff_ci95=[round(bs[int(.025 * len(bs))], 1), round(bs[int(.975 * len(bs))], 1)],
+                                     exact_diff_pts=round(100 * (sum(r["exact"] for r in B) - sum(r["exact"] for r in A)) / len(A), 1),
+                                     exact_diff_ci95=[round(ci[0], 1), round(ci[1], 1)])
     return out
 
 

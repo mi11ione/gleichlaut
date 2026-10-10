@@ -145,6 +145,8 @@ C = [  # id, source, path, fmt, command
  ("pe8q8_hi", "eval/results/post_edit_8b_q8_0.json", "all.edits_saved_ci95.1", "{:.1f}", RE),
  ("size_q8_diff", "eval/results/size_compare.json", "q8_0.saved_diff_pts", "{:.1f}", RE), ("size_q8_lo", "eval/results/size_compare.json", "q8_0.saved_diff_ci95.0", "{:.1f}", RE),
  ("size_q8_hi", "eval/results/size_compare.json", "q8_0.saved_diff_ci95.1", "{:.1f}", RE),
+ ("q8q4_diff", "eval/results/size_compare.json", "q8_0_vs_q4_k_m.saved_diff_pts", "{:.1f}", RE), ("q8q4_lo", "eval/results/size_compare.json", "q8_0_vs_q4_k_m.saved_diff_ci95.0", "{:.1f}", RE),
+ ("q8q4_hi", "eval/results/size_compare.json", "q8_0_vs_q4_k_m.saved_diff_ci95.1", "{:.1f}", RE),
  ("size_q4_diff", "eval/results/size_compare.json", "q4_k_m.saved_diff_pts", "{:.1f}", RE), ("size_q4_lo", "eval/results/size_compare.json", "q4_k_m.saved_diff_ci95.0", "{:.1f}", RE),
  ("size_q4_hi", "eval/results/size_compare.json", "q4_k_m.saved_diff_ci95.1", "{:.1f}", RE),
  ("tb_house", "eval/results/termbase.json", "termbase.house_total", "{}", RE), ("tb_house_fr", "eval/results/termbase.json", "termbase.house.fr", "{}", RE), ("tb_house_it", "eval/results/termbase.json", "termbase.house.it", "{}", RE),
@@ -155,6 +157,7 @@ C = [  # id, source, path, fmt, command
  ("ar_number", "eval/results/audit_recall.json", "types.number.recall_pct", "{:.1f}", RE), ("ar_language", "eval/results/audit_recall.json", "types.language.recall_pct", "{:.1f}", RE),
  ("ar_unit", "eval/results/audit_recall.json", "types.unit.recall_pct", "{:.1f}", RE), ("ar_deletion", "eval/results/audit_recall.json", "types.deletion.recall_pct", "{:.1f}", RE),
  ("ar_typo", "eval/results/audit_recall.json", "types.typo.recall_pct", "{:.1f}", RE),
+ ("m3_backend_vllm", "eval/results/m3.json", "serving_backends.vllm", "{}", RE), ("m3_backend_fp1", "eval/results/m3.json", "serving_backends.fp1", "{}", RE),
  ("sh_items", "eval/results/shadow_20260901_20261001.json", "q4_k_m.items", "{}", RE), ("sh_compared", "eval/results/shadow_20260901_20261001.json", "compared", "{}", RE),
  ("sh_boiler", "eval/results/shadow_20260901_20261001.json", "boilerplate_items", "{}", RE),
  ("sh_ready_total", "eval/results/shadow_20260901_20261001.json", "ready_total", "{}", RE),
@@ -181,9 +184,12 @@ C = [  # id, source, path, fmt, command
 R = "eval/results/research_facts.json"; X = "eval/results/external_facts.json"
 for k, f in (("window_disobeyed_8b_pct", "{}"), ("window_disobeyed_70b_pct", "{}"), ("window_8b_unflagged_real", "{}"), ("judge_known_divergences", "{}"),
              ("judge_70b_nein", "{}"), ("typing_operator_accuracy_8b_pct", "{}"), ("typing_wrong_in_all_three", "{}"), ("retry_8b_fixed", "{}"),
-             ("publicai_8b_name_identical_cells", "{}"), ("gguf_q4_agree_bf16", "{}"), ("mlx4_agree_bf16", "{}")):
+             ("publicai_8b_name_identical_cells", "{}"), ("gguf_q4_agree_bf16", "{}"), ("mlx4_agree_bf16", "{}"),
+             ("mmlu_shared_route_pct", "{:.1f}"), ("mmlu_v1_8b_route_pct", "{:.1f}"), ("judge_8b_logprob_auroc", "{:.2f}"),
+             ("judge_8b_logprob_auroc_order_hi", "{:.2f}"), ("judge_8b_logprob_auroc_order_lo", "{:.2f}"),
+             ("judge_8b_logprob_argmax", "{}"), ("gguf_q8_agree_bf16", "{}"), ("free_translation_real_flips_sample", "{}")):
     C.append((k, R, k + ".value", f, HAND))
-for k in ("judge_70b_nein", "typing_wrong_in_all_three", "retry_8b_fixed", "publicai_8b_name_identical_cells", "gguf_q4_agree_bf16"):
+for k in ("judge_70b_nein", "typing_wrong_in_all_three", "retry_8b_fixed", "publicai_8b_name_identical_cells", "gguf_q4_agree_bf16", "mmlu_shared_route_pct"):
     C.append((k + "_of", R, k + ".of", "{}", HAND))
 for k, f in (("okp_insured_2025_millions", "{:.2f}"), ("main_language_fr_pct", "{:.1f}"), ("main_language_it_pct", "{:.1f}"),
              ("infomaniak_70b_chf_per_m_in", "{:.2f}"), ("infomaniak_70b_chf_per_m_out", "{:.2f}"), ("efd_language_service_chf_per_page_min", "{}"),

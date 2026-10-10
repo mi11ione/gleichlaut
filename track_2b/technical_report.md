@@ -87,8 +87,12 @@ evaluation only.
 | SL drafting (16 GiB option) | Apertus v1.5 8B GGUF Q8_0, sha256-pinned | the same runners (R1/M2, 200.5 s per draft) |
 | research arms (dev, statutes) | Apertus v1.5 8B, MLX 4-bit DWQ | a laptop; this build agreed with bf16 on 548 of 648 decisions in our parity battery, the GGUF on 622 |
 
-Public AI's `apertus-v1.5-8b` name serves the 70B (identical greedy outputs in 760 of 792 cells, 70B-level MMLU), so
-every 8B number here comes from local runs.
+We do not control which weights Public AI serves. The 70B name is answered by two backends (`tp2` and `fp1-nes`,
+logged per call where the API reports it: 202 / 81 calls in the seeded rerun); `fp1-nes` also answers the
+`apertus-v1.5-8b` name with byte-identical greedy outputs in 760 of 792 cells. We infer that it serves the 70B from MMLU
+(84.4% on 250 questions, against 70.8% for the v1 8B route), which is evidence, not proof. So every 8B number here comes
+from local runs, and the 70B rows describe "the 70B as Public AI served it"; the 8B rows carry a digit and number-word
+logit mask that the API cannot offer the 70B (the 70B's 3 number-word drafts were all flagged).
 
 ### 3.2 How the model is used, and which size
 
@@ -112,9 +116,9 @@ review because German job titles ("EFZ") need a terminology list that only exist
 
 | Task | Result | Done instead by |
 |---|---|---|
-| Free translation of the new German (8B, dev 120) | 0% exact; negation/modality/number changes in 78 of 120, none flagged ("deve" → "dovrebbe") | locked rewrite of the old text |
+| Free translation of the new German (8B MLX 4-bit, dev 120) | 0% exact; lexicon counters fire on 78 of 120; a seeded read of 20 found 2 real flips ("deve" → "dovrebbe"), about 8 in 120, none flagged | locked rewrite of the old text |
 | Edit only a marked span (dev 120) | span ignored in 73% (8B) and 81% (70B) of windows | whole-paragraph rewrite + lock check |
-| Judge DE/FR/IT equivalence (9 known Fedlex divergences) | 8B 0 of 9; 70B 0 of 9 ("they differ" in 2 of 270 answers) | deterministic checks and the audit |
+| Judge DE/FR/IT equivalence (9 known Fedlex divergences) | as a yes/no answer, 8B (MLX) 0 of 9, 70B 0 of 9 ("they differ" in 2 of 270 answers); the 8B's log-probabilities rank the divergent language first in 6 of 9 (AUROC 0.81, order-fragile), which the API does not expose for the 70B | deterministic checks and the audit |
 | Type numeric conditions | 8B operator accuracy 36%; errors correlated across languages | code (slots, audit) |
 | SL drafting with the 8B, MLX build, no re-ask (dev 120) | flagged 85.0%; 1 ready draft reverses a meaning | the shipped GGUF build with the full pipeline (passes R1) |
 | SL terminology with the 8B GGUF (held-out 166) | 29 of 60 ready drafts use "assurance obligatoire de maladie" for BAG's "…des soins" | the 70B, or a terminology list |
@@ -151,7 +155,7 @@ German changes. Every ready non-exact draft was read in full; a seeded 20 flagge
 | **Apertus 8B GGUF Q8_0 on CPU, same (R1, M2)** | **held-out** | **166** | **17.5%** | **+11.4 [4.8, 18.7]** | **62.7%** | **37.3%** | **0 / 0 / 0** | **PASS** |
 | Apertus 8B (MLX DWQ), no re-ask | dev | 120 | 15.0% | +9.2 [3.3, 15.8] | 85.0% | 15.0% | 1 / 0 / 0 | FAIL |
 | Statutes: 8B (MLX DWQ) | Fedlex (dev) | 120 | 50.0% | rules 35.0% | 31.7% | 68.3% | 0 / 4 / 4 | review all |
-| Statutes: 70B | Fedlex (dev) | 120 | 48.3% | rules 35.0% | 23.3% | 76.7% | 2 / 1 / 5 | review all |
+| Statutes: 70B | Fedlex (dev) | 120 | 48.3% | rules 35.0% | 23.3% | 76.7% | 2 / 1 / 4 | review all |
 | Statutes: 8B GGUF Q4_K_M (R6) | Fedlex (dev) | 120 | 45.8% | rules 35.0% | 28.3% | 71.7% | 4 / 4 / 6 | review all |
 | Statutes: 8B GGUF Q8_0 (R6) | Fedlex (dev) | 120 | 47.5% | rules 35.0% | 26.7% | 73.3% | 4 / 3 / 6 | review all |
 
@@ -162,7 +166,8 @@ fewer token edits to reach BAG's published text (95% CI [31.0, 54.1]); 59.1% few
 166 items, more on 29. Of a seeded 20 flagged drafts, 13 needed no change: the checks are tuned to miss nothing.
 
 **Stability.** The seeded rerun reproduced 69.9% of final outputs byte-for-byte and the ready/flagged verdict with
-κ 0.963; the API itself is not deterministic at temperature 0, which is why certification re-runs the whole suite.
+κ 0.963. Outputs at temperature 0 differ between calls, possibly because requests are routed between the two serving
+backends; either way, this is why certification re-runs the whole suite on the endpoint it certifies.
 
 **Audit.** On the 6 Oct 2026 register, numeric check: 21 findings in 17 limitations; all 10 known divergent limitations
 and all 13 of their known values are among them; a blind annotation finds 10 of the 21 real (47.6%, Wilson

@@ -1,0 +1,60 @@
+build	key	A_fix	A_class	B_fix	B_class	T_fix	T_class	final_fix	final	note_A
+70b	cc/1955/871_893_899/2025-07-01#art_86_a/para_2|it	no	equivalent	no	equivalent			no	equivalent	Correct; "giorni lavorativi" mirrors Arbeitstagen
+70b	cc/1985/1778_1778_1778/2025-01-01#art_7/para_1/listintro|it	yes	minor	yes	minor			yes	minor	in misura seguente ungrammatical; missing object for dedurre
+70b	cc/1988/1776_1776_1776/2025-01-01#art_5/para_1|fr	no	equivalent	no	equivalent			no	equivalent	Correctly drops communication restriction; wording differs
+70b	cc/1997/2417_2417_2417/2026-02-01#art_14/para_3/lbl_c|fr	no	preexisting	no	equivalent	no	equivalent	no	equivalent	Date updated; German "Gangfische" already in tgt_old
+70b	cc/1997/2417_2417_2417/2026-02-01#art_14/para_3/lbl_c|it	no	equivalent	no	equivalent			no	equivalent	Date updated; official added (Gangfisch) as extra fix
+70b	cc/1997/2417_2417_2417/2026-02-01#art_15/para_3|it	no	equivalent	no	equivalent			no	equivalent	3 m vs "tre metri"
+70b	cc/2000/554/2025-08-01#art_16/para_4|it	yes	german	yes	german			yes	german	Transplantationsgesetz left in German; "del 8" also wrong
+70b	cc/2003/735/2025-01-01#art_7/para_3|fr	yes	minor	yes	minor			yes	minor	les actions calque of Aktionen; text elsewhere uses campagne
+70b	cc/2003/735/2025-01-01#art_7/para_3|it	yes	cosmetic	yes	cosmetic			yes	cosmetic	Wrong abbreviation UFAC instead of UFAG
+70b	cc/2003/735/2025-01-01#art_9/para|it	yes	german	yes	german			yes	german	German abbreviation BLW left ("L'BLW") instead of UFAG
+70b	cc/2009/681/2025-05-01#art_12_a/para_1|fr	no	equivalent	no	equivalent			no	equivalent	Date updated; official rewrote rest as extra fix
+70b	cc/2009/681/2025-05-01#art_3/para_1|fr	yes	REAL	yes	REAL			yes	REAL	Restricts to goods transport; German now covers all road transport
+70b	cc/2009/681/2025-05-01#art_3/para_1|it	no	equivalent	no	equivalent			no	equivalent	Correctly generalised; "professioni" vs "attività" harmless
+70b	cc/2009/681/2025-05-01#art_4/para_1/lbl_b|fr	no	equivalent	no	equivalent			no	equivalent	Conjunction dropped per German; official kept "et"
+70b	cc/2009/681/2025-05-01#art_4/para_1/lbl_c|fr	no	equivalent	no	equivalent			no	equivalent	Adds "et" per German; official placed conjunction differently
+70b	cc/2010/267/2025-04-01#art_269/para_2/lbl_g|it	yes	minor	yes	minor			yes	minor	Clumsy double "nonché"; meaning preserved
+70b	cc/2011/251/2026-06-01#art_2/para_1/lbl_c|fr	yes	minor	yes	minor			yes	minor	Non-standard profession title "employée de restaurant"
+70b	cc/2011/251/2026-06-01#art_2/para_1/lbl_c|it	yes	german	yes	german			yes	german	EFZ left instead of AFC; title matches different profession
+70b	cc/2011/251/2026-06-01#art_2/para_1/lbl_e|it	yes	REAL	yes	REAL			yes	REAL	Wrong credential CFP instead of AFC; male form "cucina" wrong
+70b	cc/2011/251/2026-06-01#art_2/para_1/lbl_h|fr	yes	german	yes	REAL	yes	german	yes	german	EFZ left; invented profession title
+70b	cc/2011/251/2026-06-01#art_4/para_1/lbl_a|fr	yes	cosmetic	yes	cosmetic			yes	cosmetic	Capitalised "Confiserie" after hyphen
+70b	cc/2011/251/2026-06-01#art_4/para_1/lbl_a|it	yes	cosmetic	yes	cosmetic			yes	cosmetic	Capitalised "Confetteria" after hyphen
+70b	cc/2013/104/2026-01-01#art_7/para/lbl_c|fr	no	equivalent	no	equivalent			no	equivalent	Amount updated; official also removed preexisting comma
+70b	cc/2016/614/2026-01-01#art_17/para_1/list_u3/lbl_c|fr	yes	minor	no	equivalent	yes	minor	yes	minor	Ordinance title altered: "des conditions" instead of official "les conditions"
+70b	cc/2016/615/2026-01-01#art_11/para_2|it	yes	cosmetic	yes	cosmetic			yes	cosmetic	al 80 should be "all'80"; otherwise correct
+70b	cc/2016/615/2026-01-01#art_19/para_4/lbl_c|it	yes	minor	yes	minor			yes	minor	nota esperienziale calque, not the standard term
+70b	cc/2018/732/2026-06-01#art_4/para_4|fr	yes	minor	no	equivalent	yes	minor	yes	minor	Document name non-standard: "accomplissement du service militaire" instead of obligations militaires
+70b	cc/2018/732/2026-06-01#art_4/para_4|it	no	equivalent	no	equivalent			no	equivalent	Correct; minor wording difference in document name
+70b	cc/2018/732/2026-06-01#art_8/para_1|fr	yes	stale	yes	stale			yes	stale	Pendant le service militaire kept though German dropped im Militärdienst
+70b	cc/2018/732/2026-06-01#art_9/para_2|fr	yes	minor	yes	minor			yes	minor	Vague document name "document relatif à l'accomplissement du service militaire"
+70b	cc/2018/732/2026-06-01#art_9/para_2|it	no	equivalent	no	equivalent			no	equivalent	Correct; "sull'" vs "di" harmless
+70b	cc/2019/609/2026-01-01#art_7/para_3|it	no	equivalent	no	equivalent			no	equivalent	Correct; official contains typo "stato stato"
+70b	cc/2021/694/2025-02-01#annex_4/lvl_u1/lvl_7/lbl_7_1|fr	no	equivalent	no	equivalent			no	equivalent	Rabbits removed correctly; official restructured sentence
+70b	cc/2023/695/2026-01-01#art_18/para_1/list_u3/lbl_c|fr	yes	minor	no	equivalent	yes	minor	yes	minor	Ordinance title altered: "des conditions" instead of official "les conditions"
+8b_mlx_dwq	cc/1988/1776_1776_1776/2025-01-01#art_5/para_1|fr	yes	stale	yes	stale			yes	stale	Kept "moyen de communication" though German dropped "der Übermittlung"
+8b_mlx_dwq	cc/1997/2417_2417_2417/2026-02-01#art_14/para_3/lbl_c|fr	no	preexisting	no	equivalent	no	equivalent	no	equivalent	Date updated; German "Gangfische" already in tgt_old
+8b_mlx_dwq	cc/1997/2417_2417_2417/2026-02-01#art_14/para_3/lbl_c|it	no	equivalent	no	equivalent			no	equivalent	Date updated; official added (Gangfisch) as extra fix
+8b_mlx_dwq	cc/1997/2417_2417_2417/2026-02-01#art_15/para_3|it	no	equivalent	no	equivalent			no	equivalent	3 m vs "tre metri"
+8b_mlx_dwq	cc/2000/554/2025-08-01#art_16/para_4|fr	yes	minor	yes	minor			yes	minor	Transplantation act title non-standard ("relative aux greffes")
+8b_mlx_dwq	cc/2003/735/2025-01-01#art_7/para_3|fr	no	equivalent	no	equivalent			no	equivalent	site web vs "site Internet" harmless
+8b_mlx_dwq	cc/2009/681/2025-05-01#art_12_a/para_1|fr	no	equivalent	no	equivalent			no	equivalent	Date updated; official rewrote rest as extra fix
+8b_mlx_dwq	cc/2009/681/2025-05-01#art_4/para_1/lbl_b|fr	no	equivalent	no	equivalent			no	equivalent	Conjunction dropped per German; official kept "et"
+8b_mlx_dwq	cc/2009/681/2025-05-01#art_4/para_1/lbl_c|fr	no	equivalent	no	equivalent			no	equivalent	Adds "et" per German; official placed conjunction differently
+8b_mlx_dwq	cc/2010/267/2025-04-01#art_269/para_2/lbl_g|it	yes	german	yes	german			yes	german	German "Absatz" left in draft
+8b_mlx_dwq	cc/2011/251/2026-06-01#art_2/para_1/lbl_c|fr	yes	german	yes	german			yes	german	German abbreviation EFZ left instead of CFC; title also non-standard
+8b_mlx_dwq	cc/2011/251/2026-06-01#art_2/para_1/lbl_c|it	yes	german	yes	german			yes	german	EFZ left instead of AFC; non-standard profession title
+8b_mlx_dwq	cc/2011/251/2026-06-01#art_2/para_1/lbl_e|it	yes	german	yes	german			yes	german	EFZ left instead of AFC
+8b_mlx_dwq	cc/2011/251/2026-06-01#art_2/para_1/lbl_h|fr	yes	stale	yes	stale			yes	stale	Profession change not applied; old title kept, duplicated feminine
+8b_mlx_dwq	cc/2011/251/2026-06-01#art_4/para_1/lbl_a|it	no	exact	no	exact			no	exact	Equal ignoring whitespace around slash
+8b_mlx_dwq	cc/2013/104/2026-01-01#art_7/para/lbl_c|fr	no	equivalent	no	equivalent			no	equivalent	Amount updated; official also removed preexisting comma
+8b_mlx_dwq	cc/2016/615/2026-01-01#art_11/para_2|it	yes	cosmetic	yes	cosmetic			yes	cosmetic	al 80 should be "all'80"; otherwise correct
+8b_mlx_dwq	cc/2016/615/2026-01-01#art_19/para_4/lbl_c|fr	yes	minor	yes	minor			yes	minor	expérience alone instead of "note d'expérience"; wrong term
+8b_mlx_dwq	cc/2016/615/2026-01-01#art_19/para_4/lbl_c|it	yes	minor	yes	minor			yes	minor	esperienze wrong/non-standard term for Erfahrungsnote
+8b_mlx_dwq	cc/2018/732/2026-06-01#art_4/para_4|it	no	equivalent	no	equivalent			no	equivalent	è da annotare acceptable for anzuzeigen
+8b_mlx_dwq	cc/2018/732/2026-06-01#art_8/para_1|fr	yes	stale	yes	stale			yes	stale	Pendant le service militaire kept though German dropped im Militärdienst
+8b_mlx_dwq	cc/2018/732/2026-06-01#art_8/para_1|it	yes	stale	yes	stale			yes	stale	secondo il libretto di servizio retained though Dienstbüchlein removed
+8b_mlx_dwq	cc/2018/732/2026-06-01#art_9/para_2|it	yes	minor	yes	minor			yes	minor	Kept "iscritta" and "certificato" instead of indicata/attestato
+8b_mlx_dwq	cc/2019/609/2026-01-01#art_7/para_3|it	no	equivalent	no	equivalent			no	equivalent	Correct; official contains typo "stato stato"
+8b_mlx_dwq	cc/2021/694/2025-02-01#annex_4/lvl_u1/lvl_7/lbl_7_1|fr	no	equivalent	no	equivalent			no	equivalent	Rabbits removed correctly; official restructured sentence
