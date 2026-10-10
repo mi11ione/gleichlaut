@@ -10,6 +10,27 @@ Each rule below is fixed **before** the run it governs. Failed runs are reported
   18:27 UTC; R5: committed 18:20 UTC, first call 18:27 UTC, 9 Oct 2026). R1 ran on GitHub Actions CPU runners after
   its commit (results log below).
 
+## Index
+
+Sections are in the order they were written (R9 before R8; R4, a standing rule, last). Outcomes are in the results log.
+
+| Rule | Governs | Outcome |
+|---|---|---|
+| R0 | pass rule for any drafting lane | 70B fresh 166: PASS |
+| R1 | is the 8B enough for the SL lane (M1 Q4_K_M, M2 Q8_0) | both PASS; SL default is the local 8B |
+| R2 | 70B run-to-run stability (M3) | rerun PASS |
+| R3 | backtest over monthly snapshots (M6) | no translation lag found |
+| R4 | no change to `frozen/` after the freeze | standing |
+| R5 | statutes: 8B vs 70B on Fedlex | 70B not better; neither passes; all statute drafts reviewed |
+| R6 | statutes with the shipped GGUF builds | neither passes; same decision |
+| R7 | first live month, Sep 2026 (written after the Q4_K_M run) | flag cap missed; 0 errors in 14 ready drafts |
+| R8 | failure-mode tests on the shipped Q8_0 | reported per test |
+| R9 | second CPU run of Q8_0, every call recorded | byte-identical |
+| R10 | second live month, Aug 2026, under R0 | neither model meets R0 |
+| R11 | annotator sensitivity to planted meaning errors | 66 of 66 caught, reference shown or hidden |
+| R12 | house wording in the prompt, both live months | more identical drafts, fewer flags; no pair meets R0; default unchanged |
+| R13 | fully blind relabel of the headline 70B run | 0 severe errors among ready drafts; κ 0.892 |
+
 ## R0. Pass rule for a drafting lane (frozen 9 Oct 2026, before the fresh 2025 run)
 
 Applies to the full pipeline (whole-paragraph locked rewrite, frozen guard stack, at most one re-ask) on a held-out set.
