@@ -122,6 +122,47 @@ could re-score it but not re-execute it. This run records every call.
 - Use: descriptive. It does not change the R1 decision or the certificate; a rerun that fails R0 is reported next to the
   R1 result, as R2 does for the 70B.
 
+## R8. The failure-mode tests on the shipped 8B build (frozen 10 Oct 2026, before any of these runs)
+
+A juror from the Apertus team noted that several rows of "where Apertus fell short" (`docs/failure-modes.md`, report
+§3.3) were measured on our MLX 4-bit DWQ build (548 of 648 parity decisions agree with bf16), not on the GGUF Q8_0 that
+ships (638 of 648). R8 re-runs every one of those tests whose prompts and data we have on the shipped build.
+
+- **Build and runner.** GGUF Q8_0 (sha256 `dea904ad…202d`, URL and hash in `.github/workflows/m1.yml`),
+  llama-cpp-python 0.3.35 in process (`backends.LlamaCpp`, the GGUF's own chat template, greedy, temperature 0), on
+  GitHub Actions `ubuntu-latest` CPU runners (`fm` workflow), sharded and resumable, every raw response kept. Not on a
+  team machine. A smoke run of at most 2 items per test may precede the full run; its outputs are not used.
+- **Same prompts, same loops.** The loops run from the research source itself (by `ast`, as `core.py` does), with only
+  the model call and token counting injected (token budgets use the GGUF tokenizer's counts where the original used the
+  MLX tokenizer's). Research files that are not yet in this repository are vendored byte-identical with their sha256
+  (`src/gleichlaut/fm/research/`).
+- **Digit / number-word logit mask:** on only where the original 8B arm had it: window-only edit (`frozen/s2/s2.py:134`
+  passes the language to `gen`, which adds the mask, s2.py:58-66) and the whole-paragraph rewrite with retry
+  (`frozen/s2/s2b.py:55-58`). Off for free translation (s2.py:150 calls `gen` without a language), equivalence judging
+  and operator typing (forced-choice log-probabilities without any mask in `round7b/spike7b.py` and
+  `dreiklang/scripts/s1.py`).
+
+| Test | Items | Prompt and loop (source) | Measured (no threshold) | MLX 4-bit result it sits beside |
+|---|---|---|---|---|
+| T1 free translation of the new German | dev 120 (`data/items/items_dev.json`) | `PF`, `run_3`: `frozen/s2/s2.py:108-110`, `145-152` | exact, edit-F1, chrF (`frozen/s2/score2.py:44-68`, arm 3, as `score.score_naive`) against rules-only; the lexicon flip counter (score2.py:50: items whose negation/modal/number counts differ from BAG's text). Labels: a seeded 20 of the flagged-by-counter items (`random.Random(20261009)`, keys sorted) by the R1 protocol, classes real flip / minor / equivalent; real flips extrapolated to all counter hits | 0.0% exact, edit-F1 28.2, chrF 71.2; counter on 78 of 120; 2 real flips in a seeded 20 |
+| T2 window-only edit (span obedience) | dev 120, 226 windows | `PW`, `run_2`: s2.py:94-106, `118-142` | windows disobeyed: output longer than the old window + 1.5 × the German insertion + 30 characters (the rule of `docs/research/rescue70b-gleichlaut.md` A; on the recorded runs it gives exactly 165/226 for the 8B MLX and 183/226 for the 70B); exact, edit-F1, chrF, flagged (score2 arm 2) | 165 of 226 (73%); exact 5.8%, chrF 84.5, flagged 81.7% |
+| T3 equivalence judging, yes/no | the 9 known Fedlex divergences + 36 controls (`round7/fedlex_items.json`, vendored) | `PAIR["de"]`, `pair_score`: `round7b/spike7b.py:67-72`, `94-103` (= `rescue70b/fx/fx.py:11-14`, `24-25`): DE–FR, DE–IT, FR–IT, both orders, 270 prompts | (a) generation, at most 8 tokens, parsed and localised as `fx.py:17-19`, `31-48`: hits /9, false flags /36, "Nein" answers /270; (b) the log-probabilities of "Ja"/"Nein" at the first answer position of the same call (the forced choice of spike7b.py:100), scored by `round7b/analyze7b.py`: hits /9 and false flags /36 at 0.5, item AUROC (both orders and each order), argmax localisation /9 | 8B (logprob): 0 / 0, AUROC 0.81 (0.82 / 0.62 by order), argmax 6 of 9; 70B (generation): 0 / 0, 2 "Nein" of 270 |
+| T4 operator typing of numeric conditions | Dreiklang: 885 prompts over 40 limitations × 3 languages (vendored with gold) | `INSTR`, `TAIL`, `PREFIX`, `OPTIONS`, `score_item`: `dreiklang/scripts/s1.py:16-42`, `67-117` (41 options as summed token log-probabilities after "Antwort:") | operator and subject accuracy of the top option over all 831 gold conditions; `correlation.py` on held-out (triples wrong in all three languages, identical wrong labels, phi), with τ re-fitted on dev by `analyze.py:fit_tau` (the original protocol) | operator 296 of 831 = 35.6%, subject 71.6%; 53 of 77 wrong in all three, 24 identical |
+| T5 greedy self-correction retry | dev 120 | `PA`, `RETRY`, `run`: `frozen/s2/s2b.py:72-86`, `98-123` | first drafts failing the lock check, and how many the one retry fixes; also exact and flagged with guards3, no re-ask (the S2b row), ready non-exact drafts labelled by the R1 protocol | retry fixed 0 of 26; flagged 85.0%, 1 ready draft reverses a meaning |
+
+- **Already recorded on the shipped build (seen before this rule, re-scored, no new run):** the R1 Q8_0 run on the
+  fresh 166 retried 40 first drafts and the retry fixed 0; the guarded re-ask was sent for 100 and kept 1
+  (`data/runs/8b_q8_0_fresh166_g3_final.jsonl`). Reported next to T5.
+- **Not re-run:** the 70B rows (served by Public AI, not a build we choose), and the back-translation and 4-way label
+  variants of the equivalence test (not in the table).
+- **Labels:** by `eval/labels/PROTOCOL.md` (two blind Claude annotators on a shuffled worklist with neutral ids, a third
+  on every disagreement; no human labels).
+- **Reporting rule:** each Q8_0 number is reported side by side with the MLX number. In the headline table of
+  `docs/failure-modes.md` and report §3.3 a row's MLX number is replaced by the Q8_0 number (MLX kept in parentheses)
+  only where the shipped build was measured; rows not measured keep their MLX label. No threshold, no decision attached:
+  whatever the shipped build does, better or worse, is what the table says. Scoring is deterministic from the recorded
+  outputs (`replay` writes `eval/results/failure_modes_q8_0.json`).
+
 ## R4. Post-freeze changes
 
 No change to `frozen/` after this commit. Any guard change needs a new held-out run before a claim; anything measured on
