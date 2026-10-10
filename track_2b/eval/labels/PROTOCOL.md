@@ -113,6 +113,63 @@ two blind annotators per worklist with the instructions above (reference shown) 
   (either: 3); the others turn on whether a wording change changes a condition, which is what the third annotator of
   the full protocol decides.
 
+## Real errors, and an annotator from another model family (PREREG R17)
+
+R11 and R14 planted errors that a Claude agent wrote, and Claude agents caught them. R17 uses errors that people made.
+It takes every place in the SL snapshot series (2026, plus the two 2025 captures) where BAG changed a French or Italian
+limitation while the German stayed byte-identical (`tools/r17_real_errors.py`). That gives 29 changes. 12 are
+typography only (11 of them Vegzelma → VEGZELMA). That leaves **17 content changes, and all are used** (fewer than 30
+exist): negation/operator 2, words 15, number 0. Ten of the 17 are one house-wording sweep of Opdivo's French code
+sentence («correspondant à … communiqué» → «de … transmis»). In two Opdivo French changes, BAG's *new* text is the
+defective one: it drops the German's code sentence and leaves «. .». This was declared before any annotation, so those
+two count as errors in the new text.
+
+Each change became two records. The error record holds the text that disagrees with the German; the control holds the
+correct text. Both show the German unchanged and draft = tgt_old, and the two records of a change never share a
+worklist. The context paragraph of the instructions was adapted: the German is unchanged, and the draft is judged
+against it as if it were new. The rest of the instructions was given verbatim. Two fresh blind annotators labelled each
+worklist, under (a) the reference shown and (b) the reference hidden (`r17_real_errors_{a,b}.tsv`,
+`eval/results/annotator_real_errors.json`).
+
+| 17 real errors | (a) reference shown | (b) reference hidden |
+|---|---|---|
+| needs fix, both / either [95% CI, both] | 5 / 5 [13.3, 53.1] | 7 / 11 [21.6, 64.0] |
+| severe (REAL, stale, german), both / either | 4 / 4 | 4 / 5 |
+| the 10 wording-sweep changes, needs fix by either | 0 | 5 |
+| the 7 other changes, needs fix by both | 5 | 6 |
+| false alarms on the 17 controls: needs fix / severe, by either | 1 / 1 | 10 / 4 |
+| κ on needs fix between the two | 0.892 | 0.531 |
+
+- **What they catch.** Both annotators label the same 4 errors severe under both protocols: «au moment de la remise»
+  for the administration time with the VAT sentence missing (Keytruda), «di prima linea» added in Italian (Jemperli),
+  and the two dropped code sentences. Under both protocols, both also call for a fix to the stray French «n'» in «n'est
+  destiné» (Resolor). They accept the house-wording sweep as equivalent when BAG's text is shown.
+- **What they miss.** Italian «assicurazione malattie» for «assicuratore malattia» (Resolor) is called equivalent in
+  both protocols, and «dell'indicazione» for «di indicazione» under (a). Recall over all 17 content changes is low (5
+  of 17 with the reference) because most of BAG's corrections are wording preferences, not meaning errors.
+- **Without the reference, BAG's corrected texts draw calls too.** 10 of 17 controls get a needs-fix call from at least
+  one annotator under (b), and most notes name a defect that is still in BAG's current text: Opdivo .04 FR has no
+  «avancé» for «fortgeschrittenem» in either version; the Opdivo .07 FR heading drops «adjuvant»; the Italian reads
+  «locale avanzato». So under (b), a needs-fix call on the sweep does not tell the error from its control.
+
+**Apertus 70B as a second, non-Claude annotator** (`eval/results/annotator_crossfamily.json`). It was called through
+the development gateway: 117 requests, all served by `swiss-ai/apertus-v1.5-70b`, temperature 0, fixed answer format,
+0 unparsed. It answered the same question as the Claude annotators.
+
+- **Audit findings (the audit uses no model).** Apertus calls all 49 findings real (36) or minor (13), so it confirms
+  every one. That agrees with the R14 Claude majority on 34 of 49, which is exactly the share the majority confirms:
+  κ 0.000. The three-way answer agrees on 25 of 49. It never answers "not", so it cannot check the 15 findings the
+  Claude majority rejects.
+- **The 17 real errors.** Apertus flags 2 with the reference shown (the Opdivo .04 dropped sentence REAL; the Resolor
+  French minor, for the insurer word) and 1 hidden (the Resolor Italian, for "German left", which is wrong). It flags 0
+  of 17 controls under either protocol. Agreement on needs fix with each Claude annotator is 31 and 30 of 34 under (a)
+  (κ 0.532, 0.452) and 17 and 15 under (b) (κ −0.059).
+- **What it shows.** On these tasks the 70B does not discriminate. It says yes to every audit finding and no to almost
+  every draft, so it can neither confirm nor contradict the Claude labels. The κ 1.000 between the two Claude
+  annotators remains agreement within one model family, as the juror said. Its value is bounded by part A: the Claude
+  annotators catch the real meaning errors listed above, and they disagree with each other where the call is a matter
+  of wording.
+
 ## Re-running it
 
 Any capable LLM agent, or a translator, can be given a worklist and the instructions above. The labels will not be

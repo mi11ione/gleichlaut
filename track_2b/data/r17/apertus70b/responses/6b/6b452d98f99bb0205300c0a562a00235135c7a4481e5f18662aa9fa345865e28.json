@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 24, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 1140, "secs": 1.0, "seed": null, "usd": 0.00100488}, "text": "answer: real\nnote: French specifies minimum weight of 62.5 kg, German version does not."}

@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 34, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 612, "secs": 1.2, "seed": null, "usd": 0.00060112}, "text": "answer: real\nnote: \"cosiddetti\" is incorrect; term should be \"antagonisti del recettore dell'angiotensina II\""}

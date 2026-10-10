@@ -35,7 +35,7 @@ human labels were used.
 | R14 | (A) audit findings relabelled by two blind annotators + a third; (B) annotator sensitivity to meaning errors inside the amended wording | (A) κ 1.000; register 17 of 27, terminology 11 of 11, lists 6 of 11 (first: 16, 8, 7); (B) 38 of 38 caught by both, 0 false alarms |
 | R15 | audit round 5: operator direction, negation, number words | recall up (operator 74.5%, number word 84.0%; negation dropped 44.0%), precision 11–25%: no kind passes, all off |
 | R16 | memorisation probe: could the models have seen the held-out answers | no evidence beyond the negative control (70B, 8B); probe sensitivity not shown |
-| R17 | real errors BAG fixed without a German change (Claude annotators); Apertus 70B as a non-Claude annotator | pending |
+| R17 | real errors BAG fixed without a German change (Claude annotators); Apertus 70B as a non-Claude annotator | 17 content changes: needs fix by both 5 (shown) / 7 (hidden), the same 4 severe; Apertus confirms all 49 findings (κ 0.000), flags 2 of 17 |
 
 ## R0. Pass rule for a drafting lane (frozen 9 Oct 2026, before the fresh 2025 run)
 
@@ -804,3 +804,19 @@ data the change was designed on is labelled "dev" in every table.
   stop criterion "≤ 10" where DE/IT say "> 10"; BEYONTTRA and VYNDAQEL.01b IT "on deve essere combinato" (the "non" of
   "darf nicht" lost its n) (`eval/results/audit_r15.json`, `audit_injection_r15_held.json`,
   `eval/labels/audit_r15_20261006.tsv`).
+- **R17, 10 Oct 2026:** pre-registered at commit 3ddc331 before any annotation or model call; 8 fresh blind Claude
+  annotators, 117 Apertus requests. **(A) Real errors:** 29 FR/IT changes with the German byte-identical, 12 typography
+  only, **17 content changes, all used** (fewer than 30): negation/operator 2, words 15, number 0; 10 are one Opdivo
+  French wording sweep; 2 reversed as declared. Needs fix on the 17 error records, both / either: **(a) 5 / 5** (Wilson
+  95% [13.3, 53.1]), **(b) 7 / 11**; severe (REAL, stale, german) both 4 under each (either 4 / 5), the same 4 (Keytruda
+  «remise» and missing VAT sentence, Jemperli IT «di prima linea» added, the two dropped Opdivo code sentences); the
+  sweep 0 of 10 under (a) (equivalent), 5 by either under (b); the other 7: 5 (a), 6 (b) by both. Misses: Resolor IT
+  «assicurazione malattie» (both protocols), Opdivo IT «dell'indicazione» (a). Controls: needs fix by either 1 (a), 10
+  (b) (severe 1, 4), most naming a defect still in BAG's current text (Opdivo .04 FR lacks «avancé»). Needs-fix κ 0.892
+  (a), 0.531 (b) (`eval/results/annotator_real_errors.json`, `eval/labels/r17_real_errors_{a,b}.tsv`). **(B) Apertus
+  70B:** development gateway, tag `gleichlaut-r17-70b`, 117 of 117 served by `swiss-ai/apertus-v1.5-70b`, 0 unparsed,
+  USD 0.14. Audit: real 36, minor 13, not 0, so it confirms all 49; agreement with the R14 Claude majority on confirmed
+  34 of 49 = the majority's own confirmed share, **κ 0.000**; three-way answer 25 of 49. Part A: errors flagged 2 of 17
+  (a), 1 of 17 (b); controls 0 and 0; needs-fix κ with the Claude annotators 0.532 / 0.452 (a), −0.059 / −0.059 (b).
+  The 70B does not discriminate on either task, so it neither confirms nor contradicts the Claude labels
+  (`eval/results/annotator_crossfamily.json`, responses `data/r17/apertus70b/`).

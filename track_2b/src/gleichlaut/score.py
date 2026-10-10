@@ -1261,3 +1261,148 @@ def memorisation():
                                    top_lcp=[{k: d[k] for k in ("set", "key", "lang", "lcp", "chrf")} for d in
                                             sorted(rows, key=lambda d: (-d["lcp"], d["key"]))[:8]])
     return res
+
+
+# ------------------------------------------------------------------ PREREG R17: real errors; a non-Claude annotator
+R17_SEVERE = ("REAL", "stale", "german")
+R17_SWEEP = "36d94228"           # the one house-wording sweep (Opdivo FR code sentence), 10 of the 17 changes
+R17_MODEL = "swiss-ai/apertus-v1.5-70b"
+
+
+def _r17_clean(text):
+    return (text or "").replace("*", "").replace("`", "")
+
+
+def r17_parse_record(text):
+    """PREREG R17 fixed answer format for a part-A record -> (needs_fix, class) or None (unparsed)."""
+    import re
+    t = _r17_clean(text)
+    f = re.search(r"(?im)^\s*needs_fix\s*:\s*(yes|no)\b", t); c = re.search(r"(?im)^\s*class\s*:\s*([A-Za-z]+)", t)
+    cls = {x.lower(): x for x in BLIND_CLASSES}.get(c.group(1).lower()) if c else None
+    return (f.group(1).lower(), cls) if f and cls else None
+
+
+def r17_parse_audit(text):
+    """PREREG R17 fixed answer format for an audit record -> 'real' | 'minor' | 'not' | None (unparsed)."""
+    import re
+    m = re.search(r"(?im)^\s*answer\s*:\s*(real|minor|not)\b", _r17_clean(text))
+    return m.group(1).lower() if m else None
+
+
+def _r17_rate(k, n): return dict(k=k, n=n, pct=round(100 * k / n, 1) if n else None, wilson95=[round(v, 1) for v in wilson(k, n)])
+
+
+def _r17_rows(p):
+    lines = open(os.path.join(LABELS, f"r17_real_errors_{p}.tsv"), encoding="utf-8").read().splitlines()
+    hdr = lines[0].split("\t")
+    return [dict(zip(hdr, l.split("\t"))) for l in lines[1:] if l]
+
+
+def annotator_real_errors():
+    """PREREG R17 part A: do the blind Claude annotators of eval/labels/PROTOCOL.md catch errors that people made and BAG
+    later fixed? Every FR/IT limitation change in the SL snapshot series with the German byte-identical, classified
+    mechanically; the 17 content changes as an error record (the text that disagrees with the German) and a control
+    record (the correct text), never in the same worklist, labelled by two blind annotators per worklist under (a)
+    reference shown and (b) hidden (tools/r17_real_errors.py; eval/labels/r17_real_errors_{a,b}.tsv). Severe = REAL,
+    stale or german. Wilson 95% over records."""
+    if not os.path.exists(os.path.join(LABELS, "r17_real_errors_a.tsv")): return None
+    K = json.load(open(os.path.join(LABELS, "r17_key.json"), encoding="utf-8"))
+    ch = {c["uid"]: c for c in K["changes"]}
+
+    def block(R, hit):
+        a = [hit(r, "A") for r in R]; b = [hit(r, "B") for r in R]
+        return dict(A=_r17_rate(sum(a), len(R)), B=_r17_rate(sum(b), len(R)), both=_r17_rate(sum(x and y for x, y in zip(a, b)), len(R)),
+                    either=_r17_rate(sum(x or y for x, y in zip(a, b)), len(R)))
+    fix = lambda r, x: r[f"{x}_fix"] == "yes"
+    sev = lambda r, x: r[f"{x}_class"] in R17_SEVERE
+
+    def summary(R):
+        return dict(n=len(R), needs_fix=block(R, fix), severe=block(R, sev),
+                    classes=dict(sorted(Counter(r[f"{x}_class"] for r in R for x in "AB").items())))
+    out = dict(prereg="R17 (part A)", severe=list(R17_SEVERE), mining=K["mining"], counts=K["counts"], reversed=sorted(K["reversed"]),
+               protocols={})
+    for p, name in (("a", "reference_shown"), ("b", "reference_hidden")):
+        rows = _r17_rows(p)
+        assert {r["key"] for r in rows} == set(K["items"]), p
+        for r in rows:
+            it = K["items"][r["key"]]; r.update(uid=it["uid"], family=it["family"], reversed=it["reversed"])
+        E = [r for r in rows if r["kind"] == "error"]; C = [r for r in rows if r["kind"] == "control"]
+        d = dict(errors=summary(E), controls=summary(C),
+                 errors_by_type={t: summary([r for r in E if r["type"] == t]) for t in sorted({r["type"] for r in E})},
+                 errors_by_family={"sweep_" + R17_SWEEP: summary([r for r in E if r["family"] == R17_SWEEP]),
+                                   "other": summary([r for r in E if r["family"] != R17_SWEEP])},
+                 errors_by_lang={L: summary([r for r in E if r["lang"] == L]) for L in ("fr", "it")},
+                 errors_bag_fixes=summary([r for r in E if not r["reversed"]]),
+                 errors_reversed=summary([r for r in E if r["reversed"]]),
+                 annotators=_kappa_yes([r["A_fix"] for r in rows], [r["B_fix"] for r in rows]))
+        d["per_error"] = [dict(uid=r["uid"], type=r["type"], family=r["family"], reversed=r["reversed"], edit=ch[r["uid"]]["word_diff"],
+                               A=f"{r['A_fix']} {r['A_class']}", B=f"{r['B_fix']} {r['B_class']}", note_A=r["note_A"], note_B=r["note_B"])
+                          for r in sorted(E, key=lambda r: r["uid"])]
+        d["missed_by_both"] = [x["uid"] for x in d["per_error"] if not any(fix(r, a) for r in E if r["uid"] == x["uid"] for a in "AB")]
+        d["false_alarms"] = [dict(uid=r["uid"], A=f"{r['A_fix']} {r['A_class']}", B=f"{r['B_fix']} {r['B_class']}", note_A=r["note_A"],
+                                  note_B=r["note_B"]) for r in sorted(C, key=lambda r: r["uid"]) if fix(r, "A") or fix(r, "B")]
+        out["protocols"][name] = d
+    return out
+
+
+def annotator_crossfamily():
+    """PREREG R17 part B: Apertus 70B (a different model family) as a second annotator: (i) the 49 audit findings of R14
+    (the audit uses no model) against the Claude majority of three; (ii) the part-A records under both protocols against
+    the error / control truth and the two Claude annotators. Re-derived from the recorded responses in
+    data/r17/apertus70b/responses (looked up by the sha256 of the frozen request) with the fixed parsers."""
+    from . import backends
+    root = os.path.join(DATA, "r17", "apertus70b", "responses")
+    if not os.path.isdir(root): return None
+    D = json.load(open(os.path.join(DATA, "r17", "r17_70b_prompts.json"), encoding="utf-8"))
+    ask = backends.Cache(root, model=D["model"]); served = Counter(); got = {}
+    for r in D["requests"]:
+        assert r["payload_key"] == backends.payload_key(D["model"], r["prompt"], D["max_tokens"])
+        text, meta = ask(r["prompt"], "r17", 0, D["max_tokens"]); served[meta.get("model_served")] += 1
+        got[(r["task"], r["id"])] = text
+    assert set(served) == {R17_MODEL}, served
+    conf = lambda a: "yes" if a in ("real", "minor") else "no"
+    # (i) audit
+    ids = json.load(open(os.path.join(LABELS, "audit_relabel_key.json"), encoding="utf-8"))["ids"]
+    maj = {r["uid"]: r for r in audit_relabel_merge()}
+    rows = []
+    for i, u in sorted(ids.items()):
+        a = r17_parse_audit(got[("audit", i)])
+        rows.append(dict(id=i, uid=u, set=maj[u]["set"], apertus=a, claude=maj[u]["final"], claude_confirmed=maj[u]["final_confirmed"]))
+    P = [r for r in rows if r["apertus"]]
+
+    def ablock(R):
+        R = [r for r in R if r["apertus"]]
+        return dict(_kappa_yes([conf(r["apertus"]) for r in R], [r["claude_confirmed"] for r in R]),
+                    answer_agree=sum(r["apertus"] == r["claude"] for r in R),
+                    apertus_confirmed=sum(conf(r["apertus"]) == "yes" for r in R), claude_confirmed=sum(r["claude_confirmed"] == "yes" for r in R))
+    audit = dict(n=len(rows), unparsed=len(rows) - len(P), all=ablock(rows),
+                 sets={s: ablock([r for r in rows if r["set"] == s]) for s in AUDIT_RELABEL_SETS},
+                 answers=dict(sorted(Counter(r["apertus"] or "unparsed" for r in rows).items())),
+                 differ=[dict(uid=r["uid"], apertus=r["apertus"], claude=r["claude"]) for r in rows
+                         if not r["apertus"] or conf(r["apertus"]) != r["claude_confirmed"]])
+    # (ii) part A
+    K = json.load(open(os.path.join(LABELS, "r17_key.json"), encoding="utf-8")); out_a = {}
+    for p, name in (("a", "reference_shown"), ("b", "reference_hidden")):
+        L = {r["key"]: r for r in _r17_rows(p)} if os.path.exists(os.path.join(LABELS, f"r17_real_errors_{p}.tsv")) else {}
+        recs = []
+        for i, k in sorted(K["ids"].items()):
+            if not i.startswith(("X", "Y") if p == "a" else ("J", "K")): continue
+            it = K["items"][k]; a = r17_parse_record(got[(p, i)])
+            recs.append(dict(key=k, kind=it["kind"], type=it["type"], reversed=it["reversed"], ans=a, claude=L.get(k)))
+        E = [r for r in recs if r["kind"] == "error"]; C = [r for r in recs if r["kind"] == "control"]
+        fx = lambda r: bool(r["ans"]) and r["ans"][0] == "yes"; sv = lambda r: bool(r["ans"]) and r["ans"][1] in R17_SEVERE
+        d = dict(unparsed=sum(not r["ans"] for r in recs),
+                 errors=dict(n=len(E), needs_fix=_r17_rate(sum(map(fx, E)), len(E)), severe=_r17_rate(sum(map(sv, E)), len(E)),
+                             classes=dict(sorted(Counter(r["ans"][1] if r["ans"] else "unparsed" for r in E).items()))),
+                 errors_bag_fixes=dict(needs_fix=_r17_rate(sum(fx(r) for r in E if not r["reversed"]), sum(not r["reversed"] for r in E))),
+                 errors_by_type={t: _r17_rate(sum(fx(r) for r in E if r["type"] == t), sum(r["type"] == t for r in E)) for t in sorted({r["type"] for r in E})},
+                 controls=dict(n=len(C), needs_fix=_r17_rate(sum(map(fx, C)), len(C)), severe=_r17_rate(sum(map(sv, C)), len(C)),
+                               classes=dict(sorted(Counter(r["ans"][1] if r["ans"] else "unparsed" for r in C).items()))))
+        if L:
+            Q = [r for r in recs if r["ans"]]
+            d["vs_claude"] = {x: _kappa_yes([r["ans"][0] for r in Q], [r["claude"][f"{x}_fix"] for r in Q]) for x in "AB"}
+            S = [r for r in Q if r["claude"]["A_fix"] == r["claude"]["B_fix"]]
+            d["vs_claude"]["where_A_B_agree"] = _kappa_yes([r["ans"][0] for r in S], [r["claude"]["A_fix"] for r in S]) if S else None
+        out_a[name] = d
+    return dict(prereg="R17 (part B)", model=D["model"], requests=len(D["requests"]), served=dict(served), max_tokens=D["max_tokens"],
+                audit=audit, real_errors=out_a)

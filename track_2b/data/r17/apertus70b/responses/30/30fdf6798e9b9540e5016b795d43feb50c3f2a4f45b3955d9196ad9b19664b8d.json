@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 23, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 672, "secs": 1.1, "seed": null, "usd": 0.0006182}, "text": "answer: real\nnote: Weight thresholds differ (15 kg vs 5 kg) for pediatric patients."}

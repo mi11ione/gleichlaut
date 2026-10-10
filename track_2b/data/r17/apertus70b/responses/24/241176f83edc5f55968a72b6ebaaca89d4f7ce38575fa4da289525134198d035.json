@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 24, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 1557, "secs": 1.0, "seed": null, "usd": 0.0013468199999999999}, "text": "answer: real\nnote: Day count differs: \"14 (Tagen)\" vs no equivalent in French."}

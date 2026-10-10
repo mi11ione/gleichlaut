@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 17, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 1058, "secs": 1.1, "seed": null, "usd": 0.0009172}, "text": "answer: real\nnote: Age limit differs (18 vs no mention)"}

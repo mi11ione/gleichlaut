@@ -1,0 +1,1 @@
+{"meta": {"backend": "fp1-nes", "completion_tokens": 35, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 1000, "secs": 2.4, "seed": null, "usd": 0.0009222000000000001}, "text": "needs_fix: no  \nclass: cosmetic  \nnote: Minor punctuation change (deux points → point virgule) does not affect meaning."}

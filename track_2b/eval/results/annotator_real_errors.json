@@ -1,0 +1,2576 @@
+{
+ "counts": {
+  "by_type": {
+   "negation_operator": 2,
+   "punctuation": 12,
+   "words": 15
+  },
+  "changes_mined": 29,
+  "content": 17,
+  "content_by_lang": {
+   "fr": 14,
+   "it": 3
+  },
+  "content_by_step": {
+   "20260304>20260401": 1,
+   "20260401>20260601": 2,
+   "20260801>20260901": 1,
+   "20260901>20261001": 13
+  },
+  "content_by_type": {
+   "negation_operator": 2,
+   "words": 15
+  },
+  "content_by_type_subtype": {
+   "negation_operator/replaced": 2,
+   "words/removed": 3,
+   "words/replaced": 12
+  },
+  "families": {
+   "1c614957": 1,
+   "2e3e0cb5": 1,
+   "36d94228": 10,
+   "4ccba973": 2,
+   "c2c0c3f8": 1,
+   "cdc23968": 1,
+   "cf83d1c3": 1
+  },
+  "per_set": {
+   "1": {
+    "control": 7,
+    "error": 10
+   },
+   "2": {
+    "control": 10,
+    "error": 7
+   }
+  },
+  "reversed": 2
+ },
+ "mining": {
+  "changes": 29,
+  "de_unchanged_pairs": 34272,
+  "de_unchanged_pairs_2025": 1318
+ },
+ "prereg": "R17 (part A)",
+ "protocols": {
+  "reference_hidden": {
+   "annotators": {
+    "agree": 26,
+    "agree_pct": 76.5,
+    "kappa": 0.531,
+    "n": 34
+   },
+   "controls": {
+    "classes": {
+     "REAL": 4,
+     "cosmetic": 3,
+     "equivalent": 15,
+     "german": 1,
+     "minor": 11
+    },
+    "n": 17,
+    "needs_fix": {
+     "A": {
+      "k": 9,
+      "n": 17,
+      "pct": 52.9,
+      "wilson95": [
+       31.0,
+       73.8
+      ]
+     },
+     "B": {
+      "k": 7,
+      "n": 17,
+      "pct": 41.2,
+      "wilson95": [
+       21.6,
+       64.0
+      ]
+     },
+     "both": {
+      "k": 6,
+      "n": 17,
+      "pct": 35.3,
+      "wilson95": [
+       17.3,
+       58.7
+      ]
+     },
+     "either": {
+      "k": 10,
+      "n": 17,
+      "pct": 58.8,
+      "wilson95": [
+       36.0,
+       78.4
+      ]
+     }
+    },
+    "severe": {
+     "A": {
+      "k": 3,
+      "n": 17,
+      "pct": 17.6,
+      "wilson95": [
+       6.2,
+       41.0
+      ]
+     },
+     "B": {
+      "k": 2,
+      "n": 17,
+      "pct": 11.8,
+      "wilson95": [
+       3.3,
+       34.3
+      ]
+     },
+     "both": {
+      "k": 1,
+      "n": 17,
+      "pct": 5.9,
+      "wilson95": [
+       1.0,
+       27.0
+      ]
+     },
+     "either": {
+      "k": 4,
+      "n": 17,
+      "pct": 23.5,
+      "wilson95": [
+       9.6,
+       47.3
+      ]
+     }
+    }
+   },
+   "errors": {
+    "classes": {
+     "REAL": 9,
+     "cosmetic": 6,
+     "equivalent": 13,
+     "minor": 6
+    },
+    "n": 17,
+    "needs_fix": {
+     "A": {
+      "k": 7,
+      "n": 17,
+      "pct": 41.2,
+      "wilson95": [
+       21.6,
+       64.0
+      ]
+     },
+     "B": {
+      "k": 11,
+      "n": 17,
+      "pct": 64.7,
+      "wilson95": [
+       41.3,
+       82.7
+      ]
+     },
+     "both": {
+      "k": 7,
+      "n": 17,
+      "pct": 41.2,
+      "wilson95": [
+       21.6,
+       64.0
+      ]
+     },
+     "either": {
+      "k": 11,
+      "n": 17,
+      "pct": 64.7,
+      "wilson95": [
+       41.3,
+       82.7
+      ]
+     }
+    },
+    "severe": {
+     "A": {
+      "k": 5,
+      "n": 17,
+      "pct": 29.4,
+      "wilson95": [
+       13.3,
+       53.1
+      ]
+     },
+     "B": {
+      "k": 4,
+      "n": 17,
+      "pct": 23.5,
+      "wilson95": [
+       9.6,
+       47.3
+      ]
+     },
+     "both": {
+      "k": 4,
+      "n": 17,
+      "pct": 23.5,
+      "wilson95": [
+       9.6,
+       47.3
+      ]
+     },
+     "either": {
+      "k": 5,
+      "n": 17,
+      "pct": 29.4,
+      "wilson95": [
+       13.3,
+       53.1
+      ]
+     }
+    }
+   },
+   "errors_bag_fixes": {
+    "classes": {
+     "REAL": 5,
+     "cosmetic": 6,
+     "equivalent": 13,
+     "minor": 6
+    },
+    "n": 15,
+    "needs_fix": {
+     "A": {
+      "k": 5,
+      "n": 15,
+      "pct": 33.3,
+      "wilson95": [
+       15.2,
+       58.3
+      ]
+     },
+     "B": {
+      "k": 9,
+      "n": 15,
+      "pct": 60.0,
+      "wilson95": [
+       35.7,
+       80.2
+      ]
+     },
+     "both": {
+      "k": 5,
+      "n": 15,
+      "pct": 33.3,
+      "wilson95": [
+       15.2,
+       58.3
+      ]
+     },
+     "either": {
+      "k": 9,
+      "n": 15,
+      "pct": 60.0,
+      "wilson95": [
+       35.7,
+       80.2
+      ]
+     }
+    },
+    "severe": {
+     "A": {
+      "k": 3,
+      "n": 15,
+      "pct": 20.0,
+      "wilson95": [
+       7.0,
+       45.2
+      ]
+     },
+     "B": {
+      "k": 2,
+      "n": 15,
+      "pct": 13.3,
+      "wilson95": [
+       3.7,
+       37.9
+      ]
+     },
+     "both": {
+      "k": 2,
+      "n": 15,
+      "pct": 13.3,
+      "wilson95": [
+       3.7,
+       37.9
+      ]
+     },
+     "either": {
+      "k": 3,
+      "n": 15,
+      "pct": 20.0,
+      "wilson95": [
+       7.0,
+       45.2
+      ]
+     }
+    }
+   },
+   "errors_by_family": {
+    "other": {
+     "classes": {
+      "REAL": 9,
+      "equivalent": 2,
+      "minor": 3
+     },
+     "n": 7,
+     "needs_fix": {
+      "A": {
+       "k": 6,
+       "n": 7,
+       "pct": 85.7,
+       "wilson95": [
+        48.7,
+        97.4
+       ]
+      },
+      "B": {
+       "k": 6,
+       "n": 7,
+       "pct": 85.7,
+       "wilson95": [
+        48.7,
+        97.4
+       ]
+      },
+      "both": {
+       "k": 6,
+       "n": 7,
+       "pct": 85.7,
+       "wilson95": [
+        48.7,
+        97.4
+       ]
+      },
+      "either": {
+       "k": 6,
+       "n": 7,
+       "pct": 85.7,
+       "wilson95": [
+        48.7,
+        97.4
+       ]
+      }
+     },
+     "severe": {
+      "A": {
+       "k": 5,
+       "n": 7,
+       "pct": 71.4,
+       "wilson95": [
+        35.9,
+        91.8
+       ]
+      },
+      "B": {
+       "k": 4,
+       "n": 7,
+       "pct": 57.1,
+       "wilson95": [
+        25.0,
+        84.2
+       ]
+      },
+      "both": {
+       "k": 4,
+       "n": 7,
+       "pct": 57.1,
+       "wilson95": [
+        25.0,
+        84.2
+       ]
+      },
+      "either": {
+       "k": 5,
+       "n": 7,
+       "pct": 71.4,
+       "wilson95": [
+        35.9,
+        91.8
+       ]
+      }
+     }
+    },
+    "sweep_36d94228": {
+     "classes": {
+      "cosmetic": 6,
+      "equivalent": 11,
+      "minor": 3
+     },
+     "n": 10,
+     "needs_fix": {
+      "A": {
+       "k": 1,
+       "n": 10,
+       "pct": 10.0,
+       "wilson95": [
+        1.8,
+        40.4
+       ]
+      },
+      "B": {
+       "k": 5,
+       "n": 10,
+       "pct": 50.0,
+       "wilson95": [
+        23.7,
+        76.3
+       ]
+      },
+      "both": {
+       "k": 1,
+       "n": 10,
+       "pct": 10.0,
+       "wilson95": [
+        1.8,
+        40.4
+       ]
+      },
+      "either": {
+       "k": 5,
+       "n": 10,
+       "pct": 50.0,
+       "wilson95": [
+        23.7,
+        76.3
+       ]
+      }
+     },
+     "severe": {
+      "A": {
+       "k": 0,
+       "n": 10,
+       "pct": 0.0,
+       "wilson95": [
+        0.0,
+        27.8
+       ]
+      },
+      "B": {
+       "k": 0,
+       "n": 10,
+       "pct": 0.0,
+       "wilson95": [
+        0.0,
+        27.8
+       ]
+      },
+      "both": {
+       "k": 0,
+       "n": 10,
+       "pct": 0.0,
+       "wilson95": [
+        0.0,
+        27.8
+       ]
+      },
+      "either": {
+       "k": 0,
+       "n": 10,
+       "pct": 0.0,
+       "wilson95": [
+        0.0,
+        27.8
+       ]
+      }
+     }
+    }
+   },
+   "errors_by_lang": {
+    "fr": {
+     "classes": {
+      "REAL": 7,
+      "cosmetic": 6,
+      "equivalent": 11,
+      "minor": 4
+     },
+     "n": 14,
+     "needs_fix": {
+      "A": {
+       "k": 5,
+       "n": 14,
+       "pct": 35.7,
+       "wilson95": [
+        16.3,
+        61.2
+       ]
+      },
+      "B": {
+       "k": 9,
+       "n": 14,
+       "pct": 64.3,
+       "wilson95": [
+        38.8,
+        83.7
+       ]
+      },
+      "both": {
+       "k": 5,
+       "n": 14,
+       "pct": 35.7,
+       "wilson95": [
+        16.3,
+        61.2
+       ]
+      },
+      "either": {
+       "k": 9,
+       "n": 14,
+       "pct": 64.3,
+       "wilson95": [
+        38.8,
+        83.7
+       ]
+      }
+     },
+     "severe": {
+      "A": {
+       "k": 4,
+       "n": 14,
+       "pct": 28.6,
+       "wilson95": [
+        11.7,
+        54.6
+       ]
+      },
+      "B": {
+       "k": 3,
+       "n": 14,
+       "pct": 21.4,
+       "wilson95": [
+        7.6,
+        47.6
+       ]
+      },
+      "both": {
+       "k": 3,
+       "n": 14,
+       "pct": 21.4,
+       "wilson95": [
+        7.6,
+        47.6
+       ]
+      },
+      "either": {
+       "k": 4,
+       "n": 14,
+       "pct": 28.6,
+       "wilson95": [
+        11.7,
+        54.6
+       ]
+      }
+     }
+    },
+    "it": {
+     "classes": {
+      "REAL": 2,
+      "equivalent": 2,
+      "minor": 2
+     },
+     "n": 3,
+     "needs_fix": {
+      "A": {
+       "k": 2,
+       "n": 3,
+       "pct": 66.7,
+       "wilson95": [
+        20.8,
+        93.9
+       ]
+      },
+      "B": {
+       "k": 2,
+       "n": 3,
+       "pct": 66.7,
+       "wilson95": [
+        20.8,
+        93.9
+       ]
+      },
+      "both": {
+       "k": 2,
+       "n": 3,
+       "pct": 66.7,
+       "wilson95": [
+        20.8,
+        93.9
+       ]
+      },
+      "either": {
+       "k": 2,
+       "n": 3,
+       "pct": 66.7,
+       "wilson95": [
+        20.8,
+        93.9
+       ]
+      }
+     },
+     "severe": {
+      "A": {
+       "k": 1,
+       "n": 3,
+       "pct": 33.3,
+       "wilson95": [
+        6.1,
+        79.2
+       ]
+      },
+      "B": {
+       "k": 1,
+       "n": 3,
+       "pct": 33.3,
+       "wilson95": [
+        6.1,
+        79.2
+       ]
+      },
+      "both": {
+       "k": 1,
+       "n": 3,
+       "pct": 33.3,
+       "wilson95": [
+        6.1,
+        79.2
+       ]
+      },
+      "either": {
+       "k": 1,
+       "n": 3,
+       "pct": 33.3,
+       "wilson95": [
+        6.1,
+        79.2
+       ]
+      }
+     }
+    }
+   },
+   "errors_by_type": {
+    "negation_operator": {
+     "classes": {
+      "REAL": 3,
+      "minor": 1
+     },
+     "n": 2,
+     "needs_fix": {
+      "A": {
+       "k": 2,
+       "n": 2,
+       "pct": 100.0,
+       "wilson95": [
+        34.2,
+        100.0
+       ]
+      },
+      "B": {
+       "k": 2,
+       "n": 2,
+       "pct": 100.0,
+       "wilson95": [
+        34.2,
+        100.0
+       ]
+      },
+      "both": {
+       "k": 2,
+       "n": 2,
+       "pct": 100.0,
+       "wilson95": [
+        34.2,
+        100.0
+       ]
+      },
+      "either": {
+       "k": 2,
+       "n": 2,
+       "pct": 100.0,
+       "wilson95": [
+        34.2,
+        100.0
+       ]
+      }
+     },
+     "severe": {
+      "A": {
+       "k": 2,
+       "n": 2,
+       "pct": 100.0,
+       "wilson95": [
+        34.2,
+        100.0
+       ]
+      },
+      "B": {
+       "k": 1,
+       "n": 2,
+       "pct": 50.0,
+       "wilson95": [
+        9.5,
+        90.5
+       ]
+      },
+      "both": {
+       "k": 1,
+       "n": 2,
+       "pct": 50.0,
+       "wilson95": [
+        9.5,
+        90.5
+       ]
+      },
+      "either": {
+       "k": 2,
+       "n": 2,
+       "pct": 100.0,
+       "wilson95": [
+        34.2,
+        100.0
+       ]
+      }
+     }
+    },
+    "words": {
+     "classes": {
+      "REAL": 6,
+      "cosmetic": 6,
+      "equivalent": 13,
+      "minor": 5
+     },
+     "n": 15,
+     "needs_fix": {
+      "A": {
+       "k": 5,
+       "n": 15,
+       "pct": 33.3,
+       "wilson95": [
+        15.2,
+        58.3
+       ]
+      },
+      "B": {
+       "k": 9,
+       "n": 15,
+       "pct": 60.0,
+       "wilson95": [
+        35.7,
+        80.2
+       ]
+      },
+      "both": {
+       "k": 5,
+       "n": 15,
+       "pct": 33.3,
+       "wilson95": [
+        15.2,
+        58.3
+       ]
+      },
+      "either": {
+       "k": 9,
+       "n": 15,
+       "pct": 60.0,
+       "wilson95": [
+        35.7,
+        80.2
+       ]
+      }
+     },
+     "severe": {
+      "A": {
+       "k": 3,
+       "n": 15,
+       "pct": 20.0,
+       "wilson95": [
+        7.0,
+        45.2
+       ]
+      },
+      "B": {
+       "k": 3,
+       "n": 15,
+       "pct": 20.0,
+       "wilson95": [
+        7.0,
+        45.2
+       ]
+      },
+      "both": {
+       "k": 3,
+       "n": 15,
+       "pct": 20.0,
+       "wilson95": [
+        7.0,
+        45.2
+       ]
+      },
+      "either": {
+       "k": 3,
+       "n": 15,
+       "pct": 20.0,
+       "wilson95": [
+        7.0,
+        45.2
+       ]
+      }
+     }
+    }
+   },
+   "errors_reversed": {
+    "classes": {
+     "REAL": 4
+    },
+    "n": 2,
+    "needs_fix": {
+     "A": {
+      "k": 2,
+      "n": 2,
+      "pct": 100.0,
+      "wilson95": [
+       34.2,
+       100.0
+      ]
+     },
+     "B": {
+      "k": 2,
+      "n": 2,
+      "pct": 100.0,
+      "wilson95": [
+       34.2,
+       100.0
+      ]
+     },
+     "both": {
+      "k": 2,
+      "n": 2,
+      "pct": 100.0,
+      "wilson95": [
+       34.2,
+       100.0
+      ]
+     },
+     "either": {
+      "k": 2,
+      "n": 2,
+      "pct": 100.0,
+      "wilson95": [
+       34.2,
+       100.0
+      ]
+     }
+    },
+    "severe": {
+     "A": {
+      "k": 2,
+      "n": 2,
+      "pct": 100.0,
+      "wilson95": [
+       34.2,
+       100.0
+      ]
+     },
+     "B": {
+      "k": 2,
+      "n": 2,
+      "pct": 100.0,
+      "wilson95": [
+       34.2,
+       100.0
+      ]
+     },
+     "both": {
+      "k": 2,
+      "n": 2,
+      "pct": 100.0,
+      "wilson95": [
+       34.2,
+       100.0
+      ]
+     },
+     "either": {
+      "k": 2,
+      "n": 2,
+      "pct": 100.0,
+      "wilson95": [
+       34.2,
+       100.0
+      ]
+     }
+    }
+   },
+   "false_alarms": [
+    {
+     "A": "yes REAL",
+     "B": "yes minor",
+     "note_A": "Refund basis changed: German fixed amount per pack becomes share of ex-factory price; \"for all indications\" dropped.",
+     "note_B": "\"festgelegten Betrag ... für alle Indikationen\" rendered as \"une partie du prix de fabrique\", scope phrase dropped.",
+     "uid": "fr:KEYTRUDA.XX---Inf-Konz:20260801>20260901"
+    },
+    {
+     "A": "yes REAL",
+     "B": "yes REAL",
+     "note_A": "\"fortgeschrittenem\" (advanced) dropped; indication scope widened.",
+     "note_B": "\"fortgeschrittenem\" (advanced) dropped; population condition missing.",
+     "uid": "fr:OPDIVO.04---Nierenzellkarzinom--RCC-:20260901>20261001"
+    },
+    {
+     "A": "yes minor",
+     "B": "yes minor",
+     "note_A": "Heading \"Melanom adjuvant\" rendered as \"Mélanome\" only; body otherwise faithful.",
+     "note_B": "Title drops \"adjuvant\", conflicts with other melanoma indication",
+     "uid": "fr:OPDIVO.07---Melanom-adjuvant:20260901>20261001"
+    },
+    {
+     "A": "yes minor",
+     "B": "no cosmetic",
+     "note_A": "Agreement error \"doivent être confirmée\"; German/English abbreviation CRC kept instead of CCR.",
+     "note_B": "Agreement error \"doivent être confirmée\"; meaning intact",
+     "uid": "fr:OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001"
+    },
+    {
+     "A": "yes minor",
+     "B": "no cosmetic",
+     "note_A": "Agreement error \"doivent être confirmée\"; CRC abbreviation kept instead of CCR.",
+     "note_B": "Agreement error \"doivent être confirmée\"; meaning intact",
+     "uid": "fr:OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001"
+    },
+    {
+     "A": "yes minor",
+     "B": "no cosmetic",
+     "note_A": "Calques (\"rejetant\", \"preuves pathologiques\"); missing full stop before \"Les patients\".",
+     "note_B": "Missing full stop before \"Les patients\"; meaning intact",
+     "uid": "fr:OPDIVO.12---MIUC-adjuvant:20260901>20261001"
+    },
+    {
+     "A": "yes german",
+     "B": "yes minor",
+     "note_A": "Source abbreviation RCC left in heading (CCR used later); \"mit OPDIVO\" dropped from 24 months.",
+     "note_B": "\"mit OPDIVO\" dropped from 24-month limit; RCC/CCR inconsistency, capitalised \"Non inclus\"",
+     "uid": "fr:OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib:20260901>20261001"
+    },
+    {
+     "A": "yes minor",
+     "B": "yes REAL",
+     "note_A": "Kostengutsprache rendered as \"demande de prise en charge\" (request, not approval); \"âgées\" agreement odd.",
+     "note_B": "Kostengutsprache rendered as mere \"demande de prise en charge\" (request, not approval); \"âgées\" agreement.",
+     "uid": "fr:RESOLOR3:20260401>20260601"
+    },
+    {
+     "A": "yes minor",
+     "B": "yes minor",
+     "note_A": "\"locale avanzato\" should be \"localmente avanzato\"; meaning otherwise correct.",
+     "note_B": "\"locale avanzato\" should be \"localmente avanzato\"; meaning otherwise intact.",
+     "uid": "it:OPDIVO.01---NSCLC-Mono:20260901>20261001"
+    },
+    {
+     "A": "no equivalent",
+     "B": "yes minor",
+     "note_A": "Faithful; minor insurer term inconsistency only.",
+     "note_B": "\"su richiesta della stessa\" ambiguous referent; inconsistent assicuratore sanitario/malattia terms.",
+     "uid": "it:RA:213c9b7d-a450-40f6-b8ad-16e06e49236d#1:20260304>20260401"
+    }
+   ],
+   "missed_by_both": [
+    "fr:OPDIVO.02---Melanom-Monotherapie:20260901>20261001",
+    "fr:OPDIVO.03---Melanom-Kombitherapie:20260901>20261001",
+    "fr:OPDIVO.09---OC-oder-GEJC-adjuvant:20260901>20261001",
+    "fr:OPDIVO.13--:20260901>20261001",
+    "fr:OPDIVO.16---GC-GEJC-OC:20260901>20261001",
+    "it:RESOLOR3:20260401>20260601"
+   ],
+   "per_error": [
+    {
+     "A": "yes REAL",
+     "B": "yes REAL",
+     "edit": [
+      [
+       "insert",
+       "",
+       "l administration"
+      ],
+      [
+       "replace",
+       "remise",
+       "tva ne peut pas être réclamée en plus de cette part du prix de fabrique"
+      ]
+     ],
+     "family": "1c614957",
+     "note_A": "VAT non-reclaimable sentence dropped; price reference \"remise\" instead of administration time.",
+     "note_B": "VAT sentence dropped; Verabreichungszeitpunkt rendered as \"remise\"",
+     "reversed": false,
+     "type": "negation_operator",
+     "uid": "fr:KEYTRUDA.XX---Inf-Konz:20260801>20260901"
+    },
+    {
+     "A": "yes REAL",
+     "B": "yes REAL",
+     "edit": [
+      [
+       "delete",
+       "le code d indication de cette limitation doit être transmis à l assureur maladie",
+       ""
+      ]
+     ],
+     "family": "4ccba973",
+     "note_A": "Indication-code transmission sentence dropped (\". .\").",
+     "note_B": "Indication-code transmission sentence missing (\". .\")",
+     "reversed": true,
+     "type": "words",
+     "uid": "fr:OPDIVO.01---NSCLC-Mono:20260901>20261001"
+    },
+    {
+     "A": "no equivalent",
+     "B": "no equivalent",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Faithful rendering of indication and maximum dosing.",
+     "note_B": "Correct.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.02---Melanom-Monotherapie:20260901>20261001"
+    },
+    {
+     "A": "no equivalent",
+     "B": "no equivalent",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Faithful rendering of monotherapy phase and dosing.",
+     "note_B": "Correct; dose and combination phase rendered faithfully.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.03---Melanom-Kombitherapie:20260901>20261001"
+    },
+    {
+     "A": "yes REAL",
+     "B": "yes REAL",
+     "edit": [
+      [
+       "delete",
+       "le code d indication de cette limitation doit être transmis à l assureur maladie",
+       ""
+      ]
+     ],
+     "family": "4ccba973",
+     "note_A": "\"fortgeschritten\" (advanced) dropped; indication-code transmission sentence missing (\". .\").",
+     "note_B": "Drops \"fortgeschrittenem\" (advanced) and indication-code sentence",
+     "reversed": true,
+     "type": "words",
+     "uid": "fr:OPDIVO.04---Nierenzellkarzinom--RCC-:20260901>20261001"
+    },
+    {
+     "A": "yes minor",
+     "B": "yes minor",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Heading drops \"adjuvant\" (Mélanome only); body otherwise faithful.",
+     "note_B": "Heading drops \"adjuvant\" (Mélanome only); body conditions correct.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.07---Melanom-adjuvant:20260901>20261001"
+    },
+    {
+     "A": "no cosmetic",
+     "B": "yes cosmetic",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Agreement error \"doivent être confirmée\"; meaning correct.",
+     "note_B": "Agreement error \"doivent être confirmée\"; meaning intact.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001"
+    },
+    {
+     "A": "no equivalent",
+     "B": "no equivalent",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Faithful; adds product name to dose sentence harmlessly.",
+     "note_B": "Correct; adds product name to dose sentence harmlessly.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.09---OC-oder-GEJC-adjuvant:20260901>20261001"
+    },
+    {
+     "A": "no cosmetic",
+     "B": "yes cosmetic",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Agreement error \"doivent être confirmée\"; meaning correct.",
+     "note_B": "Agreement error \"doivent être confirmée\"; otherwise all conditions and doses correct.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001"
+    },
+    {
+     "A": "no equivalent",
+     "B": "yes cosmetic",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Faithful; both bullet alternatives and 12-month cap preserved.",
+     "note_B": "Missing full stop after \"(stades pT3, pT4a ou pN+)\"; conditions correct.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.12---MIUC-adjuvant:20260901>20261001"
+    },
+    {
+     "A": "no equivalent",
+     "B": "no equivalent",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Faithful; PD-L1 threshold, dose, 24-month cap, exclusion all correct.",
+     "note_B": "All conditions, 24-month max, progression exclusion and date carve-out correct.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.13--:20260901>20261001"
+    },
+    {
+     "A": "no equivalent",
+     "B": "no equivalent",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "All conditions, dose, exclusion and date exemption correctly rendered.",
+     "note_B": "Correct; CPS≥10, dose, exclusion and date carve-out preserved.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.16---GC-GEJC-OC:20260901>20261001"
+    },
+    {
+     "A": "no cosmetic",
+     "B": "yes minor",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Correct meaning; heading uses RCC while body uses CCR, odd capitalisation.",
+     "note_B": "Heading keeps \"RCC\" (later CCR); \"festgelegten Anteil\" loses \"fixed\"; capital \"Non\".",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib:20260901>20261001"
+    },
+    {
+     "A": "yes REAL",
+     "B": "yes minor",
+     "edit": [
+      [
+       "delete",
+       "n",
+       ""
+      ],
+      [
+       "replace",
+       "assurance",
+       "assureur maladie"
+      ]
+     ],
+     "family": "c2c0c3f8",
+     "note_A": "\"n'est destiné\" garbled negation; \"demande\" replaces required cost approval (Kostengutsprache).",
+     "note_B": "\"n'est destiné aux adultes\" broken negation; \"âgées\" wrong gender",
+     "reversed": false,
+     "type": "negation_operator",
+     "uid": "fr:RESOLOR3:20260401>20260601"
+    },
+    {
+     "A": "yes minor",
+     "B": "yes minor",
+     "edit": [
+      [
+       "replace",
+       "dell",
+       "di"
+      ]
+     ],
+     "family": "cf83d1c3",
+     "note_A": "\"locale avanzato\" should be \"localmente avanzato\".",
+     "note_B": "\"locale avanzato\" instead of \"localmente avanzato\"",
+     "reversed": false,
+     "type": "words",
+     "uid": "it:OPDIVO.01---NSCLC-Mono:20260901>20261001"
+    },
+    {
+     "A": "yes REAL",
+     "B": "yes REAL",
+     "edit": [
+      [
+       "delete",
+       "di prima linea",
+       ""
+      ]
+     ],
+     "family": "cdc23968",
+     "note_A": "Adds \"di prima linea\" not in German, restricting scope; (EC) omitted.",
+     "note_B": "Adds \"di prima linea\" restriction not in German (primär = primary advanced)",
+     "reversed": false,
+     "type": "words",
+     "uid": "it:RA:213c9b7d-a450-40f6-b8ad-16e06e49236d#1:20260304>20260401"
+    },
+    {
+     "A": "no equivalent",
+     "B": "no equivalent",
+     "edit": [
+      [
+       "replace",
+       "assicurazione malattie",
+       "assicuratore malattia"
+      ]
+     ],
+     "family": "2e3e0cb5",
+     "note_A": "Faithful Italian rendering of all conditions.",
+     "note_B": "Correct and complete",
+     "reversed": false,
+     "type": "words",
+     "uid": "it:RESOLOR3:20260401>20260601"
+    }
+   ]
+  },
+  "reference_shown": {
+   "annotators": {
+    "agree": 33,
+    "agree_pct": 97.1,
+    "kappa": 0.892,
+    "n": 34
+   },
+   "controls": {
+    "classes": {
+     "REAL": 1,
+     "exact": 31,
+     "minor": 2
+    },
+    "n": 17,
+    "needs_fix": {
+     "A": {
+      "k": 0,
+      "n": 17,
+      "pct": 0.0,
+      "wilson95": [
+       0.0,
+       18.4
+      ]
+     },
+     "B": {
+      "k": 1,
+      "n": 17,
+      "pct": 5.9,
+      "wilson95": [
+       1.0,
+       27.0
+      ]
+     },
+     "both": {
+      "k": 0,
+      "n": 17,
+      "pct": 0.0,
+      "wilson95": [
+       0.0,
+       18.4
+      ]
+     },
+     "either": {
+      "k": 1,
+      "n": 17,
+      "pct": 5.9,
+      "wilson95": [
+       1.0,
+       27.0
+      ]
+     }
+    },
+    "severe": {
+     "A": {
+      "k": 0,
+      "n": 17,
+      "pct": 0.0,
+      "wilson95": [
+       0.0,
+       18.4
+      ]
+     },
+     "B": {
+      "k": 1,
+      "n": 17,
+      "pct": 5.9,
+      "wilson95": [
+       1.0,
+       27.0
+      ]
+     },
+     "both": {
+      "k": 0,
+      "n": 17,
+      "pct": 0.0,
+      "wilson95": [
+       0.0,
+       18.4
+      ]
+     },
+     "either": {
+      "k": 1,
+      "n": 17,
+      "pct": 5.9,
+      "wilson95": [
+       1.0,
+       27.0
+      ]
+     }
+    }
+   },
+   "errors": {
+    "classes": {
+     "REAL": 8,
+     "equivalent": 24,
+     "minor": 2
+    },
+    "n": 17,
+    "needs_fix": {
+     "A": {
+      "k": 5,
+      "n": 17,
+      "pct": 29.4,
+      "wilson95": [
+       13.3,
+       53.1
+      ]
+     },
+     "B": {
+      "k": 5,
+      "n": 17,
+      "pct": 29.4,
+      "wilson95": [
+       13.3,
+       53.1
+      ]
+     },
+     "both": {
+      "k": 5,
+      "n": 17,
+      "pct": 29.4,
+      "wilson95": [
+       13.3,
+       53.1
+      ]
+     },
+     "either": {
+      "k": 5,
+      "n": 17,
+      "pct": 29.4,
+      "wilson95": [
+       13.3,
+       53.1
+      ]
+     }
+    },
+    "severe": {
+     "A": {
+      "k": 4,
+      "n": 17,
+      "pct": 23.5,
+      "wilson95": [
+       9.6,
+       47.3
+      ]
+     },
+     "B": {
+      "k": 4,
+      "n": 17,
+      "pct": 23.5,
+      "wilson95": [
+       9.6,
+       47.3
+      ]
+     },
+     "both": {
+      "k": 4,
+      "n": 17,
+      "pct": 23.5,
+      "wilson95": [
+       9.6,
+       47.3
+      ]
+     },
+     "either": {
+      "k": 4,
+      "n": 17,
+      "pct": 23.5,
+      "wilson95": [
+       9.6,
+       47.3
+      ]
+     }
+    }
+   },
+   "errors_bag_fixes": {
+    "classes": {
+     "REAL": 4,
+     "equivalent": 24,
+     "minor": 2
+    },
+    "n": 15,
+    "needs_fix": {
+     "A": {
+      "k": 3,
+      "n": 15,
+      "pct": 20.0,
+      "wilson95": [
+       7.0,
+       45.2
+      ]
+     },
+     "B": {
+      "k": 3,
+      "n": 15,
+      "pct": 20.0,
+      "wilson95": [
+       7.0,
+       45.2
+      ]
+     },
+     "both": {
+      "k": 3,
+      "n": 15,
+      "pct": 20.0,
+      "wilson95": [
+       7.0,
+       45.2
+      ]
+     },
+     "either": {
+      "k": 3,
+      "n": 15,
+      "pct": 20.0,
+      "wilson95": [
+       7.0,
+       45.2
+      ]
+     }
+    },
+    "severe": {
+     "A": {
+      "k": 2,
+      "n": 15,
+      "pct": 13.3,
+      "wilson95": [
+       3.7,
+       37.9
+      ]
+     },
+     "B": {
+      "k": 2,
+      "n": 15,
+      "pct": 13.3,
+      "wilson95": [
+       3.7,
+       37.9
+      ]
+     },
+     "both": {
+      "k": 2,
+      "n": 15,
+      "pct": 13.3,
+      "wilson95": [
+       3.7,
+       37.9
+      ]
+     },
+     "either": {
+      "k": 2,
+      "n": 15,
+      "pct": 13.3,
+      "wilson95": [
+       3.7,
+       37.9
+      ]
+     }
+    }
+   },
+   "errors_by_family": {
+    "other": {
+     "classes": {
+      "REAL": 8,
+      "equivalent": 4,
+      "minor": 2
+     },
+     "n": 7,
+     "needs_fix": {
+      "A": {
+       "k": 5,
+       "n": 7,
+       "pct": 71.4,
+       "wilson95": [
+        35.9,
+        91.8
+       ]
+      },
+      "B": {
+       "k": 5,
+       "n": 7,
+       "pct": 71.4,
+       "wilson95": [
+        35.9,
+        91.8
+       ]
+      },
+      "both": {
+       "k": 5,
+       "n": 7,
+       "pct": 71.4,
+       "wilson95": [
+        35.9,
+        91.8
+       ]
+      },
+      "either": {
+       "k": 5,
+       "n": 7,
+       "pct": 71.4,
+       "wilson95": [
+        35.9,
+        91.8
+       ]
+      }
+     },
+     "severe": {
+      "A": {
+       "k": 4,
+       "n": 7,
+       "pct": 57.1,
+       "wilson95": [
+        25.0,
+        84.2
+       ]
+      },
+      "B": {
+       "k": 4,
+       "n": 7,
+       "pct": 57.1,
+       "wilson95": [
+        25.0,
+        84.2
+       ]
+      },
+      "both": {
+       "k": 4,
+       "n": 7,
+       "pct": 57.1,
+       "wilson95": [
+        25.0,
+        84.2
+       ]
+      },
+      "either": {
+       "k": 4,
+       "n": 7,
+       "pct": 57.1,
+       "wilson95": [
+        25.0,
+        84.2
+       ]
+      }
+     }
+    },
+    "sweep_36d94228": {
+     "classes": {
+      "equivalent": 20
+     },
+     "n": 10,
+     "needs_fix": {
+      "A": {
+       "k": 0,
+       "n": 10,
+       "pct": 0.0,
+       "wilson95": [
+        0.0,
+        27.8
+       ]
+      },
+      "B": {
+       "k": 0,
+       "n": 10,
+       "pct": 0.0,
+       "wilson95": [
+        0.0,
+        27.8
+       ]
+      },
+      "both": {
+       "k": 0,
+       "n": 10,
+       "pct": 0.0,
+       "wilson95": [
+        0.0,
+        27.8
+       ]
+      },
+      "either": {
+       "k": 0,
+       "n": 10,
+       "pct": 0.0,
+       "wilson95": [
+        0.0,
+        27.8
+       ]
+      }
+     },
+     "severe": {
+      "A": {
+       "k": 0,
+       "n": 10,
+       "pct": 0.0,
+       "wilson95": [
+        0.0,
+        27.8
+       ]
+      },
+      "B": {
+       "k": 0,
+       "n": 10,
+       "pct": 0.0,
+       "wilson95": [
+        0.0,
+        27.8
+       ]
+      },
+      "both": {
+       "k": 0,
+       "n": 10,
+       "pct": 0.0,
+       "wilson95": [
+        0.0,
+        27.8
+       ]
+      },
+      "either": {
+       "k": 0,
+       "n": 10,
+       "pct": 0.0,
+       "wilson95": [
+        0.0,
+        27.8
+       ]
+      }
+     }
+    }
+   },
+   "errors_by_lang": {
+    "fr": {
+     "classes": {
+      "REAL": 6,
+      "equivalent": 20,
+      "minor": 2
+     },
+     "n": 14,
+     "needs_fix": {
+      "A": {
+       "k": 4,
+       "n": 14,
+       "pct": 28.6,
+       "wilson95": [
+        11.7,
+        54.6
+       ]
+      },
+      "B": {
+       "k": 4,
+       "n": 14,
+       "pct": 28.6,
+       "wilson95": [
+        11.7,
+        54.6
+       ]
+      },
+      "both": {
+       "k": 4,
+       "n": 14,
+       "pct": 28.6,
+       "wilson95": [
+        11.7,
+        54.6
+       ]
+      },
+      "either": {
+       "k": 4,
+       "n": 14,
+       "pct": 28.6,
+       "wilson95": [
+        11.7,
+        54.6
+       ]
+      }
+     },
+     "severe": {
+      "A": {
+       "k": 3,
+       "n": 14,
+       "pct": 21.4,
+       "wilson95": [
+        7.6,
+        47.6
+       ]
+      },
+      "B": {
+       "k": 3,
+       "n": 14,
+       "pct": 21.4,
+       "wilson95": [
+        7.6,
+        47.6
+       ]
+      },
+      "both": {
+       "k": 3,
+       "n": 14,
+       "pct": 21.4,
+       "wilson95": [
+        7.6,
+        47.6
+       ]
+      },
+      "either": {
+       "k": 3,
+       "n": 14,
+       "pct": 21.4,
+       "wilson95": [
+        7.6,
+        47.6
+       ]
+      }
+     }
+    },
+    "it": {
+     "classes": {
+      "REAL": 2,
+      "equivalent": 4
+     },
+     "n": 3,
+     "needs_fix": {
+      "A": {
+       "k": 1,
+       "n": 3,
+       "pct": 33.3,
+       "wilson95": [
+        6.1,
+        79.2
+       ]
+      },
+      "B": {
+       "k": 1,
+       "n": 3,
+       "pct": 33.3,
+       "wilson95": [
+        6.1,
+        79.2
+       ]
+      },
+      "both": {
+       "k": 1,
+       "n": 3,
+       "pct": 33.3,
+       "wilson95": [
+        6.1,
+        79.2
+       ]
+      },
+      "either": {
+       "k": 1,
+       "n": 3,
+       "pct": 33.3,
+       "wilson95": [
+        6.1,
+        79.2
+       ]
+      }
+     },
+     "severe": {
+      "A": {
+       "k": 1,
+       "n": 3,
+       "pct": 33.3,
+       "wilson95": [
+        6.1,
+        79.2
+       ]
+      },
+      "B": {
+       "k": 1,
+       "n": 3,
+       "pct": 33.3,
+       "wilson95": [
+        6.1,
+        79.2
+       ]
+      },
+      "both": {
+       "k": 1,
+       "n": 3,
+       "pct": 33.3,
+       "wilson95": [
+        6.1,
+        79.2
+       ]
+      },
+      "either": {
+       "k": 1,
+       "n": 3,
+       "pct": 33.3,
+       "wilson95": [
+        6.1,
+        79.2
+       ]
+      }
+     }
+    }
+   },
+   "errors_by_type": {
+    "negation_operator": {
+     "classes": {
+      "REAL": 2,
+      "minor": 2
+     },
+     "n": 2,
+     "needs_fix": {
+      "A": {
+       "k": 2,
+       "n": 2,
+       "pct": 100.0,
+       "wilson95": [
+        34.2,
+        100.0
+       ]
+      },
+      "B": {
+       "k": 2,
+       "n": 2,
+       "pct": 100.0,
+       "wilson95": [
+        34.2,
+        100.0
+       ]
+      },
+      "both": {
+       "k": 2,
+       "n": 2,
+       "pct": 100.0,
+       "wilson95": [
+        34.2,
+        100.0
+       ]
+      },
+      "either": {
+       "k": 2,
+       "n": 2,
+       "pct": 100.0,
+       "wilson95": [
+        34.2,
+        100.0
+       ]
+      }
+     },
+     "severe": {
+      "A": {
+       "k": 1,
+       "n": 2,
+       "pct": 50.0,
+       "wilson95": [
+        9.5,
+        90.5
+       ]
+      },
+      "B": {
+       "k": 1,
+       "n": 2,
+       "pct": 50.0,
+       "wilson95": [
+        9.5,
+        90.5
+       ]
+      },
+      "both": {
+       "k": 1,
+       "n": 2,
+       "pct": 50.0,
+       "wilson95": [
+        9.5,
+        90.5
+       ]
+      },
+      "either": {
+       "k": 1,
+       "n": 2,
+       "pct": 50.0,
+       "wilson95": [
+        9.5,
+        90.5
+       ]
+      }
+     }
+    },
+    "words": {
+     "classes": {
+      "REAL": 6,
+      "equivalent": 24
+     },
+     "n": 15,
+     "needs_fix": {
+      "A": {
+       "k": 3,
+       "n": 15,
+       "pct": 20.0,
+       "wilson95": [
+        7.0,
+        45.2
+       ]
+      },
+      "B": {
+       "k": 3,
+       "n": 15,
+       "pct": 20.0,
+       "wilson95": [
+        7.0,
+        45.2
+       ]
+      },
+      "both": {
+       "k": 3,
+       "n": 15,
+       "pct": 20.0,
+       "wilson95": [
+        7.0,
+        45.2
+       ]
+      },
+      "either": {
+       "k": 3,
+       "n": 15,
+       "pct": 20.0,
+       "wilson95": [
+        7.0,
+        45.2
+       ]
+      }
+     },
+     "severe": {
+      "A": {
+       "k": 3,
+       "n": 15,
+       "pct": 20.0,
+       "wilson95": [
+        7.0,
+        45.2
+       ]
+      },
+      "B": {
+       "k": 3,
+       "n": 15,
+       "pct": 20.0,
+       "wilson95": [
+        7.0,
+        45.2
+       ]
+      },
+      "both": {
+       "k": 3,
+       "n": 15,
+       "pct": 20.0,
+       "wilson95": [
+        7.0,
+        45.2
+       ]
+      },
+      "either": {
+       "k": 3,
+       "n": 15,
+       "pct": 20.0,
+       "wilson95": [
+        7.0,
+        45.2
+       ]
+      }
+     }
+    }
+   },
+   "errors_reversed": {
+    "classes": {
+     "REAL": 4
+    },
+    "n": 2,
+    "needs_fix": {
+     "A": {
+      "k": 2,
+      "n": 2,
+      "pct": 100.0,
+      "wilson95": [
+       34.2,
+       100.0
+      ]
+     },
+     "B": {
+      "k": 2,
+      "n": 2,
+      "pct": 100.0,
+      "wilson95": [
+       34.2,
+       100.0
+      ]
+     },
+     "both": {
+      "k": 2,
+      "n": 2,
+      "pct": 100.0,
+      "wilson95": [
+       34.2,
+       100.0
+      ]
+     },
+     "either": {
+      "k": 2,
+      "n": 2,
+      "pct": 100.0,
+      "wilson95": [
+       34.2,
+       100.0
+      ]
+     }
+    },
+    "severe": {
+     "A": {
+      "k": 2,
+      "n": 2,
+      "pct": 100.0,
+      "wilson95": [
+       34.2,
+       100.0
+      ]
+     },
+     "B": {
+      "k": 2,
+      "n": 2,
+      "pct": 100.0,
+      "wilson95": [
+       34.2,
+       100.0
+      ]
+     },
+     "both": {
+      "k": 2,
+      "n": 2,
+      "pct": 100.0,
+      "wilson95": [
+       34.2,
+       100.0
+      ]
+     },
+     "either": {
+      "k": 2,
+      "n": 2,
+      "pct": 100.0,
+      "wilson95": [
+       34.2,
+       100.0
+      ]
+     }
+    }
+   },
+   "false_alarms": [
+    {
+     "A": "no exact",
+     "B": "yes REAL",
+     "note_A": "Identical to official; note both omit \"fortgeschritten\" (avancé), shared with published text.",
+     "note_B": "Drops 'fortgeschrittenem' (advanced) condition; identical to official but narrower scope lost.",
+     "uid": "fr:OPDIVO.04---Nierenzellkarzinom--RCC-:20260901>20261001"
+    }
+   ],
+   "missed_by_both": [
+    "fr:OPDIVO.02---Melanom-Monotherapie:20260901>20261001",
+    "fr:OPDIVO.03---Melanom-Kombitherapie:20260901>20261001",
+    "fr:OPDIVO.07---Melanom-adjuvant:20260901>20261001",
+    "fr:OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001",
+    "fr:OPDIVO.09---OC-oder-GEJC-adjuvant:20260901>20261001",
+    "fr:OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001",
+    "fr:OPDIVO.12---MIUC-adjuvant:20260901>20261001",
+    "fr:OPDIVO.13--:20260901>20261001",
+    "fr:OPDIVO.16---GC-GEJC-OC:20260901>20261001",
+    "fr:OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib:20260901>20261001",
+    "it:OPDIVO.01---NSCLC-Mono:20260901>20261001",
+    "it:RESOLOR3:20260401>20260601"
+   ],
+   "per_error": [
+    {
+     "A": "yes REAL",
+     "B": "yes REAL",
+     "edit": [
+      [
+       "insert",
+       "",
+       "l administration"
+      ],
+      [
+       "replace",
+       "remise",
+       "tva ne peut pas être réclamée en plus de cette part du prix de fabrique"
+      ]
+     ],
+     "family": "1c614957",
+     "note_A": "VAT sentence dropped; prices at \"remise\" instead of administration time.",
+     "note_B": "VAT non-reclaimable sentence dropped; price date 'remise' instead of administration time.",
+     "reversed": false,
+     "type": "negation_operator",
+     "uid": "fr:KEYTRUDA.XX---Inf-Konz:20260801>20260901"
+    },
+    {
+     "A": "yes REAL",
+     "B": "yes REAL",
+     "edit": [
+      [
+       "delete",
+       "le code d indication de cette limitation doit être transmis à l assureur maladie",
+       ""
+      ]
+     ],
+     "family": "4ccba973",
+     "note_A": "Indication-code transmission obligation dropped (\". .\").",
+     "note_B": "Indication-code transmission sentence dropped; only \". .\" left.",
+     "reversed": true,
+     "type": "words",
+     "uid": "fr:OPDIVO.01---NSCLC-Mono:20260901>20261001"
+    },
+    {
+     "A": "no equivalent",
+     "B": "no equivalent",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Only final code sentence wording differs from official (communiqué vs transmis); meaning identical.",
+     "note_B": "Only final code-sentence wording differs from official; meaning preserved.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.02---Melanom-Monotherapie:20260901>20261001"
+    },
+    {
+     "A": "no equivalent",
+     "B": "no equivalent",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Only final code sentence wording differs from official (communiqué vs transmis); meaning identical.",
+     "note_B": "Only final code-sentence wording differs from official; meaning preserved.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.03---Melanom-Kombitherapie:20260901>20261001"
+    },
+    {
+     "A": "yes REAL",
+     "B": "yes REAL",
+     "edit": [
+      [
+       "delete",
+       "le code d indication de cette limitation doit être transmis à l assureur maladie",
+       ""
+      ]
+     ],
+     "family": "4ccba973",
+     "note_A": "Indication-code obligation dropped; \"fortgeschritten\" (advanced) also omitted.",
+     "note_B": "Indication-code transmission sentence dropped; only \". .\" left.",
+     "reversed": true,
+     "type": "words",
+     "uid": "fr:OPDIVO.04---Nierenzellkarzinom--RCC-:20260901>20261001"
+    },
+    {
+     "A": "no equivalent",
+     "B": "no equivalent",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Only final code sentence wording differs from official (communiqué vs transmis); meaning identical.",
+     "note_B": "Only final code-sentence wording differs from official; meaning preserved.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.07---Melanom-adjuvant:20260901>20261001"
+    },
+    {
+     "A": "no equivalent",
+     "B": "no equivalent",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Only final code sentence wording differs from official (communiqué vs transmis); meaning identical.",
+     "note_B": "Only final code-sentence wording differs; agreement slip 'doivent être confirmée' also in official.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001"
+    },
+    {
+     "A": "no equivalent",
+     "B": "no equivalent",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Only final code sentence wording differs from official (communiqué vs transmis); meaning identical.",
+     "note_B": "Only final code-sentence wording differs from official; meaning preserved.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.09---OC-oder-GEJC-adjuvant:20260901>20261001"
+    },
+    {
+     "A": "no equivalent",
+     "B": "no equivalent",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Only final code sentence wording differs from official (communiqué vs transmis); meaning identical.",
+     "note_B": "Only final code-sentence wording differs from official; meaning preserved.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H:20260901>20261001"
+    },
+    {
+     "A": "no equivalent",
+     "B": "no equivalent",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Only final code sentence wording differs from official (communiqué vs transmis); meaning identical.",
+     "note_B": "Only final code-sentence wording differs; missing period before 'Les patients' as in official.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.12---MIUC-adjuvant:20260901>20261001"
+    },
+    {
+     "A": "no equivalent",
+     "B": "no equivalent",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Only final code sentence wording differs from official (communiqué vs transmis); meaning identical.",
+     "note_B": "Only final code-sentence wording differs from official; meaning preserved.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.13--:20260901>20261001"
+    },
+    {
+     "A": "no equivalent",
+     "B": "no equivalent",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Only final code sentence wording differs from official (communiqué vs transmis); meaning identical.",
+     "note_B": "Only final code-sentence wording differs from official; meaning preserved.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.16---GC-GEJC-OC:20260901>20261001"
+    },
+    {
+     "A": "no equivalent",
+     "B": "no equivalent",
+     "edit": [
+      [
+       "replace",
+       "correspondant à",
+       "de"
+      ],
+      [
+       "replace",
+       "communiqué",
+       "transmis"
+      ]
+     ],
+     "family": "36d94228",
+     "note_A": "Only final code sentence wording differs from official (communiqué vs transmis); meaning identical.",
+     "note_B": "Only final code-sentence wording differs; 'mit OPDIVO' implicit.",
+     "reversed": false,
+     "type": "words",
+     "uid": "fr:OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib:20260901>20261001"
+    },
+    {
+     "A": "yes minor",
+     "B": "yes minor",
+     "edit": [
+      [
+       "delete",
+       "n",
+       ""
+      ],
+      [
+       "replace",
+       "assurance",
+       "assureur maladie"
+      ]
+     ],
+     "family": "c2c0c3f8",
+     "note_A": "\"n'est destiné aux\" ungrammatical stray negation; \"assurance\" instead of assureur-maladie.",
+     "note_B": "Stray negation 'n'est destiné' ungrammatical; 'assurance' vs 'assureur maladie'.",
+     "reversed": false,
+     "type": "negation_operator",
+     "uid": "fr:RESOLOR3:20260401>20260601"
+    },
+    {
+     "A": "no equivalent",
+     "B": "no equivalent",
+     "edit": [
+      [
+       "replace",
+       "dell",
+       "di"
+      ]
+     ],
+     "family": "cf83d1c3",
+     "note_A": "Only \"codice dell'indicazione\" vs \"codice di indicazione\"; harmless.",
+     "note_B": "'codice dell'indicazione' vs 'codice di indicazione'; harmless wording.",
+     "reversed": false,
+     "type": "words",
+     "uid": "it:OPDIVO.01---NSCLC-Mono:20260901>20261001"
+    },
+    {
+     "A": "yes REAL",
+     "B": "yes REAL",
+     "edit": [
+      [
+       "delete",
+       "di prima linea",
+       ""
+      ]
+     ],
+     "family": "cdc23968",
+     "note_A": "Adds \"di prima linea\" (first-line) restriction absent from German.",
+     "note_B": "Adds 'di prima linea' (first-line) restriction absent from German.",
+     "reversed": false,
+     "type": "words",
+     "uid": "it:RA:213c9b7d-a450-40f6-b8ad-16e06e49236d#1:20260304>20260401"
+    },
+    {
+     "A": "no equivalent",
+     "B": "no equivalent",
+     "edit": [
+      [
+       "replace",
+       "assicurazione malattie",
+       "assicuratore malattia"
+      ]
+     ],
+     "family": "2e3e0cb5",
+     "note_A": "\"assicurazione malattie\" vs \"assicuratore malattia\"; harmless wording.",
+     "note_B": "Only 'assicurazione malattie' vs official 'assicuratore malattia'; harmless.",
+     "reversed": false,
+     "type": "words",
+     "uid": "it:RESOLOR3:20260401>20260601"
+    }
+   ]
+  }
+ },
+ "reversed": [
+  "fr:OPDIVO.01---NSCLC-Mono:20260901>20261001",
+  "fr:OPDIVO.04---Nierenzellkarzinom--RCC-:20260901>20261001"
+ ],
+ "severe": [
+  "REAL",
+  "stale",
+  "german"
+ ]
+}

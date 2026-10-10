@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 17, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 618, "secs": 1.5, "seed": null, "usd": 0.0005564}, "text": "answer: minor\nnote: Outdated wording but meaning remains consistent across languages."}

@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 25, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 868, "secs": 1.3, "seed": null, "usd": 0.00078476}, "text": "needs_fix: no  \nclass: equivalent  \nnote: Minor punctuation omission corrected in official translation."}

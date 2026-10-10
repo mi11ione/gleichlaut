@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 24, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 825, "secs": 1.3, "seed": null, "usd": 0.00074658}, "text": "needs_fix: yes\nclass: REAL\nnote: Missing sentence about transmitting indication code to insurer."}

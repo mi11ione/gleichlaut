@@ -1,0 +1,1 @@
+{"meta": {"backend": "fp1-nes", "completion_tokens": 21, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 644, "secs": 1.9, "seed": null, "usd": 0.0005894}, "text": "answer: real\nnote: \"fois\" vs absence of multiplier in German text indicates different condition."}

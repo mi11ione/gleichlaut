@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 40, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 2313, "secs": 1.5, "seed": null, "usd": 0.00201346}, "text": "needs_fix: no  \nclass: equivalent  \nnote: Minor wording change (\"pazienti adulte\" → \"pazienti adulte affette da\") does not alter meaning."}

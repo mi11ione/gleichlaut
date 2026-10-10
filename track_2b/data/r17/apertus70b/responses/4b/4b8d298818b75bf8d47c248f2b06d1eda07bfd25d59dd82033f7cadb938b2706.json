@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 32, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 893, "secs": 1.1, "seed": null, "usd": 0.0008257000000000001}, "text": "needs_fix: no  \nclass: exact  \nnote: No changes detected between de_old/de_new and tgt_old/official_new."}

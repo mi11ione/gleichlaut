@@ -1,0 +1,1 @@
+{"meta": {"backend": "fp1-nes", "completion_tokens": 17, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 874, "secs": 2.3, "seed": null, "usd": 0.0007663199999999999}, "text": "answer: real\nnote: Italian text is identical to French, not Italian."}

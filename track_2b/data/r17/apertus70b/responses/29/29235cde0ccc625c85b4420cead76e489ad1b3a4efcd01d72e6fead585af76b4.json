@@ -1,0 +1,1 @@
+{"meta": {"backend": "fp1-nes", "completion_tokens": 27, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 1516, "secs": 2.3, "seed": null, "usd": 0.0013219599999999998}, "text": "needs_fix: no  \nclass: equivalent  \nnote: Draft matches tgt_old; no German change applied."}

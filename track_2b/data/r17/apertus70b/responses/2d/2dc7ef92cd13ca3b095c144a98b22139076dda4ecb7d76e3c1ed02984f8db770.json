@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 33, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 1196, "secs": 2.8, "seed": null, "usd": 0.00107708}, "text": "needs_fix: no\nclass: equivalent\nnote: Minor grammatical error (\"doivent être confirmée\" should be \"doivent être confirmées\")."}

@@ -1,0 +1,1 @@
+{"meta": {"backend": "vllm-0.1.dev1+g54b4292c2-tp2-bfd70257", "completion_tokens": 18, "model_served": "swiss-ai/apertus-v1.5-70b", "prompt_tokens": 1230, "secs": 1.1, "seed": null, "usd": 0.0010611599999999998}, "text": "answer: real\nnote: Week frequency differs (8 Wochen vs ogni quattro settimane)"}

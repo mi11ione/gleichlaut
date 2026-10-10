@@ -53,7 +53,10 @@ serving side, §4) passes the same rule (+12.0 points, 41.6% ready). The annotat
 (pre-registered R11): a meaning error planted into each of 66 ready drafts was labelled one by both of them 66 of 66
 times (95% CI lower bound 94.5%), with BAG's text shown or hidden; written inside the amended sentence so that it reads
 like part of the amendment (R14), 38 of 38 were labelled REAL or stale by both (lower bound 90.8%), with 0 false alarms
-on the 38 drafts untouched. On two live months (R7, R10) no ready draft changed a meaning, but neither month met the
+on the 38 drafts untouched. On 17 real errors that BAG corrected in French or Italian without a German change (R17), both annotators
+flagged 5 with the reference shown and 7 with it hidden (either: 11), and labelled the same 4 severe; 10 of the 17 are a wording
+sweep they accept as equivalent. Apertus 70B, as a non-Claude annotator, confirmed all 49 audit findings and flagged 2 of the 17
+(κ 0.000 with the Claude majority), so it neither confirms nor contradicts the Claude labels. On two live months (R7, R10) no ready draft changed a meaning, but neither month met the
 rule: the checks flagged 81.8–92.7% of drafts, so on live data the drafting is a review aid and the audit is what an
 office runs first. A 70B draft costs **CHF 0.0024** at a Swiss provider's published price. `make run` re-executes the
 recorded runs offline and re-derives every number.

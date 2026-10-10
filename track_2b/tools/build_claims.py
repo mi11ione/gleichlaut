@@ -288,6 +288,32 @@ for cid, path, fmt in (("asi_planted", "counts.planted", "{}"), ("asi_real", "co
                        ("asi_bound_q8", "ready_bound.q8_0.adjusted_both", "{:.1f}")):
     C.append((cid, ASI, path, fmt, RE))
 
+# PREREG R17: (A) real errors BAG fixed without a German change; (B) Apertus 70B as a non-Claude annotator
+RA17, RAa, RAb = "eval/results/annotator_real_errors.json", "protocols.reference_shown.", "protocols.reference_hidden."
+for cid, path, fmt in (("r17_changes", "counts.changes_mined", "{}"), ("r17_content", "counts.content", "{}"),
+                       ("r17_sweep", "counts.families.36d94228", "{}"), ("r17_typo", "counts.by_type.punctuation", "{}"),
+                       ("r17_a_fix_both", RAa + "errors.needs_fix.both.k", "{}"), ("r17_a_fix_either", RAa + "errors.needs_fix.either.k", "{}"),
+                       ("r17_a_fix_lo", RAa + "errors.needs_fix.both.wilson95.0", "{:.1f}"), ("r17_a_fix_hi", RAa + "errors.needs_fix.both.wilson95.1", "{:.1f}"),
+                       ("r17_a_sev_both", RAa + "errors.severe.both.k", "{}"),
+                       ("r17_b_fix_both", RAb + "errors.needs_fix.both.k", "{}"), ("r17_b_fix_either", RAb + "errors.needs_fix.either.k", "{}"),
+                       ("r17_b_fix_lo", RAb + "errors.needs_fix.both.wilson95.0", "{:.1f}"), ("r17_b_fix_hi", RAb + "errors.needs_fix.both.wilson95.1", "{:.1f}"),
+                       ("r17_b_sev_both", RAb + "errors.severe.both.k", "{}"), ("r17_b_sev_either", RAb + "errors.severe.either.k", "{}"),
+                       ("r17_a_other_fix_both", RAa + "errors_by_family.other.needs_fix.both.k", "{}"),
+                       ("r17_b_other_fix_both", RAb + "errors_by_family.other.needs_fix.both.k", "{}"),
+                       ("r17_a_sweep_fix_either", RAa + "errors_by_family.sweep_36d94228.needs_fix.either.k", "{}"),
+                       ("r17_a_ctl_fix_either", RAa + "controls.needs_fix.either.k", "{}"), ("r17_b_ctl_fix_either", RAb + "controls.needs_fix.either.k", "{}"),
+                       ("r17_b_ctl_sev_either", RAb + "controls.severe.either.k", "{}"),
+                       ("r17_a_kappa", RAa + "annotators.kappa", "{:.3f}"), ("r17_b_kappa", RAb + "annotators.kappa", "{:.3f}")):
+    C.append((cid, RA17, path, fmt, RE))
+XF, XFa, XFb = "eval/results/annotator_crossfamily.json", "real_errors.reference_shown.", "real_errors.reference_hidden."
+for cid, path, fmt in (("xf_requests", "requests", "{}"), ("xf_audit_n", "audit.all.n", "{}"), ("xf_audit_agree", "audit.all.agree", "{}"),
+                       ("xf_audit_kappa", "audit.all.kappa", "{:.3f}"), ("xf_audit_answer_agree", "audit.all.answer_agree", "{}"),
+                       ("xf_audit_conf", "audit.all.apertus_confirmed", "{}"), ("xf_audit_unparsed", "audit.unparsed", "{}"),
+                       ("xf_a_fix", XFa + "errors.needs_fix.k", "{}"), ("xf_a_sev", XFa + "errors.severe.k", "{}"),
+                       ("xf_b_fix", XFb + "errors.needs_fix.k", "{}"), ("xf_b_sev", XFb + "errors.severe.k", "{}"),
+                       ("xf_a_ctl_fix", XFa + "controls.needs_fix.k", "{}"), ("xf_b_ctl_fix", XFb + "controls.needs_fix.k", "{}")):
+    C.append((cid, XF, path, fmt, RE))
+
 # PREREG R12: house wording in the drafting prompt (variant v3-terms) beside the frozen pipeline on both live months
 R12 = "eval/results/r12_terms.json"
 for mk, mon in (("aug", "20260801-20260901"), ("sep", "20260901-20261001")):
