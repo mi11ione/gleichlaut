@@ -1,0 +1,273 @@
+{
+ "prereg": "eval/prereg/PREREG.md R14 (part B)",
+ "written_by": "the agent that pre-registered R14, by hand, after the seeded base selection and before any annotation",
+ "rule": "one meaning error per base, inside a sentence of the draft that the German change touched, written as fluent text adjoining or within the amended wording; old must occur exactly once in the draft",
+ "plants": [
+  {
+   "key": "wb000-fr",
+   "type": "and_or",
+   "old": "avec le carboplatine et le pémétrexed pour le traitement",
+   "new": "avec le carboplatine ou le pémétrexed pour le traitement",
+   "error": "the combination partner becomes either drug (German: carboplatin and pemetrexed)"
+  },
+  {
+   "key": "wb000-it",
+   "type": "scope",
+   "old": "Amivantamab è rimborsato in combinazione con",
+   "new": "Amivantamab è rimborsato in monoterapia o in combinazione con",
+   "error": "indication widened to monotherapy"
+  },
+  {
+   "key": "wb002-fr",
+   "type": "scope",
+   "old": "d'un CBNPC non épidermoïde localement avancé",
+   "new": "d'un CBNPC localement avancé",
+   "error": "indication widened to squamous NSCLC"
+  },
+  {
+   "key": "wb002-it",
+   "type": "number_noun",
+   "old": "delezioni dell'esone 19 dell'EGFR o mutazioni sostitutive L858R dell'esone 21",
+   "new": "delezioni dell'esone 21 dell'EGFR o mutazioni sostitutive L858R dell'esone 19",
+   "error": "exon numbers attached to the wrong mutation"
+  },
+  {
+   "key": "wb003-fr",
+   "type": "and_or",
+   "old": "réfractaire ou récidivant (LMPGBrr)",
+   "new": "réfractaire et récidivant (LMPGBrr)",
+   "error": "refractory or relapsed becomes refractory and relapsed"
+  },
+  {
+   "key": "wb007-fr",
+   "type": "scope",
+   "old": "VENCLYXTO est indiqué en association avec le rituximab",
+   "new": "VENCLYXTO est indiqué en monothérapie ou en association avec le rituximab",
+   "error": "indication widened to monotherapy"
+  },
+  {
+   "key": "wb007-it",
+   "type": "condition",
+   "old": "rituximab VENCLYXTO è indicato",
+   "new": "rituximab Previa garanzia di assunzione delle spese da parte dell’assicurazione malattia, VENCLYXTO è indicato",
+   "error": "the deleted prior-approval condition kept in part"
+  },
+  {
+   "key": "wb015-fr",
+   "type": "scope",
+   "old": "par l'assurance obligatoire des soins.",
+   "new": "par l'assurance obligatoire des soins chez les patients de plus de 65 ans.",
+   "error": "the exclusion narrowed to patients over 65"
+  },
+  {
+   "key": "wb017-it",
+   "type": "scope",
+   "old": "delle cure medico-sanitarie.",
+   "new": "delle cure medico-sanitarie nei pazienti con insufficienza renale.",
+   "error": "the exclusion narrowed to patients with renal failure"
+  },
+  {
+   "key": "wb019-it",
+   "type": "condition",
+   "old": "non sarà rimborsata dall'assicurazione obbligatoria delle cure medico-sanitarie.",
+   "new": "sarà rimborsata dall'assicurazione obbligatoria delle cure medico-sanitarie solo previa garanzia di assunzione dei costi.",
+   "error": "not reimbursed becomes reimbursed after prior approval"
+  },
+  {
+   "key": "wb023-it",
+   "type": "and_or",
+   "old": "e/o un inibitore ACE non sarà rimborsata",
+   "new": "e un inibitore ACE non sarà rimborsata",
+   "error": "and/or becomes and: the exclusion only for all three together"
+  },
+  {
+   "key": "wb029-fr",
+   "type": "condition",
+   "old": "ne sera pas remboursé par l'assurance obligatoire des soins.",
+   "new": "ne sera remboursé par l'assurance obligatoire des soins qu'après garantie préalable de l'assureur-maladie.",
+   "error": "not reimbursed becomes reimbursed after prior approval"
+  },
+  {
+   "key": "wb030-fr",
+   "type": "condition",
+   "old": "par l'assurance obligatoire des soins.",
+   "new": "par l'assurance obligatoire des soins au-delà des trois premiers mois de traitement.",
+   "error": "the exclusion only after the first three months"
+  },
+  {
+   "key": "wb031-fr",
+   "type": "scope",
+   "old": "par l'assurance obligatoire des soins.",
+   "new": "par l'assurance obligatoire des soins en traitement initial.",
+   "error": "the exclusion narrowed to initial treatment"
+  },
+  {
+   "key": "wb031-it",
+   "type": "condition",
+   "old": "delle cure medico-sanitarie.",
+   "new": "delle cure medico-sanitarie per più di sei mesi.",
+   "error": "the exclusion only beyond six months"
+  },
+  {
+   "key": "wb032-fr",
+   "type": "condition",
+   "old": "n’est pas remboursé par l'assurance obligatoire des soins.",
+   "new": "n’est pas remboursé par l'assurance obligatoire des soins pendant les douze premiers mois de traitement.",
+   "error": "the exclusion limited to the first twelve months"
+  },
+  {
+   "key": "wb040-fr",
+   "type": "scope",
+   "old": "par emballage de KEYTRUDA (2 flacons) administré de manière prouvée.",
+   "new": "par emballage de KEYTRUDA (2 flacons) administré de manière prouvée en monothérapie.",
+   "error": "refund narrowed to monotherapy (German: all indications)"
+  },
+  {
+   "key": "wb040-it",
+   "type": "number_noun",
+   "old": "per ogni confezione di KEYTRUDA (2 flaconcini) somministrata in modo verificabile",
+   "new": "per ogni flaconcino di KEYTRUDA (confezione da 2) somministrato in modo verificabile",
+   "error": "refund per vial instead of per pack of 2"
+  },
+  {
+   "key": "wb060-it",
+   "type": "condition",
+   "old": "alla durata massima della rimunerazione non si applica",
+   "new": "alla durata massima della rimunerazione e del trattamento non si applica",
+   "error": "exemption extended to the treatment duration (the old term kept beside the new)"
+  },
+  {
+   "key": "wb061-fr",
+   "type": "number_noun",
+   "old": "KADCYLA 100mg la somme de Fr. 263.80 ou pour KADCYLA 160mg la somme de Fr. 425.81",
+   "new": "KADCYLA 100mg la somme de Fr. 425.81 ou pour KADCYLA 160mg la somme de Fr. 263.80",
+   "error": "the two new amounts attached to the wrong pack size"
+  },
+  {
+   "key": "wb063-fr",
+   "type": "condition",
+   "old": "n’est pas envisageable.",
+   "new": "n’est pas envisageable, ou ayant rechuté dans les 24 mois suivant un régime à base de rituximab.",
+   "error": "the deleted second indication kept in part"
+  },
+  {
+   "key": "wb071-fr",
+   "type": "number_noun",
+   "old": "un montant de Fr. 595.16 pour chaque boîte remis de AKEEGA.",
+   "new": "un montant de Fr. 595.16 par mois de traitement par AKEEGA.",
+   "error": "the new amount per month of treatment instead of per pack"
+  },
+  {
+   "key": "wb071-it",
+   "type": "condition",
+   "old": "per ogni confezione di AKEEGA dispensata,",
+   "new": "per ogni confezione di AKEEGA dispensata a partire dalla terza,",
+   "error": "refund only from the third pack"
+  },
+  {
+   "key": "wb072-it",
+   "type": "and_or",
+   "old": "rimborsato in combinazione con isatuximab e desametasone per il trattamento",
+   "new": "rimborsato in combinazione con isatuximab o desametasone per il trattamento",
+   "error": "isatuximab and dexamethasone becomes either"
+  },
+  {
+   "key": "wb074-it",
+   "type": "condition",
+   "old": "reumatologici. Il seguente codice",
+   "new": "reumatologici. Janssen-Cilag AG rimborsa Fr. 62.00 per ogni siringa preriempita Tremfya acquistata. Il seguente codice",
+   "error": "the deleted refund kept for syringes"
+  },
+  {
+   "key": "wb075-fr",
+   "type": "scope",
+   "old": "lors d'une insuffisance rénale: 17807.01",
+   "new": "lors d'une insuffisance rénale terminale: 17807.01",
+   "error": "indication narrowed to end-stage renal failure"
+  },
+  {
+   "key": "wb075-it",
+   "type": "and_or",
+   "old": "Anemia renale nel caso di un'insufficienza renale: 17807.01",
+   "new": "Anemia renale o insufficienza renale: 17807.01",
+   "error": "renal anaemia in renal failure becomes either condition"
+  },
+  {
+   "key": "wb079-fr",
+   "type": "number_noun",
+   "old": "Prix de facturation par application et patient 222.41",
+   "new": "Prix de facturation par patient 222.41",
+   "error": "the new price per patient instead of per application and patient"
+  },
+  {
+   "key": "wb081-fr",
+   "type": "number_noun",
+   "old": "soit CHF 13’148.57 par emballage",
+   "new": "soit CHF 13’148.57 pour les deux emballages",
+   "error": "the new amount for both packs instead of per pack"
+  },
+  {
+   "key": "wb081-it",
+   "type": "scope",
+   "old": "previa certificazione della somministrazione, al prezzo di Fr. 13’148.57 ciascuna.",
+   "new": "previa certificazione della somministrazione nei pazienti adulti, al prezzo di Fr. 13’148.57 ciascuna.",
+   "error": "refund narrowed to adults (adolescents from 12 dropped)"
+  },
+  {
+   "key": "wb084-fr",
+   "type": "condition",
+   "old": "En combinaison avec un inhibiteur SGLT-2 avec ou sans metformine",
+   "new": "En combinaison avec un inhibiteur SGLT-2 et la metformine",
+   "error": "with or without metformin becomes with metformin"
+  },
+  {
+   "key": "wb084-it",
+   "type": "and_or",
+   "old": "In combinazione con un inibitore SGLT-2 con o senza metformina",
+   "new": "In combinazione con un inibitore SGLT-2 o con metformina",
+   "error": "SGLT-2 with or without metformin becomes SGLT-2 or metformin"
+  },
+  {
+   "key": "wb086-it",
+   "type": "condition",
+   "old": "alla cassa malati: 19225.02.",
+   "new": "alla cassa malati: 19225.02. Novartis Pharma Schweiz AG rimborsa alla cassa malati il 17.27 percento del prezzo di fabbrica per confezione di Revolade.",
+   "error": "the deleted refund kept in a shortened form"
+  },
+  {
+   "key": "wb089-it",
+   "type": "scope",
+   "old": "Il seguente codice deve essere trasmesso alla cassa malati: 19225.01.",
+   "new": "Per i pazienti pediatrici, il seguente codice deve essere trasmesso alla cassa malati: 19225.01.",
+   "error": "code obligation narrowed to paediatric patients"
+  },
+  {
+   "key": "wb090-fr",
+   "type": "number_noun",
+   "old": "avec Prasugrel est de 12 mois.",
+   "new": "avec Prasugrel est de 12 mois par année civile.",
+   "error": "12 months per calendar year instead of in total"
+  },
+  {
+   "key": "wb090-it",
+   "type": "scope",
+   "old": "del trattamento con Prasugrel è di 12 mesi.",
+   "new": "del trattamento con Prasugrel nei pazienti di età superiore a 75 anni è di 12 mesi.",
+   "error": "the limit narrowed to patients over 75"
+  },
+  {
+   "key": "wb091-fr",
+   "type": "and_or",
+   "old": "de traitement avec Prasugrel est de 12 mois.",
+   "new": "de traitement avec Prasugrel ou l'acide acétylsalicylique est de 12 mois.",
+   "error": "the limit extended to either drug"
+  },
+  {
+   "key": "wb091-it",
+   "type": "number_noun",
+   "old": "La durata massima del trattamento con Prasugrel è di 12 mesi.",
+   "new": "La durata massima di ogni ciclo di trattamento con Prasugrel è di 12 mesi.",
+   "error": "12 months per cycle instead of in total"
+  }
+ ]
+}

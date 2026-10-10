@@ -1,0 +1,73 @@
+{
+ "prereg": "eval/prereg/PREREG.md R14 (part A)",
+ "seed": 20261016,
+ "sets": {
+  "register": [
+   "audit_20261006",
+   "audit2_20261006"
+  ],
+  "terminology": [
+   "audit3_terminology_20261006"
+  ],
+  "lists": [
+   "audit_migel_20260701",
+   "audit_al_20260701"
+  ]
+ },
+ "counts": {
+  "register": 27,
+  "terminology": 11,
+  "lists": 11
+ },
+ "ids": {
+  "R00": "audit2_20261006:B02",
+  "R01": "audit_migel_20260701:MG04",
+  "R02": "audit_migel_20260701:MG07",
+  "R03": "audit3_terminology_20261006:C06",
+  "R04": "audit_al_20260701:AL02",
+  "R05": "audit_migel_20260701:MG00",
+  "R06": "audit2_20261006:B04",
+  "R07": "audit_20261006:A05",
+  "R08": "audit2_20261006:B05",
+  "R09": "audit_20261006:A14",
+  "R10": "audit3_terminology_20261006:C10",
+  "R11": "audit_20261006:A04",
+  "R12": "audit3_terminology_20261006:C01",
+  "R13": "audit_20261006:A20",
+  "R14": "audit3_terminology_20261006:C03",
+  "R15": "audit_20261006:A17",
+  "R16": "audit3_terminology_20261006:C07",
+  "R17": "audit_al_20260701:AL00",
+  "R18": "audit3_terminology_20261006:C09",
+  "R19": "audit_20261006:A02",
+  "R20": "audit2_20261006:B00",
+  "R21": "audit2_20261006:B01",
+  "R22": "audit_migel_20260701:MG03",
+  "R23": "audit_al_20260701:AL01",
+  "R24": "audit_20261006:A10",
+  "R25": "audit_20261006:A12",
+  "R26": "audit_20261006:A13",
+  "R27": "audit_20261006:A03",
+  "R28": "audit_20261006:A08",
+  "R29": "audit_20261006:A07",
+  "R30": "audit_20261006:A06",
+  "R31": "audit3_terminology_20261006:C04",
+  "R32": "audit2_20261006:B03",
+  "R33": "audit_20261006:A00",
+  "R34": "audit_20261006:A19",
+  "R35": "audit3_terminology_20261006:C08",
+  "R36": "audit_20261006:A16",
+  "R37": "audit3_terminology_20261006:C00",
+  "R38": "audit3_terminology_20261006:C05",
+  "R39": "audit_20261006:A11",
+  "R40": "audit_20261006:A01",
+  "R41": "audit_migel_20260701:MG06",
+  "R42": "audit_20261006:A09",
+  "R43": "audit_migel_20260701:MG02",
+  "R44": "audit_migel_20260701:MG01",
+  "R45": "audit_20261006:A15",
+  "R46": "audit_20261006:A18",
+  "R47": "audit_migel_20260701:MG05",
+  "R48": "audit3_terminology_20261006:C02"
+ }
+}

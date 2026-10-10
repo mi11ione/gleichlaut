@@ -1,0 +1,1640 @@
+{
+ "prereg": "eval/prereg/PREREG.md R14 (part B)",
+ "seed": 20261017,
+ "types": [
+  "scope",
+  "condition",
+  "number_noun",
+  "and_or"
+ ],
+ "counts": {
+  "bases": 38,
+  "planted": 38,
+  "untouched": 38,
+  "real": 30,
+  "by_type_lang": {
+   "scope/fr": 6,
+   "scope/it": 5,
+   "condition/fr": 5,
+   "condition/it": 7,
+   "number_noun/fr": 5,
+   "number_noun/it": 3,
+   "and_or/fr": 3,
+   "and_or/it": 4
+  },
+  "family": 8,
+  "per_set": {
+   "1": {
+    "planted": 19,
+    "untouched": 19,
+    "real": 15
+   },
+   "2": {
+    "untouched": 19,
+    "planted": 19,
+    "real": 15
+   }
+  }
+ },
+ "items": {
+  "wb000-fr|planted": {
+   "key": "wb000-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "and_or",
+   "old": "avec le carboplatine et le pémétrexed pour le traitement",
+   "new": "avec le carboplatine ou le pémétrexed pour le traitement",
+   "error": "the combination partner becomes either drug (German: carboplatin and pemetrexed)",
+   "touched_sentence": "1L CBNPC (en combinaison avec le pemetrexed et le carboplatine) Amivantamab est remboursé en combinaison avec le carboplatine et le pémétrexed pour le traitement de première ligne des patients adultes atteints d’un CBNPC non épidermoïde localement avancé ou métastatique avec des mutations activatrices par insertion dans l’exon 20 du récepteur du facteur de croissance épidermique (EGFR).",
+   "set": 1
+  },
+  "wb000-fr|untouched": {
+   "key": "wb000-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb000-it|planted": {
+   "key": "wb000-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "scope",
+   "old": "Amivantamab è rimborsato in combinazione con",
+   "new": "Amivantamab è rimborsato in monoterapia o in combinazione con",
+   "error": "indication widened to monotherapy",
+   "touched_sentence": "1L NSCLC (in combinazione con pemetrexed e carboplatino) Amivantamab è rimborsato in combinazione con pemetrexed e carboplatino per il trattamento di prima linea di pazienti adulti affetti da NSCLC non squamoso localmente avanzato o metastatico con mutazioni da inserzione attivanti dell'esone 20 del recettore del fattore di crescita epidermico (EGFR).",
+   "set": 1
+  },
+  "wb000-it|untouched": {
+   "key": "wb000-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb002-fr|planted": {
+   "key": "wb002-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "scope",
+   "old": "d'un CBNPC non épidermoïde localement avancé",
+   "new": "d'un CBNPC localement avancé",
+   "error": "indication widened to squamous NSCLC",
+   "touched_sentence": "2L CBNPC (en combinaison avec le pemetrexed et le carboplatine) Amivantamab est remboursé en combinaison avec le carboplatine et le pémétrexed pour le traitement des patients adultes atteints d'un CBNPC non épidermoïde localement avancé ou métastatique avec des mutations du gène de l’EGFR par délétion dans l'exon 19 ou substitution L858R dans l’exon 21, chez lesquels la maladie a progressé pendant ou après un traitement par Osimertinib.",
+   "set": 1
+  },
+  "wb002-fr|untouched": {
+   "key": "wb002-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb002-it|planted": {
+   "key": "wb002-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "number_noun",
+   "old": "delezioni dell'esone 19 dell'EGFR o mutazioni sostitutive L858R dell'esone 21",
+   "new": "delezioni dell'esone 21 dell'EGFR o mutazioni sostitutive L858R dell'esone 19",
+   "error": "exon numbers attached to the wrong mutation",
+   "touched_sentence": "2L NSCLC (in combinazione con pemetrexed e carboplatino) Amivantamab è rimborsato in combinazione con pemetrexed e carboplatino per il trattamento di pazienti adulti con NSCLC non squamoso localmente avanzato o metastatico con delezioni dell'esone 19 dell'EGFR o mutazioni sostitutive L858R dell'esone 21, nei quali la malattia è progredita durante o dopo un trattamento con Osimertinib.",
+   "set": 1
+  },
+  "wb002-it|untouched": {
+   "key": "wb002-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb003-fr|planted": {
+   "key": "wb003-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "and_or",
+   "old": "réfractaire ou récidivant (LMPGBrr)",
+   "new": "réfractaire et récidivant (LMPGBrr)",
+   "error": "refractory or relapsed becomes refractory and relapsed",
+   "touched_sentence": "3L Lymphome médiastinal primitif à grandes cellules B (LMPGBrr) (monothérapie) KN170 (avec modèle de prix) KEYTRUDA en monothérapie du lymphome médiastinal primitif à grandes cellules B réfractaire ou récidivant (LMPGBrr), chez les adultes ‒ qui ont reçu au moins 2 traitements antérieurs, dont au moins un par le rituximab, ET ‒ qui n'entrent pas en ligne de compte pour une greffe autologue de cellules souches ou qui ont subi une récidive après une greffe.",
+   "set": 2
+  },
+  "wb003-fr|untouched": {
+   "key": "wb003-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb007-fr|planted": {
+   "key": "wb007-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "scope",
+   "old": "VENCLYXTO est indiqué en association avec le rituximab",
+   "new": "VENCLYXTO est indiqué en monothérapie ou en association avec le rituximab",
+   "error": "indication widened to monotherapy",
+   "touched_sentence": "Leucémie lymphoïde chronique en association avec du rituximab VENCLYXTO est indiqué en association avec le rituximab pour le traitement des patients adultes atteints d'une leucémie lymphoïde chronique (LLC) ayant reçu au moins un traitement antérieur.",
+   "set": 1
+  },
+  "wb007-fr|untouched": {
+   "key": "wb007-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb007-it|planted": {
+   "key": "wb007-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "condition",
+   "old": "rituximab VENCLYXTO è indicato",
+   "new": "rituximab Previa garanzia di assunzione delle spese da parte dell’assicurazione malattia, VENCLYXTO è indicato",
+   "error": "the deleted prior-approval condition kept in part",
+   "touched_sentence": "Leucemia linfatica cronica in combinazione con rituximab VENCLYXTO è indicato in combinazione con rituximab per il trattamento della leucemia linfatica cronica (LLC) in pazienti adulti sottoposti ad almeno una precedente terapia.",
+   "set": 1
+  },
+  "wb007-it|untouched": {
+   "key": "wb007-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb010-fr|real": {
+   "key": "wb010-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb010-it|real": {
+   "key": "wb010-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb011-fr|real": {
+   "key": "wb011-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "70b"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb011-it|real": {
+   "key": "wb011-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb013-it|real": {
+   "key": "wb013-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "70b"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb014-fr|real": {
+   "key": "wb014-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb015-fr|planted": {
+   "key": "wb015-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "family": "981f07a8",
+   "kind": "planted",
+   "type": "scope",
+   "old": "par l'assurance obligatoire des soins.",
+   "new": "par l'assurance obligatoire des soins chez les patients de plus de 65 ans.",
+   "error": "the exclusion narrowed to patients over 65",
+   "touched_sentence": "Le traitement combiné d'AMLODIPINE VALSARTAN HCT SANDOZ et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'assurance obligatoire des soins.",
+   "set": 1
+  },
+  "wb015-fr|untouched": {
+   "key": "wb015-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0"
+   ],
+   "family": "981f07a8",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb017-it|planted": {
+   "key": "wb017-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "981f07a8",
+   "kind": "planted",
+   "type": "scope",
+   "old": "delle cure medico-sanitarie.",
+   "new": "delle cure medico-sanitarie nei pazienti con insufficienza renale.",
+   "error": "the exclusion narrowed to patients with renal failure",
+   "touched_sentence": "La terapia combinata di AMLODIPIN VALSARTAN VIATRIS e di un calcio antagonista I.T. 02.06 e/o di un cosiddetti antagonisti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazione obbligatoria delle cure medico-sanitarie.",
+   "set": 1
+  },
+  "wb017-it|untouched": {
+   "key": "wb017-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "981f07a8",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb019-it|planted": {
+   "key": "wb019-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "981f07a8",
+   "kind": "planted",
+   "type": "condition",
+   "old": "non sarà rimborsata dall'assicurazione obbligatoria delle cure medico-sanitarie.",
+   "new": "sarà rimborsata dall'assicurazione obbligatoria delle cure medico-sanitarie solo previa garanzia di assunzione dei costi.",
+   "error": "not reimbursed becomes reimbursed after prior approval",
+   "touched_sentence": "La terapia combinata di AMLODIPIN-VALSARTAN-HCT-MEPHA e di un calcio antagonista I.T. 02.06 e/o di un cosiddetti antagonisti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazione obbligatoria delle cure medico-sanitarie.",
+   "set": 1
+  },
+  "wb019-it|untouched": {
+   "key": "wb019-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "981f07a8",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb023-it|planted": {
+   "key": "wb023-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "981f07a8",
+   "kind": "planted",
+   "type": "and_or",
+   "old": "e/o un inibitore ACE non sarà rimborsata",
+   "new": "e un inibitore ACE non sarà rimborsata",
+   "error": "and/or becomes and: the exclusion only for all three together",
+   "touched_sentence": "La terapia combinata di EXFORGE e di un calcio antagonista I.T. 02.06 e/o di un cosiddetti antagonisti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazione obbligatoria delle cure medico-sanitarie.",
+   "set": 1
+  },
+  "wb023-it|untouched": {
+   "key": "wb023-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "981f07a8",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb029-fr|planted": {
+   "key": "wb029-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "981f07a8",
+   "kind": "planted",
+   "type": "condition",
+   "old": "ne sera pas remboursé par l'assurance obligatoire des soins.",
+   "new": "ne sera remboursé par l'assurance obligatoire des soins qu'après garantie préalable de l'assureur-maladie.",
+   "error": "not reimbursed becomes reimbursed after prior approval",
+   "touched_sentence": "Le traitement combiné de SEVIKAR/HCT et d'un antagoniste du calcium I.T. 02.06. et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'assurance obligatoire des soins.",
+   "set": 1
+  },
+  "wb029-fr|untouched": {
+   "key": "wb029-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "981f07a8",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb030-fr|planted": {
+   "key": "wb030-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "981f07a8",
+   "kind": "planted",
+   "type": "condition",
+   "old": "par l'assurance obligatoire des soins.",
+   "new": "par l'assurance obligatoire des soins au-delà des trois premiers mois de traitement.",
+   "error": "the exclusion only after the first three months",
+   "touched_sentence": "Le traitement combiné d’ VALSARTAN AMLO SPIRIG HC et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'assurance obligatoire des soins.",
+   "set": 1
+  },
+  "wb030-fr|untouched": {
+   "key": "wb030-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "981f07a8",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb031-fr|planted": {
+   "key": "wb031-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "981f07a8",
+   "kind": "planted",
+   "type": "scope",
+   "old": "par l'assurance obligatoire des soins.",
+   "new": "par l'assurance obligatoire des soins en traitement initial.",
+   "error": "the exclusion narrowed to initial treatment",
+   "touched_sentence": "Le traitement combiné d’une association fixe de candésartan et amlodipine et d'un antagoniste du calcium I.T. 02.06. et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA n’est pas remboursé par l'assurance obligatoire des soins.",
+   "set": 1
+  },
+  "wb031-fr|untouched": {
+   "key": "wb031-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "981f07a8",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb031-it|planted": {
+   "key": "wb031-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "981f07a8",
+   "kind": "planted",
+   "type": "condition",
+   "old": "delle cure medico-sanitarie.",
+   "new": "delle cure medico-sanitarie per più di sei mesi.",
+   "error": "the exclusion only beyond six months",
+   "touched_sentence": "La terapia combinata con l’associazione a dose fissa di Candesartan e Amlodipin e di un calcio antagonista I.T. 02.06. e/o di un cosiddetti antagonisti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall’assicurazione obbligatoria delle cure medico-sanitarie.",
+   "set": 1
+  },
+  "wb031-it|untouched": {
+   "key": "wb031-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "981f07a8",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb032-fr|planted": {
+   "key": "wb032-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "condition",
+   "old": "n’est pas remboursé par l'assurance obligatoire des soins.",
+   "new": "n’est pas remboursé par l'assurance obligatoire des soins pendant les douze premiers mois de traitement.",
+   "error": "the exclusion limited to the first twelve months",
+   "touched_sentence": "Le traitement combiné d’une association fixe d’olmésartan-amlodipine ou d’olmésartan-amlodipine-hydrochlorothiazide et d'un antagoniste du calcium I.T. 02.06. et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA n’est pas remboursé par l'assurance obligatoire des soins.",
+   "set": 2
+  },
+  "wb032-fr|untouched": {
+   "key": "wb032-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb033-fr|real": {
+   "key": "wb033-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb033-it|real": {
+   "key": "wb033-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb036-it|real": {
+   "key": "wb036-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb039-fr|real": {
+   "key": "wb039-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "REAL",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb040-fr|planted": {
+   "key": "wb040-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "scope",
+   "old": "par emballage de KEYTRUDA (2 flacons) administré de manière prouvée.",
+   "new": "par emballage de KEYTRUDA (2 flacons) administré de manière prouvée en monothérapie.",
+   "error": "refund narrowed to monotherapy (German: all indications)",
+   "touched_sentence": "MSD Merck Sharp & Dohme AG rembourse, sur demande, à l’assurance maladie auprès de laquelle la personne était assurée au moment de la remise, une partie du prix de fabrique par emballage de KEYTRUDA (2 flacons) administré de manière prouvée.",
+   "set": 2
+  },
+  "wb040-fr|untouched": {
+   "key": "wb040-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb040-it|planted": {
+   "key": "wb040-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "number_noun",
+   "old": "per ogni confezione di KEYTRUDA (2 flaconcini) somministrata in modo verificabile",
+   "new": "per ogni flaconcino di KEYTRUDA (confezione da 2) somministrato in modo verificabile",
+   "error": "refund per vial instead of per pack of 2",
+   "touched_sentence": "MSD Merck Sharp & Dohme AG esegue un rimborso per ogni confezione di KEYTRUDA (2 flaconcini) somministrata in modo verificabile, su richiesta dell'assicuratore malattie presso il quale la persona assicurata era assicurata al momento del percepimento.",
+   "set": 2
+  },
+  "wb040-it|untouched": {
+   "key": "wb040-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb042-it|real": {
+   "key": "wb042-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "REAL",
+   "base_runs": [
+    "q8_0",
+    "q4_k_m"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb043-fr|real": {
+   "key": "wb043-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "REAL",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb054-fr|real": {
+   "key": "wb054-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb054-it|real": {
+   "key": "wb054-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb056-it|real": {
+   "key": "wb056-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb057-fr|real": {
+   "key": "wb057-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "70b"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb058-it|real": {
+   "key": "wb058-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb060-it|planted": {
+   "key": "wb060-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "q8_0"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "condition",
+   "old": "alla durata massima della rimunerazione non si applica",
+   "new": "alla durata massima della rimunerazione e del trattamento non si applica",
+   "error": "exemption extended to the treatment duration (the old term kept beside the new)",
+   "touched_sentence": "Per i pazienti il cui trattamento è iniziato prima del 01.06.2025, la limitazione aggiuntiva relativa alla durata massima della rimunerazione non si applica.",
+   "set": 2
+  },
+  "wb060-it|untouched": {
+   "key": "wb060-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "q8_0"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb061-fr|planted": {
+   "key": "wb061-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "number_noun",
+   "old": "KADCYLA 100mg la somme de Fr. 263.80 ou pour KADCYLA 160mg la somme de Fr. 425.81",
+   "new": "KADCYLA 100mg la somme de Fr. 425.81 ou pour KADCYLA 160mg la somme de Fr. 263.80",
+   "error": "the two new amounts attached to the wrong pack size",
+   "touched_sentence": "Le titulaire de l'autorisation, Roche Pharma (Suisse) SA, rembourse à l’assureur-maladie auprès duquel était assurée la personne au moment de l’achat, et sur première demande de celui-ci, pour chaque boîte de KADCYLA 100mg la somme de Fr. 263.80 ou pour KADCYLA 160mg la somme de Fr. 425.81 sur le prix de fabrique.",
+   "set": 1
+  },
+  "wb061-fr|untouched": {
+   "key": "wb061-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb063-fr|planted": {
+   "key": "wb063-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "condition",
+   "old": "n’est pas envisageable.",
+   "new": "n’est pas envisageable, ou ayant rechuté dans les 24 mois suivant un régime à base de rituximab.",
+   "error": "the deleted second indication kept in part",
+   "touched_sentence": "Maladie de Waldenström (MW, monothérapie) En monothérapie à partir de la première ligne pour le traitement de patients adultes symptomatiques atteints d’une MW pour lesquels une chimio-immunothérapie à base de rituximab (DRC, BR, BDR, VR) n’est pas envisageable.",
+   "set": 1
+  },
+  "wb063-fr|untouched": {
+   "key": "wb063-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb065-fr|real": {
+   "key": "wb065-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q8_0",
+    "q4_k_m"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb067-fr|real": {
+   "key": "wb067-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "ready": true,
+   "set": 2
+  },
+  "wb067-it|real": {
+   "key": "wb067-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb068-fr|real": {
+   "key": "wb068-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb069-fr|real": {
+   "key": "wb069-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb069-it|real": {
+   "key": "wb069-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "stale",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb071-fr|planted": {
+   "key": "wb071-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "number_noun",
+   "old": "un montant de Fr. 595.16 pour chaque boîte remis de AKEEGA.",
+   "new": "un montant de Fr. 595.16 par mois de traitement par AKEEGA.",
+   "error": "the new amount per month of treatment instead of per pack",
+   "touched_sentence": "Le titulaire de l'autorisation Janssen-Cilag AG rembourse à l'assureur-maladie auprès duquel la personne était assurée lors de la remise du médicament, à la première demande de l'assureur-maladie, un montant de Fr. 595.16 pour chaque boîte remis de AKEEGA.",
+   "set": 2
+  },
+  "wb071-fr|untouched": {
+   "key": "wb071-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb071-it|planted": {
+   "key": "wb071-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "condition",
+   "old": "per ogni confezione di AKEEGA dispensata,",
+   "new": "per ogni confezione di AKEEGA dispensata a partire dalla terza,",
+   "error": "refund only from the third pack",
+   "touched_sentence": "Il titolare dell'autorizzazione Janssen-Cilag AG rimborsa all'assicurazione malattie presso la quale la persona era assicurata al momento della dispensazione del farmaco, un importo di Fr. 595.16 per ogni confezione di AKEEGA dispensata, su prima richiesta dell'assicurazione malattie.",
+   "set": 2
+  },
+  "wb071-it|untouched": {
+   "key": "wb071-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb072-it|planted": {
+   "key": "wb072-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "and_or",
+   "old": "rimborsato in combinazione con isatuximab e desametasone per il trattamento",
+   "new": "rimborsato in combinazione con isatuximab o desametasone per il trattamento",
+   "error": "isatuximab and dexamethasone becomes either",
+   "touched_sentence": "POMALIDOMID-TEVA è rimborsato in combinazione con isatuximab e desametasone per il trattamento del mieloma multiplo recidivante e refrattario in pazienti adulti che hanno ricevuto almeno due linee di trattamento precedenti, tra cui lenalidomide e un inibitore del proteasoma, e che hanno riportato una progressione della malattia durante l'ultima terapia.",
+   "set": 2
+  },
+  "wb072-it|untouched": {
+   "key": "wb072-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb074-it|planted": {
+   "key": "wb074-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "condition",
+   "old": "reumatologici. Il seguente codice",
+   "new": "reumatologici. Janssen-Cilag AG rimborsa Fr. 62.00 per ogni siringa preriempita Tremfya acquistata. Il seguente codice",
+   "error": "the deleted refund kept for syringes",
+   "touched_sentence": "Il seguente codice d’indicazione deve essere comunicato all’assicuratore malattie: 21007.02.",
+   "set": 1
+  },
+  "wb074-it|untouched": {
+   "key": "wb074-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb075-fr|planted": {
+   "key": "wb075-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "scope",
+   "old": "lors d'une insuffisance rénale: 17807.01",
+   "new": "lors d'une insuffisance rénale terminale: 17807.01",
+   "error": "indication narrowed to end-stage renal failure",
+   "touched_sentence": "Anémie rénale lors d'une insuffisance rénale: 17807.01 Le code d’indication suivant doit être transmis: 17807.01",
+   "set": 2
+  },
+  "wb075-fr|untouched": {
+   "key": "wb075-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb075-it|planted": {
+   "key": "wb075-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "and_or",
+   "old": "Anemia renale nel caso di un'insufficienza renale: 17807.01",
+   "new": "Anemia renale o insufficienza renale: 17807.01",
+   "error": "renal anaemia in renal failure becomes either condition",
+   "touched_sentence": "Anemia renale nel caso di un'insufficienza renale: 17807.01 Il seguente codice di indicazione deve essere trasmesso: 17807.01",
+   "set": 2
+  },
+  "wb075-it|untouched": {
+   "key": "wb075-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb076-fr|real": {
+   "key": "wb076-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "70b"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb079-fr|planted": {
+   "key": "wb079-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "number_noun",
+   "old": "Prix de facturation par application et patient 222.41",
+   "new": "Prix de facturation par patient 222.41",
+   "error": "the new price per patient instead of per application and patient",
+   "touched_sentence": "Prix de facturation par application et patient 222.41 (Division 7.5).",
+   "set": 2
+  },
+  "wb079-fr|untouched": {
+   "key": "wb079-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb081-fr|planted": {
+   "key": "wb081-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "number_noun",
+   "old": "soit CHF 13’148.57 par emballage",
+   "new": "soit CHF 13’148.57 pour les deux emballages",
+   "error": "the new amount for both packs instead of per pack",
+   "touched_sentence": "Dans le cas d’un traitement de 12 ou 16 semaines avec MAVIRET®, AbbVie AG remboursera, sur demande de l’assureur maladie chez lequel la personne assurée était assurée à la date de la délivrance du médicament, le prix de fabrique du troisième/quatrième emballage – soit CHF 13’148.57 par emballage – si son administration au patient est démontrée.",
+   "set": 2
+  },
+  "wb081-fr|untouched": {
+   "key": "wb081-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb081-it|planted": {
+   "key": "wb081-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "scope",
+   "old": "previa certificazione della somministrazione, al prezzo di Fr. 13’148.57 ciascuna.",
+   "new": "previa certificazione della somministrazione nei pazienti adulti, al prezzo di Fr. 13’148.57 ciascuna.",
+   "error": "refund narrowed to adults (adolescents from 12 dropped)",
+   "touched_sentence": "Per un trattamento MAVIRET® della durata di 12/16 settimane, e su richiesta della cassa malati presso cui il paziente era assicurato al momento della percezione del trattamento, AbbVie AG rimborserà il prezzo di fabbrica per la consegna della terza/quarta confezione, previa certificazione della somministrazione, al prezzo di Fr. 13’148.57 ciascuna.",
+   "set": 2
+  },
+  "wb081-it|untouched": {
+   "key": "wb081-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb083-fr|real": {
+   "key": "wb083-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb083-it|real": {
+   "key": "wb083-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q8_0",
+    "q4_k_m"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb084-fr|planted": {
+   "key": "wb084-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "condition",
+   "old": "En combinaison avec un inhibiteur SGLT-2 avec ou sans metformine",
+   "new": "En combinaison avec un inhibiteur SGLT-2 et la metformine",
+   "error": "with or without metformin becomes with metformin",
+   "touched_sentence": "Pour le traitement des patients atteints de diabète sucré de type 2 en association avec les options thérapeutiques suivantes, si ces antidiabétiques n'assurent pas un contrôle adéquat de la glycémie: - En double combinaison avec la metformine ou une sulfonylurée - En triple combinaison avec une combinaison de metformine et d'une sulfonylurée - En combinaison avec l'insuline basale avec ou sans metformine - En combinaison avec un inhibiteur SGLT-2 avec ou sans metformine Au moins BMI 28.",
+   "set": 1
+  },
+  "wb084-fr|untouched": {
+   "key": "wb084-fr",
+   "lang": "fr",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb084-it|planted": {
+   "key": "wb084-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "and_or",
+   "old": "In combinazione con un inibitore SGLT-2 con o senza metformina",
+   "new": "In combinazione con un inibitore SGLT-2 o con metformina",
+   "error": "SGLT-2 with or without metformin becomes SGLT-2 or metformin",
+   "touched_sentence": "Per il trattamento dei pazienti con diabete mellito di tipo 2 in combinazione con le seguenti opzioni terapeutiche, se questi antidiabetici non forniscono un adeguato controllo della glicemia: - Come doppia combinazione con la metformina o la sulfonilurea - Come tripla combinazione con una combinazione di metformina e sulfonilurea - In combinazione con l'insulina basale con o senza metformina - In combinazione con un inibitore SGLT-2 con o senza metformina Almeno BMI 28.",
+   "set": 1
+  },
+  "wb084-it|untouched": {
+   "key": "wb084-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 2
+  },
+  "wb085-fr|real": {
+   "key": "wb085-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "ready": true,
+   "set": 2
+  },
+  "wb085-it|real": {
+   "key": "wb085-it",
+   "lang": "it",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q4_k_m"
+   ],
+   "ready": true,
+   "set": 1
+  },
+  "wb086-it|planted": {
+   "key": "wb086-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "condition",
+   "old": "alla cassa malati: 19225.02.",
+   "new": "alla cassa malati: 19225.02. Novartis Pharma Schweiz AG rimborsa alla cassa malati il 17.27 percento del prezzo di fabbrica per confezione di Revolade.",
+   "error": "the deleted refund kept in a shortened form",
+   "touched_sentence": "Il seguente codice deve essere trasmesso alla cassa malati: 19225.02.",
+   "set": 2
+  },
+  "wb086-it|untouched": {
+   "key": "wb086-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb087-fr|real": {
+   "key": "wb087-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 1
+  },
+  "wb088-fr|real": {
+   "key": "wb088-fr",
+   "lang": "fr",
+   "kind": "real",
+   "existing": "german",
+   "base_runs": [
+    "q8_0"
+   ],
+   "ready": false,
+   "set": 2
+  },
+  "wb089-it|planted": {
+   "key": "wb089-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "scope",
+   "old": "Il seguente codice deve essere trasmesso alla cassa malati: 19225.01.",
+   "new": "Per i pazienti pediatrici, il seguente codice deve essere trasmesso alla cassa malati: 19225.01.",
+   "error": "code obligation narrowed to paediatric patients",
+   "touched_sentence": "Il seguente codice deve essere trasmesso alla cassa malati: 19225.01.",
+   "set": 2
+  },
+  "wb089-it|untouched": {
+   "key": "wb089-it",
+   "lang": "it",
+   "base_class": "equivalent",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb090-fr|planted": {
+   "key": "wb090-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "number_noun",
+   "old": "avec Prasugrel est de 12 mois.",
+   "new": "avec Prasugrel est de 12 mois par année civile.",
+   "error": "12 months per calendar year instead of in total",
+   "touched_sentence": "La durée maximale de traitement avec Prasugrel est de 12 mois.",
+   "set": 2
+  },
+  "wb090-fr|untouched": {
+   "key": "wb090-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb090-it|planted": {
+   "key": "wb090-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "scope",
+   "old": "del trattamento con Prasugrel è di 12 mesi.",
+   "new": "del trattamento con Prasugrel nei pazienti di età superiore a 75 anni è di 12 mesi.",
+   "error": "the limit narrowed to patients over 75",
+   "touched_sentence": "La durata massima del trattamento con Prasugrel è di 12 mesi.",
+   "set": 2
+  },
+  "wb090-it|untouched": {
+   "key": "wb090-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb091-fr|planted": {
+   "key": "wb091-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "and_or",
+   "old": "de traitement avec Prasugrel est de 12 mois.",
+   "new": "de traitement avec Prasugrel ou l'acide acétylsalicylique est de 12 mois.",
+   "error": "the limit extended to either drug",
+   "touched_sentence": "La durée maximale de traitement avec Prasugrel est de 12 mois.",
+   "set": 2
+  },
+  "wb091-fr|untouched": {
+   "key": "wb091-fr",
+   "lang": "fr",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  },
+  "wb091-it|planted": {
+   "key": "wb091-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "planted",
+   "type": "number_noun",
+   "old": "La durata massima del trattamento con Prasugrel è di 12 mesi.",
+   "new": "La durata massima di ogni ciclo di trattamento con Prasugrel è di 12 mesi.",
+   "error": "12 months per cycle instead of in total",
+   "touched_sentence": "La durata massima del trattamento con Prasugrel è di 12 mesi.",
+   "set": 2
+  },
+  "wb091-it|untouched": {
+   "key": "wb091-it",
+   "lang": "it",
+   "base_class": "exact",
+   "base_runs": [
+    "70b",
+    "q8_0",
+    "q4_k_m"
+   ],
+   "family": "other",
+   "kind": "untouched",
+   "type": null,
+   "set": 1
+  }
+ },
+ "ids": {
+  "V000": "wb029-fr|planted",
+  "V001": "wb071-it|untouched",
+  "V002": "wb043-fr|real",
+  "V003": "wb084-fr|planted",
+  "V004": "wb010-fr|real",
+  "V005": "wb002-fr|planted",
+  "V006": "wb079-fr|untouched",
+  "V007": "wb040-it|untouched",
+  "V008": "wb087-fr|real",
+  "V009": "wb000-fr|planted",
+  "V010": "wb074-it|planted",
+  "V011": "wb033-fr|real",
+  "V012": "wb007-it|planted",
+  "V013": "wb090-fr|untouched",
+  "V014": "wb003-fr|untouched",
+  "V015": "wb086-it|untouched",
+  "V016": "wb031-fr|planted",
+  "V017": "wb072-it|untouched",
+  "V018": "wb060-it|untouched",
+  "V019": "wb019-it|planted",
+  "V020": "wb081-fr|untouched",
+  "V021": "wb083-fr|real",
+  "V022": "wb091-fr|untouched",
+  "V023": "wb011-it|real",
+  "V024": "wb023-it|planted",
+  "V025": "wb084-it|planted",
+  "V026": "wb081-it|untouched",
+  "V027": "wb040-fr|untouched",
+  "V028": "wb067-it|real",
+  "V029": "wb039-fr|real",
+  "V030": "wb075-it|untouched",
+  "V031": "wb065-fr|real",
+  "V032": "wb013-it|real",
+  "V033": "wb071-fr|untouched",
+  "V034": "wb000-it|planted",
+  "V035": "wb007-fr|planted",
+  "V036": "wb030-fr|planted",
+  "V037": "wb089-it|untouched",
+  "V038": "wb063-fr|planted",
+  "V039": "wb085-it|real",
+  "V040": "wb054-it|real",
+  "V041": "wb091-it|untouched",
+  "V042": "wb068-fr|real",
+  "V043": "wb031-it|planted",
+  "V044": "wb002-it|planted",
+  "V045": "wb075-fr|untouched",
+  "V046": "wb090-it|untouched",
+  "V047": "wb014-fr|real",
+  "V048": "wb032-fr|untouched",
+  "V049": "wb010-it|real",
+  "V050": "wb061-fr|planted",
+  "V051": "wb015-fr|planted",
+  "V052": "wb017-it|planted",
+  "W000": "wb091-fr|planted",
+  "W001": "wb091-it|planted",
+  "W002": "wb063-fr|untouched",
+  "W003": "wb085-fr|real",
+  "W004": "wb011-fr|real",
+  "W005": "wb054-fr|real",
+  "W006": "wb002-it|untouched",
+  "W007": "wb033-it|real",
+  "W008": "wb084-it|untouched",
+  "W009": "wb079-fr|planted",
+  "W010": "wb003-fr|planted",
+  "W011": "wb040-it|planted",
+  "W012": "wb030-fr|untouched",
+  "W013": "wb084-fr|untouched",
+  "W014": "wb083-it|real",
+  "W015": "wb069-fr|real",
+  "W016": "wb007-it|untouched",
+  "W017": "wb056-it|real",
+  "W018": "wb069-it|real",
+  "W019": "wb061-fr|untouched",
+  "W020": "wb031-fr|untouched",
+  "W021": "wb032-fr|planted",
+  "W022": "wb000-fr|untouched",
+  "W023": "wb002-fr|untouched",
+  "W024": "wb031-it|untouched",
+  "W025": "wb036-it|real",
+  "W026": "wb090-fr|planted",
+  "W027": "wb060-it|planted",
+  "W028": "wb000-it|untouched",
+  "W029": "wb019-it|untouched",
+  "W030": "wb081-it|planted",
+  "W031": "wb088-fr|real",
+  "W032": "wb023-it|untouched",
+  "W033": "wb015-fr|untouched",
+  "W034": "wb075-fr|planted",
+  "W035": "wb071-fr|planted",
+  "W036": "wb029-fr|untouched",
+  "W037": "wb081-fr|planted",
+  "W038": "wb071-it|planted",
+  "W039": "wb057-fr|real",
+  "W040": "wb058-it|real",
+  "W041": "wb042-it|real",
+  "W042": "wb072-it|planted",
+  "W043": "wb017-it|untouched",
+  "W044": "wb076-fr|real",
+  "W045": "wb067-fr|real",
+  "W046": "wb040-fr|planted",
+  "W047": "wb075-it|planted",
+  "W048": "wb007-fr|untouched",
+  "W049": "wb089-it|planted",
+  "W050": "wb086-it|planted",
+  "W051": "wb074-it|untouched",
+  "W052": "wb090-it|planted"
+ }
+}

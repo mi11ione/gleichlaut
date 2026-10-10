@@ -32,6 +32,7 @@ human labels were used.
 | R11 | annotator sensitivity to planted meaning errors | 66 of 66 caught, reference shown or hidden |
 | R12 | house wording in the prompt, both live months | more identical drafts, fewer flags; no pair meets R0; default unchanged |
 | R13 | fully blind relabel of the headline 70B run | 0 severe errors among ready drafts; κ 0.892 |
+| R14 | (A) audit findings relabelled by two blind annotators + a third; (B) annotator sensitivity to meaning errors inside the amended wording | pending |
 | R15 | audit round 5: operator direction, negation, number words | pending |
 
 ## R0. Pass rule for a drafting lane (frozen 9 Oct 2026, before the fresh 2025 run)
@@ -420,6 +421,99 @@ Italian says "quattro". R15 adds three checks to `gleichlaut.audit` and fixes ho
   stating it as a blind spot with the measured recall. README, report and `docs/audit.md` state recall before and after
   per type and the precision, whatever they are (`score.audit_r15` -> `eval/results/audit_r15.json`, re-derived by
   `replay`).
+
+## R14. Audit relabel and in-span annotator sensitivity (frozen 10 Oct 2026, before any annotation)
+
+A juror: (a) the audit precision figures (16 of 27 findings on the 6 Oct 2026 register, 8 of 11 terminology notices, 7 of
+11 on MiGeL and the Analysenliste) rest on one Claude annotator per finding (the single `real` column of
+`eval/labels/audit*_*.tsv`), while the README says "blind annotators"; (b) R11 planted only single local edits, which
+annotators catch by diffing the draft against the old text, whereas real errors look like a plausible part of the
+amendment (scope drift inside the amended sentence). R14 answers both; no model is called, all annotation is by fresh
+blind Claude subagents.
+
+### Part A: every audit finding relabelled by two blind annotators and a third on disagreements
+
+- **Items** (`tools/audit_relabel.py`, deterministic, `--check` reproduces the files byte for byte): all 49 labelled
+  findings: *register* = `audit_20261006` (21 number findings) + `audit2_20261006` (6 language / editorial) = 27;
+  *terminology* = `audit3_terminology_20261006` (11); *lists* = `audit_migel_20260701` (8) + `audit_al_20260701` (3) = 11.
+  Each record is the committed worklist record of its file with every field kept (texts, `finding`, and its own
+  `question`, unchanged) except the id, which becomes a neutral `R00`…; the 49 are pooled and shuffled with
+  `random.Random(20261016)` (`eval/labels/audit_relabel_worklist.json`); the id -> finding map
+  (`audit_relabel_key.json`) is kept apart and never shown. The first labels, the set names and the audit's ranking are
+  not in the worklist.
+- **Annotators.** Two fresh general-purpose Claude subagents, each given only a copy of the worklist in an otherwise empty
+  directory; the second labels the records in reverse order. A third fresh agent labels, in a new worklist (ids `T00`…,
+  shuffled with `random.Random(20261018)`, same record fields), every finding where the two answers differ. Instructions,
+  verbatim (the second annotator gets the extra sentence in brackets, the third the same instructions with its own file):
+
+  > You are a blind annotator for an evaluation of a divergence audit. Read ONLY this file: `<worklist>` (N records). Do
+  > NOT open, search or list any other file or directory. Use only the read of that file and one write of your output
+  > file. No web access.
+  >
+  > Context: Swiss federal lists of reimbursed medicines, medical devices and laboratory analyses (BAG
+  > Spezialitätenliste, MiGeL, Analysenliste) are published in German, French and Italian, and the language versions
+  > should state the same conditions. An automatic audit flagged each record below; `finding` says what it flagged and
+  > `lang` names the language version concerned. Each record carries the texts and its own `question`.
+  >
+  > For each record, read the texts and the finding in full and answer the record's `question` with exactly one of:
+  > real, minor, not (as that question defines them). [Label the records in reverse order: start with the last record of
+  > the file and end with the first.]
+  >
+  > Write a TSV to `<output>` with header `id\tanswer\tnote` (note <= 20 words). Read every record fully; do not skim
+  > long paragraphs. Report back only "done" plus counts per answer, computed from the file you wrote.
+
+  plus the R11 operational note on long lines (read the file so that every line is shown in full, still only this file).
+- **Merge** (`eval/labels/audit_relabel.tsv`: `uid, set, first, A, B, T, final, final_confirmed, note_A, note_B,
+  note_T`; raw annotator files `audit_relabel_{A,B,T}.tsv` by neutral id beside it). *Confirmed* = answer `real` or
+  `minor`: the finding names a real divergence or defect, which is what the first annotation's `real = yes` records.
+  `final` = the answer shared by at least two of the three, otherwise the third's (A's when A and B agree);
+  `final_confirmed` = majority of three on confirmed (A's when A and B agree on it).
+- **Outcomes** (no threshold; `score.audit_relabel` -> `eval/results/audit_relabel.json`, re-derived by `replay` from the
+  committed files): agreement and Cohen's κ between A and B on confirmed (49 findings, and per set), agreement on the
+  three-way answer; majority precision per set (register x of 27, terminology x of 11, lists x of 11) with Wilson 95%,
+  and strict precision (answer `real` only); agreement of the majority with the first single labels per set, with κ,
+  and the findings where they differ.
+- **Reporting rule, stated now.** If the majority precision of a set differs from the first annotation, the README and
+  report numbers switch to the majority labels (`score.audit_eval` and `score.audit_more` read `audit_relabel.tsv`),
+  and the first labels stay in the results as `first_annotation`. If they are the same, the README says that two blind
+  annotators and a third on disagreements confirm them, with the agreement. Either way the wording "blind annotators"
+  then describes what was done.
+
+### Part B: meaning errors planted inside the amended wording
+
+- **Bases** (`tools/plant_inspan.py`, seed 20261017; design in its docstring; `--check` reproduces its output byte for
+  byte): the R11 base pool (fresh-166 ready drafts that every label calls exact or equivalent, one draft per item),
+  restricted to drafts of the 70B or the 8B Q8_0 run and not marked needs-fix by the R13 blind majority: 64. The
+  boilerplate family 981f07a8 (one sentence whose only change is the insurer term) is subsampled to 4 FR + 4 IT with
+  `random.Random("20261017:family:<lang>")`; all 30 other bases are kept: **38 bases** (exact and equivalent).
+- **Plants** (`eval/labels/inspan_plants.json`): written by hand by the pre-registering agent after the seeded base
+  selection and before any annotation, one per base, as fluent text that reads like part of the amendment, adjoining or
+  within the amended wording: **scope** (population or indication widened or narrowed within the amended clause, 11),
+  **condition** (a condition of the new German half-applied or kept in part from the old text, or changed within the
+  amended clause, 12), **number_noun** (a number or unit of the amended clause attached to the wrong noun, 8),
+  **and_or** (an and/or inside the amended clause, 7). The tool checks that the whole edit lies inside a sentence of the
+  draft that the German change touched (a sentence overlapping a character the draft changed against `tgt_old`; for a
+  pure deletion, the sentences on both sides) and that each plant's `old` text occurs once. Each plant records the
+  meaning error it makes (`error`, never shown).
+- **Worklists** (`inspan_set{1,2}_worklist.json`, 53 records each): every base once planted and once untouched, never
+  both in one worklist; a group of bases sharing an SL cluster or the same touched sentence puts all its planted copies in
+  the same worklist (so no worklist holds a planted copy beside an untouched sibling of the same wording); the 30 real
+  drafts of R11 (REAL / stale / german) split between the two as a base-rate mix; seeded shuffle, neutral ids `V000`… /
+  `W000`…, fields exactly as `eval/labels/PROTOCOL.md` with `official_new` shown. The key (`inspan_key.json`) is kept
+  apart and never shown.
+- **Annotators.** Per worklist two fresh general-purpose Claude subagents (4 in all), each given only a copy of its
+  worklist in an otherwise empty directory, with the PROTOCOL.md instructions verbatim (reference shown) plus the R11
+  operational note on long lines; the second reads the records in reverse order. No annotator sees both worklists. No
+  tie-break: recall is reported per annotator, for both and for either (as R11).
+- **Metrics** (no threshold; `score.annotator_sensitivity_inspan` -> `eval/results/annotator_sensitivity_inspan.json`,
+  re-derived by `replay` from `eval/labels/inspan_sensitivity.tsv` and the key): severe = REAL or stale (as R11); for the
+  38 planted copies, caught as needs_fix = yes and as severe by A, by B, by both and by either, overall and by type,
+  language and family, with Wilson 95% over items; false alarms on the 38 untouched copies (needs_fix = yes; severe); on
+  the 30 real drafts, severe labels by existing class; the planted copies missed by both, with the plant and the labels.
+- **Reporting rule, stated now.** The README and the technical report state the in-span recall (severe by both / by
+  either, Wilson 95%) next to R11's 66 of 66, whatever it is, and the 95% bound on severe errors among ready drafts
+  divided by the both-annotator in-span recall (descriptive). If recall is below R11's, the README says that "0 meaning
+  errors among ready drafts" is bounded by this recall. No decision attached: no earlier outcome is re-opened.
 
 ## R4. Post-freeze changes
 
