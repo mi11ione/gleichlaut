@@ -156,7 +156,7 @@ def test_no_horizontal_overflow_at_phone_width():
             finally:
                 shutil.rmtree(prof, ignore_errors=True)
             o = json.loads(html.unescape(re.search(r'<pre id="res">(.*?)</pre>', r.stdout, re.S).group(1)))
-            assert o == dict(w=w, sw=w), (w, h, o)
+            assert o["sw"] <= o["w"] and w - 20 <= o["w"] <= w, (w, h, o)   # no horizontal overflow; a classic scrollbar (Linux) may take up to 20 px
 
 
 def test_page_xliff_export_validates():
