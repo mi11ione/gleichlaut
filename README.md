@@ -11,8 +11,8 @@ something different in each language is a condition nobody can apply consistentl
 [technical report](track_2b/technical_report.md) · Hack Apertus, Track 2B, team 444
 
 - **The audit runs today, with no model.** It reads all 1,688 limitations in German, French and Italian and turns them
-  into 27 findings in 18 issues to decide; blind annotators confirm 16 of the 27 as real, among them the 10
-  divergences an earlier census had listed (Nemluvio, Diaphin). On 1,000 divergences planted into clean texts it finds
+  into 27 findings; blind annotators confirm 16 of them as real, among them the 10 divergences an earlier census had
+  listed (Nemluvio, Diaphin). In the register they become 18 issues, one decision each. On 1,000 divergences planted into clean texts it finds
   93.0% of changed numbers, 73.0% of changed units and 75.0% of deleted clauses.
 - **Drafting is a review aid, air-gapped on a CPU** with Apertus 8B. When the German changes, Apertus pre-fills the French
   and Italian, code writes every number, and frozen checks say why a draft needs a look. On 166 held-out amendments
