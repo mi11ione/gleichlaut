@@ -5,7 +5,7 @@ Each rule below is fixed **before** the run it governs. Failed runs are reported
 - **R0 and the guard freeze** predate this repository: they were written in the research log before the fresh 2025 run
   (verbatim excerpt with the log's sha256: `docs/research/freeze-record.md`). This repository was created after that run;
   `freeze.json` and `tools/freeze.py` check that the vendored files still carry the frozen hashes.
-- **R1–R6** were committed here before their runs. `run_times.json` lists the first and last model call of each run from
+- **R1–R7** were committed here before their runs. `run_times.json` lists the first and last model call of each run from
   the development gateway's append-only ledger next to the commit times of this file (R2: committed 18:01 UTC, first call
   18:27 UTC; R5: committed 18:20 UTC, first call 18:27 UTC, 9 Oct 2026). R1 ran on GitHub Actions CPU runners after
   its commit (results log below).
@@ -89,6 +89,22 @@ the statute claim must be measured on it.
 - Decision: as R5. Every statute draft goes to review unless a GGUF build meets R0 on these items (in-sample caveat). If a
   GGUF build is more than 10 points below the 8B MLX build on exact, the README and report say that statutes were
   measured on the MLX build and report the GGUF as weaker; they do not claim the GGUF for statutes.
+
+## R7. The first shadow month (01.09.2026 → 01.10.2026) with all three models (frozen 10 Oct 2026, after the Q4_K_M run, before the Q8_0 and 70B runs)
+
+The shadow workflow drafted the month's 52 FR/IT items from the public feed with the default Q4_K_M build (run
+38002803918; `data/shadow/20260901-20261001/q4_k_m/`): 8 routed to a translator, 41 compared with BAG's published text,
+3 identical, 4 ready, 37 flagged. Its outputs were looked at before this rule was written.
+
+- Runs: the same items (`data/shadow/20260901-20261001/items.json`), the same routing and pipeline: Q8_0 through the
+  shadow workflow (`build=q8_0`, CPU runners, `--network none`), and the 70B through the development gateway
+  (`tools/run_shadow70b.py`; temperature 0, plain user messages, served model checked on every call).
+- Labels: every ready draft that differs from BAG's published text, of all three runs, pooled and shuffled, by the R1
+  protocol (two blind Claude annotators, a third breaks disagreements).
+- Reported (no threshold: one month, 41 compared items): identical, ready, flagged, and the classes of ready drafts, per
+  model, side by side.
+- Use: descriptive. It does not change the defaults set under R1. Any ready draft labelled REAL, stale or German is named
+  in the report next to the R1 result.
 
 ## R4. Post-freeze changes
 

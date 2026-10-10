@@ -1,0 +1,99 @@
+{
+ "mode": "shadow (public feed), certified local 8B",
+ "date": "2026-10-09T23:54:25+00:00",
+ "items": 52,
+ "records": 52,
+ "missing": 0,
+ "status": {
+  "flagged": 40,
+  "human": 8,
+  "ready": 4
+ },
+ "by_lang": {
+  "fr": {
+   "flagged": 22,
+   "human": 4
+  },
+  "it": {
+   "flagged": 18,
+   "human": 4,
+   "ready": 4
+  }
+ },
+ "rule_only": 4,
+ "reasked": 36,
+ "human_reasons": {
+  "German text longer than 2500 characters and the change needs the model (outside the evaluated range)": 4,
+  "German changed 73% of its tokens (> 60%): a rewrite, not an amendment": 2,
+  "German changed 74% of its tokens (> 60%): a rewrite, not an amendment": 2
+ },
+ "review_reasons": {},
+ "shadow": {
+  "compared": 41,
+  "exact": 3,
+  "ready": 4,
+  "ready_exact": 1,
+  "exact_rate": 7.3,
+  "ready_rate": 9.8,
+  "flag_rate": 90.2,
+  "ready_exact_rate": 25.0,
+  "rates_note": "percent of the drafted items with a published target (status human excluded)",
+  "ready_not_exact": [
+   "VERZENIO.01a-c8a78a-it",
+   "VERZENIO.02a-f05251-it",
+   "VERZENIO.03a-175825-it"
+  ],
+  "note": "tgt_new = the FR/IT text BAG already published; it was never shown to the model"
+ },
+ "calls": {
+  "n": 86,
+  "prompt_tokens": 98340,
+  "completion_tokens": 21024,
+  "models_served": [
+   "gguf:apertus-v1.5-8b-text-q4_k_m.gguf"
+  ],
+  "system_fingerprints": [],
+  "endpoints": [
+   "local llama.cpp (in process)"
+  ],
+  "chf_estimate": 0.1214,
+  "chf_basis": "Swiss provider's published price, CHF 0.70 / 2.50 per M input / output tokens"
+ },
+ "mining": {
+  "snap_old": "20260901",
+  "snap_new": "20261001",
+  "de_changes": 24,
+  "de_rewrites_over60": 2,
+  "items": 52,
+  "items_with_published_target": 49,
+  "unmatched": 0,
+  "unmatched_reasons": {},
+  "step": [
+   {
+    "a": "20260901",
+    "b": "20261001",
+    "matched": 60,
+    "over60": 4,
+    "new_distinct_pairs": 24
+   }
+  ]
+ },
+ "gate": {
+  "certificate": "8b-q4_k_m-fresh166",
+  "kind": "build",
+  "certification": "build certificate 8b-q4_k_m-fresh166 (2026-10-09T21:55:28+00:00, GGUF sha256 a037df8d87ff..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299",
+  "llama_cpp_python": "0.3.35"
+ },
+ "backend": {
+  "name": "llamacpp",
+  "label": "llamacpp gguf:apertus-v1.5-8b-text-q4_k_m.gguf",
+  "review_policy": null
+ },
+ "shards": 4,
+ "gates_agree": true,
+ "next": [
+  "gleichlaut emit --records out/month/20260901-20261001/records.jsonl --items out/month/20260901-20261001/items.json --n 0 --out out/month/20260901-20261001/emit",
+  "gleichlaut ui --records out/month/20260901-20261001/records.jsonl --items out/month/20260901-20261001/items.json --out out/month/20260901-20261001/ui/index.html"
+ ]
+}

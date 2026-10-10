@@ -24,12 +24,16 @@ on:
       from: { description: "old feed date YYYYMMDD, or previous", required: true, default: "previous" }
       to: { description: "new feed date YYYYMMDD, or latest", required: true, default: "latest" }
       shards: { description: "parallel 4-core runners", required: true, default: "4" }
+      build: { description: "certified 8B GGUF build: q4_k_m (8 GiB) or q8_0 (16 GiB)", required: true, default: "q4_k_m" }
 permissions: { contents: read }
 concurrency: { group: shadow, cancel-in-progress: false }
 env:
-  GGUF_FILE: models/apertus-v1.5-8b-text-q4_k_m.gguf
-  GGUF_URL: https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf
-  GLEICHLAUT_MODEL_SHA256: a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299
+  BUILD: ${{ inputs.build || 'q4_k_m' }}
+  GGUF_FILE: models/apertus-v1.5-8b-text-${{ inputs.build || 'q4_k_m' }}.gguf
+  URL_q4_k_m: https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf
+  SHA_q4_k_m: a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299
+  URL_q8_0: https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf
+  SHA_q8_0: dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d
 jobs:
   plan:
     runs-on: ubuntu-24.04
@@ -109,20 +113,21 @@ jobs:
       - name: restore GGUF cache
         id: gguf
         uses: actions/cache/restore@v6
-        with: { path: track_2b/models, key: "gguf-apertus-v1.5-8b-text-q4_k_m-a037df8d" }
+        with: { path: track_2b/models, key: "gguf-apertus-v1.5-8b-text-${{ inputs.build || 'q4_k_m' }}" }
       - name: fetch and verify the GGUF
         run: |
           mkdir -p models
-          [ -f "$GGUF_FILE" ] || curl -sSL -A gleichlaut/0.1 -o "$GGUF_FILE" "$GGUF_URL"
-          echo "$GLEICHLAUT_MODEL_SHA256  $GGUF_FILE" | sha256sum -c -
+          U=URL_$BUILD; S=SHA_$BUILD
+          [ -f "$GGUF_FILE" ] || curl -sSL -A gleichlaut/0.1 -o "$GGUF_FILE" "${!U}"
+          echo "${!S}  $GGUF_FILE" | sha256sum -c -
       - name: draft with the certified local 8B (make month, offline image, --network none)
         run: |
           set -o pipefail
-          timeout --signal=INT 330m make month ITEMS=out/plan/shard-${{ matrix.k }}.json 2>&1 | tee month-${{ matrix.k }}.log
+          timeout --signal=INT 330m make month BUILD=$BUILD ITEMS=out/plan/shard-${{ matrix.k }}.json 2>&1 | tee month-${{ matrix.k }}.log
       - name: save GGUF cache
         if: always() && matrix.k == 0 && steps.gguf.outputs.cache-hit != 'true' && hashFiles('track_2b/models/*.gguf') != ''
         uses: actions/cache/save@v6
-        with: { path: track_2b/models, key: "gguf-apertus-v1.5-8b-text-q4_k_m-a037df8d" }
+        with: { path: track_2b/models, key: "gguf-apertus-v1.5-8b-text-${{ inputs.build || 'q4_k_m' }}" }
       - uses: actions/upload-artifact@v7
         if: always()
         with:
@@ -196,6 +201,6 @@ jobs:
       - uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: shadow-${{ needs.plan.outputs.from }}-${{ needs.plan.outputs.to }}
+          name: shadow-${{ needs.plan.outputs.from }}-${{ needs.plan.outputs.to }}-${{ inputs.build || 'q4_k_m' }}
           path: track_2b/out/month/${{ needs.plan.outputs.from }}-${{ needs.plan.outputs.to }}
           retention-days: 90
