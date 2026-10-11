@@ -51,6 +51,7 @@ C = [  # id, source, path, fmt, command
  ("ag_kappa", "eval/results/agreement_fresh166.json", "kappa", "{:.3f}", RE),
  ("blind_agree", "eval/results/fresh166_blind.json", "annotators.agree", "{}", RE), ("blind_n", "eval/results/fresh166_blind.json", "annotators.n", "{}", RE),
  ("blind_kappa", "eval/results/fresh166_blind.json", "annotators.kappa", "{:.3f}", RE),
+ ("ks_q8_pct", "eval/results/keystroke_proxy.json", "fresh166.q8_0.keystrokes_saved_pct", "{:.1f}", RE), ("ks_70b_pct", "eval/results/keystroke_proxy.json", "fresh166.70b.keystrokes_saved_pct", "{:.1f}", RE),
  ("live_q8_saved", "eval/results/live_edits.json", "q8_0.pooled.edits_saved_pct", "{:.1f}", RE), ("live_q8_lo", "eval/results/live_edits.json", "q8_0.pooled.edits_saved_ci95.0", "{:.1f}", RE), ("live_q8_hi", "eval/results/live_edits.json", "q8_0.pooled.edits_saved_ci95.1", "{:.1f}", RE),
  ("live_70b_saved", "eval/results/live_edits.json", "70b.pooled.edits_saved_pct", "{:.1f}", RE), ("live_70b_lo", "eval/results/live_edits.json", "70b.pooled.edits_saved_ci95.0", "{:.1f}", RE), ("live_70b_hi", "eval/results/live_edits.json", "70b.pooled.edits_saved_ci95.1", "{:.1f}", RE),
  ("live_n", "eval/results/live_edits.json", "q8_0.pooled.n", "{}", RE),

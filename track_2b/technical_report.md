@@ -228,7 +228,10 @@ re-run by anyone.
 | 10× | 574 | $1.59 | CHF 1.36 | 2.7 h |
 
 At this volume a per-token Swiss endpoint costs CHF 0.14 a month; dedicated 70B hardware pays only across many lists
-(MiGeL and the Analysenliste carry limitation columns in the same three languages).
+(MiGeL and the Analysenliste carry limitation columns in the same three languages). In keystrokes, the 8B's drafts cut the typing
+needed to reach BAG's text by 42.2% (70B 50.6%); priced with the keystroke-level model (Card, Moran & Newell 1980) that
+is 4.7 to 11.1 minutes of typing a month at today's volume, a lower bound: reading and checking are not counted
+(`eval/results/keystroke_proxy.json`).
 
 ## 6. Design limits we measured
 
