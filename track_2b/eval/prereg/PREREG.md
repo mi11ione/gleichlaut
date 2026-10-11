@@ -42,6 +42,7 @@ human labels were used.
 | R21 | a task-specific system message on top of the house wording (v4-system, certified Q8_0): fresh 166 (A) and both live months (B) | A meets R0 (13.9% identical, +7.8; frozen 17.5%); no live month (Aug 1 REAL, Sep flagged 70.7%): not a candidate, default unchanged |
 | R22 | stricter alignment for the operator and negation module (round 5b), held half of the register and R15's held planted set | held precision 19.0% → 40.0% (2 of 5; dev 2 of 2); planted operator 66.5%, dropped negation 43.0%; the three finds kept: fails the precision bar, stays opt-in |
 | R23 | the first BAG feed after 6 Oct 2026 (unseen window): the frozen default and v4-system, under R0 | pending (void if no feed by 15 Oct 2026) |
+| R24 | the shipped audit (defaults, round 5 off) on 7 federal acts behind the SL (KVG, KVV, KLV, HMG, VAM, AMZV, VAZV), DE/FR/IT aligned by article | pending |
 
 Corrections to statements of fact inside rule text (11 Oct 2026; the rules themselves are unchanged and their text below
 stays as frozen):
@@ -1031,6 +1032,68 @@ fixes now, before BAG publishes it, the window that can test it unseen.
   R0 on the held-out 166); the shipped default changes only after that result is reported, in its own commit. If it
   does not, the frozen default stays. The frozen lane's result is reported either way as the third live window.
   Whatever comes out is reported as is, criterion by criterion.
+
+## R24. The shipped audit on binding federal law: the acts behind the SL, DE/FR/IT (frozen 11 Oct 2026, before any of these texts is fetched)
+
+The audit was built and measured on BAG's lists (SL register, MiGeL, Analysenliste). R24 runs it, unchanged, on the
+federal acts the SL rests on. There every language version is equally binding (Publications Act, PublG, SR 170.512,
+Art. 14 para. 1: "Bei Erlassen sind die drei Fassungen in gleicher Weise verbindlich"), and the structure (article,
+paragraph, letter, item) is the same in German, French and Italian, so the three texts can be aligned without
+translation. Nothing here changes a detection rule; the only new code is an adapter that reads Fedlex and aligns.
+
+- **Corpus, fixed now (7 acts).** The consolidated text of each, in DE, FR and IT:
+  SR 832.10 KVG (Federal Act on Health Insurance; Art. 52 is the SL's basis),
+  SR 832.102 KVV (Health Insurance Ordinance; Art. 64–75 the SL procedure, Art. 71a–71d reimbursement in single cases),
+  SR 832.112.31 KLV (FDHA Ordinance on Benefits; Art. 30–38 admission and prices of SL medicines), with its annexes as far
+  as they are part of the consolidated text (Annex 1; Annexes 2 and 3, MiGeL and AL, are published outside the SR and
+  are not part of this corpus),
+  SR 812.21 HMG (Therapeutic Products Act; a Swissmedic authorisation is the first condition for SL admission),
+  SR 812.212.21 VAM (Medicinal Products Ordinance),
+  SR 812.212.22 AMZV (Swissmedic Ordinance on the Requirements for the Authorisation of Medicinal Products; product
+  information, which the SL limitation texts follow),
+  SR 812.212.23 VAZV (Swissmedic Ordinance on Simplified Authorisation).
+  Not included: UVG / UVV, MVG, IVG and the other acts that pay for medicines under their own rules; the SL is issued
+  under KVG Art. 52, and this list is the KVG/KVV/KLV chain plus the Swissmedic authorisation it presupposes.
+- **Version.** For each act the consolidated version with the latest applicability date on or before the run date that
+  Fedlex has in all three languages (SPARQL `jolux:dateApplicability`, AKN XML manifestation, as `fed.ingest`). An SR
+  number is resolved to its `eli/cc/...` work through `jolux:classifiedByTaxonomyEntry`; if several works carry the
+  number, the one Fedlex marks in force. Recorded per act and language: ELI, version date, file URL, byte length,
+  sha256. If an act cannot be fetched in all three languages, it is reported as missing and not replaced.
+- **Fetch.** One run, `hackapertus-research/0.1`, at most 1 request per second (the vendored `net.py` waits ≥ 1.1 s),
+  robots.txt respected (checked today: `fedlex.data.admin.ch` disallows `/filestore/*`, so XML files come from
+  `www.fedlex.admin.ch/filestore`, which allows it; the SPARQL endpoint is allowed). Nothing else is fetched.
+- **Alignment (adapter, alignment code only).** A unit is an AKN element of the main text or an annex: (a) every leaf
+  with an `eId` (paragraph, item, list introduction, as `fed/research/units.py`), keyed by act and `eId` (article /
+  paragraph / letter / item); (b) text without an `eId` (annex tables, annex text blocks): keyed by the nearest ancestor
+  with an `eId` (or the annex) and its structural path below it (table, row, cell, block position). A unit is aligned
+  when its key exists in all three languages; the rest are counted per act and language, not audited. Footnotes
+  (`authorialNote`) and the unit's own structural label (`num`: paragraph number, letter, item number) are left out,
+  because alignment is by structure. Whitespace is normalised as in the SL path (`sl.ingest.nrm`). The adapter is
+  committed with the extracted aligned texts before the audit checks are run on them; any later alignment fix is
+  reported as a deviation and never chosen by looking at findings.
+- **Checks: the shipped defaults, unchanged.** `audit.run_all` exactly as `audit_lists` runs MiGeL and AL: kinds
+  `number` (a value bound to a unit present in one language and absent in the other, R1–R5 of round 2), `unit`,
+  `language`, `editorial`, with register statistics built from the corpus itself (`build_stats`, as for the lists);
+  no terminology check (its pairs are mined from the SL, `pairs=[]`); the round-5 module (R15/R22: operator, negation,
+  number_word) **off** (`r5=False`). No new detection rule, threshold, lexicon or filter. `likely_equivalent` is
+  computed as shipped and reported, but filters nothing.
+- **Labels.** Every finding, no sample, by `eval/labels/PROTOCOL.md` with R14's audit set-up: a worklist with neutral ids
+  (`F00`…), shuffled with `random.Random(20261024)`, fields `id, act, ref, kind, lang, de, fr, it, finding, question`
+  (no rank, rule name, fid or `likely_equivalent`); `question` is the shipped audit worklist question of the finding's
+  kind (number: as `audit_lists.worklist_list`; unit, language, editorial: `audit.QUESTION`), answered real / minor /
+  not. Two fresh blind Claude annotators (the second in reverse order), R14's instructions verbatim except the context
+  sentence, which names the corpus: "Swiss federal acts on health insurance and therapeutic products (KVG, KVV, KLV,
+  HMG and its ordinances) are published in German, French and Italian; all three versions are equally binding and
+  should state the same law." A third fresh annotator labels every finding where the two answers differ (new worklist,
+  ids `T00`…, `random.Random(20261025)`). Final = the answer at least two share, else the third's; confirmed = real or
+  minor (R14). No human labels, no model calls except the annotator subagents.
+- **Report** (`score.audit_fedlex` -> `eval/results/audit_fedlex.json`, re-derived by `replay` from the committed texts,
+  findings and labels): corpus (per act: version, sha256, units aligned and unaligned), findings by kind, language and
+  act, confirmed real / minor / not, precision (confirmed / findings) and strict precision (real / findings) with Wilson
+  95%, A–B agreement and κ, and every confirmed real divergence with its article reference and the three texts. **No
+  threshold and no decision**: whatever comes out is reported as is. Zero findings, or zero confirmed, is a valid result
+  (the binding federal texts would then agree where the SL texts do not); a confirmed divergence in binding law is
+  reported as a finding about the text, not as a judgement on which version prevails.
 
 ## R4. Post-freeze changes
 
