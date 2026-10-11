@@ -1,0 +1,190 @@
+{
+ "prereg": "R24",
+ "run_date": "2026-10-11",
+ "user_agent": "hackapertus-research/0.1",
+ "min_interval_s": 1.1,
+ "robots": {
+  "checked": "2026-10-11",
+  "fedlex.data.admin.ch": "Disallow: /filestore/* (SPARQL endpoint allowed)",
+  "www.fedlex.admin.ch": "Allow: / (print views disallowed)"
+ },
+ "acts": {
+  "832.10": {
+   "abbr": "KVG",
+   "why": "Federal Act on Health Insurance; Art. 52 is the SL's basis",
+   "eli": "cc/1995/1328_1328_1328",
+   "version": "2026-07-01",
+   "later_versions": [],
+   "files": {
+    "de": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1995/1328_1328_1328/20260701/de/xml/fedlex-data-admin-ch-eli-cc-1995-1328_1328_1328-20260701-de-xml-1.xml",
+     "bytes": 432753,
+     "sha256": "32b0745cd3827c26d6ad5a0789d45269509e980a671afc70fdcbade07f64f8b9"
+    },
+    "fr": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1995/1328_1328_1328/20260701/fr/xml/fedlex-data-admin-ch-eli-cc-1995-1328_1328_1328-20260701-fr-xml-1.xml",
+     "bytes": 464256,
+     "sha256": "c107fc65b90f34132c97caf7e2b441de5db8e7e917de003fba3d204067552e0b"
+    },
+    "it": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1995/1328_1328_1328/20260701/it/xml/fedlex-data-admin-ch-eli-cc-1995-1328_1328_1328-20260701-it-xml-1.xml",
+     "bytes": 434951,
+     "sha256": "71e4d35953fb3156ce42dd7d2d05be1adb4c3cc18e6cea940eb08af0adc25308"
+    }
+   }
+  },
+  "832.102": {
+   "abbr": "KVV",
+   "why": "Health Insurance Ordinance; Art. 64-75 SL procedure, Art. 71a-71d single cases",
+   "eli": "cc/1995/3867_3867_3867",
+   "version": "2026-08-01",
+   "later_versions": [],
+   "files": {
+    "de": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1995/3867_3867_3867/20260801/de/xml/fedlex-data-admin-ch-eli-cc-1995-3867_3867_3867-20260801-de-xml.xml",
+     "bytes": 652377,
+     "sha256": "1aed66cafd38b948c417b11a467117092bf45287685448dc70bcb3fa16cda653"
+    },
+    "fr": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1995/3867_3867_3867/20260801/fr/xml/fedlex-data-admin-ch-eli-cc-1995-3867_3867_3867-20260801-fr-xml.xml",
+     "bytes": 700260,
+     "sha256": "6c50c78fd8b14d746f1d55c8b31b5891a4c8c475d94fafbdd2e2ffb8094ed9c8"
+    },
+    "it": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1995/3867_3867_3867/20260801/it/xml/fedlex-data-admin-ch-eli-cc-1995-3867_3867_3867-20260801-it-xml.xml",
+     "bytes": 664431,
+     "sha256": "5fdfbefdc0d339864a0a07ddce9b3b30892c3509ab2c5ffdbb971fe724a7c7ab"
+    }
+   }
+  },
+  "832.112.31": {
+   "abbr": "KLV",
+   "why": "FDHA Ordinance on Benefits; Art. 30-38 SL admission and prices; annexes as consolidated",
+   "eli": "cc/1995/4964_4964_4964",
+   "version": "2026-08-01",
+   "later_versions": [
+    "2027-01-01"
+   ],
+   "files": {
+    "de": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1995/4964_4964_4964/20260801/de/xml/fedlex-data-admin-ch-eli-cc-1995-4964_4964_4964-20260801-de-xml.xml",
+     "bytes": 387999,
+     "sha256": "b61a18e3d47cdddbe6572aa7ce227c2abbaee4a937271036f8d3b1eefba23828"
+    },
+    "fr": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1995/4964_4964_4964/20260801/fr/xml/fedlex-data-admin-ch-eli-cc-1995-4964_4964_4964-20260801-fr-xml.xml",
+     "bytes": 416926,
+     "sha256": "475dc00703fc92248638742c0bc57e4756ce5803116797cdb4bad346b3ced16b"
+    },
+    "it": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1995/4964_4964_4964/20260801/it/xml/fedlex-data-admin-ch-eli-cc-1995-4964_4964_4964-20260801-it-xml.xml",
+     "bytes": 395251,
+     "sha256": "ed2b68f067fb2f090902d86f680821e6900e297b9978a194e3584365c694158f"
+    }
+   }
+  },
+  "812.21": {
+   "abbr": "HMG",
+   "why": "Therapeutic Products Act; Swissmedic authorisation is the first SL condition",
+   "eli": "cc/2001/422",
+   "version": "2025-01-01",
+   "later_versions": [
+    "2027-01-01"
+   ],
+   "files": {
+    "de": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2001/422/20250101/de/xml/fedlex-data-admin-ch-eli-cc-2001-422-20250101-de-xml-7.xml",
+     "bytes": 364750,
+     "sha256": "56d669d9be42b1bd711bcd87f77ec3fcea2fcc063571b84335fa3afba96f6801"
+    },
+    "fr": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2001/422/20250101/fr/xml/fedlex-data-admin-ch-eli-cc-2001-422-20250101-fr-xml-7.xml",
+     "bytes": 393707,
+     "sha256": "66194db86227e06f7c093aa9389dd0d7df511953e40e63b233ebb132ba695b11"
+    },
+    "it": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2001/422/20250101/it/xml/fedlex-data-admin-ch-eli-cc-2001-422-20250101-it-xml-7.xml",
+     "bytes": 369724,
+     "sha256": "5a07c30e5e8504c81d20a4f78887646b938a775780f71300b034e5df840e942f"
+    }
+   }
+  },
+  "812.212.21": {
+   "abbr": "VAM",
+   "why": "Medicinal Products Ordinance",
+   "eli": "cc/2018/588",
+   "version": "2026-01-01",
+   "later_versions": [],
+   "files": {
+    "de": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2018/588/20260101/de/xml/fedlex-data-admin-ch-eli-cc-2018-588-20260101-de-xml.xml",
+     "bytes": 191902,
+     "sha256": "6c88f4076e2baffc6e4a2916aee2c48ce29f82fedcd365424a0a9c06761108fa"
+    },
+    "fr": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2018/588/20260101/fr/xml/fedlex-data-admin-ch-eli-cc-2018-588-20260101-fr-xml.xml",
+     "bytes": 201426,
+     "sha256": "6214fea53d3fb1e32c3186f9b7b8d2a604073caa4e562adc50629eb83788e116"
+    },
+    "it": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2018/588/20260101/it/xml/fedlex-data-admin-ch-eli-cc-2018-588-20260101-it-xml.xml",
+     "bytes": 192727,
+     "sha256": "4122d34cc3632cd8b445a07b2d99fa3b91ba2b9e46fad5608513432806e0b04e"
+    }
+   }
+  },
+  "812.212.22": {
+   "abbr": "AMZV",
+   "why": "Swissmedic Ordinance on authorisation requirements; product information",
+   "eli": "cc/2001/517",
+   "version": "2026-07-01",
+   "later_versions": [],
+   "files": {
+    "de": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2001/517/20260701/de/xml/fedlex-data-admin-ch-eli-cc-2001-517-20260701-de-xml.xml",
+     "bytes": 248587,
+     "sha256": "55b2669b3d82d1543c963aa9319f5722b2d56adbbd47bd0da7df628d1e1e8ea5"
+    },
+    "fr": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2001/517/20260701/fr/xml/fedlex-data-admin-ch-eli-cc-2001-517-20260701-fr-xml.xml",
+     "bytes": 267949,
+     "sha256": "84ea3055cdea92f75a3f5c9d13e3aae83c5ccc13f1a5f659b9f4be96b332088c"
+    },
+    "it": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2001/517/20260701/it/xml/fedlex-data-admin-ch-eli-cc-2001-517-20260701-it-xml.xml",
+     "bytes": 253726,
+     "sha256": "8b08af182b6a9df43d4d9c19c802f54f10a03f41d2fd24e21042aa790178e96b"
+    }
+   }
+  },
+  "812.212.23": {
+   "abbr": "VAZV",
+   "why": "Swissmedic Ordinance on simplified authorisation",
+   "eli": "cc/2006/558",
+   "version": "2026-07-01",
+   "later_versions": [],
+   "files": {
+    "de": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2006/558/20260701/de/xml/fedlex-data-admin-ch-eli-cc-2006-558-20260701-de-xml.xml",
+     "bytes": 111854,
+     "sha256": "cfa1055dcb0dc8170600537b507b70611616d766422866811845c76a4090b078"
+    },
+    "fr": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2006/558/20260701/fr/xml/fedlex-data-admin-ch-eli-cc-2006-558-20260701-fr-xml.xml",
+     "bytes": 122254,
+     "sha256": "482a90cd3a0a3b21b5cf398e42d1968c4550355e86658eb6635718035aff02ec"
+    },
+    "it": {
+     "url": "https://www.fedlex.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2006/558/20260701/it/xml/fedlex-data-admin-ch-eli-cc-2006-558-20260701-it-xml.xml",
+     "bytes": 113763,
+     "sha256": "bb6782edd576033e99ade4824d9d09f1ad0373f9d63fab131819886496298ba3"
+    }
+   }
+  }
+ },
+ "fetch_window_utc": [
+  "2026-10-11T19:47:10Z",
+  "2026-10-11T19:50:44Z"
+ ],
+ "requests": 30
+}
