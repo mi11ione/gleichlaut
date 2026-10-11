@@ -68,7 +68,8 @@ measured too: Q8_0 saves 12.2 points more edits than Q4_K_M on the same items.
 - **Divergences decide real money:** the Federal Supreme Court ruled on a German-only wording in the very KLV rule BAG
   uses to price SL medicines and followed the French and Italian (BGE 144 V 14); a Thurgau court freed an insured
   person from a year's premiums over a German/French-Italian divergence in the KVG (TVR 2016 Nr. 35)
-  ([cases](track_2b/docs/research/language-versions-in-court.md)).
+  ([cases](track_2b/docs/research/language-versions-in-court.md)). And BAG works on it: in 2026 it revised 17 French or
+  Italian limitations in substance while the German stayed unchanged.
 - **Beyond the SL:** the same audit runs on MiGeL and the Analysenliste, BAG's other trilingual lists, and the drafting
   lane on federal statutes.
 - **Running every month:** shadow mode drafts each new SL release on the live public feed and grades itself against
