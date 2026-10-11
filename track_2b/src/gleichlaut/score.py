@@ -609,7 +609,25 @@ def audit_grouping():
     from .ui import audit_view
     A = audit_view.data(hist=None); R = A["rows"]
     return dict(findings=sum(r["kind"] != "terminology" for r in R), terminology=sum(r["kind"] == "terminology" for r in R),
-                rows=len(R), issues=len(A["issues"]), issues_terminology=sum(all(R[i]["kind"] == "terminology" for i in I["rows"]) for I in A["issues"]))
+                rows=len(R), issues=len(A["issues"]), issues_terminology=sum(all(R[i]["kind"] == "terminology" for i in I["rows"]) for I in A["issues"]),
+                issues_equivalent=sum(1 for I in A["issues"] if I["eq"]))
+
+
+def audit_reconciliation(res):
+    """One table from the counts that are spread over three results: findings + terminology notices -> issues (this
+    grouping), how many the blind annotators confirmed (audit_relabel, PREREG R14: register and terminology sets) and,
+    apart, the experimental round-5 checks (audit_r15). Written into audit_grouping.json under 'reconciliation'."""
+    g, S, X = res["audit_grouping"], res["audit_relabel"]["sets"], res["audit_r15"]["register"]
+    def part(a, n):
+        a = {k: a.get(k, 0) for k in ("real", "minor", "not")}
+        assert sum(a.values()) == n, (a, n)
+        return dict(n=n, confirmed=a["real"] + a["minor"], **a)
+    reg, term = part(S["register"]["answers"], g["findings"]), part(S["terminology"]["answers"], g["terminology"])
+    tot = {k: reg[k] + term[k] for k in reg}
+    assert tot["n"] == g["rows"]
+    return dict(rows=g["rows"], issues=g["issues"], issues_equivalent=g["issues_equivalent"], register=reg, terminology=term, all=tot,
+                experimental=dict(n=X["findings"], confirmed=X["real_or_minor"], real=X["real"], minor=X["real_or_minor"] - X["real"],
+                                  **{"not": X["findings"] - X["real_or_minor"]}))
 
 
 def value():

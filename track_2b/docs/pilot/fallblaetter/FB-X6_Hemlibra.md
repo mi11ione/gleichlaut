@@ -11,9 +11,10 @@ Spezialitätenliste (SL), Prüfung der Sprachfassungen DE/FR/IT, Lauf vom 06.10.
 | Art der Prüfung | Zahlwort: experimentelle Prüfung, standardmässig aus |
 | Betroffene Sprachfassung(en) | FR |
 | Abweichung | Zahlwort, FR: DE — · FR 2 |
+| Weicht von den beiden anderen ab | unklar (die dritte Sprache entscheidet es nicht) |
 | Erstmals festgestellt | nicht datiert (die experimentelle Prüfung wird nicht über frühere Stände datiert) |
 | Blinde Einstufung | geringfügig: Form fehlerhaft, Bedeutung erhalten (W01: minor) |
-| Herkunft der Einstufung | zwei blinde Claude-Annotatoren, übereinstimmend (PREREG R15); keine Einstufung durch das BAG |
+| Herkunft der Einstufung | zwei blinde Claude-Annotatoren, übereinstimmend; keine Einstufung durch das BAG |
 | Hinweis | experimentelle Prüfart; 31 Befunde im Register, davon 6 bestätigt (eval/results/audit_r15.json) |
 | Nachschlagen | https://sl.bag.admin.ch/sl, Präparat «Hemlibra» suchen, Limitierung in DE, FR und IT vergleichen; Rohdaten: https://epl.bag.admin.ch/static/sl/publication/fhir/foph-sl-publication-20261006-de.ndjson (ebenso `-fr`, `-it`) |
 
@@ -23,11 +24,11 @@ Wörtlich aus der Publikation vom 06.10.2026; die abweichenden Werte sind **fett
 
 ### Befund W01
 
-- **DE:** …erreicht wird, die so wenig wie möglich von der Dosierung nach Fachinformation abweicht. Anpassungen der Dosierung aufgrund von Gewichtsänderungen…
+- **DE:** Für alle Indikationen gelten folgende Vergütungsvoraussetzungen:
 - **FR:** Pour toutes les **deux** indications, les conditions de remboursement suivantes s’ap…
-- **IT:** …ottenere una dose per somministrazione che si discosti il meno possibile dal dosaggio indicato nell’informazione professionale. È possibile modificare…
+- **IT:** Per tutte le indicazioni valgono le seguenti condizioni di rimborso:
 
-Begründung der blinden Einstufung (Annotator, englisch, unverändert): *FR "Pour toutes les deux indications" vs DE "Für alle Indikationen"; adds count, conditions still apply to all.*
+Einstufung: von beiden blinden Claude-Annotatoren als geringfügig bestätigt: die Form ist fehlerhaft, die Bedeutung erhalten.
 
 ## Bearbeitung (durch BAG auszufüllen)
 
@@ -35,8 +36,8 @@ Begründung der blinden Einstufung (Annotator, englisch, unverändert): *FR "Pou
 |---|---|
 | Geschäftsnummer (GEVER) | durch BAG zu ergänzen |
 | Sprache der Verfügung | aus dem Dossier: ______ |
-| Entscheid | ☐ Abweichung bestätigt, Bedeutung betroffen ☐ Abweichung bestätigt, nur Form ☐ keine Abweichung ☐ weitere Abklärung |
-| Massnahme | ☐ Korrektur im ordentlichen Verfahren (Weg durch BAG festzulegen) ☐ Korrektur bei nächster Änderung oder Überprüfung ☐ keine |
+| Welcher Text ist falsch? | ☐ DE ☐ FR ☐ IT (mehrere möglich; gemessen am Entscheid des BAG) |
+| Was ist zu tun? | ☐ Von Amtes wegen berichtigen ☐ Mit der Zulassungsinhaberin in der dreijährlichen Überprüfung aufnehmen ☐ An den Sprachdienst ☐ Keine Massnahme (gleichwertige Formulierung) ☐ Noch unklar – Entscheiddossier prüfen |
 | Bemerkung | |
 | Visum (Name, Datum) | |
 

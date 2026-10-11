@@ -271,6 +271,13 @@ for cid, path, fmt in (("as_planted", "counts.planted", "{}"), ("as_untouched", 
                        ("as_b_real_REAL_either", ASB + "real.severe_incl_german_by_existing.REAL.either.k", "{}")):
     C.append((cid, AS, path, fmt, RE))
 
+# the audit's reconciliation table (README audit section, docs/pilot/Management_Notiz.md): findings -> issues -> confirmed
+RC = "eval/results/audit_grouping.json"
+for cid, path in (("rc_rows", "rows"), ("rc_issues", "issues"), ("rc_eq", "issues_equivalent"),
+                  *[(f"rc_{a}_{b}", f"{c}.{b}") for a, c in (("reg", "register"), ("term", "terminology"), ("all", "all"), ("x", "experimental"))
+                    for b in ("n", "confirmed", "real", "minor", "not")]):
+    C.append((cid, RC, "reconciliation." + path, "{}", RE))
+
 # PREREG R14: (A) every labelled audit finding relabelled by two blind annotators + a third; (B) errors inside the amended wording
 AR = "eval/results/audit_relabel.json"
 for cid, path, fmt in (("ar14_n", "findings", "{}"), ("ar14_agree", "all.annotators.agree", "{}"), ("ar14_kappa", "all.annotators.kappa", "{:.3f}"),

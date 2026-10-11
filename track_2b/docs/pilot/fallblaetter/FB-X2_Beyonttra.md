@@ -11,9 +11,10 @@ Spezialitätenliste (SL), Prüfung der Sprachfassungen DE/FR/IT, Lauf vom 06.10.
 | Art der Prüfung | Verneinung: experimentelle Prüfung, standardmässig aus |
 | Betroffene Sprachfassung(en) | IT |
 | Abweichung | Verneinung, IT: DE verneint («nicht»), IT nicht |
+| Weicht von den beiden anderen ab | IT |
 | Erstmals festgestellt | nicht datiert (die experimentelle Prüfung wird nicht über frühere Stände datiert) |
 | Blinde Einstufung | real: Bedeutung weicht ab (G03: real) |
-| Herkunft der Einstufung | zwei blinde Claude-Annotatoren, übereinstimmend (PREREG R15); keine Einstufung durch das BAG |
+| Herkunft der Einstufung | zwei blinde Claude-Annotatoren, übereinstimmend; keine Einstufung durch das BAG |
 | Hinweis | experimentelle Prüfart; 31 Befunde im Register, davon 6 bestätigt (eval/results/audit_r15.json) |
 | Nachschlagen | https://sl.bag.admin.ch/sl, Präparat «Beyonttra» suchen, Limitierung in DE, FR und IT vergleichen; Rohdaten: https://epl.bag.admin.ch/static/sl/publication/fhir/foph-sl-publication-20261006-de.ndjson (ebenso `-fr`, `-it`) |
 
@@ -24,10 +25,10 @@ Wörtlich aus der Publikation vom 06.10.2026; die abweichenden Werte sind **fett
 ### Befund G03
 
 - **DE:** BEYONTTRA darf **nicht** mit anderen spezifischen Arzneimitteln zur Behandlung der Transthyretin-Amyloidose (z.B. TTR-Stabilisatoren, TTR-Gen Silencer) kombiniert werden.
-- **FR:** …filtration glomérulaire \< 25 ml/min/1,73 m2. BEYONTTRA ne doit pas être combiné avec d’autres médicaments spécifiques pour le traitement de l’amylose…
+- **FR:** BEYONTTRA **ne** doit pas être combiné avec d’autres médicaments spécifiques pour le traitement de l’amylose à transthyrétine (p. ex. stabilisateurs du TTR, agents silencieux du gène TTR).
 - **IT:** BEYONTTRA on deve essere combinato con altri medicamenti specifici per il trattamento dell’amiloidosi da transtiretina (ad esempio stabilizzatori del TTR, agenti silenziatori del gene TTR).
 
-Begründung der blinden Einstufung (Annotator, englisch, unverändert): *IT "BEYONTTRA on deve essere combinato" (typo for non) vs DE "darf nicht ... kombiniert werden"; prohibition literally lost.*
+Einstufung: von beiden blinden Claude-Annotatoren als real bestätigt: die Bedeutung weicht ab.
 
 ## Bearbeitung (durch BAG auszufüllen)
 
@@ -35,8 +36,8 @@ Begründung der blinden Einstufung (Annotator, englisch, unverändert): *IT "BEY
 |---|---|
 | Geschäftsnummer (GEVER) | durch BAG zu ergänzen |
 | Sprache der Verfügung | aus dem Dossier: ______ |
-| Entscheid | ☐ Abweichung bestätigt, Bedeutung betroffen ☐ Abweichung bestätigt, nur Form ☐ keine Abweichung ☐ weitere Abklärung |
-| Massnahme | ☐ Korrektur im ordentlichen Verfahren (Weg durch BAG festzulegen) ☐ Korrektur bei nächster Änderung oder Überprüfung ☐ keine |
+| Welcher Text ist falsch? | ☐ DE ☐ FR ☐ IT (mehrere möglich; gemessen am Entscheid des BAG) |
+| Was ist zu tun? | ☐ Von Amtes wegen berichtigen ☐ Mit der Zulassungsinhaberin in der dreijährlichen Überprüfung aufnehmen ☐ An den Sprachdienst ☐ Keine Massnahme (gleichwertige Formulierung) ☐ Noch unklar – Entscheiddossier prüfen |
 | Bemerkung | |
 | Visum (Name, Datum) | |
 

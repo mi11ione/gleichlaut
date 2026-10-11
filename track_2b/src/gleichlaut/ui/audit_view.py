@@ -35,10 +35,8 @@ KINDS = ("number", "unit", "language", "editorial", "terminology")
 ACTIONS = {"Berichtigung": "exofficio", "GÄL": "holder", "GAEL": "holder", "none": "none", "unclear": "unclear"}
 LANGS = ("de", "fr", "it")
 NUMW = core.gl2.NUMW
-try:
-    from ..audit import UNIT_RX as _UNIT_RX
-except Exception:                       # the audit module is being extended by a teammate: degrade to no unit binding
-    _UNIT_RX = {}
+from .. import audit as au
+_UNIT_RX = au.UNIT_RX
 SENT = re.compile(r"[^.;!?]*(?:[.;!?](?=\s|$)|$)")
 
 
@@ -110,7 +108,7 @@ def _render(plain, lang, hot, marks):
     marks = list(marks)
     words = NUMW.get(lang, NUMW["de"])
     for m in _num_rx(lang).finditer(plain):
-        if any(a <= m.start() < b for a, b, _ in marks): continue
+        if any(a < m.end() and m.start() < b for a, b, _ in marks): continue
         t = m.group(0).lower()
         v = str(words.index(t)) if t in words else _canon(t)
         marks.append((m.start(), m.end(), 2 if v in hot else 1))
@@ -157,22 +155,67 @@ def _values_in(s, lang):
     return out
 
 
-def _window(full_ref, ctx_ref, ref_lang, full, lang, w=70):
+def _window(full_ref, ctx_ref, ref_lang, full, lang, w=70, rel=None, shift=False):
     """The passage of `full` that corresponds to the German context: the window around a number of `full` that shares the
     most other numbers with the German context (ties: closest relative position); without shared numbers, the window
     at the German context's relative position. Written like the audit's contexts: '…' + about 2*w characters + '…'."""
     core_ref = re.sub(r"[…\[\]]", "", ctx_ref).strip()
-    pos = full_ref.find(core_ref[:40]); rel = (pos + len(core_ref) / 2) / max(1, len(full_ref)) if pos >= 0 else 0.5
+    if rel is None:
+        pos = full_ref.find(core_ref[:40]); rel = (pos + len(core_ref) / 2) / max(1, len(full_ref)) if pos >= 0 else 0.5
     anchors = {v for _, v in _values_in(core_ref, ref_lang)} - {"1"}
-    V = _values_in(full, lang); best, at = (0, 0.0), int(rel * len(full))
-    for p, _ in V:
+    V = _values_in(full, lang); best, at, bv = (0, 0.0), int(rel * len(full)), None
+    for p, v in V:
         win = {v for q, v in V if abs(q - p) <= w}
         sc = (len(win & anchors), -abs(p / max(1, len(full)) - rel))
-        if sc > best: best, at = sc, p
+        if sc > best: best, at, bv = sc, p, v
+    if shift and bv in anchors:                 # centre on the place of the flagged value, not on the shared number
+        c0 = re.sub(r"^…", "", ctx_ref.strip()); f0 = c0.find("[")
+        R = [q for q, v in _values_in(re.sub(r"[\[\]]", "", c0), ref_lang) if v == bv]
+        if f0 >= 0 and R: at = max(0, min(len(full) - 1, at + f0 - min(R, key=lambda q: abs(q - f0))))
     a, b = max(0, at - w), min(len(full), at + w)
     a = full.rfind(" ", 0, a) + 1 if a > 0 else 0
     b = (full.find(" ", b) if full.find(" ", b) > 0 else len(full)) if b < len(full) else b
     return ("…" if a > 0 else "") + full[a:b].strip() + ("…" if b < len(full) else "")
+
+
+_NT = {}
+def _nt(full):
+    """{lang: nrm(text)}: the texts as the audit reads them (its contexts and offsets refer to these)."""
+    k = tuple(sorted(full.items()))
+    if k not in _NT:
+        if len(_NT) > 256: _NT.clear()
+        _NT[k] = {L: au.nrm(t) for L, t in full.items()}
+    return _NT[k]
+
+
+def _aligned_window(full, ref, c, k, w=70):
+    """The passage of language k at the place of the reference context c (a '[x]' context of language ref): the window
+    of the sentence(s) the audit's sentence alignment pairs with c's sentence (audit.aligned_span), chosen inside it as
+    _window does; _window over the whole text when c is not found or its sentence is in no aligned pair."""
+    T = _nt(full); sp = _locate(T.get(ref, ""), c) if T.get(ref) else None
+    g = au.aligned_span(T, ref, sp[0], k) if sp and T.get(k) else None
+    if not g: return _window(full[ref], c, ref, full[k], k, w)
+    a = au.aligned_span(T, ref, sp[0], ref) or (sp[0], sp[1] + 1)
+    seg = T[k][g[0]:g[1]].strip()
+    win = seg if len(seg) <= 4 * w else _window(T[ref], c, ref, seg, k, w, rel=(sp[0] - a[0]) / max(1, a[1] - a[0]), shift=True)
+    if g[0] > 0 and not win.startswith("…"): win = "…" + win
+    if g[1] < len(T[k].rstrip()) and not win.endswith("…"): win = win + "…"
+    return win
+
+
+def _pick(full, side, other, xs, value):
+    """the first of a value's '[x]' contexts (language side) whose aligned sentence in language other states the value
+    fewer times (the place where the texts differ); the first context when none does or the texts are not at hand."""
+    cs = [c for c in xs if isinstance(c, str)]
+    T = _nt(full) if full else {}
+    if len(cs) < 2 or not T.get(side) or not T.get(other): return cs[0] if cs else None
+    cnt = lambda t, L: sum(1 for x in au.values(t, L) if x["v"] == value or x.get("alt") == value)
+    for c in cs:
+        sp = _locate(T[side], c)
+        if not sp: continue
+        a, g = au.aligned_span(T, side, sp[0], side), au.aligned_span(T, side, sp[0], other)
+        if a and g and cnt(T[side][a[0]:a[1]], side) > cnt(T[other][g[0]:g[1]], other): return c
+    return cs[0]
 
 
 def _ctxs(f, kind, L):
@@ -235,21 +278,24 @@ def rows(F, hist=None, date="20261006", snaps=None):
             for k, s in S.items():
                 s = s[0] if isinstance(s, (list, tuple)) and s else s
                 if k in LANGS and isinstance(s, str) and s.strip(): snip[k] = s; src[k] = "audit"
-        def ctx(xs): return next((x["context"][0] for x in xs or [] if x.get("context")), None)
+        full = _hist_texts(hist, date, lim)
+        def ctx(xs, side=None, oth=None):
+            x = next((x for x in xs or [] if x.get("context")), None)
+            if x is None: return None
+            return _pick(full, side, oth, x["context"], x.get("value")) if side and oth else x["context"][0]
         top = f.get("context")
         top = top[0] if isinstance(top, (list, tuple)) and top else top if isinstance(top, str) else None
         if top and L in LANGS and L not in snip and kind in ("language", "editorial", "terminology"): snip[L] = top; src[L] = "context"
-        if "de" not in snip and ctx(f.get("de_only")): snip["de"] = ctx(f.get("de_only")); src["de"] = "context"
-        if L and L not in snip and ctx(f.get("tgt_only")): snip[L] = ctx(f.get("tgt_only")); src[L] = "context"
+        if "de" not in snip and ctx(f.get("de_only")): snip["de"] = ctx(f.get("de_only"), "de", L); src["de"] = "context"
+        if L and L not in snip and ctx(f.get("tgt_only")): snip[L] = ctx(f.get("tgt_only"), L, "de"); src[L] = "context"
         for g in twin:
             if other not in snip and ctx(g.get("tgt_only")): snip[other] = ctx(g.get("tgt_only")); src[other] = "context"
             if "de" not in snip and ctx(g.get("de_only")): snip["de"] = ctx(g.get("de_only")); src["de"] = "context"
-        full = _hist_texts(hist, date, lim)
         ref = next((k for k in LANGS if k in snip and k in full), None)
         if full and ref:                           # fill a missing language from the snapshot, near the reference context
             for k in LANGS:
                 if k in snip or k not in full: continue
-                snip[k] = _window(full[ref], snip[ref], ref, full[k], k); src[k] = "snapshot"
+                snip[k] = _aligned_window(full, ref, snip[ref], k); src[k] = "snapshot"
         odd = f.get("odd_one_out")
         if odd not in LANGS + ("unclear",) and kind == "terminology" and L in LANGS: odd = L
         if odd not in LANGS + ("unclear",):
@@ -424,7 +470,7 @@ def _mark(s, words):
     return s
 
 
-def experimental(A, date, labels=None):
+def experimental(A, date, labels=None, hist=None):
     """Round-5 findings (operator, negation, number word: findings_r5, PREREG R15) that both blind annotators confirmed
     (final label real or minor in eval/labels/audit_r15_<date>.tsv). Every round-5 kind ships off (summary.round5.on): they
     are shown apart, never counted in the headline or the 18 issues, but each is decidable like an issue (kind
@@ -442,11 +488,18 @@ def experimental(A, date, labels=None):
         L, k, fl = f.get("lang"), f.get("kind"), (lab.get(f.get("fid")) or {}).get("final")
         if fl not in CONFIRMED: continue
         ctx = [c for c in (f.get("context") or []) if isinstance(c, str)]
+        M = "it" if L == "fr" else "fr"; T = _nt(_hist_texts(hist, date, f.get("id"))); tm, odd = "", None
         if k == "operator":
             what = [k, L, f"{f.get('de_op')} {f.get('value')}", f"{f.get('tgt_op')} {f.get('value')}"]; de, tg = (ctx + ["", ""])[:2]
+            o = au.operator_display(f, T) if T.get("de") and T.get(L) else None     # the aligned occurrences, not the first ones
+            if o: de, tg, tm, odd = o["de"], o[L], o.get(M) or "", o["odd"]
         elif k == "negation":
             neg = " ".join(f.get("negations") or []); de, tg = (ctx + ["", ""])[:2]
             what = [k, L, neg, "—"] if f.get("side") == "de" else [k, L, "—", neg]
+            sp = f.get("tgt_span")
+            if T.get(L) and sp:
+                S = au.sentence_display(T, L, sp[0], ("de", L, M)); odd = au.negation_odd(T, f, S); tm = _clip(S.get(M) or "")
+                if tm: tm = _mark(tm, [h[2] for h in au.neg_strong(tm, M)])
             if f.get("side") == "de": de = _mark(de, f.get("negations") or [])
             else: tg = _mark(tg, f.get("negations") or [])
         else:
@@ -454,12 +507,19 @@ def experimental(A, date, labels=None):
             what = [k, L, dv or "—", tv or "—"]
             de = next((c for x in f.get("de_only") or [] for c in x.get("context") or []), "")
             tg = next((c for x in f.get("tgt_only") or [] for c in x.get("context") or []), "")
+            sp = next((x.get("span") for x in f.get("tgt_only") or [] if x.get("span")), None)
+            at = (L, sp[0]) if sp else ("de", (_locate(T.get("de", ""), de) or (None,))[0]) if de and T.get("de") else (None, None)
+            if at[1] is not None:                     # the other languages: the sentences aligned with the flagged one
+                S = au.sentence_display(T, at[0], at[1], ("de", L, M)); tm = _clip(S.get(M) or "")
+                de, tg = de or _clip(S.get("de") or ""), tg or _clip(S.get(L) or "")
         prod = f.get("product"); prod = ", ".join(prod) if isinstance(prod, (list, tuple)) else (prod or "")
         sig = "|".join([str(f.get("id") or ""), "experimental:" + str(k), str(L or ""), f"{what[2]}>{what[3]}"])
-        snip = {kk: x for kk, x in (("de", highlight(de, "de", set()) if de else None), (L, highlight(tg, L, set()) if tg else None)) if x}
+        snip = {kk: x for kk, x in (("de", highlight(de, "de", set()) if de else None), (L, highlight(tg, L, set()) if tg else None),
+                                    (M, highlight(tm, M, set()) if tm else None)) if x}
+        snip = {kk: snip[kk] for kk in LANGS if kk in snip}
         out.append(dict(fid=f.get("fid"), lim=f.get("id"), product=prod, kind="experimental", xkind=k, lang=L, label=fl, what=what,
                         desc=f.get("description") or "", snip=snip, src={kk: "context" for kk in snip}, sig=sig, no=f.get("fid") or "",
-                        rid=hashlib.sha1(sig.encode()).hexdigest()[:10], odd=f.get("odd_one_out") if f.get("odd_one_out") in LANGS else "unclear",
+                        rid=hashlib.sha1(sig.encode()).hexdigest()[:10], odd=f.get("odd_one_out") if f.get("odd_one_out") in LANGS else odd if odd in LANGS else "unclear",
                         vals={}, known=False, eq=None, term=None, expl=[], fix=None, found=None, dating=None, rank=None, langs=["de", L],
                         sug=ACTIONS.get(f.get("suggested_action") or "", f.get("suggested_action") or "")))
     S = A.get("summary", {}).get("round5") or {}
@@ -505,7 +565,7 @@ def data(path=AUDIT, results=RESULTS, hist=None):
     R = rows(F, hist, date, snaps)
     I = issues(R)
     meta.update(issues=len(I))
-    T = full_texts(F, R, hist, date); X = experimental(A, date)
+    T = full_texts(F, R, hist, date); X = experimental(A, date, hist=hist)
     for r in (X or {}).get("rows", []):              # the full texts of an experimental finding's limitation, when at hand
         full = _hist_texts(hist, date, r["lim"]) if r["lim"] not in T else {}
         if full: T[r["lim"]] = {L: _render(full[L], L, set(), []) for L in LANGS if full.get(L)}

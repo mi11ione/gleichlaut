@@ -1,7 +1,41 @@
 {
  "findings": 27,
  "issues": 18,
+ "issues_equivalent": 3,
  "issues_terminology": 3,
+ "reconciliation": {
+  "all": {
+   "confirmed": 28,
+   "minor": 12,
+   "n": 38,
+   "not": 10,
+   "real": 16
+  },
+  "experimental": {
+   "confirmed": 6,
+   "minor": 3,
+   "n": 31,
+   "not": 25,
+   "real": 3
+  },
+  "issues": 18,
+  "issues_equivalent": 3,
+  "register": {
+   "confirmed": 17,
+   "minor": 5,
+   "n": 27,
+   "not": 10,
+   "real": 12
+  },
+  "rows": 38,
+  "terminology": {
+   "confirmed": 11,
+   "minor": 7,
+   "n": 11,
+   "not": 0,
+   "real": 4
+  }
+ },
  "rows": 38,
  "terminology": 11
 }

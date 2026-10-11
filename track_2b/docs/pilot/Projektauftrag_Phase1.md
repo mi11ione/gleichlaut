@@ -17,8 +17,14 @@ Felder mit «durch BAG zu ergänzen» sind bewusst offen; es werden keine Person
 ## Ausgangslage
 
 Das BAG entscheidet über die Limitierungen der Spezialitätenliste (KVV Art. 73) und publiziert sie in drei
-Sprachfassungen auf sl.bag.admin.ch. Die Übereinstimmung der Übersetzungen wird heute in der Überprüfung alle drei Jahre
-bei der Zulassungsinhaberin abgefragt ([sl-process.md](../sl-process.md) §5). Ein Programm vergleicht Zahlen,
+Sprachfassungen auf sl.bag.admin.ch. Die Übereinstimmung der Übersetzungen fragt das BAG heute in der Überprüfung alle
+drei Jahre ab, und zwar nicht nur die Kriterien Wirksamkeit, Zweckmässigkeit und Wirtschaftlichkeit (WZW) allgemein: Im
+Kapitel Zweckmässigkeit des ePL-Formulars der dreijährlichen Überprüfung beantwortet die Zulassungsinhaberin wörtlich die
+Frage «Falls eine Limitierung vorhanden ist, ist diese wissenschaftlich eindeutig und klar verständlich formuliert und
+die Übersetzungen sind kongruent?» (Feld `sl.request.expediency.changes.formulationLimitation`, öffentlich in
+https://sl.bag.admin.ch/assets/i18n/de.json; Hilfetext: «Ist gegebenenfalls eine Übersetzung missverständlich
+formuliert?»). Es ist eine Selbstauskunft der Zulassungsinhaberin; eine Prüfung durch das BAG selbst ist nicht
+dokumentiert ([sl-process.md](../sl-process.md) §5). Ein Programm vergleicht Zahlen,
 Sprache des Feldes, Tippfehler und vom BAG bereits korrigierte Begriffe aller 1688 Limitierungen der Publikation vom
 6. Oktober 2026. Es liest nur die öffentliche Publikation und ruft kein Sprachmodell auf. Ergebnis: 38 Befunde, von
 blinden Claude-Annotatoren 16 als real (Bedeutung weicht ab) und 12 als geringfügig eingestuft

@@ -9,9 +9,10 @@ Spezialitätenliste (SL), Prüfung der Sprachfassungen DE/FR/IT, Lauf vom 06.10.
 | Art der Prüfung | Zahl (Wert mit Einheit) |
 | Betroffene Sprachfassung(en) | IT |
 | Abweichung | Zahl, IT: DE 6 · IT 12 |
+| Weicht von den beiden anderen ab | IT |
 | Erstmals festgestellt | bereits im frühesten geprüften Stand 2026 vorhanden (19.02.2026); vorhanden in 9 von 9 geprüften Ständen ab diesem Datum |
 | Blinde Einstufung | real: Bedeutung weicht ab (N01: real) |
-| Herkunft der Einstufung | zwei blinde Claude-Annotatoren, ein dritter bei Uneinigkeit (Mehrheit, PREREG R14); keine Einstufung durch das BAG |
+| Herkunft der Einstufung | zwei blinde Claude-Annotatoren, ein dritter bei Uneinigkeit (Mehrheit); keine Einstufung durch das BAG |
 | Hinweis | Fall war vor Entwicklung der Prüfregel bekannt (kein unabhängiger Treffer) |
 | Nachschlagen | https://sl.bag.admin.ch/sl, Präparat «Diaphin» suchen, Limitierung in DE, FR und IT vergleichen; Rohdaten: https://epl.bag.admin.ch/static/sl/publication/fhir/foph-sl-publication-20261006-de.ndjson (ebenso `-fr`, `-it`) |
 
@@ -22,10 +23,10 @@ Wörtlich aus der Publikation vom 06.10.2026; die abweichenden Werte sind **fett
 ### Befund N01
 
 - **DE:** …brikabgabepreises zuzüglich dem preisbezogenen Zuschlag von **6%** zuzüglich MWST. Aufgrund spezieller Vertriebsverhältnisse …
-- **FR:** …Diaphin sur la base du prix de fabrique, plus la prime relative au prix de **6%**, TVA en sus. En raison de la situation particulière de distribution…
+- **FR:** …Détermination du prix pour Diaphin sur la base du prix de fabrique, plus la prime relative au prix de **6%**, TVA en sus.…
 - **IT:** …ezzo di fabbrica, più il supplemento attinente al prezzo di **12%** più la IVA. A causa della situazione particolare della dis…
 
-Begründung der blinden Einstufung (Annotator, englisch, unverändert): *Supplement 6% in DE vs 12% in IT.*
+Einstufung: von beiden blinden Claude-Annotatoren als real bestätigt: die Bedeutung weicht ab.
 
 ## Bearbeitung (durch BAG auszufüllen)
 
@@ -33,8 +34,8 @@ Begründung der blinden Einstufung (Annotator, englisch, unverändert): *Supplem
 |---|---|
 | Geschäftsnummer (GEVER) | durch BAG zu ergänzen |
 | Sprache der Verfügung | aus dem Dossier: ______ |
-| Entscheid | ☐ Abweichung bestätigt, Bedeutung betroffen ☐ Abweichung bestätigt, nur Form ☐ keine Abweichung ☐ weitere Abklärung |
-| Massnahme | ☐ Korrektur im ordentlichen Verfahren (Weg durch BAG festzulegen) ☐ Korrektur bei nächster Änderung oder Überprüfung ☐ keine |
+| Welcher Text ist falsch? | ☐ DE ☐ FR ☐ IT (mehrere möglich; gemessen am Entscheid des BAG) |
+| Was ist zu tun? | ☐ Von Amtes wegen berichtigen ☐ Mit der Zulassungsinhaberin in der dreijährlichen Überprüfung aufnehmen ☐ An den Sprachdienst ☐ Keine Massnahme (gleichwertige Formulierung) ☐ Noch unklar – Entscheiddossier prüfen |
 | Bemerkung | |
 | Visum (Name, Datum) | |
 

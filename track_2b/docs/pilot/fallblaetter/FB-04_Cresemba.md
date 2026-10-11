@@ -9,9 +9,10 @@ Spezialitätenliste (SL), Prüfung der Sprachfassungen DE/FR/IT, Lauf vom 06.10.
 | Art der Prüfung | Zahl (Wert mit Einheit) |
 | Betroffene Sprachfassung(en) | FR |
 | Abweichung | Zahl, FR: DE 16 · FR — |
+| Weicht von den beiden anderen ab | FR |
 | Erstmals festgestellt | bereits im frühesten geprüften Stand 2026 vorhanden (19.02.2026); vorhanden in 9 von 9 geprüften Ständen ab diesem Datum |
 | Blinde Einstufung | real: Bedeutung weicht ab (N09: real) |
-| Herkunft der Einstufung | zwei blinde Claude-Annotatoren, ein dritter bei Uneinigkeit (Mehrheit, PREREG R14); keine Einstufung durch das BAG |
+| Herkunft der Einstufung | zwei blinde Claude-Annotatoren, ein dritter bei Uneinigkeit (Mehrheit); keine Einstufung durch das BAG |
 | Hinweis | Fall war vor Entwicklung der Prüfregel bekannt (kein unabhängiger Treffer) |
 | Nachschlagen | https://sl.bag.admin.ch/sl, Präparat «Cresemba» suchen, Limitierung in DE, FR und IT vergleichen; Rohdaten: https://epl.bag.admin.ch/static/sl/publication/fhir/foph-sl-publication-20261006-de.ndjson (ebenso `-fr`, `-it`) |
 
@@ -23,9 +24,9 @@ Wörtlich aus der Publikation vom 06.10.2026; die abweichenden Werte sind **fett
 
 - **DE:** …ter von 6 Jahren und mit einem Körpergewicht von mindestens **16 kg** vergütet.
 - **FR:** …concomitante chez les adultes et les patients pédiatriques à partir de 6 ans.
-- **IT:** …moderata a grave negli adulti e nei pazienti pediatrici a partire dai 6 anni di età e con un peso corporeo di almeno **16 kg**.
+- **IT:** …pediatrici a partire dai 6 anni di età e con un peso corporeo di almeno **16 kg**.
 
-Begründung der blinden Einstufung (Annotator, englisch, unverändert): *FR omits minimum body weight 16 kg for paediatric patients.*
+Einstufung: von beiden blinden Claude-Annotatoren als real bestätigt: die Bedeutung weicht ab.
 
 ## Bearbeitung (durch BAG auszufüllen)
 
@@ -33,8 +34,8 @@ Begründung der blinden Einstufung (Annotator, englisch, unverändert): *FR omit
 |---|---|
 | Geschäftsnummer (GEVER) | durch BAG zu ergänzen |
 | Sprache der Verfügung | aus dem Dossier: ______ |
-| Entscheid | ☐ Abweichung bestätigt, Bedeutung betroffen ☐ Abweichung bestätigt, nur Form ☐ keine Abweichung ☐ weitere Abklärung |
-| Massnahme | ☐ Korrektur im ordentlichen Verfahren (Weg durch BAG festzulegen) ☐ Korrektur bei nächster Änderung oder Überprüfung ☐ keine |
+| Welcher Text ist falsch? | ☐ DE ☐ FR ☐ IT (mehrere möglich; gemessen am Entscheid des BAG) |
+| Was ist zu tun? | ☐ Von Amtes wegen berichtigen ☐ Mit der Zulassungsinhaberin in der dreijährlichen Überprüfung aufnehmen ☐ An den Sprachdienst ☐ Keine Massnahme (gleichwertige Formulierung) ☐ Noch unklar – Entscheiddossier prüfen |
 | Bemerkung | |
 | Visum (Name, Datum) | |
 

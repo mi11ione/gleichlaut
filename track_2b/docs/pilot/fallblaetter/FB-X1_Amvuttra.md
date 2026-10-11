@@ -11,9 +11,10 @@ Spezialitätenliste (SL), Prüfung der Sprachfassungen DE/FR/IT, Lauf vom 06.10.
 | Art der Prüfung | Vergleichsoperator: experimentelle Prüfung, standardmässig aus |
 | Betroffene Sprachfassung(en) | FR |
 | Abweichung | Vergleichsoperator, FR: DE «\> 10» · FR «≤ 10» |
+| Weicht von den beiden anderen ab | FR |
 | Erstmals festgestellt | nicht datiert (die experimentelle Prüfung wird nicht über frühere Stände datiert) |
 | Blinde Einstufung | real: Bedeutung weicht ab (O01: real) |
-| Herkunft der Einstufung | zwei blinde Claude-Annotatoren, übereinstimmend (PREREG R15); keine Einstufung durch das BAG |
+| Herkunft der Einstufung | zwei blinde Claude-Annotatoren, übereinstimmend; keine Einstufung durch das BAG |
 | Hinweis | experimentelle Prüfart; 31 Befunde im Register, davon 6 bestätigt (eval/results/audit_r15.json) |
 | Nachschlagen | https://sl.bag.admin.ch/sl, Präparat «Amvuttra» suchen, Limitierung in DE, FR und IT vergleichen; Rohdaten: https://epl.bag.admin.ch/static/sl/publication/fhir/foph-sl-publication-20261006-de.ndjson (ebenso `-fr`, `-it`) |
 
@@ -24,10 +25,10 @@ Wörtlich aus der Publikation vom 06.10.2026; die abweichenden Werte sind **fett
 ### Befund O01
 
 - **DE:** …n folgende Kriterien eingetreten sein müssen: • NIS-Zunahme **\> 10 Punkte** und • Zunahme im PND-Score um \> 1 Stufe (PND IIIa zu…
-- **FR:** …critères suivants sont remplis: - augmentation du score NIS **≤ 10 points**, et - pas d’augmentation du score PND. • après 24 mo…
-- **IT:** …mesi devono essere subentrati i seguenti criteri: • aumento del NIS \> 10 punti e • aumento del punteggio PND di \> 1 livello (anche un PND da…
+- **FR:** …être survenus dans les 12 mois: • augmentation du score NIS **≤ 10 points** et • augmentation du score PND \> 1 stade (de PND III…
+- **IT:** …ono essere subentrati i seguenti criteri: • aumento del NIS **\> 10 punti** e • aumento del punteggio PND di \> 1 livello (anche u…
 
-Begründung der blinden Einstufung (Annotator, englisch, unverändert): *Stop criteria: DE "NIS-Zunahme \> 10 Punkte" vs FR "augmentation du score NIS ≤ 10 points"; inverts discontinuation threshold.*
+Einstufung: von beiden blinden Claude-Annotatoren als real bestätigt: die Bedeutung weicht ab.
 
 ## Bearbeitung (durch BAG auszufüllen)
 
@@ -35,8 +36,8 @@ Begründung der blinden Einstufung (Annotator, englisch, unverändert): *Stop cr
 |---|---|
 | Geschäftsnummer (GEVER) | durch BAG zu ergänzen |
 | Sprache der Verfügung | aus dem Dossier: ______ |
-| Entscheid | ☐ Abweichung bestätigt, Bedeutung betroffen ☐ Abweichung bestätigt, nur Form ☐ keine Abweichung ☐ weitere Abklärung |
-| Massnahme | ☐ Korrektur im ordentlichen Verfahren (Weg durch BAG festzulegen) ☐ Korrektur bei nächster Änderung oder Überprüfung ☐ keine |
+| Welcher Text ist falsch? | ☐ DE ☐ FR ☐ IT (mehrere möglich; gemessen am Entscheid des BAG) |
+| Was ist zu tun? | ☐ Von Amtes wegen berichtigen ☐ Mit der Zulassungsinhaberin in der dreijährlichen Überprüfung aufnehmen ☐ An den Sprachdienst ☐ Keine Massnahme (gleichwertige Formulierung) ☐ Noch unklar – Entscheiddossier prüfen |
 | Bemerkung | |
 | Visum (Name, Datum) | |
 

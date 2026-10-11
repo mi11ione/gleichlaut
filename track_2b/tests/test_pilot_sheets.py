@@ -1,5 +1,6 @@
 """Pilot pack (docs/pilot): tools/pilot_sheets.py runs, writes one Fallblatt per register issue plus one per confirmed
-experimental finding and an overview, and the committed sheets equal what it generates."""
+experimental finding and an overview (the answers are the register's own: tests/test_excerpts.py), and the committed
+sheets equal what it generates."""
 import os, re, subprocess, sys, tempfile
 from gleichlaut.ui import audit_view as av
 
@@ -18,7 +19,8 @@ def test_one_sheet_per_issue():
         assert "00_Uebersicht.md" in os.listdir(t)
         for f in got:
             s = open(os.path.join(t, f), encoding="utf-8").read()
-            for field in ("Sprache der Verfügung | aus dem Dossier", "| Entscheid |", "| Massnahme |", "| Visum", "sl.bag.admin.ch/sl"):
+            for field in ("Sprache der Verfügung | aus dem Dossier", "| Welcher Text ist falsch? |", "| Was ist zu tun? |", "| Visum", "sl.bag.admin.ch/sl",
+                          "| Weicht von den beiden anderen ab |"):
                 assert field in s, (f, field)
             assert ("experimentelle Prüfung, standardmässig aus" in s) == f.startswith("FB-X"), f
 

@@ -61,6 +61,19 @@ threshold fixed on planted copies), and it separates planted flips from the unto
 keeps 13 of the 31 register findings with only 2 confirmed among them (15.4%; Amvuttra's "≤ 10" judged the same
 condition), so the checks stay off ([eval/results/audit_apertus_filter.json](eval/results/audit_apertus_filter.json)).
 
+The audit's counts in one table (`eval/results/audit_grouping.json`, `reconciliation`; confirmed = real or minor by the
+blind Claude annotators' majority):
+
+| | Items | Confirmed | Real (changes a condition) | Minor | Not confirmed |
+|---|---|---|---|---|---|
+| Findings (number, unit, language, typo) | 27 | 17 | 12 | 5 | 10 |
+| Terminology notices | 11 | 11 | 4 | 7 | 0 |
+| **All, in the register** | **38** | **28** | **16** | **12** | **10** |
+| Experimental checks (off; shown apart) | 31 | 6 | 3 | 3 | 25 |
+
+In the register the 38 become 18 issues (3 of them probably equivalent wording, shown collapsed); the experimental
+findings are not part of the 18 and are decided and counted on their own.
+
 The two meet in the review register. Nemluvio's old Italian already says "every 4 weeks"; the 70B draft (the register's
 "fewer edits" lane) writes "every 8 weeks", matching the German, and the register shows it as a correction to check, not
 as an error. The default 8B keeps the 4, and the register marks the old text as already diverging. BAG's own update kept

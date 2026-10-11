@@ -32,6 +32,10 @@ SHORT = {"real": "real", "minor": "geringfügig", "not": "nicht bestätigt"}
 LABEL = {"real": "real: Bedeutung weicht ab", "minor": "geringfügig: Form fehlerhaft, Bedeutung erhalten",
          "not": "nicht bestätigt: gleiche Bedeutung"}
 EXP = "experimentelle Prüfung, standardmässig aus"
+# die Antworten des Registers, Wort für Wort (src/gleichlaut/ui/page.py, TX8.de: aWrongQ, aRemQ, rem; Test prüft die Gleichheit)
+WRONG_Q, REM_Q = "Welcher Text ist falsch?", "Was ist zu tun?"
+REM = ("Von Amtes wegen berichtigen", "Mit der Zulassungsinhaberin in der dreijährlichen Überprüfung aufnehmen", "An den Sprachdienst",
+       "Keine Massnahme (gleichwertige Formulierung)", "Noch unklar – Entscheiddossier prüfen")
 FEED = "https://epl.bag.admin.ch/static/sl/publication/fhir/foph-sl-publication-20261006-{}.ndjson"
 
 
@@ -68,10 +72,21 @@ def mark(snip, what):
     return out
 
 
+def votes_line(final, votes):
+    """Die Einstufung in einem deutschen Satz (statt der englischen Begründung der Annotatoren)."""
+    v = [x for x in votes if x]; k = sum(x == final for x in v)
+    who = "von beiden blinden Claude-Annotatoren" if len(v) == 2 and k == 2 else f"von {k} der {len(v)} blinden Claude-Annotatoren (Mehrheit)"
+    return f"{who} {VERDICT[final]}"
+
+
+VERDICT = {"real": "als real bestätigt: die Bedeutung weicht ab", "minor": "als geringfügig bestätigt: die Form ist fehlerhaft, die Bedeutung erhalten",
+           "not": "nicht bestätigt: gleiche Bedeutung"}
+
+
 def labels(F):
-    """{fid: (final, note)} für die 38 Registerbefunde: Mehrheit aus audit_relabel.tsv, über die Satzdateien (Kennung,
+    """{fid: (final, Satz)} für die 38 Registerbefunde: Mehrheit aus audit_relabel.tsv, über die Satzdateien (Kennung,
     Sprache, Rang bzw. Art) dem Befund zugeordnet."""
-    M = {r["uid"]: (r["final"], r["note_A"]) for r in tsv("audit_relabel.tsv")}
+    M = {r["uid"]: (r["final"], votes_line(r["final"], (r["A"], r["B"], r["T"]))) for r in tsv("audit_relabel.tsv")}
     out = {}
     def one(hits, uid):
         assert len(hits) == 1, (uid, len(hits))
@@ -99,6 +114,10 @@ def check_counts(lab, X, issues):
     G = json.load(open(os.path.join(RESULTS, "audit_grouping.json"), encoding="utf-8"))
     assert len(issues) == G["issues"], (len(issues), G["issues"])
     return got
+
+
+def ODD(o):
+    return LANG.get(o, "unklar (die dritte Sprache entscheidet es nicht)") if o != "unclear" else "unklar (die dritte Sprache entscheidet es nicht)"
 
 
 def what_line(w):
@@ -151,14 +170,14 @@ def sheet(no, title, meta, excerpts, fids, exp=False):
         o += [f"### Befund {fid}", ""]
         for L in av.LANGS:
             if L in ex: o += [f"- **{LANG[L]}:** {render(ex[L])}"]
-        if note: o += ["", f"Begründung der blinden Einstufung (Annotator, englisch, unverändert): *{esc(note)}*"]
+        if note: o += ["", f"Einstufung: {esc(note)}."]
         o += [""]
     o += ["## Bearbeitung (durch BAG auszufüllen)", "",
           "| Feld | Eintrag |", "|---|---|",
           "| Geschäftsnummer (GEVER) | durch BAG zu ergänzen |",
           "| Sprache der Verfügung | aus dem Dossier: ______ |",
-          "| Entscheid | ☐ Abweichung bestätigt, Bedeutung betroffen ☐ Abweichung bestätigt, nur Form ☐ keine Abweichung ☐ weitere Abklärung |",
-          "| Massnahme | ☐ Korrektur im ordentlichen Verfahren (Weg durch BAG festzulegen) ☐ Korrektur bei nächster Änderung oder Überprüfung ☐ keine |",
+          f"| {WRONG_Q} | ☐ DE ☐ FR ☐ IT (mehrere möglich; gemessen am Entscheid des BAG) |",
+          f"| {REM_Q} | " + " ".join("☐ " + x for x in REM) + " |",
           "| Bemerkung | |",
           "| Visum (Name, Datum) | |", "",
           f"Quelle: `data/audit/audit_{DATE}.json`, Befund{'e' if len(fids) > 1 else ''} {', '.join(fids)}; "
@@ -188,9 +207,10 @@ def build():
                 ("Art der Prüfung", ", ".join(KIND.get(k, k) for k in i["kinds"])),
                 ("Betroffene Sprachfassung(en)", ", ".join(LANG[x] for x in i["langs"])),
                 ("Abweichung", "<br>".join(esc(what_line(w)) for w in i["what"])),
+                ("Weicht von den beiden anderen ab", ODD(i["odd"])),
                 ("Erstmals festgestellt", dating_line(i["dating"])),
                 ("Blinde Einstufung", f"{LABEL[L[0]]} ({lines})"),
-                ("Herkunft der Einstufung", "zwei blinde Claude-Annotatoren, ein dritter bei Uneinigkeit (Mehrheit, PREREG R14); keine Einstufung durch das BAG"),
+                ("Herkunft der Einstufung", "zwei blinde Claude-Annotatoren, ein dritter bei Uneinigkeit (Mehrheit); keine Einstufung durch das BAG"),
                 ("Hinweis", "; ".join(flags) if flags else "–"),
                 ("Nachschlagen", f"https://sl.bag.admin.ch/sl, Präparat «{esc(i['products'][0] if i['products'] else '')}» suchen, Limitierung in DE, FR und IT vergleichen; "
                                  f"Rohdaten: {FEED.format('de')} (ebenso `-fr`, `-it`)")]
@@ -213,16 +233,17 @@ def build():
                 ("Art der Prüfung", f"{KIND[r['xkind']]}: {EXP}"),
                 ("Betroffene Sprachfassung(en)", LANG[r["lang"]]),
                 ("Abweichung", esc(what_line(w))),
+                ("Weicht von den beiden anderen ab", ODD(r["odd"])),
                 ("Erstmals festgestellt", dating_line(None)),
                 ("Blinde Einstufung", f"{LABEL[r['label']]} ({r['fid']}: {r['label']})"),
-                ("Herkunft der Einstufung", "zwei blinde Claude-Annotatoren, übereinstimmend (PREREG R15); keine Einstufung durch das BAG"),
+                ("Herkunft der Einstufung", "zwei blinde Claude-Annotatoren, übereinstimmend; keine Einstufung durch das BAG"),
                 ("Hinweis", "experimentelle Prüfart; 31 Befunde im Register, davon 6 bestätigt (eval/results/audit_r15.json)"),
                 ("Nachschlagen", f"https://sl.bag.admin.ch/sl, Präparat «{esc(r['product'])}» suchen, Limitierung in DE, FR und IT vergleichen; "
                                  f"Rohdaten: {FEED.format('de')} (ebenso `-fr`, `-it`)")]
         no = X["issues"][n]["iid"]
         name = f"FB-{no}_{re.sub(r'[^A-Za-z0-9]+', '-', r['product']).strip('-')}.md"
         files[name] = sheet(no, f"{r['product']} ({KIND[r['xkind']]}, experimentell)", meta,
-                            [(r["fid"], snip, (r15.get(r["fid"]) or {}).get("note_A", ""))], [r["fid"]], exp=True)
+                            [(r["fid"], snip, votes_line(r["label"], ((r15.get(r["fid"]) or {}).get(c, "") for c in ("A", "B", "T"))))], [r["fid"]], exp=True)
         idx.append((no, name, r["product"], [r["lim"]], [r["xkind"]], [r["lang"]], [w], r["label"], None, True))
     files["00_Uebersicht.md"] = overview(idx, tot, X, len(I))
     return files

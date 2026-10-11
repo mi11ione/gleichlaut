@@ -15,6 +15,7 @@ Prüfung. Für einen neuen Lauf wird der Generator erneut ausgeführt; die Vorla
 | Art der Prüfung | Zahl (Wert mit Einheit) · Einheit · Sprache des Feldes · redaktionell (Tippfehler) · Terminologie · experimentell: Vergleichsoperator, Verneinung, Zahlwort |
 | Betroffene Sprachfassung(en) | DE, FR, IT |
 | Abweichung | die abweichenden Werte, z. B. «Zahl, IT: DE 8 · IT 4» |
+| Weicht von den beiden anderen ab | DE, FR oder IT; «unklar», wenn die dritte Sprache es nicht entscheidet |
 | Erstmals festgestellt | erster geprüfter Stand mit dem Befund und der Stand davor ohne ihn; oder «bereits im frühesten geprüften Stand 2026 vorhanden» |
 | Blinde Einstufung | real: Bedeutung weicht ab · geringfügig: Form fehlerhaft, Bedeutung erhalten · nicht bestätigt: gleiche Bedeutung |
 | Herkunft der Einstufung | blinde Claude-Annotatoren; keine Einstufung durch das BAG |
@@ -23,7 +24,8 @@ Prüfung. Für einen neuen Lauf wird der Generator erneut ausgeführt; die Vorla
 
 ## Auszüge
 
-Wörtlich aus der Publikation; die abweichenden Werte **fett**.
+Wörtlich aus der Publikation; die abweichenden Werte **fett**. In jeder Sprache der Satz, den die Satzzuordnung der
+Prüfung einander zuordnet (dieselbe Stelle in DE, FR und IT).
 
 ### Befund [Kennung]
 
@@ -31,13 +33,15 @@ Wörtlich aus der Publikation; die abweichenden Werte **fett**.
 - **FR:** …
 - **IT:** …
 
+Einstufung: in einem Satz, z. B. «von beiden blinden Claude-Annotatoren als real bestätigt: die Bedeutung weicht ab».
+
 ## Bearbeitung (durch BAG auszufüllen)
 
 | Feld | Eintrag |
 |---|---|
 | Geschäftsnummer (GEVER) | durch BAG zu ergänzen |
 | Sprache der Verfügung | aus dem Dossier: ______ |
-| Entscheid | ☐ Abweichung bestätigt, Bedeutung betroffen ☐ Abweichung bestätigt, nur Form ☐ keine Abweichung ☐ weitere Abklärung |
-| Massnahme | ☐ Korrektur im ordentlichen Verfahren (Weg durch BAG festzulegen) ☐ Korrektur bei nächster Änderung oder Überprüfung ☐ keine |
+| Welcher Text ist falsch? | ☐ DE ☐ FR ☐ IT (mehrere möglich; gemessen am Entscheid des BAG) |
+| Was ist zu tun? | ☐ Von Amtes wegen berichtigen ☐ Mit der Zulassungsinhaberin in der dreijährlichen Überprüfung aufnehmen ☐ An den Sprachdienst ☐ Keine Massnahme (gleichwertige Formulierung) ☐ Noch unklar – Entscheiddossier prüfen |
 | Bemerkung | |
 | Visum (Name, Datum) | |

@@ -669,7 +669,7 @@ def term_detail(p, L):
 
 LOC_TERM = {"fr": "l'ancien texte dit «{o}» ; l'OFSP a remplacé ce terme par «{n}» (allemand «{d}») dans {k} autres limitations",
             "it": "il vecchio testo dice «{o}»; l'UFSP ha sostituito questo termine con «{n}» (tedesco «{d}») in {k} altre limitazioni",
-            "de": "der alte Text sagt «{o}»; das BAG hat den Begriff in {k} anderen Limitationen durch «{n}» ersetzt (deutsch «{d}»)"}
+            "de": "der alte Text sagt «{o}»; das BAG hat den Begriff in {k} anderen Limitierungen durch «{n}» ersetzt (deutsch «{d}»)"}
 
 
 # LIKELY EQUIVALENT (number findings; display/triage only: never changes a finding's id, rank or any count).
@@ -1164,6 +1164,96 @@ def run_r5(J, names, F=None, kinds=KINDS_R5):
     for f in R: c[f["kind"]] += 1; f["rank"] = c[f["kind"]]; f["fid"] = f"{pre[f['kind']]}{c[f['kind']]:02d}"
     return R
 # ------------------------------------------------------------------ END OF ROUND-5 RULES
+
+
+# ------------------------------------------------------------------ display: where a finding stands in the three texts
+# Display only (register and Fallblatt; no finding, count or rule depends on it). The checks compare whole texts; the
+# reader needs the one sentence where the texts differ, in all three languages. The excerpts below come from the
+# sentence alignment the round-5 checks use (align()); T = {lang: nrm(text)} of one limitation, offsets in T.
+def _pairs(T, L, _c={}):
+    k = (T["de"], T[L], L)
+    if k not in _c:
+        if len(_c) > 64: _c.clear()
+        _c[k] = align(T["de"], T[L], L)[0]
+    return _c[k]
+
+
+def aligned_span(T, src, at, dst):
+    """(start, end) in T[dst] of the sentence(s) aligned with the sentence of T[src] at position `at` (via German when
+    neither side is German); None when that sentence is in no aligned pair."""
+    if src == dst: return next(((a, b) for a, b in sentences(T[src]) if a <= at < b), None)
+    if src != "de" and dst != "de":
+        d = aligned_span(T, src, at, "de")
+        if d is None: return None
+        G = [g for dd, g, c in _pairs(T, dst) if dd[0] < d[1] and d[0] < dd[1]]
+        return (min(g[0] for g in G), max(g[1] for g in G)) if G else None
+    L = dst if src == "de" else src
+    for d, g, c in _pairs(T, L):
+        own, oth = (d, g) if src == "de" else (g, d)
+        if own[0] <= at < own[1]: return oth
+    return None
+
+
+def _span(x): return (min(x["s"], x["os"]), max(x["e"], x["oe"]))
+
+
+def operator_display(f, T):
+    """An operator finding as the reader should see it: the German occurrence with the German direction and the flagged
+    target occurrence (tgt_spans) in the same aligned sentence pair (else the k-th directed occurrence of the value on
+    each side, as the check counts them), and the third language at the same place. -> dict(de, <lang>, <third>: '[x]'
+    context, dirs {lang: min|max}, odd: the language whose direction differs from the other two (None: unclear),
+    how: 'aligned' | 'order'), or None when the occurrences are not found."""
+    L, v = f["lang"], f["value"]; M = "it" if L == "fr" else "fr"
+    de, tg = T.get("de") or "", T.get(L) or ""
+    if not de or not tg: return None
+    xa = [x for x in directions(de, "de") if x["v"] == v and not x["neg"]]
+    xb = [x for x in directions(tg, L) if x["v"] == v and not x["neg"]]
+    flagged = [x for x in xb if list(_span(x)) in [list(s) for s in f.get("tgt_spans") or []]] or [x for x in xb if x["dir"] == f["tgt_dir"]]
+    A_ = [x for x in xa if x["dir"] == f["de_dir"]]; pick = None
+    for d, g, c in _pairs(T, L):
+        a = [x for x in A_ if d[0] <= x["s"] < d[1]]; b = [x for x in flagged if g[0] <= x["s"] < g[1]]
+        if a and b: pick = (a[0], b[0], "aligned"); break
+    if pick is None:
+        pick = next(((x, y, "order") for x, y in zip(xa, xb) if x["dir"] == f["de_dir"] and y["dir"] == f["tgt_dir"]), None)
+    if pick is None: return None
+    ea, eb, how = pick
+    out = {"de": ctx(de, dict(zip("se", _span(ea)))), L: ctx(tg, dict(zip("se", _span(eb)))), "how": how,
+           "dirs": {"de": ea["dir"], L: eb["dir"]}, "odd": None}
+    tm = T.get(M) or ""
+    if tm:
+        xm = [x for x in directions(tm, M) if x["v"] == v and not x["neg"]]; em = None
+        g = aligned_span(T, "de", ea["s"], M); d = aligned_span(T, "de", ea["s"], "de")
+        if g and d:
+            mine = [x for x in xa if d[0] <= x["s"] < d[1]]; there = [x for x in xm if g[0] <= x["s"] < g[1]]
+            if there: em = there[min(mine.index(ea), len(there) - 1)]
+        if em is None and len(xm) == len(xa): em = xm[xa.index(ea)]
+        if em is not None:
+            out[M] = ctx(tm, dict(zip("se", _span(em)))); out["dirs"][M] = em["dir"]
+            out["odd"] = L if em["dir"] == ea["dir"] else "de" if em["dir"] == eb["dir"] else None
+        elif g:
+            out[M] = tm[g[0]:g[1]]
+    return out
+
+
+def sentence_display(T, src, at, langs):
+    """{lang: the sentence aligned with the sentence of T[src] at `at`} for each lang in langs (missing: not aligned)."""
+    out = {}
+    for k in langs:
+        sp = aligned_span(T, src, at, k)
+        if sp: out[k] = T[k][sp[0]:sp[1]]
+    return out
+
+
+def negation_odd(T, f, sents):
+    """the language whose negation the other two lack (or that lacks the negation the other two have), from the aligned
+    sentences of a negation finding; None when the third language does not settle it."""
+    L = f["lang"]; M = "it" if L == "fr" else "fr"
+    if not all(sents.get(k) for k in ("de", L, M)): return None
+    P = {k: _neg_profile(sents[k], k) for k in ("de", L, M)}
+    same = lambda a, b: _neg_one_sided(P[a], P[b]) is None
+    if same("de", M) and not same(L, M): return L
+    if same(L, M) and not same("de", M): return "de"
+    return None
 
 
 LOC = {"lang": {"fr": "l'ancien texte français est en {x}", "it": "il vecchio testo italiano è in {x}",

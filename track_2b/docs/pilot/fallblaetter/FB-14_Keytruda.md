@@ -9,9 +9,10 @@ Spezialitätenliste (SL), Prüfung der Sprachfassungen DE/FR/IT, Lauf vom 06.10.
 | Art der Prüfung | Sprache des Feldes |
 | Betroffene Sprachfassung(en) | IT |
 | Abweichung | Sprache, IT: das IT-Feld ist in FR verfasst |
+| Weicht von den beiden anderen ab | IT |
 | Erstmals festgestellt | erstmals am 01.08.2026, nicht vorhanden am 01.07.2026; vorhanden in 4 von 4 geprüften Ständen ab diesem Datum |
 | Blinde Einstufung | real: Bedeutung weicht ab (L01: real) |
-| Herkunft der Einstufung | zwei blinde Claude-Annotatoren, ein dritter bei Uneinigkeit (Mehrheit, PREREG R14); keine Einstufung durch das BAG |
+| Herkunft der Einstufung | zwei blinde Claude-Annotatoren, ein dritter bei Uneinigkeit (Mehrheit); keine Einstufung durch das BAG |
 | Hinweis | – |
 | Nachschlagen | https://sl.bag.admin.ch/sl, Präparat «Keytruda» suchen, Limitierung in DE, FR und IT vergleichen; Rohdaten: https://epl.bag.admin.ch/static/sl/publication/fhir/foph-sl-publication-20261006-de.ndjson (ebenso `-fr`, `-it`) |
 
@@ -25,7 +26,7 @@ Wörtlich aus der Publikation vom 06.10.2026; die abweichenden Werte sind **fett
 - **FR:** Carcinome urothélial (monothérapie) KN045 (avec modèle de prix) Monothérapie du carcinome urothélial localement…
 - **IT:** Carcinome urothélial (monothérapie) KN045 (avec modèle de prix) Monothérapie du carcinome urothélial localement avancé ou métastatique chez les adultes ayant ét…
 
-Begründung der blinden Einstufung (Annotator, englisch, unverändert): *Italian field contains the French text verbatim.*
+Einstufung: von beiden blinden Claude-Annotatoren als real bestätigt: die Bedeutung weicht ab.
 
 ## Bearbeitung (durch BAG auszufüllen)
 
@@ -33,8 +34,8 @@ Begründung der blinden Einstufung (Annotator, englisch, unverändert): *Italian
 |---|---|
 | Geschäftsnummer (GEVER) | durch BAG zu ergänzen |
 | Sprache der Verfügung | aus dem Dossier: ______ |
-| Entscheid | ☐ Abweichung bestätigt, Bedeutung betroffen ☐ Abweichung bestätigt, nur Form ☐ keine Abweichung ☐ weitere Abklärung |
-| Massnahme | ☐ Korrektur im ordentlichen Verfahren (Weg durch BAG festzulegen) ☐ Korrektur bei nächster Änderung oder Überprüfung ☐ keine |
+| Welcher Text ist falsch? | ☐ DE ☐ FR ☐ IT (mehrere möglich; gemessen am Entscheid des BAG) |
+| Was ist zu tun? | ☐ Von Amtes wegen berichtigen ☐ Mit der Zulassungsinhaberin in der dreijährlichen Überprüfung aufnehmen ☐ An den Sprachdienst ☐ Keine Massnahme (gleichwertige Formulierung) ☐ Noch unklar – Entscheiddossier prüfen |
 | Bemerkung | |
 | Visum (Name, Datum) | |
 

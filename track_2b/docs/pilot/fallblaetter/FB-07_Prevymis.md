@@ -9,9 +9,10 @@ Spezialitätenliste (SL), Prüfung der Sprachfassungen DE/FR/IT, Lauf vom 06.10.
 | Art der Prüfung | Zahl (Wert mit Einheit), redaktionell (Tippfehler) |
 | Betroffene Sprachfassung(en) | FR |
 | Abweichung | Zahl, FR: DE 15 · FR 5<br>Tippfehler, FR: «de15», gemeint «de 15» |
+| Weicht von den beiden anderen ab | FR |
 | Erstmals festgestellt | bereits im frühesten geprüften Stand 2026 vorhanden (19.02.2026); vorhanden in 9 von 9 geprüften Ständen ab diesem Datum |
 | Blinde Einstufung | geringfügig: Form fehlerhaft, Bedeutung erhalten (N04: not; E04: minor) |
-| Herkunft der Einstufung | zwei blinde Claude-Annotatoren, ein dritter bei Uneinigkeit (Mehrheit, PREREG R14); keine Einstufung durch das BAG |
+| Herkunft der Einstufung | zwei blinde Claude-Annotatoren, ein dritter bei Uneinigkeit (Mehrheit); keine Einstufung durch das BAG |
 | Hinweis | – |
 | Nachschlagen | https://sl.bag.admin.ch/sl, Präparat «Prevymis» suchen, Limitierung in DE, FR und IT vergleichen; Rohdaten: https://epl.bag.admin.ch/static/sl/publication/fhir/foph-sl-publication-20261006-de.ndjson (ebenso `-fr`, `-it`) |
 
@@ -22,18 +23,18 @@ Wörtlich aus der Publikation vom 06.10.2026; die abweichenden Werte sind **fett
 ### Befund N04
 
 - **DE:** … 30 kg und für pädiatrische Patienten mit einem Gewicht von **15 kg** bis unter 30 kg für eine Verabreichung ohne Ciclosporin,…
-- **FR:** …s 30 kg, ainsi que chez les patients pédiatriques pesant de15 kg à moins de 30 kg pour une administration sans ciclospori…
+- **FR:** …s 30 kg, ainsi que chez les patients pédiatriques pesant de1**5 kg** à moins de 30 kg pour une administration sans ciclospori…
 - **IT:** …almeno 30 kg, nonché nei pazienti pediatrici con un peso compreso tra **15 kg** e meno di 30 kg per una somministrazione senza ciclosporina, che…
 
-Begründung der blinden Einstufung (Annotator, englisch, unverändert): *'de15' tokenisation artefact; 15 kg present in FR.*
+Einstufung: von beiden blinden Claude-Annotatoren nicht bestätigt: gleiche Bedeutung.
 
 ### Befund E04
 
-- **DE:** …mindestens 30 kg und für pädiatrische Patienten mit einem Gewicht von **15 kg** bis unter 30 kg für eine Verabreichung ohne Ciclosporin, die CMV-seropositive…
+- **DE:** …von mindestens 30 kg und für pädiatrische Patienten mit einem Gewicht von **15 kg** bis unter 30 kg für eine Verabreichung ohne Ciclosporin, die CMV-seropositive…
 - **FR:** …, ainsi que chez les patients pédiatriques pesant **de15 kg** à moins de 30 kg pour une administration sans …
-- **IT:** …almeno 30 kg, nonché nei pazienti pediatrici con un peso compreso tra **15 kg** e meno di 30 kg per una somministrazione senza ciclosporina, che…
+- **IT:** …di almeno 30 kg, nonché nei pazienti pediatrici con un peso compreso tra **15 kg** e meno di 30 kg per una somministrazione senza ciclosporina, che…
 
-Begründung der blinden Einstufung (Annotator, englisch, unverändert): *'de15' missing space; cosmetic typo.*
+Einstufung: von beiden blinden Claude-Annotatoren als geringfügig bestätigt: die Form ist fehlerhaft, die Bedeutung erhalten.
 
 ## Bearbeitung (durch BAG auszufüllen)
 
@@ -41,8 +42,8 @@ Begründung der blinden Einstufung (Annotator, englisch, unverändert): *'de15' 
 |---|---|
 | Geschäftsnummer (GEVER) | durch BAG zu ergänzen |
 | Sprache der Verfügung | aus dem Dossier: ______ |
-| Entscheid | ☐ Abweichung bestätigt, Bedeutung betroffen ☐ Abweichung bestätigt, nur Form ☐ keine Abweichung ☐ weitere Abklärung |
-| Massnahme | ☐ Korrektur im ordentlichen Verfahren (Weg durch BAG festzulegen) ☐ Korrektur bei nächster Änderung oder Überprüfung ☐ keine |
+| Welcher Text ist falsch? | ☐ DE ☐ FR ☐ IT (mehrere möglich; gemessen am Entscheid des BAG) |
+| Was ist zu tun? | ☐ Von Amtes wegen berichtigen ☐ Mit der Zulassungsinhaberin in der dreijährlichen Überprüfung aufnehmen ☐ An den Sprachdienst ☐ Keine Massnahme (gleichwertige Formulierung) ☐ Noch unklar – Entscheiddossier prüfen |
 | Bemerkung | |
 | Visum (Name, Datum) | |
 

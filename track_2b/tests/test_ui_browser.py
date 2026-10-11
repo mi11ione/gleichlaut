@@ -69,7 +69,7 @@ def test_audit_tab_opens_with_hash_and_german_default():
     assert sum(len(i["rows"]) for i in I) == len(C["D"]["audit"]["rows"])            # every finding is in exactly one issue
     assert "Von Amtes wegen" in s and "Sprachdienst" in s and ">GÄL<" not in s
     assert re.search(r'id="ex-tg" aria-expanded="false">\[\+\] Experimentelle Prüfungen \(ausgeschaltet\) · 6 von 31 Befunden von zwei blinden Annotatoren bestätigt · 0 entschieden</button>', s)
-    assert "27 Befunde + 11 Terminologie-Hinweise = 38, zusammengefasst in 18 Fälle; 3 davon wahrscheinlich gleichwertig (eingeklappt)." in html.unescape(s)
+    assert "27 Befunde + 11 Terminologie-Hinweise = 38, zusammengefasst in 18 Fällen; 3 davon wahrscheinlich gleichwertig (eingeklappt)." in html.unescape(s)
     assert "15 Fälle in der Liste + 3 eingeklappt (wahrscheinlich gleichwertig) = 18 von 18 Fällen · 38 von 38 Befunden und Hinweisen" in html.unescape(s)
 
 
@@ -143,10 +143,10 @@ def test_save_next_waits_for_a_decision_legend_and_storage_note():
     assert not o["err"] and o["d0"] is True and o["d1"] is False and o["label"] == "Save, next change" and o["w0"].startswith("Decide first"), o
     assert "~ flagged, probably fine" in o["key"] and "▲ flagged, to check" in o["key"]
     assert o["prog"] == "1/166 decided · saved in this browser only · export to keep"
-    probe = ERR + NAME + ("setTimeout(function(){var b=document.getElementById('a-next'),d0=b.disabled,h=document.querySelector('#acase .sl .sub').textContent;name('A. Muster');"
-                   "document.querySelector('#acase .aw button[data-a=\"wrong\"]').click();var dw=document.getElementById('a-next').disabled;"
+    probe = ERR + NAME + ("setTimeout(function(){var b=document.getElementById('a-next'),d0=b.getAttribute('aria-disabled')==='true',h=document.querySelector('#acase .sl .sub').textContent;name('A. Muster');"
+                   "document.querySelector('#acase .aw button[data-a=\"wrong\"]').click();var dw=document.getElementById('a-next').getAttribute('aria-disabled')==='true';"
                    "document.querySelector('#acase button[data-a=\"rem\"][data-v=\"exofficio\"]').click();var st=document.getElementById('a-stt');"
-                   "var e=document.createElement('pre');e.id='out';e.textContent=JSON.stringify({d0:d0,h:h,dw:dw,d1:document.getElementById('a-next').disabled,"
+                   "var e=document.createElement('pre');e.id='out';e.textContent=JSON.stringify({d0:d0,h:h,dw:dw,d1:document.getElementById('a-next').getAttribute('aria-disabled')==='true',"
                    "st:st.textContent,done:st.className,label:document.getElementById('a-next').textContent,err:window.__err});document.body.appendChild(e)},300);")
     o = json.loads(html.unescape(re.search(r'<pre id="out">(.*?)</pre>', _dom(C["p"], "#audit", "en", probe), re.S).group(1)))
     assert not o["err"] and o["d0"] is True and o["dw"] is True and o["d1"] is False and o["label"] == "Save, next issue", o   # the wrong text alone is not a decision
@@ -263,24 +263,63 @@ def test_audit_asks_which_text_is_wrong_odd_first_majority_confirmed_name_requir
     inline confirmation and saves nothing until confirmed; IT + language service is stored as right DE+FR, fix_it."""
     C = _page()
     probe = ERR + NAME + ("setTimeout(function(){var o={};o.order=[].map.call(document.querySelectorAll('#acase .aw button'),function(b){return b.textContent});"
-        "o.pressed0=document.querySelectorAll('#acase button[aria-pressed=\"true\"]').length;o.dis0=[].filter.call(document.querySelectorAll('#acase .arem button'),function(b){return b.disabled}).map(function(b){return b.dataset.v});"
+        "o.pressed0=document.querySelectorAll('#acase button[aria-pressed=\"true\"]').length;o.dis0=[].filter.call(document.querySelectorAll('#acase .arem button'),function(b){return b.getAttribute('aria-disabled')==='true'}).map(function(b){return b.dataset.v});"
         "bw('IT').click();o.n0=Object.keys(rows()).length;o.ask=!!document.getElementById('a-name-ask');o.focus=document.activeElement&&document.activeElement.id;"
-        "name('R. Muster');o.ask2=!!document.getElementById('a-name-ask');"
-        "bw('DE').click();o.conf=(q('.aconf')||{}).textContent||'';o.n1=Object.keys(rows()).length;q('button[data-a=\"wcancel\"]').click();o.conf2=!!q('.aconf');"
+        "o.pend=bw('IT').getAttribute('aria-pressed');name('R. Muster');document.getElementById('a-rev').dispatchEvent(new Event('change',{bubbles:true}));o.ask2=!!document.getElementById('a-name-ask');"
+        "o.kept=(rows()[" + json.dumps(DIAPHIN) + "]||{}).wrong;o.keptBy=(rows()[" + json.dumps(DIAPHIN) + "]||{}).by;"
+        "bw('DE').click();o.conf=(q('.aconf')||{}).textContent||'';o.n1=rows()[" + json.dumps(DIAPHIN) + "].wrong;q('button[data-a=\"wcancel\"]').click();o.conf2=!!q('.aconf');"
         "bw('FR').click();q('.aconf .primary').click();o.fr=rows()[" + json.dumps(DIAPHIN) + "].wrong;bw('FR').click();"
-        "bw('IT').click();o.next1=document.getElementById('a-next').disabled;br('langsvc').click();o.next2=document.getElementById('a-next').disabled;"
+        "o.next1=document.getElementById('a-next').getAttribute('aria-disabled')==='true';br('langsvc').click();o.next2=document.getElementById('a-next').getAttribute('aria-disabled')==='true';"
         "o.r=rows()[" + json.dumps(DIAPHIN) + "];o.rev=window.GleichlautReview.payload().reviewer;o.st=document.getElementById('a-stt').textContent;"
         "o.lab=br('langsvc').textContent;o.err=window.__err;out(o)},300);")
     o = _out(_dom(C["p"], "#audit", "en", probe))
     assert not o["err"], o["err"]
     assert o["order"] == ["IT · differs from the other two", "DE", "FR"] and o["pressed0"] == 0 and o["dis0"] == ["exofficio", "holder"]
-    assert o["n0"] == 0 and o["ask"] and o["focus"] == "a-rev" and not o["ask2"]                 # nothing saved without a name
-    assert o["conf"].startswith("DE agrees with FR here; IT is the one that differs. Mark DE as wrong anyway?") and o["n1"] == 0 and not o["conf2"]
-    assert o["fr"] == ["FR"]                                                                       # confirmed, then taken back
+    assert o["n0"] == 0 and o["ask"] and o["focus"] == "a-rev" and not o["ask2"] and o["pend"] == "true"   # kept, not saved, without a name
+    assert o["kept"] == ["IT"] and o["keptBy"] == "R. Muster"                                      # saved once the name is in
+    assert o["conf"].startswith("DE agrees with FR here; IT is the one that differs. Mark DE as wrong anyway?") and o["n1"] == ["IT"] and not o["conf2"]
+    assert o["fr"] == ["FR", "IT"]                                                                 # confirmed, then taken back
     assert o["next1"] is True and o["next2"] is False and o["lab"] == "Send to the language service · IT"
     r = o["r"]
     assert (r["wrong"], r["remedy"], r["right"], r["actions"], r["by"], r["decided"]) == (["IT"], "langsvc", "DE+FR", ["fix_it", "langsvc"], "R. Muster", True), r
     assert o["rev"] == "R. Muster" and o["st"].startswith("✓ IT wrong · Send to the language service (IT) · decided on ")
+
+
+def test_juror_sequence_disabled_remedy_then_name_then_note():
+    """The juror's sequence on Diaphin in a fresh profile (no stored name): "Correct ex officio" first (not available yet:
+    a one-line reason, nothing saved), then IT (the name is asked for; IT stays chosen), the name, a note, "Save, next
+    issue" (says why it waits), then the remedy, which now registers, and "Save, next issue" moves on. Time stamps are
+    Europe/Zurich with offset; both CSVs are ';'-separated with a BOM and carry the SL snapshot and the code revision."""
+    C = _page()
+    probe = ERR + NAME + ("setTimeout(function(){var o={},h0=q('h2').textContent;"
+        "br('exofficio').click();var why=document.getElementById(br('exofficio').getAttribute('aria-describedby'));"
+        "o.why=why&&!why.hidden&&why.classList.contains('warn')?why.textContent:'';o.n0=Object.keys(rows()).length;"
+        "bw('IT').click();o.ask=!!document.getElementById('a-name-ask');o.pend=bw('IT').getAttribute('aria-pressed');o.exDis=br('exofficio').getAttribute('aria-disabled');"
+        "var n=document.getElementById('a-rev');n.focus();n.value='J. Juror';n.dispatchEvent(new Event('input',{bubbles:true}));"
+        "var ta=q('textarea[data-a=\"note\"]');ta.focus();ta.value='checked against the dossier';ta.dispatchEvent(new Event('input',{bubbles:true}));"
+        "var r=rows()[" + json.dumps(DIAPHIN) + "]||{};o.w=r.wrong;o.by=r.by;o.note=r.note;o.st=document.getElementById('a-stt').textContent;"
+        "o.exDis2=br('exofficio').getAttribute('aria-disabled');"
+        "document.getElementById('a-next').click();var aw=document.getElementById('an-why');o.nextWhy=aw.classList.contains('warn')?aw.textContent:'';o.stay=q('h2').textContent===h0;"
+        "br('exofficio').click();r=rows()[" + json.dumps(DIAPHIN) + "];o.r=r;o.st2=document.getElementById('a-stt').textContent;"
+        "o.prog=document.getElementById('progress').textContent;"
+        "var R=window.GleichlautReview;o.csv=R.auditCsv();o.f=R.findingsCsv();o.at=R.payload().audit_rows[" + json.dumps(DIAPHIN) + "].at;"
+        "document.getElementById('a-next').click();o.moved=q('h2').textContent!==h0;o.err=window.__err;out(o)},300);")
+    o = _out(_dom(C["p"], "#audit", "en", probe))
+    assert not o["err"], o["err"]
+    assert o["why"] == "“Correct ex officio” and “Raise with the holder” need the wrong text chosen above." and o["n0"] == 0, o
+    assert o["ask"] and o["pend"] == "true" and o["exDis"] is None                     # IT kept while the name is asked for
+    assert o["w"] == ["IT"] and o["by"] == "J. Juror" and o["note"] == "checked against the dossier" and o["exDis2"] is None, o
+    assert o["st"].startswith("open · IT marked wrong, no action chosen yet"), o["st"]
+    assert o["nextWhy"].startswith("Decide first") and o["stay"]
+    r = o["r"]
+    assert (r["wrong"], r["remedy"], r["decided"], r["by"]) == (["IT"], "exofficio", True, "J. Juror") and o["st2"].startswith("✓ IT wrong · Correct ex officio (IT)")
+    assert re.fullmatch(r"20\d\d-\d\d-\d\dT\d\d:\d\d:\d\d\+0[12]:00", r["at"]) and o["at"] == r["at"], r["at"]
+    assert o["prog"].startswith("1/18 issues decided · 0/6 experimental"), o["prog"]
+    head, row = o["csv"].split("\r\n")[:2]
+    assert o["csv"].startswith("\ufeff") and head.split(";")[-1] == "Code revision" and r["at"] in row and ";06.10.2026;" in row
+    fh, fr = o["f"].split("\r\n")[:2]
+    assert o["f"].startswith("\ufeff") and fh.lstrip("\ufeff").split(";")[-2:] == ["sl_snapshot", "rev"] and fr.split(";")[-2] == "20261006"
+    assert o["moved"]
 
 
 def test_old_decision_files_still_import():
@@ -297,7 +336,7 @@ def test_old_decision_files_still_import():
         "var x=rows();o.a=x[" + json.dumps(DIAPHIN) + "];o.b=x[" + json.dumps(s2) + "];o.prog=document.getElementById('progress').textContent;o.err=window.__err;out(o)},300);")
     o = _out(_dom(C["p"], "#audit", "en", probe))
     assert not o["err"], o["err"]
-    assert o["m"] == "Imported 0 draft decisions and 2 audit decisions.", o["m"]
+    assert o["m"] == "Imported 0 draft decisions and 2 audit decisions. Reviewer name taken from the file: X.", o["m"]
     a, b = o["a"], o["b"]
     assert (a["right"], a["actions"], a["wrong"], a["remedy"], a["decided"]) == ("", ["fix_de", "langsvc"], ["DE"], "langsvc", True)
     assert (b["right"], b["actions"], b["remedy"], b["decided"], b["by"]) == ("IT", ["exofficio"], "exofficio", True, "X")
@@ -318,7 +357,7 @@ def test_exports_in_the_interface_language_with_codes():
     assert H[5:7] == ["Art", "kind_code"] and H[10:14] == ["Falscher Text", "Fassung gemäss Entscheid", "Massnahme", "action_code"], H
     assert (V["Art"], V["kind_code"], V["Falscher Text"], V["Fassung gemäss Entscheid"], V["Massnahme"], V["action_code"], V["Entschieden von"]) == \
         ("Zahl", "number", "IT", "DE+FR", "Von Amtes wegen berichtigen (IT)", "fix_it exofficio", "R. Muster"), V
-    assert "Correct" not in o["csv"] and ",Zahl,number," in o["f"] and ",Von Amtes wegen berichtigen (IT),fix_it exofficio,," in o["f"]
+    assert "Correct" not in o["csv"] and ";Zahl;number;" in o["f"] and ";Von Amtes wegen berichtigen (IT);fix_it exofficio;;" in o["f"]
     j, i = o["j"], o["i"]
     assert (j["kind"], j["kind_label"], j["action_label"], j["actions"], j["ui_lang"]) == ("number", "Zahl", "Von Amtes wegen berichtigen (IT)", ["fix_it", "exofficio"], "de")
     assert i["action_label"] == j["action_label"] and i["by"] == "R. Muster" and i["kind_label"] == "Zahl"

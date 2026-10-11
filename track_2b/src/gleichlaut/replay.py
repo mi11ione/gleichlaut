@@ -63,6 +63,7 @@ def compute():
     res["annotator_sensitivity"] = score.annotator_sensitivity(res)   # PREREG R11: planted meaning errors, reference shown / hidden
     res["fresh166_blind"] = score.blind_relabel_70b(res)   # PREREG R13: the headline 70B run relabelled fully blind (PROTOCOL.md)
     res["audit_relabel"] = score.audit_relabel()   # PREREG R14 (A): every labelled audit finding, two blind annotators + a third
+    res["audit_grouping"]["reconciliation"] = score.audit_reconciliation(res)   # findings -> issues -> confirmed, in one table
     res["annotator_sensitivity_inspan"] = score.annotator_sensitivity_inspan(res)   # PREREG R14 (B): errors inside the amended wording
     res["memorisation"] = score.memorisation()     # PREREG R16: memorisation probe of the held-out answers (T) against P and N controls
     res["annotator_real_errors"] = score.annotator_real_errors()   # PREREG R17 (A): errors BAG fixed without a German change

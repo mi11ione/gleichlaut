@@ -11,6 +11,20 @@ Publikation und ruft kein Sprachmodell auf. Ergebnis: **38 Befunde** auf 27 Limi
 vom BAG: **16 real** (die Bedeutung weicht ab), **12 geringfügig** (Form fehlerhaft, Bedeutung erhalten),
 **10 nicht bestätigt** (`eval/results/audit_relabel.json`).
 
+Die Zahlen auf einen Blick (`eval/results/audit_grouping.json`, Abschnitt `reconciliation`; bestätigt = von der
+Mehrheit der blinden Annotatoren als real oder geringfügig eingestuft):
+
+| | Anzahl | bestätigt | real (Bedingung weicht ab) | geringfügig | nicht bestätigt |
+|---|---|---|---|---|---|
+| Befunde (Zahl, Einheit, Sprache, Tippfehler) | 27 | 17 | 12 | 5 | 10 |
+| Terminologie-Hinweise | 11 | 11 | 4 | 7 | 0 |
+| **Total im Register** | **38** | **28** | **16** | **12** | **10** |
+| Experimentelle Prüfung (aus, separat geführt) | 31 | 6 | 3 | 3 | 25 |
+
+Im Register ergeben die 38 Befunde und Hinweise 18 Sachverhalte (Fälle); 3 davon sind vermutlich gleichwertige
+Formulierungen und eingeklappt. Die Befunde der experimentellen Prüfung gehören nicht zu den 18 Fällen und werden im
+Register separat gezählt.
+
 ## Abweichungen in der Bedeutung (real)
 
 - **Nemluvio** (IT): Erhaltungsdosis DE alle acht Wochen, IT alle vier Wochen («ogni quattro settimane»).

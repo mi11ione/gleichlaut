@@ -19,7 +19,9 @@ files to `--out`:
 - `audit_<date>.json`: every finding, plus the hits on the fresh items;
 - `audit_<date>_summary.json`: the counts;
 - `audit_texts_<date>.json`: the DE/FR/IT texts of every limitation with a finding, so the register tab can show excerpts
-  without the snapshot files;
+  without the snapshot files. The excerpts in the register and the Fallblätter come from the sentence alignment the
+  round-5 checks use (`aligned_span`, `operator_display`; display only, no count depends on it): the place where the
+  texts differ, in all three languages, not the first occurrence of the value (`tests/test_excerpts.py`);
 - `lang_stats_<date>.json.gz`: the register statistics that the language and editorial checks use;
 - `term_pairs_<date>.json`: the terminology pairs mined from BAG's own corrections (`--terms FILE` reuses a file instead).
 
@@ -728,5 +730,10 @@ error. The signal is therefore off; the statistics are reported in the summary (
   There are fewer independent errors than findings.
 - **MiGeL/AL** were run once on the 1 Jul 2026 versions, with no dating and no labels. The `term_pairs()` statistics
   (off signal) are now deterministic (ties sorted); the FR count of ids with an exception moved from 483 to 484.
+- **Found by a user, not by the audit** (BAG-officer test, Oct 2026; no rule was changed for them):
+  - Inclusive and exclusive bounds count as the same direction: Dupixent `.05P` FR «supérieur à 60 kg» vs DE «ab 60 kg»
+    treats a child of exactly 60 kg differently, and is not flagged.
+  - The editorial check missed Amvuttra FR «après les 12 premiers de traitement» (the word «mois» is missing): a
+    missing unit word after a number is not one of its rules.
 - **No authority.** A finding says the languages differ or that a passage looks mistyped. Which version is right is for
   BAG to decide; it can be the German (see `odd_one_out`).
