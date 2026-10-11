@@ -57,7 +57,7 @@ def scan(files, rows):
         txt = re.sub(r"<!--\s*noclaim\s*-->.*?<!--\s*/noclaim\s*-->", "", txt, flags=re.S)
         txt = re.sub(r"(?m)^#+\s*[\d.]+", "", txt)                                        # section numbers
         txt = re.sub(r"XLIFF \d\.\d((?: and |/|, )\d\.\d)?", "", txt)                         # format versions
-        txt = re.sub(r"(Apache-|CC-BY-|XLIFF |FHIR R|IG |PublG Art\. |Art\. |T |su-d-)[\d.]+", "", txt)   # versions, articles, table ids
+        txt = re.sub(r"(Apache-|CC-BY-|XLIFF |FHIR R|IG |PublG Art\. |Art\. |T |su-d-|translate-toolkit )[\d.]+", "", txt)   # versions, articles, table ids
         txt = re.sub(r"95% (CI|upper|confidence|Wilson)", "", txt)                           # the confidence level itself
         txt = re.sub(r"\*\*Team:\*\*[^\n]*|[Tt]eam 444", "", txt)                                 # team name
         txt = re.sub(r"95% (bound|interval)", "", txt)

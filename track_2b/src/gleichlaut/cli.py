@@ -9,6 +9,8 @@
   draft      draft FR/IT for an item file (docs/item-schema.json) through a backend; resumable records + summary
   live       the live slice alone (5 Fedlex items) through LLM_BASE_URL or a local GGUF
   emit, ui   XLIFF 2.1 / FHIR and the review page (over a recorded run; --records/--items where the build supports them)
+  xliff-import  XLIFF 1.2 / 2.1 returned from a CAT tool -> the review page's decisions JSON (accepted / accepted-edited /
+             sent back per unit, edited targets, reviewer): FILE... [--run RUN | --records R --items I] [--out F]
   audit      the DE<->FR/IT congruence audit of the whole register (gleichlaut.audit; no model): --date latest|YYYYMMDD
              (default latest) --fetch (download missing feeds) -> out/audit ($GLEICHLAUT_AUDIT_OUT; data/audit/ only with
              --evidence); --fail-on-new exits 8 for findings not in the previous run and not decided (the scheduled
@@ -948,6 +950,8 @@ def _dispatch(argv):
             raise FeedError(f"cannot download the GGUF from {GGUF_URL}: {getattr(e, 'reason', None) or e} (a re-run resumes the "
                             f"partial download; air-gapped: copy the file into {models_dir()} and check its sha256 {GGUF_SHA})")
     if c in ("emit", "ui"): return passthrough(c, rest)
+    if c == "xliff-import":
+        from .emit import xliff_import; return xliff_import.main(rest)
     if c == "backtest":
         from . import backtest; return backtest.main(rest) or 0
     if c in ("draft", "month"):

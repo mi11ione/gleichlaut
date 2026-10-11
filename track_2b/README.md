@@ -154,7 +154,7 @@ code: [docs/failure-modes.md](docs/failure-modes.md).
 |---|---|
 | ePL editor: "Limitierungstext DE / FR / IT" fields per limitation | **Draft** proposes the FR and IT fields when the DE field changes |
 | Triennial review: applicants declare "…und die Übersetzungen sind kongruent?" | **Audit** gives BAG its own check of that declaration, for the whole register in seconds |
-| Federal translation tool STAR Transit | XLIFF 1.2 and 2.1, numbers protected, checks as notes |
+| Federal translation tool STAR Transit | XLIFF 1.2 and 2.1, numbers protected, checks as notes; round-trips through translate-toolkit 3.20.0 and back into the register (`gleichlaut xliff-import`) |
 | Terminology (TermStar) | BAG's house renderings mined from the register itself: 64 entries as TBX, plus a terminology note on any draft that departs from them, and a note where a sentence the draft wrote departs from BAG's dominant wording of a fixed sentence such as the indication-code formula ([docs/termbase.md](docs/termbase.md)) |
 | Monthly FHIR R5 publication (CH EPL profile) | drafts emitted as ClinicalUseDefinition in the feed's own shape |
 

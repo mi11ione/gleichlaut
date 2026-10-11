@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.1" version="1.1">
+  <file original="returned-fr-CH.po" source-language="en-US" datatype="plaintext">
+    <body>
+      <trans-unit xml:space="preserve" id="2" approved="no" restype="x-gettext-domain-header">
+        <source>Project-Id-Version: PACKAGE VERSION
+Report-Msgid-Bugs-To: 
+POT-Creation-Date: 2026-10-11 19:22+0200
+PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE
+Last-Translator: FULL NAME &lt;EMAIL@ADDRESS&gt;
+Language-Team: LANGUAGE &lt;LL@li.org&gt;
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Generator: Translate Toolkit 3.20.0
+</source>
+        <target state="translated">Project-Id-Version: PACKAGE VERSION
+Report-Msgid-Bugs-To: 
+POT-Creation-Date: 2026-10-11 19:22+0200
+PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE
+Last-Translator: FULL NAME &lt;EMAIL@ADDRESS&gt;
+Language-Team: LANGUAGE &lt;LL@li.org&gt;
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Generator: Translate Toolkit 3.20.0
+</target>
+      </trans-unit>
+      <trans-unit xml:space="preserve" id="3" approved="yes">
+        <source>1L NSCLC (in Kombination mit Pemetrexed und Carboplatin) Amivantamab wird vergütet in Kombination mit Carboplatin und Pemetrexed zur Erstlinienbehandlung von erwachsenen Patienten mit lokal fortgeschrittenem oder metastasiertem nicht-plattenepithelialem NSCLC mit aktivierenden Exon-20-Insertionsmutationen des epidermalen Wachstumsfaktor-Rezeptors (EGFR). Folgender Indikationscode ist an den Krankenversicherer zu übermitteln: 21390.03</source>
+        <target state="translated">1L CBNPC (en combinaison avec le pemetrexed et le carboplatine) Amivantamab est remboursé en combinaison avec le carboplatine et le pémétrexed pour le traitement de première ligne des patients adultes atteints d’un CBNPC non épidermoïde localement avancé ou métastatique avec des mutations activatrices par insertion dans l'exon 20 du récepteur du facteur de croissance épidermique (EGFR). Le code d’indication suivant doit être transmis à l'assureur-maladie : 21390.03</target>
+      </trans-unit>
+      <trans-unit xml:space="preserve" id="4" approved="no">
+        <source>2L NSCLC (Monotherapie) Amivantamab wird vergütet als Monotherapie für die Behandlung von Patienten mit metastasierendem oder nicht-resezierbarem NSCLC mit aktivierenden Insertionsmutationen im Exon 20 des Gens des Rezeptors für den epidermalen Wachstumsfaktor (EGFR), bei denen die Krankheit während oder nach einer platinhaltigen Chemotherapie fortgeschritten ist. Folgender Indikationscode ist an den Krankenversicherer zu übermitteln: 21390.01.</source>
+        <target state="needs-translation">2L CBNPC (monothérapie) Amivantamab est remboursé en monothérapie pour le traitement des patients atteints d'un cancer du poumon non à petites cellules (CBNPC) métastatique ou non résécable, présentant des mutations activatrices par insertion dans l’exon 20du gène du récepteur du facteur de croissance épidermique (EGFR), chez lesquels la maladie a progressé pendant ou après une chimiothérapie à base de platine. Le code d’indication suivant doit être transmis à l'assurance maladie: 21390.01</target>
+      </trans-unit>
+      <trans-unit xml:space="preserve" id="5" approved="no">
+        <source>2L NSCLC (in Kombination mit Pemetrexed und Carboplatin) Amivantamab wird vergütet in Kombination mit Carboplatin und Pemetrexed zur Behandlung von erwachsenen Patienten mit lokal fortgeschrittenem oder metastasiertem nicht-plattenepithelialem NSCLC mit EGFR-Exon-19-Deletionen oder Exon-21-L858R-Substitutionsmutationen, bei denen die Krankheit während oder nach einer Behandlung mit Osimertinib fortgeschritten ist. Folgender Indikationscode ist an den Krankenversicherer zu übermitteln: 21390.02</source>
+        <target state="needs-translation">2L CBNPC (en combinaison avec le pemetrexed et le carboplatine) Amivantamab est remboursé en combinaison avec le carboplatine et le pémétrexed pour le traitement des patients adultes atteints d'un CBNPC non épidermoïde localement avancé ou métastatique avec des mutations du gène de l’EGFR par délétion dans l'exon 19 ou substitution L858R dans l’exon 21, chez lesquels la maladie a progressé pendant ou après un traitement par osimertinib. Le code d’indication suivant doit être transmis à l'assurance maladie: 21390.02</target>
+      </trans-unit>
+      <trans-unit xml:space="preserve" id="6" approved="yes">
+        <source>3L Primäres mediastinales grosszelliges B-Zell-Lymphom (rrPMBCL) (Monotherapie) KN170 (mit Preismodell) KEYTRUDA als Monotherapie zur Behandlung des refraktären oder rezidivierenden primären mediastinalen grosszelligen B-Zell-Lymphoms (rrPMBCL) bei Erwachsenen - mit mindestens 2 Vorbehandlungen, von denen mindestens eine mit Rituximab durchgeführt wurde UND - die für eine autologe Stammzelltransplantation nicht in Frage kommen oder einen Rückfall nach Transplantation hatten. Nicht zur Behandlung von Patienten mit PMBCL, die eine dringende zytoreduktive Therapie benötigen. Folgender Code ist an den Krankenversicherer zu übermitteln: 20416.12</source>
+        <target state="translated">3L Lymphome médiastinal primitif à grandes cellules B (LMPGBrr) (monothérapie) KN170 (avec modèle de prix) KEYTRUDA en monothérapie du lymphome médiastinal primitif à grandes cellules B réfractaire ou récidivant (LMPGBrr), chez les adultes ‒ qui ont reçu au moins 2 traitements antérieurs, dont au moins un par le rituximab, ET ‒ qui n'entrent pas en ligne de compte pour une greffe autologue de cellules souches ou qui ont subi une récidive après une greffe. N'est pas indiqué pour le traitement des patients atteints d'un LMPGB, qui nécessitent un traitement cytoréducteur en urgence Le code suivant doit être transmis à l’assurance maladie: 20416.12</target>
+      </trans-unit>
+      <trans-unit xml:space="preserve" id="7">
+        <source>Atopische Dermatitis – Erwachsene und Jugendliche ab 12 Jahren (ohne Preismodell) NEMLUVIO wird in einer Anfangsdosis von 60 mg als subkutane Injektion (zwei Injektionen zu je 30 mg) in Woche 0, gefolgt von einer Dosis von 30 mg als subkutane Injektion alle vier Wochen bis Woche 16 und danach in einer Erhaltungsdosis von 30 mg als subkutane Injektion alle acht Wochen, zur Behandlung erwachsener und jugendlicher Patienten (ab dem 12. Lebensjahr und mit einem Körpergewicht von mindestens 30 kg) mit schwerer atopischer Dermatitis (IGA 4 auf IGA-Skala von 0-4 oder SCORAD &gt;50 oder EASI ≥21.1) vergütet, sofern die Patienten auf eine intensivierte Lokalbehandlung mit verschreibungspflichtigen topischen Therapien (topische Kortikoide und/oder Calcineurininhibitoren) und Phototherapie (sofern verfügbar und angezeigt) und auf eine systemische Behandlung mit einem konventionellen Immunsuppressivum (ausgenommen systemische Kortikoide) während mindestens einem Monat unzureichend angesprochen haben oder bei denen diese Therapien kontraindiziert sind oder aufgrund von klinisch relevanten Nebenwirkungen abgebrochen werden mussten. Falls nach 16 Wochen Behandlung mit NEMLUVIO kein therapeutischer Erfolg eingetreten ist, d.h. keine IGA-Reduktion um ≥2 Punkte gegenüber dem Ausgangswert oder keine ≥50% Verbesserung des EASI-Scores (EASI 50) gegenüber dem Ausgangswert oder keine ≥50% Verbesserung des SCORAD-Scores (SCORAD 50) gegenüber dem Ausgangswert, ist die Behandlung abzubrechen. Folgender Code ist an den Krankenversicherer zu übermitteln: 21912.01</source>
+        <target></target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

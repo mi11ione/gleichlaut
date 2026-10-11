@@ -380,6 +380,50 @@ gleichlaut ui   --records out/month/<run>/records.jsonl --items out/month/<run>/
 - `ui/index.html` is one self-contained review page (works from `file://`, makes no requests). Reviewer decisions stay
   in the browser until "Export decisions".
 
+### 5d. Translation round trip
+
+The files the translators return come back into the register as the review page's decisions JSON:
+
+```bash
+gleichlaut xliff-import returned/*.xlf --out out/month/<run>/decisions-xliff.json
+#   the run is read from <file original="gleichlaut:RUN">; a month run: --records ... --items ...;
+#   a file without target language (po2xliff): --lang fr|it; --reviewer NAME when the file names none
+gleichlaut emit --records ... --items ... --decisions out/month/<run>/decisions-xliff.json --out ...   # reviewed XLIFF
+```
+
+Per unit (all segments of a unit read as one text, so joined, split or flattened segments make no difference):
+signed off (1.2 `approved="yes"` or state `signed-off` / `final`; 2.1 every segment `reviewed` / `final`) -> accepted,
+or accepted-edited when the text differs from the draft; target removed or emptied -> sent back; edited but not signed
+off -> the edited text only (shown on the page, no decision); no draft and no target -> untranslated. Units are matched
+by id, else by their German source text. The reviewer comes from the 1.2 `<phase>` the target names (`contact-name`,
+`date`) or a 2.1 `<mda:meta type="reviewer">`. "Import decisions" on the review page reads the same file.
+
+What was verified, 11 Oct 2026 (`tools/xliff_tt_roundtrip.py`; fixtures in `tests/fixtures/xliff-roundtrip/`, checked
+by `tests/test_xliff_import.py`):
+
+- Export: `gleichlaut emit --run q8_0 --n 10` (the default 8B lane), the FR files, XLIFF 1.2 and 2.1 (5 units each).
+- Tool: **translate-toolkit 3.20.0** (the toolkit behind Pootle and Weblate; Python 3.14, lxml 6.1.3), its stores
+  `xliff.xlifffile` (1.2) and `xliff2.Xliff2File` (2.1). As the translator: 3 targets edited, 2 units signed off (1.2
+  `signed-off` + `final`, 2.1 `reviewed` + `final`), 1 cleared to `needs-translation` / `initial`; segmentation changed
+  (1.2: one target's `<mrk mtype="seg">` segments replaced by one plain target; 2.1: two segments joined, one split).
+  Written back by translate-toolkit.
+- Kept in both versions: unit ids and order, `name` / `resname`, every note (file and unit, text and attributes), the
+  German source, the 1.2 `alt-trans` with the previous version, the 2.1 `subState`, the inline `<mrk>` markup of edited
+  targets. The returned 1.2 file validates against the OASIS 1.2 strict XSD. The returned 2.1 file does not: translate-
+  toolkit 3.20.0 writes `xml:space="preserve"` on every `<segment>` it touches, which the 2.1 core XSD does not allow;
+  the importer reads it all the same.
+- Gettext bridge, `xliff2po` -> PO -> `po2xliff` on the returned 1.2 file: target text and fuzzy / not fuzzy survive;
+  unit ids, notes, `alt-trans` and states do not (xliff2po carries only notes `from="translator"` / `"developer"` and
+  location context groups; po2xliff numbers the units anew in an XLIFF 1.1 file without target language, with or
+  without `-t`). The importer matches those units by their German source (`--run q8_0 --lang fr`).
+- Read back by `gleichlaut xliff-import`, all three returned files give the same result: 1 accepted, 1 accepted-edited,
+  1 sent back, 2 edited without sign-off. Those decisions through `gleichlaut emit --decisions` give reviewed XLIFF 1.2
+  and 2.1 that validate against the OASIS XSDs.
+- Scripting translate-toolkit: `unit.target = "..."` on a target holding `<mrk>` elements keeps the elements and puts
+  the new text in front (the target doubles); edit through `unit.rich_target`.
+- STAR Transit, the federal translation service's tool, is proprietary and was not available to the project; Okapi
+  Tikal was not installed on the test machine. The exchange files are plain XLIFF 1.2 strict and 2.1 core.
+
 ## 6. Exit codes
 
 | Code | Meaning | What to do |
@@ -535,6 +579,7 @@ make canary                                    # 70B lane: monthly, before draft
 make month-70b                                 # 70B lane: shadow mode through the certified endpoint
 PYTHONPATH=src python3 -m gleichlaut month --items sl-team.json --dry-run     # prompts, slot maps, routing; no request
 PYTHONPATH=src python3 -m gleichlaut draft --items x.json --out out/x --backend stub   # wiring test, no model
+gleichlaut xliff-import returned/*.xlf --out decisions.json   # XLIFF back from the translators -> review decisions
 PYTHONPATH=src python3 -m gleichlaut audit --date latest --fetch --fail-on-new --metrics-file m.prom   # monitoring (= make local-audit AUDIT_ARGS=...)
 ```
 
