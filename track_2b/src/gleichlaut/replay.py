@@ -105,7 +105,8 @@ def headline(res):
     yn = lambda ok: "PASS" if ok else "FAIL"
     L = ["", "HEADLINE",
          f"  Audit (no model, 6 Oct 2026 register): {a['v2']['findings_all_kinds']} findings in {g['issues']} issues, "
-         f"{a['v2']['real_all_kinds']} real ({a['v2']['precision_all_pct']:.1f}%); planted-divergence recall: changed number "
+         f"{res['audit_relabel']['sets']['register']['confirmed_majority']} confirmed by blind Claude annotators "
+         f"({res['audit_relabel']['sets']['register']['confirmed_strict_real']} change a condition); planted-divergence recall: changed number "
          f"{ar['number']['recall_pct']:.1f}%, changed unit {ar['unit']['recall_pct']:.1f}%, deleted clause {ar['deletion']['recall_pct']:.1f}%, "
          f"typo {ar['typo']['recall_pct']:.1f}%",
          "  Drafting, fresh 2025 held-out set (166 FR/IT items, guards frozen before any output existed), pre-registered rule R0:",
@@ -123,7 +124,7 @@ def headline(res):
                f"{m} {yn(r['month']['meets_r0'])} (exact {r['month']['exact']}/{r['month']['n']}, flagged "
                f"{r['month']['criteria']['flag_rate'][0]:.1f}% > 70%, meaning errors among ready {r['month']['unflagged_real_n']})"
                for m, r in res[k]["r0"].items())
-           for k, lbl in (("shadow_20260801_20260901", "Aug 2026 (R10, prospective)"),) if res.get(k, {}).get("r0")],
+           for k, lbl in (("shadow_20260801_20260901", "Aug 2026 (R10; its drafted items were already in our dev and out-of-sample sets)"),) if res.get(k, {}).get("r0")],
          *[f"  house wording in the prompt (R12, v3-terms, not shipped): " + "; ".join(
                f"{run[4:6]}/{m} {'PASS' if v['v3_terms']['meets_r0'] else 'FAIL'} (identical {v['frozen']['exact']} -> {v['v3_terms']['exact']}"
                f"/{v['v3_terms']['n']}, flagged {v['v3_terms']['criteria']['flag_rate'][0]:.1f}%)"

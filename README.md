@@ -10,14 +10,16 @@ something different in each language is a condition nobody can apply consistentl
 **[Open the review register](https://gleichlaut.mi11ion.io/)** · **[watch the demo](https://gleichlaut.mi11ion.io/demo.mp4)** · [project README](track_2b/README.md) ·
 [technical report](track_2b/technical_report.md) · Hack Apertus, Track 2B, team 444
 
-- **The audit runs today, with no model.** It reads all 1,688 limitations in German, French and Italian and finds
-  divergences nobody had listed. Amvuttra's French stop rule says an NIS increase "≤ 10" points where German and Italian
-  say "> 10". The Italian of Beyonttra and Vyndaqel says "on deve essere combinato" where the German says "darf nicht …
-  kombiniert werden": a ban that reads as an obligation. (These two come from operator and negation checks that ship
-  off by default, because only 6 of their 31 findings are confirmed.)
-- **Its main check** turns the register into 27 findings, 18 issues to decide. Two blind Claude annotators (a third on
-  disagreements) confirm 17: 12 that change a condition and 5 minor ones such as typos; among them are the 10 divergences an earlier census had listed and its rules were built
-  around. On 1,000 divergences planted into clean texts it finds 93.0% of changed numbers.
+- **The audit runs today, with no model.** It reads all 1,688 limitations in German, French and Italian and turns them
+  into 18 issues to decide. Two blind Claude annotators (a third on disagreements) confirm 12 findings that change a
+  condition, among them Nemluvio's interval, Diaphin's surcharge and the 16 kg limit missing in Cresemba's French, plus
+  5 minor ones such as typos next to numbers. 10 of the 12 were on our earlier census list, which the rules were built
+  around; beyond it, 1 of 11 number findings is confirmed. On 1,000 divergences planted into clean texts it finds 93.0%
+  of changed numbers.
+- **Experimental checks, off by default, found what nobody had listed.** Amvuttra's French stop rule says an NIS
+  increase "≤ 10" points where German and Italian say "> 10". The Italian of Beyonttra and Vyndaqel says "on deve
+  essere combinato" where the German says "darf nicht … kombiniert werden": a ban that reads as an obligation. These
+  checks stay off because only 6 of their 31 findings are confirmed.
 - **Drafting is a review aid, air-gapped on a CPU** with Apertus 8B: Apertus pre-fills the French and Italian when the
   German changes, code writes every number, and frozen checks say why a draft needs a look. On 166 held-out amendments
   the drafts need **33.1% fewer edits**, and the drafts marked ready carry **0 meaning errors**, as read by blind Claude annotators (who catch every planted error but
@@ -29,7 +31,8 @@ something different in each language is a condition nobody can apply consistentl
   [project README](track_2b/README.md) and the [technical report](track_2b/technical_report.md).
 
 ![The review register: the German change, then the French and Italian drafts. Code writes the underlined numbers; the
-Italian note says the old Italian already said "every 4 weeks" and the draft follows the German's 8.](track_2b/docs/register-nemluvio.png)
+Italian note says the old Italian already said "every 4 weeks". This is the optional 70B lane, whose draft follows the
+German's 8; the default 8B keeps the 4, so the case stays open for a person.](track_2b/docs/register-nemluvio.png)
 
 How it works, in one line: numbers never reach the model (code writes them back), Apertus rewrites only the wording,
 and frozen deterministic checks, not a model, decide which drafts are ready and say why in the reviewer's language.
