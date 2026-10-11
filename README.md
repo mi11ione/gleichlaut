@@ -63,6 +63,8 @@ measured too: Q8_0 saves 12.2 points more edits than Q4_K_M on the same items.
   system (GEVER); the audit answers the "translations congruent?" question of BAG's triennial review for the whole list.
 - **Ready to hand over:** a German phase-1 pack with a one-page decision memo and one case sheet per issue
   ([docs/pilot/](track_2b/docs/pilot/)); `make pilot-pack` builds it, with the offline register, reproducibly.
+- **Pays off every month:** new divergences keep arriving. The June, August and September 2026 releases each added
+  new ones, and a monthly run puts them in front of a decision the day BAG publishes.
 - **Aimed where the problem is:** the same audit over seven federal health acts (5,991 aligned provisions, KVG to
   HMG), which pass through the federal language services, confirms no divergence among its 26 candidates; the SL's own
   texts are where the three languages drift, and that is where Gleichlaut works.
