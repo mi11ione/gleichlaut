@@ -53,7 +53,8 @@ kind (Q4_K_M, for an 8 GiB box, passes too: +10.8 points [4.8, 17.5]). Apertus 7
 54.1]; 39.8% of its drafts come out ready, with 0 meaning errors, stale changes or German left, its ready drafts rarely
 need a fix to the amendment (3 of 66), and a repeat run passes the same rule. A 70B draft costs **CHF 0.0024** at a
 Swiss provider's published price. The annotators behind these zeros were tested themselves: they caught all 66 planted
-meaning errors and all 38 written to read like part of the amendment, and flagged 5 of 17 real errors BAG had corrected (§6). In shadow mode, drafting runs on every new SL release from
+meaning errors and all 38 written to read like part of the amendment, and flagged 5 of the 7 content errors BAG had corrected (§6;
+the other 10 of its 17 corrections were one house-wording sweep, rightly judged equivalent). In shadow mode, drafting runs on every new SL release from
 the live public feed and grades itself against what BAG publishes (§8): on the August and September 2026 lists the 8B's
 drafts needed 28.4% fewer edits [14.9, 38.6] and the 70B's 51.8% [29.7, 68.7], the same picture as the held-out test. `make run` re-executes the recorded runs offline and
 re-derives every number.
@@ -253,8 +254,8 @@ is 4.7 to 11.1 minutes of typing a month at today's volume, a lower bound: readi
 - **What the evaluation rests on.** Ten of the twelve confirmed audit findings re-confirm the census the rules were
   built around; beyond it, 1 of 11 number findings is confirmed. The experimental operator and negation checks find
   74.5% of planted operator flips but 6 of their 31 register findings are confirmed, and neither an 8B log-probability filter
-  (R18; 2 of 13 kept) nor stricter sentence alignment (R22; held-half precision 19.0% to 40.0%) reached the pre-registered bar. Labels are by blind Claude annotators: on 17 real errors BAG itself corrected
-  (R17) both flagged 5 with BAG's text shown, accepting a 10-item house-wording sweep as equivalent; Apertus 70B as a
+  (R18; 2 of 13 kept) nor stricter sentence alignment (R22; held-half precision 19.0% to 40.0%) reached the pre-registered bar. Labels are by blind Claude annotators: of the 7 content errors BAG itself
+  corrected (R17) both flagged 5 with BAG's text shown, and judged the other 10 corrections, one house-wording sweep, equivalent; Apertus 70B as a
   second annotator did not discriminate (κ 0.000). The 70B rows describe the shared endpoint as Public AI served it
   (see Models and builds). On the live months the checks flagged 81.8–92.7% of drafts, so neither met the 70% flag cap of R0; house
   wording in the prompt brought September to 70.7% (R21).
