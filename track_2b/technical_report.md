@@ -7,7 +7,7 @@ Numbers never reach the model; frozen deterministic checks decide what is ready.
 - **Event:** Online
 - **Team:** 444
 - **Review register (live):** https://gleichlaut.mi11ion.io/ · **Demo video:** https://gleichlaut.mi11ion.io/demo.mp4
-- **Declared maturity:** feasibility study
+- **Declared maturity:** the audit is a deployable prototype; drafting is a feasibility study running in shadow mode
 
 ## 1. Summary
 

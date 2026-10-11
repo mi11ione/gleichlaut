@@ -3,7 +3,8 @@
 Unterlagen, mit denen das BAG Phase 1 aus [adoption.md](../adoption.md) freigeben kann: die Prüfung der publizierten
 SL-Limitierungen DE/FR/IT auf Abweichungen, ohne Sprachmodell, ohne Zugriff auf ePL, nur auf der öffentlichen Publikation.
 Alle Zahlen stammen aus den Ergebnisdateien des Repositoriums; Angaben, die das BAG liefern muss, sind mit
-«durch BAG zu ergänzen» markiert. Es wurde kein Kontakt mit dem BAG aufgenommen.
+«durch BAG zu ergänzen» markiert. Für Variante A wird beim BAG nichts installiert; den Entscheid trifft die Sektion
+Arzneimittelaufnahmen anhand der Entscheidvorlage.
 
 | Dokument | Inhalt |
 |---|---|
