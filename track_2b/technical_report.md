@@ -106,7 +106,7 @@ evaluation only.
 
 | Use | Model / build | Where it ran for the reported numbers |
 |---|---|---|
-| SL drafting | Apertus v1.5 70B (as Public AI served it; identity inferred, below) | Public AI through a budget gateway; temperature 0; one user message, no system message of ours; served model logged |
+| SL drafting | Apertus v1.5 70B (as Public AI served it; identity inconclusive, below) | Public AI through a budget gateway; temperature 0; one user message, no system message of ours; served model logged |
 | SL and statute drafting (default) | Apertus v1.5 8B GGUF Q8_0, sha256-pinned | 4-core CPU GitHub runners via llama.cpp (R1/M2, 200.5 s per draft); greedy; digit and number-word logit mask |
 | SL and statute drafting (8 GiB option) | Apertus v1.5 8B GGUF Q4_K_M, sha256-pinned | the same runners and decoding (R1/M1, 153.4 s per draft) |
 | research arms (dev 120, statutes / R5, failure-mode tests) | Apertus v1.5 8B text, MLX 4-bit DWQ, third-party (`m1rkocasu/Apertus-v1.5-8B-text-MLX-4bit-DWQ`) | a laptop GPU; agrees with bf16 `swiss-ai/Apertus-v1.5-8B-DPO` (an intermediate checkpoint) on 610 of 648 decisions (Q8_0 GGUF 638, Q4_K_M 622) |
@@ -135,8 +135,8 @@ items): both 8B GGUF builds pass the rule (Q4_K_M: flagged 63.9%, ready drafts 0
 Q8_0: flagged 62.7%, ready drafts 0 / 0 / 0), so under R1 the SL default is the local 8B. In this pipeline, with one run per
 build and no bf16 8B run, quantisation mattered about as much as size: Q8_0 has the same exact-match rate as the 70B (no equivalence test); on edits saved (33.1% vs 42.4%) the aggregate difference [−1.3, 20.2]
 includes zero, though the 70B needs fewer edits on 81 items and Q8_0 on 26; Q4_K_M is clearly behind (20.9%; against
-the 70B [8.7, 34.9], against Q8_0 [6.0, 19.9], paired 95% CIs of the difference in edits saved). The 70B is worth its endpoint where
-editing time matters (ready drafts needing a fix: 3 of 66, against 25 of 62 for Q8_0 and 33 of 60 for Q4_K_M, mostly one
+the 70B [8.7, 34.9], against Q8_0 [6.0, 19.9], paired 95% CIs of the difference in edits saved). If an office certifies its own 70B endpoint and the result carries over (unverified: we do not know which model Public AI
+served), the 70B is worth it where editing time matters (ready drafts needing a fix: 3 of 66, against 25 of 62 for Q8_0 and 33 of 60 for Q4_K_M, mostly one
 insurance term). The research-phase MLX build had flagged 85.0% on dev
 items without the re-ask. Federal statutes (pre-registered R5, 120 paragraphs): the 70B is no better (exact
 48.3% vs 50.0% for the 8B MLX build; 2 vs 0 real errors among drafts marked ready). The shipped GGUF builds on the same

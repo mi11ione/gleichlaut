@@ -14,18 +14,19 @@ something different in each language is a condition nobody can apply consistentl
   into 18 issues to decide. Two blind Claude annotators (a third on disagreements) confirm 12 findings that change a
   condition, among them Nemluvio's interval, Diaphin's surcharge and the 16 kg limit missing in Cresemba's French, plus
   5 minor ones such as typos next to numbers. 10 of the 12 were on our earlier census list, which the rules were built
-  around; beyond it, 1 of 11 number findings is confirmed. On 1,000 divergences planted into clean texts it finds 93.0%
+  around (five divergences repeated across sibling products); beyond it, 1 of 11 number findings is confirmed. On 1,000 divergences planted into clean texts it finds 93.0%
   of changed numbers.
 - **Experimental checks, off by default, found what nobody had listed.** Amvuttra's French stop rule says an NIS
   increase "≤ 10" points where German and Italian say "> 10". The Italian of Beyonttra and Vyndaqel says "on deve
   essere combinato" where the German says "darf nicht … kombiniert werden": a ban that reads as an obligation. These
   checks stay off because only 6 of their 31 findings are confirmed.
-- **Drafting is a review aid, air-gapped on a CPU** with Apertus 8B: Apertus pre-fills the French and Italian when the
+- **Drafting is a review aid, air-gapped on a CPU** with Apertus 8B (a third-party text-only GGUF build): Apertus pre-fills the French and Italian when the
   German changes, code writes every number, and frozen checks say why a draft needs a look. On 166 held-out amendments
-  the drafts need **33.1% fewer edits**, and the drafts marked ready carry **0 meaning errors**, as read by blind Claude annotators (who catch every planted error but
-  miss subtler real ones, see the [project README](track_2b/README.md)). On two live months the
+  the drafts need **33.1% fewer edits**, and the drafts marked ready carry **0 meaning errors**, as read by blind Claude annotators, who caught every planted error but only 5 of 17 real errors
+  BAG had corrected (see the [project README](track_2b/README.md)). On two live months the
   checks flagged most drafts, so a translator still reviews nearly everything.
-- **The 70B where an endpoint you control is available:** 42.4% fewer edits, at CHF 0.0024 per draft.
+- **The 70B, optional:** as Public AI served it (we could not verify which model that was), its drafts needed 42.4% fewer
+  edits, at CHF 0.0024 per draft; an office would certify its own endpoint first (`make certify-endpoint`).
 - **Every number is checkable:** `cd track_2b && make run` (Docker, CPU, about two minutes, no network) re-derives every
   figure from the recorded model responses and the committed labels. The details, bounds and caveats are in the
   [project README](track_2b/README.md) and the [technical report](track_2b/technical_report.md).

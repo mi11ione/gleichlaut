@@ -140,8 +140,8 @@ runs with a digit mask the 70B endpoint does not offer). On edits saved, quantis
 item by item the 70B needs fewer edits on 81 drafts and Q8_0 on 26. Q8_0's 62 ready drafts
 have no meaning error, stale change or German left; 25 still need a small fix, 22 of them one insurance term. The
 70B's ready drafts rarely need a fix to the amendment (3 of 66). So: Q8_0 by default (16 GiB RAM), Q4_K_M
-on an 8 GiB box (`BUILD=q4_k_m`), the 70B where an endpoint you control is available and the extra edits are
-worth it. On 120 federal-statute amendments (Fedlex) the 70B is no better than the 8B (exact 48.3%, against 50.0% for the 8B
+on an 8 GiB box (`BUILD=q4_k_m`), the 70B where an endpoint you control is certified and the extra edits are
+worth it (the served model behind our 70B numbers is not verified; see the report on models and builds). On 120 federal-statute amendments (Fedlex) the 70B is no better than the 8B (exact 48.3%, against 50.0% for the 8B
 MLX build and 45.8% / 47.5% for the shipped Q4_K_M / Q8_0 builds). No size passes the safety rule on statutes: the GGUF
 builds mark 4 drafts ready that change a provision (the vocational title "EFZ" rendered as a lower qualification, a
 fuel category, a clause the German dropped). So statutes run the 8B
