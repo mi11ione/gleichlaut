@@ -1,0 +1,30 @@
+id	needs_fix	class	note
+S00	no	equivalent	Code sentence correctly replaced; official adds "malattie" only.
+S01	yes	cosmetic	Change applied but dangling colon left after "assureur-maladie:".
+S02	yes	minor	Ophthalmochirurgen applied, but untouched clause b) "il medico" also changed to oftalmochirurgo.
+S03	yes	cosmetic	Change applied but dangling colon left after "assureur-maladie:".
+S04	yes	REAL	Prior-approval condition dropped; German "Kostengutsprache" left; sentences inserted mid-text.
+S05	no	equivalent	Prior-approval sentence removed, VENCLYXTO capitalised; harmless case change only.
+S06	yes	cosmetic	OKP phrase added correctly; "dalla assicurazione" missing elision.
+S07	yes	REAL	Removed prior-approval sentence kept as "Après accord sur la prise en charge" (condition retained).
+S08	no	equivalent	Grundversicherung replaced correctly; other differences are official extra fixes.
+S09	yes	stale	"Colite ulcerosa" heading not added; also policlinici changed to "policlinico".
+S10	yes	stale	No change applied: new APL indication missing, removed prior-approval sentence kept.
+S11	no	equivalent	Refund paragraph removed correctly; only harmless term normalisations.
+S12	no	equivalent	Novartis refund sentence removed; harmless rimborso->assunzione wording change.
+S13	no	equivalent	Code sentence correctly replaced; official adds "malattie" only.
+S14	no	equivalent	Code sentence added correctly; wording "code d'indication suivant" harmless.
+S15	yes	stale	Draft identical to old target; Novartis refund sentence not removed.
+S16	no	equivalent	Novartis refund sentence removed; harmless rimborso->assunzione wording change.
+S17	yes	stale	Removed prior-approval sentence retained; also "Arseni triossido", "acido retinoico trans" odd.
+S18	yes	minor	Content complete but last sentence German-syntax calque, ungrammatical; "il faut : uniquement".
+S19	yes	minor	"CD38 anticorpo" word-order calque; "dopo" instead of during prior treatment.
+S20	yes	german	German artefact "I-CANS" copied; "Une remboursement ... exclue" gender error.
+S21	yes	REAL	"(modèle de prix)" instead of without; removed KoGu and dosing kept; "Folguer Code".
+S22	no	equivalent	OKP term replaced correctly; official extra fix of ARA term.
+S23	no	equivalent	Product name and code updated; "dei costi" harmless.
+S24	yes	german	Garbled Germanism "Folgore Codice è da trasmettere" for code sentence.
+S25	yes	cosmetic	GLP-1 option added but German typo copied as "GLP1 - 1".
+S26	no	equivalent	Ophthalmochirurgen applied as ophtalmochirurgiens; official hyphenates only.
+S27	no	equivalent	OKP phrase added correctly; other differences are official extra fixes.
+S28	no	equivalent	Ophthalmochirurgen applied; harmless assureur/assurance wording change.

@@ -288,6 +288,9 @@ re-ask and frozen code unchanged. Frozen → v3-terms, identical drafts: Q8_0 1 
 model meets R0: September fails the flag cap, August Q8_0 the German-left cap (BAG's typo "GLP1-1-Analogon"), and the
 August 70B gets worse (1 REAL, 2 stale, 2 German among 7 ready). As pre-registered, it is not a candidate for a held-out
 test; the frozen default stays.
+A fixed task-specific system message replacing the default persona (`Apertus 1.5 Omni`), on top of that block (R21,
+pre-registered, Q8_0), meets R0 on the held-out 166 (13.9% identical, +7.8; frozen 17.5%) but on neither live month
+(August: 1 REAL among ready; September: 70.7% flagged), so the default stays.
 Next: the mined termbase as a pre-registered check resource (it already names the term in 22 of the 25 Q8_0 ready
 drafts that need a fix), a direction-flip check, and a Swiss 70B endpoint certified with `make certify-endpoint`.
 

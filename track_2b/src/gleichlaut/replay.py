@@ -70,6 +70,7 @@ def compute():
     res["annotator_crossfamily"] = score.annotator_crossfamily()   # PREREG R17 (B): Apertus 70B as a non-Claude annotator
     res["audit_apertus_filter"] = score.audit_apertus_filter()   # PREREG R18: Apertus 8B log-probability filter on the round-5 audit findings
     res["identity_r19"] = score.identity_r19()   # PREREG R19: the certified 8B Q8_0 on the identity probes (MMLU 250, battery 792)
+    res["r21_system"] = score.r21_system(res)   # PREREG R21: v4-system (system message + house wording), fresh 166 and both live months, re-executed from its exchanges
     from .emit import explain
     res["explain_v2"] = explain.measure_v2()       # translator-facing reasons, before/after the round-6 wording (display only)
     res["explain_v3"] = explain.measure_v3()       # house sentences, termbase in rewritten text, noise, hedging, codes (display only)

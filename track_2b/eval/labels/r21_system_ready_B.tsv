@@ -1,0 +1,30 @@
+id	needs_fix	class	note
+S28	no	equivalent	Ophtalmochirurgiens applied; unrequested assureur-maladie change harmless; hyphenation differs from official.
+S27	no	preexisting	AOS added correctly; mistranslated angiotensin II antagonist already in old text.
+S26	no	equivalent	Ophtalmochirurgiens applied twice; only hyphenation differs from official.
+S25	yes	cosmetic	New GLP-1 line added but rendered 'GLP1 - 1' (spacing/name defect).
+S24	yes	german	'Folgore Codice' is a Germanised artefact of 'Folgender Code'.
+S23	no	equivalent	Product name and code updated; 'dei costi' wording change harmless.
+S22	no	preexisting	AOS applied; angiotensin II antagonist mistranslation preexisting.
+S21	yes	REAL	'(modele de prix)' instead of 'sans'; deleted dosing/KoGu kept; 112 mg KRd wrong; 'Folguer'.
+S20	yes	minor	Exclusion added correctly; 'Une remboursement ... exclue' gender error; I-CANS copied.
+S19	yes	minor	Exclusion and deletion applied; 'CD38 anticorpo' calque, 'dopo' for 'unter'.
+S18	yes	minor	New sentences present; last sentence German-syntax calque 'Sont dans des cas...' ungrammatical.
+S17	yes	REAL	Deleted prior-authorisation sentence retained; 'Arseni triossido' non-standard.
+S16	no	equivalent	Rebate sentence removed correctly; unrequested 'assunzione dei costi' harmless.
+S15	yes	stale	Rebate sentence not deleted; draft identical to old text.
+S14	no	equivalent	Code sentence added correctly; 'code d'indication' faithful.
+S13	no	equivalent	Code sentence replaced correctly; 'assicuratore' without 'malattie' harmless.
+S12	no	equivalent	Rebate sentence removed correctly; wording change harmless.
+S11	no	equivalent	Rebate/VAT sentences removed correctly; harmonisation of assureur-maladie harmless.
+S10	yes	REAL	Amendment not applied: new first-line indication missing, deleted KoGu requirement retained.
+S09	yes	stale	Code added and KoGu deleted, but heading 'Colite ulcerosa' missing; 'policlinico' typo.
+S08	no	preexisting	AOMS applied; 'un cosiddetti antagonisti' error preexisting.
+S07	yes	REAL	Deleted prior-authorisation requirement partly retained ('Apres accord sur la prise en charge').
+S06	no	preexisting	AOMS applied; 'cosiddetti' error preexisting; 'dalla assicurazione' acceptable.
+S05	no	equivalent	KoGu sentence removed, VENCLYXTO capitalised; lowercase 'informazione' harmless.
+S04	yes	REAL	New KoGu/VA requirement dropped; 'Kostengutsprache' left in German; sentences misplaced.
+S03	yes	cosmetic	Code sentence applied but ends with stray colon.
+S02	yes	minor	Unrequested change: 'medico' in b) replaced by 'oftalmochirurgo', beyond German change.
+S01	yes	cosmetic	Code sentence applied but ends with stray colon.
+S00	no	equivalent	Code sentence applied; 'assicuratore' without 'malattie' harmless.

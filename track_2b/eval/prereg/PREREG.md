@@ -39,7 +39,7 @@ human labels were used.
 | R18 | Apertus 8B log-probability filter on the round-5 audit findings that ship off (threshold from planted copies, applied to the 31 register findings) | planted AUROC 0.955; register kept 13, 2 of 6 confirmed (15.4%): fails, the kinds stay off |
 | R19 | the certified 8B Q8_0 on the identity probes (the 250 MMLU questions, the 792-cell battery): is `fp1-nes` an 8B? | MMLU 78.4% (shared model 84.4%, v1 8B 70.8%); text equal to fp1-nes in 40.7% of cells, decisions 88.6% (fp1-nes) vs 90.4% (tp2): inconclusive (O4) |
 | R20 | the 6 Oct 2026 audit as frozen predictions, scored against BAG's own later corrections (an oracle that is not Claude) | pending (first scoring snapshot expected 1 Nov 2026) |
-| R21 | a task-specific system message on top of the house wording (v4-system, certified Q8_0): fresh 166 (A) and both live months (B) | pending |
+| R21 | a task-specific system message on top of the house wording (v4-system, certified Q8_0): fresh 166 (A) and both live months (B) | A meets R0 (13.9% identical, +7.8; frozen 17.5%); no live month (Aug 1 REAL, Sep flagged 70.7%): not a candidate, default unchanged |
 
 Corrections to statements of fact inside rule text (11 Oct 2026; the rules themselves are unchanged and their text below
 stays as frozen):
@@ -1140,3 +1140,26 @@ data the change was designed on is labelled "dev" in every table.
   it". Post hoc (not in the rule): on the 648 parity cells Q8_0 agrees with tp2 on 605 and with the 8B name on 603
   forced-choice decisions (tp2 with the 8B name on 626), against 638 for the recorded Q8_0 with bf16 DPO
   (`eval/results/identity_r19.json`).
+- **R21, 11 Oct 2026:** pre-registered at commit aff91df (07:29 UTC) before any model run; variant, mined 2025 house
+  wording, prompt record and workflow at 4f6d972. Workflow `r21-8b`, GitHub Actions CPU runners, build certificate
+  8b-q8_0-fresh166 verified on every shard: fresh 166 run 38121568986 (13 shards, 303 calls), September 38121571690 (4
+  shards, 81 calls, 66 distinct requests), August 38121574420 (3 shards, 40 calls); every request carried the system
+  message (sha256 `a81624dc…`); `make run` re-executes all three from their recorded exchanges (166 of 166, 44 of 44,
+  22 of 22 records equal, 0 misses; `data/r21/runs/`). **(A) fresh 166, R0 as R1 (M2):** v4-system identical to BAG
+  **13.9%** (23 of 166; +7.8 points over rules-only [3.0, 13.9]), flagged **65.1%**, ready 58, among them 0 REAL, 0
+  stale, 0 German (95% upper bound on severe among ready 6.2%): **meets R0**. Certified frozen run: 17.5% (+11.4 [4.8,
+  18.7]), flagged 62.7%, ready 62 (23 of them "minor", the non-house "assurance obligatoire de maladie"; v4-system
+  ready: 13 exact, 38 equivalent, 4 preexisting, 3 cosmetic, 0 minor). Paired: identical outputs 54 of 166, flag
+  agreement 148 (κ 0.765), identical-to-BAG gained 2 and lost 8 (wb000, wb002, wb072 FR and IT, wb038-fr, wb040-fr);
+  of the 13 model-call items whose user prompt is unchanged (system message only), 8 give the frozen output. Seeded 20
+  flagged drafts: 8 need no fix. **(B) live months (not unseen), frozen -> v3-terms -> v4-system, Q8_0:** August (n 22)
+  identical 1 -> 3 -> 4 (+18.2 points, holds), flagged 81.8% -> 63.6% -> 54.5% (holds), stale + German 1 -> 1 -> 0
+  (holds), REAL 0 -> 0 -> **1 = 4.5% (fails)**: a French draft keeps the deleted prior-approval sentence («Après
+  accord sur la prise en charge», XTANDI.01; REAL by all three annotators): **does not meet R0**. September (n 41)
+  identical 3 -> 8 -> 10 (+24.4, holds), flagged 92.7% -> 73.2% -> **70.7% (fails**, 29 of 41), REAL 0, stale + German 0
+  (hold): **does not meet R0**. **Decision as pre-registered:** R0 holds on A but on no live month, so v4-system is
+  not a candidate default; reported as is, and the frozen default stays. Labels: 29 records (A: 5 ready, 18 of the
+  flagged sample; August 2, September 4; 40 ready fresh-166 drafts reused a label of a byte-identical earlier draft),
+  two blind annotators (needs fix 28 of 29, κ 0.931; class 22 of 29), a third on 10; final: 10 equivalent, 3
+  preexisting, 4 cosmetic, 4 minor, 1 German, 3 stale, 4 REAL (3 of them flagged) (`eval/results/r21_system.json`,
+  `eval/labels/r21_system_ready.tsv`).

@@ -395,6 +395,24 @@ for cid, path, fmt in (("r19_mmlu_pct", "mmlu.q8_0.pct", "{:.1f}"), ("r19_mmlu_k
                        ("r19_ph_cells", "battery.post_hoc.parity_cells", "{}"), ("r19_line", "decision.thresholds.mmlu_low_max_pct", "{:.0f}")):
     C.append((cid, ID, path, fmt, RE))
 
+# PREREG R21: variant v4-system (house wording + a fixed system message), fresh 166 (A) and both live months (B), Q8_0
+R21 = "eval/results/r21_system.json"
+for cid, path, fmt in (("r21_a_exact", "sets.fresh166.v4_system.exact.model", "{:.1f}"), ("r21_a_delta", "sets.fresh166.v4_system.exact.delta", "{:+.1f}"),
+                       ("r21_a_lo", "sets.fresh166.v4_system.exact.ci95.0", "{:.1f}"), ("r21_a_hi", "sets.fresh166.v4_system.exact.ci95.1", "{:.1f}"),
+                       ("r21_a_flag", "sets.fresh166.v4_system.flag_rate", "{:.1f}"), ("r21_a_ready", "sets.fresh166.v4_system.unflagged", "{}"),
+                       ("r21_a_exact_n", "sets.fresh166.v4_system.exact_n", "{}"), ("r21_a_cert_exact", "sets.fresh166.certified.exact.model", "{:.1f}"),
+                       ("r21_a_same", "sets.fresh166.paired.identical_outputs", "{}"), ("r21_a_kappa", "sets.fresh166.paired.flag_kappa", "{:.3f}"),
+                       ("r21_aug_exact", "sets.20260801-20260901.v4_system.exact", "{}"), ("r21_aug_flag", "sets.20260801-20260901.v4_system.criteria.flag_rate.0", "{:.1f}"),
+                       ("r21_aug_real_n", "sets.20260801-20260901.v4_system.unflagged_real_n", "{}"),
+                       ("r21_aug_real", "sets.20260801-20260901.v4_system.criteria.unflagged_real.0", "{:.1f}"),
+                       ("r21_sep_exact", "sets.20260901-20261001.v4_system.exact", "{}"), ("r21_sep_flag", "sets.20260901-20261001.v4_system.criteria.flag_rate.0", "{:.1f}"),
+                       ("r21_sep_flagged", "sets.20260901-20261001.v4_system.flagged", "{}"),
+                       ("r21_sep_gain", "sets.20260901-20261001.v4_system.criteria.exact_gain.0", "{:+.1f}"),
+                       ("r21_aug_gain", "sets.20260801-20260901.v4_system.criteria.exact_gain.0", "{:+.1f}"),
+                       ("r21_labelled", "annotators.n", "{}"), ("r21_tiebreak", "annotators.tiebreak", "{}"),
+                       ("r21_kappa", "annotators.needs_fix_kappa", "{:.3f}")):
+    C.append((cid, R21, path, fmt, RE))
+
 if __name__ == "__main__":
     rows = ["id\tvalue\tsource\tpath\tfmt\tcommand\twhere"]
     for cid, src, path, fmt, cmd in C:

@@ -16,9 +16,10 @@ template's default "Apertus 1.5 Omni" system turn; gleichlaut.v4system).
                       one), then every item of the shard through v4-system with llama.cpp; every exchange (request as
                       sent, response) -> out/r21/<S>/shard<K>of<N>/exchanges.jsonl, records.jsonl, calls.jsonl, gate.json.
   gather --set S --in DIR...   merge the shards -> data/r21/runs/<S>_q8_0/ (records, exchanges, calls, summary).
-  worklist --map M    pool every ready (guard verdict) v4-system draft that differs from BAG's published text and is not
-                      byte-identical to an already-labelled draft of the same item, all three sets, one record per distinct
-                      (set, item, draft), seeded shuffle, neutral ids -> eval/labels/r21_system_ready_worklist.json.
+  worklist --map M    pool every ready (guard verdict) v4-system draft that differs from BAG's published text, and the
+                      fresh 166's seeded 20 flagged drafts, except drafts byte-identical to an already-labelled draft of
+                      the same item (score.r21_known_labels), all three sets, one record per (set, item), seeded shuffle,
+                      neutral ids -> eval/labels/r21_system_ready_worklist.json; the id map goes to M (kept apart).
   merge A B [T] --map M   annotator TSVs -> eval/labels/r21_system_ready.tsv (tie-break worklist when only A and B).
 usage: PYTHONPATH=src python3 tools/r21_system.py mine --xml DIR|prompts|--check [--xml DIR]|run ...|gather ...|worklist|merge"""
 import argparse, glob, hashlib, json, os, random, re, sys, time
@@ -216,37 +217,6 @@ def gather(s, dirs):
 
 
 # ---------------------------------------------------------------- labels
-def labelled_drafts():
-    """-> {(set, key): {draft text: final label}} of every already-labelled draft (byte-identical reuse)."""
-    from gleichlaut import score
-    from gleichlaut.certify import reference_labels
-    L = {}
-    I = {x["key"]: x for x in items("fresh166")}
-    F70 = score.load_jsonl(score.RUNS["fresh166"]["final"]); lab70 = score.load_labels(score.RUNS["fresh166"]["labels"])
-    for k, r in F70.items():
-        if k in lab70: L.setdefault(("fresh166", k), {})[r["out"]] = lab70[k]
-    def tsv(p):
-        if not os.path.exists(p): return []
-        X = open(p, encoding="utf-8").read().splitlines(); h = X[0].split("\t")
-        return [dict(zip(h, l.split("\t"))) for l in X[1:] if l.strip()]
-    for rel, lab in (("runs/8b_q4_k_m_fresh166_g3_final.jsonl", "m1_q4_k_m_fresh166.tsv"), ("runs/8b_q8_0_fresh166_g3_final.jsonl", "m1_q8_0_fresh166.tsv"),
-                     ("runs/8b_q8_0_fresh166_g3_rerun.jsonl", "m2_rerun_q8_0_fresh166.tsv")):
-        if not os.path.exists(os.path.join(score.DATA, rel)): continue
-        F = score.load_jsonl(rel)
-        for r in tsv(os.path.join(LAB, lab)): L.setdefault(("fresh166", r["key"]), {})[F[r["key"]]["out"]] = r["final"]
-    for m in SETS[1:]:
-        D = os.path.join(core.ROOT, "data", "shadow", m)
-        recs = {}
-        for f in os.listdir(D):
-            p = os.path.join(D, f, "records.jsonl")
-            if os.path.exists(p): recs[f] = {json.loads(l)["key"]: json.loads(l) for l in open(p, encoding="utf-8")}
-        for r in tsv(os.path.join(LAB, f"shadow_{m.replace('-', '_')}_ready.tsv")):
-            L.setdefault((m, r["key"]), {})[recs[r["model"]][r["key"]]["out"]] = r["final"]
-        for r in tsv(os.path.join(LAB, "r12_terms_ready.tsv")):
-            if r["month"] == m: L.setdefault((m, r["key"]), {})[recs[f"v3_terms_{r['model']}"][r["key"]]["out"]] = r["final"]
-    return L
-
-
 def v4_records(s):
     p = os.path.join(RUNS, f"{s}_{BUILD}", "records.jsonl")
     return {json.loads(l)["key"]: json.loads(l) for l in open(p, encoding="utf-8")} if os.path.exists(p) else None
@@ -260,11 +230,17 @@ def ready(r):
 
 
 def worklist(map_path):
-    norm = core.lock.norm; L = labelled_drafts(); todo = []
+    """ready non-exact drafts of the three sets plus, for the fresh 166, the seeded 20 flagged drafts (seed 20261009, as
+    R1), minus exact drafts and drafts byte-identical to a draft labelled earlier for the same item (score.r21_known_labels)."""
+    from gleichlaut import score
+    norm = core.lock.norm; L = score.r21_known_labels(); todo = []
     for s in SETS:
         R = v4_records(s); I = {x["key"]: x for x in items(s)}
+        smp = set()
+        if s == "fresh166":
+            fl = sorted(k for k, r in R.items() if r["guard_flag"]); smp = set(random.Random(20261009).sample(fl, min(20, len(fl))))
         for k, r in R.items():
-            if not ready(r) or not I[k].get("tgt_new") or norm(r["out"]) == norm(I[k]["tgt_new"]): continue
+            if not (ready(r) or k in smp) or not I[k].get("tgt_new") or norm(r["out"]) == norm(I[k]["tgt_new"]): continue
             if r["out"] in L.get((s, k), {}): continue
             todo.append((s, k, r["out"]))
     keys = sorted(set(todo)); random.Random(SEED).shuffle(keys)
@@ -299,14 +275,15 @@ def merge(a, b, t, map_path):
     if t:
         TM = json.load(open(map_path + ".tiebreak.json")); T = {TM[k]: v for k, v in _tsv(t).items()}
         assert set(T) == set(need), "tie-break file does not cover the disagreements"
-    rows = ["\t".join(("set", "key", "A_fix", "A_class", "B_fix", "B_class", "T_fix", "T_class", "final_fix", "final", "note_A"))]
+    W = {w["id"]: w for w in json.load(open(WL, encoding="utf-8"))}
+    rows = ["\t".join(("set", "key", "draft_sha256", "A_fix", "A_class", "B_fix", "B_class", "T_fix", "T_class", "final_fix", "final", "note_A"))]
     for i in sorted(M, key=lambda i: (M[i]["set"], M[i]["key"])):
         a_, b_, t_ = A[i], B[i], T.get(i)
         if t_:
             v = [a_["class"], b_["class"], t_["class"]]; fin = t_["class"] if len(set(v)) == 3 else max(set(v), key=v.count)
             fx = [a_["needs_fix"], b_["needs_fix"], t_["needs_fix"]]; ffix = max(set(fx), key=fx.count)
         else: fin, ffix = a_["class"], a_["needs_fix"]
-        rows.append("\t".join((M[i]["set"], M[i]["key"], a_["needs_fix"], a_["class"], b_["needs_fix"], b_["class"],
+        rows.append("\t".join((M[i]["set"], M[i]["key"], hashlib.sha256(W[i]["draft"].encode("utf-8")).hexdigest(), a_["needs_fix"], a_["class"], b_["needs_fix"], b_["class"],
                                t_["needs_fix"] if t_ else "", t_["class"] if t_ else "", ffix, fin, a_.get("note", "").replace("\t", " "))))
     open(TSV, "w", encoding="utf-8").write("\n".join(rows) + "\n")
     print(f"merged {len(M)} records -> {TSV}; tie-breaks {len(T)}")

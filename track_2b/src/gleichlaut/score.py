@@ -1674,3 +1674,171 @@ def identity_r19():
     return dict(mmlu=mmlu, battery=bat, decision=dict(outcome=o, reading=R19_OUTCOME[o], decisions_gap_fp1_minus_tp2_pts=gap, thresholds=th, **flags),
                 shards=dict(n=len(shards), certificate_verified=sum(1 for g in shards if g.get("certificate")),
                             gguf_sha256=sorted({g["gguf_sha256"] for g in shards})))
+
+
+# ---------------------------------------------------------------- PREREG R21: variant v4-system (system message + house wording)
+R21_SETS = ("fresh166", "20260801-20260901", "20260901-20261001")
+R21_FIELDS = ("out", "guard_flag", "reasked", "replaced", "retried")
+R21_NOFIX = ("exact", "equivalent", "preexisting")      # a class-only label (no needs_fix column): these need no fix
+
+
+def _tsv_rows(p):
+    if not os.path.exists(p): return []
+    L = open(p, encoding="utf-8").read().splitlines(); h = L[0].split("\t")
+    return [dict(zip(h, l.split("\t"))) for l in L[1:] if l.strip()]
+
+
+def r21_known_labels():
+    """-> {(set, key): {draft text: (class, needs_fix)}} of every draft labelled before R21 (byte-identical reuse): fresh
+    166: the 70B reference labels, the R1 Q4_K_M and Q8_0 labels, R9; live months: the R7 / R10 and R12 labels."""
+    K = {}
+    def put(s, k, out, cls, fix): K.setdefault((s, k), {}).setdefault(out, (cls, fix or ("no" if cls in R21_NOFIX else "yes")))
+    F70 = load_jsonl(RUNS["fresh166"]["final"]); lab70 = load_labels(RUNS["fresh166"]["labels"])
+    for k, r in F70.items():
+        if k in lab70: put("fresh166", k, r["out"], lab70[k], None)
+    for rel, lab in (("runs/8b_q4_k_m_fresh166_g3_final.jsonl", "m1_q4_k_m_fresh166.tsv"), ("runs/8b_q8_0_fresh166_g3_final.jsonl", "m1_q8_0_fresh166.tsv"),
+                     ("runs/8b_q8_0_fresh166_g3_rerun.jsonl", "m2_rerun_q8_0_fresh166.tsv")):
+        if not os.path.exists(os.path.join(DATA, rel)): continue
+        F = load_jsonl(rel)
+        for r in _tsv_rows(os.path.join(LABELS, lab)): put("fresh166", r["key"], F[r["key"]]["out"], r["final"], r["final_fix"])
+    for m in R21_SETS[1:]:
+        D = os.path.join(DATA, "shadow", m); recs = {}
+        for f in sorted(os.listdir(D)):
+            p = os.path.join(D, f, "records.jsonl")
+            if os.path.exists(p): recs[f] = {json.loads(l)["key"]: json.loads(l) for l in open(p, encoding="utf-8")}
+        for r in _tsv_rows(os.path.join(LABELS, f"shadow_{m.replace('-', '_')}_ready.tsv")):
+            put(m, r["key"], recs[r["model"]][r["key"]]["out"], r["final"], r.get("final_fix"))
+        for r in _tsv_rows(os.path.join(LABELS, "r12_terms_ready.tsv")):
+            if r["month"] == m: put(m, r["key"], recs[f"v3_terms_{r['model']}"][r["key"]]["out"], r["final"], r.get("final_fix"))
+    return K
+
+
+def r21_records(s):
+    p = os.path.join(DATA, "r21", "runs", f"{s}_q8_0", "records.jsonl")
+    return {json.loads(l)["key"]: json.loads(l) for l in open(p, encoding="utf-8")} if os.path.exists(p) else None
+
+
+def r21_reexecute(s):
+    """re-execute the R21 run of set s end to end from its own recorded exchanges (v4system.Recorded): every request is
+    rebuilt (system message included) and looked up by its sha256; -> [records equal, drafted, hits, misses]."""
+    from . import cli, v4system
+    R = r21_records(s); E = os.path.join(DATA, "r21", "runs", f"{s}_q8_0", "exchanges.jsonl")
+    I = load_items("items/items_fresh.json") if s == "fresh166" else json.load(open(os.path.join(DATA, "shadow", s, "items.json"), encoding="utf-8"))
+    rec = v4system.Recorded(E); P = v4system.SystemPipeline(rec)
+    dk = [x for x in I if s == "fresh166" or cli.route(x)[0] != "human"]
+    same = sum(all(P.run(x).get(f) == R[x["key"]].get(f) for f in R21_FIELDS) for x in dk)
+    return [same, len(dk), rec.hits, len(rec.misses)]
+
+
+def r21_system(res=None):
+    """PREREG R21: v4-system (gleichlaut.v4system: the v3-terms block from each item's own old snapshot plus one fixed
+    system message) with the certified Q8_0. (A) the fresh 166, scored by R0 exactly as R1 (M2) beside the certified run;
+    (B) both live months, the four R0 criteria on the guards' verdict beside the frozen (R7 / R10) and v3-terms (R12) Q8_0
+    runs. Labels: exact; else the label of a byte-identical draft labelled earlier for the same item (r21_known_labels);
+    else eval/labels/r21_system_ready.tsv (blind, R1 protocol). Each run is re-executed from its recorded exchanges."""
+    import random
+    from . import v4system
+    if r21_records("fresh166") is None: return None
+    norm = core.lock.norm; chk = core.check_only("g3"); K = r21_known_labels()
+    new = {(r["set"], r["key"]): r for r in _tsv_rows(os.path.join(LABELS, "r21_system_ready.tsv"))}
+    raw = {a: _tsv_rows(os.path.join(LABELS, f"r21_system_ready_{a}.tsv")) for a in "ABT"}
+
+    def label(s, k, out):
+        if (s, k) in new and new[(s, k)].get("draft_sha256", hashlib_sha(out)) == hashlib_sha(out): return new[(s, k)]["final"], new[(s, k)]["final_fix"], "new"
+        if out in K.get((s, k), {}): c, f = K[(s, k)][out]; return c, f, "reused"
+        return "?", "?", "unlabelled"
+    P = json.load(open(os.path.join(core.ROOT, "eval", "prereg", "r21_prompts.json"), encoding="utf-8"))
+    out = dict(rule="PREREG R21", variant=v4system.VARIANT, system_sha256=v4system.SYSTEM_SHA256, pass_rule=PASS_RULE, sets={})
+    # (A) fresh 166
+    I = load_items("items/items_fresh.json"); V = r21_records("fresh166"); C = load_jsonl("runs/8b_q8_0_fresh166_g3_final.jsonl")
+    rows1, rows2, src = [], [], Counter()
+    for x in I:
+        k = x["key"]; r = V[k]
+        a = S["score_one"](x, core.gl2.rules(x["de_old"], x["de_new"], x["tgt_old"], x["lang"])[0], "1"); b = S["score_one"](x, r["out"], "1")
+        flag = chk.check(x, r["out"])["flag"]; assert flag == r["guard_flag"], k
+        cls, fix, how = ("exact", "no", "exact") if b["exact"] else label("fresh166", k, r["out"])
+        if not flag and not b["exact"]: src[how] += 1
+        b.update(flagged=flag, cls=cls, fix=fix, family=x["cluster"], reasked=r.get("reasked", False), replaced=bool(r.get("replaced")))
+        a.update(family=x["cluster"]); rows1.append(a); rows2.append(b)
+    s = summarise(rows1, rows2, labelled=True)
+    fl = sorted(r["key"] for r in rows2 if r["flagged"]); smp = random.Random(20261009).sample(fl, min(20, len(fl)))
+    byk = {r["key"]: r for r in rows2}
+    s["flagged_sample"] = dict(n=len(smp), no_fix=sum(byk[k]["fix"] == "no" for k in smp), unlabelled=sum(byk[k]["fix"] == "?" for k in smp))
+    U = [r for r in rows2 if not r["flagged"]]
+    s["ready_needs_fix"] = sum(r["fix"] == "yes" for r in U); s["ready_label_source"] = dict(sorted(src.items()))
+    keys = [x["key"] for x in I]; n = len(keys); fa = [C[k]["guard_flag"] for k in keys]; fb = [V[k]["guard_flag"] for k in keys]
+    agree = sum(p == q for p, q in zip(fa, fb)); pA, pB = sum(fa) / n, sum(fb) / n; pe = pA * pB + (1 - pA) * (1 - pB)
+    exF = {k for k in keys if norm(C[k]["out"]) == norm(I[keys.index(k)]["tgt_new"])}; exV = {r["key"] for r in rows2 if r["exact"]}
+    pi = P["sets"]["fresh166"]["items"]; sysonly = [k for k in keys if pi[k]["model_call"] and pi[k]["prompt_sha256_frozen"] == pi[k]["prompt_sha256_v4"]]
+    cert = (res or {}).get("m1_q8_0") or m1("q8_0")
+    out["sets"]["fresh166"] = dict(
+        v4_system=s, certified=dict((k_, cert[k_]) for k_ in ("n", "exact", "flag_rate", "flagged", "unflagged", "ready_rate", "unflagged_classes",
+                                                               "unflagged_REAL", "unflagged_stale", "unflagged_german", "pass_rule", "pass")),
+        paired=dict(identical_outputs=sum(C[k]["out"] == V[k]["out"] for k in keys), flag_agreement=agree,
+                    flag_kappa=round((agree / n - pe) / (1 - pe), 3) if pe < 1 else 1.0,
+                    exact_gained=sorted(exV - exF), exact_lost=sorted(exF - exV),
+                    flag_to_ready=sum(C[k]["guard_flag"] and not V[k]["guard_flag"] for k in keys),
+                    ready_to_flag=sum(not C[k]["guard_flag"] and V[k]["guard_flag"] for k in keys),
+                    system_only_items=len(sysonly), system_only_same_output=sum(C[k]["out"] == V[k]["out"] for k in sysonly)),
+        prompts=dict((k_, P["sets"]["fresh166"][k_]) for k_ in ("drafted", "model_calls", "user_prompt_changed", "terms_dates")),
+        run=_r21_run("fresh166"), reexecuted=r21_reexecute("fresh166"))
+    out["meets_r0_A"] = s["pass"]
+    # (B) both live months: frozen (R7 / R10), v3-terms (R12), v4-system
+    st = lambda r: r["status"] if r["status"] == "human" else r.get("guard_status", r["status"])
+    for m in R21_SETS[1:]:
+        D = os.path.join(DATA, "shadow", m)
+        I = {x["key"]: x for x in json.load(open(os.path.join(D, "items.json"), encoding="utf-8"))}
+        cmp_ = [k for k, x in I.items() if x.get("tgt_new")]
+        rule_ok = {k: norm(core.gl2.rules(I[k]["de_old"], I[k]["de_new"], I[k]["tgt_old"], I[k]["lang"])[0]) == norm(I[k]["tgt_new"]) for k in cmp_}
+        mo = {}
+        for arm, recs in (("frozen", os.path.join(D, "q8_0", "records.jsonl")), ("v3_terms", os.path.join(D, "v3_terms_q8_0", "records.jsonl")),
+                          ("v4_system", None)):
+            R = r21_records(m) if recs is None else {json.loads(l)["key"]: json.loads(l) for l in open(recs, encoding="utf-8")}
+            if R is None: continue
+            assert set(R) == set(I), (m, arm)
+            d = [k for k in cmp_ if st(R[k]) != "human"]; nn = len(d)
+            ex = [k for k in d if norm(R[k]["out"]) == norm(I[k]["tgt_new"])]; ru = sum(rule_ok[k] for k in d)
+            rd = [k for k in d if st(R[k]) == "ready"]; ne = [k for k in rd if k not in ex]
+            cls = Counter(label(m, k, R[k]["out"])[0] for k in ne)
+            real = cls.get("REAL", 0); su = cls.get("stale", 0) + cls.get("german", 0); fl_ = sum(st(R[k]) == "flagged" for k in d)
+            c = dict(unflagged_real=[round(100 * real / nn, 2), 100 * real / nn <= PASS_RULE["unflagged_real_max_pct"]],
+                     unflagged_stale_untranslated=[round(100 * su / nn, 2), 100 * su / nn <= PASS_RULE["unflagged_stale_untranslated_max_pct"]],
+                     exact_gain=[round(100 * (len(ex) - ru) / nn, 1), 100 * (len(ex) - ru) / nn >= PASS_RULE["exact_gain_min_pts"]],
+                     flag_rate=[round(100 * fl_ / nn, 1), 100 * fl_ / nn <= PASS_RULE["flag_rate_max_pct"]])
+            mo[arm] = dict(n=nn, exact=len(ex), rules_exact=ru, ready=len(rd), ready_exact=len(rd) - len(ne), ready_not_exact=len(ne),
+                           ready_classes=dict(sorted(cls.items())), unlabelled=cls.get("?", 0), flagged=fl_,
+                           unflagged_real_n=real, unflagged_stale_german_n=su, criteria=c,
+                           meets_r0=all(v[1] for v in c.values()) and not cls.get("?", 0), _ex=set(ex), _R=R)
+        if "v4_system" in mo:
+            F, Vm = mo["frozen"]["_R"], mo["v4_system"]["_R"]; T3 = mo["v3_terms"]["_R"]
+            d = [k for k in cmp_ if st(Vm[k]) != "human"]
+            mo["paired"] = dict(exact_gained_vs_frozen=sorted(mo["v4_system"]["_ex"] - mo["frozen"]["_ex"]),
+                                exact_lost_vs_frozen=sorted(mo["frozen"]["_ex"] - mo["v4_system"]["_ex"]),
+                                exact_gained_vs_v3=sorted(mo["v4_system"]["_ex"] - mo["v3_terms"]["_ex"]),
+                                exact_lost_vs_v3=sorted(mo["v3_terms"]["_ex"] - mo["v4_system"]["_ex"]),
+                                same_output_as_v3=sum(T3[k]["out"] == Vm[k]["out"] for k in d), compared=len(d))
+            mo["run"] = _r21_run(m); mo["reexecuted"] = r21_reexecute(m)
+        for a in ("frozen", "v3_terms", "v4_system"):
+            if a in mo: mo[a].pop("_R"); mo[a].pop("_ex")
+        out["sets"][m] = mo
+    out["meets_r0_B"] = sorted(m for m in R21_SETS[1:] if out["sets"][m].get("v4_system", {}).get("meets_r0"))
+    out["candidate_default"] = bool(out["meets_r0_A"] and out["meets_r0_B"])
+    L = list(new.values())
+    if L:
+        nn = len(L); ag = sum(r["A_fix"] == r["B_fix"] for r in L); qa = sum(r["A_fix"] == "yes" for r in L) / nn; qb = sum(r["B_fix"] == "yes" for r in L) / nn
+        qe = qa * qb + (1 - qa) * (1 - qb)
+        out["annotators"] = dict(n=nn, needs_fix_agree=ag, needs_fix_kappa=round((ag / nn - qe) / (1 - qe), 3) if qe < 1 else None,
+                                 class_agree=sum(r["A_class"] == r["B_class"] for r in L), tiebreak=sum(bool(r["T_class"]) for r in L),
+                                 final_classes=dict(sorted(Counter(r["final"] for r in L).items())), raw_files=sorted(a for a, v in raw.items() if v))
+    return out
+
+
+def hashlib_sha(t):
+    import hashlib
+    return hashlib.sha256(t.encode("utf-8")).hexdigest()
+
+
+def _r21_run(s):
+    S_ = json.load(open(os.path.join(DATA, "r21", "runs", f"{s}_q8_0", "summary.json"), encoding="utf-8"))
+    return {k: S_[k] for k in ("shards", "gates", "gates_verified", "gguf_sha256", "llama_cpp_python", "calls", "exchanges", "models_served",
+                               "prompt_tokens", "completion_tokens", "cpu_secs", "system_sha256") if k in S_}

@@ -1,0 +1,11 @@
+id	needs_fix	class	note
+X00	no	preexisting	OKP term applied correctly; "un cosiddetti antagonisti" grammar error preexisting from tgt_old
+X01	yes	REAL	"(modèle de prix)" reverses "ohne Preismodell"; removed KoGu and dosage sentence kept; Kd->KRd error; "Folguer Code"
+X02	yes	minor	Exclusion added correctly but "Une remboursement ... exclue" gender error; I-CANS copied from German
+X03	no	preexisting	OKP term applied; wrong ACE-inhibitor wording for AT-II antagonist preexisting
+X04	no	preexisting	OKP addition applied; AT-II antagonist mistranslation preexisting
+X05	yes	cosmetic	OKP applied but "dalla assicurazione" lacks elision; other errors preexisting
+X06	yes	REAL	New KoGu/médecin-conseil requirement dropped; "Kostengutsprache" left in German; sentences misplaced
+X07	yes	REAL	German removed KoGu entirely; draft keeps KoGu requirement (only consultation dropped)
+X08	yes	stale	German change not applied: new-diagnosis indication missing, KoGu retained, no arsenic subject
+X09	yes	REAL	Removed KoGu/medico di fiducia requirement retained; new content otherwise applied

@@ -1,0 +1,26 @@
+{
+ "build": "q8_0",
+ "calls": 40,
+ "completion_tokens": 8435,
+ "cpu_secs": 5365.1,
+ "exchanges": 40,
+ "gates": [
+  "8b-q8_0-fresh166"
+ ],
+ "gates_verified": 3,
+ "gguf_sha256": [
+  "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d"
+ ],
+ "items": 38,
+ "llama_cpp_python": [
+  "0.3.35"
+ ],
+ "models_served": [
+  "gguf:q8_0.gguf"
+ ],
+ "prompt_tokens": 46897,
+ "set": "20260801-20260901",
+ "shards": 3,
+ "system_sha256": "a81624dc3341e9add1447dbff1cc1dc45c6800acba0fbf3319c9927480cf848f",
+ "variant": "v4-system"
+}

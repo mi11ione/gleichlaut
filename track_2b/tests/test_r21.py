@@ -134,6 +134,20 @@ def test_cli_variant():
     except cli.UsageError: pass
 
 
+def test_result_record():
+    """the committed R21 result: every shard verified the certificate, every run re-executes from its exchanges, and the
+    decision follows the pre-registered rule (A and at least one live month)."""
+    p = os.path.join(ROOT, "eval", "results", "r21_system.json")
+    if not os.path.exists(p): return
+    r = json.load(open(p, encoding="utf-8"))
+    for s in SETS:
+        d = r["sets"][s]; run = d["run"]; rex = d["reexecuted"]
+        assert run["gates_verified"] == run["shards"] and run["gates"] == ["8b-q8_0-fresh166"] and run["system_sha256"] == V.SYSTEM_SHA256
+        assert rex[0] == rex[1] and rex[3] == 0
+    assert r["candidate_default"] == bool(r["meets_r0_A"] and r["meets_r0_B"])
+    assert r["meets_r0_A"] == r["sets"]["fresh166"]["v4_system"]["pass"]
+
+
 if __name__ == "__main__":
     for n, f in sorted(globals().items()):
         if n.startswith("test_") and callable(f): f(); print("ok", n)

@@ -212,6 +212,12 @@ text are one insurer word: mostly the Italian termbase entry, the bare head «as
 «assicuratore malattie» (the shipped termbase has since dropped that entry: the register splits, no phrase is a majority;
 [docs/termbase.md](docs/termbase.md#fourth-review-11-oct-2026-italian-translator)); in French BAG itself published its minority « assurance maladie ». The two blind annotators agreed on all
 19 labelled drafts (`eval/results/r12_terms.json`).
+**A task-specific system message (R21, pre-registered before any run)**, replacing the template's default persona
+(`Apertus 1.5 Omni`) on top of the same house wording (Q8_0 on CPU runners, runs `38121568986`, `38121574420`, `38121571690`),
+meets R0 on the held-out 166 (13.9% identical to BAG, +7.8 points over the no-model start, 65.1% flagged, no ready draft
+with an error; the frozen pipeline: 17.5%) but on neither live month (August: one ready French draft keeps a deleted
+prior-approval condition; September: 70.7% flagged), so as pre-registered it is not a candidate and the frozen default
+stays (`eval/results/r21_system.json`).
 Phased pilot (audit first), owners, protection needs and monthly effort: [docs/adoption.md](docs/adoption.md).
 Phase-1 pilot pack in German (draft mandate, protection-needs analysis, management note, one GEVER case sheet per audit issue; owners left for BAG to fill in): [docs/pilot/](docs/pilot/README.md).
 
