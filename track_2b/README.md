@@ -162,6 +162,12 @@ code: [docs/failure-modes.md](docs/failure-modes.md).
 German changes from the public feed, drafts them, and grades itself against what BAG publishes. First user group: BAG's
 Sektion Arzneimittelaufnahmen and the ePL team. Operator runbook: [docs/operations.md](docs/operations.md).
 
+**Two live months, in short.** On the August and September 2026 lists no draft marked ready changed a meaning, with
+either model: the meaning-error criterion of our rule held on live data (August's ready drafts carried BAG's own typo
+"GLP1-1-Analogon" through, which the German-left criterion counts). The review-load criterion (at most 70% of drafts
+flagged) is the open target: 81.8–92.7% were flagged, and BAG's house terms plus a task prompt brought September to 70.7%.
+The details, month by month and criterion by criterion:
+
 **The first shadow month has run** (1 Sep → 1 Oct 2026, R7, its rule written after the Q4_K_M outputs existed; `data/shadow/`): 52 FR/IT items; 8 went
 straight to a translator (rewrites, over-long texts). On this month the drafting fails the 70% flag cap of our own rule: 32 of the other 41 add a new standard
 sentence ("Der Indikationscode dieser Limitierung …"), and the no-model start got 0 of 41 right. Apertus drafted 3 (8B)
