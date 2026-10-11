@@ -1171,6 +1171,316 @@ def run_r5(J, names, F=None, kinds=KINDS_R5):
     return R
 # ------------------------------------------------------------------ END OF ROUND-5 RULES
 
+# ================================================================== round 5b: stricter alignment (PREREG R22)
+# Written after PREREG R22 was committed (2514b9b), on the dev half only (dev register texts and findings, their R15
+# notes, the R15 dev planted copies). A second rule set for the same three kinds, beside the frozen R15 block above
+# (which is unchanged; R5_ON untouched). It reuses the R15 parser, sentence splitter and aligner.
+#
+# OPERATOR (R22 1, 2). Directions are compared per aligned sentence pair (OP_ALIGN), never across the whole text. Both
+# ends of a range ('vom 1.1.2020 bis zum 31.8.2021', 'de 12 à 17 ans', 'tra 2 e 4') have no direction. A bound is
+# negated when a clause negation precedes it anywhere in its sentence (a negation covers an enumeration), or, in German,
+# follows it in its clause (verb-final). A value's occurrences are paired in order (same count on both sides, else not
+# judged); a finding when the two bounds have the same negation status and opposite directions.
+# NEGATION (R22 3, 4, 5). Clause negations raise a finding. Word negations block one: hyphen compounds, the R15 narrow
+# list, FR/IT 'non' before an adjective or participle, FR bare 'non', German attributive 'nicht' (+ an inflected
+# adjective or participle before a noun); they raise one only when the other side states the negated word itself
+# un-negated (a cognate: 'Non-Hodgkin' / 'hodgkinien'; deviation from R22's wording, made on the dev planted copies).
+# Restriction words (nur / seulement, ne ... que / solo, non ... che) block when the other side has fewer of them (an
+# unpaired 'nur' = 'ne ... que'; 'nur' against 'uniquement' cancels), and 'ne ... que', 'non ... che' are not clause
+# negations. Not a finding when the negation lives in a bound ('non ... più di 60 g' = 'höchstens 60 g'), or when the
+# lacking side's negation sits next door (misalignment guard: in pair k-1 or k+1, or an unaligned sentence between
+# them, the lacking side has a clause negation that the other side does not match). (R22 said: a window count of clause
+# negations; that count also counted negations the other side words as a word negation, and was replaced on dev.)
+# NUMBER_WORD (R22 6). As R15, but a value is reported only when the aligned sentence of the other side states a
+# different value of the same class in its place (a substitution); an omission is not. A number word glued to or
+# compounded with the next word on the other side ('deuxlignes', 'Fünffache', 'dreimal') reconciles it.
+KINDS_R22 = KINDS_R5
+OP_ALIGN = "aligned"            # R22 (1): the strictest of aligned / cost / all with dev planted operator recall >= 65%
+_RGLUE = {"de": r"bis(?:\s+(?:zum|zur|zu|maximal|max\.))?|-|–|—|und",
+          "fr": r"à|au|aux|jusqu['’](?:à|au|aux)|-|–|—|et",
+          "it": r"a|al|ai|agli|alla|alle|fino\s+(?:a|al|ai|alla|alle)|-|–|—|e|ed"}
+_RNG_GAP = {L: re.compile(r"\s*(?:\S+\s+)?(?:" + g + r")\s+(?:(?:dem|den|der|le|la|les|l['’]|il|i|lo|gli)\s+)?$", re.I) for L, g in _RGLUE.items()}
+_RESTR = {"de": r"\bnur\b|\blediglich\b|\bausschlie(?:ss|ß)lich\b|\beinzig\w*",
+          "fr": r"\bseulement\b|\buniquement\b|\bexclusivement\b",
+          "it": r"\bsolo\b|\bsoltanto\b|\bsolamente\b|\bunicamente\b|\besclusivamente\b"}
+_RS = {L: re.compile(v, re.I) for L, v in _RESTR.items()}
+_IT_CHE = re.compile(r"\bnon\s+(?:\S+\s+)?che\s+(?=(?:per|a|al|ai|alla|alle|in|nel|nei|nella|da|dal|il|la|i|le|un|una|uno|\d))", re.I)
+_DE_DET = r"(?:d|ein|kein|dies|jen|welch|ander|all|beid|viel|wenig|mehrer|solch|unser|ihr|sein|mein|eur|jed|manch|folgend)\w*"
+_DE_ATTR = re.compile(r"\s+(?!" + _DE_DET + r"\s)[a-zäöüß][\wäöüß-]{2,}(?:e|en|er|em|es)\s+[A-ZÄÖÜ]")
+
+
+def _word_neg(s, L, h):
+    """a clause-negation hit of neg_strong() that negates a word, not a clause: FR/IT 'non' before an adjective or
+    participle, FR bare 'non', German attributive 'nicht' ('bei nicht abgeschlossener Familienplanung'), IT restrictive
+    'non ... che'."""
+    w = h[2].lower()
+    if _adj_non(s, L, h): return True
+    if L == "fr" and w == "non": return True
+    if L == "de" and w == "nicht" and _DE_ATTR.match(s, h[1]): return True
+    if L == "it" and w == "non" and _IT_CHE.match(s, h[0]): return True
+    return False
+
+
+def clause_negs(s, L):
+    """the clause negations of sentence s (R22): neg_strong() without word negations -> [(start, end, surface)]."""
+    return [h for h in neg_strong(s, L) if not _word_neg(s, L, h)]
+
+
+def _neg_profile22(t, k):
+    """S clause negations, X word negations, P R15's restriction / exception / 'below' words and idioms, R restriction
+    words ('nur' / 'seulement', 'ne ... que' / 'solo', 'non ... che'; each occurrence)."""
+    hs = neg_strong(t, k); S = [h for h in hs if not _word_neg(t, k, h)]
+    W = [t[h[0]:h[1] + 1 + len(re.match(r"\s*\S*", t[h[1]:]).group(0).strip())] for h in hs if _word_neg(t, k, h)]
+    R = [m.group(0) for m in _RS[k].finditer(t)]
+    if k == "fr": R += ["ne … que" for m in re.finditer(r"\b(?:ne\b|n['’])", t, re.I) if _ne_que(t, m.end())]
+    if k == "it": R += ["non … che" for m in _IT_CHE.finditer(t)]
+    X = [w for w in neg_lex(t, k) + W + [m.group(0) for m in _NT[k].finditer(t)] if not _RS[k].fullmatch(w)]
+    return dict(S=[h[2] for h in S], X=X, P=[w for w in neg_supp(t, k) if w != "ne … que"], R=R)
+
+
+def _blocks(y, x):
+    """the side y has a negation of its own that may say what x's negation says: a clause or word negation, a restriction
+    / exception / 'below' word or idiom (R15), or more restriction words than x (an unpaired 'nur' = 'ne ... que')."""
+    return bool(y["S"] or y["X"] or y["P"] or len(y["R"]) > len(x["R"]))
+
+
+def _fold(w):
+    """a word folded for cognate matching across DE/FR/IT: lower case, accents and umlauts dropped (ä -> e), k/z -> c,
+    y -> i, ph -> f, th -> t, a leading h dropped ('hämatologisch' / 'ematologico')."""
+    import unicodedata
+    w = w.lower().replace("ä", "e").replace("ö", "o").replace("ü", "u").replace("ß", "ss")
+    w = "".join(ch for ch in unicodedata.normalize("NFD", w) if not unicodedata.combining(ch))
+    for x, y in (("ph", "f"), ("th", "t"), ("k", "c"), ("z", "c"), ("y", "i")): w = w.replace(x, y)
+    return w[1:] if w[:1] == "h" else w
+
+
+_WNEG_CMP = re.compile(r"\b(?:nicht|non)-?([^\W\d_]{4,})", re.I)
+
+
+def word_neg_stems(s, L):
+    """the words a word negation negates: hyphen or glued compounds ('Non-Hodgkin', 'nichthämatologisch'), and the word
+    after a word-negating 'nicht' / 'non' (_word_neg)."""
+    out = [m.group(1) for m in _WNEG_CMP.finditer(s)]
+    for h in neg_strong(s, L):
+        if _word_neg(s, L, h):
+            m = re.match(r"\s+([^\W\d_]{4,})", s[h[1]:])
+            if m: out.append(m.group(1))
+    return out
+
+
+def _cognate(stem, t, L):
+    """t states the word stem un-negated: a word of t (>= 5 letters) with the same first 5 folded letters, not itself
+    negated (no nicht/non/ne/n' right before it, no nicht-/non- compound)."""
+    f = _fold(stem)[:5]
+    if len(f) < 5: return False
+    for m in re.finditer(r"[^\W\d_][\w-]{4,}", t):
+        w = m.group(0)
+        if re.match(r"(?i)(?:nicht|non)-?", w) or _fold(w)[:5] != f: continue
+        pre = re.findall(r"\S+", t[max(0, m.start() - 20):m.start()])[-1:]
+        if pre and re.fullmatch(r"(?i)nicht|non|ne|n['’]\S*|kein\w*|pas|aucun\w*|nessun\w*", pre[0]): continue
+        return True
+    return False
+
+
+def _crossed(P, k, side, de, tgt, lang):
+    """misalignment guard (R22 5): in a neighbouring pair (k-1, k+1) the side that lacks the negation in pair k has a
+    clause negation that the other side of that pair lacks entirely, or an unaligned sentence of the lacking side between
+    those pairs has a clause negation: the negation sits next door, not missing."""
+    lt, ll = (tgt, lang) if side == "a" else (de, "de")
+    for j in (k - 1, k + 1):
+        if not 0 <= j < len(P): continue
+        A_, B_ = _neg_profile22(de[P[j][0][0]:P[j][0][1]], "de"), _neg_profile22(tgt[P[j][1][0]:P[j][1][1]], lang)
+        y, x = (B_, A_) if side == "a" else (A_, B_)
+        if y["S"] and not _blocks(x, y): return True
+    i = 1 if side == "a" else 0
+    a = P[k - 1][i][1] if k > 0 else 0; b = P[k + 1][i][0] if k + 1 < len(P) else len(lt)
+    covered = [p[i] for p in P]
+    for x0, x1 in sentences(lt):
+        if x0 >= a and x1 <= b and not any(c[0] <= x0 < c[1] for c in covered) and clause_negs(lt[x0:x1], ll): return True
+    return False
+
+
+def _bound_explained(sd, sg, lang, side):
+    """values whose bound is negated on the negated side and stated un-negated with the opposite direction on the other
+    ('non ... più di 60 g' = 'höchstens 60 g'): the negation lives in the bound, not in the condition."""
+    A_, B_ = directions22(sd, "de"), directions22(sg, lang)
+    X, Y = (A_, B_) if side == "a" else (B_, A_)
+    return sum(1 for v in set(x["v"] for x in X if x["neg"])
+               if any(y["v"] == v and not y["neg"] and y["dir"] != x["dir"] for x in X if x["v"] == v and x["neg"] for y in Y))
+
+
+def negation_diff22(de, tgt, lang):
+    """R22 (3-5): per judged aligned pair, a clause negation on one side, or a word negation whose word the other side
+    states un-negated (a cognate: 'Non-Hodgkin' / 'hodgkinien'), and no negation of any kind (clause, word, restriction,
+    idiom) on the other side; not when the negation lives in a bound or sits in a neighbouring sentence
+    -> [dict(side, negations, ...)] as negation_diff."""
+    de, tgt = nrm(de), nrm(tgt); out = []
+    P, n, m = align(de, tgt, lang)
+    for k, (d, g, c) in enumerate(P):
+        if not (c <= ALIGN_MAX and (n == m or c <= ALIGN_MAX_UNEVEN)): continue
+        sd, sg = de[d[0]:d[1]], tgt[g[0]:g[1]]
+        A_, B_ = _neg_profile22(sd, "de"), _neg_profile22(sg, lang)
+        side, neg = None, []
+        for x, y, sx, sy, lx, ly, sd_ in ((A_, B_, sd, sg, "de", lang, "a"), (B_, A_, sg, sd, lang, "de", "b")):
+            if _blocks(y, x): continue
+            if x["S"]: side, neg = sd_, x["S"]; break
+            st = [w for w in word_neg_stems(sx, lx) if _cognate(w, sy, ly)]
+            if st: side, neg = sd_, st; break
+        if side is None: continue
+        if x["S"] and _bound_explained(sd, sg, lang, side) >= len(x["S"]): continue
+        if _crossed(P, k, side, de, tgt, lang): continue
+        out.append(dict(side="de" if side == "a" else lang, negations=neg, de_sentence=sd, tgt_sentence=sg, de_span=d,
+                        tgt_span=g, cost=c, unit="sentence"))
+    return out
+
+
+# ---- operator (R22 1, 2)
+def _op_pairs(de, tgt, lang):
+    if OP_ALIGN == "aligned": return aligned(de, tgt, lang)
+    P = align(de, tgt, lang)[0]
+    return [p for p in P if p[2] <= ALIGN_MAX] if OP_ALIGN == "cost" else P
+
+
+_DE_SUB = re.compile(r"\b(?:die|der|das|dem|den|deren|dessen|welche\w*|wenn|falls|sofern|soweit|ob|dass|weil|da|solange|sobald|"
+                     r"nachdem|bevor|bis|wobei|womit|wodurch|sodass|so dass|und|oder|sowie)\b", re.I)
+
+
+def _bound_negated(s, x, lang):
+    """R22 (2): R15's scope (a clause negation at most 12 words earlier in the clause), or, in German, 'nicht'/'kein'
+    later in the bound's clause with no subordinating or coordinating word in between (verb-final: 'mindestens 20 ...
+    nicht erreicht')."""
+    if _negated(s, min(x["s"], x["os"]), lang): return True
+    if lang == "de":
+        e = max(x["e"], x["oe"]); m = re.search(r"[,;:()•]|\s[-–]\s", s[e:]); tail = s[e:e + m.start()] if m else s[e:]
+        h = clause_negs(tail, "de")
+        return bool(h) and not _DE_SUB.search(tail[:h[0][0]])
+    return False
+
+
+def directions22(s, lang):
+    """directions() of sentence s with R22's range ends and negation scope."""
+    X = directions(s, lang); V = values(s, lang)
+    out = []
+    for x in X:
+        prev = [y for y in V if y["e"] <= x["s"] and x["s"] - y["e"] <= 30]
+        nxt = [y for y in V if y["s"] >= x["e"] and y["s"] - x["e"] <= 30]
+        if prev and _RNG_GAP[lang].match(s[prev[-1]["e"]:x["s"]]) and re.fullmatch(r"\s*(?:\S+\s+)?(?:" + _RGLUE[lang] + r")\s+(?:\S+\s+)?", s[prev[-1]["e"]:x["s"]], re.I):
+            continue                                                       # the end of a range
+        if nxt and re.fullmatch(r"\s*(?:\S+\s+)?(?:" + _RGLUE[lang] + r")\s+(?:(?:dem|den|der|le|la|les|l['’]|il|i|lo|gli)\s+)?", s[x["e"]:nxt[0]["s"]], re.I) \
+                and not re.fullmatch(r"und|et|e|ed", re.search(r"(\S+)\s+(?:\S+\s+)?$", s[x["e"]:nxt[0]["s"]] + " ").group(1), re.I):
+            continue                                                       # the start of a range ('ab 12 bis 17 Jahren')
+        out.append(dict(x, neg=_bound_negated(s, x, lang)))
+    for a_, b_ in zip(out, out[1:]):                   # a negation covers an enumeration of bounds ('non ... più di 60 g e più di 120 g')
+        gap = s[max(a_["e"], a_["oe"]):min(b_["s"], b_["os"])]
+        if a_["neg"] and not b_["neg"] and a_["dir"] == b_["dir"] and len(gap) <= 80 and not re.search(r"[.;:]", gap) \
+                and not clause_negs(gap, lang) and re.search(r"(?i)\b(?:und|oder|sowie|bzw\.|et|ou|ni|e|ed|o|né|oppure)\b|,", gap):
+            b_["neg"] = True
+    return out
+
+
+def operator_diff22(de, tgt, lang):
+    """R22 (1, 2): per aligned pair, a value's directed occurrences paired in order; a finding when two paired bounds have
+    the same negation status and opposite directions -> [dict] as operator_diff."""
+    de, tgt = nrm(de), nrm(tgt); out = []
+    for d, g, c in _op_pairs(de, tgt, lang):
+        sd, sg = de[d[0]:d[1]], tgt[g[0]:g[1]]
+        A_, B_ = directions22(sd, "de"), directions22(sg, lang)
+        for v in sorted(set(x["v"] for x in A_) & set(x["v"] for x in B_)):
+            xa = [x for x in A_ if x["v"] == v]; xb = [x for x in B_ if x["v"] == v]
+            if len(xa) != len(xb): continue
+            bad = [(a, b) for a, b in zip(xa, xb) if a["neg"] == b["neg"] and a["dir"] != b["dir"]]
+            if not bad: continue
+            ea, eb = bad[0]
+            sp = lambda x, o: (o + min(x["s"], x["os"]), o + max(x["e"], x["oe"]))
+            out.append(dict(value=v, de_op=ea["op"], tgt_op=eb["op"], de_dir=ea["dir"], tgt_dir=eb["dir"], unit=ea["unit"] or eb["unit"],
+                            context_de=ctx(de, dict(zip(("s", "e"), sp(ea, d[0])))), context_tgt=ctx(tgt, dict(zip(("s", "e"), sp(eb, g[0])))),
+                            tgt_spans=[sp(b, g[0]) for a, b in bad], de_span=d, tgt_span=g))
+    return out
+
+
+# ---- number words (R22 6)
+def _glued(v, text, L):
+    """the number word of v starts a longer word of text ('deuxlignes', 'Fünffache', 'dreimal')."""
+    n = _num(v)
+    if n is None or n != int(n) or not 2 <= n <= 12: return False
+    return re.search(r"\b" + NUMW[L][int(n)] + r"[^\W\d_]{2,}", text, re.I) is not None
+
+
+def number_word_diff22(de, tgt, lang, reported=None):
+    """R22 (6): number_word_diff() findings kept only when the other side's aligned sentence states a different value in
+    their place (a value it states more often than this side, 'beide' / 'les deux' / 'entrambi' counting as 2; not of a
+    different time or mass dimension), and not reconciled by a glued or compounded number word."""
+    de, tgt = nrm(de), nrm(tgt); out = []
+    for w in number_word_diff(de, tgt, lang, reported):
+        own, oth, ol, wl = (w["de_sentence"], w["tgt_sentence"], lang, "de") if w["side"] == "de" else (w["tgt_sentence"], w["de_sentence"], "de", lang)
+        if _glued(w["value"], oth, ol): continue
+        V = [x for x in values(own, wl) if x["src"] != "date"]; Y = [y for y in values(oth, ol) if y["src"] != "date" and not y.get("ord")]
+        co = Counter(x["v"] for x in V); cy = Counter(y["v"] for y in Y)
+        x0 = next((x for x in V if x["v"] == w["value"]), dict(unit=w["unit"]))
+        c0 = _ucls(x0.get("unit"), wl) if x0.get("unit") not in (None, "word") else None
+        sub = [y for y in Y if y["v"] != w["value"] and cy[y["v"]] > co.get(y["v"], 0)
+               and not (c0 and y.get("unit") and _ucls(y["unit"], ol) and DIM.get(_ucls(y["unit"], ol)) != DIM.get(c0))]
+        if not sub and w["value"] != "2" and re.search(_BOTH[ol], oth, re.I) and not re.search(_BOTH[wl], own, re.I): sub = ["2"]
+        if sub: out.append(w)
+    return out
+
+
+def r22_findings(i, de, tgt, lang, number_f=None, kinds=KINDS_R22):
+    """the round-5b findings of one limitation and language (without fid/rank), in r5_findings' format."""
+    out = []
+    if "operator" in kinds:
+        for o in operator_diff22(de, tgt, lang):
+            W = {"min": "a lower bound", "max": "an upper bound"}
+            out.append(dict(id=i, lang=lang, kind="operator", languages=["de", lang], value=o["value"], unit=o["unit"],
+                            de_op=o["de_op"], tgt_op=o["tgt_op"], de_dir=o["de_dir"], tgt_dir=o["tgt_dir"],
+                            context=[o["context_de"], o["context_tgt"]], tgt_spans=[list(x) for x in o["tgt_spans"]],
+                            tgt_span=list(o["tgt_span"]),
+                            description=f"DE makes {o['value']} {W[o['de_dir']]} ('{o['de_op']}'), {lang.upper()} "
+                                        f"{W[o['tgt_dir']]} ('{o['tgt_op']}')."))
+    if "negation" in kinds:
+        for g in negation_diff22(de, tgt, lang):
+            S = NAME[g["side"]]; O = NAME[lang] if g["side"] == "de" else "German"
+            out.append(dict(id=i, lang=lang, kind="negation", languages=["de", lang], side=g["side"], negations=g["negations"],
+                            unit=g["unit"], context=[_clip(g["de_sentence"]), _clip(g["tgt_sentence"])], tgt_span=list(g["tgt_span"]),
+                            description=f"The {S} {g['unit']} is negated ({', '.join(g['negations'])}); the aligned {O} {g['unit']} "
+                                        f"has no negation."))
+    if "number_word" in kinds:
+        rep = set()
+        if number_f:
+            rep = {("de", x["value"]) for x in number_f.get("de_only") or []} | {(lang, x["value"]) for x in number_f.get("tgt_only") or []}
+        ws = number_word_diff22(de, tgt, lang, rep)
+        if ws:
+            da = [w for w in ws if w["side"] == "de"]; ta = [w for w in ws if w["side"] != "de"]
+            p = [f"DE has {w['value']} ({w['unit'] or 'number word'}), {lang.upper()} does not" for w in da] + \
+                [f"{lang.upper()} has {w['value']} ({w['unit'] or 'number word'}), DE does not" for w in ta]
+            out.append(dict(id=i, lang=lang, kind="number_word", languages=["de", lang],
+                            de_only=[dict(value=w["value"], unit=w["unit"], src=w["src"], context=w["context"]) for w in da],
+                            tgt_only=[dict(value=w["value"], unit=w["unit"], src=w["src"], context=w["context"], span=list(w["span"])) for w in ta],
+                            context=[c for w in ws for c in w["context"][:1]], description="; ".join(p) + " (in the aligned sentence)."))
+    return out
+
+
+def run_r22(J, names, F=None, kinds=KINDS_R22):
+    """round-5b findings on a register (J as load()); F: the number findings of run() (for number_word dedup). Ids
+    P01.. (operator), Q01.. (negation), V01.. (number_word), apart from R15's O/G/W."""
+    by = {(f["id"], f["lang"]): f for f in F or [] if f["kind"] == "number"}
+    pname = lambda i: sorted(set(n.split(" ")[0] for n in names.get(i, [])))[:3]
+    R = []
+    for i in sorted(J["de"]["lim"]):
+        de = J["de"]["lim"][i]
+        for L in ("fr", "it"):
+            t = J[L]["lim"].get(i)
+            if not t: continue
+            for f in r22_findings(i, de, t, L, by.get((i, L)), kinds):
+                f.update(product=pname(i), half=half(i), odd_one_out=None, suggested_action=None, likely_equivalent=False, equivalence=None)
+                R.append(f)
+    order = {k: n for n, k in enumerate(KINDS_R22)}
+    R.sort(key=lambda f: (order[f["kind"]], f["id"], f["lang"], str(f.get("value") or f.get("tgt_span"))))
+    pre = {"operator": "P", "negation": "Q", "number_word": "V"}; c = Counter()
+    for f in R: c[f["kind"]] += 1; f["rank"] = c[f["kind"]]; f["fid"] = f"{pre[f['kind']]}{c[f['kind']]:02d}"
+    return R
+# ------------------------------------------------------------------ END OF ROUND-5B RULES
+
 
 # ------------------------------------------------------------------ display: where a finding stands in the three texts
 # Display only (register and Fallblatt; no finding, count or rule depends on it). The checks compare whole texts; the
@@ -1420,7 +1730,7 @@ def run_all(hist, date, J=None, names=None, st=None, pairs=None, r5=False):
     """every kind on one snapshot -> (findings, number stats, extra stats). Number findings are exactly run()'s.
     pairs: terminology pairs (default: the shipped data/audit/term_pairs_20261006.json; [] = no terminology check).
     r5: also append the round-5 findings (operator, negation, number_word; PREREG R15), after all the others; the
-    findings of the other kinds are the same either way."""
+    findings of the other kinds are the same either way. r5='r22': the round-5b rule set instead (PREREG R22)."""
     if J is None: J, names = load(hist, date)
     if pairs is None: pairs = load_terms()
     F, S = run(hist, date, J, names)
@@ -1497,6 +1807,7 @@ def run_all(hist, date, J=None, names=None, st=None, pairs=None, r5=False):
         f["counterpart"] = counterpart(f, J["de"]["lim"][f["id"]], J[f["lang"]]["lim"][f["id"]])     # display only (round 5)
     for f in U + Lg + E + Tm: f["likely_equivalent"], f["equivalence"] = False, None     # assessed for number findings only
     X = dict(language_fields_judged=dict(judged), language_fields_too_short=dict(short), unit_one_sided=one)
+    if r5 == "r22": return F + U + Lg + E + Tm + run_r22(J, names, F), S, X
     if r5: return F + U + Lg + E + Tm + run_r5(J, names, F), S, X
     return F + U + Lg + E + Tm, S, X
 
@@ -1700,6 +2011,26 @@ def r5_logic_sha(s=None):
     """sha256 of the round-5 block's rule logic: its syntax tree without comments, docstrings or layout, serialised by
     field name and value (fields that are None or empty are left out, so the value is the same on Python 3.9 and 3.12).
     A comment or docstring edit leaves it unchanged; any change to code, constants or strings changes it."""
+    return _logic_sha(_r5_block(s))
+
+
+def _r22_block(s=None):
+    s = open(os.path.abspath(__file__), encoding="utf-8").read() if s is None else s
+    a = s.index("# " + "=" * 66 + " round 5b"); b = s.index("# " + "-" * 66 + " END OF ROUND-5B RULES")
+    return s[a:b]
+
+
+def r22_block_sha(s=None):
+    """sha256 of the round-5b block's bytes (PREREG R22)."""
+    return hashlib.sha256(_r22_block(s).encode("utf-8")).hexdigest()
+
+
+def r22_logic_sha(s=None):
+    """the round-5b block's rule-logic fingerprint (as r5_logic_sha)."""
+    return _logic_sha(_r22_block(s))
+
+
+def _logic_sha(block):
     import ast
 
     def ser(n):
@@ -1708,7 +2039,7 @@ def r5_logic_sha(s=None):
             return n.__class__.__name__ + "(" + ",".join(f"{k}={v}" for k, v in F) + ")"
         if isinstance(n, list): return "[" + ",".join(ser(x) for x in n) + "]"
         return repr(n)
-    t = ast.parse(_r5_block(s))
+    t = ast.parse(block)
     for n in ast.walk(t):
         B = getattr(n, "body", None)
         if isinstance(n, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and B and isinstance(B[0], ast.Expr) \
