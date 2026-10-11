@@ -1,0 +1,142 @@
+[
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard0of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard10of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard11of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard12of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard13of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard14of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard15of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard16of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard17of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard18of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard19of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard1of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard2of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard3of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard4of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard5of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard6of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard7of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard8of20"
+ },
+ {
+  "certificate": "8b-q8_0-fresh166",
+  "verified": "build certificate 8b-q8_0-fresh166 (2026-10-09T23:20:36+00:00, GGUF sha256 dea904ad80cd..., llama-cpp-python 0.3.35; verified: records re-scored, hashes match)",
+  "gguf_sha256": "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
+  "inputs_sha256": "7777c0cfafb0b75698ef3132b960350280bcacedd29f30dd9a8df9ab60994ab8",
+  "shard": "shard9of20"
+ }
+]

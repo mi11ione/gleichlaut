@@ -113,6 +113,13 @@ Against rules+, our strongest no-model baseline (it also copies changed names an
 identical), the 70B still adds +6.6 points [1.8, 12.0] and 41.3% fewer edits [29.7, 53.0]. The default Q8_0 adds
 the same +6.6 points [1.8, 12.0] (as many identical drafts, not all the same ones) and 31.8% fewer edits [19.3, 42.8].
 
+Which model Public AI serves under the 70B name is inferred, not known: two backends answer it (`tp2` and `fp1-nes`;
+the headline run did not log which, its seeded rerun went 202 / 81). The inference rested on MMLU: 84.4% for the shared
+model against 70.8% for the v1 8B. The certified local v1.5 8B Q8_0, run on the same 250 questions and the same
+792-cell battery (pre-registered R19), scores 78.4% and matches neither backend closely (decisions 88.6% with
+`fp1-nes`, 90.4% with `tp2`): inconclusive under the rule stated in advance, so the 70B rows describe "the 70B as Public
+AI served it" (technical report, section 3, "Models and builds").
+
 **What it is worth at today's volume.** BAG publishes about 57.4 French and Italian limitation texts a month that
 follow a German change. Starting from the old text with updated numbers, a translator makes about 2,020 word-level
 edits a month to reach the published wording (35.1 per text); starting from the default 8B draft that drops by about

@@ -37,7 +37,7 @@ human labels were used.
 | R16 | memorisation probe: could the models have seen the held-out answers | no evidence beyond the negative control (70B, 8B); probe sensitivity not shown |
 | R17 | real errors BAG fixed without a German change (Claude annotators); Apertus 70B as a non-Claude annotator | 17 content changes: needs fix by both 5 (shown) / 7 (hidden), the same 4 severe; Apertus confirms all 49 findings (κ 0.000), flags 2 of 17 |
 | R18 | Apertus 8B log-probability filter on the round-5 audit findings that ship off (threshold from planted copies, applied to the 31 register findings) | planted AUROC 0.955; register kept 13, 2 of 6 confirmed (15.4%): fails, the kinds stay off |
-| R19 | the certified 8B Q8_0 on the identity probes (the 250 MMLU questions, the 792-cell battery): is `fp1-nes` an 8B? | pending |
+| R19 | the certified 8B Q8_0 on the identity probes (the 250 MMLU questions, the 792-cell battery): is `fp1-nes` an 8B? | MMLU 78.4% (shared model 84.4%, v1 8B 70.8%); text equal to fp1-nes in 40.7% of cells, decisions 88.6% (fp1-nes) vs 90.4% (tp2): inconclusive (O4) |
 | R20 | the 6 Oct 2026 audit as frozen predictions, scored against BAG's own later corrections (an oracle that is not Claude) | pending (first scoring snapshot expected 1 Nov 2026) |
 
 Corrections to statements of fact inside rule text (11 Oct 2026; the rules themselves are unchanged and their text below
@@ -1044,3 +1044,19 @@ data the change was designed on is labelled "dev" in every table.
   HEAD; recorded as `rules_logic_sha256` in the audit summary and `eval/results/audit_r15.json`, with the byte
   fingerprint kept as recorded. `tests/test_audit_r5.py` fails if the logic or the record drifts. No rule, finding or
   result changed.
+- **R19, 11 Oct 2026:** pre-registered at commit 8f5f16d (23:54 UTC, 10 Oct) before any model run; tool, vendored inputs
+  and workflow at a3f930f; a smoke run of 2
+  questions and 2 cells per shard on 2 shards (run 38096748736, outputs not used); workflow `r19-8b`, run 38097175838
+  (20 CPU shards, all succeeded, build certificate 8b-q8_0-fresh166 verified on all 20), 250 of 250 questions and 792 of
+  792 cells (`data/r19/runs/8b_q8_0/`); prompt token counts equal to the API's in every generation and forced-choice
+  call. **MMLU:** Q8_0 **78.4%** (196 of 250, Wilson [72.9, 83.1]); shared model − Q8_0 **+6.0** [1.6, 10.4]; Q8_0 − v1
+  8B **+7.6** [2.0, 13.6]; letters equal to the shared model's 211, to the v1 8B's 184. **Battery:** text byte-identical
+  to fp1-nes **322 of 792 (40.7%)**, to the 8B name 324 (Q8_0 never ends an answer with a period; fp1-nes does in 382
+  cells, and 341 texts differ only by it); generation decisions equal to fp1-nes 702 (88.6%), to the 8B name 699;
+  forced-choice decisions equal to tp2 716 (90.4%), to the 8B name 706; log-odds r 0.875 with tp2 (mean |Δ| 9.39), 0.867
+  with the 8B name (8.78); Q8_0's own generation and forced choice agree on 782. **Outcome:** MMLU-low fails (78.4% >
+  78%, although the CI of the gap excludes 0), fp1-nes is not matched far more than tp2 (gap −1.8 points), Q8_0 is not
+  ≥ 80% and the CI excludes 0: **O4, inconclusive**; the report and README say so and keep "the 70B as Public AI served
+  it". Post hoc (not in the rule): on the 648 parity cells Q8_0 agrees with tp2 on 605 and with the 8B name on 603
+  forced-choice decisions (tp2 with the 8B name on 626), against 638 for the recorded Q8_0 with bf16 DPO
+  (`eval/results/identity_r19.json`).

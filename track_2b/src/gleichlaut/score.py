@@ -1654,9 +1654,23 @@ def identity_r19():
                prompt_tokens_mismatch=dict(generation=len(ptok_gen), forced_choice=len(ptok_fc), generation_cells=ptok_gen[:20],
                                            forced_choice_cells=sorted(set(ptok_fc))[:20]),
                q8_answers=dict(Counter(Bq[j]["text"] for j in range(N)).most_common(6)), recorded_references=ref)
+    P = [j for j in range(N) if not Bq[j]["cell"].endswith("_R4")]       # the 648 parity cells (stage9 R0/R3)
+    nodot = lambda t: t.strip().rstrip(".")
+    bat["post_hoc"] = dict(
+        note="not pre-registered; descriptive. The 648 R0/R3 cells are the parity battery on which the recorded Q8_0 "
+             "(llama.cpp, Metal) agreed with bf16 swiss-ai/Apertus-v1.5-8B-DPO on 638 (research_facts gguf_q8_agree_bf16)",
+        parity_cells=len(P),
+        forced_choice_tp2=sum((Bq[j]["lo"] > 0) == (tp2[j]["lo_conv"] > 0) for j in P),
+        forced_choice_8b_name=sum((Bq[j]["lo"] > 0) == (f8[j]["lo_conv"] > 0) for j in P),
+        tp2_vs_8b_name=sum((tp2[j]["lo_conv"] > 0) == (f8[j]["lo_conv"] > 0) for j in P),
+        decisions_fp1=sum(same(Bq[j]["dec"], fp1[j]["dec"]) for j in P),
+        text_fp1_same_but_final_period=sum(Bq[j]["text"] != fp1[j]["text"] and nodot(Bq[j]["text"]) == nodot(fp1[j]["text"]) for j in range(N)),
+        q8_answers_ending_in_period=sum(Bq[j]["text"].strip().endswith(".") for j in range(N)),
+        fp1_answers_ending_in_period=sum(fp1[j]["text"].strip().endswith(".") for j in range(N)))
     gap = round(100 * (df - dt) / N, 1)
     o, flags = r19_decide(acc, mmlu["shared_minus_q8"]["ci95"], 100 * bf / N, gap)
     shards = json.load(open(os.path.join(run, "shards.json"), encoding="utf-8"))
-    return dict(mmlu=mmlu, battery=bat, decision=dict(outcome=o, reading=R19_OUTCOME[o], decisions_gap_fp1_minus_tp2_pts=gap, **flags),
+    th = dict(mmlu_low_max_pct=78.0, mmlu_near_min_pct=65.0, mmlu_high_min_pct=80.0, fp1_far_min_pct=90.0, fp1_low_max_pct=75.0, gap_min_pts=3.0)
+    return dict(mmlu=mmlu, battery=bat, decision=dict(outcome=o, reading=R19_OUTCOME[o], decisions_gap_fp1_minus_tp2_pts=gap, thresholds=th, **flags),
                 shards=dict(n=len(shards), certificate_verified=sum(1 for g in shards if g.get("certificate")),
                             gguf_sha256=sorted({g["gguf_sha256"] for g in shards})))

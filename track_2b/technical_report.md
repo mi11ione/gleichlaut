@@ -118,7 +118,17 @@ On a 792-cell research battery `fp1-nes` answered the 70B name and gave byte-ide
 `apertus-v1.5-8b` name in 760 of 792 cells; the research log's "all 1584 calls were served by the 8B vLLM backend" refers
 to that 8B name (a third backend, `tp8-pp2`), not to the 70B name or to any drafting run. The research inferred one
 shared model behind both names and called it the 70B from MMLU on the 8B name (84.4% on 250 questions, against 70.8% for
-the v1 8B route; that comparison mixes model version and size): evidence, not proof. Re-scored by backend (post hoc,
+the v1 8B route; that comparison mixes model version and size): evidence, not proof. After an Apertus-team juror asked,
+we scored the certified local v1.5 8B Q8_0 on the same probes (PREREG R19, CPU runners, prompts and decoding as
+recorded): **78.4% on the 250 MMLU questions** (196; 6.0 points below the shared model [1.6, 10.4], 7.6 above the v1 8B
+[2.0, 13.6]), so part of the gap the 70B inference rested on is model version, not size. On the battery its greedy text
+equals `fp1-nes`'s in 322 of 792 cells (40.7%; it never closes "Ja" or "Nein" with the period the served model writes in
+382), and its decisions agree with `fp1-nes` (88.6%) no more than with `tp2` (90.4%, forced choice). Under the rule
+stated before the run this is **inconclusive**: 78.4% sits just above the 78% line below which the MMLU gap would have
+counted, and neither backend matches the local 8B. Post hoc, on the 648 cells of the parity battery the local Q8_0
+agrees with `tp2` on 605 decisions and with the 8B name on 603, where it agreed with the bf16 8B DPO checkpoint on 638:
+the served model departs from a v1.5 8B by more than quantisation does, but its size remains unproven
+(`eval/results/identity_r19.json`). Re-scored by backend (post hoc,
 descriptive, below; `eval/results/fresh166_by_backend.json`), the rerun's `fp1-nes`-only items come out with more
 ready drafts and more edits saved than its `tp2`-only items; the router, not we, assigned the items, so the classes
 differ in items (and in how often the re-ask ran) as well as in backend. So every 8B number here comes

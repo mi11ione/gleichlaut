@@ -1,0 +1,120 @@
+{
+ "battery": {
+  "decisions_8b_name": 699,
+  "decisions_fp1": 702,
+  "decisions_fp1_pct": 88.6,
+  "forced_choice_8b_name": 706,
+  "forced_choice_tp2": 716,
+  "forced_choice_tp2_pct": 90.4,
+  "logodds_8b_name": {
+   "mean_abs_diff": 8.78,
+   "r": 0.867
+  },
+  "logodds_tp2": {
+   "mean_abs_diff": 9.39,
+   "r": 0.875
+  },
+  "n": 792,
+  "post_hoc": {
+   "decisions_fp1": 601,
+   "forced_choice_8b_name": 603,
+   "forced_choice_tp2": 605,
+   "fp1_answers_ending_in_period": 382,
+   "note": "not pre-registered; descriptive. The 648 R0/R3 cells are the parity battery on which the recorded Q8_0 (llama.cpp, Metal) agreed with bf16 swiss-ai/Apertus-v1.5-8B-DPO on 638 (research_facts gguf_q8_agree_bf16)",
+   "parity_cells": 648,
+   "q8_answers_ending_in_period": 0,
+   "text_fp1_same_but_final_period": 341,
+   "tp2_vs_8b_name": 626
+  },
+  "prompt_tokens_mismatch": {
+   "forced_choice": 0,
+   "forced_choice_cells": [],
+   "generation": 0,
+   "generation_cells": []
+  },
+  "q8_answers": {
+   "Ja": 286,
+   "Nein": 110,
+   "nicht schuldig": 78,
+   "schuldig": 318
+  },
+  "q8_generation_vs_forced_choice": 782,
+  "q8_unparsed": 0,
+  "recorded_references": {
+   "b8_name_vs_tp2_forced_choice": 760,
+   "fp1_generation_vs_tp2_forced_choice": 758,
+   "fp1_vs_8b_name_decisions": 787,
+   "fp1_vs_8b_name_text": 760
+  },
+  "text_identical_8b_name": 324,
+  "text_identical_8b_name_stripped": 324,
+  "text_identical_fp1": 322,
+  "text_identical_fp1_pct": 40.7,
+  "text_identical_fp1_stripped": 322
+ },
+ "decision": {
+  "decisions_gap_fp1_minus_tp2_pts": -1.8,
+  "fp1_agreement_low": true,
+  "fp1_far_more_than_tp2": false,
+  "mmlu_low": false,
+  "outcome": "O4",
+  "reading": "inconclusive",
+  "thresholds": {
+   "fp1_far_min_pct": 90.0,
+   "fp1_low_max_pct": 75.0,
+   "gap_min_pts": 3.0,
+   "mmlu_high_min_pct": 80.0,
+   "mmlu_low_max_pct": 78.0,
+   "mmlu_near_min_pct": 65.0
+  }
+ },
+ "mmlu": {
+  "letters_agree_shared": 211,
+  "letters_agree_v1": 184,
+  "n": 250,
+  "q8_0": {
+   "correct": 196,
+   "pct": 78.4,
+   "unparsed": 0,
+   "wilson95": [
+    72.9,
+    83.1
+   ]
+  },
+  "q8_minus_v1": {
+   "ci95": [
+    2.0,
+    13.6
+   ],
+   "pts": 7.6
+  },
+  "raw_answers": {
+   "A": 71,
+   "B": 56,
+   "C": 76,
+   "D": 47
+  },
+  "shared": {
+   "correct": 211,
+   "pct": 84.4
+  },
+  "shared_minus_q8": {
+   "ci95": [
+    1.6,
+    10.4
+   ],
+   "pts": 6.0
+  },
+  "v1_8b": {
+   "correct": 177,
+   "pct": 70.8
+  }
+ },
+ "shards": {
+  "certificate_verified": 20,
+  "gguf_sha256": [
+   "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d"
+  ],
+  "n": 20
+ }
+}

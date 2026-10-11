@@ -382,6 +382,19 @@ PR, PC = "eval/predictions/audit_20261006_predictions.json", "PYTHONPATH=src pyt
 for cid, path in (("r20_predictions", "counts.predictions"), ("r20_positive", "counts.positive.n"), ("r20_negative", "counts.negative.n")):
     C.append((cid, PR, path, "{}", PC))
 
+# PREREG R19: the certified 8B Q8_0 on the identity probes (MMLU 250, battery 792)
+ID = "eval/results/identity_r19.json"
+for cid, path, fmt in (("r19_mmlu_pct", "mmlu.q8_0.pct", "{:.1f}"), ("r19_mmlu_k", "mmlu.q8_0.correct", "{}"),
+                       ("r19_gap", "mmlu.shared_minus_q8.pts", "{:.1f}"), ("r19_gap_lo", "mmlu.shared_minus_q8.ci95.0", "{:.1f}"),
+                       ("r19_gap_hi", "mmlu.shared_minus_q8.ci95.1", "{:.1f}"), ("r19_v1", "mmlu.q8_minus_v1.pts", "{:.1f}"),
+                       ("r19_v1_lo", "mmlu.q8_minus_v1.ci95.0", "{:.1f}"), ("r19_v1_hi", "mmlu.q8_minus_v1.ci95.1", "{:.1f}"),
+                       ("r19_text_fp1", "battery.text_identical_fp1", "{}"), ("r19_text_fp1_pct", "battery.text_identical_fp1_pct", "{:.1f}"),
+                       ("r19_dec_fp1_pct", "battery.decisions_fp1_pct", "{:.1f}"), ("r19_fc_tp2_pct", "battery.forced_choice_tp2_pct", "{:.1f}"),
+                       ("r19_fp1_period", "battery.post_hoc.fp1_answers_ending_in_period", "{}"),
+                       ("r19_ph_tp2", "battery.post_hoc.forced_choice_tp2", "{}"), ("r19_ph_8b", "battery.post_hoc.forced_choice_8b_name", "{}"),
+                       ("r19_ph_cells", "battery.post_hoc.parity_cells", "{}"), ("r19_line", "decision.thresholds.mmlu_low_max_pct", "{:.0f}")):
+    C.append((cid, ID, path, fmt, RE))
+
 if __name__ == "__main__":
     rows = ["id\tvalue\tsource\tpath\tfmt\tcommand\twhere"]
     for cid, src, path, fmt, cmd in C:
