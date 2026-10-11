@@ -1,0 +1,506 @@
+{
+ "prereg": "R22",
+ "date": "20261006",
+ "freeze": "951cdd2",
+ "rules_sha256": "591e02d2f3c80f491751c0deedcd5918a87e57b194f4abf1dd942d7835cf7ffc",
+ "rules_logic_sha256": "8b27d9410455bc9bea54ab6e5ec0df9fbe93c712ba8740189c1981429eb603d2",
+ "op_align": "aligned",
+ "model_calls": 0,
+ "summary": {
+  "findings": 7,
+  "by_kind": {
+   "operator": 2,
+   "negation": 5,
+   "number_word": 0
+  },
+  "by_half": {
+   "dev": 2,
+   "held": 5
+  },
+  "reused": 6,
+  "new": 1,
+  "r15_findings": 31,
+  "r15_dropped": 25
+ },
+ "findings": [
+  {
+   "id": "AMVUTTRA.01a",
+   "lang": "fr",
+   "kind": "operator",
+   "languages": [
+    "de",
+    "fr"
+   ],
+   "value": "10",
+   "unit": "Punkte",
+   "de_op": ">",
+   "tgt_op": "≤",
+   "de_dir": "min",
+   "tgt_dir": "max",
+   "context": [
+    "…n folgende Kriterien eingetreten sein müssen: • NIS-Zunahme [> 10] Punkte und • Zunahme im PND-Score um > 1 Stufe (PND IIIa zu…",
+    "…être survenus dans les 12 mois: • augmentation du score NIS [≤ 10] points et • augmentation du score PND > 1 stade (de PND III…"
+   ],
+   "tgt_spans": [
+    [
+     3054,
+     3058
+    ],
+    [
+     3191,
+     3195
+    ]
+   ],
+   "tgt_span": [
+    3026,
+    4533
+   ],
+   "description": "DE makes 10 a lower bound ('>'), FR an upper bound ('≤').",
+   "product": [
+    "Amvuttra"
+   ],
+   "half": "dev",
+   "odd_one_out": null,
+   "suggested_action": null,
+   "likely_equivalent": false,
+   "equivalence": null,
+   "rank": 1,
+   "fid": "P01",
+   "label_source": {
+    "reused": "O01",
+    "final": "real"
+   }
+  },
+  {
+   "id": "WYNZORA",
+   "lang": "it",
+   "kind": "operator",
+   "languages": [
+    "de",
+    "it"
+   ],
+   "value": "120",
+   "unit": "g",
+   "de_op": "nicht mehr als",
+   "tgt_op": "più di",
+   "de_dir": "max",
+   "tgt_dir": "min",
+   "context": [
+    "… Pro 4 Tage wird nicht mehr als 60 g (= 1 Tube), pro 8 Tage [nicht mehr als 120] g (= 2 Tuben) vergütet.",
+    "…e. Non sono rimborsati più di 60 g (=1 tubo) per 4 giorni e [più di 120] g (= 2 tubi) per 8 giorni."
+   ],
+   "tgt_spans": [
+    [
+     118,
+     128
+    ]
+   ],
+   "tgt_span": [
+    61,
+    155
+   ],
+   "description": "DE makes 120 an upper bound ('nicht mehr als'), IT a lower bound ('più di').",
+   "product": [
+    "Wynzora"
+   ],
+   "half": "held",
+   "odd_one_out": null,
+   "suggested_action": null,
+   "likely_equivalent": false,
+   "equivalence": null,
+   "rank": 2,
+   "fid": "P02",
+   "label_source": {
+    "reused": "O04",
+    "final": "not"
+   }
+  },
+  {
+   "id": "BEYONTTRA",
+   "lang": "it",
+   "kind": "negation",
+   "languages": [
+    "de",
+    "it"
+   ],
+   "side": "de",
+   "negations": [
+    "nicht"
+   ],
+   "unit": "sentence",
+   "context": [
+    "BEYONTTRA darf nicht mit anderen spezifischen Arzneimitteln zur Behandlung der Transthyretin-Amyloidose (z.B. TTR-Stabilisatoren, TTR-Gen Silencer) kombiniert werden.",
+    "BEYONTTRA on deve essere combinato con altri medicamenti specifici per il trattamento dell’amiloidosi da transtiretina (ad esempio stabilizzatori del TTR, agenti silenziatori del gene TTR)."
+   ],
+   "tgt_span": [
+    2279,
+    2468
+   ],
+   "description": "The German sentence is negated (nicht); the aligned Italian sentence has no negation.",
+   "product": [
+    "Beyonttra"
+   ],
+   "half": "dev",
+   "odd_one_out": null,
+   "suggested_action": null,
+   "likely_equivalent": false,
+   "equivalence": null,
+   "rank": 1,
+   "fid": "Q01",
+   "label_source": {
+    "reused": "G03",
+    "final": "real"
+   }
+  },
+  {
+   "id": "HEMLIBRA.XXb",
+   "lang": "it",
+   "kind": "negation",
+   "languages": [
+    "de",
+    "it"
+   ],
+   "side": "de",
+   "negations": [
+    "kein"
+   ],
+   "unit": "sentence",
+   "context": [
+    "Die Preisberechnung für Blutpräparate erfolgt aufgrund des Fabrikabgabepreises zuzüglich einer Fixmarge wegen der speziellen Verteilersituation (praktisch kein Zwischenhandel) von Fr. 40.-- zuzüglich MWST.",
+    "Il calcolo del prezzo per i preparati sanguini si basa sul prezzo di fabbrica, maggiorato di un margine fisso di Fr. 40.-- più IVA dovuto alla speciale situazione distributiva (commissioni intermedie praticamente assenti)."
+   ],
+   "tgt_span": [
+    2850,
+    3072
+   ],
+   "description": "The German sentence is negated (kein); the aligned Italian sentence has no negation.",
+   "product": [
+    "Hemlibra"
+   ],
+   "half": "held",
+   "odd_one_out": null,
+   "suggested_action": null,
+   "likely_equivalent": false,
+   "equivalence": null,
+   "rank": 2,
+   "fid": "Q02",
+   "label_source": {
+    "reused": "G07",
+    "final": "not"
+   }
+  },
+  {
+   "id": "VYNDAQEL.01b",
+   "lang": "it",
+   "kind": "negation",
+   "languages": [
+    "de",
+    "it"
+   ],
+   "side": "de",
+   "negations": [
+    "nicht"
+   ],
+   "unit": "sentence",
+   "context": [
+    "VYNDAQEL darf nicht mit anderen spezifischen Arzneimitteln zur Behandlung der Transthyretin-Amyloidose (z.B. TTR-Stabilisatoren, TTR-Gen Silencer) kombiniert werden.",
+    "VYNDAQEL on deve essere combinato con altri medicamenti specifici per il trattamento dell’amiloidosi da transtiretina (ad esempio stabilizzatori del TTR, agenti silenziatori del gene TTR)."
+   ],
+   "tgt_span": [
+    2628,
+    2816
+   ],
+   "description": "The German sentence is negated (nicht); the aligned Italian sentence has no negation.",
+   "product": [
+    "Vyndaqel"
+   ],
+   "half": "held",
+   "odd_one_out": null,
+   "suggested_action": null,
+   "likely_equivalent": false,
+   "equivalence": null,
+   "rank": 3,
+   "fid": "Q03",
+   "label_source": {
+    "reused": "G17",
+    "final": "real"
+   }
+  },
+  {
+   "id": "ZAVICEFTA2",
+   "lang": "fr",
+   "kind": "negation",
+   "languages": [
+    "de",
+    "fr"
+   ],
+   "side": "fr",
+   "negations": [
+    "n’"
+   ],
+   "unit": "sentence",
+   "context": [
+    "Die Pfizer AG vergütet dem Leistungserbringer, bei dem eine angebrochene Packung ZAVICEFTA verfällt, auf dessen erste Aufforderung hin den Anteil des Fabrikabgabepreises für die Anzahl der verfallenen Ampullen zurück.",
+    "À la première demande d’un prestataire de service n’ayant pas utilisé l’intégralité du contenu d’une boîte de ZAVICEFTA, la société Pfizer AG rembourse à celui-ci la part du prix de fabrique proportionnelle au nombre d’ampoules non utilisées."
+   ],
+   "tgt_span": [
+    1502,
+    1744
+   ],
+   "description": "The French sentence is negated (n’); the aligned German sentence has no negation.",
+   "product": [
+    "Zavicefta"
+   ],
+   "half": "held",
+   "odd_one_out": null,
+   "suggested_action": null,
+   "likely_equivalent": false,
+   "equivalence": null,
+   "rank": 4,
+   "fid": "Q04",
+   "label_source": {
+    "reused": "G18",
+    "final": "minor"
+   }
+  },
+  {
+   "id": "ZAVICEFTA2",
+   "lang": "fr",
+   "kind": "negation",
+   "languages": [
+    "de",
+    "fr"
+   ],
+   "side": "de",
+   "negations": [
+    "nicht"
+   ],
+   "unit": "sentence",
+   "context": [
+    "• Komplizierte intraabdominelle Infektionen (clAl) • Komplizierte Harnwegsinfektionen (cUTI), einschliesslich Pyelonephritis • Nosokomiale Pneumonien (HAP), einschliesslich beatmungsassoziierter Pneumonien (VAP) Zur Verhinderung einer schnellen Resistenzentwicklung gegenüber ZAVICEFTA darf dieses fü…",
+    "• Infections intra-abdominales compliquées (IIAc) • Infections des voies urinaires compliquées (IVUc), dont la pyélonéphrite • Pneumonies nosocomiales (PN), dont les pneumonies acquises sous ventilation mécanique (PAVM) Afin d’éviter le développement rapide de résistances à ZAVICEFTA, ce traitement …"
+   ],
+   "tgt_span": [
+    403,
+    970
+   ],
+   "description": "The German sentence is negated (nicht); the aligned French sentence has no negation.",
+   "product": [
+    "Zavicefta"
+   ],
+   "half": "held",
+   "odd_one_out": null,
+   "suggested_action": null,
+   "likely_equivalent": false,
+   "equivalence": null,
+   "rank": 5,
+   "fid": "Q05",
+   "label_source": {
+    "reused": null,
+    "worklist_id": "S00"
+   }
+  }
+ ],
+ "r15_dropped": [
+  {
+   "fid": "O02",
+   "id": "NPLATE4",
+   "lang": "it",
+   "kind": "operator",
+   "half": "held",
+   "final": "not"
+  },
+  {
+   "fid": "O03",
+   "id": "OPDIVO.03a",
+   "lang": "it",
+   "kind": "operator",
+   "half": "held",
+   "final": "not"
+  },
+  {
+   "fid": "G01",
+   "id": "AMVUTTRA.02",
+   "lang": "fr",
+   "kind": "negation",
+   "half": "held",
+   "final": "not"
+  },
+  {
+   "fid": "G02",
+   "id": "AMVUTTRA.02",
+   "lang": "fr",
+   "kind": "negation",
+   "half": "held",
+   "final": "not"
+  },
+  {
+   "fid": "G04",
+   "id": "DECADURABOL2",
+   "lang": "it",
+   "kind": "negation",
+   "half": "held",
+   "final": "minor"
+  },
+  {
+   "fid": "G05",
+   "id": "ERBITUX5",
+   "lang": "fr",
+   "kind": "negation",
+   "half": "dev",
+   "final": "not"
+  },
+  {
+   "fid": "G06",
+   "id": "GALAFOLD3",
+   "lang": "it",
+   "kind": "negation",
+   "half": "held",
+   "final": "not"
+  },
+  {
+   "fid": "G08",
+   "id": "KEYTRUDA.03",
+   "lang": "fr",
+   "kind": "negation",
+   "half": "held",
+   "final": "not"
+  },
+  {
+   "fid": "G09",
+   "id": "KEYTRUDA.03---Inj-L-s---1L-plattenepitheliales-NSCLC-KN407",
+   "lang": "fr",
+   "kind": "negation",
+   "half": "held",
+   "final": "not"
+  },
+  {
+   "fid": "G10",
+   "id": "KEYTRUDA.XX---Inf-Konz",
+   "lang": "it",
+   "kind": "negation",
+   "half": "held",
+   "final": "not"
+  },
+  {
+   "fid": "G11",
+   "id": "LIORESAL",
+   "lang": "fr",
+   "kind": "negation",
+   "half": "held",
+   "final": "not"
+  },
+  {
+   "fid": "G12",
+   "id": "LIORESAL",
+   "lang": "it",
+   "kind": "negation",
+   "half": "held",
+   "final": "not"
+  },
+  {
+   "fid": "G13",
+   "id": "MABTHERA.02",
+   "lang": "fr",
+   "kind": "negation",
+   "half": "dev",
+   "final": "not"
+  },
+  {
+   "fid": "G14",
+   "id": "RIXATHON.02",
+   "lang": "fr",
+   "kind": "negation",
+   "half": "held",
+   "final": "not"
+  },
+  {
+   "fid": "G15",
+   "id": "RUXIENCE.02",
+   "lang": "fr",
+   "kind": "negation",
+   "half": "held",
+   "final": "not"
+  },
+  {
+   "fid": "G16",
+   "id": "TRUXIMA.02",
+   "lang": "fr",
+   "kind": "negation",
+   "half": "dev",
+   "final": "not"
+  },
+  {
+   "fid": "W01",
+   "id": "HEMLIBRA.XXb",
+   "lang": "fr",
+   "kind": "number_word",
+   "half": "held",
+   "final": "minor"
+  },
+  {
+   "fid": "W02",
+   "id": "IDEFIRIX",
+   "lang": "it",
+   "kind": "number_word",
+   "half": "held",
+   "final": "not"
+  },
+  {
+   "fid": "W03",
+   "id": "LEQVIO.01",
+   "lang": "it",
+   "kind": "number_word",
+   "half": "dev",
+   "final": "not"
+  },
+  {
+   "fid": "W04",
+   "id": "PRALUENT.01a",
+   "lang": "it",
+   "kind": "number_word",
+   "half": "dev",
+   "final": "not"
+  },
+  {
+   "fid": "W05",
+   "id": "REPATHA.01a",
+   "lang": "it",
+   "kind": "number_word",
+   "half": "held",
+   "final": "not"
+  },
+  {
+   "fid": "W06",
+   "id": "STELARAPP4",
+   "lang": "fr",
+   "kind": "number_word",
+   "half": "dev",
+   "final": "not"
+  },
+  {
+   "fid": "W07",
+   "id": "STELARAPP4",
+   "lang": "it",
+   "kind": "number_word",
+   "half": "dev",
+   "final": "not"
+  },
+  {
+   "fid": "W08",
+   "id": "TEPKINLY.01a",
+   "lang": "fr",
+   "kind": "number_word",
+   "half": "held",
+   "final": "not"
+  },
+  {
+   "fid": "W09",
+   "id": "TEPKINLY.01b",
+   "lang": "fr",
+   "kind": "number_word",
+   "half": "dev",
+   "final": "not"
+  }
+ ]
+}

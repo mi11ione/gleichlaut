@@ -307,6 +307,7 @@ is therefore expected and is not evidence about divergences of other kinds.
 | Recall, planted divergences (200 per type, FR+IT) | number **93.0%**, unit **73.0%**, clause deletion **75.0%**, wrong language **94.0%**, typo next to a number **51.0%** (section "Recall on planted divergences") |
 | Recall, planted v2 (sites drawn from all numbers; 200 per type) | any number **55.5%**, number word **37.0%**, flipped operator **0%**, dropped negation **0%** (subsection "v2: sites not chosen by the detector's own rule") |
 | Round 5, off (PREREG R15, held half, 200 per type) | with the round-5 checks: flipped operator 0 → **74.5%**, dropped negation 0 → **44.0%**, added negation 0 → **55.5%**, number word 30.5 → **84.0%**; 31 register findings, 6 real or minor (no kind reaches the 50% precision bar; section "Round 5") |
+| Round 5b, off (PREREG R22, stricter alignment) | held precision 19.0% → **40.0%** (2 of 5), planted operator **66.5%**, dropped negation **43.0%**, AMVUTTRA.01a / BEYONTTRA / VYNDAQEL.01b still found; misses the 50% bar, stays opt-in (section "Round 5b") |
 | Keytruda KN045 | **found** (`L01`): the IT field is identical to the FR text (function words fr 39 / it 1, trigram margin 2.16 nat); first seen **1 Aug 2026**, present in 4 snapshots (Aug, Sep, 1 Oct, 6 Oct) |
 | Other language findings | none on 6 Oct, and none in any of the 9 snapshots (`language_any_snapshot`). On 6 Oct no other field passes even rule A alone |
 | Number findings explained by a typo | 4 of 21: LEQVIO FR+IT (`N16`, `N17` ← German `1 .4`), PREVYMIS FR (`N04` ← `de15`), FORSTEO IT (`N13` ← `se mesi`) |
@@ -683,6 +684,54 @@ what they flag is a paraphrase. Two cheap next steps:
 - Pairing multiplier wordings (`das Fünffache` = `cinque volte`).
 
 Both would need their own pre-registered round.
+
+## Round 5b: stricter alignment (PREREG R22, measured, off)
+
+A juror asked for the operator and negation module to be precise enough to ship on by default. R22 fixed the test before
+any rule changed (commit `2514b9b`): a second rule set, written on the dev half only and frozen in commit `951cdd2`
+(round-5b block, rule logic `8b27d941…`, `audit.R22_FROZEN`), judged on the held half. The R15 block and its results
+are unchanged; `run_all(..., r5="r22")` and `audit.run_r22()` compute the new set on request.
+
+What changed, by false-positive class (none names a product or phrase):
+
+- **Wrong clause or date paired.** Operators are compared per aligned sentence pair (`aligned()`, R15's judged pairs),
+  not across the whole text; a value's bounds are paired in order.
+- **Ranges and stop rules.** Both ends of a range with glue words (`vom … bis zum`, `du … au`, `dal … al`) have no
+  direction. A negated bound is compared only with a negated bound (`mindestens 20 … nicht erreicht` against `inferiore
+  a 20` is not judged); German verb-final `nicht` counts; a negation covers an enumeration of bounds; a negation that
+  lives in a bound (`non … più di 60 g` = `höchstens 60 g`) is no negation finding.
+- **Word against clause negation.** Only clause negations raise a negation finding. Word negations (`nicht-mutiert`,
+  `bei nicht abgeschlossener Familienplanung`, FR bare `non`, `ohne`, `refraktär`) block one, and raise one only when
+  the other side states the negated word itself un-negated (`Non-Hodgkin` / `hodgkinien`).
+- **Restrictive `ne … que`.** `nur` / `seulement` / `solo` and `ne … que` / `non … che` are restriction words; an
+  unpaired one blocks a finding, a paired one cancels.
+- **Misalignment.** No finding when the missing negation sits in the neighbouring sentence of the other side.
+- **Number words.** Reported only as a substitution (the other sentence states a different value in its place), never
+  as an omission; a glued or compounded number word (`deuxlignes`, `Fünffache`) reconciles.
+
+Five deviations from R22's wording were decided on the dev planted copies before the freeze and are listed in the
+PREREG results log.
+
+**Result** (`eval/results/audit_r22.json`). Register (6 Oct 2026): 7 findings instead of 31 (operator 2, negation 5,
+number_word 0). Six reuse their R15 label; the new one was labelled by two fresh blind annotators (not, not).
+
+| | R15 | R22 |
+|---|---|---|
+| held findings, real or minor | 4 of 21 (19.0%) | **2 of 5 (40.0%)** [11.8, 76.9] |
+| dev findings, real or minor (design data) | 2 of 10 | 2 of 2 |
+| planted operator flipped (held, 200) | 74.5% | **66.5%** [59.7, 72.7] |
+| planted negation dropped (held, 200) | 44.0% | **43.0%** [36.3, 49.9] |
+| planted negation added / number word changed | 55.5% / 84.0% | 55.0% / 81.0% |
+| AMVUTTRA.01a FR (dev), BEYONTTRA IT (dev), VYNDAQEL.01b IT (held) | found | found |
+
+The planted copies are R15's; re-scored with the R15 rules they reproduce R15's counts exactly. The held false findings
+are an operator inside a negated enumeration the rule did not reach (WYNZORA IT), «kein Zwischenhandel» against
+«praticamente assenti» (HEMLIBRA IT) and «nicht geeignet» against «inadaptés» (ZAVICEFTA2 FR). Two minor R15 finds are
+lost (DECADURABOL2, HEMLIBRA FR).
+
+**Outcome: fails the precision bar (40.0% < 50%), so the module stays opt-in.** Recall and the three named finds hold.
+Caveat stated in R22: the held findings' R15 notes were public when R22 was written, so the held figure tests whether
+class-level rules remove known classes, not an unseen error rate. With 5 held findings the interval is wide.
 
 ## Second signal: term pairs (measured, off)
 

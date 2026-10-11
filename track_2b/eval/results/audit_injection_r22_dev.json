@@ -1,0 +1,454 @@
+{
+ "generated_by": "python3 tools/audit_inject.py --protocol r22 --half dev",
+ "model_calls": 0,
+ "network": false,
+ "date": "20261006",
+ "half": "dev",
+ "seed": 20261015,
+ "status": "design (dev half): not a measurement",
+ "protocol": {
+  "written": "PROTOCOL r22 in the tools/audit_inject.py docstring; PREREG R22 (commit 2514b9b)",
+  "copies": "R15's (protocol r15, same seed and eligibility)",
+  "eligible": "half dev: 809 triples, 788 with no finding of any kind under the frozen R15 audit",
+  "detection": "R15's 'after' rule, with the R15 kinds (reproduction) and with the R22 kinds (measurement)"
+ },
+ "rules": {
+  "r22_block_sha256": "591e02d2f3c80f491751c0deedcd5918a87e57b194f4abf1dd942d7835cf7ffc",
+  "r22_logic_sha256": "8b27d9410455bc9bea54ab6e5ec0df9fbe93c712ba8740189c1981429eb603d2",
+  "r15_logic_sha256": "480ef3e31a9b107af3a342e84b7eba90b950c71e2a5b14ead06f2d81355ffb52",
+  "op_align": "aligned"
+ },
+ "summary": {
+  "operator": {
+   "n": 200,
+   "recall_r15": 0.735,
+   "recall_r22": 0.655,
+   "wilson95_r22": [
+    0.587,
+    0.717
+   ]
+  },
+  "negation_drop": {
+   "n": 200,
+   "recall_r15": 0.48,
+   "recall_r22": 0.43,
+   "wilson95_r22": [
+    0.363,
+    0.499
+   ]
+  },
+  "negation_add": {
+   "n": 200,
+   "recall_r15": 0.51,
+   "recall_r22": 0.505,
+   "wilson95_r22": [
+    0.436,
+    0.574
+   ]
+  },
+  "number_word": {
+   "n": 200,
+   "recall_r15": 0.87,
+   "recall_r22": 0.865,
+   "wilson95_r22": [
+    0.811,
+    0.906
+   ]
+  }
+ },
+ "types": {
+  "operator": {
+   "n": 200,
+   "detected_before": 0,
+   "detected_r15": 147,
+   "detected_r22": 131,
+   "recall_r15": 0.735,
+   "recall_r22": 0.655,
+   "wilson95_r22": [
+    0.587,
+    0.717
+   ],
+   "eligible_limitations": {
+    "fr": 271,
+    "it": 301
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "r15": 74,
+     "r22": 66,
+     "wilson95_r22": [
+      0.563,
+      0.745
+     ]
+    },
+    "it": {
+     "n": 100,
+     "r15": 73,
+     "r22": 65,
+     "wilson95_r22": [
+      0.553,
+      0.736
+     ]
+    }
+   },
+   "gained": 16,
+   "lost": 32,
+   "lost_list": [
+    {
+     "id": "TYSABRI4",
+     "lang": "fr",
+     "sub": "au moins->au plus"
+    },
+    {
+     "id": "OPDIVO.12",
+     "lang": "fr",
+     "sub": "maximum->minimum"
+    },
+    {
+     "id": "ILARIS.03a",
+     "lang": "fr",
+     "sub": "plus->moins"
+    },
+    {
+     "id": "PROLASTINliq",
+     "lang": "fr",
+     "sub": "au moins->au plus"
+    },
+    {
+     "id": "MYOZYME4",
+     "lang": "fr",
+     "sub": "supérieur->inférieur"
+    },
+    {
+     "id": "VERQUVO",
+     "lang": "fr",
+     "sub": "≤->≥"
+    },
+    {
+     "id": "AIMOVIG.01",
+     "lang": "fr",
+     "sub": "au moins->au plus"
+    },
+    {
+     "id": "SARCLISA.02",
+     "lang": "fr",
+     "sub": "au moins->au plus"
+    },
+    {
+     "id": "ZARZIO",
+     "lang": "fr",
+     "sub": "<->>"
+    },
+    {
+     "id": "LONSURF.02",
+     "lang": "fr",
+     "sub": "au moins->au plus"
+    },
+    {
+     "id": "ILARIShid.04",
+     "lang": "fr",
+     "sub": "plus->moins"
+    },
+    {
+     "id": "EPREXSYMPTAN",
+     "lang": "fr",
+     "sub": "minimum->maximum"
+    },
+    {
+     "id": "NEUPOGEN",
+     "lang": "fr",
+     "sub": "<->>"
+    },
+    {
+     "id": "SUNLENCA.01a",
+     "lang": "fr",
+     "sub": "au moins->au plus"
+    },
+    {
+     "id": "VYEPTI.01",
+     "lang": "fr",
+     "sub": "au moins->au plus"
+    },
+    {
+     "id": "NUSTENDI.01",
+     "lang": "fr",
+     "sub": "au moins->au plus"
+    },
+    {
+     "id": "EVENITY.01a",
+     "lang": "fr",
+     "sub": "au moins->au plus"
+    },
+    {
+     "id": "KOSELUGO.01---Monotherapie",
+     "lang": "fr",
+     "sub": "≥->≤"
+    },
+    {
+     "id": "DUPIXENT.06-Pen---Chronische-Rhinosinusitis-mit-Nasenpolypen--CR",
+     "lang": "fr",
+     "sub": "au moins->au plus"
+    },
+    {
+     "id": "MYOZYME4",
+     "lang": "it",
+     "sub": "oltre->sotto"
+    },
+    {
+     "id": "QUOFENIX",
+     "lang": "it",
+     "sub": "≥->≤"
+    },
+    {
+     "id": "VERQUVO",
+     "lang": "it",
+     "sub": "≤->≥"
+    },
+    {
+     "id": "LENALI.AC.09",
+     "lang": "it",
+     "sub": "almeno->al massimo"
+    },
+    {
+     "id": "JARDIANCE6",
+     "lang": "it",
+     "sub": "almeno->al massimo"
+    },
+    {
+     "id": "KEYTRUDA.25",
+     "lang": "it",
+     "sub": "massim->minim"
+    },
+    {
+     "id": "GIVLAARI.01",
+     "lang": "it",
+     "sub": "almeno->al massimo"
+    },
+    {
+     "id": "ZYDELIG2",
+     "lang": "it",
+     "sub": ">-><"
+    },
+    {
+     "id": "AIMOVIG.01",
+     "lang": "it",
+     "sub": "almeno->al massimo"
+    },
+    {
+     "id": "ILARIShid.04",
+     "lang": "it",
+     "sub": "più->meno"
+    },
+    {
+     "id": "LENALI.TE.09",
+     "lang": "it",
+     "sub": "almeno->al massimo"
+    },
+    {
+     "id": "TENKASI.1200",
+     "lang": "it",
+     "sub": "≥->≤"
+    },
+    {
+     "id": "OPDIVO-22095.XX",
+     "lang": "it",
+     "sub": "al massimo->almeno"
+    }
+   ]
+  },
+  "negation_drop": {
+   "n": 200,
+   "detected_before": 0,
+   "detected_r15": 96,
+   "detected_r22": 86,
+   "recall_r15": 0.48,
+   "recall_r22": 0.43,
+   "wilson95_r22": [
+    0.363,
+    0.499
+   ],
+   "eligible_limitations": {
+    "fr": 108,
+    "it": 143
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "r15": 43,
+     "r22": 39,
+     "wilson95_r22": [
+      0.3,
+      0.488
+     ]
+    },
+    "it": {
+     "n": 100,
+     "r15": 53,
+     "r22": 47,
+     "wilson95_r22": [
+      0.375,
+      0.567
+     ]
+    }
+   },
+   "gained": 0,
+   "lost": 10,
+   "lost_list": [
+    {
+     "id": "IMBRUVICA.03",
+     "lang": "fr",
+     "sub": "non"
+    },
+    {
+     "id": "SKYRIZI.03---Morbus-Crohn--nur-360-mg-und-600-mg-",
+     "lang": "fr",
+     "sub": "non"
+    },
+    {
+     "id": "CALQUEtab.01",
+     "lang": "fr",
+     "sub": "non"
+    },
+    {
+     "id": "EVRYSDI.01a",
+     "lang": "fr",
+     "sub": "non"
+    },
+    {
+     "id": "OPDIVO.16",
+     "lang": "it",
+     "sub": "non"
+    },
+    {
+     "id": "OPDIVO.16---GC-GEJC-OC",
+     "lang": "it",
+     "sub": "non"
+    },
+    {
+     "id": "MOUNJARO.01",
+     "lang": "it",
+     "sub": "non"
+    },
+    {
+     "id": "ENHERTU.03",
+     "lang": "it",
+     "sub": "non"
+    },
+    {
+     "id": "IMBRUVICA.03",
+     "lang": "it",
+     "sub": "non"
+    },
+    {
+     "id": "NOXAFIL2",
+     "lang": "it",
+     "sub": "non"
+    }
+   ]
+  },
+  "negation_add": {
+   "n": 200,
+   "detected_before": 0,
+   "detected_r15": 102,
+   "detected_r22": 101,
+   "recall_r15": 0.51,
+   "recall_r22": 0.505,
+   "wilson95_r22": [
+    0.436,
+    0.574
+   ],
+   "eligible_limitations": {
+    "fr": 282,
+    "it": 273
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "r15": 49,
+     "r22": 48,
+     "wilson95_r22": [
+      0.385,
+      0.577
+     ]
+    },
+    "it": {
+     "n": 100,
+     "r15": 53,
+     "r22": 53,
+     "wilson95_r22": [
+      0.433,
+      0.625
+     ]
+    }
+   },
+   "gained": 0,
+   "lost": 1,
+   "lost_list": [
+    {
+     "id": "BIMZELX.05a",
+     "lang": "fr",
+     "sub": "fr:sont"
+    }
+   ]
+  },
+  "number_word": {
+   "n": 200,
+   "detected_before": 85,
+   "detected_r15": 174,
+   "detected_r22": 173,
+   "recall_r15": 0.87,
+   "recall_r22": 0.865,
+   "wilson95_r22": [
+    0.811,
+    0.906
+   ],
+   "eligible_limitations": {
+    "fr": 141,
+    "it": 144
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "r15": 86,
+     "r22": 85,
+     "wilson95_r22": [
+      0.767,
+      0.907
+     ]
+    },
+    "it": {
+     "n": 100,
+     "r15": 88,
+     "r22": 88,
+     "wilson95_r22": [
+      0.802,
+      0.93
+     ]
+    }
+   },
+   "gained": 0,
+   "lost": 1,
+   "lost_list": [
+    {
+     "id": "FLIXABI.06",
+     "lang": "fr",
+     "sub": "word"
+    }
+   ]
+  }
+ },
+ "inputs": {
+  "audit_py_sha256": "97c6af7f4d4f0e37e3687fc74862b6a2a43cf5ab4b7a54034ed01e963415a39b",
+  "snapshot_sha256": {
+   "de": "fe5e60f1931a6b345ae4687f9affbf1b05efa14263d20c16f410d3260228cc68",
+   "fr": "4d10dd047bdfd65a3bff5aca361706f2d3901c7872c6c9179948ede2f9477a54",
+   "it": "bcd86c674898d32f52b034674f54c67c2dac7cb893afc941e86da0642e1cd577"
+  }
+ },
+ "runtime": {
+  "seconds_total": 305.9,
+  "seconds_copies": 263.2,
+  "jobs": 8
+ }
+}

@@ -2054,6 +2054,10 @@ def _logic_sha(block):
 # R15 post-freeze note).
 R5_FROZEN = dict(commit="6a2c269", block_sha256="2d5dcaaf3b7a8c53f8baae797f045708ac843efeef0db692aa383d3a64d8e1bc",
                  logic_sha256="480ef3e31a9b107af3a342e84b7eba90b950c71e2a5b14ead06f2d81355ffb52")
+# The R22 freeze (commit 951cdd2, PREREG R22): the round-5b block's byte and rule-logic fingerprints; tests/test_audit_r22.py
+# keeps the logic fingerprint so.
+R22_FROZEN = dict(commit="951cdd2", block_sha256="591e02d2f3c80f491751c0deedcd5918a87e57b194f4abf1dd942d7835cf7ffc",
+                  logic_sha256="8b27d9410455bc9bea54ab6e5ec0df9fbe93c712ba8740189c1981429eb603d2")
 
 
 QUESTION_TERM = ("Does the 'lang' text render the German term named in 'finding' with a term that is wrong or that BAG no "

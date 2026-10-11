@@ -603,6 +603,68 @@ def audit_r15():
                 decision=dec, verification=dict((k, v) for k, v in H["verification"].items() if k != "copies_list"))
 
 
+def audit_r22():
+    """PREREG R22: the round-5b rule set (stricter alignment) for the operator and negation module. Register findings on
+    the 6 Oct 2026 register (data/audit/audit_r22_20261006.json, tools/r22_audit.py) with their labels (the R15 final
+    label reused, or two blind annotators + a third for the new ones: eval/labels/audit_r22_20261006.tsv), precision by
+    half before (R15) and after (R22), held planted recall on R15's copies (eval/results/audit_injection_r22_held.json,
+    tools/audit_inject.py --protocol r22), the three named finds, and the decision rule as pre-registered."""
+    from . import audit as A
+    R = os.path.join(core.ROOT, "eval", "results")
+    D = json.load(open(os.path.join(DATA, "audit", "audit_r22_20261006.json"), encoding="utf-8"))
+    rd = lambda p: [dict(zip(r[0], x)) for r in [[l.split("\t") for l in open(p, encoding="utf-8").read().splitlines()]] for x in r[1:]]
+    l15 = {r["fid"]: r for r in rd(os.path.join(LABELS, "audit_r15_20261006.tsv"))}
+    lp = os.path.join(LABELS, "audit_r22_20261006.tsv")
+    l22 = {r["fid"]: r for r in rd(lp)} if os.path.exists(lp) else {}
+    yes = lambda v: v in ("real", "minor")
+    F = []
+    for f in D["findings"]:
+        src = f["label_source"]
+        fin = src["final"] if src["reused"] else (l22[f["fid"]]["final"] if f["fid"] in l22 else None)
+        F.append(dict(fid=f["fid"], id=f["id"], lang=f["lang"], kind=f["kind"], half=f["half"], reused=src["reused"], final=fin))
+
+    def prec(rows):
+        lab = [r for r in rows if r["final"]]; y = sum(yes(r["final"]) for r in lab); st = sum(r["final"] == "real" for r in lab)
+        return dict(findings=len(rows), labelled=len(lab), real_or_minor=y, real=st,
+                    precision_pct=round(100 * y / len(lab), 1) if lab else None,
+                    wilson95_pct=[round(v, 1) for v in wilson(y, len(lab))] if lab else None,
+                    strict_pct=round(100 * st / len(lab), 1) if lab else None)
+    old = [dict(fid=k, kind=v["kind"], half=v["half"], final=v["final"]) for k, v in l15.items()]
+    halves = ("dev", "held")
+    precision = dict(r22={h: prec([r for r in F if r["half"] == h]) for h in halves}, r15={h: prec([r for r in old if r["half"] == h]) for h in halves})
+    precision["r22"]["all"] = prec(F); precision["r15"]["all"] = prec(old)
+    precision["r22_by_kind_held"] = {k: prec([r for r in F if r["half"] == "held" and r["kind"] == k]) for k in A.KINDS_R22}
+    precision["r15_by_kind_held"] = {k: prec([r for r in old if r["half"] == "held" and r["kind"] == k]) for k in A.KINDS_R5}
+    pct = lambda k, n: round(100 * k / n, 1) if n else None
+    H = json.load(open(os.path.join(R, "audit_injection_r22_held.json"), encoding="utf-8"))
+    H15 = json.load(open(os.path.join(R, "audit_injection_r15_held.json"), encoding="utf-8"))
+    rec = {t: dict(n=v["n"], r15=v["detected_r15"], r22=v["detected_r22"], r15_pct=pct(v["detected_r15"], v["n"]), r22_pct=pct(v["detected_r22"], v["n"]),
+                   wilson95_r22_pct=[round(100 * x, 1) for x in v["wilson95_r22"]], gained=v["gained"], lost=v["lost"],
+                   by_lang={L: dict(n=b["n"], r15=b["r15"], r22=b["r22"]) for L, b in v["by_lang"].items()}) for t, v in H["types"].items()}
+    reproduced = all(H["types"][t]["detected_r15"] == H15["types"][t]["detected_after"] and H["types"][t]["n"] == H15["types"][t]["n"] for t in H15["types"])
+    dp = os.path.join(R, "audit_injection_r22_dev.json")
+    rec_dev = {t: dict(n=v["n"], r15=v["detected_r15"], r22=v["detected_r22"]) for t, v in json.load(open(dp, encoding="utf-8"))["types"].items()} if os.path.exists(dp) else None
+    named = {}
+    for cud, kind, L in (("AMVUTTRA.01a", "operator", "fr"), ("BEYONTTRA", "negation", "it"), ("VYNDAQEL.01b", "negation", "it")):
+        hit = [r["fid"] for r in F if (r["id"], r["kind"], r["lang"]) == (cud, kind, L)]
+        named[cud] = dict(kind=kind, lang=L, half=A.half(cud), found=bool(hit), fids=hit)
+    ph = precision["r22"]["held"]
+    crit = dict(precision_held=ph["precision_pct"] is not None and ph["labelled"] == ph["findings"] and ph["precision_pct"] >= 50,
+                recall_operator=rec["operator"]["r22"] / rec["operator"]["n"] >= 0.6,
+                recall_negation_drop=rec["negation_drop"]["r22"] / rec["negation_drop"]["n"] >= 0.4,
+                named_finds=all(v["found"] for v in named.values()))
+    ag = [r for r in l22.values() if yes(r["A"]) == yes(r["B"])]
+    return dict(prereg="R22", freeze=D["freeze"], rules_sha256=D["rules_sha256"], rules_logic_sha256=D["rules_logic_sha256"],
+                rules_logic_matches_code=D["rules_logic_sha256"] == A.r22_logic_sha(), op_align=D["op_align"],
+                register=dict(findings=len(F), by_kind=D["summary"]["by_kind"], by_half=D["summary"]["by_half"], reused=D["summary"]["reused"],
+                              new=D["summary"]["new"], r15_findings=D["summary"]["r15_findings"], r15_no_longer_reported=D["summary"]["r15_dropped"],
+                              findings_list=F),
+                labels=dict(new_records=len(l22), agreement=len(ag), tie_break=sum(1 for r in l22.values() if r.get("T"))),
+                precision=precision, recall_held=rec, recall_dev=rec_dev, planted_copies_reproduce_r15=reproduced, seed=H["seed"],
+                named_finds=named, criteria=crit, ship_on_by_default=all(crit.values()),
+                note="a pass is reported for the maintainers to integrate; this repository does not change the default (R5_ON, UI)")
+
+
 def audit_grouping():
     """How the register groups the audit for decision (ui.audit_view.issues): findings naming the same difference on the
     same text are one issue. Counts the number/unit/language/editorial findings, the terminology notices and the issues."""

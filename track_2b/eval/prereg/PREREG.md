@@ -40,7 +40,7 @@ human labels were used.
 | R19 | the certified 8B Q8_0 on the identity probes (the 250 MMLU questions, the 792-cell battery): is `fp1-nes` an 8B? | MMLU 78.4% (shared model 84.4%, v1 8B 70.8%); text equal to fp1-nes in 40.7% of cells, decisions 88.6% (fp1-nes) vs 90.4% (tp2): inconclusive (O4) |
 | R20 | the 6 Oct 2026 audit as frozen predictions, scored against BAG's own later corrections (an oracle that is not Claude) | pending (first scoring snapshot expected 1 Nov 2026) |
 | R21 | a task-specific system message on top of the house wording (v4-system, certified Q8_0): fresh 166 (A) and both live months (B) | A meets R0 (13.9% identical, +7.8; frozen 17.5%); no live month (Aug 1 REAL, Sep flagged 70.7%): not a candidate, default unchanged |
-| R22 | stricter alignment for the operator and negation module (round 5b), held half of the register and R15's held planted set | pending |
+| R22 | stricter alignment for the operator and negation module (round 5b), held half of the register and R15's held planted set | held precision 19.0% → 40.0% (2 of 5; dev 2 of 2); planted operator 66.5%, dropped negation 43.0%; the three finds kept: fails the precision bar, stays opt-in |
 
 Corrections to statements of fact inside rule text (11 Oct 2026; the rules themselves are unchanged and their text below
 stays as frozen):
@@ -1237,3 +1237,33 @@ data the change was designed on is labelled "dev" in every table.
   two blind annotators (needs fix 28 of 29, κ 0.931; class 22 of 29), a third on 10; final: 10 equivalent, 3
   preexisting, 4 cosmetic, 4 minor, 1 German, 3 stale, 4 REAL (3 of them flagged) (`eval/results/r21_system.json`,
   `eval/labels/r21_system_ready.tsv`).
+- **R22, 11 Oct 2026:** pre-registered at commit 2514b9b (15:39 UTC) before any rule change; round-5b block written on
+  the dev half only and frozen at commit 951cdd2 (block sha256 `591e02d2…`, rule logic `8b27d941…`, `audit.R22_FROZEN`;
+  the R15 block, its fingerprints, `findings_r5` and the 38 existing findings unchanged). No held text was opened and
+  nothing was run on the held half before the freeze. **Deviations from R22's wording, all decided on the dev planted
+  copies before the freeze:** (a) a word negation raises a finding when the other side states the negated word itself
+  un-negated (a cognate, first five folded letters: `Non-Hodgkin` / `hodgkinien`); R22 said word negations never raise
+  one; (b) restriction words block only when the other side has fewer of
+  them (`nur` against `uniquement` cancels; 13 of 13 dev added-negation losses); (c) the misalignment guard is a
+  neighbour check (the lacking side's clause negation sits in pair k−1 / k+1 or an unaligned sentence between, unmatched
+  there) instead of the window count, which also counted negations the other side words lexically; (d) a bound's
+  negation scope is R15's (12 words back in the clause) plus a negated bound's enumeration (same direction, joined by a
+  coordinator or comma, ≤ 80 characters) and German verb-final `nicht`/`kein` with no subordinating or coordinating
+  word in between, not "anywhere earlier in the sentence" (that flagged bounds the negation does not govern); a
+  negation that lives in a bound (`non … più di 60 g` = `höchstens 60 g`) raises no negation finding; (e) number words:
+  "a different value in its place" is a value the other sentence states more often (not of another time or mass
+  dimension), with `beide` / `les deux` / `entrambi` as 2. Dev dropped-negation recall was 27% with R22's wording for
+  (a)–(c) and 43% after. Alignment choice by the fixed rule: `aligned()` gave dev
+  operator recall 65.5% (≥ 65%), so `OP_ALIGN = "aligned"` (all pairs: 79.5%). **Register** (6 Oct 2026): 7 findings
+  (operator 2, negation 5, number_word 0; dev 2, held 5); 6 reuse an R15 label, 1 new (ZAVICEFTA2 FR `Q05`, two fresh
+  blind annotators: not / not, no tie-break); 25 of the 31 R15 findings are no longer reported. **Held precision**:
+  R15 4 of 21 = 19.0% → R22 **2 of 5 = 40.0%** [11.8, 76.9] (strict real 1 of 5): VYNDAQEL.01b IT (real), ZAVICEFTA2 FR
+  `Q04` (minor, reused); false: WYNZORA IT operator (the enumeration rule did not cover it), HEMLIBRA.XXb IT («kein
+  Zwischenhandel» / «assenti»), ZAVICEFTA2 FR `Q05` («nicht geeignet» / «inadaptés»). Lost confirmed held findings:
+  DECADURABOL2, HEMLIBRA.XXb `W01` (minor). Dev 2 of 2, all 4 of 7 (57.1%). **Held planted recall** (R15's copies,
+  reproduced exactly: 149 / 88 / 111 / 168): operator 74.5% → **66.5%** [59.7, 72.7], dropped negation 44.0% →
+  **43.0%** [36.3, 49.9], added 55.5% → 55.0%, number word 84.0% → 81.0% (dev 65.5 / 43.0 / 50.5 / 86.5). **Named
+  finds:** AMVUTTRA.01a FR (dev, `P01`, both FR stop criteria «≤ 10»), BEYONTTRA IT (dev, `Q01`), VYNDAQEL.01b IT (held,
+  `Q03`): all found. **Outcome:** recall and the three finds hold, held precision 40.0% < 50%: **fails**; the module
+  stays opt-in and the R22 rules are not switched on (`eval/results/audit_r22.json`, `data/audit/audit_r22_20261006.json`,
+  `eval/results/audit_injection_r22_{held,dev}.json`, `eval/labels/audit_r22_20261006.tsv`).

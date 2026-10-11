@@ -1,0 +1,409 @@
+{
+ "generated_by": "python3 tools/audit_inject.py --protocol r22 --half held",
+ "model_calls": 0,
+ "network": false,
+ "date": "20261006",
+ "half": "held",
+ "seed": 20261016,
+ "status": "pre-registered measurement (PREREG R22)",
+ "protocol": {
+  "written": "PROTOCOL r22 in the tools/audit_inject.py docstring; PREREG R22 (commit 2514b9b)",
+  "copies": "R15's (protocol r15, same seed and eligibility)",
+  "eligible": "half held: 815 triples, 784 with no finding of any kind under the frozen R15 audit",
+  "detection": "R15's 'after' rule, with the R15 kinds (reproduction) and with the R22 kinds (measurement)"
+ },
+ "rules": {
+  "r22_block_sha256": "591e02d2f3c80f491751c0deedcd5918a87e57b194f4abf1dd942d7835cf7ffc",
+  "r22_logic_sha256": "8b27d9410455bc9bea54ab6e5ec0df9fbe93c712ba8740189c1981429eb603d2",
+  "r15_logic_sha256": "480ef3e31a9b107af3a342e84b7eba90b950c71e2a5b14ead06f2d81355ffb52",
+  "op_align": "aligned"
+ },
+ "summary": {
+  "operator": {
+   "n": 200,
+   "recall_r15": 0.745,
+   "recall_r22": 0.665,
+   "wilson95_r22": [
+    0.597,
+    0.727
+   ]
+  },
+  "negation_drop": {
+   "n": 200,
+   "recall_r15": 0.44,
+   "recall_r22": 0.43,
+   "wilson95_r22": [
+    0.363,
+    0.499
+   ]
+  },
+  "negation_add": {
+   "n": 200,
+   "recall_r15": 0.555,
+   "recall_r22": 0.55,
+   "wilson95_r22": [
+    0.481,
+    0.617
+   ]
+  },
+  "number_word": {
+   "n": 200,
+   "recall_r15": 0.84,
+   "recall_r22": 0.81,
+   "wilson95_r22": [
+    0.75,
+    0.858
+   ]
+  }
+ },
+ "types": {
+  "operator": {
+   "n": 200,
+   "detected_before": 0,
+   "detected_r15": 149,
+   "detected_r22": 133,
+   "recall_r15": 0.745,
+   "recall_r22": 0.665,
+   "wilson95_r22": [
+    0.597,
+    0.727
+   ],
+   "eligible_limitations": {
+    "fr": 294,
+    "it": 320
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "r15": 77,
+     "r22": 65,
+     "wilson95_r22": [
+      0.553,
+      0.736
+     ]
+    },
+    "it": {
+     "n": 100,
+     "r15": 72,
+     "r22": 68,
+     "wilson95_r22": [
+      0.583,
+      0.763
+     ]
+    }
+   },
+   "gained": 10,
+   "lost": 26,
+   "lost_list": [
+    {
+     "id": "OPDIVO.12---MIUC-adjuvant",
+     "lang": "fr",
+     "sub": "≥->≤"
+    },
+    {
+     "id": "DOXORACLI.01",
+     "lang": "fr",
+     "sub": "au moins->au plus"
+    },
+    {
+     "id": "TECENTR.02",
+     "lang": "fr",
+     "sub": "au moins->au plus"
+    },
+    {
+     "id": "ILARIStra.03",
+     "lang": "fr",
+     "sub": "plus->moins"
+    },
+    {
+     "id": "EZMEKLY.01---Monotherapie-p-diatrisch",
+     "lang": "fr",
+     "sub": "≥->≤"
+    },
+    {
+     "id": "ILARISfmf.05",
+     "lang": "fr",
+     "sub": "plus->moins"
+    },
+    {
+     "id": "DARZALEX.01c",
+     "lang": "fr",
+     "sub": "au moins->au plus"
+    },
+    {
+     "id": "BEVACIZUM.09",
+     "lang": "fr",
+     "sub": "au moins->au plus"
+    },
+    {
+     "id": "ACCOFIL",
+     "lang": "fr",
+     "sub": "<->>"
+    },
+    {
+     "id": "FILGRASTIM",
+     "lang": "fr",
+     "sub": "<->>"
+    },
+    {
+     "id": "LYNPARZA.04a",
+     "lang": "fr",
+     "sub": "≥->≤"
+    },
+    {
+     "id": "HYMPAVZI.XX",
+     "lang": "fr",
+     "sub": "plus->moins"
+    },
+    {
+     "id": "ARANESP5",
+     "lang": "fr",
+     "sub": "minimum->maximum"
+    },
+    {
+     "id": "TYRUKO.01",
+     "lang": "fr",
+     "sub": "au moins->au plus"
+    },
+    {
+     "id": "BRILIQU60.01",
+     "lang": "fr",
+     "sub": "≥->≤"
+    },
+    {
+     "id": "DIFICLIR2",
+     "lang": "fr",
+     "sub": "≥->≤"
+    },
+    {
+     "id": "LENALI.SP.09",
+     "lang": "it",
+     "sub": "almeno->al massimo"
+    },
+    {
+     "id": "LYNPARZA.03a",
+     "lang": "it",
+     "sub": "≥->≤"
+    },
+    {
+     "id": "MILUPAPREGO",
+     "lang": "it",
+     "sub": "massim->minim"
+    },
+    {
+     "id": "NINLARO-01",
+     "lang": "it",
+     "sub": "almeno->al massimo"
+    },
+    {
+     "id": "DOXORACLI.01",
+     "lang": "it",
+     "sub": "almeno->al massimo"
+    },
+    {
+     "id": "FIRAZYR2",
+     "lang": "it",
+     "sub": "superior->inferior"
+    },
+    {
+     "id": "LENALI.VI.09",
+     "lang": "it",
+     "sub": "almeno->al massimo"
+    },
+    {
+     "id": "KAPRUVIA.01",
+     "lang": "it",
+     "sub": ">-><"
+    },
+    {
+     "id": "ILARIStra.03",
+     "lang": "it",
+     "sub": "più->meno"
+    },
+    {
+     "id": "AJOVY.01",
+     "lang": "it",
+     "sub": "almeno->al massimo"
+    }
+   ]
+  },
+  "negation_drop": {
+   "n": 200,
+   "detected_before": 0,
+   "detected_r15": 88,
+   "detected_r22": 86,
+   "recall_r15": 0.44,
+   "recall_r22": 0.43,
+   "wilson95_r22": [
+    0.363,
+    0.499
+   ],
+   "eligible_limitations": {
+    "fr": 128,
+    "it": 160
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "r15": 40,
+     "r22": 39,
+     "wilson95_r22": [
+      0.3,
+      0.488
+     ]
+    },
+    "it": {
+     "n": 100,
+     "r15": 48,
+     "r22": 47,
+     "wilson95_r22": [
+      0.375,
+      0.567
+     ]
+    }
+   },
+   "gained": 0,
+   "lost": 2,
+   "lost_list": [
+    {
+     "id": "SPINRAZA.01",
+     "lang": "fr",
+     "sub": "non"
+    },
+    {
+     "id": "NOXAFIL3",
+     "lang": "it",
+     "sub": "non"
+    }
+   ]
+  },
+  "negation_add": {
+   "n": 200,
+   "detected_before": 0,
+   "detected_r15": 111,
+   "detected_r22": 110,
+   "recall_r15": 0.555,
+   "recall_r22": 0.55,
+   "wilson95_r22": [
+    0.481,
+    0.617
+   ],
+   "eligible_limitations": {
+    "fr": 272,
+    "it": 261
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "r15": 49,
+     "r22": 48,
+     "wilson95_r22": [
+      0.385,
+      0.577
+     ]
+    },
+    "it": {
+     "n": 100,
+     "r15": 62,
+     "r22": 62,
+     "wilson95_r22": [
+      0.522,
+      0.709
+     ]
+    }
+   },
+   "gained": 0,
+   "lost": 1,
+   "lost_list": [
+    {
+     "id": "BIMZELX.01",
+     "lang": "fr",
+     "sub": "fr:sont"
+    }
+   ]
+  },
+  "number_word": {
+   "n": 200,
+   "detected_before": 61,
+   "detected_r15": 168,
+   "detected_r22": 162,
+   "recall_r15": 0.84,
+   "recall_r22": 0.81,
+   "wilson95_r22": [
+    0.75,
+    0.858
+   ],
+   "eligible_limitations": {
+    "fr": 130,
+    "it": 127
+   },
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "r15": 85,
+     "r22": 83,
+     "wilson95_r22": [
+      0.745,
+      0.891
+     ]
+    },
+    "it": {
+     "n": 100,
+     "r15": 83,
+     "r22": 79,
+     "wilson95_r22": [
+      0.7,
+      0.858
+     ]
+    }
+   },
+   "gained": 0,
+   "lost": 6,
+   "lost_list": [
+    {
+     "id": "REMICADE2",
+     "lang": "fr",
+     "sub": "word"
+    },
+    {
+     "id": "INFLECTRA3",
+     "lang": "fr",
+     "sub": "word"
+    },
+    {
+     "id": "WINREVAIR.01",
+     "lang": "it",
+     "sub": "v1_site"
+    },
+    {
+     "id": "REMSIMA4",
+     "lang": "it",
+     "sub": "word"
+    },
+    {
+     "id": "REMICADE2",
+     "lang": "it",
+     "sub": "word"
+    },
+    {
+     "id": "INFLECTRA3",
+     "lang": "it",
+     "sub": "word"
+    }
+   ]
+  }
+ },
+ "inputs": {
+  "audit_py_sha256": "97c6af7f4d4f0e37e3687fc74862b6a2a43cf5ab4b7a54034ed01e963415a39b",
+  "snapshot_sha256": {
+   "de": "fe5e60f1931a6b345ae4687f9affbf1b05efa14263d20c16f410d3260228cc68",
+   "fr": "4d10dd047bdfd65a3bff5aca361706f2d3901c7872c6c9179948ede2f9477a54",
+   "it": "bcd86c674898d32f52b034674f54c67c2dac7cb893afc941e86da0642e1cd577"
+  }
+ },
+ "runtime": {
+  "seconds_total": 271.6,
+  "seconds_copies": 239.8,
+  "jobs": 8
+ }
+}

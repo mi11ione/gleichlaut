@@ -110,10 +110,17 @@ PROTOCOL r15 (--protocol r15 --half dev|held; PREREG R15, committed 28fe22b befo
              finding in the target language whose target sentence contains the edit position; number_word, a number or
              number_word finding with the new value on the target side or the old value on the German side.
 
-usage: python3 tools/audit_inject.py [--protocol v1|v2|r15] [--half dev|held] [--hist DIR] [--n 100] [--seed S] [--jobs J]
+PROTOCOL r22 (--protocol r22 --half dev|held; PREREG R22, committed 2514b9b before the round-5b rules were written)
+  Copies      exactly R15's (protocol r15: same eligibility under the frozen R15 audit, seed, types, n, injectors).
+  Execution   every copy runs once with run_all(..., r5='r22'); the R15 round-5 findings of the same copy are computed
+              beside it (run_r5 on the copy's limitation with the same number findings, as run_all(..., r5=True) does).
+  Detection   R15's rule, 'after' with the R15 kinds (must reproduce R15's committed counts: the copies are the same)
+              and with the R22 kinds in their place (the measurement).
+
+usage: python3 tools/audit_inject.py [--protocol v1|v2|r15|r22] [--half dev|held] [--hist DIR] [--n 100] [--seed S] [--jobs J]
                                      [--verify K|all] [--out FILE]
 writes eval/results/audit_injection.json (v1), eval/results/audit_injection_v2.json (v2) or
-       eval/results/audit_injection_r15_<half>.json (r15)"""
+       eval/results/audit_injection_r15_<half>.json (r15), eval/results/audit_injection_r22_<half>.json (r22)"""
 import argparse, hashlib, json, math, os, random, re, sys, time
 from collections import Counter, defaultdict
 from concurrent.futures import ProcessPoolExecutor
@@ -767,7 +774,7 @@ def main(argv=None):
     ap.add_argument("--hist", default=os.environ.get("GLEICHLAUT_HIST") or os.path.expanduser("~/Desktop/hackapertus/spikes/gleichlaut/data/hist"))
     ap.add_argument("--date", default=DATE)
     ap.add_argument("--n", type=int, default=100, help="injections per type and target language (default 100)")
-    ap.add_argument("--protocol", choices=("v1", "v2", "r15"), default="v1", help="v1 (default, the published run), v2 or r15 (docstring)")
+    ap.add_argument("--protocol", choices=("v1", "v2", "r15", "r22"), default="v1", help="v1 (default, the published run), v2, r15 or r22 (docstring)")
     ap.add_argument("--half", choices=("dev", "held"), default=None, help="r15: the half of the register to plant into")
     ap.add_argument("--seed", type=int, default=None, help="default 20261010 (v1) / 20261011 (v2)")
     ap.add_argument("--jobs", type=int, default=min(8, os.cpu_count() or 1))
@@ -775,6 +782,7 @@ def main(argv=None):
     ap.add_argument("--out", default=None)
     a = ap.parse_args(argv)
     if a.protocol == "r15": return main_r15(a)
+    if a.protocol == "r22": return main_r22(a)
     v2 = a.protocol == "v2"
     if a.seed is None: a.seed = SEED2 if v2 else SEED
     if a.verify is None: a.verify = "40" if v2 else "100"
@@ -1068,6 +1076,87 @@ def main_r15(a):
     print(f"{'type':14} {'n':>4} {'before':>7} {'after':>7}  wilson95(after)")
     for t, v in per_type.items():
         print(f"{t:14} {v['n']:4d} {v['recall_before']:7.3f} {v['recall_after']:7.3f}  {v['wilson95_after'][0]:.3f}-{v['wilson95_after'][1]:.3f}")
+    print(f"{out['runtime']['seconds_total']} s; wrote {os.path.relpath(out_p, ROOT)}")
+
+
+# ================================================================== protocol r22 (docstring 'PROTOCOL r22')
+def run_copy_r22(job):
+    i, L, new = job["id"], job["lang"], job["new"]
+    J2 = copy_of(i, L, new); st = A._prep(stats_for(J2, L))
+    sub = {X: {"lim": {i: J2[X]["lim"][i]}} for X in A.LANGS}; nm = {i: G["names"].get(i, [])}
+    F22, _, _ = A.run_all(None, G["date"], sub, nm, st, pairs=G["P"], r5="r22")
+    old = [f for f in F22 if f["kind"] in OLD_KINDS]
+    F15 = old + A.run_r5(sub, nm, [f for f in old if f["kind"] == "number"])
+    return dict(k=job["k"], r15=F15, r22=F22)
+
+
+def main_r22(a):
+    """PROTOCOL r22 (docstring): R15's planted copies, scored with the R15 and the R22 round-5 rules."""
+    if not a.half: sys.exit("--protocol r22 needs --half dev|held")
+    seed = a.seed if a.seed is not None else SEED_R15[a.half]
+    out_p = a.out or os.path.join(ROOT, "eval", "results", f"audit_injection_r22_{a.half}.json")
+    t0 = time.time()
+    _init(a.hist, a.date); J, P = G["J"], G["P"]
+    B, _, _ = A.run_all(None, a.date, J, G["names"], A._prep(dict(G["base"])), pairs=P, r5=True)
+    flagged = set(f["id"] for f in B)
+    rep = {}
+    for i in sorted(J["de"]["lim"]):
+        k = tuple(nrm(J[X]["lim"].get(i) or "") for X in A.LANGS)
+        if all(k) and k not in rep: rep[k] = i
+    inhalf = [i for i in rep.values() if A.half(i) == a.half]
+    pool = sorted(i for i in inhalf if i not in flagged)
+    jobs, pools = [], {}
+    for t in TYPES_R15:                                   # exactly main_r15's sampling
+        for L in LANGS_T:
+            rng = random.Random(f"{seed}:{t}:{L}"); ids = list(pool); rng.shuffle(ids); n = elig = 0
+            for i in ids:
+                old = nrm(J[L]["lim"][i]); inj = INJ_R15[t](old, L, rng)
+                if inj is None: continue
+                elig += 1
+                if n >= a.n: continue
+                jobs.append(dict(k=len(jobs), type=t, lang=L, id=i, old=old, new=inj["new"], inj={k: v for k, v in inj.items() if k != "new"},
+                                 de=nrm(J["de"]["lim"][i])))
+                n += 1
+            pools[f"{t}:{L}"] = elig
+    t1 = time.time(); res = {}
+    with ProcessPoolExecutor(max_workers=a.jobs, mp_context=multiprocessing.get_context("fork")) as ex:
+        light = [dict(k=j["k"], id=j["id"], lang=j["lang"], new=j["new"]) for j in jobs]
+        for r in ex.map(run_copy_r22, light, chunksize=4): res[r["k"]] = r
+    t_runs = time.time() - t1
+    per_type = {}
+    for t in TYPES_R15:
+        rows = []
+        for j in (j for j in jobs if j["type"] == t):
+            r = res[j["k"]]
+            rows.append(dict(j=j, r15=detected_r15(j, r["r15"], after=True), r22=detected_r15(j, r["r22"], after=True),
+                             before=detected_r15(j, r["r22"], after=False)))
+        n = len(rows); k15 = sum(x["r15"] for x in rows); k22 = sum(x["r22"] for x in rows)
+        bl = {L: dict(n=sum(x["j"]["lang"] == L for x in rows), r15=sum(x["r15"] for x in rows if x["j"]["lang"] == L),
+                      r22=sum(x["r22"] for x in rows if x["j"]["lang"] == L)) for L in LANGS_T}
+        for L in LANGS_T: bl[L]["wilson95_r22"] = wilson(bl[L]["r22"], bl[L]["n"])
+        per_type[t] = dict(n=n, detected_before=sum(x["before"] for x in rows), detected_r15=k15, detected_r22=k22,
+                           recall_r15=round(k15 / n, 3) if n else None, recall_r22=round(k22 / n, 3) if n else None,
+                           wilson95_r22=wilson(k22, n), eligible_limitations={L: pools[f"{t}:{L}"] for L in LANGS_T}, by_lang=bl,
+                           gained=sum(1 for x in rows if x["r22"] and not x["r15"]), lost=sum(1 for x in rows if x["r15"] and not x["r22"]),
+                           lost_list=[dict(id=x["j"]["id"], lang=x["j"]["lang"], sub=x["j"]["inj"]["sub"]) for x in rows if x["r15"] and not x["r22"]])
+    out = dict(generated_by=f"python3 tools/audit_inject.py --protocol r22 --half {a.half}" + ("" if a.n == 100 else f" --n {a.n}"),
+               model_calls=0, network=False, date=a.date, half=a.half, seed=seed,
+               status="design (dev half): not a measurement" if a.half == "dev" else "pre-registered measurement (PREREG R22)",
+               protocol=dict(written="PROTOCOL r22 in the tools/audit_inject.py docstring; PREREG R22 (commit 2514b9b)",
+                             copies="R15's (protocol r15, same seed and eligibility)",
+                             eligible=f"half {a.half}: {len(inhalf)} triples, {len(pool)} with no finding of any kind under the frozen R15 audit",
+                             detection="R15's 'after' rule, with the R15 kinds (reproduction) and with the R22 kinds (measurement)"),
+               rules=dict(r22_block_sha256=A.r22_block_sha(), r22_logic_sha256=A.r22_logic_sha(), r15_logic_sha256=A.r5_logic_sha(), op_align=A.OP_ALIGN),
+               summary={t: dict(n=v["n"], recall_r15=v["recall_r15"], recall_r22=v["recall_r22"], wilson95_r22=v["wilson95_r22"]) for t, v in per_type.items()},
+               types=per_type,
+               inputs=dict(audit_py_sha256=sha(os.path.join(ROOT, "src", "gleichlaut", "audit.py")),
+                           snapshot_sha256={X: sha(os.path.join(a.hist, f"{a.date}-{X}.json")) for X in A.LANGS}),
+               runtime=dict(seconds_total=round(time.time() - t0, 1), seconds_copies=round(t_runs, 1), jobs=a.jobs))
+    os.makedirs(os.path.dirname(out_p), exist_ok=True)
+    json.dump(out, open(out_p, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print(f"{'type':14} {'n':>4} {'r15':>7} {'r22':>7}  wilson95(r22)")
+    for t, v in per_type.items():
+        print(f"{t:14} {v['n']:4d} {v['recall_r15']:7.3f} {v['recall_r22']:7.3f}  {v['wilson95_r22'][0]:.3f}-{v['wilson95_r22'][1]:.3f}")
     print(f"{out['runtime']['seconds_total']} s; wrote {os.path.relpath(out_p, ROOT)}")
 
 

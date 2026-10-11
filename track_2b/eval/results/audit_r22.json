@@ -1,0 +1,408 @@
+{
+ "criteria": {
+  "named_finds": true,
+  "precision_held": false,
+  "recall_negation_drop": true,
+  "recall_operator": true
+ },
+ "freeze": "951cdd2",
+ "labels": {
+  "agreement": 1,
+  "new_records": 1,
+  "tie_break": 0
+ },
+ "named_finds": {
+  "AMVUTTRA.01a": {
+   "fids": [
+    "P01"
+   ],
+   "found": true,
+   "half": "dev",
+   "kind": "operator",
+   "lang": "fr"
+  },
+  "BEYONTTRA": {
+   "fids": [
+    "Q01"
+   ],
+   "found": true,
+   "half": "dev",
+   "kind": "negation",
+   "lang": "it"
+  },
+  "VYNDAQEL.01b": {
+   "fids": [
+    "Q03"
+   ],
+   "found": true,
+   "half": "held",
+   "kind": "negation",
+   "lang": "it"
+  }
+ },
+ "note": "a pass is reported for the maintainers to integrate; this repository does not change the default (R5_ON, UI)",
+ "op_align": "aligned",
+ "planted_copies_reproduce_r15": true,
+ "precision": {
+  "r15": {
+   "all": {
+    "findings": 31,
+    "labelled": 31,
+    "precision_pct": 19.4,
+    "real": 3,
+    "real_or_minor": 6,
+    "strict_pct": 9.7,
+    "wilson95_pct": [
+     9.2,
+     36.3
+    ]
+   },
+   "dev": {
+    "findings": 10,
+    "labelled": 10,
+    "precision_pct": 20.0,
+    "real": 2,
+    "real_or_minor": 2,
+    "strict_pct": 20.0,
+    "wilson95_pct": [
+     5.7,
+     51.0
+    ]
+   },
+   "held": {
+    "findings": 21,
+    "labelled": 21,
+    "precision_pct": 19.0,
+    "real": 1,
+    "real_or_minor": 4,
+    "strict_pct": 4.8,
+    "wilson95_pct": [
+     7.7,
+     40.0
+    ]
+   }
+  },
+  "r15_by_kind_held": {
+   "negation": {
+    "findings": 14,
+    "labelled": 14,
+    "precision_pct": 21.4,
+    "real": 1,
+    "real_or_minor": 3,
+    "strict_pct": 7.1,
+    "wilson95_pct": [
+     7.6,
+     47.6
+    ]
+   },
+   "number_word": {
+    "findings": 4,
+    "labelled": 4,
+    "precision_pct": 25.0,
+    "real": 0,
+    "real_or_minor": 1,
+    "strict_pct": 0.0,
+    "wilson95_pct": [
+     4.6,
+     69.9
+    ]
+   },
+   "operator": {
+    "findings": 3,
+    "labelled": 3,
+    "precision_pct": 0.0,
+    "real": 0,
+    "real_or_minor": 0,
+    "strict_pct": 0.0,
+    "wilson95_pct": [
+     0.0,
+     56.2
+    ]
+   }
+  },
+  "r22": {
+   "all": {
+    "findings": 7,
+    "labelled": 7,
+    "precision_pct": 57.1,
+    "real": 3,
+    "real_or_minor": 4,
+    "strict_pct": 42.9,
+    "wilson95_pct": [
+     25.0,
+     84.2
+    ]
+   },
+   "dev": {
+    "findings": 2,
+    "labelled": 2,
+    "precision_pct": 100.0,
+    "real": 2,
+    "real_or_minor": 2,
+    "strict_pct": 100.0,
+    "wilson95_pct": [
+     34.2,
+     100.0
+    ]
+   },
+   "held": {
+    "findings": 5,
+    "labelled": 5,
+    "precision_pct": 40.0,
+    "real": 1,
+    "real_or_minor": 2,
+    "strict_pct": 20.0,
+    "wilson95_pct": [
+     11.8,
+     76.9
+    ]
+   }
+  },
+  "r22_by_kind_held": {
+   "negation": {
+    "findings": 4,
+    "labelled": 4,
+    "precision_pct": 50.0,
+    "real": 1,
+    "real_or_minor": 2,
+    "strict_pct": 25.0,
+    "wilson95_pct": [
+     15.0,
+     85.0
+    ]
+   },
+   "number_word": {
+    "findings": 0,
+    "labelled": 0,
+    "precision_pct": null,
+    "real": 0,
+    "real_or_minor": 0,
+    "strict_pct": null,
+    "wilson95_pct": null
+   },
+   "operator": {
+    "findings": 1,
+    "labelled": 1,
+    "precision_pct": 0.0,
+    "real": 0,
+    "real_or_minor": 0,
+    "strict_pct": 0.0,
+    "wilson95_pct": [
+     0.0,
+     79.3
+    ]
+   }
+  }
+ },
+ "prereg": "R22",
+ "recall_dev": {
+  "negation_add": {
+   "n": 200,
+   "r15": 102,
+   "r22": 101
+  },
+  "negation_drop": {
+   "n": 200,
+   "r15": 96,
+   "r22": 86
+  },
+  "number_word": {
+   "n": 200,
+   "r15": 174,
+   "r22": 173
+  },
+  "operator": {
+   "n": 200,
+   "r15": 147,
+   "r22": 131
+  }
+ },
+ "recall_held": {
+  "negation_add": {
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "r15": 49,
+     "r22": 48
+    },
+    "it": {
+     "n": 100,
+     "r15": 62,
+     "r22": 62
+    }
+   },
+   "gained": 0,
+   "lost": 1,
+   "n": 200,
+   "r15": 111,
+   "r15_pct": 55.5,
+   "r22": 110,
+   "r22_pct": 55.0,
+   "wilson95_r22_pct": [
+    48.1,
+    61.7
+   ]
+  },
+  "negation_drop": {
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "r15": 40,
+     "r22": 39
+    },
+    "it": {
+     "n": 100,
+     "r15": 48,
+     "r22": 47
+    }
+   },
+   "gained": 0,
+   "lost": 2,
+   "n": 200,
+   "r15": 88,
+   "r15_pct": 44.0,
+   "r22": 86,
+   "r22_pct": 43.0,
+   "wilson95_r22_pct": [
+    36.3,
+    49.9
+   ]
+  },
+  "number_word": {
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "r15": 85,
+     "r22": 83
+    },
+    "it": {
+     "n": 100,
+     "r15": 83,
+     "r22": 79
+    }
+   },
+   "gained": 0,
+   "lost": 6,
+   "n": 200,
+   "r15": 168,
+   "r15_pct": 84.0,
+   "r22": 162,
+   "r22_pct": 81.0,
+   "wilson95_r22_pct": [
+    75.0,
+    85.8
+   ]
+  },
+  "operator": {
+   "by_lang": {
+    "fr": {
+     "n": 100,
+     "r15": 77,
+     "r22": 65
+    },
+    "it": {
+     "n": 100,
+     "r15": 72,
+     "r22": 68
+    }
+   },
+   "gained": 10,
+   "lost": 26,
+   "n": 200,
+   "r15": 149,
+   "r15_pct": 74.5,
+   "r22": 133,
+   "r22_pct": 66.5,
+   "wilson95_r22_pct": [
+    59.7,
+    72.7
+   ]
+  }
+ },
+ "register": {
+  "by_half": {
+   "dev": 2,
+   "held": 5
+  },
+  "by_kind": {
+   "negation": 5,
+   "number_word": 0,
+   "operator": 2
+  },
+  "findings": 7,
+  "findings_list": [
+   {
+    "fid": "P01",
+    "final": "real",
+    "half": "dev",
+    "id": "AMVUTTRA.01a",
+    "kind": "operator",
+    "lang": "fr",
+    "reused": "O01"
+   },
+   {
+    "fid": "P02",
+    "final": "not",
+    "half": "held",
+    "id": "WYNZORA",
+    "kind": "operator",
+    "lang": "it",
+    "reused": "O04"
+   },
+   {
+    "fid": "Q01",
+    "final": "real",
+    "half": "dev",
+    "id": "BEYONTTRA",
+    "kind": "negation",
+    "lang": "it",
+    "reused": "G03"
+   },
+   {
+    "fid": "Q02",
+    "final": "not",
+    "half": "held",
+    "id": "HEMLIBRA.XXb",
+    "kind": "negation",
+    "lang": "it",
+    "reused": "G07"
+   },
+   {
+    "fid": "Q03",
+    "final": "real",
+    "half": "held",
+    "id": "VYNDAQEL.01b",
+    "kind": "negation",
+    "lang": "it",
+    "reused": "G17"
+   },
+   {
+    "fid": "Q04",
+    "final": "minor",
+    "half": "held",
+    "id": "ZAVICEFTA2",
+    "kind": "negation",
+    "lang": "fr",
+    "reused": "G18"
+   },
+   {
+    "fid": "Q05",
+    "final": "not",
+    "half": "held",
+    "id": "ZAVICEFTA2",
+    "kind": "negation",
+    "lang": "fr",
+    "reused": null
+   }
+  ],
+  "new": 1,
+  "r15_findings": 31,
+  "r15_no_longer_reported": 25,
+  "reused": 6
+ },
+ "rules_logic_matches_code": true,
+ "rules_logic_sha256": "8b27d9410455bc9bea54ab6e5ec0df9fbe93c712ba8740189c1981429eb603d2",
+ "rules_sha256": "591e02d2f3c80f491751c0deedcd5918a87e57b194f4abf1dd942d7835cf7ffc",
+ "seed": 20261016,
+ "ship_on_by_default": false
+}
