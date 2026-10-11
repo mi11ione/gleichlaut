@@ -24,7 +24,10 @@ numbers as 1, each with its unit when one follows.
              writes at that place (the audit's display-only 'counterpart', round 5; else counterpart() from the snippets:
              Nemluvio 'DE 8 · IT 4'), '—' when there is none.
   exp        the round-5 findings (operator, negation, number word; findings_r5, every kind off by default) that both blind
-             annotators confirmed (eval/labels/audit_r15_<date>.tsv): a separate read-only group, outside the headline."""
+             annotators confirmed (eval/labels/audit_r15_<date>.tsv): a separate read-only group, outside the headline.
+  blind      the blind Claude annotators' majority label of a finding (real | minor | not; eval/labels/audit_relabel.tsv via
+             blind_labels(), round 5: audit_r15_<date>.tsv) and blind_n, how many annotators read it; an issue takes the
+             most serious label of its findings (issue_label). The page groups the issues by it."""
 import hashlib, json, os, re
 from .. import core
 
@@ -263,6 +266,7 @@ def dating(first, seen, snaps):
 
 
 def rows(F, hist=None, date="20261006", snaps=None):
+    BL = blind_labels(F, date)
     by = {}
     for f in F: by.setdefault((f.get("id"), f.get("lang")), []).append(f)
     out, seen = [], set()
@@ -324,6 +328,7 @@ def rows(F, hist=None, date="20261006", snaps=None):
                         twin=bool(twin), found=f.get("detected"), expl=f.get("explained_by") or [],
                         fix=[f.get("surface"), f.get("suggestion")] if f.get("surface") and f.get("suggestion") else None,
                         since=f.get("first_seen"), seen=f.get("seen_in"),
+                        blind=(BL.get(f.get("fid")) or {}).get("final"), blind_n=len((BL.get(f.get("fid")) or {}).get("votes") or ()),
                         cp={k: [_canon(x.get("value")) for x in v] for k, v in f["counterpart"].items()} if isinstance(f.get("counterpart"), dict) else None,
                         snip={k: highlight(_clip(s) if src.get(k) != "context" else s, k, V[k] or hot) for k, s in snip.items()},
                         src=src))
@@ -416,7 +421,8 @@ def issues(R):
                         products=uniq(r["product"] for r in M), kinds=uniq(r["kind"] for r in M), langs=langs,
                         known=any(r["known"] for r in M), eq=all(r["eq"] is not None for r in M) and not any(r["known"] for r in M),
                         term=all(r["kind"] == "terminology" for r in M), odd=odd[0] if len(odd) == 1 else "unclear",
-                        vals={L: v for L, v in vals.items() if v}, what=what, dating=min(dt, key=lambda d: d["first"]) if dt else None))
+                        vals={L: v for L, v in vals.items() if v}, what=what, dating=min(dt, key=lambda d: d["first"]) if dt else None,
+                        blind=issue_label([r.get("blind") for r in M]), blind_n=max([r.get("blind_n") or 0 for r in M] or [0])))
     return out
 
 
@@ -456,6 +462,43 @@ def full_texts(F, R, hist=None, date="20261006"):
         # number finding), the conflicting values are marked as in the excerpts
         out[lim] = {L: _render(full[L], L, set() if spans[L] else hot, [(a, b, 2) for a, b in sorted(set(spans[L]))]) for L in LANGS if full.get(L)}
     return out
+
+
+LABELS = os.path.join(core.ROOT, "eval", "labels")
+RANK = ("real", "minor", "not")                    # an issue takes the most serious label among its findings
+
+
+def _tsv(p):
+    L = open(p, encoding="utf-8").read().splitlines(); h = L[0].split("\t")
+    return [dict(zip(h, x.split("\t"))) for x in L[1:] if x.strip()]
+
+
+def blind_labels(F, date):
+    """{fid: dict(final, votes)}: the blind Claude annotators' majority label (eval/labels/audit_relabel.tsv, PREREG R14:
+    real = changes a condition, minor = wrong form with the meaning kept, not = not confirmed) of each finding of the
+    audit, matched through the set files (audit_<date>.tsv by limitation, language and rank; audit2_<date>.tsv and
+    audit3_terminology_<date>.tsv by limitation, language and kind). {} when the label files of that date are absent; a
+    finding without a unique match has no label (never guessed)."""
+    rel = os.path.join(LABELS, "audit_relabel.tsv")
+    sets = [(f"audit_{date}", lambda f, r: f.get("id") == r["cud"] and f.get("lang") == r["lang"] and _kind(f) == "number"
+             and str(f.get("rank")) == r["rank"])] + \
+           [(n, lambda f, r: f.get("id") == r["cud"] and f.get("lang") == r["lang"] and _kind(f) == r["kind"])
+            for n in (f"audit2_{date}", f"audit3_terminology_{date}")]
+    if not os.path.exists(rel) or not all(os.path.exists(os.path.join(LABELS, n + ".tsv")) for n, _ in sets): return {}
+    M = {r["uid"]: r for r in _tsv(rel)}; out = {}
+    for name, match in sets:
+        for r in _tsv(os.path.join(LABELS, name + ".tsv")):
+            hits = [f for f in F if match(f, r)]; m = M.get(f"{name}:{r['id']}")
+            if len(hits) == 1 and m and m.get("final") in RANK and hits[0].get("fid"):
+                out[hits[0]["fid"]] = dict(final=m["final"], votes=[v for v in (m.get("A"), m.get("B"), m.get("T")) if v])
+    return out
+
+
+def issue_label(labs):
+    """The label of an issue from its findings' labels: the most serious one (real > minor > not); None when a finding of
+    the issue has no label."""
+    if not labs or any(x is None for x in labs): return None
+    return min(labs, key=RANK.index)
 
 
 R15_LABELS = os.path.join(core.ROOT, "eval", "labels", "audit_r15_{date}.tsv")
@@ -517,7 +560,9 @@ def experimental(A, date, labels=None, hist=None):
         snip = {kk: x for kk, x in (("de", highlight(de, "de", set()) if de else None), (L, highlight(tg, L, set()) if tg else None),
                                     (M, highlight(tm, M, set()) if tm else None)) if x}
         snip = {kk: snip[kk] for kk in LANGS if kk in snip}
+        votes = [v for v in (lab[f.get("fid")].get(c) for c in ("A", "B", "T")) if v]
         out.append(dict(fid=f.get("fid"), lim=f.get("id"), product=prod, kind="experimental", xkind=k, lang=L, label=fl, what=what,
+                        blind=fl, blind_n=len(votes),
                         desc=f.get("description") or "", snip=snip, src={kk: "context" for kk in snip}, sig=sig, no=f.get("fid") or "",
                         rid=hashlib.sha1(sig.encode()).hexdigest()[:10], odd=f.get("odd_one_out") if f.get("odd_one_out") in LANGS else odd if odd in LANGS else "unclear",
                         vals={}, known=False, eq=None, term=None, expl=[], fix=None, found=None, dating=None, rank=None, langs=["de", L],
@@ -525,7 +570,7 @@ def experimental(A, date, labels=None, hist=None):
     S = A.get("summary", {}).get("round5") or {}
     I = [dict(iid=f"X{n + 1}", key=hashlib.sha1(("exp\n" + r["sig"]).encode()).hexdigest()[:10], rows=[n], fids=[r["no"]], lims=[r["lim"]],
               products=[r["product"]] if r["product"] else [], kinds=["experimental"], langs=[x for x in LANGS if x in ("de", r["lang"])],
-              known=False, eq=False, term=False, odd=r["odd"], vals={}, exp=True,
+              known=False, eq=False, term=False, odd=r["odd"], vals={}, exp=True, blind=r["blind"], blind_n=r["blind_n"],
               what=[["experimental", r["lang"], r["what"][2], r["what"][3], r["xkind"]]], dating=None) for n, r in enumerate(out)]
     return dict(n=len(F5), confirmed=len(out), on=S.get("on") or {}, labels=os.path.relpath(p, core.ROOT), rows=out, issues=I)
 

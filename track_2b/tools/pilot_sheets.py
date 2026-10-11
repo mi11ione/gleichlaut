@@ -85,20 +85,10 @@ VERDICT = {"real": "als real bestätigt: die Bedeutung weicht ab", "minor": "als
 
 def labels(F):
     """{fid: (final, Satz)} für die 38 Registerbefunde: Mehrheit aus audit_relabel.tsv, über die Satzdateien (Kennung,
-    Sprache, Rang bzw. Art) dem Befund zugeordnet."""
-    M = {r["uid"]: (r["final"], votes_line(r["final"], (r["A"], r["B"], r["T"]))) for r in tsv("audit_relabel.tsv")}
-    out = {}
-    def one(hits, uid):
-        assert len(hits) == 1, (uid, len(hits))
-        out[hits[0]["fid"]] = M[uid]
-    for r in tsv("audit_20261006.tsv"):
-        one([f for f in F if f["id"] == r["cud"] and f["lang"] == r["lang"] and av._kind(f) == "number"
-             and str(f.get("rank")) == r["rank"]], f"audit_20261006:{r['id']}")
-    for name in ("audit2_20261006", "audit3_terminology_20261006"):
-        for r in tsv(f"{name}.tsv"):
-            one([f for f in F if f["id"] == r["cud"] and f["lang"] == r["lang"] and av._kind(f) == r["kind"]], f"{name}:{r['id']}")
-    assert len(out) == len(F), (len(out), len(F))
-    return out
+    Sprache, Rang bzw. Art) dem Befund zugeordnet (audit_view.blind_labels, dieselbe Zuordnung wie im Register)."""
+    BL = av.blind_labels(F, DATE)
+    assert len(BL) == len(F), (len(BL), len(F))
+    return {fid: (b["final"], votes_line(b["final"], b["votes"])) for fid, b in BL.items()}
 
 
 def check_counts(lab, X, issues):

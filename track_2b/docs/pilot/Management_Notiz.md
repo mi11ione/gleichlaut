@@ -1,6 +1,7 @@
 # Notiz an die Sektionsleitung: Sprachfassungen der SL-Limitierungen, Prüfung vom 6. Oktober 2026
 
-Stand 10.10.2026. Entwurf; Adressat und Absender «durch BAG zu ergänzen».
+Stand 11.10.2026. Entwurf; Adressat und Absender «durch BAG zu ergänzen». Der Antrag steht auf einer Seite in der
+[Entscheidvorlage](Entscheidvorlage_Phase1.md).
 
 ## Worum es geht
 
@@ -21,8 +22,9 @@ Mehrheit der blinden Annotatoren als real oder geringfügig eingestuft):
 | **Total im Register** | **38** | **28** | **16** | **12** | **10** |
 | Experimentelle Prüfung (aus, separat geführt) | 31 | 6 | 3 | 3 | 25 |
 
-Im Register ergeben die 38 Befunde und Hinweise 18 Sachverhalte (Fälle); 3 davon sind vermutlich gleichwertige
-Formulierungen und eingeklappt. Die Befunde der experimentellen Prüfung gehören nicht zu den 18 Fällen und werden im
+Im Register ergeben die 38 Befunde und Hinweise 18 Sachverhalte (Fälle), gruppiert nach der Einstufung der
+Annotatoren; die 4 Fälle, die sie nicht bestätigt haben (darunter die 3 vermutlich gleichwertigen Formulierungen), sind
+eingeklappt. Die Befunde der experimentellen Prüfung gehören nicht zu den 18 Fällen und werden im
 Register separat gezählt.
 
 ## Abweichungen in der Bedeutung (real)

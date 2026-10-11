@@ -39,6 +39,9 @@ button,select,input,textarea{font:inherit;color:inherit}
 .tools select{background:none;border:0;border-bottom:1px solid var(--hair);padding:1px 0}
 .ctx{margin:0;padding:9px 0 10px;color:var(--ink2);font:400 13px/1.45 var(--sans);border-bottom:1px solid var(--hair);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;max-width:150ch}
 .ctx b{color:var(--ink);font-weight:500}
+.ctx .qh{background:none;border:1px solid var(--ink2);border-radius:50%;width:17px;height:17px;padding:0;margin:0 6px 0 0;font:500 11px/15px var(--sans);color:var(--ink);cursor:pointer;vertical-align:1px}
+.ctx .qh[aria-expanded="true"]{background:var(--sel);color:var(--sel-ink)}
+.lanehelp{margin:0;padding:6px 0 9px;color:var(--ink2);font:400 12.5px/1.45 var(--sans);border-bottom:1px solid var(--hair);max-width:150ch}
 /* buttons */
 .tb{background:none;border:0;padding:1px 0;cursor:pointer;color:var(--ink2);border-bottom:1px solid transparent}
 .tb:hover{color:var(--ink);border-bottom-color:var(--hair)}
@@ -286,6 +289,7 @@ BODY = r"""<div class="app">
   <label><span id="l-ui" class="vh"></span><select id="ui-lang" aria-label="Interface language" data-aria="uil"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option></select></label><button class="tb" id="theme" type="button"></button></div>
 </header>
 <p class="ctx" id="ctxline"></p>
+<p class="lanehelp" id="lanehelp" hidden></p>
 <div class="work" id="p-audit" role="tabpanel" aria-labelledby="t-audit" hidden>
  <section class="register" aria-label="Issues" data-aria="issues">
   <div class="filters"><div class="fl" id="a-show"></div><div class="fl" id="a-lang"></div><div class="fl" id="a-kind"></div><div class="fl" id="a-since" hidden></div>
@@ -584,7 +588,7 @@ Object.keys(TX2).forEach(function(L){Object.keys(TX2[L]).forEach(function(k){TX[
 var TX3={
 de:{sub:"Prüfregister · Apertus entwirft, Code prüft",divergent:"Entwürfe, deren bisheriger Text schon ein Problem hat",
  tb:{project:"Projekt",drawing:"Zeichnung",sheet:"Blatt",rev:"Rev.",date:"Datum (SL-Stand)",lane:"Spur",model:"Modell",run:"Lauf",checked:"Geprüft von",checkedV:"eingefrorene Prüfungen"},
- lane70:"weniger Korrekturen (optional): 70B, zertifizierter Endpunkt",lane8:"Standard: 8B auf CPU, ohne Netz",laneDef:"Standardspur: 8B auf CPU, ohne Netz",drawingBy:"{l}, {n} Entwürfe von Apertus {m}",
+ lane70:"weniger Korrekturen: Apertus 70B, wie von Public AI bereitgestellt (optionale Spur; Identität nicht überprüft)",lane8:"Standard: 8B auf CPU, ohne Netz",laneDef:"Standardspur: 8B auf CPU, ohne Netz",drawingBy:"{l}, {n} Entwürfe von Apertus {m}",
  t1h:"Entwürfe",t1s:"Apertus entwirft, Code prüft",t1f:"{n} Entwürfe · {r} bereit · {f} markiert",
  t1t:"Apertus {m} schreibt für {c} deutsche Änderungen nur die Formulierung des französischen und italienischen Texts um; jede Zahl setzt der Code ein. Eingefrorene Prüfungen kennzeichnen jeden Entwurf als «bereit» oder «markiert» und sagen warum, in der Sprache der prüfenden Person.",
  t2h:"Registerprüfung",t2s:"nur Code, kein Modell",t2f:"{a} Befunde + {t} Terminologie-Hinweise",
@@ -598,7 +602,7 @@ de:{sub:"Prüfregister · Apertus entwirft, Code prüft",divergent:"Entwürfe, d
  keyAud:[["✓","entschieden"],["v2","widersprüchlicher Wert"],["v1","weitere Zahl"],["bar","Sprache, die von den beiden anderen abweicht"]]},
 en:{sub:"Review register · Apertus drafts, code checks",divergent:"Drafts whose old text already has a problem",
  tb:{project:"Project",drawing:"Drawing",sheet:"Sheet",rev:"Rev",date:"Date (SL snapshot)",lane:"Lane",model:"Model",run:"Run",checked:"Checked by",checkedV:"frozen checks"},
- lane70:"fewer edits (optional): 70B, certified endpoint",lane8:"default: 8B on CPU, air-gapped",laneDef:"default lane: 8B on CPU, air-gapped",drawingBy:"{l}, {n} drafts by Apertus {m}",
+ lane70:"fewer edits: Apertus 70B as Public AI served it (optional lane; identity not verified)",lane8:"default: 8B on CPU, air-gapped",laneDef:"default lane: 8B on CPU, air-gapped",drawingBy:"{l}, {n} drafts by Apertus {m}",
  t1h:"Drafts",t1s:"Apertus drafts, code checks",t1f:"{n} drafts · {r} ready · {f} flagged",
  t1t:"For {c} German changes, Apertus {m} rewrites only the wording of the French and Italian; code writes every number. Frozen checks mark each draft ready or flagged and say why, in the reviewer's language.",
  t2h:"Register audit",t2s:"code only, no model",t2f:"{a} findings + {t} terminology notices",
@@ -612,7 +616,7 @@ en:{sub:"Review register · Apertus drafts, code checks",divergent:"Drafts whose
  keyAud:[["✓","decided"],["v2","conflicting value"],["v1","other number"],["bar","language that differs from the other two"]]},
 fr:{sub:"Registre de révision · Apertus rédige, le code contrôle",divergent:"Brouillons dont l'ancien texte a déjà un problème",
  tb:{project:"Projet",drawing:"Dessin",sheet:"Feuille",rev:"Rév.",date:"Date (version LS)",lane:"Variante",model:"Modèle",run:"Série",checked:"Contrôlé par",checkedV:"contrôles gelés"},
- lane70:"moins de corrections (optionnelle) : 70B, point d'accès certifié",lane8:"par défaut : 8B sur CPU, hors réseau",laneDef:"variante par défaut : 8B sur CPU, hors réseau",drawingBy:"{l}, {n} brouillons d'Apertus {m}",
+ lane70:"moins de corrections : Apertus 70B tel que servi par Public AI (variante optionnelle ; identité non vérifiée)",lane8:"par défaut : 8B sur CPU, hors réseau",laneDef:"variante par défaut : 8B sur CPU, hors réseau",drawingBy:"{l}, {n} brouillons d'Apertus {m}",
  t1h:"Brouillons",t1s:"Apertus rédige, le code contrôle",t1f:"{n} brouillons · {r} prêts · {f} signalés",
  t1t:"Pour {c} modifications du texte allemand, Apertus {m} ne réécrit que la formulation française et italienne ; le code écrit chaque nombre. Des contrôles gelés marquent chaque brouillon prêt ou signalé et disent pourquoi, dans la langue du réviseur.",
  t2h:"Audit du registre",t2s:"code seul, sans modèle",t2f:"{a} constats + {t} avis de terminologie",
@@ -626,7 +630,7 @@ fr:{sub:"Registre de révision · Apertus rédige, le code contrôle",divergent:
  keyAud:[["✓","décidé"],["v2","valeur contradictoire"],["v1","autre nombre"],["bar","langue qui diffère des deux autres"]]},
 it:{sub:"Registro di revisione · Apertus redige, il codice controlla",divergent:"Bozze il cui vecchio testo ha già un problema",
  tb:{project:"Progetto",drawing:"Disegno",sheet:"Foglio",rev:"Rev.",date:"Data (versione ES)",lane:"Variante",model:"Modello",run:"Serie",checked:"Controllato da",checkedV:"controlli congelati"},
- lane70:"meno correzioni (opzionale): 70B, endpoint certificato",lane8:"predefinita: 8B su CPU, senza rete",laneDef:"variante predefinita: 8B su CPU, senza rete",drawingBy:"{l}, {n} bozze di Apertus {m}",
+ lane70:"meno correzioni: Apertus 70B come servito da Public AI (variante opzionale; identità non verificata)",lane8:"predefinita: 8B su CPU, senza rete",laneDef:"variante predefinita: 8B su CPU, senza rete",drawingBy:"{l}, {n} bozze di Apertus {m}",
  t1h:"Bozze",t1s:"Apertus redige, il codice controlla",t1f:"{n} bozze · {r} pronte · {f} segnalate",
  t1t:"Per {c} modifiche tedesche, Apertus {m} riscrive solo la formulazione francese e italiana; ogni numero lo scrive il codice. Controlli congelati segnano ogni bozza come pronta o segnalata e dicono perché, nella lingua di chi rivede.",
  t2h:"Verifica del registro",t2s:"solo codice, nessun modello",t2f:"{a} rilievi + {t} avvisi di terminologia",
@@ -729,23 +733,23 @@ it:{aLead:"Ogni riga è un caso: un punto in cui i testi tedesco, francese e ita
 Object.keys(TX4).forEach(function(L){Object.keys(TX4[L]).forEach(function(k){TX[L][k]=TX4[L][k]})});
 // redesign (10 Oct 2026): one bar, a context line, list + case in both views, statistics in the footer
 var TX5={
-de:{gCond:"Ändert eine Bedingung",gEdit:"Tippfehler und Redaktion",gTerm:"Terminologie",ctxAud:"Der Code vergleicht alle {n} Limitierungen auf DE/FR/IT, ohne Modell. Zu entscheiden ist pro Fall: welcher Text ist falsch, und was geschieht.",export:"Export",ctxD:"Die optionale 70B-Spur; die Standardspur (8B auf CPU) entwirft dieselben Änderungen. Markiert heisst: eine Person prüft – die Prüfungen sind darauf ausgelegt, nichts zu übersehen.",whereS:"Entscheide bleiben in diesem Browser, bis sie exportiert werden.",backList:"Liste",slotsT:"Platzhalter zeigen",famChange1:"1 Änderung",aThen:"Weiter",aOr:"Oder",aboutH:"Über dieses Register",aBind:"Massgebend ist die Fassung, die dem Entscheid des BAG entspricht; welche das ist, weiss die Prüfung nicht.",
+de:{gCond:"Ändert eine Bedingung",gEdit:"Tippfehler und Redaktion",gTerm:"Terminologie",ctxAud:"Der Code vergleicht alle {n} Limitierungen auf DE/FR/IT, ohne Modell. Zu entscheiden ist pro Fall: welcher Text ist falsch, und was geschieht.",export:"Export",ctxD:"Die optionale 70B-Spur, wie von Public AI bereitgestellt (Identität nicht überprüft); die Standardspur (8B auf CPU) entwirft dieselben Änderungen. Markiert heisst: eine Person prüft – die Prüfungen sind darauf ausgelegt, nichts zu übersehen.",whereS:"Entscheide bleiben in diesem Browser, bis sie exportiert werden.",backList:"Liste",slotsT:"Platzhalter zeigen",famChange1:"1 Änderung",aThen:"Weiter",aOr:"Oder",aboutH:"Über dieses Register",aBind:"Massgebend ist die Fassung, die dem Entscheid des BAG entspricht; welche das ist, weiss die Prüfung nicht.",
  aKnownHeadS:"Von unserer früheren Erhebung erfasst · {k} von {n} gefunden",aTermHeadS:"Terminologie · {n}",aWhat:"Was abweicht",aDating:"Seit wann",aNote2:"Hinweis",aTermL:"Begriff",
  aTexts:"Die Texte",aActL:"Massnahmen und Notiz",saveNextI:"Nächster Fall",keysA:"j/k oder ↑/↓ wechseln · Ctrl/Cmd+Enter speichern und weiter",lane:"Spur",laneM:"Methode",comparedW:"Verglichen mit"},
-en:{gCond:"Changes a condition",gEdit:"Typos and editorial",gTerm:"Terminology",ctxAud:"Code compares all {n} limitations in DE/FR/IT, no model. Each issue needs one decision: which text is wrong, and what happens next.",export:"Export",ctxD:"The optional 70B lane; the default 8B on CPU drafts the same changes. Flagged means a person checks it: the checks are tuned to miss nothing.",whereS:"Decisions stay in this browser until exported.",backList:"List",slotsT:"Show number slots",famChange1:"1 change",aThen:"Then",aOr:"Or",aboutH:"About this register",aBind:"What counts is the version that matches BAG's decision; which one that is, the audit cannot know.",
+en:{gCond:"Changes a condition",gEdit:"Typos and editorial",gTerm:"Terminology",ctxAud:"Code compares all {n} limitations in DE/FR/IT, no model. Each issue needs one decision: which text is wrong, and what happens next.",export:"Export",ctxD:"The optional 70B lane, as Public AI served it (identity not verified); the default 8B on CPU drafts the same changes. Flagged means a person checks it: the checks are tuned to miss nothing.",whereS:"Decisions stay in this browser until exported.",backList:"List",slotsT:"Show number slots",famChange1:"1 change",aThen:"Then",aOr:"Or",aboutH:"About this register",aBind:"What counts is the version that matches BAG's decision; which one that is, the audit cannot know.",
  aKnownHeadS:"Listed by our earlier census · {k} of {n} found",aTermHeadS:"Terminology · {n}",aWhat:"What differs",aDating:"Since when",aNote2:"Note",aTermL:"Term",
  aTexts:"The texts",aActL:"Actions and note",saveNextI:"Next issue",keysA:"j/k or ↑/↓ move · Ctrl/Cmd+Enter save and next",lane:"Lane",laneM:"Method",comparedW:"Compared with"},
-fr:{gCond:"Modifie une condition",gEdit:"Coquilles et rédaction",gTerm:"Terminologie",ctxAud:"Le code compare les {n} limitations en DE/FR/IT, sans modèle. Chaque cas demande une décision : quel texte est erroné, et quelle suite lui donner.",export:"Exporter",ctxD:"La variante 70B optionnelle ; la variante par défaut (8B sur CPU) rédige les mêmes modifications. Signalé veut dire : une personne vérifie, les contrôles sont réglés pour ne rien laisser passer.",whereS:"Les décisions restent dans ce navigateur jusqu'à leur exportation.",backList:"Liste",slotsT:"Afficher les emplacements",famChange1:"1 modification",aThen:"Ensuite",aOr:"Ou",aboutH:"À propos de ce registre",aBind:"Ce qui compte est la version conforme à la décision de l'OFSP ; laquelle, l'audit ne peut pas le savoir.",
+fr:{gCond:"Modifie une condition",gEdit:"Coquilles et rédaction",gTerm:"Terminologie",ctxAud:"Le code compare les {n} limitations en DE/FR/IT, sans modèle. Chaque cas demande une décision : quel texte est erroné, et quelle suite lui donner.",export:"Exporter",ctxD:"La variante 70B optionnelle, telle que servie par Public AI (identité non vérifiée) ; la variante par défaut (8B sur CPU) rédige les mêmes modifications. Signalé veut dire : une personne vérifie, les contrôles sont réglés pour ne rien laisser passer.",whereS:"Les décisions restent dans ce navigateur jusqu'à leur exportation.",backList:"Liste",slotsT:"Afficher les emplacements",famChange1:"1 modification",aThen:"Ensuite",aOr:"Ou",aboutH:"À propos de ce registre",aBind:"Ce qui compte est la version conforme à la décision de l'OFSP ; laquelle, l'audit ne peut pas le savoir.",
  aKnownHeadS:"Recensés par notre inventaire antérieur · {k} sur {n} trouvés",aTermHeadS:"Terminologie · {n}",aWhat:"Ce qui diverge",aDating:"Depuis quand",aNote2:"Remarque",aTermL:"Terme",
  aTexts:"Les textes",aActL:"Mesures et remarque",saveNextI:"Cas suivant",keysA:"j/k ou ↑/↓ naviguer · Ctrl/Cmd+Entrée enregistrer et continuer",lane:"Variante",laneM:"Méthode",comparedW:"Comparé avec"},
-it:{gCond:"Modifica una condizione",gEdit:"Refusi e redazione",gTerm:"Terminologia",ctxAud:"Il codice confronta tutte le {n} limitazioni in DE/FR/IT, senza modello. Ogni caso chiede una decisione: quale testo è sbagliato, e come procedere.",export:"Esporta",ctxD:"La variante 70B opzionale; la variante predefinita (8B su CPU) redige le stesse modifiche. Segnalata significa che una persona deve verificarla: i controlli sono tarati per non lasciarsi sfuggire nulla.",whereS:"Le decisioni restano in questo browser finché non vengono esportate.",backList:"Elenco",slotsT:"Mostra i segnaposto",famChange1:"1 modifica",aThen:"Poi",aOr:"Oppure",aboutH:"Informazioni su questo registro",aBind:"Conta la versione conforme alla decisione dell'UFSP; quale sia, la verifica non può saperlo.",
+it:{gCond:"Modifica una condizione",gEdit:"Refusi e redazione",gTerm:"Terminologia",ctxAud:"Il codice confronta tutte le {n} limitazioni in DE/FR/IT, senza modello. Ogni caso chiede una decisione: quale testo è sbagliato, e come procedere.",export:"Esporta",ctxD:"La variante 70B opzionale, come servita da Public AI (identità non verificata); la variante predefinita (8B su CPU) redige le stesse modifiche. Segnalata significa che una persona deve verificarla: i controlli sono tarati per non lasciarsi sfuggire nulla.",whereS:"Le decisioni restano in questo browser finché non vengono esportate.",backList:"Elenco",slotsT:"Mostra i segnaposto",famChange1:"1 modifica",aThen:"Poi",aOr:"Oppure",aboutH:"Informazioni su questo registro",aBind:"Conta la versione conforme alla decisione dell'UFSP; quale sia, la verifica non può saperlo.",
  aKnownHeadS:"Già rilevati dal nostro censimento precedente · trovati {k} su {n}",aTermHeadS:"Terminologia · {n}",aWhat:"Che cosa diverge",aDating:"Da quando",aNote2:"Nota",aTermL:"Termine",
  aTexts:"I testi",aActL:"Misure e nota",saveNextI:"Caso successivo",keysA:"j/k o ↑/↓ spostarsi · Ctrl/Cmd+Invio salva e continua",lane:"Variante",laneM:"Metodo",comparedW:"Confrontato con"}};
 Object.keys(TX5).forEach(function(L){Object.keys(TX5[L]).forEach(function(k){TX[L][k]=TX5[L][k]})});
 // lanes (8B Q8_0 on CPU the default, 70B fewer edits, live months), one save-and-next pattern, what counts as decided,
 // where decisions live, distinct legend labels (10 Oct 2026, juror round)
 var TX6={
-de:{laneOpt8:"Testmenge (publiziert) · 8B Q8_0, CPU (Standard)",laneOpt70:"Testmenge (publiziert) · 70B, Endpunkt (weniger Korrekturen)",laneOptLive:"Schattenlauf {m} (nicht produktiv) · 8B Q8_0, CPU",
+de:{laneOpt8:"Testmenge (publiziert) · 8B Q8_0, CPU (Standard)",laneOpt70:"Testmenge (publiziert) · Apertus 70B, wie von Public AI bereitgestellt (optional; Identität nicht überprüft)",laneOptLive:"Schattenlauf {m} (nicht produktiv) · 8B Q8_0, CPU",
  ctxD8:"Die Standardspur: Apertus 8B auf CPU, ohne Netz. Markiert heisst: eine Person prüft – die Prüfungen sind darauf ausgelegt, nichts zu übersehen.",
  ctxDL:"Vom BAG im Monat {m} publizierte Änderungen, danach zur Messung mit der Standardspur (8B auf CPU) aus dem öffentlichen Feed entworfen; die französische und italienische Fassung des BAG hat das Modell nie gesehen. Lange oder umgeschriebene Texte gehen ohne Entwurf an die Übersetzung. Markiert heisst: eine Person prüft.",
  keyS:[["✓","bereit"],["~","markiert, wohl in Ordnung"],["▲","markiert, zu prüfen"],["≠","bisheriger Text mit Problem"]],
@@ -759,7 +763,7 @@ de:{laneOpt8:"Testmenge (publiziert) · 8B Q8_0, CPU (Standard)",laneOpt70:"Test
  expHead:"Experimentelle Prüfungen (standardmässig aus) · {c} von {n} bestätigt",expNote:"Die Prüfungen auf Operator, Verneinung und Zahlwort (Runde 5) sind ausgeschaltet: weniger als die Hälfte ihrer Befunde war echt. Hier stehen nur Befunde, die zwei blinde Annotatoren beide bestätigt haben; sie zählen nicht zu den Fällen oben, ein Entscheid wird nicht erfasst.",
  kindsX:{operator:"Operator",negation:"Verneinung",number_word:"Zahlwort"},labX:{real:"bestätigt: ändert die Bedeutung",minor:"bestätigt: geringfügig"},
  aNoteOnly:"offen · Notiz gespeichert, noch keine Fassung oder Massnahme gewählt",lsNote:"nur in diesem Browser gespeichert · zum Behalten exportieren"},
-en:{laneOpt8:"Test set (published) · 8B Q8_0, CPU (default)",laneOpt70:"Test set (published) · 70B endpoint (fewer edits)",laneOptLive:"Shadow run {m} (not for production) · 8B Q8_0, CPU",
+en:{laneOpt8:"Test set (published) · 8B Q8_0, CPU (default)",laneOpt70:"Test set (published) · Apertus 70B as Public AI served it (optional; identity not verified)",laneOptLive:"Shadow run {m} (not for production) · 8B Q8_0, CPU",
  ctxD8:"The default lane: Apertus 8B on CPU, air-gapped. Flagged means a person checks it: the checks are tuned to miss nothing.",
  ctxDL:"Changes BAG published in {m}, drafted afterwards from the public feed by the default lane (8B on CPU) to measure it; BAG's French and Italian were never shown to the model. Long or rewritten texts go to a translator without a draft. Flagged means a person checks it.",
  keyS:[["✓","ready"],["~","flagged, probably fine"],["▲","flagged, to check"],["≠","old text has a problem"]],
@@ -773,7 +777,7 @@ en:{laneOpt8:"Test set (published) · 8B Q8_0, CPU (default)",laneOpt70:"Test se
  expHead:"Experimental checks (off by default) · {c} confirmed of {n}",expNote:"The operator, negation and number-word checks (round 5) ship off: fewer than half of their findings were real. Listed here only where two blind annotators both confirmed the finding; not counted in the issues above, no decision recorded.",
  kindsX:{operator:"operator",negation:"negation",number_word:"number word"},labX:{real:"confirmed: changes the meaning",minor:"confirmed: minor"},
  aNoteOnly:"open · note saved, no version or action chosen yet",lsNote:"saved in this browser only · export to keep"},
-fr:{laneOpt8:"Jeu de test (publié) · 8B Q8_0, CPU (par défaut)",laneOpt70:"Jeu de test (publié) · 70B, point d'accès (moins de corrections)",laneOptLive:"Essai à blanc {m} (hors production) · 8B Q8_0, CPU",
+fr:{laneOpt8:"Jeu de test (publié) · 8B Q8_0, CPU (par défaut)",laneOpt70:"Jeu de test (publié) · Apertus 70B tel que servi par Public AI (optionnel ; identité non vérifiée)",laneOptLive:"Essai à blanc {m} (hors production) · 8B Q8_0, CPU",
  ctxD8:"La variante par défaut : Apertus 8B sur CPU, hors réseau. Signalé veut dire : une personne vérifie, les contrôles sont réglés pour ne rien laisser passer.",
  ctxDL:"Modifications publiées par l'OFSP au mois {m}, rédigées ensuite à partir du flux public par la variante par défaut (8B sur CPU) pour la mesurer ; le modèle n'a jamais vu le français ni l'italien de l'OFSP. Les textes longs ou réécrits vont au traducteur sans brouillon. Signalé veut dire : une personne vérifie.",
  keyS:[["✓","prêt"],["~","signalé, probablement sans problème"],["▲","signalé, à vérifier"],["≠","l'ancien texte a un problème"]],
@@ -787,7 +791,7 @@ fr:{laneOpt8:"Jeu de test (publié) · 8B Q8_0, CPU (par défaut)",laneOpt70:"Je
  expHead:"Contrôles expérimentaux (désactivés par défaut) · {c} confirmés sur {n}",expNote:"Les contrôles d'opérateur, de négation et de nombre en lettres (5e série) sont désactivés : moins de la moitié de leurs constats étaient réels. Ne figurent ici que les constats confirmés par deux annotateurs à l'aveugle ; ils ne comptent pas dans les cas ci-dessus et aucune décision n'est enregistrée.",
  kindsX:{operator:"opérateur",negation:"négation",number_word:"nombre en lettres"},labX:{real:"confirmé : change le sens",minor:"confirmé : mineur"},
  aNoteOnly:"ouvert · remarque enregistrée, ni version ni mesure choisie",lsNote:"enregistré dans ce navigateur seulement · exporter pour conserver"},
-it:{laneOpt8:"Insieme di prova (pubblicato) · 8B Q8_0, CPU (predefinita)",laneOpt70:"Insieme di prova (pubblicato) · 70B, endpoint (meno correzioni)",laneOptLive:"Prova in parallelo {m} (non produttiva) · 8B Q8_0, CPU",
+it:{laneOpt8:"Insieme di prova (pubblicato) · 8B Q8_0, CPU (predefinita)",laneOpt70:"Insieme di prova (pubblicato) · Apertus 70B come servito da Public AI (opzionale; identità non verificata)",laneOptLive:"Prova in parallelo {m} (non produttiva) · 8B Q8_0, CPU",
  ctxD8:"La variante predefinita: Apertus 8B su CPU, senza rete. Segnalata significa che una persona deve verificarla: i controlli sono tarati per non lasciarsi sfuggire nulla.",
  ctxDL:"Modifiche pubblicate dall'UFSP nel mese {m}, redatte in seguito dal flusso pubblico con la variante predefinita (8B su CPU) per misurarla; il modello non ha mai visto il francese né l'italiano dell'UFSP. I testi lunghi o riscritti vanno al traduttore senza bozza. Segnalata significa che una persona deve verificarla.",
  keyS:[["✓","pronta"],["~","segnalata, probabilmente in ordine"],["▲","segnalata, da verificare"],["≠","il vecchio testo ha un problema"]],
@@ -928,6 +932,39 @@ it:{aria:{views:"Viste",issues:"Elenco dei casi",issue:"Caso",register:"Registro
  aLegacy:"Salvato da una versione precedente di questa pagina: {x}",aRightS:"versione conforme alla decisione {r}",
  csvHead:["Caso","Rilievi","Prodotto","Limitazione","Lingue","Tipo","kind_code","Valori","Datazione","Già rilevato in precedenza","Testo errato","Versione conforme alla decisione","Misura","action_code","Nota","Deciso il","Deciso da","Verifica (versione ES)","Deciso separatamente","Revisione del codice"]}};
 Object.keys(TX8).forEach(function(L){Object.keys(TX8[L]).forEach(function(k){TX[L][k]=TX8[L][k]})});
+// federal and Apertus-team jurors (11 Oct 2026): the issues grouped by the blind annotators' majority label, the label on
+// every issue, the GEVER CSV with the label and the excerpts, the audit decisions in a file of their own, the lanes and
+// statuses explained under the lane select
+var TX9={
+de:{gNot:"Von den Annotatoren nicht bestätigt ({n})",blind2:"Zwei blinde Claude-Annotatoren: {x}",blind3:"Blinde Claude-Annotatoren (Mehrheit von drei): {x}",
+ blindL:{real:"ändert eine Bedingung",minor:"geringfügig",not:"nicht bestätigt"},blindPer:"je Befund: {x}",
+ cntB:"{a} Befunde + {t} Terminologie-Hinweise = {s}, zusammengefasst in {n} Fällen; {e} davon von den blinden Annotatoren nicht bestätigt (eingeklappt).",
+ shownLB:"{l} Fälle in der Liste + {e} eingeklappt (nicht bestätigt) = {n} von {N} Fällen · {m} von {M} Befunden und Hinweisen",
+ csvMore:["Blinde Einstufung","Auszug DE","Auszug FR","Auszug IT"],exportDecA:"Prüfungsentscheide exportieren (JSON)",
+ laneQ:"Spuren und Status erklären",
+ laneHelp:"Testmenge: 166 publizierte Änderungen, neu entworfen, um das Werkzeug zu messen; Standard ist Apertus 8B Q8_0 auf CPU (zertifizierter Build), optional Apertus 70B, wie von Public AI bereitgestellt (Identität nicht überprüft). Schattenlauf: ein Monat des Live-Feeds, nicht produktiv. Status: ✓ bereit (alle Prüfungen bestanden) · ~ wahrscheinlich in Ordnung (markiert, jeder Befund wahrscheinlich unbedenklich) · ▲ zu prüfen · ≠ abweichend (der alte Text weicht schon vom Deutschen ab) · h an Übersetzung übergeben."},
+en:{gNot:"Not confirmed by the annotators ({n})",blind2:"Two blind Claude annotators: {x}",blind3:"Blind Claude annotators (majority of three): {x}",
+ blindL:{real:"changes a condition",minor:"minor",not:"not confirmed"},blindPer:"per finding: {x}",
+ cntB:"{a} findings + {t} terminology notices = {s}, grouped into {n} issues; {e} of them not confirmed by the blind annotators (collapsed).",
+ shownLB:"{l} issues listed + {e} collapsed (not confirmed) = {n} of {N} issues · {m} of {M} findings and notices",
+ csvMore:["Blind label","Excerpt DE","Excerpt FR","Excerpt IT"],exportDecA:"Export audit decisions (JSON)",
+ laneQ:"Explain lanes and statuses",
+ laneHelp:"Test set: 166 published changes re-drafted to measure the tool; the default is Apertus 8B Q8_0 on CPU (certified build), the option Apertus 70B as Public AI served it (identity not verified). Shadow run: one month of the live feed, not for production. Status: ✓ ready (all checks passed) · ~ probably fine (flagged, every finding probably harmless) · ▲ to check · ≠ divergent (the old text already differs from the German) · h routed to a translator."},
+fr:{gNot:"Non confirmés par les annotateurs ({n})",blind2:"Deux annotateurs Claude à l'aveugle : {x}",blind3:"Annotateurs Claude à l'aveugle (majorité de trois) : {x}",
+ blindL:{real:"modifie une condition",minor:"mineur",not:"non confirmé"},blindPer:"par constat : {x}",
+ cntB:"{a} constats + {t} avis terminologiques = {s}, regroupés en {n} cas ; {e} d'entre eux non confirmés par les annotateurs à l'aveugle (repliés).",
+ shownLB:"{l} cas listés + {e} repliés (non confirmés) = {n} cas sur {N} · {m} constats et avis sur {M}",
+ csvMore:["Évaluation à l'aveugle","Extrait DE","Extrait FR","Extrait IT"],exportDecA:"Exporter les décisions de l'audit (JSON)",
+ laneQ:"Expliquer les variantes et les statuts",
+ laneHelp:"Jeu de test : 166 modifications publiées, rédigées à nouveau pour mesurer l'outil ; par défaut Apertus 8B Q8_0 sur CPU (build certifié), en option Apertus 70B tel que servi par Public AI (identité non vérifiée). Essai à blanc : un mois du flux réel, hors production. Statuts : ✓ prêt (tous les contrôles passés) · ~ probablement sans problème (signalé, chaque constat probablement anodin) · ▲ à vérifier · ≠ divergent (l'ancien texte diffère déjà de l'allemand) · h confié à un traducteur."},
+it:{gNot:"Non confermati dagli annotatori ({n})",blind2:"Due annotatori Claude alla cieca: {x}",blind3:"Annotatori Claude alla cieca (maggioranza di tre): {x}",
+ blindL:{real:"modifica una condizione",minor:"minore",not:"non confermato"},blindPer:"per rilievo: {x}",
+ cntB:"{a} rilievi + {t} avvisi terminologici = {s}, raggruppati in {n} casi; {e} di essi non confermati dagli annotatori alla cieca (richiusi).",
+ shownLB:"{l} casi in elenco + {e} richiusi (non confermati) = {n} casi su {N} · {m} rilievi e avvisi su {M}",
+ csvMore:["Valutazione alla cieca","Estratto DE","Estratto FR","Estratto IT"],exportDecA:"Esporta le decisioni della verifica (JSON)",
+ laneQ:"Spiegare varianti e stati",
+ laneHelp:"Insieme di prova: 166 modifiche pubblicate, redatte di nuovo per misurare lo strumento; predefinita Apertus 8B Q8_0 su CPU (build certificato), opzionale Apertus 70B come servito da Public AI (identità non verificata). Prova in parallelo: un mese del flusso reale, non produttiva. Stati: ✓ pronta (tutti i controlli superati) · ~ probabilmente in ordine (segnalata, ogni rilievo probabilmente innocuo) · ▲ da verificare · ≠ divergente (il testo precedente diverge già dal tedesco) · h affidata a un traduttore."}};
+Object.keys(TX9).forEach(function(L){Object.keys(TX9[L]).forEach(function(k){TX[L][k]=TX9[L][k]})});
 function nT(k,n,o){o=o||{};o.n=n;return fmt(n===1&&TX[UL][k+"1"]!=null?t(k+"1"):t(k),o)}
 function pickUI(){if(TX[P.ui])return P.ui;var L=[];try{L=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||""]}catch(e){}
  for(var i=0;i<L.length;i++){var c=String(L[i]||"").slice(0,2).toLowerCase();if(TX[c])return c}return "de"}
@@ -964,7 +1001,7 @@ function mark(it){if(!it)return ['<span class="mk o">·</span>',""];var d=dec(it
  if(it.status==="human")return ['<span class="mk">h</span>',"human"];
  return it.status==="ready"?['<span class="mk">✓</span>',"ready"]:it.lvl==="fine"?['<span class="mk f">~</span>',"fine"]:['<span class="mk r">▲</span>',"flagged"]}
 // ------------------------------------------------------------------ header and chrome
-var TAB=AU?"audit":"drafts";   // landing view: the register audit (runs today, no model); #drafts or #wbNNN opens the drafts
+var TAB=AU?"audit":"drafts",LHOPEN=false;   // landing view: the register audit (runs today, no model); #drafts or #wbNNN opens the drafts
 function kv(id,rows){if(!$(id))return;$(id).innerHTML=rows.map(function(r){return "<dt"+(r[3]?' title="'+esc(r[3])+'"':"")+">"+esc(r[0])+"</dt><dd"+(r[2]?' class="'+r[2]+'"':"")+">"+esc(r[1])+"</dd>"}).join("")}
 function ddate(s){return /^\d{8}$/.test(s||"")?s.slice(6,8)+"."+s.slice(4,6)+"."+s.slice(0,4):(s||"?")}
 function grp(n){var s=String(n==null?"—":n);return /^\d{4,6}$/.test(s)?s.slice(0,-3)+(UL==="en"?",":"’")+s.slice(-3):s}
@@ -984,11 +1021,12 @@ function chrome(){
  $("t-audit").setAttribute("aria-selected",TAB==="audit");$("t-drafts").setAttribute("aria-selected",TAB==="drafts");
  $("t-audit").tabIndex=TAB==="audit"?0:-1;$("t-drafts").tabIndex=TAB==="drafts"?0:-1;
  $("p-audit").hidden=TAB!=="audit";$("p-drafts").hidden=TAB!=="drafts";
- $("x-sum").textContent=t("export");$("x-dec").textContent=t("exportDec");$("where").textContent=t("where")+" "+t("whereM");
+ $("x-sum").textContent=t("export");$("x-dec").textContent=t(TAB==="audit"&&AU?"exportDecA":"exportDec");$("where").textContent=t("where")+" "+t("whereM");
  ["x-xlf","x-xlf12","x-copy","x-imp","x-msg"].forEach(function(i){$(i).hidden=TAB==="audit"});["a-csv-i","a-csv","a-imp","a-msg"].forEach(function(i){$(i).hidden=TAB!=="audit"});
  var fz1=(M.pipeline.match(/freeze sha256:([0-9a-f]+)/)||[])[1]||"";
  $("prov").textContent=M.pipeline.split(";")[0]+(fz1?" · freeze "+fz1.slice(0,12):"")+" · outputs "+M.run_sha256.slice(0,12)+(M.rev?" · rev "+M.rev:"")+" · "+t("whereS");
  $("prov").title=M.pipeline+" · outputs sha256:"+M.run_sha256+" · items sha256:"+M.items_sha256+(AU?" · audit "+AU.meta.file:"");
+ $("lanehelp").hidden=TAB==="audit"||!LHOPEN;$("lanehelp").textContent=t("laneHelp");
  if(TAB==="audit"){chromeAudit();$("ctxline").title=$("ctxline").textContent;return}
  // one line of context: what these drafts are, whose decision they are
  // with lanes: a select of the lanes first (8B default, 70B fewer edits, the live months), then what the lane shown is
@@ -1000,7 +1038,9 @@ function chrome(){
  $("ctxline").innerHTML=(LANES.length>1?'<label class="lsel"><span class="vh">'+esc(t("lane"))+'</span><select id="lane-s">'+LANES.map(function(l){
    var o=l.live?fmt(t("laneOptLive"),{m:l.live}):l.lane==="70b"?t("laneOpt70"):t("laneOpt8");
    return '<option value="'+esc(l.id)+'"'+(l.id===(LANE||DEF)?" selected":"")+">"+esc(o)+"</option>"}).join("")+"</select></label> ":"")+
+  '<button type="button" class="qh" id="lane-q" aria-expanded="'+LHOPEN+'" aria-controls="lanehelp" title="'+esc(t("laneQ"))+'" aria-label="'+esc(t("laneQ"))+'">?</button>'+
   "<b>"+esc(cap(fmt(t("drawingBy"),{l:LB,n:C.items,m:MS})))+".</b> "+esc(ctx);
+ $("lane-q").onclick=function(){LHOPEN=!LHOPEN;this.setAttribute("aria-expanded",LHOPEN);$("lanehelp").hidden=!LHOPEN};
  if($("lane-s"))$("lane-s").onchange=function(){var v=this.value;location.hash="#"+(v===DEF?"":v+"/")+"drafts"};
  $("ctxline").title=cap(fmt(t("drawingBy"),{l:LB,n:C.items,m:MS}))+". "+ctx;
  var fz=(M.pipeline.match(/freeze sha256:([0-9a-f]+)/)||[])[1]||"";
@@ -1048,7 +1088,7 @@ document.querySelector(".views").addEventListener("keydown",function(e){if(e.key
 // listed below it. Decisions are stored per finding signature (SA[sig] = {right, actions[], note, at, by, date} + own:true
 // when a finding is decided apart from its issue): a decision on the issue is written to every finding of the issue
 // that is not decided separately, so it carries over to the next audit run finding by finding.
-var AF={show:"all",lang:"all",kind:"all",since:""},EQOPEN=false,EXOPEN=false,OPEN={},
+var AF={show:"all",lang:"all",kind:"all",since:""},EQOPEN=false,NCOPEN=false,EXOPEN=false,OPEN={},
  LNG=["DE","FR","IT"],REM=["exofficio","holder","langsvc","none","unclear"],AWC=null,ANAME=false,PEND=null;
 var IS=AU?AU.issues:[];
 if(AU){IS.forEach(function(I){I.M=I.rows.map(function(i){return AU.rows[i]});I.M.forEach(function(r){r.I=I})})}
@@ -1098,7 +1138,8 @@ function aStatus(d){if(!d||!d.at)return t("openSt");
  if(d.date&&AU&&d.date!==AU.meta.date)s+=" "+fmt(t("earlier"),{s:ddate(d.date)});return s}
 function dating(x){if(!x)return "";if(x.earliest&&x.n===x.m)return fmt(t("dA"),{n:x.n,d:ddate(x.first)});
  if(x.prev&&x.n===x.m)return fmt(t("dB"),{p:ddate(x.prev),d:ddate(x.first),n:x.n});return fmt(t("dC"),{d:ddate(x.first),n:x.n,m:x.m==null?"?":x.m})}
-function cntTxt(){var m=AU.meta;return fmt(t("cntA"),{a:m.main,t:m.term,s:m.main+m.term,n:IS.length,e:IS.filter(function(I){return I.eq}).length})}
+function cntTxt(){var m=AU.meta,nc=IS.filter(function(I){return I.blind==="not"}).length,lab=IS.some(function(I){return I.blind});
+ return fmt(t(lab?"cntB":"cntA"),{a:m.main,t:m.term,s:m.main+m.term,n:IS.length,e:lab?nc:IS.filter(function(I){return I.eq}).length})}
 function chromeAudit(){var m=AU.meta,nf=AU.rows.length;
  $("ctxline").innerHTML="<b>"+esc(fmt(t("drawA"),{d:ddate(m.date)}))+".</b> "+esc(fmt(t("ctxAud"),{n:grp(m.n_limitations)}))+" "+esc(cntTxt());
  var bk=m.by_kind?Object.keys(m.by_kind).filter(function(k){return k!=="terminology"}).map(function(k){return m.by_kind[k]+" "+(t("kinds")[k]||k)}).join(", "):"";
@@ -1200,19 +1241,28 @@ function xOk(I){if(AF.lang!=="all"&&I.langs.indexOf(AF.lang)<0)return false;if(A
 function short(x,n){return x.length>n?x.slice(0,n).replace(/\s+\S*$/,"")+" …":x}
 function sev(I){if(I.eq)return 3;if(I.term)return 2;var ed=I.M.some(function(r){return r.kind==="editorial"}),expl=I.M.some(function(r){return r.expl&&r.expl.length});
  if(I.kinds.every(function(k){return k==="editorial"})||(ed&&expl))return 1;return 0}
+// the groups follow the blind annotators' majority label of each issue (its most serious finding): changes a condition,
+// minor (typos and editorial), terminology apart, not confirmed (collapsed); an issue without labels falls back to the
+// kinds of its findings (sev), with the audit's "probably equivalent" collapsed
+function bucket(I){if(I.blind==="not")return 4;if(I.term)return 2;if(I.blind==="real")return 0;if(I.blind==="minor")return 1;return sev(I)}
+function blindTxt(I){if(!I.blind)return "";var L=t("blindL"),s=fmt(t(I.blind_n>2?"blind3":"blind2"),{x:L[I.blind]||I.blind});
+ if(I.M.length>1&&uniqP(I.M.map(function(r){return r.blind})).length>1)s+=" ("+fmt(t("blindPer"),{x:I.M.map(function(r){return (r.no||r.fid)+" "+(L[r.blind]||r.blind||"—")}).join(", ")})+")";
+ return s}
 function renderAudit(){if(!AU){$("p-audit").innerHTML='<p class="empty">'+esc(t("aNoFile"))+"</p>";return}
- var tb=document.querySelector("#aud tbody"),Is=AF.kind==="experimental"?[]:IS.filter(aOk),G=[[],[],[],[]],h="",Xs=XIS.filter(xOk);
- Is.forEach(function(I){G[sev(I)].push(I)});
+ var tb=document.querySelector("#aud tbody"),Is=AF.kind==="experimental"?[]:IS.filter(aOk),G=[[],[],[],[],[]],h="",Xs=XIS.filter(xOk);
+ Is.forEach(function(I){G[bucket(I)].push(I)});
  var nf=function(L){return L.reduce(function(s,I){return s+I.M.length},0)};
- AVIS=G[0].concat(G[1],G[2],EQOPEN?G[3]:[],EXOPEN?Xs:[]);
+ AVIS=G[0].concat(G[1],G[2],NCOPEN?G[4]:[],EQOPEN?G[3]:[],EXOPEN?Xs:[]);
  [["gCond",G[0]],["gEdit",G[1]],["gTerm",G[2]]].forEach(function(x){if(x[1].length)h+='<tr class="grp"><td colspan="3">'+esc(t(x[0]))+" · "+x[1].length+"</td></tr>"+x[1].map(aRow).join("")});
+ if(G[4].length)h+='<tr class="eqh"><td colspan="3"><button type="button" id="nc-tg" aria-expanded="'+NCOPEN+'">['+(NCOPEN?"−":"+")+"] "+esc(fmt(t("gNot"),{n:G[4].length}))+"</button></td></tr>"+(NCOPEN?G[4].map(aRow).join(""):"");
  if(G[3].length)h+='<tr class="eqh"><td colspan="3"><button type="button" id="eq-tg" aria-expanded="'+EQOPEN+'">['+(EQOPEN?"−":"+")+"] "+esc(fmt(t("eqHead"),{n:G[3].length}))+"</button></td></tr>"+(EQOPEN?G[3].map(aRow).join(""):"");
  h+=expHTML(Xs);
  tb.innerHTML=h||'<tr><td colspan="3" class="empty">'+esc(t("aNone"))+"</td></tr>";
+ var ng=$("nc-tg");if(ng)ng.onclick=function(){NCOPEN=!NCOPEN;renderAudit();var b=$("nc-tg");if(b)b.focus()};
  var tg=$("eq-tg");if(tg)tg.onclick=function(){EQOPEN=!EQOPEN;renderAudit();var b=$("eq-tg");if(b)b.focus()};
  var xg=$("ex-tg");if(xg)xg.onclick=function(){EXOPEN=!EXOPEN;renderAudit();var b=$("ex-tg");if(b)b.focus()};
- var ne=EQOPEN?0:G[3].length;
- $("a-shown").textContent=fmt(t(ne?"shownL":"shownL0"),{l:Is.length-ne,e:ne,n:Is.length,N:IS.length,m:nf(Is),M:AU.rows.length});
+ var nq=EQOPEN?0:G[3].length,nn=NCOPEN?0:G[4].length,ne=nq+nn;
+ $("a-shown").textContent=fmt(t(!ne?"shownL0":nq?"shownL":"shownLB"),{l:Is.length-ne,e:ne,n:Is.length,N:IS.length,m:nf(Is),M:AU.rows.length});
  if(AVIS.indexOf(ASEL)<0)ASEL=AVIS[0]||null;
  renderACase();progress()}
 // experimental checks (round 5, switched off): only the findings both blind annotators confirmed, below the issues and
@@ -1238,7 +1288,7 @@ function aCaseHTML(I){var r=I.M[0],d=iDec(I)||{},n=I.M.length,odd=I.odd==="uncle
   (I.dating?"<dt>"+esc(t("aDating"))+"</dt><dd>"+esc(dating(I.dating))+"</dd>":"")+
   (uniqP(sub).length?"<dt>"+esc(t("aNote2"))+"</dt><dd>"+uniqP(sub).map(esc).join("<br>")+"</dd>":"")+
   (r.term?"<dt>"+esc(t("aTermL"))+"</dt><dd>"+termHTML(r)+"</dd>":"")+
-  (I.exp?"<dt>"+esc(t("aBlind"))+"</dt><dd>"+esc(t("labX")[r.label]||r.label)+(r.desc?'<span class="sub2"'+(UL!=="en"?' lang="en"':"")+">"+esc(UL!=="en"?t("descEn")+": ":"")+esc(r.desc)+"</span>":"")+"</dd>":"")+
+  (I.blind?"<dt>"+esc(t("aBlind"))+"</dt><dd>"+esc(blindTxt(I))+(I.exp&&r.desc?'<span class="sub2"'+(UL!=="en"?' lang="en"':"")+">"+esc(UL!=="en"?t("descEn")+": ":"")+esc(r.desc)+"</span>":"")+"</dd>":"")+
   (I.dating&&I.dating.prev?"<dt></dt><dd><span class=\"sub2\">"+esc(fmt(t("txtChange"),{L:(I.odd&&I.odd!=="unclear"?I.odd:I.langs.filter(function(x){return x!=="de"})[0]||"").toUpperCase(),p:ddate(I.dating.prev),d:ddate(I.dating.first),s:ddate(AU.meta.date)}))+"</span></dd>":"")+
   "<dt>"+esc(t("decLang"))+"</dt><dd>"+esc(t("decLangV"))+"</dd>"+
   "<dt>"+esc(t("slLink"))+'</dt><dd><span class="mono">sl.bag.admin.ch/sl</span><span class="sub2">'+esc(fmt(t("slLinkT"),{p:uniqP(I.products).join(", ")||I.lims[0]}))+" · "+esc(I.lims.join(" · "))+"</span></dd></dl></section>";
@@ -1326,10 +1376,13 @@ function iRow(I){var d=iDec(I)||{},x=aAns(d);
   return r.no+" ("+[ansTxt(y)||y.right,y.note].filter(Boolean).join(" · ")+")"}).join("; ");
  return [I.iid,I.fids.join(" "),uniqP(I.products).join(", "),I.lims.join(" "),I.langs.map(function(L){return L.toUpperCase()}).join(" "),
   kindLab(I),I.exp?"experimental":I.kinds.join("+"),what,I.dating?dating(I.dating):"",I.known?t("yes"):t("no2"),
-  x.w.join(", "),d.right==="unclear"?t("rUnclear"):(d.right||""),actLab(d),aActs(d).join(" "),d.note||"",d.at?zts(d.at):"",d.by||"",ddate(d.date||AU.meta.date),own,M.rev||""]}
+  x.w.join(", "),d.right==="unclear"?t("rUnclear"):(d.right||""),actLab(d),aActs(d).join(" "),d.note||"",d.at?zts(d.at):"",d.by||"",ddate(d.date||AU.meta.date),own,
+  blindTxt(I),exText(I.M[0],"de"),exText(I.M[0],"fr"),exText(I.M[0],"it"),M.rev||""]}
+// the excerpt of one language as the issue view shows it (the aligned passage, edges trimmed to whole words)
+function exText(r,L){var s=trimSeg(r&&r.snip?r.snip[L]:null);return s&&s.length?s.map(function(x){return x[0]}).join(""):""}
 // the issues with their decisions, one line each, for filing (GEVER): in the interface language, ';'-separated with a BOM so
 // that Excel (de-CH) opens it in columns
-function auditCsv(){var lines=[t("csvHead")].concat(IS.map(iRow),XIS.map(iRow));
+function auditCsv(){var H=t("csvHead"),lines=[H.slice(0,-1).concat(t("csvMore"),H.slice(-1))].concat(IS.map(iRow),XIS.map(iRow));
  return "﻿"+lines.map(function(l){return l.map(csvCellS).join(";")}).join("\r\n")+"\r\n"}
 function csvCellS(s){s=String(s==null?"":s);return /[";\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
 // the JSON exports: codes (kind, wrong, remedy, right, actions) for machines, labels in the interface language at export
@@ -1337,14 +1390,14 @@ function csvCellS(s){s=String(s==null?"":s);return /[";\n\r]/.test(s)?'"'+s.repl
 function rKindLab(r){return r.kind==="experimental"?t("kinds").experimental+(r.xkind?" ("+(t("kindsX")[r.xkind]||r.xkind)+")":""):(t("kinds")[r.kind]||r.kind)}
 function auditExport(){if(!AU)return {};var o={};allRows().forEach(function(r){var d=SA[r.sig];if(d){var x=aAns(d);o[r.sig]={limitation:r.lim,product:r.product,lang:r.lang,kind:r.kind==="experimental"?"experimental check":r.kind,kind_label:rKindLab(r),check:r.xkind||undefined,odd_one_out:r.odd,known:r.known,
  issue:r.I?r.I.iid:"",issue_key:r.I?r.I.key:"",decided_separately:!!d.own,decided:aDone(d),wrong:x.w,remedy:x.m,right:d.right||"",actions:aActs(d),action_label:actLab(d),note:d.note||"",at:d.at?zts(d.at):null,by:d.by||"",audit_date:d.date||AU.meta.date,rev:M.rev||"",ui_lang:UL}}});return o}
-function auditIssues(){return IS.concat(XIS).map(function(I){var d=iDec(I)||{},x=aAns(d);return {issue:I.iid,key:I.key,kind:I.exp?"experimental check":I.kinds.join(" + "),kind_label:kindLab(I),findings:I.M.map(function(r){return r.sig}),fids:I.fids,limitations:I.lims,
+function auditIssues(){return IS.concat(XIS).map(function(I){var d=iDec(I)||{},x=aAns(d);return {issue:I.iid,key:I.key,kind:I.exp?"experimental check":I.kinds.join(" + "),kind_label:kindLab(I),findings:I.M.map(function(r){return r.sig}),fids:I.fids,limitations:I.lims,blind_label:I.blind||null,
  wrong:x.w,remedy:x.m,right:d.right||"",actions:aActs(d),action_label:actLab(d),note:d.note||"",at:d.at?zts(d.at):null,by:d.by||"",decided:iDecided(I)}})}
 function snipText(r,L){return (r.snip[L]||[]).map(function(x){return x[0]}).join("")}
 $("a-csv-i").onclick=function(){download("gleichlaut-audit-"+AU.meta.date+"-issues.csv",auditCsv(),"text/csv");$("a-msg").textContent=t("dl")+": CSV"};
 // the findings, one line each: machine column names, the kind and the action in the interface language with their codes;
 // ';'-separated with a BOM like the issues file, every line with the SL snapshot and the code revision
-function findingsCsv(){var head=["rank","issue","limitation","product","kind","kind_code","lang","odd_one_out","known","probably_equivalent","de","fr","it","wrong","right","action","action_code","note","decided_at","decided_by","decided_in_audit","decided_separately","sl_snapshot","rev"];
- var lines=[head.join(";")].concat(allRows().map(function(r){var d=SA[r.sig]||{};return [r.rank,r.I?r.I.iid:"",r.lim,r.product,rKindLab(r),r.kind==="experimental"?"experimental:"+r.xkind:r.kind,r.lang,r.odd,r.known?"yes":"no",r.eq!=null?(r.eq||"yes"):"",snipText(r,"de"),snipText(r,"fr"),snipText(r,"it"),aAns(d).w.join(" "),d.right||"",
+function findingsCsv(){var head=["rank","issue","limitation","product","kind","kind_code","lang","odd_one_out","known","probably_equivalent","blind_label","de","fr","it","wrong","right","action","action_code","note","decided_at","decided_by","decided_in_audit","decided_separately","sl_snapshot","rev"];
+ var lines=[head.join(";")].concat(allRows().map(function(r){var d=SA[r.sig]||{};return [r.rank,r.I?r.I.iid:"",r.lim,r.product,rKindLab(r),r.kind==="experimental"?"experimental:"+r.xkind:r.kind,r.lang,r.odd,r.known?"yes":"no",r.eq!=null?(r.eq||"yes"):"",r.blind||"",snipText(r,"de"),snipText(r,"fr"),snipText(r,"it"),aAns(d).w.join(" "),d.right||"",
   actLab(d),aActs(d).join(" "),d.note||"",d.at?zts(d.at):"",d.by||"",d.date||"",d.own?"yes":"",AU.meta.date,M.rev||""].map(csvCellS).join(";")}));
  return "\ufeff"+lines.join("\r\n")+"\r\n"}
 $("a-csv").onclick=function(){
@@ -1645,9 +1698,14 @@ $("x-xlf12").onclick=function(){var Ls=F.lang==="all"?["fr","it"]:[F.lang];Ls=Ls
  Ls.forEach(function(L,i){setTimeout(function(){download("gleichlaut-"+M.run+"-de-CH_"+(L==="fr"?"fr-CH":"it-CH")+"-reviewed.xliff12.xlf",xliff12(L),"application/xliff+xml")},i*400)});
  msg(t("dl")+": "+Ls.map(function(L){return "XLIFF 1.2 "+L.toUpperCase()}).join(", "))};
 // the one decisions export (draft and audit decisions, edits): the page keeps them only in this browser
-$("x-dec").onclick=function(){download("gleichlaut-decisions-"+M.run+".json",JSON.stringify(payload(),null,1),"application/json");var b=$("x-dec");b.textContent=t("dl")+": JSON";
- setTimeout(function(){b.textContent=t("exportDec")},2500)};
-$("x-copy").onclick=function(){var s=JSON.stringify(payload(),null,1),box=$("copybox");
+// from the audit tab the audit decisions go to a file of their own, named by the SL snapshot audited; from the drafts tab
+// the drafts' decisions and edits, named by the lane's run
+function auditPayload(){return {audit_date:AU?AU.meta.date:null,exported_at:zts(),reviewer:who(),ui_lang:UL,rev:M.rev||"",audit:SA,audit_rows:auditExport(),audit_issues:AU?auditIssues():[]}}
+function draftsPayload(){var p=payload();["audit_date","audit","audit_rows","audit_issues"].forEach(function(k){delete p[k]});return p}
+function decFile(){return TAB==="audit"&&AU?["gleichlaut-audit-decisions-"+AU.meta.date+".json",auditPayload()]:["gleichlaut-decisions-"+M.run+".json",draftsPayload()]}
+$("x-dec").onclick=function(){var f=decFile();download(f[0],JSON.stringify(f[1],null,1),"application/json");var b=$("x-dec");b.textContent=t("dl")+": "+f[0];
+ setTimeout(function(){b.textContent=t(TAB==="audit"?"exportDecA":"exportDec")},2500)};
+$("x-copy").onclick=function(){var s=JSON.stringify(draftsPayload(),null,1),box=$("copybox");
  function fallback(){box.hidden=false;box.value=s;box.focus();box.select();msg(t("selcopy"))}
  try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(function(){box.hidden=true;msg(t("copied"))},fallback)}else fallback()}catch(e){fallback()}};
 // one file or several (colleagues' exports): merged with what this browser holds, the newest decision per item wins (by its
@@ -1687,7 +1745,7 @@ function fromHash(){var h=decodeURIComponent(location.hash.slice(1));if(laneOf(h
   if(!(langs(g).some(function(L){return okItem(g.items[L])})))F.status="all";sel=g;return true}return false}
 var fromLink=fromHash()&&TAB==="drafts"&&!!sel;chrome();if(TAB==="audit")renderAudit();else{renderReg();if(sel){markSel(true);renderCase()}}
 if(fromLink)setTimeout(function(){var c=$("case");if(c&&c.getBoundingClientRect().top<64)c.scrollIntoView({block:"start"})},0);
-window.GleichlautReview={xliff:xliff,xliff12:xliff12,segBeads:segBeads,payload:payload,importDecisions:importDecisions,setTab:setTab,auditCsv:auditCsv,findingsCsv:findingsCsv};
+window.GleichlautReview={xliff:xliff,xliff12:xliff12,segBeads:segBeads,payload:payload,auditPayload:auditPayload,draftsPayload:draftsPayload,decFile:decFile,importDecisions:importDecisions,setTab:setTab,auditCsv:auditCsv,findingsCsv:findingsCsv};
 window.addEventListener("hashchange",function(){if(fromHash()){setTab(TAB);var c=$("case");if(TAB==="drafts"&&c&&c.getBoundingClientRect().top<64)c.scrollIntoView({block:"start"})}});
 })();
 </script>

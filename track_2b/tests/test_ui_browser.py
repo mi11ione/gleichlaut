@@ -64,14 +64,17 @@ def _out(s):
 def test_audit_tab_opens_with_hash_and_german_default():
     C = _page(); s = _dom(C["p"], "#audit", "de-CH,de")
     assert re.search(r'id="t-audit"[^>]*aria-selected="true"', s) and re.search(r'id="p-audit"[^>]*role="tabpanel"(?![^>]*hidden)', s)
-    I = C["D"]["audit"]["issues"]; eq = [i for i in I if i["eq"]]          # one row per issue (grouped findings)
-    assert len(re.findall(r'<tr data-iss="[0-9a-f]{10}"', s)) == len(I) - len(eq) and "Registerprüfung" in s and 'lang="de"' in s
-    if eq: assert f"Wahrscheinlich gleichwertige Formulierung ({len(eq)})" in s     # collapsed, counted, never dropped
+    I = C["D"]["audit"]["issues"]; nc = [i for i in I if i["blind"] == "not"]   # one row per issue (grouped findings)
+    assert len(re.findall(r'<tr data-iss="[0-9a-f]{10}"', s)) == len(I) - len(nc) and "Registerprüfung" in s and 'lang="de"' in s
+    assert f"Von den Annotatoren nicht bestätigt ({len(nc)})" in s and len(nc) == 4     # collapsed, counted, never dropped
+    G = [html.unescape(x) for x in re.findall(r'<tr class="grp"><td colspan="3">([^<]*)</td>', s) if "esc(" not in x]
+    assert G == ["Ändert eine Bedingung · 8", "Tippfehler und Redaktion · 3", "Terminologie · 3"], G     # by the blind majority label
+    assert "Zwei blinde Claude-Annotatoren: ändert eine Bedingung" in html.unescape(s)                  # on the issue shown
     assert sum(len(i["rows"]) for i in I) == len(C["D"]["audit"]["rows"])            # every finding is in exactly one issue
     assert "Von Amtes wegen" in s and "Sprachdienst" in s and ">GÄL<" not in s
     assert re.search(r'id="ex-tg" aria-expanded="false">\[\+\] Experimentelle Prüfungen \(ausgeschaltet\) · 6 von 31 Befunden von zwei blinden Annotatoren bestätigt · 0 entschieden</button>', s)
-    assert "27 Befunde + 11 Terminologie-Hinweise = 38, zusammengefasst in 18 Fällen; 3 davon wahrscheinlich gleichwertig (eingeklappt)." in html.unescape(s)
-    assert "15 Fälle in der Liste + 3 eingeklappt (wahrscheinlich gleichwertig) = 18 von 18 Fällen · 38 von 38 Befunden und Hinweisen" in html.unescape(s)
+    assert "27 Befunde + 11 Terminologie-Hinweise = 38, zusammengefasst in 18 Fällen; 4 davon von den blinden Annotatoren nicht bestätigt (eingeklappt)." in html.unescape(s)
+    assert "14 Fälle in der Liste + 4 eingeklappt (nicht bestätigt) = 18 von 18 Fällen · 38 von 38 Befunden und Hinweisen" in html.unescape(s)
 
 
 def test_landing_is_the_audit_tab_and_drafts_by_hash():
@@ -86,7 +89,7 @@ def test_landing_is_the_audit_tab_and_drafts_by_hash():
         assert f'aria-label="{html.escape(lab, quote=False)}"' in s.replace("&#39;", "'"), lab
     assert not re.search(r'aria-label="(?:Views|Issues|Family|Register|Case|Interface language)"', s)
     ctx = re.search(r'<p class="ctx" id="ctxline"[^>]*>(.*?)</p>', s, re.S).group(1); txt = html.unescape(re.sub(r"<select.*?</select>", "", ctx, flags=re.S))
-    assert '<option value="8b" selected="">Jeu de test (publié) · 8B Q8_0, CPU (par défaut)</option>' in ctx and '<option value="70b">Jeu de test (publié) · 70B, point d\'accès (moins de corrections)</option>' in html.unescape(ctx)
+    assert '<option value="8b" selected="">Jeu de test (publié) · 8B Q8_0, CPU (par défaut)</option>' in ctx and '<option value="70b">Jeu de test (publié) · Apertus 70B tel que servi par Public AI (optionnel ; identité non vérifiée)</option>' in html.unescape(ctx)
     assert '<option value="aug2026">Essai à blanc 08.2026 (hors production) · 8B Q8_0, CPU</option>' in ctx
     assert "Jeu de test réservé à l'évaluation : modifications passées de la LS 06.2025–02.2026, déjà publiées par l'OFSP, 166 brouillons d'Apertus 8B Q8_0." in txt
     assert "62 prêts (37.3%) · 104 signalés · 17.5% identiques" in txt and "La variante par défaut" in txt
@@ -182,7 +185,7 @@ def test_experimental_findings_are_decidable_and_exported_as_their_own_kind():
                    "head:document.getElementById('ex-tg').textContent,prog:document.getElementById('progress').textContent,err:window.__err});document.body.appendChild(e)},300);")
     o = json.loads(html.unescape(re.search(r'<pre id="out">(.*?)</pre>', _dom(C["p"], "#audit", "en", probe), re.S).group(1)))
     assert not o["err"], o["err"]
-    assert o["rows"] == 15 + 6 and "Both blind annotators" not in o["h"] and "both blind annotators: " in o["h"]
+    assert o["rows"] == 14 + 6 and "Two blind Claude annotators: " in o["h"]                 # the same label line as an issue
     assert o["xi"] == 6 and o["dec"] == 1 and o["kinds"] == ["experimental check"] and o["csv"]
     assert o["head"].endswith("· 1 decided") and o["prog"].startswith("0/18 issues decided")      # outside the 18 issues
 
@@ -424,3 +427,26 @@ if __name__ == "__main__":
     fs = [(n, f) for n, f in sorted(globals().items()) if n.startswith("test_") and callable(f)]
     for n, f in fs: f(); print("ok", n)
     print(f"{len(fs)} passed")
+
+
+def test_gever_csv_label_and_excerpts_export_names_and_lane_help():
+    """The GEVER CSV of the issues carries the blind label and the DE/FR/IT excerpts the issue view shows; the audit
+    decisions export as gleichlaut-audit-decisions-<SL date>.json (audit only), the drafts' as a lane-specific file; the
+    drafts tab explains the lanes and statuses under a "?" next to the lane select."""
+    C = _page()
+    probe = ERR + NAME + ("setTimeout(function(){var R=window.GleichlautReview,o={},csv=R.auditCsv().replace(/^\\ufeff/,'').split('\\r\\n');"
+        "o.h=csv[0].split(';');o.r=csv[1].split(';');o.ex=[].map.call(document.querySelectorAll('#acase .ftg .snip'),function(x){return x.textContent});"
+        "var f=R.decFile();o.fa=f[0];o.ka=Object.keys(f[1]).sort();R.setTab('drafts');f=R.decFile();o.fd=f[0];o.kd=Object.keys(f[1]);"
+        "var q=document.getElementById('lane-q'),hp=document.getElementById('lanehelp');o.h0=hp.hidden;q.click();o.h1=hp.hidden;o.ht=hp.textContent;o.qe=q.getAttribute('aria-expanded');"
+        "o.err=window.__err;out(o)},300);")
+    o = _out(_dom(C["p"], "#audit", "en", probe))
+    assert not o["err"], o["err"]
+    V = dict(zip(o["h"], o["r"]))
+    assert o["h"][-5:] == ["Blind label", "Excerpt DE", "Excerpt FR", "Excerpt IT", "Code revision"], o["h"]
+    assert V["Blind label"] == "Two blind Claude annotators: changes a condition" and V["Issue"] == "01"
+    for k, full in zip(("Excerpt DE", "Excerpt FR", "Excerpt IT"), o["ex"][:3]):      # the aligned excerpt, taken from the text shown
+        assert V[k].strip("…").strip() in full, (k, V[k])
+    assert "6%" in V["Excerpt DE"] and "12%" in V["Excerpt IT"]
+    assert o["fa"] == "gleichlaut-audit-decisions-20261006.json" and "audit" in o["ka"] and "decisions" not in o["ka"]
+    assert o["fd"].startswith("gleichlaut-decisions-") and "audit" not in o["fd"] and "audit" not in o["kd"] and "decisions" in o["kd"]
+    assert o["h0"] and not o["h1"] and o["qe"] == "true" and "probably fine" in o["ht"] and "divergent" in o["ht"] and "identity not verified" in o["ht"]

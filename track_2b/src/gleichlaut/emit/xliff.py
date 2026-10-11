@@ -63,6 +63,7 @@ NOTE = {
                     "relevé un problème (voir les remarques de l'unité). state=needs-translation avec une cible vide : "
                     "brouillon rejeté à la révision (dans alt-trans rejected), à traduire. Pas de cible : confié à un traducteur.",
         "prov": "Modèle {model} ; {pipeline} ; série {run}",
+        "served70": "{model}, tel que servi par Public AI (variante optionnelle ; identité non vérifiée)",
         "prov_run": "Série enregistrée {run} (modèle non indiqué dans les enregistrements) ; {pipeline}",
         "product": "{product} ; limitation {code} ; LS {old} → {new}",
         "prev_de": "Allemand précédent : {t}", "prev_tgt": "Texte français précédent : {t}",
@@ -133,6 +134,7 @@ NOTE = {
                     "rilevato un problema (vedi le note dell'unità). state=needs-translation con testo d'arrivo vuoto: "
                     "bozza respinta in revisione (in alt-trans rejected), da tradurre. Nessun testo d'arrivo: affidata a un traduttore.",
         "prov": "Modello {model}; {pipeline}; serie {run}",
+        "served70": "{model}, come servito da Public AI (variante opzionale; identità non verificata)",
         "prov_run": "Serie registrata {run} (modello non indicato nelle registrazioni); {pipeline}",
         "product": "{product}; limitazione {code}; ES {old} → {new}",
         "prev_de": "Tedesco precedente: {t}", "prev_tgt": "Testo italiano precedente: {t}",
@@ -238,7 +240,17 @@ def review_text(lang, d, at=None, why=""):
 def provenance_note(meta, lang):
     """'Modèle <id> ; <pipeline> ; série <run>', or 'Série enregistrée <run> (…)' when the records do not name the model."""
     if not meta.get("model_known", True): return nt(lang, "prov_run", run=meta["run"], pipeline=meta["pipeline"])
-    return nt(lang, "prov", model=model_label(meta), pipeline=meta["pipeline"], run=meta["run"])
+    m = model_label(meta)
+    if served70(meta): m = nt(lang, "served70", model=m)
+    return nt(lang, "prov", model=m, pipeline=meta["pipeline"], run=meta["run"])
+
+
+def served70(meta):
+    """A recorded 70B run: its drafts came from Public AI's endpoint, which we do not control and whose model identity is
+    inconclusive (docs/research/served-70b.md), so the notes say so instead of naming the model as certain."""
+    from . import MODEL
+    from .. import core
+    return meta.get("model") == core.M70 and MODEL.get(meta.get("run")) == core.M70
 
 
 def _q(t): return f"{{{NS}}}{t}"

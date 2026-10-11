@@ -28,13 +28,17 @@
 #   MONTH_ARGS="--emit ..."  extra arguments for gleichlaut month (e.g. --emit writes XLIFF/FHIR + the review register)
 #   make fake-endpoint  an OpenAI-compatible fake on 127.0.0.1:8099 for test environments (FAKE_MODE=recorded|echo|...)
 #   make local-run      the same as `make run` without Docker (Python >= 3.9; lxml optional)
+#   make pilot-pack     the phase-1 pilot pack (Variante A) as one checksummed, reproducible zip in ./dist (gitignored):
+#                       offline register, Fallblätter MD + PDF, Entscheidvorlage, Management-Notiz, Schutzbedarfsanalyse,
+#                       Projektauftrag, SHA256SUMS. Fails when the Fallblätter or their PDFs are not current. No model, no network
+#   make pilot-pdf      re-render docs/pilot/pdf/ (python-markdown + headless Chrome; dev step, then commit the PDFs)
 #   make install-dev    pip install -e . (the `gleichlaut` console script; library: docs/api.md)
 #   make lock / sbom    re-lock the hash-pinned requirements (network: PyPI JSON API) / regenerate docs/sbom.json
 # Behind a proxy / internal CA: HTTPS_PROXY, HTTP_PROXY, NO_PROXY are passed into the containers; SSL_CERT_FILE and
 # REQUESTS_CA_BUNDLE (host paths) are mounted read-only and passed. GLEICHLAUT_CERT_KEY (host path of the certificate HMAC
 # key) is mounted read-only. Operator runbook: docs/operations.md. Certificates live in ./state (gitignored), mounted.
 .PHONY: run run-offline test certify certify-build certify-endpoint canary month month-offline month-70b fetch-gguf audit feeds \
-        fake-endpoint local-run local-test local-audit backtest ui clean install-dev lock sbom
+        fake-endpoint local-run local-test local-audit backtest ui pilot-pack pilot-pdf clean install-dev lock sbom
 IMAGE   ?= gleichlaut
 NAME    ?= gleichlaut-run-$(shell date +%s)
 PROXY    = -e HTTPS_PROXY -e HTTP_PROXY -e NO_PROXY -e https_proxy -e http_proxy -e no_proxy
@@ -166,6 +170,12 @@ backtest:
 
 ui:
 	PYTHONPATH=src python3 -m gleichlaut ui --out out/ui/index.html
+
+pilot-pack:
+	python3 tools/pilot_pack.py
+
+pilot-pdf:
+	python3 tools/pilot_sheets.py && python3 tools/pilot_pdf.py
 
 install-dev:
 	python3 -m pip install -e .

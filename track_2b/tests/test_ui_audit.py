@@ -162,3 +162,41 @@ def test_findings_group_into_issues_deterministically():
     for g in I:
         d = g["dating"]
         if d: assert d["first"] and (d["prev"] is None) == d["earliest"]      # "since the earliest snapshot" vs "first appeared between"
+
+
+def test_issues_carry_the_blind_majority_label():
+    """Every finding carries the blind annotators' majority label (eval/labels/audit_relabel.tsv, R14; round 5: R15) and
+    every issue the most serious label of its findings: Emgality (both findings 'not') is not confirmed, Forsteo (E05
+    'real') changes a condition; the counts equal eval/results/audit_relabel.json; the page groups by it and shows it."""
+    A = _audit(); R = A["rows"]; I = A["issues"]
+    S = json.load(open(os.path.join(audit_view.core.ROOT, "eval", "results", "audit_relabel.json"), encoding="utf-8"))["sets"]
+    for k in ("real", "minor", "not"):
+        assert sum(r["blind"] == k for r in R) == S["register"]["answers"].get(k, 0) + S["terminology"]["answers"].get(k, 0), k
+    assert all(r["blind_n"] == 2 for r in R)
+    by = {g["products"][0]: g for g in I}
+    assert by["Emgality"]["blind"] == "not" and by["Forsteo, Movymia, Sondelbay"]["blind"] == "real" and by["Leqvio"]["blind"] == "minor"
+    for g in I: assert g["blind"] == min((R[i]["blind"] for i in g["rows"]), key=audit_view.RANK.index)
+    nonterm = [g for g in I if not g["term"]]
+    assert sum(g["blind"] == "real" for g in nonterm) == 8 and sum(g["blind"] == "not" for g in I) == 4
+    assert sum(R[i]["blind"] == "real" for g in nonterm for i in g["rows"]) == S["register"]["answers"]["real"] == 12
+    assert all(g["blind"] in ("real", "minor") for g in A["exp"]["issues"])
+    assert audit_view.blind_labels(json.load(open(audit_view.AUDIT, encoding="utf-8"))["findings"], "19990101") == {}   # no labels: none
+    from gleichlaut.ui import page
+    s = page.BODY
+    assert 'function bucket(I){if(I.blind==="not")return 4;if(I.term)return 2;if(I.blind==="real")return 0;if(I.blind==="minor")return 1;return sev(I)}' in s
+    tx9 = s[s.index("var TX9="):s.index("Object.keys(TX9)")]
+    for k in ("gNot:", "blind2:", "blind3:", "blindL:", "cntB:", "shownLB:", "csvMore:", "laneHelp:", "exportDecA:"): assert tx9.count(k) == 4, k
+
+
+def test_70b_lane_never_called_certified():
+    """The 70B drafts came from Public AI's endpoint, whose model identity is inconclusive (docs/research/served-70b.md):
+    the page never calls that lane certified, and the XLIFF provenance notes of a recorded 70B run say so."""
+    from gleichlaut.ui import page
+    from gleichlaut.emit import xliff
+    from gleichlaut import core
+    s = page.BODY + page.HEAD
+    for w in ("certified endpoint", "zertifizierter Endpunkt", "point d'accès certifié", "endpoint certificato"): assert w not in s, w
+    assert s.count("Apertus 70B as Public AI served it (optional lane; identity not verified)") == 1
+    meta = dict(model=core.M70, run="fresh166", pipeline="p")
+    assert "tel que servi par Public AI" in xliff.provenance_note(meta, "fr") and "identità non verificata" in xliff.provenance_note(meta, "it")
+    assert "Public AI" not in xliff.provenance_note(dict(meta, model="m", run="q8_0"), "fr")
