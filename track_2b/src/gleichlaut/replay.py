@@ -44,7 +44,8 @@ def compute():
     res["ready_quality"] = score.ready_quality()
     res["audit"] = score.audit_eval()
     res["audit_more"] = score.audit_more()
-    res["baseline_plus"] = score.baseline_plus()
+    res["baseline_plus"] = score.baseline_plus()          # the 70B and the default Q8_0 against rules+
+    res["fresh166_by_backend"] = score.fresh166_by_backend()   # post hoc: the 70B fresh-166 arms by serving backend
     res["m1_q4_k_m"] = score.m1("q4_k_m")
     res["post_edit_8b_q4_k_m"] = score.post_edit("runs/8b_q4_k_m_fresh166_g3_final.jsonl")
     res["m1_q8_0"] = score.m1("q8_0")

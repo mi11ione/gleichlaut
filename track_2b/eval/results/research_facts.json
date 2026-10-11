@@ -54,6 +54,11 @@
   "of": 792,
   "source": "docs/research/model-identity-and-quantisation.md"
  },
+ "publicai_8b_name_battery_calls": {
+  "value": 1584,
+  "detail": "the apertus-v1.5-8b name on the battery (792 forced-choice and 792 generation calls), all served by vllm-0.23.1rc1...-tp8-pp2; the research log's 'All 1584 calls were served by the 8B vLLM backend'",
+  "source": "docs/research/model-identity-and-quantisation.md"
+ },
  "gguf_q4_agree_bf16": {
   "value": 622,
   "of": 648,
@@ -62,6 +67,13 @@
  "mlx4_agree_bf16": {
   "value": 548,
   "of": 648,
+  "source": "docs/research/model-identity-and-quantisation.md",
+  "detail": "our own MLX 4-bit g64 (mlx_lm.convert --q-group-size 64) of the final checkpoint, against bf16 swiss-ai/Apertus-v1.5-8B-DPO (revision not recorded); not the DWQ build of the research arms"
+ },
+ "mlx_dwq_agree_bf16": {
+  "value": 610,
+  "of": 648,
+  "detail": "the research arms' build, m1rkocasu/Apertus-v1.5-8B-text-MLX-4bit-DWQ, against bf16 swiss-ai/Apertus-v1.5-8B-DPO: 38 of 648 decisions differ, mean |delta| 7.5 nats (research log inversions/results.md)",
   "source": "docs/research/model-identity-and-quantisation.md"
  },
  "free_translation_example": {

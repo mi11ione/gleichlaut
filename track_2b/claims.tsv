@@ -352,6 +352,8 @@ judge_8b_logprob_auroc_order_lo	0.62	eval/results/research_facts.json	judge_8b_l
 judge_8b_logprob_argmax	6	eval/results/research_facts.json	judge_8b_logprob_argmax.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
 gguf_q8_agree_bf16	638	eval/results/research_facts.json	gguf_q8_agree_bf16.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
 free_translation_real_flips_sample	2	eval/results/research_facts.json	free_translation_real_flips_sample.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
+mlx_dwq_agree_bf16	610	eval/results/research_facts.json	mlx_dwq_agree_bf16.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
+publicai_8b_name_battery_calls	1584	eval/results/research_facts.json	publicai_8b_name_battery_calls.value	{}	hand-entered from the cited source (see note in file)	README/report/notes
 judge_70b_nein_of	270	eval/results/research_facts.json	judge_70b_nein.of	{}	hand-entered from the cited source (see note in file)	README/report/notes
 typing_wrong_in_all_three_of	77	eval/results/research_facts.json	typing_wrong_in_all_three.of	{}	hand-entered from the cited source (see note in file)	README/report/notes
 retry_8b_fixed_of	26	eval/results/research_facts.json	retry_8b_fixed.of	{}	hand-entered from the cited source (see note in file)	README/report/notes
@@ -572,3 +574,48 @@ mem_N_n	62	eval/results/memorisation.json	sizes.N	{}	PYTHONPATH=src python3 -m g
 mem_70b_N_next10	0	eval/results/memorisation.json	models.70b.sets.N.next10_count	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 mem_8b_N_next10	0	eval/results/memorisation.json	models.8b_q8_0.sets.N.next10_count	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 mem_70b_requests	333	eval/results/memorisation.json	models.70b.requests	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+bp_q8_delta	+6.6	eval/results/baseline_plus.json	q8_0.delta	{:+.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+bp_q8_lo	1.8	eval/results/baseline_plus.json	q8_0.ci95.0	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+bp_q8_hi	12.0	eval/results/baseline_plus.json	q8_0.ci95.1	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+bp_q8_edits	31.8	eval/results/baseline_plus.json	q8_0.edits_saved_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+bp_q8_e_lo	19.3	eval/results/baseline_plus.json	q8_0.edits_saved_ci95.0	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+bp_q8_e_hi	42.8	eval/results/baseline_plus.json	q8_0.edits_saved_ci95.1	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_head_calls	285	eval/results/fresh166_by_backend.json	fresh166.calls	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_head_n	154	eval/results/fresh166_by_backend.json	fresh166.by_backend.unknown.n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_head_exact	21	eval/results/fresh166_by_backend.json	fresh166.by_backend.unknown.exact	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_head_exact_pct	13.6	eval/results/fresh166_by_backend.json	fresh166.by_backend.unknown.exact_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_head_ready	59	eval/results/fresh166_by_backend.json	fresh166.by_backend.unknown.ready	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_head_ready_pct	38.3	eval/results/fresh166_by_backend.json	fresh166.by_backend.unknown.ready_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_head_reasked	98	eval/results/fresh166_by_backend.json	fresh166.by_backend.unknown.reasked	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_head_edits_saved_pct	42.6	eval/results/fresh166_by_backend.json	fresh166.by_backend.unknown.edits_saved_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_ruleonly_n	12	eval/results/fresh166_by_backend.json	fresh166.by_backend.rule-only.n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_ruleonly_exact	8	eval/results/fresh166_by_backend.json	fresh166.by_backend.rule-only.exact	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_ruleonly_exact_pct	66.7	eval/results/fresh166_by_backend.json	fresh166.by_backend.rule-only.exact_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_ruleonly_ready	7	eval/results/fresh166_by_backend.json	fresh166.by_backend.rule-only.ready	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_ruleonly_ready_pct	58.3	eval/results/fresh166_by_backend.json	fresh166.by_backend.rule-only.ready_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_ruleonly_reasked	0	eval/results/fresh166_by_backend.json	fresh166.by_backend.rule-only.reasked	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_ruleonly_edits_saved_pct	0.0	eval/results/fresh166_by_backend.json	fresh166.by_backend.rule-only.edits_saved_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_tp2_n	88	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.tp2.n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_tp2_exact	14	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.tp2.exact	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_tp2_exact_pct	15.9	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.tp2.exact_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_tp2_ready	40	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.tp2.ready	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_tp2_ready_pct	45.5	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.tp2.ready_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_tp2_reasked	49	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.tp2.reasked	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_tp2_edits_saved_pct	39.3	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.tp2.edits_saved_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_fp1_n	27	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.fp1-nes.n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_fp1_exact	5	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.fp1-nes.exact	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_fp1_exact_pct	18.5	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.fp1-nes.exact_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_fp1_ready	19	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.fp1-nes.ready	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_fp1_ready_pct	70.4	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.fp1-nes.ready_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_fp1_reasked	8	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.fp1-nes.reasked	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_fp1_edits_saved_pct	51.3	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.fp1-nes.edits_saved_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_mixed_n	39	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.mixed.n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_mixed_exact	3	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.mixed.exact	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_mixed_exact_pct	7.7	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.mixed.exact_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_mixed_ready	3	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.mixed.ready	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_mixed_ready_pct	7.7	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.mixed.ready_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_mixed_reasked	39	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.mixed.reasked	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_mixed_edits_saved_pct	33.8	eval/results/fresh166_by_backend.json	m3_seed1.by_backend.mixed.edits_saved_pct	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_m3_calls	283	eval/results/fresh166_by_backend.json	m3_seed1.calls	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_m3_tp2_calls	202	eval/results/fresh166_by_backend.json	m3_seed1.calls_by_backend.tp2	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+fb_m3_fp1_calls	81	eval/results/fresh166_by_backend.json	m3_seed1.calls_by_backend.fp1-nes	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes

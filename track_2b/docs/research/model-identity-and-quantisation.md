@@ -4,6 +4,20 @@ Lines copied from `spikes/live/results.md` (sha256 `c2e422b5690dbb45b2b017fb89ef
 
 > Note (10 Oct 2026): these are verbatim research-log lines. "The shared model is the 70B" is an inference from MMLU
 > against the v1 8B (which mixes version and size), not an established fact; see report §3.1.
+>
+> Note (11 Oct 2026), reading these lines correctly (sources quoted below):
+> - **Which builds.** "bf16 DPO" is the bf16 weights of `swiss-ai/Apertus-v1.5-8B-DPO`, an intermediate post-training
+>   checkpoint (the stage before the final SDPO stage released as `swiss-ai/Apertus-v1.5-8B`), downloaded with
+>   `hf download` without a revision: the revision is not recorded. "MLX 4-bit final" / "MLX 4-bit g64" is our own
+>   `mlx_lm.convert -q --q-bits 4 --q-group-size 64` of the final checkpoint: 548 of 648 is this build. The research arms
+>   (dev 120, statutes / R5, the failure-mode tests) ran the third-party `m1rkocasu/Apertus-v1.5-8B-text-MLX-4bit-DWQ`;
+>   on the same 648 probes it disagrees with bf16 DPO on 38, i.e. agrees on **610 of 648** (mean |Δ| 7.5 nats; the DWQ
+>   trace is assembled from four runs with byte-identical questions).
+> - **"All 1584 calls were served by the 8B vLLM backend"** is about the `swiss-ai/apertus-v1.5-8b` name on the battery
+>   (792 forced-choice and 792 generation calls, all on `vllm-0.23.1rc1…-tp8-pp2`). It says nothing about the 70B name or
+>   about any drafting run. The 70B name was answered by `fp1-nes` on the battery (792 of 792) and by `fp1-nes` or `tp2`
+>   elsewhere. The MMLU 84.4% was measured on the `apertus-v1.5-8b` name; its calls kept the served model name, not the
+>   backend.
 
 ## live/results.md
 
@@ -29,3 +43,26 @@ All 1584 calls were served by the 8B vLLM backend. Measured prefill-vs-decode dr
 ## loop/learnings.md
 
 - **VERDICT (9 Oct, 19:45): the shared model is the 70B.** Same 250 MMLU questions: shared model 84.4% (211/250) vs `apertus-8b-instruct` (v1 8B) 70.8% (177/250); 16-GPU deployment; 4× slower decoding. Public AI's `apertus-v1.5-8b` name serves the 70B.
+
+## stage/results.md (sha256 `c08ef6aa625e607d9845cf901ff2568e2163619e8e51e6dcbfb8a07658e0b7ca`)
+
+| base (stage 0) | swiss-ai/Apertus-v1.5-8B-base (ungated; shards hardlinked from the other agent's download, HF LFS sha256 verified) | text branch → `mlx_lm.convert -q --q-bits 4 --q-group-size 64` |
+| SFT, RLVR, DPO | swiss-ai/Apertus-v1.5-8B-{SFT,RLVR,DPO} (gated, Roman's HF token) | same |
+| final (SDPO) | swiss-ai/Apertus-v1.5-8B via the cpral/Apertus-V1.5-8B-ungated mirror; all 4 shards, tokenizer, template and config match the official swiss-ai sha256 published on ModelScope | same |
+| final_dwq | m1rkocasu/Apertus-v1.5-8B-text-MLX-4bit-DWQ (the round-7 model) | forced choice only; reproduces round 7 exactly (max abs. lp diff 0.0) |
+
+## linie9/bf16.md (sha256 `6ef3f17ef681210621a469ca30863b59cfc637ad2776c69ea089de389d1aaaa2`)
+
+- **Stages:** `swiss-ai/Apertus-v1.5-8B-RLVR` and `-DPO`.
+  - Only the omni text shards (`model-apertus-model-*`) were downloaded, about 16 GB each, with the HF token piped from the Air.
+
+(The download script `linie9/bf16_scripts/chain.sh` runs `hf download swiss-ai/Apertus-v1.5-8B-$st --include 'model-apertus-model-*.safetensors'` with no `--revision`.)
+
+## inversions/results.md (sha256 `f68302ca42923ca25f0405db01ee295d6b5756b6375eb9a96a338238feb8303f`)
+
+| final 4-bit DWQ | Assembled from four runs with byte-identical question strings (checked): conv_R0 ladder `round7/linie.json`; conv_R3 ladder `round8/ladder.json` R3; conv R0/R3 never `round8/never.json`; ver_R0 ladder `round8/polarity.json`; ver_R3 ladder and ver R0/R3 never `linie9/apertus.json` |
+- **No final bf16.** The 3-way task below uses **DPO bf16 as a stand-in for final bf16**. This is justified because DPO → final at g64 changes only 13/648 decisions, with a mean |Δ| of 0.9 nats, against 100–125 decisions for any quantisation step. It is still a proxy.
+Each cell shows decision disagreements out of 648 probes / mean |Δ log-odds| in nats.
+| | RLVR bf16 | RLVR g64 | DPO bf16 | DPO g64 | final g64 | final DWQ |
+| DPO bf16 | | | – | **103 / 9.9** | 100 / 9.9 | 38 / 7.5 |
+- DWQ sits much closer to (DPO-)bf16 than g64 does: 38 vs 100 flips.

@@ -247,7 +247,8 @@ for k, f in (("window_disobeyed_8b_pct", "{}"), ("window_disobeyed_70b_pct", "{}
              ("publicai_8b_name_identical_cells", "{}"), ("gguf_q4_agree_bf16", "{}"), ("mlx4_agree_bf16", "{}"),
              ("mmlu_shared_route_pct", "{:.1f}"), ("mmlu_v1_8b_route_pct", "{:.1f}"), ("judge_8b_logprob_auroc", "{:.2f}"),
              ("judge_8b_logprob_auroc_order_hi", "{:.2f}"), ("judge_8b_logprob_auroc_order_lo", "{:.2f}"),
-             ("judge_8b_logprob_argmax", "{}"), ("gguf_q8_agree_bf16", "{}"), ("free_translation_real_flips_sample", "{}")):
+             ("judge_8b_logprob_argmax", "{}"), ("gguf_q8_agree_bf16", "{}"), ("free_translation_real_flips_sample", "{}"),
+             ("mlx_dwq_agree_bf16", "{}"), ("publicai_8b_name_battery_calls", "{}")):
     C.append((k, R, k + ".value", f, HAND))
 for k in ("judge_70b_nein", "typing_wrong_in_all_three", "retry_8b_fixed", "publicai_8b_name_identical_cells", "gguf_q4_agree_bf16", "mmlu_shared_route_pct"):
     C.append((k + "_of", R, k + ".of", "{}", HAND))
@@ -351,6 +352,23 @@ for s_ in "TPN":
     for m, mk in (("70b", "70b"), ("8b_q8_0", "8b")):
         C.append((f"mem_{mk}_{s_}_next10", MEM, f"models.{m}.sets.{s_}.next10_count", "{}", RE))
 C.append(("mem_70b_requests", MEM, "models.70b.requests", "{}", RE))
+
+# the default 8B Q8_0 against rules+ (same method as the 70B row), and the 70B fresh-166 arms by serving backend (post hoc)
+BP = "eval/results/baseline_plus.json"
+for cid, path, fmt in (("bp_q8_delta", "q8_0.delta", "{:+.1f}"), ("bp_q8_lo", "q8_0.ci95.0", "{:.1f}"), ("bp_q8_hi", "q8_0.ci95.1", "{:.1f}"),
+                       ("bp_q8_edits", "q8_0.edits_saved_pct", "{:.1f}"), ("bp_q8_e_lo", "q8_0.edits_saved_ci95.0", "{:.1f}"),
+                       ("bp_q8_e_hi", "q8_0.edits_saved_ci95.1", "{:.1f}")):
+    C.append((cid, BP, path, fmt, RE))
+FB = "eval/results/fresh166_by_backend.json"
+C.append(("fb_head_calls", FB, "fresh166.calls", "{}", RE))
+for arm, cls, ak in (("fresh166", "unknown", "head"), ("fresh166", "rule-only", "ruleonly"), ("m3_seed1", "tp2", "tp2"),
+                     ("m3_seed1", "fp1-nes", "fp1"), ("m3_seed1", "mixed", "mixed")):
+    for k, fmt in (("n", "{}"), ("exact", "{}"), ("exact_pct", "{:.1f}"), ("ready", "{}"), ("ready_pct", "{:.1f}"), ("reasked", "{}"),
+                   ("edits_saved_pct", "{:.1f}")):
+        C.append((f"fb_{ak}_{k}", FB, f"{arm}.by_backend.{cls}.{k}", fmt, RE))
+for cid, path in (("fb_m3_calls", "m3_seed1.calls"), ("fb_m3_tp2_calls", "m3_seed1.calls_by_backend.tp2"),
+                  ("fb_m3_fp1_calls", "m3_seed1.calls_by_backend.fp1-nes")):
+    C.append((cid, FB, path, "{}", RE))
 
 if __name__ == "__main__":
     rows = ["id\tvalue\tsource\tpath\tfmt\tcommand\twhere"]

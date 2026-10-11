@@ -742,9 +742,16 @@ def audit_eval(majority=True):
 
 def baseline_plus():
     """Apertus 70B (fresh 166) against rules+ (gleichlaut.baseline): exact match, paired cluster bootstrap over German
-    changes, and token edits still needed to reach BAG's text."""
+    changes, and token edits still needed to reach BAG's text. `q8_0`: the same comparison for the default 8B lane (the
+    certified GGUF Q8_0 run of R1/M2), by the same method and resampling seeds."""
+    out = _vs_rules_plus(RUNS["fresh166"]["final"])
+    out["q8_0"] = _vs_rules_plus(RUNS["q8_0"]["final"])
+    return out
+
+
+def _vs_rules_plus(final):
     from .baseline import rules_plus
-    I = load_items("items/items_fresh.json"); F = load_jsonl(RUNS["fresh166"]["final"]); norm = core.lock.norm
+    I = load_items("items/items_fresh.json"); F = load_jsonl(final); norm = core.lock.norm
     A, B, rows = [], [], []
     for x in I:
         rp = rules_plus(x); gold = norm(x["tgt_new"])
@@ -774,6 +781,49 @@ def baseline_plus():
                                     delta=round(100 * (sum(r["exact"] for r in Bf) - sum(r["exact"] for r in Af)) / len(Bf), 1),
                                     ci95=[round(cif[0], 1), round(cif[1], 1)]))
 
+
+def fresh166_by_backend():
+    """Post hoc, descriptive (no rule): the 70B fresh-166 drafts split by the Public AI backend that served their calls,
+    from the per-call `backend` field of the recorded responses (logged where the API reported it). Two arms: the
+    headline run (`fresh166`) and its seeded rerun (R2, `m3_seed1`). Item class: every call of the item on `tp2`, every
+    call on `fp1-nes`, both (`mixed`), no backend logged (`unknown`), no model call (rule-only). Per class: items, exact
+    (BAG's text), ready (not flagged), and token edits saved against the rules-only start (as `post_edit`)."""
+    from . import backends
+    norm = core.lock.norm; out = {}
+    for arm in ("fresh166", "m3_seed1"):
+        R = RUNS[arm]; I = load_items(R["items"]); F = load_jsonl(R["final"])
+        ask = backends.Cache(os.path.join(DATA, "cache", "responses"), model=core.M70,
+                             extra={"seed": R["seed"]} if "seed" in R else None)
+        seen = {}
+
+        def rec(prompt, tag, cap, mt):
+            text, meta = ask(prompt, tag, cap, mt); seen.setdefault(rec.key, []).append(meta.get("backend")); return text, meta
+        P = core.Pipeline(rec, R["stack"]); rows = []
+        for x in I:
+            rec.key = x["key"]; r = P.run(x); f = F[x["key"]]
+            assert r["out"] == f["out"] and r["guard_flag"] == f["guard_flag"], (arm, x["key"])
+            b = seen.get(x["key"], [])
+            kinds = {("tp2" if "-tp2-" in v else v) if v else "unknown" for v in b}
+            cls = "rule-only" if not b else ("unknown" if kinds == {"unknown"} else kinds.pop() if len(kinds) == 1 else "mixed")
+            gold = norm(x["tgt_new"]); r1 = norm(core.gl2.rules(x["de_old"], x["de_new"], x["tgt_old"], x["lang"])[0])
+            rows.append(dict(cls=cls, exact=bool(S["score_one"](x, f["out"], "1")["exact"]), ready=not f["guard_flag"], reasked=bool(f.get("reasked")),
+                             rules=sum(S["edits"](r1, gold).values()), draft=sum(S["edits"](norm(f["out"]), gold).values()), calls=b))
+        calls = [v for r in rows for v in r["calls"]]
+        by = {}
+        for c in ("tp2", "fp1-nes", "mixed", "unknown", "rule-only"):
+            Rc = [r for r in rows if r["cls"] == c]
+            if not Rc: continue
+            sr, sd = sum(r["rules"] for r in Rc), sum(r["draft"] for r in Rc)
+            by[c] = dict(n=len(Rc), exact=sum(r["exact"] for r in Rc), exact_pct=round(100 * sum(r["exact"] for r in Rc) / len(Rc), 1),
+                         ready=sum(r["ready"] for r in Rc), ready_pct=round(100 * sum(r["ready"] for r in Rc) / len(Rc), 1),
+                         reasked=sum(r["reasked"] for r in Rc),
+                         edits_saved_pct=round(100 * (sr - sd) / sr, 1) if sr else None)
+        out[arm] = dict(n=len(rows), calls=len(calls),
+                        calls_by_backend=dict(sorted(Counter(("tp2" if v and "-tp2-" in v else v) or "unknown" for v in calls).items())),
+                        by_backend=by)
+    out["note"] = ("post hoc and descriptive; the backend is whatever Public AI routed the call to (not chosen, not randomised), "
+                   "so the classes differ in items as well as in backend")
+    return out
 
 def m1(build="q4_k_m"):
     """PREREG R1: the shipped SL pipeline with the Apertus 8B GGUF (CPU, GitHub Actions) on the fresh 166, against the same
@@ -1500,3 +1550,95 @@ def audit_apertus_filter():
                 generation=dict(answers=dict(sorted(ans.items())), calls=2 * len(R),
                                 mean_mass=r4(sum(R[k][o]["mass"] for k in R for o in ("ab", "ba")) / (2 * len(R))) if R else None),
                 decision=dec)
+
+
+def r19_decide(acc, ci_shared_minus_q8, byte_fp1_pct, dec_gap_pts):
+    """PREREG R19 decision rule (stated before the run): -> (outcome, flags)."""
+    low = acc <= 78.0 and ci_shared_minus_q8[0] > 0
+    far = byte_fp1_pct >= 90.0 and dec_gap_pts >= 3.0
+    if low and acc >= 65.0 and far: o = "O1"
+    elif low and byte_fp1_pct < 75.0: o = "O2"
+    elif acc >= 80.0 or ci_shared_minus_q8[0] <= 0: o = "O3"
+    else: o = "O4"
+    return o, dict(mmlu_low=low, fp1_far_more_than_tp2=far, fp1_agreement_low=byte_fp1_pct < 75.0)
+
+
+R19_OUTCOME = {"O1": "fp1-nes is likely an 8B: the headline '70B' arm may be partly 8B-served",
+               "O2": "the 70B inference is strengthened",
+               "O3": "MMLU does not separate the shared model from the v1.5 8B; the 84.4% is no longer evidence of size",
+               "O4": "inconclusive"}
+
+
+def identity_r19():
+    """PREREG R19: the certified 8B Q8_0 on the identity probes, against the recorded Public AI outputs. MMLU (250
+    questions, run.py prompt and first-[ABCD] scorer): accuracy, paired bootstrap differences against the shared model
+    (the apertus-v1.5-8b name) and the v1 8B route. Battery (792 cells): byte-identical generated text against fp1-nes and
+    the 8B name, generation decisions against both, forced-choice decisions and log-odds against tp2 and the 8B name;
+    the prompt token counts against the API's. Then the pre-registered decision rule."""
+    import random
+    R19 = os.path.join(DATA, "r19"); run = os.path.join(R19, "runs", "8b_q8_0")
+    if not os.path.exists(os.path.join(run, "battery.jsonl")): return None
+    jl = lambda p: [json.loads(l) for l in open(p, encoding="utf-8") if l.strip()]
+    ld = lambda rel: json.load(open(os.path.join(R19, rel), encoding="utf-8"))
+    items = ld("mmlu/items.json"); M = {r["j"]: r for r in jl(os.path.join(run, "mmlu.jsonl"))}
+    sh, v1 = ld("mmlu/res_swiss-ai_apertus-v1.5-8b.json"), ld("mmlu/res_swiss-ai_apertus-8b-instruct.json")
+    n = len(items); assert len(M) == n == len(sh) == len(v1)
+    gold = ["ABCD"[it["a"]] for it in items]
+    for j in range(n): assert M[j]["gold"] == sh[j]["gold"] == v1[j]["gold"] == gold[j]
+    q = [M[j]["pred"] == gold[j] for j in range(n)]; s_ = [r["pred"] == r["gold"] for r in sh]; v_ = [r["pred"] == r["gold"] for r in v1]
+    pct = lambda k, m: round(100 * k / m, 1)
+
+    def boot(a, b, seed=20261019, B=2000):
+        rng = random.Random(seed); ds = []
+        for _ in range(B):
+            idx = [rng.randrange(n) for _ in range(n)]; ds.append(100 * sum(a[i] - b[i] for i in idx) / n)
+        ds.sort(); return [round(ds[int(0.025 * B)], 1), round(ds[int(0.975 * B)], 1)]
+    acc = 100 * sum(q) / n
+    mmlu = dict(n=n, q8_0=dict(correct=sum(q), pct=pct(sum(q), n), wilson95=[round(v, 1) for v in wilson(sum(q), n)],
+                               unparsed=sum(M[j]["pred"] is None for j in range(n))),
+                shared=dict(correct=sum(s_), pct=pct(sum(s_), n)), v1_8b=dict(correct=sum(v_), pct=pct(sum(v_), n)),
+                shared_minus_q8=dict(pts=round(100 * (sum(s_) - sum(q)) / n, 1), ci95=boot(s_, q)),
+                q8_minus_v1=dict(pts=round(100 * (sum(q) - sum(v_)) / n, 1), ci95=boot(q, v_)),
+                letters_agree_shared=sum(M[j]["pred"] == sh[j]["pred"] for j in range(n)),
+                letters_agree_v1=sum(M[j]["pred"] == v1[j]["pred"] for j in range(n)),
+                raw_answers=dict(sorted(Counter(M[j]["raw"] for j in range(n)).most_common(8))))
+    rec = {k: ld(f"battery/{k}.json")["rows"] for k in ("gen_apertus-v1.5-70b", "gen_apertus-v1.5-8b", "fc_apertus-v1.5-8b", "fc_apertus-70b-instruct")}
+    Bq = {r["j"]: r for r in jl(os.path.join(run, "battery.jsonl"))}; N = len(rec["gen_apertus-v1.5-70b"]); assert len(Bq) == N == 792
+    fp1, g8, f8, tp2 = (rec[k] for k in ("gen_apertus-v1.5-70b", "gen_apertus-v1.5-8b", "fc_apertus-v1.5-8b", "fc_apertus-70b-instruct"))
+    for j in range(N):
+        b = Bq[j]
+        for z in (fp1[j], g8[j], f8[j], tp2[j]): assert (z["set"], z["item"], z["variant"], z["cell"]) == (b["set"], b["item"], b["variant"], b["cell"])
+    same = lambda a, b: a is not None and a == b
+    byte = lambda rows, strip=False: sum((Bq[j]["text"].strip() == rows[j]["text"].strip()) if strip else (Bq[j]["text"] == rows[j]["text"]) for j in range(N))
+    dec_g = lambda rows: sum(same(Bq[j]["dec"], rows[j]["dec"]) for j in range(N))
+    dec_f = lambda rows: sum((Bq[j]["lo"] > 0) == (rows[j]["lo_conv"] > 0) for j in range(N))
+
+    def corr(rows):
+        x = [Bq[j]["lo"] for j in range(N)]; y = [rows[j]["lo_conv"] for j in range(N)]
+        mx, my = sum(x) / N, sum(y) / N
+        cov = sum((a - mx) * (b - my) for a, b in zip(x, y)); vx = sum((a - mx) ** 2 for a in x); vy = sum((b - my) ** 2 for b in y)
+        return round(cov / (vx * vy) ** 0.5, 3), round(sum(abs(a - b) for a, b in zip(x, y)) / N, 2)
+    r_t, m_t = corr(tp2); r_8, m_8 = corr(f8)
+    ptok_gen = [j for j in range(N) if Bq[j]["ptok"] != fp1[j]["pt"]]
+    ptok_fc = [j for j in range(N) for c, v in Bq[j]["fc"].items() if v["ntok"] != tp2[j]["calls"][c]["pt"]]
+    bf, df, dt = byte(fp1), dec_g(fp1), dec_f(tp2)
+    ref = dict(fp1_vs_8b_name_text=sum(fp1[j]["text"] == g8[j]["text"] for j in range(N)),
+               fp1_vs_8b_name_decisions=sum(same(fp1[j]["dec"], g8[j]["dec"]) for j in range(N)),
+               b8_name_vs_tp2_forced_choice=sum((f8[j]["lo_conv"] > 0) == (tp2[j]["lo_conv"] > 0) for j in range(N)),
+               fp1_generation_vs_tp2_forced_choice=sum(fp1[j]["dec"] is not None and fp1[j]["dec"] == int(tp2[j]["lo_conv"] > 0) for j in range(N)))
+    bat = dict(n=N, text_identical_fp1=bf, text_identical_fp1_pct=pct(bf, N), text_identical_fp1_stripped=byte(fp1, True),
+               text_identical_8b_name=byte(g8), text_identical_8b_name_stripped=byte(g8, True),
+               decisions_fp1=df, decisions_fp1_pct=pct(df, N), decisions_8b_name=dec_g(g8),
+               forced_choice_tp2=dt, forced_choice_tp2_pct=pct(dt, N), forced_choice_8b_name=dec_f(f8),
+               logodds_tp2=dict(r=r_t, mean_abs_diff=m_t), logodds_8b_name=dict(r=r_8, mean_abs_diff=m_8),
+               q8_unparsed=sum(Bq[j]["dec"] is None for j in range(N)),
+               q8_generation_vs_forced_choice=sum(Bq[j]["dec"] is not None and Bq[j]["dec"] == int(Bq[j]["lo"] > 0) for j in range(N)),
+               prompt_tokens_mismatch=dict(generation=len(ptok_gen), forced_choice=len(ptok_fc), generation_cells=ptok_gen[:20],
+                                           forced_choice_cells=sorted(set(ptok_fc))[:20]),
+               q8_answers=dict(Counter(Bq[j]["text"] for j in range(N)).most_common(6)), recorded_references=ref)
+    gap = round(100 * (df - dt) / N, 1)
+    o, flags = r19_decide(acc, mmlu["shared_minus_q8"]["ci95"], 100 * bf / N, gap)
+    shards = json.load(open(os.path.join(run, "shards.json"), encoding="utf-8"))
+    return dict(mmlu=mmlu, battery=bat, decision=dict(outcome=o, reading=R19_OUTCOME[o], decisions_gap_fp1_minus_tp2_pts=gap, **flags),
+                shards=dict(n=len(shards), certificate_verified=sum(1 for g in shards if g.get("certificate")),
+                            gguf_sha256=sorted({g["gguf_sha256"] for g in shards})))

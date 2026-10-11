@@ -141,9 +141,12 @@ items from the cache and requires them to be identical; it reproduces 120/120 ov
   still differ from the official text; whether they are acceptable is open until they are annotated.
 - **RM is weak.** The model wrote 1/22 RM items exactly, and 0/19 for Graubuenden. The Graubuenden RM texts are in the
   Romansh pretraining data (S2 contamination), and that did not help. RM is reported as exploratory, outside Gleichlaut's FR/IT scope.
-- **The build differs.** The numbers are from MLX 4-bit DWQ on a laptop GPU. `make run` ships a GGUF Q4_K_M build on CPU,
-  which was not measured on this task. The live slice prints the recorded MLX result next to each live draft so that
-  differences are visible. Quantisation can change outputs (MLX g64 4-bit distorted verdicts on another task).
+- **The build differs.** The numbers are from the third-party MLX 4-bit DWQ build (`m1rkocasu/Apertus-v1.5-8B-text-MLX-4bit-DWQ`)
+  on a laptop GPU. `make run` ships a GGUF build on CPU: Q8_0 by default, Q4_K_M certified for an 8 GiB box. Both were
+  later measured on the same 120 items (PREREG R6: exact 47.5% Q8_0, 45.8% Q4_K_M; report §3.2). The live slice prints
+  the recorded MLX result next to each live draft so that differences are visible. Quantisation can change outputs: our
+  own MLX g64 4-bit build (not the DWQ build used here) distorted verdicts on another task; in the parity battery it
+  agrees with the bf16 DPO checkpoint on 548 of 648 decisions, the DWQ build on 610.
 - **Retry count, corrected.** As run on the Air, the lock (raw text, which counted the 8B's ’ -> ' as an edit) sent 25 items
   to a retry. Under the corrected, apostrophe-normalised lock that the reported numbers use, 14 would have been retried
   (12 of them in the shipped lane; the other 2 go to the code lane). No retry fixed anything: 0/25 as run, 0/14 corrected.

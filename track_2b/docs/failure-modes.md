@@ -3,9 +3,11 @@
 Every row is a measured result; the numbers and their sources are in `technical_report.md` §5 and `claims.tsv`.
 Gleichlaut uses Apertus for one job only, rewriting the wording of a French or Italian paragraph under a lock, because
 that is the one job where both sizes were measured to beat a no-model baseline. Everything else is code. Read the rows
-as evidence about this pipeline and these builds, not about Apertus in general. The research ran these tests on our own
-MLX 4-bit build, which agrees with the bf16 reference checkpoint of our research runs on 548 of 648 decisions in our parity battery (the shipped GGUF
-builds: Q4_K_M 622, Q8_0 638). After a juror from the Apertus team asked, every 8B test we had prompts and data for was
+as evidence about this pipeline and these builds, not about Apertus in general. The research ran these tests on a
+third-party MLX 4-bit DWQ build (`m1rkocasu/Apertus-v1.5-8B-text-MLX-4bit-DWQ`). In our parity battery it agrees on 610
+of 648 decisions with bf16 weights of `swiss-ai/Apertus-v1.5-8B-DPO`, an intermediate post-training checkpoint, not the
+released v1.5 8B (revision not recorded); the shipped GGUF builds agree on 622 (Q4_K_M) and 638 (Q8_0). The 548 of 648
+quoted earlier belongs to our own MLX 4-bit g64 build of the released checkpoint, which ran none of these tests. After a juror from the Apertus team asked, every 8B test we had prompts and data for was
 re-run on the shipped Q8_0 with the same prompts and items on CPU runners (PREREG R8,
 `eval/results/failure_modes_q8_0.json`): the 8B numbers below are Q8_0, the MLX number in parentheses. The 70B rows are
 whatever Public AI served under that name.

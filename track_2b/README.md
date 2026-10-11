@@ -94,7 +94,8 @@ half of the 70B's ready drafts. Without it, 75.8% of drafts are flagged, which w
 rule, while the exact-match gain grows to +14.4 points (report §6).
 
 Against rules+, our strongest no-model baseline (it also copies changed names and deletes whole sentences, 10.8%
-identical), the 70B still adds +6.6 points [1.8, 12.0] and 41.3% fewer edits [29.7, 53.0].
+identical), the 70B still adds +6.6 points [1.8, 12.0] and 41.3% fewer edits [29.7, 53.0]. The default Q8_0 adds
+the same +6.6 points [1.8, 12.0] (as many identical drafts, not all the same ones) and 31.8% fewer edits [19.3, 42.8].
 
 **What it is worth at today's volume.** BAG publishes about 57.4 French and Italian limitation texts a month that
 follow a German change. Starting from the old text with updated numbers, a translator makes about 2,020 word-level

@@ -39,6 +39,16 @@ human labels were used.
 | R18 | Apertus 8B log-probability filter on the round-5 audit findings that ship off (threshold from planted copies, applied to the 31 register findings) | planted AUROC 0.955; register kept 13, 2 of 6 confirmed (15.4%): fails, the kinds stay off |
 | R19 | the certified 8B Q8_0 on the identity probes (the 250 MMLU questions, the 792-cell battery): is `fp1-nes` an 8B? | pending |
 
+Corrections to statements of fact inside rule text (11 Oct 2026; the rules themselves are unchanged and their text below
+stays as frozen):
+- R6 says the shipped 8B is "Q4_K_M by default, Q8_0 as an option". That was the default when R6 was written; after R1
+  (M2) the default became **Q8_0**, with Q4_K_M certified as the option for an 8 GiB box.
+- R8 credits "548 of 648 parity decisions agree with bf16" to "our MLX 4-bit DWQ build". 548 of 648 is our own MLX 4-bit
+  g64 build of the released checkpoint, which ran none of the R8 tests. The research arms R8 re-runs used the
+  third-party `m1rkocasu/Apertus-v1.5-8B-text-MLX-4bit-DWQ`, which agrees on **610 of 648**. "bf16" is the bf16 weights
+  of `swiss-ai/Apertus-v1.5-8B-DPO`, an intermediate post-training checkpoint, not the released v1.5 8B (revision not
+  recorded). Sources: `docs/research/model-identity-and-quantisation.md`.
+
 ## R0. Pass rule for a drafting lane (frozen 9 Oct 2026, before the fresh 2025 run)
 
 Applies to the full pipeline (whole-paragraph locked rewrite, frozen guard stack, at most one re-ask) on a held-out set.

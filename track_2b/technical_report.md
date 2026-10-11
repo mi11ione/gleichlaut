@@ -48,7 +48,8 @@ BAG's published text 17.5% of the time against 6.0% for the no-model start, +11.
 33.1% fewer token edits; 0 errors of any severe kind among its 62 ready drafts; Q4_K_M, for an 8 GiB box: +10.8 points
 [4.8, 17.5], 36.1% ready), so the default deployment is fully air-gapped. Apertus 70B, as Public AI served it, has the
 same identical-draft rate (**17.5%**; no equivalence test): **+11.4 points, 95% CI [4.8, 18.7]**; against rules+, our
-strongest no-model baseline, **+6.6 [1.8, 12.0]**. It cuts the token edits still needed to reach BAG's text by
+strongest no-model baseline, **+6.6 [1.8, 12.0]** and 41.3% fewer edits [29.7, 53.0] (the default Q8_0 against rules+:
+also +6.6 [1.8, 12.0], as many identical drafts though not all the same ones, and 31.8% fewer edits [19.3, 42.8]). It cuts the token edits still needed to reach BAG's text by
 **42.4%** [31.0, 54.1] (vs 33.1% for Q8_0, paired difference 9.3 points [−1.3, 20.2]; vs 20.9% for Q4_K_M); **39.8%**
 of its drafts come out ready, with **0** meaning errors, stale changes or German left among them, and its ready drafts
 rarely need a fix to the amendment (3 of 66); a repeat run (seed changed; at temperature 0 the differences come from the
@@ -108,14 +109,30 @@ evaluation only.
 | SL drafting | Apertus v1.5 70B (as Public AI served it; identity inferred, below) | Public AI through a budget gateway; temperature 0; one user message, no system message of ours (the official Apertus template, if the server uses it, adds a default system turn and a developer turn; `docs/research/chat-template.md`); served model logged |
 | SL and statute drafting (default) | Apertus v1.5 8B GGUF Q8_0, sha256-pinned | 4-core CPU GitHub runners via llama.cpp (R1/M2, 200.5 s per draft); greedy; digit and number-word logit mask |
 | SL and statute drafting (8 GiB option) | Apertus v1.5 8B GGUF Q4_K_M, sha256-pinned | the same runners and decoding (R1/M1, 153.4 s per draft) |
-| research arms (dev, statutes) | Apertus v1.5 8B, MLX 4-bit DWQ | a laptop; this build agreed with the bf16 reference checkpoint of our research runs on 548 of 648 decisions in our parity battery, the Q8_0 GGUF on 638 and the Q4_K_M on 622 |
+| research arms (dev 120, statutes / R5, failure-mode tests) | Apertus v1.5 8B text, MLX 4-bit DWQ, third-party (`m1rkocasu/Apertus-v1.5-8B-text-MLX-4bit-DWQ`) | a laptop GPU. Parity battery (648 decisions) against bf16 weights of `swiss-ai/Apertus-v1.5-8B-DPO`, an intermediate post-training checkpoint, not the released v1.5 8B (revision not recorded): this DWQ build agrees on 610, the Q8_0 GGUF on 638, the Q4_K_M on 622; our own MLX 4-bit g64 build of the released checkpoint, used in no reported arm, on 548 |
 
-We do not control which weights Public AI serves. The 70B name is answered by two backends (`tp2` and `fp1-nes`,
-logged per call where the API reports it: 202 / 81 calls in the seeded rerun); `fp1-nes` also answers the
-`apertus-v1.5-8b` name with byte-identical greedy outputs in 760 of 792 cells. We infer that it serves the 70B from MMLU
-(84.4% on 250 questions, against 70.8% for the v1 8B route; that comparison mixes model version and size), which is evidence, not proof. So every 8B number here comes
+We do not control which weights Public AI serves, and the 70B rows are a mix of backends whose identity is uncertain.
+The `apertus-v1.5-70b` name is answered by two backends, `tp2` and `fp1-nes`. The headline fresh-166 run did not log the
+backend (285 calls); its seeded rerun on the same items (R2, which also passes R0) did: 202 calls `tp2`, 81 `fp1-nes`.
+On a 792-cell research battery `fp1-nes` answered the 70B name and gave byte-identical greedy text to the
+`apertus-v1.5-8b` name in 760 of 792 cells; the research log's "all 1584 calls were served by the 8B vLLM backend" refers
+to that 8B name (a third backend, `tp8-pp2`), not to the 70B name or to any drafting run. The research inferred one
+shared model behind both names and called it the 70B from MMLU on the 8B name (84.4% on 250 questions, against 70.8% for
+the v1 8B route; that comparison mixes model version and size): evidence, not proof. Re-scored by backend (post hoc,
+descriptive, below; `eval/results/fresh166_by_backend.json`), the rerun's `fp1-nes`-only items come out with more
+ready drafts and more edits saved than its `tp2`-only items; the router, not we, assigned the items, so the classes
+differ in items (and in how often the re-ask ran) as well as in backend. So every 8B number here comes
 from local runs, and the 70B rows describe "the 70B as Public AI served it"; the 8B rows carry a digit and number-word
 logit mask that Public AI's API does not offer for the 70B (an OpenAI-compatible server such as vLLM could, via `logit_bias`) (the 70B's 3 number-word drafts were all flagged). The 8B GGUF builds come from a third-party text-only extraction of `swiss-ai/Apertus-v1.5-8B` (`docs/dependencies.md`); llama.cpp applies the chat template embedded in the GGUF, which is byte-identical to the official `swiss-ai/Apertus-v1.5-8B` template (sha256 `d23af285…`, both builds; `docs/research/chat-template.md`). Before our user message it adds the template's default system turn ("You are Apertus […] Omni, a multimodal assistant developed by the Swiss AI Initiative […]", full text in that note) and the developer turn "Deliberation: disabled / Tool Capabilities: disabled". Asked to continue each held-out answer word for word from its first half (PREREG R16), neither the 70B nor the 8B reproduced the next ten words of any of the 160 (0 of 62 for texts published after any plausible cutoff, 3 of 120 for the 70B on texts unchanged since before 2023): no evidence of memorisation, from a probe that recalls little even of long-standing texts.
+
+| 70B arm, items by backend of their calls (post hoc) | items | exact | ready | re-asked | edits saved vs rules-only |
+|---|---|---|---|---|---|
+| headline run: backend not logged | 154 | 21 (13.6%) | 59 (38.3%) | 98 | 42.6% |
+| R2 rerun: every call `tp2` | 88 | 14 (15.9%) | 40 (45.5%) | 49 | 39.3% |
+| R2 rerun: every call `fp1-nes` | 27 | 5 (18.5%) | 19 (70.4%) | 8 | 51.3% |
+| R2 rerun: calls on both | 39 | 3 (7.7%) | 3 (7.7%) | 39 | 33.8% |
+
+Both arms also have 12 rule-only items (no model call).
 
 ### 3.2 How the model is used, and which size
 
@@ -128,8 +145,8 @@ none did in its 166 drafts).
 items): both 8B GGUF builds pass the rule (Q4_K_M: flagged 63.9%, ready drafts 0 meaning errors and 3 stale or German;
 Q8_0: flagged 62.7%, ready drafts 0 / 0 / 0), so under R1 the SL default is the local 8B. In this pipeline, with one run per
 build and no bf16 8B run, quantisation mattered about as much as size: Q8_0 has the same exact-match rate as the 70B (no equivalence test); on edits saved (33.1% vs 42.4%) the aggregate difference [−1.3, 20.2]
-includes zero, though the 70B needs fewer edits on 81 items and Q8_0 on 26; Q4_K_M is clearly behind (20.9%,
-difference [8.7, 34.9]). The 70B is worth its endpoint where
+includes zero, though the 70B needs fewer edits on 81 items and Q8_0 on 26; Q4_K_M is clearly behind (20.9%; against
+the 70B [8.7, 34.9], against Q8_0 [6.0, 19.9], paired 95% CIs of the difference in edits saved). The 70B is worth its endpoint where
 editing time matters (ready drafts needing a fix: 3 of 66, against 25 of 62 for Q8_0 and 33 of 60 for Q4_K_M, mostly one
 insurance term). The research-phase MLX build had flagged 85.0% on dev
 items without the re-ask. Federal statutes (pre-registered R5, 120 paragraphs): the 70B is no better (exact
