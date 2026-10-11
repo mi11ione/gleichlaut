@@ -41,7 +41,7 @@ old one. That finds four French texts naming the wrong drug class, four ungramma
 texts still saying «communiqué» where the register now says «transmis» (11 of 11 notices confirmed; 4 change the meaning).
 In all, blind Claude annotators confirm 17 of the 27 findings (63.0%): 12 change a condition (44.4%) and 5 are minor, such as typos next to numbers (the 17th is the number check's view of the
 Italian typo «se mesi», which the editorial check also finds). In the review register the 27 findings and 11 terminology notices (38 in all) become 18 issues, one decision each,
-3 of them probably equivalent wording and shown collapsed: sibling products that share a divergence are one issue. On two lists it was never designed on, MiGeL and the Analysenliste, **6 of 11** findings are confirmed (4 change a condition); the
+grouped by the blind labels (the 4 issues the annotators did not confirm, which include the 3 the audit itself marks as probably equivalent wording, are shown collapsed): sibling products that share a divergence are one issue. On two lists it was never designed on, MiGeL and the Analysenliste, **6 of 11** findings are confirmed (4 change a condition); the
 Analysenliste's Italian, for example, makes a test billable after 13 repetitions where German and French say 14. Each
 finding was read by two blind Claude annotators, the second in reverse order, and a third where their answers differed
 (pre-registered R14: they agree whether a finding is real on all 49, κ 1.000); the confirmed counts above are their majority. A single first
@@ -70,7 +70,7 @@ blind Claude annotators' majority):
 | **All, in the register** | **38** | **28** | **16** | **12** | **10** |
 | Experimental checks (off; shown apart) | 31 | 6 | 3 | 3 | 25 |
 
-In the register the 38 become 18 issues (3 of them probably equivalent wording, shown collapsed); the experimental
+In the register the 38 become 18 issues (the 4 the annotators did not confirm shown collapsed); the experimental
 findings are not part of the 18 and are decided and counted on their own.
 A check that does not rest on Claude is pre-registered (R20): the 34 confirmed findings are frozen as predictions that BAG
 will correct them and the 35 unconfirmed ones as negative predictions (`eval/predictions/audit_20261006_predictions.json`,
