@@ -8,7 +8,7 @@ Italian: at the published price, the two readings differ by **CHF 13,577 a year 
 6% in German and French and 12% in Italian. Gleichlaut's operator and negation module adds Amvuttra, whose French stop
 rule says an NIS increase "≤ 10" points where German and Italian say "> 10": one patient's stop decision is worth
 **CHF 338,743 a year** at list price ([formulas](track_2b/eval/results/stakes.json)). Same drug, same law, three
-answers. Gleichlaut found all of them.
+answers. Gleichlaut flags each one.
 
 **[Open the review register](https://gleichlaut.mi11ion.io/)** · **[Watch the 2-minute demo](https://gleichlaut.mi11ion.io/demo.mp4)** ·
 [Project README](track_2b/README.md) · [Technical report](track_2b/technical_report.md) · Hack Apertus, Track 2B, team 444
