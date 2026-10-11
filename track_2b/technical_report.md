@@ -9,6 +9,14 @@ Numbers never reach the model; frozen deterministic checks decide what is ready.
 - **Review register (live):** https://gleichlaut.mi11ion.io/ · **Demo video:** https://gleichlaut.mi11ion.io/demo.mp4
 - **Declared maturity:** the audit is a deployable prototype; drafting is a feasibility study running in shadow mode
 
+**At a glance.**
+- **The problem:** Swiss drug-reimbursement conditions are binding in German, French and Italian, and some disagree:
+  for one Nemluvio patient the two readings differ by CHF 13,577 a year.
+- **The audit ships today, with no model:** 18 issues to decide; 12 confirmed findings change a condition.
+- **Drafting with Apertus 8B on an ordinary CPU:** 33.1% fewer edits on 166 held-out amendments with 0 meaning errors
+  in its ready drafts, and 28.4% fewer on BAG's live August and September 2026 lists.
+- **Runs under the office's control:** offline, Apache-2.0, in BAG's own FHIR format; `make run` re-derives every number.
+
 ## 1. Summary
 
 **The job.** BAG maintains the 1,688 reimbursement conditions ("limitations") of the Spezialitätenliste in German,
@@ -160,7 +168,9 @@ No personal data.
 
 Exact = equal to BAG's published text after whitespace/apostrophe normalisation. CIs: paired cluster bootstrap over
 German changes. Every ready non-exact draft was read in full; a seeded 20 flagged drafts estimate review load. Pass rule
-(pre-registered): unflagged real errors ≤ 1%, unflagged stale + untranslated ≤ 2%, exact ≥ rules + 5, flagged ≤ 70%.
+(pre-registered) for drafts to be accepted after a light check: unflagged real errors ≤ 1%, unflagged stale +
+untranslated ≤ 2%, exact ≥ rules + 5, flagged ≤ 70%. As a review aid, where every draft is read, a draft only needs to
+be a better start than the old text; the edits saved measure that, held out and on the live months.
 
 | Setup (FR+IT) | Set | n | Exact | Δ vs rules [95% CI] | Flagged | Ready | Ready with real / stale / untranslated | Rule |
 |---|---|---|---|---|---|---|---|---|

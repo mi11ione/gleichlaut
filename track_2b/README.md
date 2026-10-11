@@ -85,7 +85,8 @@ the 4.
 ## Results (pre-registered, held out)
 
 Test set: 166 French/Italian amendments from SL changes between Jun 2025 and Feb 2026, 154 in edit patterns never seen
-during design. The checks and all their resources were hashed before any output existed (the freeze predates this
+during design. Drafting is judged twice: as a review aid (does the draft need fewer edits than the old text?) and
+against our pre-registered rule for accepting drafts after only a light check. The checks and all their resources were hashed before any output existed (the freeze predates this
 repository; `eval/prereg/PREREG.md` says what can and cannot be verified from here). Could Apertus have seen BAG's answers? Asked to
 continue each from its first half (PREREG R16), neither the 70B nor the 8B reproduced the next ten words of any of the
 160 (nor of 62 texts first published in Aug and Sep 2026; v1.5's training-data cutoff is not documented; 3 of 120 for the 70B on texts unchanged since before 2023,
@@ -98,7 +99,7 @@ so the probe recalls little even of those).
 | Drafts that pass every check ("ready") | 37.3% | 36.1% | **39.8%** | |
 | Errors in ready drafts (meaning / stale / German left) | **0 / 0 / 0** | 0 / 1 / 2 | **0 / 0 / 0** | |
 | Ready drafts that need a fix to the amendment | 25 of 62 (22 named by the terminology note) | 33 of 60 (27 named by it) | **3 of 66** | |
-| Pre-registered pass rule | **PASS** | **PASS** | **PASS** (and again on a repeat run) | |
+| Pre-registered rule for accepting drafts after a light check | **PASS** | **PASS** | **PASS** (and again on a repeat run) | |
 
 **Would the annotators have seen a meaning error?** Measured (pre-registered R11): one meaning error of 7 kinds (dropped condition, and/or, obligation, scope, direction, negation, number) planted into each of 66 ready drafts was labelled a meaning error by both blind annotators 66 of 66 times (95% CI lower bound 94.5%), with BAG's published text shown and with it hidden alike, and 0 of the same 66 drafts left untouched were. Errors written inside the amended sentence so that they read like part of the amendment (pre-registered R14: widened or narrowed scope, a half-applied condition, a number on the wrong noun, and/or) were caught by both 38 of 38 times (lower bound 90.8%), with 0 false alarms on the same 38 drafts untouched; real errors are subtler: of 3 drafts labelled a meaning error earlier, both annotators agree on 1 ([eval/labels/PROTOCOL.md](eval/labels/PROTOCOL.md)). On 17 real errors, French or Italian texts that BAG corrected without any German change (pre-registered R17), both annotators flagged 5 with BAG's text shown and 7 without it (either: 11), and called the same 4 meaning errors each time; 10 of the 17 are one house-wording sweep that they accept as equivalent. Apertus 70B, tried as a non-Claude annotator, confirmed all 49 audit findings and flagged 2 of the 17, so it does not discriminate (κ 0.000 with the Claude majority).
 
