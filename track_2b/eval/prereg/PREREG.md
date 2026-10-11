@@ -40,6 +40,7 @@ human labels were used.
 | R19 | the certified 8B Q8_0 on the identity probes (the 250 MMLU questions, the 792-cell battery): is `fp1-nes` an 8B? | MMLU 78.4% (shared model 84.4%, v1 8B 70.8%); text equal to fp1-nes in 40.7% of cells, decisions 88.6% (fp1-nes) vs 90.4% (tp2): inconclusive (O4) |
 | R20 | the 6 Oct 2026 audit as frozen predictions, scored against BAG's own later corrections (an oracle that is not Claude) | pending (first scoring snapshot expected 1 Nov 2026) |
 | R21 | a task-specific system message on top of the house wording (v4-system, certified Q8_0): fresh 166 (A) and both live months (B) | A meets R0 (13.9% identical, +7.8; frozen 17.5%); no live month (Aug 1 REAL, Sep flagged 70.7%): not a candidate, default unchanged |
+| R22 | stricter alignment for the operator and negation module (round 5b), held half of the register and R15's held planted set | pending |
 
 Corrections to statements of fact inside rule text (11 Oct 2026; the rules themselves are unchanged and their text below
 stays as frozen):
@@ -915,6 +916,79 @@ pre-registered task-specific system prompt should be tried. R21 tests one fixed 
   live month in (B). Otherwise it is reported as it comes out, criterion by criterion, and the frozen default stays.
   Either way this repository does not change the default: a candidate is reported for the team to decide, after which a
   default change would need its own record. The variant is not changed after any output is seen.
+
+## R22. Stricter alignment for the operator and negation module (frozen 11 Oct 2026, before any rule change)
+
+A juror: the operator and negation module (R15: `operator`, `negation`, `number_word`) found the real AMVUTTRA.01a,
+BEYONTTRA and VYNDAQEL.01b, but ships opt-in because 6 of its 31 register findings are confirmed (19.4%; R18's Apertus
+filter did not help). Raise its precision enough to ship it on by default, honestly. R22 writes a second rule set
+beside the frozen R15 block (which stays byte for byte as frozen, `R5_ON` untouched) and fixes now how it is judged.
+
+- **The split, as R15 (`audit.half()`: md5 of the limitation id even = dev).** Of the 31 R15 register findings, **dev
+  (10)**: O01 AMVUTTRA.01a FR (real), G03 BEYONTTRA IT (real), G05 ERBITUX5 FR, G13 MABTHERA.02 FR, G16 TRUXIMA.02 FR,
+  W03 LEQVIO.01 IT, W04 PRALUENT.01a IT, W06 STELARAPP4 FR, W07 STELARAPP4 IT, W09 TEPKINLY.01b FR (8 not). **Held
+  (21)**: O02 NPLATE4 IT, O03 OPDIVO.03a IT, O04 WYNZORA IT, G01 and G02 AMVUTTRA.02 FR, G04 DECADURABOL2 IT (minor), G06
+  GALAFOLD3 IT, G07 HEMLIBRA.XXb IT, G08 KEYTRUDA.03 FR, G09 KEYTRUDA.03 (KN407) FR, G10 KEYTRUDA.XX IT, G11 LIORESAL FR,
+  G12 LIORESAL IT, G14 RIXATHON.02 FR, G15 RUXIENCE.02 FR, G17 VYNDAQEL.01b IT (real), G18 ZAVICEFTA2 FR (minor), W01
+  HEMLIBRA.XXb FR (minor), W02 IDEFIRIX IT, W05 REPATHA.01a IT, W08 TEPKINLY.01a FR. Held precision before: 4 of 21 =
+  **19.0%**. Of the three named finds, AMVUTTRA.01a and BEYONTTRA are dev, VYNDAQEL.01b is held.
+- **What is and is not unseen, stated now.** Design data are the dev-half register texts and findings, their R15
+  annotator notes, and the R15 dev planted copies (`tools/audit_inject.py --protocol r15 --half dev`, seed 20261015).
+  No held-half limitation text is opened and the new rules are not run on the held half (register or planted) before
+  the freeze. But the held findings' ids and one-line annotator notes have been public since R15
+  (`eval/labels/audit_r15_20261006.tsv`, the docs' list of false-positive kinds) and were read when this rule was
+  written; the classes named below come from the dev notes and from that public list (sentence misalignment, FR
+  restrictive `ne … que`, a negation covering an enumeration, range and stop-rule pairing, number words in unrelated
+  clauses). So held precision measures whether class-level rules remove known classes without item tuning, not an unseen
+  error rate; it is reported with that caveat. No rule may name a product, a limitation or a held phrase.
+- **Planned changes (class-level; lexicons and the one threshold choice below written on dev only).** Deterministic,
+  stdlib, no model; a new block `round 5b (PREREG R22)` in `audit.py` reusing the R15 parser and sentence splitter.
+  (1) *Stricter alignment for `operator`.* Directions are compared per aligned sentence pair, never across the whole
+  text (R15 paired equal values anywhere in the text: the wrong clause or date). Threshold choice fixed now: the
+  strictest of (a) R15's judged pairs `aligned()`, (b) every `align()` pair with cost ≤ 0.4, (c) every `align()` pair,
+  whose operator recall on the dev planted copies is ≥ 65%. (2) *Ranges and stop rules.* Both ends of a range written
+  with glue words (`vom … bis zum`, `du … au`, `dal … al`, `zwischen … und`, `entre … et`, `tra … e`, dates included)
+  have no direction. A bound is negated when a clause negation precedes it anywhere in its sentence (a negation covers a
+  whole enumeration: `non … più di 60 g … e più di 120 g`), or, in German, follows it in its clause (verb-final:
+  `mindestens 20 … nicht erreichen`). Occurrences of a value are paired in order; a finding only when the two bounds have
+  the same negation status and opposite directions; a negated bound against an un-negated one is not judged (¬≥ = <;
+  scope too uncertain). (3) *Only clause negations trigger a `negation` finding.* Word negations block a finding but no
+  longer raise one: hyphen compounds (`nicht-…`, `non-…`), the R15 narrow list (ohne, unzureichend, refraktär, sans,
+  senza …), FR/IT `non` before an adjective or participle (R15 already), FR bare `non` (French negates a clause with
+  `ne`/`n'`), and German attributive `nicht` (`nicht` + an inflected adjective or participle before a noun: `bei nicht
+  abgeschlossener Familienplanung`). (4) *Restriction pairs.* `nur`, `lediglich`, `ausschliesslich` / `seulement`,
+  `uniquement`, `exclusivement`, `ne … que` (any distance in the sentence, across commas) / `solo`, `soltanto`,
+  `solamente`, `unicamente`, `esclusivamente`, `non … che` count as restriction words: they block a finding on the other
+  side, and a `ne … que` / `non … che` is not a clause negation. (5) *Misalignment guard for `negation`.* A one-sided
+  clause negation in pair k is reported only when, over pairs k−1, k, k+1 and the unaligned sentences between them, the
+  negated side has more clause negations than the other side (a negation moved to a neighbouring sentence by the
+  alignment is not a finding). (6) *`number_word`: substitutions only.* A number-word value is reported only when the
+  aligned sentence of the other side states a different value in its place (a one-sided number word, or a one-sided
+  value of the same unit class); an omission (a list announced as "drei Therapien", a count the other side leaves
+  implicit) is not. A number word glued to or compounded with the next word on the other side (`deuxlignes`,
+  `Fünffache`, `dreimal`) reconciles it.
+- **Freeze.** The commit of the round-5b block; its byte and rule-logic sha256 (as `r5_logic_sha`) go into the results;
+  `tests/test_audit_r22.py` fails if the logic drifts. After the freeze only reporting may change. R15's block, its
+  fingerprints, `findings_r5`, the 38 existing findings and every committed R15/R18 result stay unchanged (tests).
+- **Register run and labels.** The frozen R22 rules on the 6 Oct 2026 register (`data/audit/audit_r22_20261006.json`).
+  An R22 finding **reuses** the R15 final label when an R15 finding has the same limitation, language and kind and (operator)
+  the same value, (negation) the same negated side and an overlapping target sentence, (number_word) a shared value on
+  the same side. Every other R22 finding is **new**: all new findings (both halves) get two fresh blind Claude
+  annotators and a third on disagreement (`eval/labels/PROTOCOL.md`; R15's worklist fields and question, neutral ids
+  `S00`…, `random.Random(20261022)` order, the second annotator in reverse). No human labels, no model API calls.
+- **Planted recall (held, R15's copies).** The R15 held planted set regenerated (seed 20261016, 100 per type and
+  language, eligibility under the frozen R15 audit as in R15), checked identical by re-scoring it with the R15 rules
+  (operator 149, negation dropped 88, added 111, number word 168 of 200 must reproduce), then scored with R22 in place
+  of R15 under R15's detection rule (`tools/audit_inject.py --protocol r22 --half held`). Reported per type and
+  language, Wilson 95%, beside R15 on the same copies; the dev planted run beside it, labelled dev.
+- **Decision rule, fixed now.** The module ships **ON by default** only if all hold: (i) on the **held** half, precision
+  of the R22 findings (all three kinds pooled; confirmed = real or minor by the final label) **≥ 50%**; (ii) held planted
+  recall **≥ 60% for operator flips** and **≥ 40% for dropped negations**; (iii) **AMVUTTRA.01a (dev), BEYONTTRA (dev)
+  and VYNDAQEL.01b (held)** are still found, by the same kind and language. Otherwise it stays opt-in and the result is
+  reported as it is. Reported beside the decision, not deciding: precision per kind and on dev and all, strict-real
+  precision, Wilson 95% intervals, held recall for added negations and number words. This repository does not flip the
+  default itself: a pass is reported for the maintainers to integrate (`score.audit_r22` -> `eval/results/audit_r22.json`,
+  re-derived by `replay`).
 
 ## R4. Post-freeze changes
 
