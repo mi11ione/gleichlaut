@@ -34,7 +34,7 @@ reviewer's own language. On 166 held-out amendments, with every check frozen bef
   times as many drafts word for word identical to it as the no-model start, and **0 meaning errors** in its ready drafts.
 - **Apertus 70B, optional:** **42.4% fewer edits**, at **CHF 0.0024 per draft**.
 
-**Every number re-runs.** `cd track_2b && make run` (Docker, CPU, about two minutes, no network) re-executes every
+**Every number re-runs.** `cd track_2b && make run` (Docker, CPU, a few minutes, no network) re-executes every
 recorded model call and re-derives every figure; [claims.tsv](track_2b/claims.tsv) maps each number to its source.
 
 ## Why Apertus, and why this size

@@ -247,7 +247,7 @@ At this volume a per-token Swiss endpoint costs CHF 0.14 a month; dedicated 70B 
 
 ## 7. Reproducibility
 
-`make run` (Docker, CPU, `--network none` unless `LLM_BASE_URL` is set; about two minutes; `make local-run` without Docker) verifies the
+`make run` (Docker, CPU, `--network none` unless `LLM_BASE_URL` is set; a few minutes; `make local-run` without Docker) verifies the
 sha256 of the frozen code, check resources and items; re-executes the recorded 70B runs and the
 recorded 8B Q8_0 CPU run (R9) end-to-end from the recorded responses (every request rebuilt byte-for-byte and found by its
 payload hash: 285 of 285 for the headline run, 283 of 283 for the 70B rerun, 242 of 242 for dev, 294 of 294 for the 8B);

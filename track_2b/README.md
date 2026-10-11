@@ -230,7 +230,7 @@ Phase-1 pilot pack in German (draft mandate, protection-needs analysis, manageme
 ## Run it
 
 ```bash
-make run            # Docker, CPU, about two minutes, no network (--network none unless LLM_BASE_URL is set)
+make run            # Docker, CPU, a few minutes, no network (--network none unless LLM_BASE_URL is set)
 make local-run      # the same without Docker: Python ≥ 3.9, lxml for the XSD check (1–3 min on a laptop)
 ```
 
