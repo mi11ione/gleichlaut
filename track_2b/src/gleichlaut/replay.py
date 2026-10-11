@@ -54,6 +54,7 @@ def compute():
     res["size_compare"] = score.size_compare()
     res["shadow_20260901_20261001"] = score.shadow_month()
     res["shadow_20260801_20260901"] = score.shadow_month("20260801-20260901", r0=True)   # PREREG R10: second, prospective month, R0 criteria
+    res["live_edits"] = score.live_edits()                                    # descriptive: edits saved on the two live months
     res["r12_terms"] = score.r12_terms()          # PREREG R12: house wording in the prompt (v3-terms) beside the frozen pipeline, both live months
     res["audit_recall"] = score.audit_recall()
     res["audit_grouping"] = score.audit_grouping()

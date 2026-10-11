@@ -33,6 +33,9 @@ reviewer's own language. On 166 held-out amendments, with every check frozen bef
 - **Apertus 8B, on an ordinary CPU, fully offline:** **33.1% fewer edits** to reach BAG's published text, almost three
   times as many drafts word for word identical to it as the no-model start, and **0 meaning errors** in its ready drafts.
 - **Apertus 70B, optional:** **42.4% fewer edits**, at **CHF 0.0024 per draft**.
+- **On the live feed too:** on BAG's August and September 2026 lists, the shipped 8B's drafts needed **28.4% fewer
+  edits** [14.9, 38.6] and the 70B's **51.8%** [29.7, 68.7], ready and flagged drafts alike: the same picture as the
+  held-out test, on the texts BAG actually published that month.
 
 **Every number re-runs.** `cd track_2b && make run` (Docker, CPU, a few minutes, no network) re-executes every
 recorded model call and re-derives every figure; [claims.tsv](track_2b/claims.tsv) maps each number to its source.
@@ -48,8 +51,13 @@ measured too: Q8_0 saves 12.2 points more edits than Q4_K_M on the same items.
 
 ## Built to be used
 
+- **Cost against benefit:** one audit run takes about a minute of CPU and no model, and puts every binding condition
+  that differs by language in front of a decision, each worth thousands of francs per patient-year; a draft costs
+  nothing with the 8B on your own CPU, or CHF 0.0024 with the 70B.
 - **Runs where BAG works:** one CPU server or a laptop, Docker or plain Python, Apache-2.0 code and weights. At runtime
   it reads only BAG's own public feed; with the 70B, the office's own endpoint.
+- **Speaks BAG's own format:** Gleichlaut reads BAG's FHIR publication feed and writes its drafts back in that feed's own
+  shape (ClinicalUseDefinition), so they land in BAG's data model, not a new one.
 - **Fits the existing process:** drafts map onto the French and Italian fields of BAG's ePL editor; translators get XLIFF
   for STAR Transit and a TBX termbase mined from BAG's own wording; decisions export as CSV for the federal records
   system (GEVER); the audit answers the "translations congruent?" question of BAG's triennial review for the whole list.

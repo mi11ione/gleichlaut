@@ -46,7 +46,8 @@ kind (Q4_K_M, for an 8 GiB box, passes too: +10.8 points [4.8, 17.5]). Apertus 7
 need a fix to the amendment (3 of 66), and a repeat run passes the same rule. A 70B draft costs **CHF 0.0024** at a
 Swiss provider's published price. The annotators behind these zeros were tested themselves: they caught all 66 planted
 meaning errors and all 38 written to read like part of the amendment, and flagged 5 of 17 real errors BAG had corrected (§6). In shadow mode, drafting runs on every new SL release from
-the live public feed and grades itself against what BAG publishes (§8). `make run` re-executes the recorded runs offline and
+the live public feed and grades itself against what BAG publishes (§8): on the August and September 2026 lists the 8B's
+drafts needed 28.4% fewer edits [14.9, 38.6] and the 70B's 51.8% [29.7, 68.7], the same picture as the held-out test. `make run` re-executes the recorded runs offline and
 re-derives every number.
 
 ## 2. Architecture

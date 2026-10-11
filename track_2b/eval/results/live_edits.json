@@ -1,0 +1,120 @@
+{
+ "70b": {
+  "20260801-20260901": {
+   "edits_saved_ci95": [
+    25.3,
+    65.3
+   ],
+   "edits_saved_pct": 44.8,
+   "n": 22,
+   "token_edits_from_draft": 388,
+   "token_edits_from_rules": 703
+  },
+  "20260901-20261001": {
+   "edits_saved_ci95": [
+    16.5,
+    78.0
+   ],
+   "edits_saved_pct": 57.3,
+   "n": 41,
+   "token_edits_from_draft": 378,
+   "token_edits_from_rules": 886
+  },
+  "pooled": {
+   "edits_saved_ci95": [
+    29.7,
+    68.7
+   ],
+   "edits_saved_pct": 51.8,
+   "n": 63,
+   "token_edits_from_draft": 766,
+   "token_edits_from_rules": 1589
+  }
+ },
+ "q4_k_m": {
+  "20260901-20261001": {
+   "edits_saved_ci95": [
+    -6.2,
+    35.9
+   ],
+   "edits_saved_pct": 20.9,
+   "n": 41,
+   "token_edits_from_draft": 701,
+   "token_edits_from_rules": 886
+  },
+  "pooled": {
+   "edits_saved_ci95": [
+    -6.2,
+    35.9
+   ],
+   "edits_saved_pct": 20.9,
+   "n": 41,
+   "token_edits_from_draft": 701,
+   "token_edits_from_rules": 886
+  }
+ },
+ "q8_0": {
+  "20260801-20260901": {
+   "edits_saved_ci95": [
+    19.5,
+    50.6
+   ],
+   "edits_saved_pct": 33.3,
+   "n": 22,
+   "token_edits_from_draft": 469,
+   "token_edits_from_rules": 703
+  },
+  "20260901-20261001": {
+   "edits_saved_ci95": [
+    -1.4,
+    38.3
+   ],
+   "edits_saved_pct": 24.6,
+   "n": 41,
+   "token_edits_from_draft": 668,
+   "token_edits_from_rules": 886
+  },
+  "pooled": {
+   "edits_saved_ci95": [
+    14.9,
+    38.6
+   ],
+   "edits_saved_pct": 28.4,
+   "n": 63,
+   "token_edits_from_draft": 1137,
+   "token_edits_from_rules": 1589
+  }
+ },
+ "v3_terms_q8_0": {
+  "20260801-20260901": {
+   "edits_saved_ci95": [
+    21.6,
+    64.4
+   ],
+   "edits_saved_pct": 40.0,
+   "n": 22,
+   "token_edits_from_draft": 422,
+   "token_edits_from_rules": 703
+  },
+  "20260901-20261001": {
+   "edits_saved_ci95": [
+    32.6,
+    82.1
+   ],
+   "edits_saved_pct": 65.6,
+   "n": 41,
+   "token_edits_from_draft": 305,
+   "token_edits_from_rules": 886
+  },
+  "pooled": {
+   "edits_saved_ci95": [
+    32.8,
+    71.0
+   ],
+   "edits_saved_pct": 54.2,
+   "n": 63,
+   "token_edits_from_draft": 727,
+   "token_edits_from_rules": 1589
+  }
+ }
+}

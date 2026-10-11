@@ -164,7 +164,8 @@ Sektion Arzneimittelaufnahmen and the ePL team. Operator runbook: [docs/operatio
 
 **Two live months, in short.** On the August and September 2026 lists no draft marked ready changed a meaning, with
 either model: the meaning-error criterion of our rule held on live data (August's ready drafts carried BAG's own typo
-"GLP1-1-Analogon" through, which the German-left criterion counts). The review-load criterion (at most 70% of drafts
+"GLP1-1-Analogon" through, which the German-left criterion counts). Drafting helps on live data: the shipped 8B's drafts needed 28.4% fewer edits [14.9, 38.6] than the old
+text with updated numbers, the 70B's 51.8% [29.7, 68.7], ready and flagged drafts alike. The review-load criterion (at most 70% of drafts
 flagged) is the open target: 81.8–92.7% were flagged, and BAG's house terms plus a task prompt brought September to 70.7%.
 The details, month by month and criterion by criterion:
 

@@ -354,6 +354,47 @@ def post_edit(final=None):
     return out
 
 
+def live_edits(months=("20260801-20260901", "20260901-20261001"), lanes=("q8_0", "q4_k_m", "70b", "v3_terms_q8_0")):
+    """Edits saved on the live months (descriptive, computed after the runs from their recorded drafts; nothing tuned):
+    the same post-editing proxy as post_edit (token edits to reach the text BAG published, from the draft vs from the
+    rules-only start), every compared item of each shadow month, ready and flagged drafts alike. Pooled over both months
+    per lane, with the same cluster bootstrap over German changes (4,000 resamples, seed 7)."""
+    import random
+    norm = core.lock.norm; out = {}
+    for lane in lanes:
+        rows = []
+        for m in months:
+            base = os.path.join(DATA, "shadow", m)
+            fp = os.path.join(base, lane, "records.jsonl")
+            if not os.path.exists(fp): continue
+            I = {x["key"]: x for x in json.load(open(os.path.join(base, "items.json"), encoding="utf-8"))}
+            for l in open(fp, encoding="utf-8"):
+                r = json.loads(l); x = I.get(r["key"])
+                if not x or not x.get("tgt_new") or "out" not in r: continue
+                gold = norm(x["tgt_new"]); r1 = norm(core.gl2.rules(x["de_old"], x["de_new"], x["tgt_old"], x["lang"])[0])
+                rows.append(dict(month=m, pair=m + ":" + r["key"].rsplit("-", 1)[0],
+                                 rules=sum(S["edits"](r1, gold).values()), draft=sum(S["edits"](norm(r["out"]), gold).values())))
+        if not rows: continue
+        o = {}
+        for g in [m for m in months] + ["pooled"]:
+            R = [r for r in rows if g == "pooled" or r["month"] == g]
+            if not R: continue
+            sr, sd = sum(r["rules"] for r in R), sum(r["draft"] for r in R)
+            e = dict(n=len(R), token_edits_from_rules=sr, token_edits_from_draft=sd,
+                     edits_saved_pct=round(100 * (sr - sd) / sr, 1) if sr else 0.0)
+            by = {}
+            for r in R: by.setdefault(r["pair"], []).append(r)
+            ks = sorted(by); rng = random.Random(7); bs = []
+            for _ in range(4000):
+                smp = [r for k in (rng.choice(ks) for _ in ks) for r in by[k]]
+                a, b = sum(r["rules"] for r in smp), sum(r["draft"] for r in smp)
+                if a: bs.append(100 * (a - b) / a)
+            bs.sort(); e["edits_saved_ci95"] = [round(bs[int(0.025 * len(bs))], 1), round(bs[int(0.975 * len(bs))], 1)]
+            o[g] = e
+        out[lane] = o
+    return out
+
+
 def shadow_month(run="20260901-20261001", r0=False):
     """A shadow month on the public feed (items mined by the shadow workflow from BAG's feeds of the two dates), drafted by
     every model whose run folder exists (q4_k_m, q8_0: shadow workflow, CPU, --network none; 70b: development gateway),
