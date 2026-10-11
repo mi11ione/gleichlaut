@@ -684,3 +684,11 @@ r21_aug_gain	+18.2	eval/results/r21_system.json	sets.20260801-20260901.v4_system
 r21_labelled	29	eval/results/r21_system.json	annotators.n	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 r21_tiebreak	10	eval/results/r21_system.json	annotators.tiebreak	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 r21_kappa	0.931	eval/results/r21_system.json	annotators.needs_fix_kappa	{:.3f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+stakes_nemluvio_chf	13,577	eval/results/stakes.json	headline.nemluvio_chf_per_patient_year	{:,.0f}	python3 tools/stakes.py	README/report/notes
+stakes_nemluvio_doses	6.5	eval/results/stakes.json	headline.nemluvio_extra_doses	{}	python3 tools/stakes.py	README/report/notes
+stakes_amvuttra_chf	338,743	eval/results/stakes.json	headline.amvuttra_chf_per_patient_year	{:,.0f}	python3 tools/stakes.py	README/report/notes
+stakes_amvuttra_dose	84,686	eval/results/stakes.json	headline.amvuttra_chf_per_dose	{:,.0f}	python3 tools/stakes.py	README/report/notes
+stakes_diaphin_pct	5.7	eval/results/stakes.json	headline.diaphin_pct	{:.1f}	python3 tools/stakes.py	README/report/notes
+stakes_diaphin_pack_max	20.78	eval/results/stakes.json	cases.1.chf_difference_per_pack_max	{:.2f}	python3 tools/stakes.py	README/report/notes
+stakes_etanercept_max	10,850	eval/results/stakes.json	headline.etanercept_chf_per_patient_year_max	{:,.0f}	python3 tools/stakes.py	README/report/notes
+stakes_dupixent_asthma	7,208	eval/results/stakes.json	headline.dupixent_asthma_chf_per_patient_year	{:,.0f}	python3 tools/stakes.py	README/report/notes

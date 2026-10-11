@@ -413,6 +413,18 @@ for cid, path, fmt in (("r21_a_exact", "sets.fresh166.v4_system.exact.model", "{
                        ("r21_kappa", "annotators.needs_fix_kappa", "{:.3f}")):
     C.append((cid, R21, path, fmt, RE))
 
+# CHF at stake per patient behind the confirmed divergences (published 6 Oct 2026 prices and texts; tools/stakes.py)
+ST = "eval/results/stakes.json"
+for cid, path, fmt in (("stakes_nemluvio_chf", "headline.nemluvio_chf_per_patient_year", "{:,.0f}"),
+                       ("stakes_nemluvio_doses", "headline.nemluvio_extra_doses", "{}"),
+                       ("stakes_amvuttra_chf", "headline.amvuttra_chf_per_patient_year", "{:,.0f}"),
+                       ("stakes_amvuttra_dose", "headline.amvuttra_chf_per_dose", "{:,.0f}"),
+                       ("stakes_diaphin_pct", "headline.diaphin_pct", "{:.1f}"),
+                       ("stakes_diaphin_pack_max", "cases.1.chf_difference_per_pack_max", "{:.2f}"),
+                       ("stakes_etanercept_max", "headline.etanercept_chf_per_patient_year_max", "{:,.0f}"),
+                       ("stakes_dupixent_asthma", "headline.dupixent_asthma_chf_per_patient_year", "{:,.0f}")):
+    C.append((cid, ST, path, fmt, "python3 tools/stakes.py"))
+
 if __name__ == "__main__":
     rows = ["id\tvalue\tsource\tpath\tfmt\tcommand\twhere"]
     for cid, src, path, fmt, cmd in C:

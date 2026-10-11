@@ -1,0 +1,470 @@
+{
+ "cases": [
+  {
+   "assumptions": [
+    "maintenance phase (after week 16), a 52-week year",
+    "one 30 mg pen per maintenance dose (the text: 'Erhaltungsdosis von 30 mg')",
+    "public price of the 1-pen pack; this indication is listed without a price model ('ohne Preismodell'), so the list price applies"
+   ],
+   "chf_per_dose": 2088.75,
+   "chf_per_patient_year": 13576.88,
+   "confirmed": {
+    "label": "real",
+    "uid": "audit_20261006:A06"
+   },
+   "doses_per_year_de_fr": 6.5,
+   "doses_per_year_it": 13.0,
+   "evidence": [
+    {
+     "lang": "de",
+     "limitation": "NEMLUVIO.01",
+     "text": "danach in einer Erhaltungsdosis von 30 mg als subkutane Injektion alle acht Wochen"
+    },
+    {
+     "lang": "fr",
+     "limitation": "NEMLUVIO.01",
+     "text": "puis d'une dose d'entretien de 30 mg par la suite, en injection sous-cutanée toutes les huit semaines"
+    },
+    {
+     "lang": "it",
+     "limitation": "NEMLUVIO.01",
+     "text": "successivamente in una dose di mantenimento di 30 mg come iniezione sottocutanea ogni quattro settimane"
+    },
+    {
+     "lang": "de",
+     "limitation": "NEMLUVIO.01",
+     "text": "(ohne Preismodell)"
+    }
+   ],
+   "extra_doses_per_year": 6.5,
+   "formula": "(52/4 - 52/8) maintenance doses x CHF 2088.75 per 30 mg pen = 6.5 x 2088.75",
+   "id": "nemluvio",
+   "kind": "price",
+   "limitation": "NEMLUVIO.01",
+   "pack": {
+    "description": "Nemluvio Trockensub 30 mg c Solv Fertpen Fertpen 1 Stk",
+    "dossier": "21912",
+    "ex_factory_price": 1905.5,
+    "gtins": [
+     "7680697070017"
+    ],
+    "limitations": [
+     "NEMLUVIO.01",
+     "NEMLUVIO.02a",
+     "NEMLUVIO.03a",
+     "NEMLUVIO.XX"
+    ],
+    "price_model": true,
+    "public_price": 2088.75
+   },
+   "product": "Nemluvio",
+   "reading": "Read in Italian, an insurer would reimburse 6.5 more pens per patient per maintenance year than the German and French texts allow; read in German or French, a patient whose prescriber follows the Italian text would be refused them."
+  },
+  {
+   "assumptions": [
+    "the published public price follows the German/French 6 % (checked: every pack's implied VAT is 2.6 %, the Swiss rate for medicines)",
+    "no per-pack surcharge in either reading (all three texts)",
+    "per pack only: the text gives no dose or pack frequency, so no annual figure"
+   ],
+   "chf_difference_per_pack_max": 20.78,
+   "chf_difference_per_pack_min": 9.36,
+   "confirmed": {
+    "label": "real",
+    "uid": "audit_20261006:A20"
+   },
+   "evidence": [
+    {
+     "lang": "de",
+     "limitation": "DIAPHIN.6-",
+     "text": "zuzüglich dem preisbezogenen Zuschlag von 6% zuzüglich MWST"
+    },
+    {
+     "lang": "fr",
+     "limitation": "DIAPHIN.6-",
+     "text": "plus la prime relative au prix de 6%, TVA en sus"
+    },
+    {
+     "lang": "it",
+     "limitation": "DIAPHIN.6-",
+     "text": "più il supplemento attinente al prezzo di 12% più la IVA"
+    },
+    {
+     "lang": "de",
+     "limitation": "DIAPHIN.6-",
+     "text": "ohne Zuschlag je Packung"
+    }
+   ],
+   "formula": "public price x (1.12 - 1.06) / 1.06 per pack (the published price is ex-factory x 1.06 x (1 + VAT); VAT cancels)",
+   "id": "diaphin",
+   "kind": "price",
+   "limitation": "DIAPHIN.6-",
+   "packs": [
+    {
+     "chf_difference_per_pack": 20.78,
+     "description": "Diaphin IR Tabl 200 mg 100 Stk",
+     "ex_factory_price": 337.52,
+     "gtin": "7680577240011",
+     "implied_vat_pct": 2.59,
+     "public_price": 367.05,
+     "public_price_at_12pct": 387.83
+    },
+    {
+     "chf_difference_per_pack": 20.78,
+     "description": "Diaphin SR Ret Filmtabl 200 mg 100 Stk",
+     "ex_factory_price": 337.52,
+     "gtin": "7680577200015",
+     "implied_vat_pct": 2.59,
+     "public_price": 367.05,
+     "public_price_at_12pct": 387.83
+    },
+    {
+     "chf_difference_per_pack": 9.36,
+     "description": "Diaphin Trockensub 5 g i.v. Amp 1 Stk",
+     "ex_factory_price": 152.0,
+     "gtin": null,
+     "implied_vat_pct": 2.59,
+     "public_price": 165.3,
+     "public_price_at_12pct": 174.66
+    }
+   ],
+   "pct_of_public_price": 5.66,
+   "product": "Diaphin",
+   "reading": "Read in Italian, each pack would be priced (and reimbursed) higher by this amount; read in German or French, the published price stands and a pharmacy applying the Italian text would charge above it."
+  },
+  {
+   "assumptions": [
+    "per pack only: the limitation gives no dose or treatment duration"
+   ],
+   "chf_per_pack": 781.6,
+   "confirmed": {
+    "label": "real",
+    "uid": "audit_20261006:A08"
+   },
+   "evidence": [
+    {
+     "lang": "de",
+     "limitation": "CRESE.Kps.IM",
+     "text": "ab dem Alter von 6 Jahren und mit einem Körpergewicht von mindestens 16 kg vergütet"
+    },
+    {
+     "lang": "fr",
+     "limitation": "CRESE.Kps.IM",
+     "text": "chez les adultes et les patients pédiatriques à partir de 6 ans."
+    }
+   ],
+   "formula": "public price per capsule pack (no annual figure)",
+   "id": "cresemba",
+   "kind": "eligibility",
+   "limitation": "CRESE.Kps.IM",
+   "packs": [
+    {
+     "description": "Cresemba Kaps 100 mg Blist 14 Stk",
+     "ex_factory_price": 703.56,
+     "gtin": "7680661720016",
+     "public_price": 781.6
+    },
+    {
+     "description": "Cresemba Kaps 40 mg Blist 35 Stk",
+     "ex_factory_price": 703.56,
+     "gtin": "7680661720023",
+     "public_price": 781.6
+    }
+   ],
+   "product": "Cresemba",
+   "reading": "Read in French, a child from 6 years weighing under 16 kg is eligible; read in German or Italian, that child's treatment is not reimbursed."
+  },
+  {
+   "assumptions": [
+    "the only dose the limitation states (1 x 50 mg per week, given in its psoriasis paragraph) applied for a full year; the juvenile arthritis paragraph states none, and a patient under 62.5 kg may need less, so this is an upper bound",
+    "the cheapest 50 mg pack of each product, per pen or syringe"
+   ],
+   "chf_per_patient_year_max": 10849.8,
+   "chf_per_patient_year_min": 8910.85,
+   "evidence": [
+    {
+     "lang": "fr",
+     "limitation": "BENEPALI4",
+     "text": "chez les patients pesant ≥ 62.5 kg"
+    },
+    {
+     "lang": "de",
+     "limitation": "BENEPALI4",
+     "text": "Standarddosierung pro Behandlungszyklus: 1 x 50 mg pro Woche"
+    }
+   ],
+   "formula": "52 weeks x (public price of a 50 mg/ml pack / number of 1 ml pens or syringes in it), cheapest pack per product",
+   "id": "etanercept",
+   "kind": "eligibility",
+   "limitation": "BENEPALI4, ERELZI2, NEPEXTO",
+   "product": "Benepali, Erelzi, Nepexto (etanercept)",
+   "products": [
+    {
+     "chf_per_50mg": 192.76,
+     "chf_per_patient_year": 10023.65,
+     "confirmed": {
+      "label": "real",
+      "uid": "audit_20261006:A02"
+     },
+     "limitation": "BENEPALI4",
+     "packs": [
+      {
+       "description": "Benepali Inj Lös 50 mg/ml Fertigpen 2 Stk",
+       "gtin": "7680663230025",
+       "public_price": 417.3,
+       "units": 2
+      },
+      {
+       "description": "Benepali Inj Lös 50 mg/ml Fertigpen 4 Stk",
+       "gtin": "7680663230018",
+       "public_price": 771.05,
+       "units": 4
+      },
+      {
+       "description": "Benepali Inj Lös 50 mg/ml Fertspr 2 Stk",
+       "gtin": "7680663250023",
+       "public_price": 417.3,
+       "units": 2
+      },
+      {
+       "description": "Benepali Inj Lös 50 mg/ml Fertspr 4 Stk",
+       "gtin": "7680663250016",
+       "public_price": 771.05,
+       "units": 4
+      }
+     ],
+     "product": "Benepali"
+    },
+    {
+     "chf_per_50mg": 208.65,
+     "chf_per_patient_year": 10849.8,
+     "confirmed": {
+      "label": "real",
+      "uid": "audit_20261006:A12"
+     },
+     "limitation": "ERELZI2",
+     "packs": [
+      {
+       "description": "Erelzi Inj Lös 50 mg/ml 2 Fertspr 1 ml",
+       "gtin": "7680661750068",
+       "public_price": 417.3,
+       "units": 2
+      },
+      {
+       "description": "Erelzi SensoReady Inj Lös 50 mg/ml 2 Fertpen 1 ml",
+       "gtin": "7680661760029",
+       "public_price": 417.3,
+       "units": 2
+      }
+     ],
+     "product": "Erelzi"
+    },
+    {
+     "chf_per_50mg": 171.36,
+     "chf_per_patient_year": 8910.85,
+     "confirmed": {
+      "label": "real",
+      "uid": "audit_20261006:A13"
+     },
+     "limitation": "NEPEXTO",
+     "packs": [
+      {
+       "description": "Nepexto Inj Lös 50 mg/ml Fertigpen 2 Fertpen 1 ml",
+       "gtin": "7680681500032",
+       "public_price": 371.85,
+       "units": 2
+      },
+      {
+       "description": "Nepexto Inj Lös 50 mg/ml Fertigpen 4 Fertpen 1 ml",
+       "gtin": "7680681500018",
+       "public_price": 685.45,
+       "units": 4
+      },
+      {
+       "description": "Nepexto Inj Lös 50 mg/ml Fertigspr 2 Fertspr 1 ml",
+       "gtin": "7680681490036",
+       "public_price": 371.85,
+       "units": 2
+      },
+      {
+       "description": "Nepexto Inj Lös 50 mg/ml Fertigspr 4 Fertspr 1 ml",
+       "gtin": "7680681490029",
+       "public_price": 685.45,
+       "units": 4
+      }
+     ],
+     "product": "Nepexto"
+    }
+   ],
+   "reading": "Read in French, a young patient under 62.5 kg with polyarticular juvenile arthritis is not reimbursed; read in German or Italian, the patient is."
+  },
+  {
+   "assumptions": [
+    "maintenance year only (loading doses excluded), a 52-week year",
+    "one prefilled syringe per dose; public price of the 2-syringe pack / 2 (pens are priced the same where listed)",
+    "Dupixent's SL entry carries a price model: the net price is lower and not public"
+   ],
+   "asthma": {
+    "chf_per_patient_year": 7207.85,
+    "formula": "52/4 doses x CHF 554.450 per 300 mg syringe",
+    "reading": "A child of 6 to 11 weighing 15 to under 30 kg: read in German or Italian, 300 mg every 4 weeks is reimbursed; read in French, no regimen covers that weight."
+   },
+   "atopic_dermatitis": {
+    "chf_difference": 7207.85,
+    "chf_per_patient_year_de": 7207.85,
+    "chf_per_patient_year_fr": 14415.7,
+    "formula": "FR 52/2 x CHF 554.450 (200 mg every 2 weeks) - DE 52/4 x CHF 554.450 (300 mg every 4 weeks)",
+    "reading": "An adolescent of 12 to 17 weighing 15 to under 30 kg: the German text reimburses 300 mg every 4 weeks, the French text (one tier for everyone under 60 kg) 200 mg every 2 weeks."
+   },
+   "chf_per_200mg": 554.45,
+   "chf_per_300mg": 554.45,
+   "confirmed": [
+    {
+     "label": "real",
+     "uid": "audit_20261006:A07"
+    },
+    {
+     "label": "real",
+     "uid": "audit_20261006:A05"
+    },
+    {
+     "label": "real",
+     "uid": "audit_20261006:A04"
+    },
+    {
+     "label": "real",
+     "uid": "audit_20261006:A11"
+    }
+   ],
+   "id": "dupixent",
+   "kind": "eligibility",
+   "limitation": "DUPIXENT.02, .02P (atopic dermatitis 12-17); DUPIXENT.05a, .05P (asthma 6-11)",
+   "packs": {
+    "mg200": {
+     "description": "Dupixent Inj Lös 200 mg/1.14 ml Fertspr Safe-Sys 2 Stk",
+     "dossier": "20819",
+     "ex_factory_price": 1004.52,
+     "gtins": [
+      "7680666490020"
+     ],
+     "limitations": [
+      "DUPIXENT.01",
+      "DUPIXENT.02",
+      "DUPIXENT.03a",
+      "DUPIXENT.04",
+      "DUPIXENT.05a",
+      "DUPIXENT.06-Pen---Chronische-Rhinosinusitis-mit-Nasenpolypen--CR",
+      "DUPIXENT.07",
+      "DUPIXENT.08",
+      "DUPIXENT.09",
+      "DUPIXENT.10",
+      "DUPIXENT.XXa"
+     ],
+     "price_model": true,
+     "public_price": 1108.9
+    },
+    "mg300": {
+     "description": "Dupixent Inj Lös 300 mg/2 ml Fertspr Safe-Sys 2 Stk",
+     "dossier": "20819",
+     "ex_factory_price": 1004.52,
+     "gtins": [
+      "7680666490013"
+     ],
+     "limitations": [
+      "DUPIXENT.01",
+      "DUPIXENT.02",
+      "DUPIXENT.03a",
+      "DUPIXENT.04",
+      "DUPIXENT.05a",
+      "DUPIXENT.06-Pen---Chronische-Rhinosinusitis-mit-Nasenpolypen--CR",
+      "DUPIXENT.07",
+      "DUPIXENT.08",
+      "DUPIXENT.09",
+      "DUPIXENT.10",
+      "DUPIXENT.XXa"
+     ],
+     "price_model": true,
+     "public_price": 1108.9
+    }
+   },
+   "price_model": true,
+   "product": "Dupixent"
+  },
+  {
+   "assumptions": [
+    "one 25 mg syringe every 3 months: the authorised dosing interval of the product information, NOT stated in the SL text (the only input here that is not in the feed); the per-dose figure needs no assumption",
+    "list price: the SL entry has a price model and the text says the manufacturer refunds an undisclosed fixed amount per pack, so the net cost is lower"
+   ],
+   "chf_per_dose": 84685.75,
+   "chf_per_patient_year": 338743.0,
+   "confirmed": {
+    "label": "real",
+    "uid": "audit_r15_20261006:O01"
+   },
+   "doses_per_year": 4,
+   "evidence": [
+    {
+     "lang": "de",
+     "limitation": "AMVUTTRA.01a",
+     "text": "AMVUTTRA wird nicht mehr vergütet, wenn eine Progression unter Therapie auftritt"
+    },
+    {
+     "lang": "de",
+     "limitation": "AMVUTTRA.01a",
+     "text": "• NIS-Zunahme > 10 Punkte und • Zunahme im PND-Score um > 1 Stufe"
+    },
+    {
+     "lang": "fr",
+     "limitation": "AMVUTTRA.01a",
+     "text": "• augmentation du score NIS ≤ 10 points et • augmentation du score PND > 1 stade"
+    },
+    {
+     "lang": "it",
+     "limitation": "AMVUTTRA.01a",
+     "text": "• aumento del NIS > 10 punti e • aumento del punteggio PND di > 1 livello"
+    },
+    {
+     "lang": "de",
+     "limitation": "AMVUTTRA.01a",
+     "text": "für jede bezogene Packung AMVUTTRA einen festgelegten Betrag des Fabrikabgabepreises zurück"
+    }
+   ],
+   "experimental": true,
+   "formula": "4 doses x CHF 84685.75 per 25 mg syringe",
+   "id": "amvuttra",
+   "kind": "eligibility",
+   "limitation": "AMVUTTRA.01a",
+   "pack": {
+    "description": "Amvuttra Inj Lös 25 mg/0.5 ml Fertspr 1 Stk",
+    "dossier": "21635",
+    "ex_factory_price": 82239.72,
+    "gtins": [
+     "7680690740016"
+    ],
+    "limitations": [
+     "AMVUTTRA.01a",
+     "AMVUTTRA.02"
+    ],
+    "price_model": true,
+    "public_price": 84685.75
+   },
+   "product": "Amvuttra",
+   "reading": "A patient after 24 months whose NIS rose by 10 points or less with a PND increase of more than one stage: read in French, reimbursement stops; read in German or Italian, it continues."
+  }
+ ],
+ "date": "20261006",
+ "generated_by": "python3 tools/stakes.py",
+ "headline": {
+  "amvuttra_chf_per_dose": 84685.75,
+  "amvuttra_chf_per_patient_year": 338743.0,
+  "diaphin_pct": 5.66,
+  "dupixent_asthma_chf_per_patient_year": 7207.85,
+  "etanercept_chf_per_patient_year_max": 10849.8,
+  "nemluvio_chf_per_patient_year": 13576.88,
+  "nemluvio_extra_doses": 6.5
+ },
+ "model_calls": 0,
+ "scope": "per patient only: no public source in the repository gives patient counts, so no population or national total is estimated; list prices (public price incl. VAT) as published on 6 Oct 2026",
+ "source": "https://epl.bag.admin.ch/static/sl/publication/fhir/foph-sl-publication-20261006-de.ndjson",
+ "source_sha256": "9eec089d47057f2a89550967ba7ef95fa38c31fdb89123f428564aec4ab6d972",
+ "weeks_per_year": 52
+}

@@ -648,6 +648,15 @@ def value():
     return out
 
 
+def stakes():
+    """What the confirmed audit divergences put at stake per patient, in CHF, from the committed 6 Oct 2026 feed prices
+    and texts (tools/stakes.py: every formula and assumption is in the result; no patient counts, no national totals)."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("gleichlaut_stakes", os.path.join(core.ROOT, "tools", "stakes.py"))
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+    return m.compute()
+
+
 def size_compare(builds=("q4_k_m", "q8_0")):
     """Model size, paired: the 70B (fresh 166) against each 8B GGUF build on the same items. Paired cluster bootstrap over
     German changes (4000 resamples, seed 7) of the difference in token edits saved against the rules-only start, and the

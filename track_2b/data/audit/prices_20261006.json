@@ -1,0 +1,331 @@
+{
+ "note": "Pack prices of the SL entries carrying the audited limitations, extracted from the public 6 Oct 2026 SL feed (DE file; prices are language-independent) by tools/stakes.py --extract. public_price = the feed's 'Retail price' (Publikumspreis), ex_factory_price = 'Ex-factory price' (Fabrikabgabepreis), CHF incl. VAT for the public price. price_model true = the SL entry has a price model (confidential refund; the net price is not public).",
+ "date": "20261006",
+ "source": "https://epl.bag.admin.ch/static/sl/publication/fhir/foph-sl-publication-20261006-de.ndjson",
+ "source_sha256": "9eec089d47057f2a89550967ba7ef95fa38c31fdb89123f428564aec4ab6d972",
+ "keys": [
+  "NEMLUVIO.01",
+  "DIAPHIN.6-",
+  "CRESE.Kps.IM",
+  "BENEPALI4",
+  "ERELZI2",
+  "NEPEXTO",
+  "DUPIXENT.02",
+  "DUPIXENT.02P",
+  "DUPIXENT.05a",
+  "DUPIXENT.05P",
+  "AMVUTTRA.01a"
+ ],
+ "packs": [
+  {
+   "description": "Amvuttra Inj Lös 25 mg/0.5 ml Fertspr 1 Stk",
+   "gtin": "7680690740016",
+   "limitations": [
+    "AMVUTTRA.01a",
+    "AMVUTTRA.02"
+   ],
+   "public_price": 84685.75,
+   "ex_factory_price": 82239.72,
+   "price_model": true,
+   "dossier": "21635"
+  },
+  {
+   "description": "Benepali Inj Lös 25 mg/0.5ml 4 Fertspr 0.5 ml",
+   "gtin": "7680663250030",
+   "limitations": [
+    "BENEPALI4"
+   ],
+   "public_price": 417.3,
+   "ex_factory_price": 368.63,
+   "price_model": false,
+   "dossier": "20871"
+  },
+  {
+   "description": "Benepali Inj Lös 50 mg/ml Fertigpen 2 Stk",
+   "gtin": "7680663230025",
+   "limitations": [
+    "BENEPALI4"
+   ],
+   "public_price": 417.3,
+   "ex_factory_price": 368.63,
+   "price_model": false,
+   "dossier": "20868"
+  },
+  {
+   "description": "Benepali Inj Lös 50 mg/ml Fertigpen 4 Stk",
+   "gtin": "7680663230018",
+   "limitations": [
+    "BENEPALI4"
+   ],
+   "public_price": 771.05,
+   "ex_factory_price": 693.89,
+   "price_model": false,
+   "dossier": "20868"
+  },
+  {
+   "description": "Benepali Inj Lös 50 mg/ml Fertspr 2 Stk",
+   "gtin": "7680663250023",
+   "limitations": [
+    "BENEPALI4"
+   ],
+   "public_price": 417.3,
+   "ex_factory_price": 368.63,
+   "price_model": false,
+   "dossier": "20871"
+  },
+  {
+   "description": "Benepali Inj Lös 50 mg/ml Fertspr 4 Stk",
+   "gtin": "7680663250016",
+   "limitations": [
+    "BENEPALI4"
+   ],
+   "public_price": 771.05,
+   "ex_factory_price": 693.89,
+   "price_model": false,
+   "dossier": "20871"
+  },
+  {
+   "description": "Cresemba Kaps 100 mg Blist 14 Stk",
+   "gtin": "7680661720016",
+   "limitations": [
+    "CRESE.Kps.IA",
+    "CRESE.Kps.IM"
+   ],
+   "public_price": 781.6,
+   "ex_factory_price": 703.56,
+   "price_model": false,
+   "dossier": "20846"
+  },
+  {
+   "description": "Cresemba Kaps 40 mg Blist 35 Stk",
+   "gtin": "7680661720023",
+   "limitations": [
+    "CRESE.Kps.IA",
+    "CRESE.Kps.IM"
+   ],
+   "public_price": 781.6,
+   "ex_factory_price": 703.56,
+   "price_model": false,
+   "dossier": "20846"
+  },
+  {
+   "description": "Diaphin IR Tabl 200 mg 100 Stk",
+   "gtin": "7680577240011",
+   "limitations": [
+    "DIAPHIN.6-"
+   ],
+   "public_price": 367.05,
+   "ex_factory_price": 337.52,
+   "price_model": false,
+   "dossier": "20521"
+  },
+  {
+   "description": "Diaphin SR Ret Filmtabl 200 mg 100 Stk",
+   "gtin": "7680577200015",
+   "limitations": [
+    "DIAPHIN.6-"
+   ],
+   "public_price": 367.05,
+   "ex_factory_price": 337.52,
+   "price_model": false,
+   "dossier": "20522"
+  },
+  {
+   "description": "Diaphin Trockensub 5 g i.v. Amp 1 Stk",
+   "gtin": null,
+   "limitations": [
+    "DIAPHIN.6-"
+   ],
+   "public_price": 165.3,
+   "ex_factory_price": 152.0,
+   "price_model": false,
+   "dossier": "17747"
+  },
+  {
+   "description": "Dupixent Inj Lös 200 mg/1.14 ml Fertpen 2 Stk",
+   "gtin": "7680676610036",
+   "limitations": [
+    "DUPIXENT.01P",
+    "DUPIXENT.02P",
+    "DUPIXENT.03P",
+    "DUPIXENT.04P",
+    "DUPIXENT.05P",
+    "DUPIXENT.06-Pen---Chronische-Rhinosinusitis-mit-Nasenpolypen--CR",
+    "DUPIXENT.07P",
+    "DUPIXENT.08P",
+    "DUPIXENT.09P",
+    "DUPIXENT.10P",
+    "DUPIXENT.XXP"
+   ],
+   "public_price": 1108.9,
+   "ex_factory_price": 1004.52,
+   "price_model": true,
+   "dossier": "21258"
+  },
+  {
+   "description": "Dupixent Inj Lös 200 mg/1.14 ml Fertspr Safe-Sys 2 Stk",
+   "gtin": "7680666490020",
+   "limitations": [
+    "DUPIXENT.01",
+    "DUPIXENT.02",
+    "DUPIXENT.03a",
+    "DUPIXENT.04",
+    "DUPIXENT.05a",
+    "DUPIXENT.06-Pen---Chronische-Rhinosinusitis-mit-Nasenpolypen--CR",
+    "DUPIXENT.07",
+    "DUPIXENT.08",
+    "DUPIXENT.09",
+    "DUPIXENT.10",
+    "DUPIXENT.XXa"
+   ],
+   "public_price": 1108.9,
+   "ex_factory_price": 1004.52,
+   "price_model": true,
+   "dossier": "20819"
+  },
+  {
+   "description": "Dupixent Inj Lös 300 mg/2 ml Fertpen 2 Stk",
+   "gtin": "7680676610043",
+   "limitations": [
+    "DUPIXENT.01P",
+    "DUPIXENT.02P",
+    "DUPIXENT.03P",
+    "DUPIXENT.04P",
+    "DUPIXENT.05P",
+    "DUPIXENT.06-Pen---Chronische-Rhinosinusitis-mit-Nasenpolypen--CR",
+    "DUPIXENT.07P",
+    "DUPIXENT.08P",
+    "DUPIXENT.09P",
+    "DUPIXENT.10P",
+    "DUPIXENT.XXP"
+   ],
+   "public_price": 1108.9,
+   "ex_factory_price": 1004.52,
+   "price_model": true,
+   "dossier": "21258"
+  },
+  {
+   "description": "Dupixent Inj Lös 300 mg/2 ml Fertspr Safe-Sys 2 Stk",
+   "gtin": "7680666490013",
+   "limitations": [
+    "DUPIXENT.01",
+    "DUPIXENT.02",
+    "DUPIXENT.03a",
+    "DUPIXENT.04",
+    "DUPIXENT.05a",
+    "DUPIXENT.06-Pen---Chronische-Rhinosinusitis-mit-Nasenpolypen--CR",
+    "DUPIXENT.07",
+    "DUPIXENT.08",
+    "DUPIXENT.09",
+    "DUPIXENT.10",
+    "DUPIXENT.XXa"
+   ],
+   "public_price": 1108.9,
+   "ex_factory_price": 1004.52,
+   "price_model": true,
+   "dossier": "20819"
+  },
+  {
+   "description": "Erelzi Inj Lös 25 mg/0.5ml 4 Fertspr 0.5 ml",
+   "gtin": "7680661750037",
+   "limitations": [
+    "ERELZI2"
+   ],
+   "public_price": 417.3,
+   "ex_factory_price": 368.63,
+   "price_model": false,
+   "dossier": "20750"
+  },
+  {
+   "description": "Erelzi Inj Lös 50 mg/ml 2 Fertspr 1 ml",
+   "gtin": "7680661750068",
+   "limitations": [
+    "ERELZI2"
+   ],
+   "public_price": 417.3,
+   "ex_factory_price": 368.63,
+   "price_model": false,
+   "dossier": "20750"
+  },
+  {
+   "description": "Erelzi SensoReady Inj Lös 50 mg/ml 2 Fertpen 1 ml",
+   "gtin": "7680661760029",
+   "limitations": [
+    "ERELZI2"
+   ],
+   "public_price": 417.3,
+   "ex_factory_price": 368.63,
+   "price_model": false,
+   "dossier": "20751"
+  },
+  {
+   "description": "Nemluvio Trockensub 30 mg c Solv Fertpen Fertpen 1 Stk",
+   "gtin": "7680697070017",
+   "limitations": [
+    "NEMLUVIO.01",
+    "NEMLUVIO.02a",
+    "NEMLUVIO.03a",
+    "NEMLUVIO.XX"
+   ],
+   "public_price": 2088.75,
+   "ex_factory_price": 1905.5,
+   "price_model": true,
+   "dossier": "21912"
+  },
+  {
+   "description": "Nepexto Inj Lös 25 mg/0.5ml Fertigspr 4 Fertspr 0.5 ml",
+   "gtin": "7680681490012",
+   "limitations": [
+    "NEPEXTO"
+   ],
+   "public_price": 371.85,
+   "ex_factory_price": 324.3,
+   "price_model": false,
+   "dossier": "21395"
+  },
+  {
+   "description": "Nepexto Inj Lös 50 mg/ml Fertigpen 2 Fertpen 1 ml",
+   "gtin": "7680681500032",
+   "limitations": [
+    "NEPEXTO"
+   ],
+   "public_price": 371.85,
+   "ex_factory_price": 324.3,
+   "price_model": false,
+   "dossier": "21396"
+  },
+  {
+   "description": "Nepexto Inj Lös 50 mg/ml Fertigpen 4 Fertpen 1 ml",
+   "gtin": "7680681500018",
+   "limitations": [
+    "NEPEXTO"
+   ],
+   "public_price": 685.45,
+   "ex_factory_price": 610.45,
+   "price_model": false,
+   "dossier": "21396"
+  },
+  {
+   "description": "Nepexto Inj Lös 50 mg/ml Fertigspr 2 Fertspr 1 ml",
+   "gtin": "7680681490036",
+   "limitations": [
+    "NEPEXTO"
+   ],
+   "public_price": 371.85,
+   "ex_factory_price": 324.3,
+   "price_model": false,
+   "dossier": "21395"
+  },
+  {
+   "description": "Nepexto Inj Lös 50 mg/ml Fertigspr 4 Fertspr 1 ml",
+   "gtin": "7680681490029",
+   "limitations": [
+    "NEPEXTO"
+   ],
+   "public_price": 685.45,
+   "ex_factory_price": 610.45,
+   "price_model": false,
+   "dossier": "21395"
+  }
+ ]
+}
