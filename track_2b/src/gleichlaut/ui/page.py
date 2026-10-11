@@ -4,268 +4,265 @@ No external request: fonts are inlined by build.fonts_css(), data by build.build
 HEAD = r"""<title>Gleichlaut Review</title>
 <style>
 __FONTS__
-/* LAYOUT. A working tool, not a poster: one bar (name, the two views with their counts, progress, export, language),
-   one line of context, then the work. Both views are the same two panes: a dense list on the left (filters on one line,
-   marks explained once at the foot of the list) and the selected case on the right (numbered sections: 1 what changed or
-   what differs, 2 the texts, 3 why, 4 the decision). Statistics, provenance and the full legend live in the footer.
-   Type: Public Sans for texts and interface, Archivo condensed only for names (product, wordmark), Fragment Mono for codes,
-   numbers and small labels. Colour: ink on white paper with hairline rules; ONE signal colour, international orange, only
-   where something needs a person (flags, divergences, conflicting values, focus). No frames, cards, radii, shadows,
-   gradients or decorative rulers. Below 900px the list sits above the case; no horizontal page scroll from 320px up. */
-:root{--paper:#fbfbf9;--ink:#141513;--ink2:#62665f;--hair:#d9dbd4;--rule:#141513;--sig:#ff4f00;--sig-ink:#141513;--wash:#f0f1ec;
---sel:#141513;--sel-ink:#fbfbf9;--sheet:var(--paper);
---sans:"Public Sans","Helvetica Neue",Arial,sans-serif;--disp:"Archivo","Archivo Narrow","Helvetica Neue Condensed","Arial Narrow",sans-serif;
---mono:"Fragment Mono","Helvetica Mono",Menlo,Consolas,monospace;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#121412;--ink:#e6e8e2;--ink2:#9a9f96;--hair:#2f332f;--rule:#e6e8e2;--sig:#ff6a26;--sig-ink:#121412;--wash:#1a1d1a;--sel:#e6e8e2;--sel-ink:#121412;color-scheme:dark}}
-:root[data-theme="dark"]{--paper:#121412;--ink:#e6e8e2;--ink2:#9a9f96;--hair:#2f332f;--rule:#e6e8e2;--sig:#ff6a26;--sig-ink:#121412;--wash:#1a1d1a;--sel:#e6e8e2;--sel-ink:#121412;color-scheme:dark}
+/* LAYOUT. A working instrument, not a poster: one bar (name, the two views with their counts, progress, export, language,
+   theme), one line of facts with its explanation behind [?], then the work. Both views are the same two panes: a ruled
+   list on the left (filters on one row) and the selected case on the right, read top to bottom (what, the texts, the
+   decision, save). Provenance lives in the footer. Type: ONE sans (Public Sans) for texts and interface, ONE mono
+   (Fragment Mono) for codes, numbers, keys and small labels; four sizes (12 / 14 / 16 / 24 px) on an 8 px rhythm.
+   Colour: black on white (dark: its faithful inverse) with hairline rules and square corners; ONE signal colour, Swiss
+   red, only where something needs a person (flags, divergences, conflicting values, errors, focus). No frames, cards,
+   chips, rails, shadows or gradients. Below 900px the list sits above the case; no horizontal page scroll from 320px. */
+:root{--paper:#fff;--ink:#111;--ink2:#5e5e5e;--hair:#d6d6d6;--rule:#111;--sig:#dc0018;--wash:#f2f2f2;--sel:#111;--sel-ink:#fff;
+--sans:"Public Sans","Helvetica Neue",Arial,sans-serif;--mono:"Fragment Mono","Helvetica Mono",Menlo,Consolas,monospace;
+--f1:12px;--f2:14px;--f3:16px;--f4:24px;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#121212;--ink:#e8e8e8;--ink2:#9d9d9d;--hair:#343434;--rule:#e8e8e8;--sig:#ff4d5a;--wash:#1d1d1d;--sel:#e8e8e8;--sel-ink:#121212;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#121212;--ink:#e8e8e8;--ink2:#9d9d9d;--hair:#343434;--rule:#e8e8e8;--sig:#ff4d5a;--wash:#1d1d1d;--sel:#e8e8e8;--sel-ink:#121212;color-scheme:dark}
 *{box-sizing:border-box;border-radius:0}
-html{-webkit-text-size-adjust:100%;font-synthesis:none}
-body{margin:0;background:var(--paper);color:var(--ink);font:400 14px/1.5 var(--sans);font-variant-numeric:tabular-nums;overflow-wrap:break-word}
+html{-webkit-text-size-adjust:100%;font-synthesis:none;scroll-padding-top:64px}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 var(--f2)/1.5 var(--sans);font-variant-numeric:tabular-nums;overflow-wrap:break-word}
 button,select,input,textarea{font:inherit;color:inherit}
+input,textarea,select{border-radius:0}
+::placeholder{color:var(--ink2);opacity:1}
 :focus-visible{outline:2px solid var(--sig);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 .app{max-width:1480px;margin:0 auto;padding-inline:24px}
 .mono,.code{font-family:var(--mono)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[hidden]{display:none!important}
 /* bar */
-.bar{position:sticky;top:0;z-index:5;background:var(--paper);display:flex;flex-wrap:wrap;align-items:center;gap:6px 28px;min-height:56px;border-bottom:1px solid var(--rule);padding-block:6px}
-.wm{font:600 24px/1 var(--disp);font-stretch:75%;letter-spacing:-.01em;margin-right:8px}
-.views{display:flex;gap:22px;align-self:stretch}
-.view{display:flex;align-items:center;gap:8px;background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-7px;padding:0 0 1px;cursor:pointer;color:var(--ink2);font:500 15px/1 var(--sans)}
+.bar{position:sticky;top:0;z-index:5;background:var(--paper);display:flex;flex-wrap:wrap;align-items:center;gap:8px 32px;min-height:56px;border-bottom:1px solid var(--rule);padding-block:8px}
+.wm{font:600 var(--f3)/1 var(--sans);letter-spacing:-.01em}
+.views{display:flex;gap:24px;align-self:stretch}
+.view{display:flex;align-items:center;gap:8px;background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-9px;padding:0 0 9px;cursor:pointer;color:var(--ink2);font:500 var(--f2)/1 var(--sans)}
 .view:hover{color:var(--ink)}
 .view[aria-selected=true]{color:var(--ink);border-bottom-color:var(--ink)}
-.view .c{font:400 12px/1 var(--mono);color:var(--ink2)}
-.tools{margin-left:auto;display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;color:var(--ink2);font:400 12px/1.4 var(--mono)}
+.view .c{font:400 var(--f1)/1 var(--mono);color:var(--ink2)}
+.tools{margin-left:auto;display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}
 .tools b{color:var(--ink);font-weight:400}
-.tools select{background:none;border:0;border-bottom:1px solid var(--hair);padding:1px 0}
-.ctx{margin:0;padding:9px 0 10px;color:var(--ink2);font:400 13px/1.45 var(--sans);border-bottom:1px solid var(--hair);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;max-width:150ch}
-.ctx b{color:var(--ink);font-weight:500}
-.ctx .qh{background:none;border:1px solid var(--ink2);border-radius:50%;width:17px;height:17px;padding:0;margin:0 6px 0 0;font:500 11px/15px var(--sans);color:var(--ink);cursor:pointer;vertical-align:1px}
-.ctx .qh[aria-expanded="true"]{background:var(--sel);color:var(--sel-ink)}
-.lanehelp{margin:0;padding:6px 0 9px;color:var(--ink2);font:400 12.5px/1.45 var(--sans);border-bottom:1px solid var(--hair);max-width:150ch}
+.tools select{background:none;border:0;padding:0;color:var(--ink2);cursor:pointer}
+/* one line of facts; its explanation behind [?] */
+.ctxw{border-bottom:1px solid var(--hair)}
+.ctxrow{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 24px;padding:12px 0}
+.ctx{margin:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;min-width:0;color:var(--ink2);font:400 var(--f1)/1.5 var(--mono)}
+.ctx .fx{color:var(--ink)}
+.ctx .lsel{min-width:0;max-width:100%}.ctx .lsel select{background:none;border:0;border-bottom:1px solid var(--ink);padding:0 2px 1px 0;font:500 var(--f2)/1.3 var(--sans);color:var(--ink);max-width:min(100%,52ch);text-overflow:ellipsis;cursor:pointer}
+.qh{background:none;border:0;padding:0;margin-left:8px;cursor:pointer;color:var(--ink2);font:400 var(--f1)/1.5 var(--mono)}
+.qh:hover,.qh[aria-expanded="true"]{color:var(--ink)}
+.demo{margin:0 0 0 auto;color:var(--ink2);font:400 var(--f1)/1.5 var(--mono)}
+.lanehelp{margin:0;padding:0 0 16px;max-width:96ch;color:var(--ink2);font:400 var(--f2)/1.5 var(--sans)}
+.lanehelp p{margin:0}.lanehelp p+p{margin-top:8px}.lanehelp b{color:var(--ink);font-weight:500}
 /* buttons */
-.tb{background:none;border:0;padding:1px 0;cursor:pointer;color:var(--ink2);border-bottom:1px solid transparent}
-.tb:hover{color:var(--ink);border-bottom-color:var(--hair)}
-.tb[aria-pressed=true]{color:var(--ink);border-bottom-color:var(--ink)}
-.box{background:none;border:1px solid var(--ink);padding:4px 10px;cursor:pointer;white-space:nowrap;font:400 12px/1.3 var(--mono)}
+.tb{background:none;border:0;padding:0;cursor:pointer;color:var(--ink2);text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px}
+.tb:hover{color:var(--ink);text-decoration-color:var(--ink2)}
+.tb[aria-pressed=true]{color:var(--ink);text-decoration-color:var(--ink)}
+.box{background:none;border:1px solid var(--ink);padding:7px 12px;cursor:pointer;white-space:nowrap;color:var(--ink);font:400 var(--f1)/1.4 var(--mono)}
 .box:hover{background:var(--wash)}
-.box[aria-pressed=true],.box.primary{background:var(--ink);color:var(--paper)}
-.box:disabled{opacity:.45;cursor:default}
+.box[aria-pressed=true],.box.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.box:disabled,.box[aria-disabled="true"],.box.primary:disabled,.box.primary[aria-disabled="true"]{background:none;color:var(--ink2);border-color:var(--hair);cursor:not-allowed}
+.box .k{color:inherit;opacity:.7}
 /* two panes */
-.work{display:grid;grid-template-columns:minmax(320px,440px) minmax(0,1fr);gap:0 36px}
-.register{border-right:1px solid var(--hair);padding:10px 20px 0 0;min-width:0;position:sticky;top:56px;align-self:start;height:calc(100vh - 56px);display:flex;flex-direction:column}
-.filters{display:flex;flex-wrap:wrap;gap:6px 14px;padding-bottom:9px;font:400 12px/1.4 var(--mono);align-items:baseline}
-.fl{display:flex;flex-wrap:wrap;gap:2px 6px;align-items:baseline}
-.fl .k{color:var(--ink2)}
-.fl:has(input){flex:1 1 100%}
-.fl select,.fl input{background:none;border:0;border-bottom:1px solid var(--hair);padding:3px 0;min-width:0;font:400 13px/1.3 var(--sans)}
-.fl input{flex:1 1 140px}.fl select{flex:0 1 auto;max-width:100%;min-width:0}
-#f-fam{flex:1 1 100%;width:100%;max-width:100%;text-overflow:ellipsis}.register .filters{min-width:0;max-width:100%}
+.work{display:grid;grid-template-columns:minmax(320px,440px) minmax(0,1fr);gap:0 40px}
+.register{border-right:1px solid var(--hair);padding:16px 24px 0 0;min-width:0;position:sticky;top:56px;align-self:start;height:calc(100vh - 56px);display:flex;flex-direction:column}
+.filters{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.75fr) minmax(0,1fr) minmax(0,1.25fr);gap:8px 12px;padding-bottom:16px;align-items:end;min-width:0}
+.fl{display:flex;flex-direction:column;gap:2px;min-width:0}
+.fl .k{color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}
+.fl select,.fl input{display:block;width:100%;min-width:0;height:28px;background:none;border:0;border-bottom:1px solid var(--hair);padding:0;color:var(--ink);font:400 var(--f2)/1.3 var(--sans);text-overflow:ellipsis;cursor:pointer}
+.fl input{cursor:text;-webkit-appearance:none;appearance:none}
+.fl select:hover,.fl input:hover{border-bottom-color:var(--ink2)}
+.fl input:focus{border-bottom-color:var(--ink)}
+.fambar{grid-column:1/-1}
 .tbl{overflow-x:auto;min-width:0}
 .reg-wrap{overflow:auto;flex:1 1 auto;min-height:120px;border-top:1px solid var(--rule)}
 table{border-collapse:collapse;width:100%}
-th{font:400 11px/1.4 var(--mono);text-align:left;color:var(--ink2);padding:6px 8px;border-bottom:1px solid var(--hair);vertical-align:bottom}
-td{padding:6px 8px;border-bottom:1px solid var(--hair);vertical-align:top}
+th{font:400 var(--f1)/1.4 var(--mono);text-align:left;color:var(--ink2);padding:8px;border-bottom:1px solid var(--hair);vertical-align:bottom}
+td{padding:8px;border-bottom:1px solid var(--hair);vertical-align:top}
+#p-audit .filters{grid-template-columns:repeat(4,minmax(0,auto))}
 #reg,#aud{table-layout:fixed}
 #reg thead th,#aud thead th{position:sticky;top:0;background:var(--paper);z-index:1}
 #reg col.c-fr,#reg col.c-it{width:30px}#reg col.c-prod{width:46%}
 #reg td.m{text-overflow:clip;padding-inline:4px;text-align:center}#reg th.m{text-align:center;padding-inline:4px}
 #reg td,#aud td{cursor:pointer}
 #reg td{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#reg td.no{font:400 11px/1.6 var(--mono);color:var(--ink2)}
 #reg td.prd{font-weight:500}
-#reg td.prd .pc{display:block;font:400 11px/1.4 var(--mono);color:var(--ink2);overflow:hidden;text-overflow:ellipsis;font-weight:400}
-#reg td.chg{color:var(--ink2);white-space:normal}#reg td.chg .cl{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35}
+#reg td.prd .pc{display:block;overflow:hidden;text-overflow:ellipsis;color:var(--ink2);font:400 var(--f1)/1.5 var(--mono)}
+#reg td.chg{color:var(--ink2);white-space:normal}#reg td.chg .cl{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.4}
 #reg tr:hover td,#aud tr.cnt:hover td{background:var(--wash)}
 #reg tr[aria-selected=true] td,#aud tr[aria-selected=true] td,#reg tr[aria-selected=true]:hover td,#aud tr[aria-selected=true]:hover td{background:var(--sel);color:var(--sel-ink)}
 #reg tr[aria-selected=true] td *,#aud tr[aria-selected=true] td *{color:var(--sel-ink)!important}
-.mk{display:inline-block;min-width:1.3em;text-align:center;font:400 13px/1 var(--mono)}.mk.r{color:var(--sig)}.mk.o,.mk.f{color:var(--ink2)}
-.lt{font:400 11px/1.4 var(--mono);letter-spacing:.04em;color:var(--ink2)}
+.mk{display:inline-block;min-width:1.3em;text-align:center;font:400 var(--f2)/1 var(--mono)}.mk.r{color:var(--sig)}.mk.o,.mk.f{color:var(--ink2)}
+.lt{font:400 var(--f1)/1.4 var(--mono);letter-spacing:.04em;color:var(--ink2)}
 .lt.s{color:var(--sig)}
-.count{color:var(--ink2);padding:6px 0 10px;font:400 11px/1.6 var(--mono);border-top:1px solid var(--hair)}
-.count .key{display:inline;padding:0;margin-left:10px}.count .key>span{margin-right:8px}
-.export{display:flex;flex-wrap:wrap;gap:8px;padding:8px 0 12px;border-top:1px solid var(--hair)}
-.export .msg{color:var(--ink2);flex-basis:100%;font:400 12px/1.4 var(--mono)}
-.key{margin:0;padding:6px 0 0;color:var(--ink2);font:400 11px/1.7 var(--mono);overflow-wrap:anywhere}
+.count{color:var(--ink2);padding:8px 0 16px;font:400 var(--f1)/1.6 var(--mono);border-top:1px solid var(--hair)}
+.count .key{display:inline;padding:0;margin-left:8px}.count .key>span{margin-right:8px}
+.key{margin:0;padding:8px 0 0;color:var(--ink2);font:400 var(--f1)/1.6 var(--mono);overflow-wrap:anywhere}
 .key>span{margin-right:12px;white-space:nowrap}
 .key .v2{border:1px solid var(--sig);padding:0 2px;color:var(--ink)}.key .v1{border-bottom:1px solid var(--ink2);color:var(--ink)}
-.key .obar{display:inline-block;width:2px;height:1em;background:var(--sig);vertical-align:-2px;margin-right:4px}
-.xl{font:400 11px/1.3 var(--mono);color:var(--ink2)}
-.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-#copybox{width:100%;height:90px;font:12px/1.4 var(--mono);border:1px solid var(--hair);background:var(--paper)}
+.xl{color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}
+#copybox{width:100%;height:96px;border:1px solid var(--hair);background:var(--paper);font:400 var(--f1)/1.4 var(--mono)}
 /* case */
-.case{min-width:0;padding:22px 0 40px;max-width:1040px;scroll-margin-top:64px}
-html{scroll-padding-top:64px}.case h2{scroll-margin-top:72px}
-.dec .why2{display:block;color:var(--ink2);font:400 12px/1.4 var(--mono);margin-top:2px}
+.case{min-width:0;padding:24px 0 48px;max-width:1040px;scroll-margin-top:64px}
 .case:focus{outline:none}
-h2{font:600 32px/1.05 var(--disp);font-stretch:75%;margin:0;letter-spacing:-.005em}
-.ref{color:var(--ink2);margin:6px 0 0;font:400 12px/1.5 var(--mono);overflow-wrap:anywhere}
-.sec{border-top:1px solid var(--hair);margin-top:22px;padding-top:10px;position:relative}
-.sl{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;margin-bottom:12px;font:600 14px/1.3 var(--sans);color:var(--ink)}
-.sl .no{position:absolute;left:-28px;font:400 12px/1.6 var(--mono);color:var(--ink2)}.sl .no b{display:none}
-.sl .sp{margin-left:auto;font:400 12px/1.4 var(--mono)}
-.back{display:none;margin-bottom:12px}
-.txt{font:400 17px/1.6 var(--sans);white-space:pre-wrap;overflow-wrap:anywhere;max-width:70ch}
-.de{border-left:2px solid var(--hair);padding-left:14px}
+.case h2{scroll-margin-top:72px}
+h2{margin:0;font:600 var(--f4)/1.2 var(--sans);letter-spacing:-.01em}
+.ref{margin:8px 0 0;color:var(--ink2);font:400 var(--f1)/1.5 var(--mono);overflow-wrap:anywhere}
+.ref b{color:var(--ink);font-weight:400}
+.sec{border-top:1px solid var(--hair);margin-top:24px;padding-top:16px}
+.sl{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:baseline;margin-bottom:16px;color:var(--ink);font:600 var(--f2)/1.3 var(--sans)}
+.sl .no{display:none}
+.sl .sp{margin-left:auto;font:400 var(--f1)/1.4 var(--mono)}
+.back{display:none;margin-bottom:16px;font:400 var(--f1)/1.4 var(--mono)}
+.txt{max-width:70ch;white-space:pre-wrap;overflow-wrap:anywhere;font:400 var(--f3)/1.6 var(--sans)}
 ins{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px;text-decoration-color:var(--ink)}
 del{color:var(--ink2);text-decoration:line-through;text-decoration-thickness:1px;margin-right:.2em}
-.gap{color:var(--ink2);font-family:var(--mono);font-size:13px;padding:0 4px}
+.gap{color:var(--ink2);font:400 var(--f1)/1 var(--mono);padding:0 4px}
 .n{font:inherit;border-bottom:1px dotted var(--ink2);white-space:nowrap}
-.n sup{display:none;font:400 .6em/1 var(--mono);color:var(--ink2);margin-left:1px;vertical-align:.5em}
+.n sup{display:none;margin-left:1px;vertical-align:.5em;color:var(--ink2);font:400 .6em/1 var(--mono)}
 .case.slots .n sup{display:inline}
 .n.m{border:1px solid var(--sig);padding:0 2px}
-.drafts{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,auto);column-gap:36px}
+.drafts{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,auto);column-gap:40px}
 .drafts.one{grid-template-columns:minmax(0,1fr)}
 .lang{display:grid;grid-row:span 4;grid-template-rows:subgrid;min-width:0;row-gap:0}
 .lang>*{min-width:0}
-.lh1{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;padding-bottom:8px;font:400 12px/1.5 var(--mono);color:var(--ink2)}
-.lh1 .ln{font:600 15px/1.3 var(--sans);color:var(--ink)}
+.lh1{display:flex;flex-wrap:wrap;gap:2px 12px;align-items:baseline;padding-bottom:8px;color:var(--ink2);font:400 var(--f1)/1.5 var(--mono)}
+.lh1 .ln{color:var(--ink);font:600 var(--f2)/1.3 var(--sans)}
 .lh1 .st{color:var(--ink)}.lh1 .st.r{color:var(--sig)}.lh1 .st .tq{border-bottom:1px solid var(--sig)}.lh1 .key{margin-left:auto;padding:0}
 .lang .body{padding-bottom:4px}
-.lang .why{border-top:1px solid var(--hair);margin-top:14px;padding-top:10px}
-.lang .why .wh{display:flex;flex-wrap:wrap;gap:2px 10px;font:400 12px/1.5 var(--mono);color:var(--ink2);margin-bottom:4px}
+.lang .why{border-top:1px solid var(--hair);margin-top:16px;padding-top:12px}
+.lang .why .wh{display:flex;flex-wrap:wrap;gap:2px 12px;margin-bottom:4px;color:var(--ink2);font:400 var(--f1)/1.5 var(--mono)}
 .lang .why .tri b{color:var(--ink);font-weight:400}
-.lang .dec{border-top:1px solid var(--hair);margin-top:12px;padding:10px 0 4px 0;border-left:0}
-.lang .dec.focus .btns .box{border-color:var(--ink)}
-.dec .btns .box{padding:7px 14px;font-size:13px}
-.dl{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin-bottom:8px;font:400 12px/1.5 var(--mono);color:var(--ink2)}
-.dl .ln{color:var(--ink)}
-.dl .st{color:var(--ink)}.dl .st.r{color:var(--sig)}
-.dl .key{margin-left:auto;padding:0}
-.dl .cap{flex-basis:100%;font:400 12px/1.4 var(--sans)}
-.dl .tri b{color:var(--ink);font-weight:400}
-.famline{color:var(--ink2);margin:2px 0 0;font:400 12px/1.5 var(--mono);overflow-wrap:anywhere}.famline .tb{color:var(--ink)}
-.ids{color:var(--ink2);margin-top:2px;font:400 11px/1.5 var(--mono)}.ids summary{cursor:pointer;display:inline}
-.notice{border-left:2px solid var(--sig);padding:2px 0 2px 12px;margin:0 0 12px;font:400 15px/1.45 var(--sans)}
-.notice .mk{color:var(--sig);margin-right:6px;min-width:0}
+.lang .dec{border-top:1px solid var(--hair);margin-top:16px;padding:16px 0 4px}
+.dec .btns .box{border-color:var(--hair)}
+.dec.focus .btns .box:not(:disabled){border-color:var(--ink)}
+.dec .btns .box[aria-pressed=true]{border-color:var(--ink)}
+.dec .why2{display:block;margin-top:4px;color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}
+.dec .rn{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:0 16px;margin-top:8px}
+.famline{margin:2px 0 0;color:var(--ink2);font:400 var(--f1)/1.5 var(--mono);overflow-wrap:anywhere}.famline .tb{color:var(--ink)}
+.ids{margin-top:16px;color:var(--ink2);font:400 var(--f1)/1.5 var(--mono)}.ids summary{cursor:pointer;display:inline}
+.notice{margin:0 0 12px;font:400 var(--f2)/1.5 var(--sans)}
+.notice .mk{color:var(--sig);margin-right:8px;min-width:0}
 .notice p{margin:0}.notice p+p{margin-top:4px}
 .notice.lang p:first-child{font-weight:500}
 .ed{outline:1px solid transparent;padding:2px 4px;margin:0 -4px}
 .ed:hover{outline-color:var(--hair)}
 .ed:focus{outline:1px solid var(--ink)}
-.edmeta{color:var(--ink2);margin-top:6px;display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;font:400 12px/1.4 var(--mono)}
-.human{font:400 15px/1.45 var(--sans);margin:0 0 8px}
-.why{margin-bottom:14px}.why+.why{border-top:1px solid var(--hair);padding-top:10px}
-.reasons{margin:4px 0 6px;padding-left:1.4em;font:400 15px/1.45 var(--sans);max-width:75ch}
+.edmeta{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:baseline;margin-top:8px;color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}
+.human{margin:0 0 8px;font:400 var(--f2)/1.5 var(--sans)}
+.why{margin-bottom:16px}.why+.why{border-top:1px solid var(--hair);padding-top:12px}
+.reasons{margin:4px 0 8px;padding-left:1.4em;max-width:75ch;font:400 var(--f2)/1.5 var(--sans)}
 .reasons li+li{margin-top:4px}.reasons li.low{color:var(--ink2)}
-.reasons li::marker{font:400 12px var(--mono);color:var(--ink2)}
-.why p.tb{margin:2px 0 6px;color:var(--ink2);font:400 13px/1.45 var(--sans);border:0}
-.why .ok{font:400 15px/1.45 var(--sans);margin:4px 0 6px}
-.why .more{color:var(--ink2);margin:0 0 4px;font:400 12px/1.4 var(--mono)}
-details>summary{cursor:pointer;color:var(--ink2);font:400 12px/1.4 var(--mono);padding:3px 0}
-details[open]>summary{margin-bottom:6px}
+.reasons li::marker{color:var(--ink2);font:400 var(--f1) var(--mono)}
+.why p.tb{margin:2px 0 8px;color:var(--ink2);font:400 var(--f2)/1.5 var(--sans);text-decoration:none;cursor:auto}
+.why .ok{margin:4px 0 8px;font:400 var(--f2)/1.5 var(--sans)}
+.why .more{margin:0 0 4px;color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}
+details>summary{cursor:pointer;padding:4px 0;color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}
+details>summary:hover{color:var(--ink)}
+details[open]>summary{margin-bottom:8px}
 .ledger{table-layout:auto;min-width:480px;margin-bottom:12px}
-.ledger td{font-size:13px}.ledger td.res{white-space:nowrap;font-family:var(--mono);font-size:12px}.ledger td.chk{width:34%}
+.ledger td.res{white-space:nowrap;font:400 var(--f1)/1.5 var(--mono)}.ledger td.chk{width:34%}
 .ledger .FAIL{color:var(--sig)}.ledger .FAILf{color:var(--ink)}.ledger .na{color:var(--ink2)}
-.ledger .fd{font:400 14px/1.4 var(--sans)}.ledger .fd p{margin:0}.ledger .fd p+p{margin-top:3px}
-.ledger .cn{display:block;font:400 12px/1.4 var(--mono);margin-top:2px}
-.ledger details{margin-top:3px}.ledger details div{overflow-wrap:anywhere;white-space:pre-wrap;color:var(--ink2);font-size:12px}
-.ledger details.pf{border-top:1px dotted var(--hair);padding-top:3px}
-.decs{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
-.decs.one{grid-template-columns:1fr}
-.dec{min-width:0;border-left:2px solid transparent;padding:4px 0 6px 12px}
-.dec.focus{border-left-color:var(--ink)}
-.btns{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
-.dec label{display:block;color:var(--ink2);margin-top:8px;font:400 12px/1.4 var(--mono)}
-.dec select,.dec textarea{display:block;width:100%;margin-top:3px;background:var(--paper);border:1px solid var(--hair);padding:4px 6px;font:400 14px/1.4 var(--sans);color:var(--ink)}
-.dec textarea{min-height:52px;resize:vertical}
-.dec .stt,.stt{color:var(--ink2);margin-top:4px;font:400 12px/1.4 var(--mono)}.stt.done{color:var(--ink)}
-.sl .sub{flex-basis:100%;font:400 12px/1.4 var(--mono);color:var(--ink2)}
-.lsn{color:var(--ink2)}
-.ctx .lsel select{background:none;border:0;border-bottom:1px solid var(--ink);padding:0 2px 0 0;margin-right:4px;font:500 13px/1.3 var(--sans);color:var(--ink);max-width:min(100%,46ch);text-overflow:ellipsis}
-.save{position:sticky;bottom:0;z-index:2;background:var(--paper);display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-top:16px;padding:10px 0;border-top:1px solid var(--rule)}
-.save .hint{color:var(--ink2);font:400 12px/1.4 var(--mono)}
+.ledger .fd p{margin:0}.ledger .fd p+p{margin-top:4px}
+.ledger .cn{display:block;margin-top:2px;font:400 var(--f1)/1.4 var(--mono)}
+.ledger details{margin-top:4px}.ledger details div{overflow-wrap:anywhere;white-space:pre-wrap;color:var(--ink2);font-size:var(--f1)}
+.ledger details.pf{border-top:1px dotted var(--hair);padding-top:4px}
+.dec{min-width:0}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin:0}
+.dec label{display:block;color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}
+.dec select,.dec textarea,.adec textarea{display:block;width:100%;margin-top:4px;background:var(--paper);border:1px solid var(--hair);padding:4px 8px;color:var(--ink);font:400 var(--f2)/1.4 var(--sans)}
+.dec select{height:30px;padding-block:0}
+.dec textarea{min-height:30px;height:30px;resize:vertical}
+.dec .stt,.stt{margin-top:8px;color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}.stt.done{color:var(--ink)}
+.save{position:sticky;bottom:0;z-index:2;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-top:24px;padding:12px 0;background:var(--paper);border-top:1px solid var(--rule)}
+.save .box{padding:8px 16px}
+.save .hint{color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}
+.hint.warn{color:var(--sig)}
+.box.pend{outline:1px dashed var(--sig);outline-offset:2px}
 .empty{color:var(--ink2);padding:24px 0}
-.fambar{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;padding-top:4px}
-.fambar .q{flex-basis:100%;font:400 14px/1.4 var(--sans)}.fambar .msg{color:var(--ink2);flex-basis:100%}
+.fambar{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline;padding-top:8px}
+.fambar .q{flex-basis:100%;font:400 var(--f2)/1.5 var(--sans)}.fambar .msg{flex-basis:100%;color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}
 /* audit list */
-#aud col.a-mk{width:36px}#aud col.a-what{width:44%}
-#aud td{font-size:13px}
+#aud col.a-mk{width:32px}#aud col.a-what{width:44%}
 #aud td.ap b{display:block;font-weight:500}
-#aud td.ap .code{display:block;font-size:11px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#aud td.aw{font:400 12px/1.45 var(--mono);color:var(--ink)}
+#aud td.ap .code{display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:var(--ink2);font-size:var(--f1)}
+#aud td.aw{color:var(--ink);font:400 var(--f1)/1.5 var(--mono)}
 #aud td.aw .kd{display:block;color:var(--ink2)}
-#aud tr.grp td{cursor:default;font:600 12px/1.4 var(--sans);color:var(--ink);padding:14px 8px 5px;border-bottom:1px solid var(--rule);background:none!important}
-#aud tr.eqh td{cursor:default;padding:12px 8px 5px;border-bottom:1px solid var(--rule)}
-#aud tr.eqh button{background:none;border:0;padding:0;cursor:pointer;font:600 12px/1.4 var(--sans);color:var(--ink2)}
+#aud tr.grp td{cursor:default;padding:16px 8px 4px;border-bottom:1px solid var(--rule);background:none!important;color:var(--ink);font:400 var(--f1)/1.4 var(--mono)}
+#aud tr.eqh td{cursor:default;padding:16px 8px 4px;border-bottom:1px solid var(--rule)}
+#aud tr.eqh button{background:none;border:0;padding:0;cursor:pointer;text-align:left;color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}
+#aud tr.eqh button:hover{color:var(--ink)}
 #aud tr.eq td{color:var(--ink2)}
 #aud tr.exp td,#aud tr.expd td,#aud tr.expn td{cursor:default}#aud tr.exp td{border-bottom:0}#aud tr.expd td{padding-top:0}
-#aud tr.expn td{color:var(--ink2);font:400 12px/1.45 var(--sans)}#aud .expd .snip{font-size:13px;line-height:1.45;margin-top:3px}
+#aud tr.expn td{color:var(--ink2);font:400 var(--f1)/1.5 var(--sans)}
 /* audit case */
-.snip{font:400 15px/1.55 var(--sans);overflow-wrap:anywhere}
+.facts1{margin:4px 0 0;color:var(--ink);font:400 var(--f1)/1.5 var(--mono);overflow-wrap:anywhere}
+.facts1 .bl{color:var(--ink2)}
+.snip{overflow-wrap:anywhere;font:400 var(--f3)/1.6 var(--sans)}
 .snip .v2{border:1px solid var(--sig);padding:0 2px;white-space:nowrap}
 .snip .v2.w{white-space:normal;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .snip .v1{border-bottom:1px solid var(--ink2)}
 .snip.src-s{color:var(--ink2)}
 .na{color:var(--ink2)}
-.ftg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 18px;margin:4px 0 10px}
-.ftc{min-width:0}.ftc+.ftc{border-left:1px solid var(--hair);padding-left:18px}
-.ftc.odd{box-shadow:inset 2px 0 0 var(--sig);padding-left:14px}
-.ftc .lh{display:flex;gap:8px;align-items:baseline;font:400 12px/1.4 var(--mono);color:var(--ink2);margin-bottom:4px}
-.ftc .lh .oddl{color:var(--sig)}
-.oddl{font:400 11px/1.3 var(--mono);color:var(--sig)}
-.snip.ftx{font:400 15px/1.6 var(--sans)}
-.ftl{margin:14px 0 2px;color:var(--ink2);font:400 12px/1.4 var(--mono)}.ftl b{color:var(--ink);font:500 15px/1.3 var(--sans);margin-right:6px}
-.facts{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:3px 18px;margin:0;font:400 14px/1.45 var(--sans)}
-.facts dt{color:var(--ink2);font:400 12px/1.8 var(--mono)}.facts dd{margin:0}
-.facts a{color:var(--ink)}.facts .term,.facts .sub2{display:block}.facts .sub2{color:var(--ink2);font-size:13px;margin-top:3px}
+.ftg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 24px;margin:0 0 8px}
+.ftc{min-width:0}.ftc+.ftc{border-left:1px solid var(--hair);padding-left:24px}
+.ftc .lh{display:flex;gap:8px;align-items:baseline;margin-bottom:8px;color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}
+.ftc .lh .lt{color:var(--ink)}
+.oddl{color:var(--sig);font:400 var(--f1)/1.4 var(--mono)}
+.ftl{margin:16px 0 4px;color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}.ftl b{margin-right:8px;color:var(--ink);font:500 var(--f2)/1.3 var(--sans)}
+.facts{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:4px 24px;margin:0;font:400 var(--f2)/1.5 var(--sans)}
+.facts dt{color:var(--ink2);font:400 var(--f1)/1.75 var(--mono)}.facts dd{margin:0}
+.facts a{color:var(--ink)}.facts .term,.facts .sub2{display:block}.facts .sub2{margin-top:2px;color:var(--ink2);font-size:var(--f1)}
 .term s{color:var(--sig);text-decoration-thickness:1px}.term u{text-decoration-thickness:2px;text-underline-offset:3px}
-table.mem{width:100%;table-layout:auto;margin:4px 0 6px}
-table.mem td{font-size:13px;padding:6px 10px 6px 0;cursor:default}
-table.mem td.mf{width:44px;white-space:nowrap;color:var(--ink2);font-family:var(--mono)}table.mem td.mc{width:40%}
-table.mem .code{color:var(--ink2);font-size:12px}table.mem .sub2{display:block;color:var(--ink2);font-size:12px}
-.adec{display:grid;grid-template-columns:minmax(0,1fr);gap:14px 0}
-.adec .btns .box{padding:7px 14px;font-size:13px}.adec .grp2{display:flex;flex-wrap:wrap;gap:6px;align-items:baseline;margin-top:6px}
-.adec .grp2 .lbl{font:400 12px/1.4 var(--mono);color:var(--ink2);min-width:9em}
-.adec .q{display:block;font:400 12px/1.4 var(--mono);color:var(--ink2);margin-bottom:4px}
-.adec select,.adec textarea{width:100%;background:var(--paper);border:1px solid var(--hair);padding:4px 6px;font:400 14px/1.4 var(--sans);color:var(--ink)}
-.adec textarea{display:block;margin-top:8px;min-height:60px;resize:vertical}
-.acts{display:flex;flex-direction:column;gap:4px;font:400 14px/1.35 var(--sans)}
-.acts .fixl{color:var(--ink)}.acts .fixg{display:inline-flex;gap:14px;margin:0 0 4px 22px}
-.acts .ck{display:inline-flex;gap:8px;align-items:baseline;cursor:pointer}
-.acts input{accent-color:var(--ink);margin:0;transform:translateY(1px)}
-.sug{color:var(--ink2);font:400 12px/1.4 var(--mono);margin-top:6px}
-.adec .sub2{display:block;color:var(--ink2);font:400 12px/1.4 var(--sans);margin-bottom:2px}
-.oddb{font-size:11px}.box[aria-pressed=false] .oddb{color:var(--sig)}
-.arem{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin:6px 0}.arem .box{white-space:normal;text-align:left;padding:7px 14px;font-size:13px;max-width:100%}
-.arem .box:disabled,.arem .box[aria-disabled="true"],.save .box[aria-disabled="true"]{opacity:.45;cursor:not-allowed}.arem .hint{color:var(--ink2);font:400 12px/1.4 var(--mono)}
-.hint.warn{color:var(--ink);border-left:2px solid var(--sig);padding-left:6px}.box.pend{outline:1px dashed var(--sig);outline-offset:2px}
-.aconf{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;margin:6px 0 2px;padding:8px 10px;border:1px solid var(--ink);background:var(--wash)}.aconf .q{flex-basis:100%;font:400 14px/1.4 var(--sans);color:var(--ink)}
-.who.ask input{border-bottom:2px solid var(--sig)}.who input#a-rev{width:min(100%,40ch)}.who+.adec{margin-top:16px}.aname{margin:6px 0 0;font:400 13px/1.4 var(--sans);color:var(--ink)}
-/* footer: what the register is, its numbers, provenance, the full legend */
-footer{border-top:1px solid var(--hair);margin-top:32px;padding:10px 0 32px;color:var(--ink2);font:400 11px/1.6 var(--mono)}
-.menu{position:relative}.menu>summary{list-style:none;cursor:pointer}.menu>summary::-webkit-details-marker{display:none}
+.termln{margin:8px 0 0;font:400 var(--f2)/1.5 var(--sans)}.termln .sub2{display:block;color:var(--ink2);font:400 var(--f1)/1.5 var(--mono)}
+table.mem{width:100%;table-layout:auto;margin:0 0 8px}
+table.mem td{padding:8px 12px 8px 0;cursor:default}
+table.mem td.mf{width:44px;white-space:nowrap;color:var(--ink2);font:400 var(--f1)/1.5 var(--mono)}table.mem td.mc{width:40%}
+table.mem .code{color:var(--ink2);font-size:var(--f1)}table.mem .sub2{display:block;color:var(--ink2);font-size:var(--f1)}
+.adec{display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
+.adec .q{display:block;margin-bottom:4px;color:var(--ink);font:600 var(--f3)/1.3 var(--sans)}
+.adec .sub2{display:block;margin-bottom:8px;color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}
+.adec .aw{margin-top:8px}
+.adec textarea{min-height:56px;resize:vertical;margin-top:12px}
+.oddb{color:inherit}.box[aria-pressed=false] .oddb{color:var(--sig)}
+.arem{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin:8px 0 0}.arem .box{white-space:normal;text-align:left;max-width:100%}
+.arem .hint{color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}
+.aconf{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline;margin:8px 0 0;padding:12px;border:1px solid var(--ink)}.aconf .q{flex-basis:100%;color:var(--ink);font:400 var(--f2)/1.5 var(--sans)}
+.sug{margin-top:8px;color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}
+.who{margin-top:0;color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}
+.who input{min-width:220px;background:none;border:0;border-bottom:1px solid var(--hair);padding:2px 0;margin-left:8px;color:var(--ink);font:400 var(--f2)/1.4 var(--sans)}
+.who.ask input{border-bottom:2px solid var(--sig)}.who input#a-rev{width:min(100%,40ch)}.who+.adec{margin-top:24px}
+.aname{margin:8px 0 0;color:var(--sig);font:400 var(--f2)/1.4 var(--sans)}
+.more2{margin-top:24px;border-top:1px solid var(--hair);padding-top:8px}
+.more2 .facts{margin-top:8px}
+/* export menu */
+.menu{position:relative}.menu>summary{list-style:none;cursor:pointer;padding:0;color:var(--ink2)}.menu>summary:hover,.menu[open]>summary{color:var(--ink)}.menu>summary::-webkit-details-marker{display:none}
 .menu>summary::after{content:" ▾"}
-.menu .mm{position:absolute;right:0;top:calc(100% + 6px);z-index:10;background:var(--paper);border:1px solid var(--ink);padding:8px 12px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:240px;font:400 13px/1.4 var(--sans)}
-.menu .mm .tb{color:var(--ink)}.menu .mm .clrq{color:var(--ink)}.ctx.demo{color:var(--ink);font-weight:600}.menu .mm .msg{color:var(--ink2);font:400 11px/1.4 var(--mono)}
-.who{margin-top:10px;font:400 12px/1.4 var(--mono);color:var(--ink2)}.who input{background:none;border:0;border-bottom:1px solid var(--hair);padding:2px 0;font:400 14px/1.4 var(--sans);color:var(--ink);min-width:220px}
-footer h3{font:500 13px/1.4 var(--sans);color:var(--ink);margin:0 0 8px}
-footer p{margin:6px 0 0;overflow-wrap:anywhere;max-width:150ch}
-.kv{display:grid;grid-template-columns:1fr 1fr;gap:0 40px}
-.kv dl{margin:0;display:grid;grid-template-columns:minmax(140px,max-content) 1fr;gap:2px 16px;align-content:start}
-.kv dt{color:var(--ink2)}.kv dd{margin:0;color:var(--ink);overflow-wrap:anywhere}
-.kv .pass{color:var(--ink)}.kv .fail{color:var(--sig)}.kv .big{color:var(--ink)}
+.menu[open]>summary{margin-bottom:0}
+.menu .mm{position:absolute;right:0;top:calc(100% + 12px);z-index:10;display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:300px;padding:12px 16px;background:var(--paper);border:1px solid var(--ink);font:400 var(--f2)/1.4 var(--sans)}
+.menu .mm .tb{color:var(--ink);text-align:left}.menu .mm .clrq{color:var(--ink)}.menu .mm .msg{color:var(--ink2);font:400 var(--f1)/1.4 var(--mono)}
+.menu .mm .msg:empty{display:none}
+.menu .mm #where{padding-top:8px;border-top:1px solid var(--hair);align-self:stretch}
+/* footer: provenance */
+footer{border-top:1px solid var(--hair);margin-top:32px;padding:12px 0 32px;color:var(--ink2);font:400 var(--f1)/1.6 var(--mono)}
+footer p{margin:0;overflow-wrap:anywhere;max-width:150ch}
 #print{display:none}
-[hidden]{display:none!important}
 @media (max-width:900px){
  .app{padding-inline:16px}
- .work.case-open .register{display:none}.back{display:inline-block}.sl .no{position:static}
- .lang{display:block;grid-row:auto}.drafts{grid-template-rows:none}.lang+.lang{border-top:1px solid var(--rule);margin-top:18px;padding-top:12px}
- .register .key{display:none}.ctx{white-space:normal;display:block;-webkit-line-clamp:none;overflow:visible}.ctx .lsel{display:block;margin-bottom:4px}
- .key>span{white-space:normal}.tools{gap:6px 12px}.wm{font-size:22px}.views{gap:16px}.box{white-space:normal}
- .bar{position:static}.views{align-self:auto}.view{margin-bottom:0;padding-bottom:4px}.tools{margin-left:0}
+ .work.case-open .register{display:none}.back{display:inline-block}
+ .lang{display:block;grid-row:auto}.drafts{grid-template-rows:none}.lang+.lang{border-top:1px solid var(--rule);margin-top:24px;padding-top:16px}
+ .register .key{display:none}.demo{margin-left:0}
+ .key>span{white-space:normal}.views{gap:16px}.box{white-space:normal}
+ .bar{position:static;gap:8px 24px}.views{align-self:auto}.view{margin-bottom:0;padding-bottom:6px}.tools{margin-left:0;gap:8px 16px}
  .work{grid-template-columns:minmax(0,1fr)}
  .register{position:static;height:auto;border-right:0;padding-right:0;border-bottom:1px solid var(--rule)}
  .reg-wrap{max-height:46vh}
- .drafts,.decs,.adec,.kv{grid-template-columns:1fr}
- .dr{padding-right:0}.dr+.dr{border-left:0;border-top:1px solid var(--hair);padding:12px 0 0;margin-top:12px}
- .ftg{grid-template-columns:minmax(0,1fr)}.ftc+.ftc{border-left:0;padding-left:0;border-top:1px solid var(--hair);margin-top:8px;padding-top:8px}
- .ftc.odd{padding-left:12px}
- .adec>div+div{margin-top:12px}
+ .filters,#p-audit .filters{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ .drafts,.adec{grid-template-columns:1fr}
+ .ftg{grid-template-columns:minmax(0,1fr)}.ftc+.ftc{border-left:0;padding-left:0;border-top:1px solid var(--hair);margin-top:12px;padding-top:12px}
+ .bar{position:relative}.menu{position:static}.menu .mm{left:0;right:0;min-width:0;top:100%}
 }
 @media print{
  @page{size:A4;margin:14mm}
  body{font-size:10pt;background:#fff;color:#000}
- .bar,.register,.save,.export,.edmeta,.btns,.dec select,.dec textarea,#case,#acase{display:none!important}
+ .bar,.ctxw,.register,.save,.export,.edmeta,.btns,.dec select,.dec textarea,#case,#acase{display:none!important}
  .why details{display:none}
  .work{display:block}
  #print{display:block}
@@ -280,18 +277,17 @@ BODY = r"""<div class="app">
  <span class="wm">Gleichlaut</span>
  <nav class="views" role="tablist" aria-label="Views" data-aria="views"><button class="view" role="tab" type="button" id="t-audit" aria-controls="p-audit"></button><button class="view" role="tab" type="button" id="t-drafts" aria-controls="p-drafts"></button></nav>
  <div class="tools"><span id="progress"></span>
-  <details class="menu" id="xmenu"><summary class="box" id="x-sum"></summary><div class="mm">
+  <details class="menu" id="xmenu"><summary id="x-sum"></summary><div class="mm">
    <button class="tb" id="x-dec" type="button"></button><button class="tb" id="x-xlf" type="button"></button><button class="tb" id="x-xlf12" type="button"></button>
    <button class="tb" id="x-copy" type="button"></button><button class="tb" id="x-imp" type="button"></button>
    <button class="tb" id="a-csv-i" type="button"></button><button class="tb" id="a-csv" type="button"></button><button class="tb" id="a-imp" type="button"></button>
-   <span class="msg" id="x-msg" aria-live="polite"></span><span class="msg" id="a-msg" aria-live="polite"></span><span class="msg" id="where"></span>
-   <button class="tb" id="x-clr" type="button"></button><span class="msg clrq" id="x-clr-q" role="group" hidden><span id="x-clr-t"></span> <button class="tb" id="x-clr-yes" type="button"></button> <button class="tb" id="x-clr-no" type="button"></button></span><span class="msg" id="x-clr-msg" aria-live="polite"></span>
+   <span class="msg" id="x-msg" aria-live="polite"></span><span class="msg" id="a-msg" aria-live="polite"></span>
+   <button class="tb" id="x-clr" type="button"></button><span class="msg clrq" id="x-clr-q" role="group" hidden><span id="x-clr-t"></span> <button class="tb" id="x-clr-yes" type="button"></button> <button class="tb" id="x-clr-no" type="button"></button></span><span class="msg" id="x-clr-msg" aria-live="polite"></span><span class="msg" id="where"></span>
    <textarea id="copybox" hidden readonly aria-label="Decisions JSON" data-aria="json"></textarea></div></details>
   <label><span id="l-ui" class="vh"></span><select id="ui-lang" aria-label="Interface language" data-aria="uil"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option></select></label><button class="tb" id="theme" type="button"></button></div>
 </header>
-<p class="ctx" id="ctxline"></p>
-<p class="ctx demo" id="demo" role="note" hidden></p>
-<p class="lanehelp" id="lanehelp" hidden></p>
+<div class="ctxw"><div class="ctxrow"><p class="ctx" id="ctxline"></p><p class="demo" id="demo" role="note" hidden></p></div>
+<div class="lanehelp" id="lanehelp" hidden></div></div>
 <div class="work" id="p-audit" role="tabpanel" aria-labelledby="t-audit" hidden>
  <section class="register" aria-label="Issues" data-aria="issues">
   <div class="filters"><div class="fl" id="a-show"></div><div class="fl" id="a-lang"></div><div class="fl" id="a-kind"></div><div class="fl" id="a-since" hidden></div>
@@ -307,7 +303,8 @@ BODY = r"""<div class="app">
   <div class="filters">
    <div class="fl" id="f-status"></div>
    <div class="fl" id="f-lang"></div>
-   <div class="fl"><select id="f-fam" aria-label="Family" data-aria="family"></select><input type="search" id="f-q" aria-label="Search product or limitation code" data-aria="search"></div>
+   <div class="fl"><label class="k" for="f-fam" id="l-fam"></label><select id="f-fam" aria-label="Family" data-aria="family"></select></div>
+   <div class="fl"><label class="k" for="f-q" id="l-q"></label><input type="search" id="f-q" aria-label="Search product or limitation code" data-aria="search"></div>
    <div class="fambar" id="fam-bulk" hidden></div>
   </div>
   <div class="tbl reg-wrap" id="reg-wrap"><table id="reg"><colgroup><col class="c-fr"><col class="c-it"><col class="c-prod"><col></colgroup>
@@ -735,16 +732,16 @@ it:{aLead:"Ogni riga è un caso: un punto in cui i testi tedesco, francese e ita
 Object.keys(TX4).forEach(function(L){Object.keys(TX4[L]).forEach(function(k){TX[L][k]=TX4[L][k]})});
 // redesign (10 Oct 2026): one bar, a context line, list + case in both views, statistics in the footer
 var TX5={
-de:{gCond:"Ändert eine Bedingung",gEdit:"Tippfehler und Redaktion",gTerm:"Terminologie",ctxAud:"Der Code vergleicht alle {n} Limitierungen auf DE/FR/IT, ohne Modell. Zu entscheiden ist pro Fall: welcher Text ist falsch, und was geschieht.",export:"Export",ctxD:"Die optionale 70B-Spur, wie von Public AI bereitgestellt (Identität nicht überprüft); die Standardspur (8B auf CPU) entwirft dieselben Änderungen. Markiert heisst: eine Person prüft – die Prüfungen sind darauf ausgelegt, nichts zu übersehen.",whereS:"Entscheide bleiben in diesem Browser, bis sie exportiert werden.",backList:"Liste",slotsT:"Platzhalter zeigen",famChange1:"1 Änderung",aThen:"Weiter",aOr:"Oder",aboutH:"Über dieses Register",aBind:"Massgebend ist die Fassung, die dem Entscheid des BAG entspricht; welche das ist, weiss die Prüfung nicht.",
+de:{gCond:"Ändert eine Bedingung",gEdit:"Tippfehler und Redaktion",gTerm:"Terminologie",ctxAud:"Der Code vergleicht alle {n} Limitierungen auf DE/FR/IT, ohne Modell. Zu entscheiden ist pro Fall: welcher Text ist falsch, und was geschieht.",export:"Export",ctxD:"Die optionale 70B-Spur, wie von Public AI bereitgestellt (Identität nicht überprüft); die Standardspur (8B auf CPU) entwirft dieselben Änderungen. Markiert heisst: eine Person prüft.",whereS:"Entscheide bleiben in diesem Browser, bis sie exportiert werden.",backList:"Liste",slotsT:"Platzhalter zeigen",famChange1:"1 Änderung",aThen:"Weiter",aOr:"Oder",aboutH:"Über dieses Register",aBind:"Massgebend ist die Fassung, die dem Entscheid des BAG entspricht; welche das ist, weiss die Prüfung nicht.",
  aKnownHeadS:"Von unserer früheren Erhebung erfasst · {k} von {n} gefunden",aTermHeadS:"Terminologie · {n}",aWhat:"Was abweicht",aDating:"Seit wann",aNote2:"Hinweis",aTermL:"Begriff",
  aTexts:"Die Texte",aActL:"Massnahmen und Notiz",saveNextI:"Nächster Fall",keysA:"j/k oder ↑/↓ wechseln · Ctrl/Cmd+Enter speichern und weiter",lane:"Spur",laneM:"Methode",comparedW:"Verglichen mit"},
-en:{gCond:"Changes a condition",gEdit:"Typos and editorial",gTerm:"Terminology",ctxAud:"Code compares all {n} limitations in DE/FR/IT, no model. Each issue needs one decision: which text is wrong, and what happens next.",export:"Export",ctxD:"The optional 70B lane, as Public AI served it (identity not verified); the default 8B on CPU drafts the same changes. Flagged means a person checks it: the checks are tuned to miss nothing.",whereS:"Decisions stay in this browser until exported.",backList:"List",slotsT:"Show number slots",famChange1:"1 change",aThen:"Then",aOr:"Or",aboutH:"About this register",aBind:"What counts is the version that matches BAG's decision; which one that is, the audit cannot know.",
+en:{gCond:"Changes a condition",gEdit:"Typos and editorial",gTerm:"Terminology",ctxAud:"Code compares all {n} limitations in DE/FR/IT, no model. Each issue needs one decision: which text is wrong, and what happens next.",export:"Export",ctxD:"The optional 70B lane, as Public AI served it (identity not verified); the default 8B on CPU drafts the same changes. Flagged means a person checks it.",whereS:"Decisions stay in this browser until exported.",backList:"List",slotsT:"Show number slots",famChange1:"1 change",aThen:"Then",aOr:"Or",aboutH:"About this register",aBind:"What counts is the version that matches BAG's decision; which one that is, the audit cannot know.",
  aKnownHeadS:"Listed by our earlier census · {k} of {n} found",aTermHeadS:"Terminology · {n}",aWhat:"What differs",aDating:"Since when",aNote2:"Note",aTermL:"Term",
  aTexts:"The texts",aActL:"Actions and note",saveNextI:"Next issue",keysA:"j/k or ↑/↓ move · Ctrl/Cmd+Enter save and next",lane:"Lane",laneM:"Method",comparedW:"Compared with"},
-fr:{gCond:"Modifie une condition",gEdit:"Coquilles et rédaction",gTerm:"Terminologie",ctxAud:"Le code compare les {n} limitations en DE/FR/IT, sans modèle. Chaque cas demande une décision : quel texte est erroné, et quelle suite lui donner.",export:"Exporter",ctxD:"La variante 70B optionnelle, telle que servie par Public AI (identité non vérifiée) ; la variante par défaut (8B sur CPU) rédige les mêmes modifications. Signalé veut dire : une personne vérifie, les contrôles sont réglés pour ne rien laisser passer.",whereS:"Les décisions restent dans ce navigateur jusqu'à leur exportation.",backList:"Liste",slotsT:"Afficher les emplacements",famChange1:"1 modification",aThen:"Ensuite",aOr:"Ou",aboutH:"À propos de ce registre",aBind:"Ce qui compte est la version conforme à la décision de l'OFSP ; laquelle, l'audit ne peut pas le savoir.",
+fr:{gCond:"Modifie une condition",gEdit:"Coquilles et rédaction",gTerm:"Terminologie",ctxAud:"Le code compare les {n} limitations en DE/FR/IT, sans modèle. Chaque cas demande une décision : quel texte est erroné, et quelle suite lui donner.",export:"Exporter",ctxD:"La variante 70B optionnelle, telle que servie par Public AI (identité non vérifiée) ; la variante par défaut (8B sur CPU) rédige les mêmes modifications. Signalé veut dire : une personne vérifie.",whereS:"Les décisions restent dans ce navigateur jusqu'à leur exportation.",backList:"Liste",slotsT:"Afficher les emplacements",famChange1:"1 modification",aThen:"Ensuite",aOr:"Ou",aboutH:"À propos de ce registre",aBind:"Ce qui compte est la version conforme à la décision de l'OFSP ; laquelle, l'audit ne peut pas le savoir.",
  aKnownHeadS:"Recensés par notre inventaire antérieur · {k} sur {n} trouvés",aTermHeadS:"Terminologie · {n}",aWhat:"Ce qui diverge",aDating:"Depuis quand",aNote2:"Remarque",aTermL:"Terme",
  aTexts:"Les textes",aActL:"Mesures et remarque",saveNextI:"Cas suivant",keysA:"j/k ou ↑/↓ naviguer · Ctrl/Cmd+Entrée enregistrer et continuer",lane:"Variante",laneM:"Méthode",comparedW:"Comparé avec"},
-it:{gCond:"Modifica una condizione",gEdit:"Refusi e redazione",gTerm:"Terminologia",ctxAud:"Il codice confronta tutte le {n} limitazioni in DE/FR/IT, senza modello. Ogni caso chiede una decisione: quale testo è sbagliato, e come procedere.",export:"Esporta",ctxD:"La variante 70B opzionale, come servita da Public AI (identità non verificata); la variante predefinita (8B su CPU) redige le stesse modifiche. Segnalata significa che una persona deve verificarla: i controlli sono tarati per non lasciarsi sfuggire nulla.",whereS:"Le decisioni restano in questo browser finché non vengono esportate.",backList:"Elenco",slotsT:"Mostra i segnaposto",famChange1:"1 modifica",aThen:"Poi",aOr:"Oppure",aboutH:"Informazioni su questo registro",aBind:"Conta la versione conforme alla decisione dell'UFSP; quale sia, la verifica non può saperlo.",
+it:{gCond:"Modifica una condizione",gEdit:"Refusi e redazione",gTerm:"Terminologia",ctxAud:"Il codice confronta tutte le {n} limitazioni in DE/FR/IT, senza modello. Ogni caso chiede una decisione: quale testo è sbagliato, e come procedere.",export:"Esporta",ctxD:"La variante 70B opzionale, come servita da Public AI (identità non verificata); la variante predefinita (8B su CPU) redige le stesse modifiche. Segnalata significa che una persona deve verificarla.",whereS:"Le decisioni restano in questo browser finché non vengono esportate.",backList:"Elenco",slotsT:"Mostra i segnaposto",famChange1:"1 modifica",aThen:"Poi",aOr:"Oppure",aboutH:"Informazioni su questo registro",aBind:"Conta la versione conforme alla decisione dell'UFSP; quale sia, la verifica non può saperlo.",
  aKnownHeadS:"Già rilevati dal nostro censimento precedente · trovati {k} su {n}",aTermHeadS:"Terminologia · {n}",aWhat:"Che cosa diverge",aDating:"Da quando",aNote2:"Nota",aTermL:"Termine",
  aTexts:"I testi",aActL:"Misure e nota",saveNextI:"Caso successivo",keysA:"j/k o ↑/↓ spostarsi · Ctrl/Cmd+Invio salva e continua",lane:"Variante",laneM:"Metodo",comparedW:"Confrontato con"}};
 Object.keys(TX5).forEach(function(L){Object.keys(TX5[L]).forEach(function(k){TX[L][k]=TX5[L][k]})});
@@ -752,7 +749,7 @@ Object.keys(TX5).forEach(function(L){Object.keys(TX5[L]).forEach(function(k){TX[
 // where decisions live, distinct legend labels (10 Oct 2026, juror round)
 var TX6={
 de:{laneOpt8:"Testmenge (publiziert) · 8B Q8_0, CPU (Standard)",laneOpt70:"Testmenge (publiziert) · Apertus 70B, wie von Public AI bereitgestellt (optional; Identität nicht überprüft)",laneOptLive:"Schattenlauf {m} (nicht produktiv) · 8B Q8_0, CPU",
- ctxD8:"Die Standardspur: Apertus 8B auf CPU, ohne Netz. Markiert heisst: eine Person prüft – die Prüfungen sind darauf ausgelegt, nichts zu übersehen.",
+ ctxD8:"Die Standardspur: Apertus 8B auf CPU, ohne Netz. Markiert heisst: eine Person prüft.",
  ctxDL:"Vom BAG im Monat {m} publizierte Änderungen, danach zur Messung mit der Standardspur (8B auf CPU) aus dem öffentlichen Feed entworfen; die französische und italienische Fassung des BAG hat das Modell nie gesehen. Lange oder umgeschriebene Texte gehen ohne Entwurf an die Übersetzung. Markiert heisst: eine Person prüft.",
  keyS:[["✓","bereit"],["~","markiert, wohl in Ordnung"],["▲","markiert, zu prüfen"],["≠","bisheriger Text mit Problem"]],
  saveNext:"Speichern, nächste Änderung",saveNextI:"Speichern, nächster Fall",
@@ -766,7 +763,7 @@ de:{laneOpt8:"Testmenge (publiziert) · 8B Q8_0, CPU (Standard)",laneOpt70:"Test
  kindsX:{operator:"Operator",negation:"Verneinung",number_word:"Zahlwort"},labX:{real:"bestätigt: ändert die Bedeutung",minor:"bestätigt: geringfügig"},
  aNoteOnly:"offen · Notiz gespeichert, noch keine Fassung oder Massnahme gewählt",lsNote:"nur in diesem Browser gespeichert · zum Behalten exportieren"},
 en:{laneOpt8:"Test set (published) · 8B Q8_0, CPU (default)",laneOpt70:"Test set (published) · Apertus 70B as Public AI served it (optional; identity not verified)",laneOptLive:"Shadow run {m} (not for production) · 8B Q8_0, CPU",
- ctxD8:"The default lane: Apertus 8B on CPU, air-gapped. Flagged means a person checks it: the checks are tuned to miss nothing.",
+ ctxD8:"The default lane: Apertus 8B on CPU, air-gapped. Flagged means a person checks it.",
  ctxDL:"Changes BAG published in {m}, drafted afterwards from the public feed by the default lane (8B on CPU) to measure it; BAG's French and Italian were never shown to the model. Long or rewritten texts go to a translator without a draft. Flagged means a person checks it.",
  keyS:[["✓","ready"],["~","flagged, probably fine"],["▲","flagged, to check"],["≠","old text has a problem"]],
  saveNext:"Save, next change",saveNextI:"Save, next issue",
@@ -780,7 +777,7 @@ en:{laneOpt8:"Test set (published) · 8B Q8_0, CPU (default)",laneOpt70:"Test se
  kindsX:{operator:"operator",negation:"negation",number_word:"number word"},labX:{real:"confirmed: changes the meaning",minor:"confirmed: minor"},
  aNoteOnly:"open · note saved, no version or action chosen yet",lsNote:"saved in this browser only · export to keep"},
 fr:{laneOpt8:"Jeu de test (publié) · 8B Q8_0, CPU (par défaut)",laneOpt70:"Jeu de test (publié) · Apertus 70B tel que servi par Public AI (optionnel ; identité non vérifiée)",laneOptLive:"Essai à blanc {m} (hors production) · 8B Q8_0, CPU",
- ctxD8:"La variante par défaut : Apertus 8B sur CPU, hors réseau. Signalé veut dire : une personne vérifie, les contrôles sont réglés pour ne rien laisser passer.",
+ ctxD8:"La variante par défaut : Apertus 8B sur CPU, hors réseau. Signalé veut dire : une personne vérifie.",
  ctxDL:"Modifications publiées par l'OFSP au mois {m}, rédigées ensuite à partir du flux public par la variante par défaut (8B sur CPU) pour la mesurer ; le modèle n'a jamais vu le français ni l'italien de l'OFSP. Les textes longs ou réécrits vont au traducteur sans brouillon. Signalé veut dire : une personne vérifie.",
  keyS:[["✓","prêt"],["~","signalé, probablement sans problème"],["▲","signalé, à vérifier"],["≠","l'ancien texte a un problème"]],
  saveNext:"Enregistrer, modification suivante",saveNextI:"Enregistrer, cas suivant",
@@ -794,7 +791,7 @@ fr:{laneOpt8:"Jeu de test (publié) · 8B Q8_0, CPU (par défaut)",laneOpt70:"Je
  kindsX:{operator:"opérateur",negation:"négation",number_word:"nombre en lettres"},labX:{real:"confirmé : change le sens",minor:"confirmé : mineur"},
  aNoteOnly:"ouvert · remarque enregistrée, ni version ni mesure choisie",lsNote:"enregistré dans ce navigateur seulement · exporter pour conserver"},
 it:{laneOpt8:"Insieme di prova (pubblicato) · 8B Q8_0, CPU (predefinita)",laneOpt70:"Insieme di prova (pubblicato) · Apertus 70B come servito da Public AI (opzionale; identità non verificata)",laneOptLive:"Prova in parallelo {m} (non produttiva) · 8B Q8_0, CPU",
- ctxD8:"La variante predefinita: Apertus 8B su CPU, senza rete. Segnalata significa che una persona deve verificarla: i controlli sono tarati per non lasciarsi sfuggire nulla.",
+ ctxD8:"La variante predefinita: Apertus 8B su CPU, senza rete. Segnalata significa che una persona deve verificarla.",
  ctxDL:"Modifiche pubblicate dall'UFSP nel mese {m}, redatte in seguito dal flusso pubblico con la variante predefinita (8B su CPU) per misurarla; il modello non ha mai visto il francese né l'italiano dell'UFSP. I testi lunghi o riscritti vanno al traduttore senza bozza. Segnalata significa che una persona deve verificarla.",
  keyS:[["✓","pronta"],["~","segnalata, probabilmente in ordine"],["▲","segnalata, da verificare"],["≠","il vecchio testo ha un problema"]],
  saveNext:"Salva, modifica successiva",saveNextI:"Salva, caso successivo",
@@ -983,6 +980,42 @@ it:{clr:"Cancella le mie decisioni e il mio nome da questo browser",clrQ:"Cancel
  clrYes:"Sì, cancella",clrNo:"Annulla",clrDone:"Cancellato: questo browser non conserva più decisioni né nomi di questa pagina.",
  demo:"Sito dimostrativo (Cloudflare, gestito dal team del progetto, non dall'UFSP): non per l'uso produttivo. Non inserire qui decisioni reali né nomi; per il pilota usare il file locale o un hosting della Confederazione."}};
 Object.keys(TX10).forEach(function(L){Object.keys(TX10[L]).forEach(function(k){TX[L][k]=TX10[L][k]})});
+// redesign (11 Oct 2026): fewer words on screen. One line of facts per tab (the sentences behind [?]), a one-line demo
+// note (the full one as its tooltip), the storage note only in the export menu, terse key hints
+var TX11={
+de:{aAllN:"Alle ({n})",decA:"entschieden",nDr:"{n} Entwürfe",factsA:"{r} bereit · {f} markiert · {x} identisch mit BAG",figsXs:"{x} von {n} identisch mit BAG",
+ aFacts:"SL-Stand {d} · {n} Limitierungen · {s} Befunde in {i} Fällen",aQ:"Die Prüfung erklären",
+ lsNote1:"Nur in diesem Browser gespeichert. Zum Behalten exportieren.",demo:"Demo-Seite, nicht vom BAG betrieben. Keine echten Entscheide oder Namen erfassen.",
+ needDec:"Zuerst entscheiden · j überspringen",needDecA:"Zuerst entscheiden · j überspringen",
+ keys:"Ctrl/Cmd+Enter speichern, weiter · j/k wechseln · f/i Sprache",keysA:"Ctrl/Cmd+Enter speichern, weiter · j/k wechseln · 1–3 falscher Text",
+ aWrongSub:"Mehrere Antworten möglich.",chkDetail:"Prüfdetail ({n} Prüfungen, Rohausgabe)",aDet:"Details",searchL:"Suche",
+ expHead:"Operator- und Negationsmodul (zuschaltbar) · {c} von {n} bestätigt · {d} entschieden",
+ expNote:"Liest Operatoren (≥, >, höchstens), Verneinungen und Zahlwörter; nur Befunde, die beide blinden Annotatoren bestätigt haben. Nicht unter den {n} Fällen oben; Export als eigene Art."},
+en:{aAllN:"All ({n})",decA:"decided",nDr:"{n} drafts",factsA:"{r} ready · {f} flagged · {x} identical to BAG",figsXs:"{x} of {n} identical to BAG",
+ aFacts:"SL {d} · {n} limitations · {s} findings in {i} issues",aQ:"Explain the audit",
+ lsNote1:"Saved in this browser only. Export to keep.",demo:"Demo site, not run by the FOPH. Do not enter real decisions or names.",
+ needDec:"Decide first · j skip",needDecA:"Decide first · j skip",
+ keys:"Ctrl/Cmd+Enter save, next · j/k move · f/i language",keysA:"Ctrl/Cmd+Enter save, next · j/k move · 1–3 wrong text",
+ aWrongSub:"More than one may be wrong.",chkDetail:"Check detail ({n} checks, raw output)",aDet:"Details",searchL:"Search",
+ expHead:"Operator and negation module (opt-in) · {c} of {n} confirmed · {d} decided",
+ expNote:"Reads operators (≥, >, at most), negations and number words; only finds both blind annotators confirmed. Not among the {n} issues above; exported as its own kind."},
+fr:{aAllN:"Tous ({n})",decA:"décidés",nDr:"{n} brouillons",factsA:"{r} prêts · {f} signalés · {x} identiques à l'OFSP",figsXs:"{x} sur {n} identiques à l'OFSP",
+ aFacts:"LS du {d} · {n} limitations · {s} constats en {i} cas",aQ:"Expliquer l'audit",
+ lsNote1:"Enregistré dans ce navigateur seulement. Exporter pour conserver.",demo:"Site de démonstration, non exploité par l'OFSP. N'y saisissez ni vraies décisions ni noms.",
+ needDec:"Décider d'abord · j passer",needDecA:"Décider d'abord · j passer",
+ keys:"Ctrl/Cmd+Entrée enregistrer, suivant · j/k naviguer · f/i langue",keysA:"Ctrl/Cmd+Entrée enregistrer, suivant · j/k naviguer · 1–3 texte erroné",
+ aWrongSub:"Plusieurs réponses possibles.",chkDetail:"Détail des contrôles ({n} contrôles, sortie brute)",aDet:"Détails",searchL:"Recherche",
+ expHead:"Module opérateurs et négations (optionnel) · {c} sur {n} confirmés · {d} décidés",
+ expNote:"Lit les opérateurs (≥, >, au maximum), les négations et les nombres en lettres ; seuls les constats confirmés par les deux annotateurs à l'aveugle. Hors des {n} cas ci-dessus ; exportés comme type à part."},
+it:{aAllN:"Tutti ({n})",decA:"decisi",nDr:"{n} bozze",factsA:"{r} pronte · {f} segnalate · {x} identiche all'UFSP",figsXs:"{x} su {n} identiche all'UFSP",
+ aFacts:"ES del {d} · {n} limitazioni · {s} rilievi in {i} casi",aQ:"Spiegare la verifica",
+ lsNote1:"Salvato solo in questo browser. Esportare per conservare.",demo:"Sito dimostrativo, non gestito dall'UFSP. Non inserire decisioni reali né nomi.",
+ needDec:"Decidere prima · j saltare",needDecA:"Decidere prima · j saltare",
+ keys:"Ctrl/Cmd+Invio salva, avanti · j/k spostarsi · f/i lingua",keysA:"Ctrl/Cmd+Invio salva, avanti · j/k spostarsi · 1–3 testo errato",
+ aWrongSub:"Più risposte possibili.",chkDetail:"Dettaglio dei controlli ({n} controlli, uscita grezza)",aDet:"Dettagli",searchL:"Cerca",
+ expHead:"Modulo operatori e negazioni (opzionale) · {c} su {n} confermati · {d} decisi",
+ expNote:"Legge operatori (≥, >, al massimo), negazioni e numeri in lettere; solo i rilievi confermati da entrambi gli annotatori alla cieca. Fuori dai {n} casi qui sopra; esportati come tipo a sé."}};
+Object.keys(TX11).forEach(function(L){TX[L].demoL=TX[L].demo;Object.keys(TX11[L]).forEach(function(k){TX[L][k]=TX11[L][k]})});
 var DEMO=/(^|\.)mi11ion\.io$/i.test(location.hostname||"");          // the demo host (Cloudflare); a local file or federal hosting is not
 function nT(k,n,o){o=o||{};o.n=n;return fmt(n===1&&TX[UL][k+"1"]!=null?t(k+"1"):t(k),o)}
 function pickUI(){if(TX[P.ui])return P.ui;var L=[];try{L=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||""]}catch(e){}
@@ -1032,6 +1065,12 @@ function keyHTML(items){return items.map(function(k){var g=k[0],m;
   else m='<span class="mk'+(g==="▲"||g==="≠"?" r":g==="~"?" f":"")+'">'+esc(g)+"</span>";
   return "<span>"+m+" "+esc(k[1])+"</span>"}).join("")}
 function cap(x){x=String(x||"");return x.charAt(0).toUpperCase()+x.slice(1)}
+// a select as wide as the option it shows (a native select is as wide as its longest option)
+function fitSel(e){try{var c=fitSel.c||(fitSel.c=document.createElement("canvas").getContext("2d")),cs=getComputedStyle(e),o=e.options[e.selectedIndex];
+ c.font=cs.fontWeight+" "+cs.fontSize+" "+cs.fontFamily;e.style.width=Math.ceil(c.measureText(o?o.text:"").width+24)+"px"}catch(x){}}
+// the [?] after the line of facts opens the explanation below it (one state for both tabs)
+function qhHTML(lab){return '<button type="button" class="qh" id="lane-q" aria-expanded="'+LHOPEN+'" aria-controls="lanehelp" title="'+esc(lab)+'" aria-label="'+esc(lab)+'">'+(LHOPEN?"[−]":"[?]")+"</button>"}
+function wireQ(){$("lane-q").onclick=function(){LHOPEN=!LHOPEN;this.setAttribute("aria-expanded",LHOPEN);this.textContent=LHOPEN?"[−]":"[?]";$("lanehelp").hidden=!LHOPEN};$("ctxline").title=$("lanehelp").textContent}
 function chrome(){
  document.documentElement.lang=UL;$("l-ui").textContent=t("ui");applyTheme();
  var C=D.counts;
@@ -1040,15 +1079,15 @@ function chrome(){
  $("t-audit").setAttribute("aria-selected",TAB==="audit");$("t-drafts").setAttribute("aria-selected",TAB==="drafts");
  $("t-audit").tabIndex=TAB==="audit"?0:-1;$("t-drafts").tabIndex=TAB==="drafts"?0:-1;
  $("p-audit").hidden=TAB!=="audit";$("p-drafts").hidden=TAB!=="drafts";
- $("x-sum").textContent=t("export");$("x-dec").textContent=t(TAB==="audit"&&AU?"exportDecA":"exportDec");$("where").textContent=t("where")+" "+t("whereM");
+ $("x-sum").textContent=t("export");$("x-dec").textContent=t(TAB==="audit"&&AU?"exportDecA":"exportDec");$("where").textContent=t("lsNote1");$("where").title=t("where")+" "+t("whereM");
  $("x-clr").textContent=t("clr");$("x-clr-t").textContent=t("clrQ");$("x-clr-yes").textContent=t("clrYes");$("x-clr-no").textContent=t("clrNo");
- $("demo").hidden=!DEMO;$("demo").textContent=DEMO?t("demo"):"";
+ $("demo").hidden=!DEMO;$("demo").textContent=DEMO?t("demo"):"";$("demo").title=DEMO?t("demoL"):"";
  ["x-xlf","x-xlf12","x-copy","x-imp","x-msg"].forEach(function(i){$(i).hidden=TAB==="audit"});["a-csv-i","a-csv","a-imp","a-msg"].forEach(function(i){$(i).hidden=TAB!=="audit"});
  var fz1=(M.pipeline.match(/freeze sha256:([0-9a-f]+)/)||[])[1]||"";
  $("prov").textContent=M.pipeline.split(";")[0]+(fz1?" · freeze "+fz1.slice(0,12):"")+" · outputs "+M.run_sha256.slice(0,12)+(M.rev?" · rev "+M.rev:"")+" · "+t("whereS");
  $("prov").title=M.pipeline+" · outputs sha256:"+M.run_sha256+" · items sha256:"+M.items_sha256+(AU?" · audit "+AU.meta.file:"");
- $("lanehelp").hidden=TAB==="audit"||!LHOPEN;$("lanehelp").textContent=t("laneHelp");
- if(TAB==="audit"){chromeAudit();$("ctxline").title=$("ctxline").textContent;return}
+ $("lanehelp").hidden=!LHOPEN;
+ if(TAB==="audit"){chromeAudit();return}
  // one line of context: what these drafts are, whose decision they are
  // with lanes: a select of the lanes first (8B default, 70B fewer edits, the live months), then what the lane shown is
  var LB=M.live&&M.live_span?fmt(t("lblLive"),{m:M.live,a:M.live_span[0],b:M.live_span[1]}):M.period&&!M.custom&&/^held-out set \(/.test(M.label||"")?fmt(t("lblHeld"),{p:M.period}):M.label;
@@ -1056,14 +1095,16 @@ function chrome(){
  var FG=A?fmt(t("figsA"),{r:A.unflagged,rp:pct(A.ready_rate),f:A.flagged,x:pct(A.exact.model)}):fmt(t("figsC"),{r:C.ready,f:C.flagged,h:C.human});
  if(!A&&!C.human)FG=FG.split(" · ").slice(0,2).join(" · ");if(!A&&C.exact!=null)FG+=" · "+fmt(t("figsX"),{x:C.exact,n:C.exact_of});
  var ctx=(FG?FG+". ":"")+(M.live?fmt(t("ctxDL"),{m:M.live}):M.custom?t("dB2"):M.lane==="70b"?t("ctxD"):M.lane==="8b"?t("ctxD8"):t("dB2"));
+ // on screen: the lane select and one line of facts; the sentences (what the lane is, its figures, the statuses) behind [?]
+ var FS=A?fmt(t("factsA"),{r:A.unflagged,f:A.flagged,x:pct(A.exact.model)}):fmt(t("figsC"),{r:C.ready,f:C.flagged,h:C.human});
+ if(!A&&!C.human)FS=FS.split(" · ").slice(0,2).join(" · ");if(!A&&C.exact!=null)FS+=" · "+fmt(t("figsXs"),{x:C.exact,n:C.exact_of});
  $("ctxline").innerHTML=(LANES.length>1?'<label class="lsel"><span class="vh">'+esc(t("lane"))+'</span><select id="lane-s">'+LANES.map(function(l){
    var o=l.live?fmt(t("laneOptLive"),{m:l.live}):l.lane==="70b"?t("laneOpt70"):t("laneOpt8");
-   return '<option value="'+esc(l.id)+'"'+(l.id===(LANE||DEF)?" selected":"")+">"+esc(o)+"</option>"}).join("")+"</select></label> ":"")+
-  '<button type="button" class="qh" id="lane-q" aria-expanded="'+LHOPEN+'" aria-controls="lanehelp" title="'+esc(t("laneQ"))+'" aria-label="'+esc(t("laneQ"))+'">?</button>'+
-  "<b>"+esc(cap(fmt(t("drawingBy"),{l:LB,n:C.items,m:MS})))+".</b> "+esc(ctx);
- $("lane-q").onclick=function(){LHOPEN=!LHOPEN;this.setAttribute("aria-expanded",LHOPEN);$("lanehelp").hidden=!LHOPEN};
+   return '<option value="'+esc(l.id)+'"'+(l.id===(LANE||DEF)?" selected":"")+">"+esc(o)+"</option>"}).join("")+"</select></label>":"")+
+  '<span class="fx">'+esc(fmt(t("nDr"),{n:C.items})+" · "+FS)+" "+qhHTML(t("laneQ"))+"</span>";
+ $("lanehelp").innerHTML="<p><b>"+esc(cap(fmt(t("drawingBy"),{l:LB,n:C.items,m:MS})))+".</b> "+esc(ctx)+"</p><p>"+esc(t("laneHelp"))+"</p>";wireQ();
+ if($("lane-s")){fitSel($("lane-s"));if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){if($("lane-s"))fitSel($("lane-s"))})}
  if($("lane-s"))$("lane-s").onchange=function(){var v=this.value;location.hash="#"+(v===DEF?"":v+"/")+"drafts"};
- $("ctxline").title=cap(fmt(t("drawingBy"),{l:LB,n:C.items,m:MS}))+". "+ctx;
  var fz=(M.pipeline.match(/freeze sha256:([0-9a-f]+)/)||[])[1]||"";
  kv("kv-l",[[t("guards"),(M.stack==="g3"?"guards3":"guards v2")+" ("+t("frozenW")+")"+(fz?" · "+String((t("tb")||{}).freeze||"freeze").toLowerCase()+" "+fz.slice(0,12):"")],
   [t("items"),String(D.counts.items)],[t("changes"),String(D.counts.changes)],[t("model"),M.model],[t("run"),M.run],
@@ -1080,12 +1121,13 @@ function chrome(){
  kv("kv-r",r);
  selF("f-status",t("status"),[["open",t("open")],["ready",t("ready")],["check",t("fCheck")],["fine",t("fFine")],["flagged",t("flagged")],["divergent",t("divF")],["decided",t("decidedF")],["all",t("all")]],F.status,function(v){F.status=v;renderReg()});
  selF("f-lang",t("language"),[["all","FR+IT"],["fr","FR"],["it","IT"]],F.lang,function(v){F.lang=v;if(v!=="all")focusL=v;famBar();renderReg();renderCase()});
- var fs=$("f-fam");fs.innerHTML="";fs.appendChild(new Option(t("allFam")+" ("+D.families.length+")",""));
+ $("l-fam").textContent=t("famOf");$("l-q").textContent=t("searchL");
+ var fs=$("f-fam");fs.innerHTML="";fs.appendChild(new Option(t("all")+" ("+D.families.length+")",""));
  D.families.forEach(function(f){var nm=String(f[2]).split(/,| \+\d/)[0],more=String(f[2]).indexOf(",")>=0||/\+\d/.test(f[2]);
   var o=new Option(fmt(t("famOpt"),{f:short(nm,32)+(more?" …":""),w:famNos(f[0]),n:f[1]}),f[0]);o.title=f[2]+" · "+famNos(f[0]);fs.appendChild(o)});fs.value=F.fam;$("f-q").placeholder=t("search");famBar();
  $("h-prod").textContent=t("product");$("h-chg").textContent=t("change");
  document.querySelectorAll("[data-aria]").forEach(function(e){var a=t("aria")[e.dataset.aria];if(a)e.setAttribute("aria-label",a)});
- $("x-xlf").textContent=t("xlf");$("x-xlf12").textContent=t("xlf12");$("x-copy").textContent=t("copy");$("x-imp").textContent=t("imp");
+ $("x-xlf").textContent=t("xlf");$("x-xlf12").textContent=t("xlf12");$("x-copy").textContent=t("copy");$("x-imp").textContent=t("imp");$("x-imp").title=t("whereM");
  $("reg-key").innerHTML=keyHTML(t("keyS"));
  $("reg-key").title=t("legend");progress()}
 function selF(id,label,opts,cur,fn){var s=$(id);s.innerHTML='<label class="k" for="'+id+'-s">'+esc(label)+'</label><select id="'+id+'-s">'+opts.map(function(o){
@@ -1096,8 +1138,8 @@ function seg(id,label,opts,cur,fn){var s=$(id);s.innerHTML='<span class="k">'+es
 function progress(){if(TAB==="audit"&&AU){var tm=AU.rows.filter(function(r){return r.kind==="terminology"}),fm=AU.rows.filter(function(r){return r.kind!=="terminology"});
   var pa=fmt(t("progA"),{i:IS.filter(iDecided).length,n:IS.length,x:fm.filter(aDecided).length,a:fm.length,y:tm.filter(aDecided).length,t:tm.length});
   var px=XIS.length?fmt(t("progX"),{d:XIS.filter(iDecided).length,n:XIS.length}):"";   // experimental checks: counted apart
-  $("progress").innerHTML="<b>"+esc(pa.split(" (")[0])+"</b>"+(px?" · <b>"+esc(px)+"</b>":"")+' · <span class="lsn">'+esc(t("lsNote"))+"</span>";$("progress").title=pa+(px?" · "+px:"")+" · "+t("where");return}
- var n=ITEMS.filter(function(it){return dec(it)}).length;$("progress").innerHTML="<b>"+n+"/"+ITEMS.length+"</b> "+esc(t("decided"))+' · <span class="lsn">'+esc(t("lsNote"))+"</span>";$("progress").title=t("where")}
+  $("progress").innerHTML="<b>"+IS.filter(iDecided).length+"/"+IS.length+"</b> "+esc(t("decA"));$("progress").title=pa+(px?" · "+px:"")+" · "+t("lsNote1");return}
+ var n=ITEMS.filter(function(it){return dec(it)}).length;$("progress").innerHTML="<b>"+n+"/"+ITEMS.length+"</b> "+esc(t("decided"));$("progress").title=t("lsNote1")}
 // ------------------------------------------------------------------ tabs
 function setTab(tb){if(tb==="audit"&&!AU)tb="drafts";TAB=tb;chrome();
  if(TAB==="audit"){renderAudit();try{if(location.hash!=="#"+HP+"audit")history.replaceState(null,"","#"+HP+"audit")}catch(e){}}
@@ -1162,7 +1204,8 @@ function dating(x){if(!x)return "";if(x.earliest&&x.n===x.m)return fmt(t("dA"),{
 function cntTxt(){var m=AU.meta,nc=IS.filter(function(I){return I.blind==="not"}).length,lab=IS.some(function(I){return I.blind});
  return fmt(t(lab?"cntB":"cntA"),{a:m.main,t:m.term,s:m.main+m.term,n:IS.length,e:lab?nc:IS.filter(function(I){return I.eq}).length})}
 function chromeAudit(){var m=AU.meta,nf=AU.rows.length;
- $("ctxline").innerHTML="<b>"+esc(fmt(t("drawA"),{d:ddate(m.date)}))+".</b> "+esc(fmt(t("ctxAud"),{n:grp(m.n_limitations)}))+" "+esc(cntTxt());
+ $("ctxline").innerHTML='<span class="fx">'+esc(fmt(t("aFacts"),{d:ddate(m.date),n:grp(m.n_limitations),s:m.main+m.term,i:IS.length}))+" "+qhHTML(t("aQ"))+"</span>";
+ $("lanehelp").innerHTML="<p><b>"+esc(fmt(t("drawA"),{d:ddate(m.date)}))+".</b> "+esc(fmt(t("ctxAud"),{n:grp(m.n_limitations)}))+"</p><p>"+esc(cntTxt())+"</p>";wireQ();
  var bk=m.by_kind?Object.keys(m.by_kind).filter(function(k){return k!=="terminology"}).map(function(k){return m.by_kind[k]+" "+(t("kinds")[k]||k)}).join(", "):"";
  kv("kv-l",[[t("aSnap"),ddate(m.date)],[t("aChecked"),m.n_limitations!=null?grp(m.n_limitations):"—"],
   [t("aFindings"),fmt(t("aFindingsV"),{a:m.main,b:bk,t:m.term,n:IS.length}).replace(" ()","")],[t("laneM"),t("laneA")]]);
@@ -1182,7 +1225,7 @@ function chromeAudit(){var m=AU.meta,nf=AU.rows.length;
   sn.forEach(function(d){var n=IS.filter(function(I){return newAfter(I,d)}).length;o+='<option value="'+d+'"'+(AF.since===d?" selected":"")+">"+esc(ddate(d))+" ("+n+")</option>"});
   ss.innerHTML=o+"</select>";ss.hidden=false;$("a-since-s").onchange=function(){AF.since=this.value;renderAudit()}}else ss.hidden=true;
  $("ah-no").textContent="";$("ah-lim").textContent=t("aLim");$("ah-kind").textContent=t("aWhat");
- $("a-csv-i").textContent=t("csvIss");$("a-csv").textContent=t("aCsv");$("a-imp").textContent=t("imp");
+ $("a-csv-i").textContent=t("csvIss");$("a-csv").textContent=t("aCsv");$("a-imp").textContent=t("imp");$("a-imp").title=t("whereM");
  progress()}
 
 function newAfter(I,d){return I.M.some(function(r){return r.dating&&r.dating.first>d})}
@@ -1212,7 +1255,7 @@ function majPartner(odd,v){var O=String(odd||"").toUpperCase();if(LNG.indexOf(O)
 // question 1, which text is wrong: nothing preselected; the version that differs from the other two first and labelled
 function ctlWrong(d,odd,scope){var A=aAns(d),O=String(odd||"").toUpperCase(),L=LNG.indexOf(O)>=0?[O].concat(LNG.filter(function(x){return x!==O})):LNG;
  var h='<div class="btns aw" role="group" aria-label="'+esc(t("aWrongQ"))+'">'+L.map(function(v){
-  var pd=isPend(scope,"wrong",v);return '<button type="button" class="box'+(pd?" pend":"")+'" data-a="wrong" data-v="'+v+'" aria-pressed="'+(A.w.indexOf(v)>=0||pd)+'">'+esc(v)+(v===O?'<span class="oddb"> · '+esc(t("oddDiff"))+"</span>":"")+"</button>"}).join("")+"</div>";
+  var pd=isPend(scope,"wrong",v),kn=scope.indexOf("i:")===0?'<span class="k">['+(L.indexOf(v)+1)+"]</span> ":"";return '<button type="button" class="box'+(pd?" pend":"")+'" data-a="wrong" data-v="'+v+'" aria-pressed="'+(A.w.indexOf(v)>=0||pd)+'">'+kn+esc(v)+(v===O?'<span class="oddb"> · '+esc(t("oddDiff"))+"</span>":"")+"</button>"}).join("")+"</div>";
  if(AWC&&AWC.s===scope)h+='<div class="aconf" role="alert"><span class="q">'+esc(fmt(t("aMajQ"),{L:AWC.v,M:majPartner(O,AWC.v),O:O}))+'</span><button type="button" class="box primary" data-a="wrong" data-ok="1" data-v="'+AWC.v+'">'+
   esc(fmt(t("aMajYes"),{L:AWC.v}))+'</button><button type="button" class="box" data-a="wcancel">'+esc(t("aMajNo"))+"</button></div>";
  return h}
@@ -1223,7 +1266,7 @@ function remNeed(A,v,scope){var pw=PEND&&PEND.s===scope&&PEND.a==="wrong";return
 function ctlRem(d,scope){var A=aAns(d),R=t("rem"),id="rn-"+scope.replace(/[^\w-]/g,"_"),W=A.w.concat(PEND&&PEND.s===scope&&PEND.a==="wrong"&&A.w.indexOf(PEND.v)<0?[PEND.v]:[]);
  return '<div class="arem" role="group" aria-label="'+esc(t("aRemQ"))+'">'+REM.map(function(v){var need=remNeed(A,v,scope),pd=isPend(scope,"rem",v);
   return '<button type="button" class="box'+(pd?" pend":"")+'" data-a="rem" data-v="'+v+'" aria-pressed="'+(A.m===v||pd)+'"'+(need?' aria-disabled="true" aria-describedby="'+id+'"':"")+">"+esc(R[v])+(W.length&&fixRem(v)?" · "+esc(W.join(", ")):"")+"</button>"}).join("")+
-  '<span class="hint" id="'+id+'"'+(W.length?" hidden":"")+">"+esc(t("remNeedW"))+"</span></div>"}
+  '<span class="hint" id="'+id+'" hidden>'+esc(t("remNeedW"))+"</span></div>"}
 function isPend(scope,a,v){return !!(PEND&&PEND.s===scope&&PEND.a===a&&PEND.v===v)}
 // what an earlier page version stored, shown until the decision is changed
 function ctlLegacy(d){if(!d||d.remedy!=null||!(d.right||aActs(d).length))return "";
@@ -1295,34 +1338,33 @@ function expHTML(Xs){var E=AU.exp;if(!E||!Xs.length)return "";
 function aMarkSel(scroll){document.querySelectorAll("#aud tbody tr[data-iss]").forEach(function(r){var on=!!ASEL&&r.dataset.iss===ASEL.key;r.setAttribute("aria-selected",on);
  if(on&&scroll){var w=$("aud-wrap"),top=r.offsetTop,hh=30;if(top-hh<w.scrollTop)w.scrollTop=top-hh;else if(top+r.offsetHeight>w.scrollTop+w.clientHeight)w.scrollTop=top+r.offsetHeight-w.clientHeight}})}
 function aMove(d){if(!AVIS.length)return;var i=AVIS.indexOf(ASEL);i=Math.max(0,Math.min(AVIS.length-1,(i<0?0:i+d)));ASEL=AVIS[i];aMarkSel(true);renderACase()}
-// the case: 1 what differs, 2 the texts (excerpts side by side, full texts below), 3 the findings of the issue, 4 the decision
+// the case, read top to bottom: the product and its limitation, what differs and the blind label (one mono line each),
+// the three texts side by side with the conflicting values marked, the one question "Which text is wrong?", the remedy,
+// save; the findings of a grouped issue and the remaining facts (dating, notes, public SL) behind two disclosures
 function aCaseHTML(I){var r=I.M[0],d=iDec(I)||{},n=I.M.length,odd=I.odd==="unclear"?t("aUnclear"):String(I.odd||"—").toUpperCase(),sub=[];
  I.M.forEach(function(x){
   if(x.found)sub.push(fmt(t("aFoundL"),{F:t("lname")[x.found]||x.found}));
   if(x.fix)sub.push(fmt(t("aFix"),{a:x.fix[0],b:x.fix[1]}));
   if(x.eq!=null)sub.push(t("eqWhy")+(UL!=="en"?" ("+t("enCode")+")":"")+": "+(x.eq||"—"));
   if(x.expl&&x.expl.length)sub.push(fmt(t("aExpl"),{x:x.expl.join(", ")}))});
- var h='<button class="tb back" type="button" data-back="1">← '+esc(t("backList"))+"</button><h2>"+esc(uniqP(I.products).join(", ")||I.lims[0])+'</h2><p class="ref">'+esc(I.lims.join(" · "))+" · "+esc(t("ahNo"))+" "+esc(I.iid)+" · "+esc(I.fids.join(" "))+(I.known?" · "+esc(t("aKnown")):"")+"</p>";
- h+='<section class="sec"><div class="sl"><span class="no">1</span><span class="t">'+esc(t("aWhat"))+'</span></div><dl class="facts">'+
-  "<dt>"+esc(t("aKind"))+"</dt><dd>"+esc(I.kinds.map(function(k){return t("kinds")[k]||k}).join(" + "))+" · "+esc(whatTxt(I))+"</dd>"+
+ var h='<button class="tb back" type="button" data-back="1">← '+esc(t("backList"))+"</button><h2>"+esc(uniqP(I.products).join(", ")||I.lims[0])+'</h2><p class="ref"><b>'+esc(I.lims.join(" · "))+"</b> · "+esc(t("ahNo"))+" "+esc(I.iid)+" · "+esc(I.fids.join(" "))+(I.known?" · "+esc(t("aKnown")):"")+"</p>"+
+  '<p class="facts1">'+esc(kindLab(I)+(r.term?"":" · "+whatTxt(I)))+(I.blind?' <span class="bl">· '+esc(blindTxt(I))+"</span>":"")+"</p>"+(r.term?'<p class="termln">'+termHTML(r)+"</p>":"");
+ h+='<section class="sec">'+(shortTexts(I)?ftHTML(I):'<div class="ftg">'+
+  ["de","fr","it"].map(function(L){var o=I.odd===L;return '<div class="ftc'+(o?" odd":"")+'"><div class="lh"><span class="lt">'+L.toUpperCase()+"</span>"+(o?'<span class="oddl">'+esc(t("oddLbl"))+"</span>":"")+"</div>"+snipHTML(r,L)+"</div>"}).join("")+"</div>"+
+  '<details class="ft" data-k="ft"'+(OPEN["ft"+I.key]?" open":"")+"><summary>"+esc(t("ft"))+(I.lims.length>1?" · "+esc(fmt(t("ftN"),{n:I.lims.length})):"")+"</summary>"+(OPEN["ft"+I.key]?ftHTML(I):"")+"</details>")+"</section>";
+ h+='<section class="sec">'+whoHTML()+
+  '<div class="adec" title="'+esc(t("aDecHint"))+'"><div><div class="q" id="aq-w">'+esc(t("aWrongQ"))+'</div><div class="sub2">'+esc(t("aWrongSub"))+"</div>"+ctlWrong(d,I.odd,"i:"+I.key)+"</div>"+
+  '<div><div class="q">'+esc(t("aRemQ"))+"</div>"+ctlRem(d,"i:"+I.key)+(r.sug?'<div class="sug">'+esc(t("aSug"))+": "+esc(t("rem")[r.sug]||t("acts")[r.sug]||r.sug)+"</div>":"")+ctlLegacy(d)+ctlNote(d)+"</div></div>"+
+  '<div class="stt'+(iAny(I)?" done":"")+'" id="a-stt">'+esc(iStatus(I))+'</div><div class="save"><button class="box primary" type="button" id="a-next"'+(iAny(I)?"":' aria-disabled="true"')+' aria-describedby="an-why">'+esc(t("saveNextI"))+'</button><span class="hint" id="an-why">'+esc(iAny(I)?t("keysA"):t("needDecA"))+"</span></div></section>";
+ if(n>1){var mo=OPEN["mem"+I.key]!=null?OPEN["mem"+I.key]:iOwn(I)>0;h+='<details class="more2" data-k="mem"'+(mo?" open":"")+"><summary>"+esc(fmt(t("mem"),{n:n}))+"</summary>"+memHTML(I)+"</details>"}
+ h+='<details class="more2" data-k="det"'+(OPEN["det"+I.key]?" open":"")+"><summary>"+esc(t("aDet"))+'</summary><dl class="facts">'+
   "<dt>"+esc(t("aOdd"))+"</dt><dd>"+esc(odd)+"</dd>"+
   (I.dating?"<dt>"+esc(t("aDating"))+"</dt><dd>"+esc(dating(I.dating))+"</dd>":"")+
   (uniqP(sub).length?"<dt>"+esc(t("aNote2"))+"</dt><dd>"+uniqP(sub).map(esc).join("<br>")+"</dd>":"")+
-  (r.term?"<dt>"+esc(t("aTermL"))+"</dt><dd>"+termHTML(r)+"</dd>":"")+
-  (I.blind?"<dt>"+esc(t("aBlind"))+"</dt><dd>"+esc(blindTxt(I))+(I.exp&&r.desc?'<span class="sub2"'+(UL!=="en"?' lang="en"':"")+">"+esc(UL!=="en"?t("descEn")+": ":"")+esc(r.desc)+"</span>":"")+"</dd>":"")+
+  (I.exp&&r.desc?"<dt>"+esc(t("aBlind"))+'</dt><dd><span class="sub2"'+(UL!=="en"?' lang="en"':"")+">"+esc(UL!=="en"?t("descEn")+": ":"")+esc(r.desc)+"</span></dd>":"")+
   (I.dating&&I.dating.prev?"<dt></dt><dd><span class=\"sub2\">"+esc(fmt(t("txtChange"),{L:(I.odd&&I.odd!=="unclear"?I.odd:I.langs.filter(function(x){return x!=="de"})[0]||"").toUpperCase(),p:ddate(I.dating.prev),d:ddate(I.dating.first),s:ddate(AU.meta.date)}))+"</span></dd>":"")+
   "<dt>"+esc(t("decLang"))+"</dt><dd>"+esc(t("decLangV"))+"</dd>"+
-  "<dt>"+esc(t("slLink"))+'</dt><dd><span class="mono">sl.bag.admin.ch/sl</span><span class="sub2">'+esc(fmt(t("slLinkT"),{p:uniqP(I.products).join(", ")||I.lims[0]}))+" · "+esc(I.lims.join(" · "))+"</span></dd></dl></section>";
- h+='<section class="sec"><div class="sl"><span class="no">2</span><span class="t">'+esc(t("aTexts"))+'</span></div><div class="ftg">'+
-  ["de","fr","it"].map(function(L){var o=I.odd===L;return '<div class="ftc'+(o?" odd":"")+'"><div class="lh"><span class="lt">'+L.toUpperCase()+"</span>"+(o?'<span class="oddl">'+esc(t("oddLbl"))+"</span>":"")+"</div>"+snipHTML(r,L)+"</div>"}).join("")+"</div>"+
-  '<details class="ft" data-k="ft"'+(OPEN["ft"+I.key]?" open":"")+"><summary>"+esc(t("ft"))+(I.lims.length>1?" · "+esc(fmt(t("ftN"),{n:I.lims.length})):"")+"</summary>"+(OPEN["ft"+I.key]?ftHTML(I):"")+"</details></section>";
- if(shortTexts(I))h=h.slice(0,h.lastIndexOf('<section class="sec"><div class="sl"><span class="no">2</span>'))+'<section class="sec"><div class="sl"><span class="no">2</span><span class="t">'+esc(t("aTexts"))+"</span></div>"+ftHTML(I)+"</section>";
- var no=3;
- if(n>1){h+='<section class="sec"><div class="sl"><span class="no">'+no+'</span><span class="t">'+esc(fmt(t("mem"),{n:n}))+"</span></div>"+memHTML(I)+"</section>";no++}
- h+='<section class="sec"><div class="sl"><span class="no">'+no+'</span><span class="t">'+esc(t("s4"))+'</span><span class="sub">'+esc(t("aDecHint"))+"</span></div>"+whoHTML()+
-  '<div class="adec"><div><div class="q" id="aq-w">'+esc(t("aWrongQ"))+'</div><div class="sub2">'+esc(t("aWrongSub"))+"</div>"+ctlWrong(d,I.odd,"i:"+I.key)+"</div>"+
-  '<div><div class="q">'+esc(t("aRemQ"))+"</div>"+ctlRem(d,"i:"+I.key)+(r.sug?'<div class="sug">'+esc(t("aSug"))+": "+esc(t("rem")[r.sug]||t("acts")[r.sug]||r.sug)+"</div>":"")+ctlLegacy(d)+ctlNote(d)+"</div></div>"+
-  '<div class="stt'+(iAny(I)?" done":"")+'" id="a-stt">'+esc(iStatus(I))+'</div><div class="save"><button class="box primary" type="button" id="a-next"'+(iAny(I)?"":' aria-disabled="true"')+' aria-describedby="an-why">'+esc(t("saveNextI"))+'</button><span class="hint" id="an-why">'+esc(iAny(I)?t("keysA"):t("needDecA"))+"</span></div></section>";
+  "<dt>"+esc(t("slLink"))+'</dt><dd><span class="mono">sl.bag.admin.ch/sl</span><span class="sub2">'+esc(fmt(t("slLinkT"),{p:uniqP(I.products).join(", ")||I.lims[0]}))+" · "+esc(I.lims.join(" · "))+"</span></dd></dl></details>";
  return h}
 function shortTexts(I){return I.lims.every(function(lim){var T=AU.texts[lim];return T&&["de","fr","it"].every(function(L){return (T[L]||[]).reduce(function(n,x){return n+x[0].length},0)<=800})})}
 function renderACase(){var c=$("acase");if(PEND&&(!ASEL||PEND.k!==ASEL.key))PEND=null;if(!ASEL){c.innerHTML='<p class="empty">'+esc(t("aNone"))+"</p>";return}c.innerHTML=aCaseHTML(ASEL)}
@@ -1355,7 +1397,7 @@ function aSync(I){var c=$("acase");if(!c||ASEL!==I)return;var d=iDec(I)||{},A=aA
  c.querySelectorAll('.adec .aw button[data-a="wrong"]:not([data-ok])').forEach(function(b){b.setAttribute("aria-pressed",A.w.indexOf(b.dataset.v)>=0||isPend(sc,"wrong",b.dataset.v));b.classList.toggle("pend",isPend(sc,"wrong",b.dataset.v))});
  c.querySelectorAll('.adec .arem button[data-a="rem"]').forEach(function(b){var v=b.dataset.v;b.setAttribute("aria-pressed",A.m===v||isPend(sc,"rem",v));b.classList.toggle("pend",isPend(sc,"rem",v));
   if(remNeed(A,v,sc))b.setAttribute("aria-disabled","true");else b.removeAttribute("aria-disabled");b.textContent=t("rem")[v]+(A.w.length&&fixRem(v)?" · "+A.w.join(", "):"")});
- var h=c.querySelector(".adec .arem .hint");if(h){h.hidden=!!A.w.length;if(A.w.length){h.classList.remove("warn");h.removeAttribute("role")}}aRefresh(I)}
+ var h=c.querySelector(".adec .arem .hint");if(h&&A.w.length){h.hidden=true;h.classList.remove("warn");h.removeAttribute("role")}aRefresh(I)}
 // a click on a control that is not available yet: its reason, in one line, where the control says why
 function aWhy(el){var id=el.getAttribute("aria-describedby"),h=id?document.getElementById(id):null;if(!h)return;h.hidden=false;h.classList.add("warn");h.setAttribute("role","alert");
  var x=h.textContent;h.textContent="";h.textContent=x}
@@ -1521,11 +1563,11 @@ function langHTML(g,L,live){var it=g.items[L],ed=S.edits[it.key],LL=L.toUpperCas
  a+="</div>";
  if(live){var d=dec(it)||{};
   a+='<div class="dec'+(L===focusL||langs(g).length<2?" focus":"")+'" data-lang="'+L+'" data-key="'+esc(it.key)+'"><div class="btns">'+
-   [["accept","1 "+t("accept")],["accept-edited","2 "+t("acceptEd")],["send-back","3 "+t("sendBack")]].map(function(b){var off=b[0]==="accept-edited"&&S.edits[it.key]==null&&d.decision!=="accept-edited";
-    return '<button class="box" type="button" data-d="'+b[0]+'" aria-pressed="'+(d.decision===b[0])+'"'+(off?' disabled aria-describedby="ae-'+esc(it.key)+'"':"")+">"+esc(b[1])+"</button>"}).join("")+"</div>"+
-   '<span class="why2" id="ae-'+esc(it.key)+'"'+(S.edits[it.key]==null?"":" hidden")+">"+esc(t("noEdit2"))+"</span>"+
-   "<label>"+esc(t("reason"))+'<select data-f="reason">'+t("reasons").map(function(r,i){var v=TX.en.reasons[i];return '<option value="'+esc(v)+'"'+(d.reason===v?" selected":"")+">"+esc(r||"—")+"</option>"}).join("")+"</select></label>"+
-   "<label>"+esc(t("note"))+'<textarea data-f="note" lang="'+L+'">'+esc(d.note||"")+"</textarea></label>"+
+   [["accept","1",t("accept")],["accept-edited","2",t("acceptEd")],["send-back","3",t("sendBack")]].map(function(b){var off=b[0]==="accept-edited"&&S.edits[it.key]==null&&d.decision!=="accept-edited";
+    return '<button class="box" type="button" data-d="'+b[0]+'" aria-pressed="'+(d.decision===b[0])+'"'+(off?' disabled aria-describedby="ae-'+esc(it.key)+'" title="'+esc(t("noEdit2"))+'"':"")+'><span class="k">['+b[1]+"]</span> "+esc(b[2])+"</button>"}).join("")+"</div>"+
+   '<span class="why2 vh" id="ae-'+esc(it.key)+'"'+(S.edits[it.key]==null?"":" hidden")+">"+esc(t("noEdit2"))+"</span>"+
+   '<div class="rn"><label>'+esc(t("reason"))+'<select data-f="reason">'+t("reasons").map(function(r,i){var v=TX.en.reasons[i];return '<option value="'+esc(v)+'"'+(d.reason===v?" selected":"")+">"+esc(r||"—")+"</option>"}).join("")+"</select></label>"+
+   "<label>"+esc(t("note"))+'<textarea data-f="note" lang="'+L+'">'+esc(d.note||"")+"</textarea></label></div>"+
    '<div class="stt" aria-live="polite">'+esc(d.decision?t("savedAt")+" · "+zshow(d.at)+(d.by?" · "+d.by:""):t("openSt"))+"</div></div>"}
  else a+="<div></div>";
  return a+"</article>"}
@@ -1593,7 +1635,7 @@ function dApplyPend(){var p=DPEND;DPEND=null;DNAME=false;dWhoRefresh();document.
 function zshow(x){var z=zts(x);return z.length>=25?z.slice(0,10)+" "+z.slice(11,16)+" "+z.slice(19):z}
 // "2 Accept edited" waits for an edit of the draft text; its reason sits under the buttons
 function aeState(key){var dv=document.querySelector('.dec[data-key="'+key+'"]');if(!dv)return;var b=dv.querySelector('button[data-d="accept-edited"]'),w=dv.querySelector(".why2"),ed=S.edits[key]!=null,d=dec(byKey[key]);
- if(b){b.disabled=!ed&&!(d&&d.decision==="accept-edited");if(b.disabled)b.setAttribute("aria-describedby","ae-"+key);else b.removeAttribute("aria-describedby")}if(w)w.hidden=ed}
+ if(b){b.disabled=!ed&&!(d&&d.decision==="accept-edited");if(b.disabled){b.setAttribute("aria-describedby","ae-"+key);b.title=t("noEdit2")}else{b.removeAttribute("aria-describedby");b.removeAttribute("title")}}if(w)w.hidden=ed}
 function setFocus(L){if(!sel||!sel.items[L]||langs(sel).indexOf(L)<0)return;focusL=L;document.querySelectorAll(".dec").forEach(function(d){d.classList.toggle("focus",d.dataset.lang===L)})}
 function decide(L,v){var it=sel&&sel.items[L];if(!it)return;var dv=document.querySelector('.dec[data-lang="'+L+'"]'),k=it.key;
  if(v==="accept-edited"&&S.edits[k]==null&&!(S.dec[k]&&S.dec[k].decision==="accept-edited")){var st=dv.querySelector(".stt");st.textContent=t("noEdit2");var ed=document.querySelector('.ed[data-key="'+k+'"]');if(ed)ed.focus();return}

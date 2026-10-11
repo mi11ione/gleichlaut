@@ -31,8 +31,9 @@ def test_self_contained_and_small():
     assert s.startswith("<!doctype html>") and "<title>Gleichlaut Review</title>" in s
     assert not re.search(r"""(?:src|href)\s*=\s*["']?(?:https?:)?//""", s)
     assert not re.search(r"url\((?!data:)", s) and "@import" not in s
-    assert s.count("@font-face") == 3 and "data:font/woff2;base64," in s
-    for fam in ("Public Sans", "Archivo", "Fragment Mono"): assert f"font-family:'{fam}'" in s, fam
+    assert s.count("@font-face") == 2 and "data:font/woff2;base64," in s      # one sans, one mono: no display face
+    for fam in ("Public Sans", "Fragment Mono"): assert f"font-family:'{fam}'" in s, fam
+    assert "Archivo" not in s and "font-stretch:75%" not in s
     assert "IBM Plex" not in s and "Source Sans" not in s   # full audit texts (officer request) included, in the default lane only
     assert all(B[k]["audit"] is None for k in B if k != "data")
 
@@ -40,8 +41,8 @@ def test_self_contained_and_small():
 def test_tokens_light_dark_and_mobile():
     s, _, _ = _page()
     assert '@media (prefers-color-scheme:dark){:root:not([data-theme="light"])' in s and ':root[data-theme="dark"]' in s
-    assert "--sig:#ff4f00" in s and "--sig:#ff6a26" in s and "--red" not in s and "border-top:5px" not in s
-    assert "--paper:#fbfbf9" in s and "--paper:#121412" in s
+    assert "--sig:#dc0018" in s and "--sig:#ff4d5a" in s and "--red" not in s and "border-top:5px" not in s   # one Swiss red
+    assert "--paper:#fff;" in s and "--paper:#121212" in s and "--ink:#111" in s
     assert "@media (max-width:900px)" in s and "@media print" in s and '<header class="bar">' in s
     assert 'class="tblock"' not in s and 'tr class="grid"' not in s and "registration marks" not in s   # no drawing-sheet furniture
 

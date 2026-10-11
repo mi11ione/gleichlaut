@@ -2,7 +2,7 @@
 runs without error, the page lands on the Register audit tab, #drafts opens the Drafts tab on the default lane (Apertus
 8B Q8_0 on CPU, its figures in the context line) and the lane select / a hash prefix (#70b/wb013) opens the 70B "fewer
 edits" lane under the same numbers, "Save, next" waits for a decision (drafts and audit), the legend tells the two
-flagged marks apart, the storage note sits by the counter, no horizontal page overflow at 390 and 320 px (in an iframe of
+flagged marks apart, the storage note sits in the export menu, no horizontal page overflow at 390 and 320 px (in an iframe of
 that width: headless Chrome on macOS lays a --window-size below 500 px out at 500 px and crops the screenshot), #audit
 opens the Register audit tab, a hash naming a draft opens it under the same number, the interface defaults to the browser language (else German), decisions import, the family action
 accepts after an in-page confirmation, "start from the old text" replaces the editable draft, and the page's own XLIFF
@@ -72,7 +72,7 @@ def test_audit_tab_opens_with_hash_and_german_default():
     assert "Zwei blinde Claude-Annotatoren: ändert eine Bedingung" in html.unescape(s)                  # on the issue shown
     assert sum(len(i["rows"]) for i in I) == len(C["D"]["audit"]["rows"])            # every finding is in exactly one issue
     assert "Von Amtes wegen" in s and "Sprachdienst" in s and ">GÄL<" not in s
-    assert re.search(r'id="ex-tg" aria-expanded="false">\[\+\] Operator- und Negationsmodul \(zuschaltbar\) · 6 von 31 Befunden von zwei blinden Annotatoren bestätigt · 0 entschieden</button>', s)
+    assert re.search(r'id="ex-tg" aria-expanded="false">\[\+\] Operator- und Negationsmodul \(zuschaltbar\) · 6 von 31 bestätigt · 0 entschieden</button>', s)
     assert "27 Befunde + 11 Terminologie-Hinweise = 38, zusammengefasst in 18 Fällen; 4 davon von den blinden Annotatoren nicht bestätigt (eingeklappt)." in html.unescape(s)
     assert "14 Fälle in der Liste + 4 eingeklappt (nicht bestätigt) = 18 von 18 Fällen · 38 von 38 Befunden und Hinweisen" in html.unescape(s)
 
@@ -91,16 +91,21 @@ def test_landing_is_the_audit_tab_and_drafts_by_hash():
     ctx = re.search(r'<p class="ctx" id="ctxline"[^>]*>(.*?)</p>', s, re.S).group(1); txt = html.unescape(re.sub(r"<select.*?</select>", "", ctx, flags=re.S))
     assert '<option value="8b" selected="">Jeu de test (publié) · 8B Q8_0, CPU (par défaut)</option>' in ctx and '<option value="70b">Jeu de test (publié) · Apertus 70B tel que servi par Public AI (optionnel ; identité non vérifiée)</option>' in html.unescape(ctx)
     assert '<option value="aug2026">Essai à blanc 08.2026 (hors production) · 8B Q8_0, CPU</option>' in ctx
-    assert "Jeu de test réservé à l'évaluation : modifications passées de la LS 06.2025–02.2026, déjà publiées par l'OFSP, 166 brouillons d'Apertus 8B Q8_0." in txt
-    assert "62 prêts (37.3%) · 104 signalés · 17.5% identiques" in txt and "La variante par défaut" in txt
-    assert "moins de corrections" not in txt and "70B" not in txt                       # the default lane claims no fewer edits
+    assert "166 brouillons · 62 prêts · 104 signalés · 17.5% identiques à l'OFSP" in txt and "[?]" in txt   # one line of facts
+    hp = html.unescape(re.search(r'<div class="lanehelp" id="lanehelp"[^>]*><p>(.*?)</p>', s, re.S).group(1))   # the sentences behind [?]
+    assert "Jeu de test réservé à l'évaluation : modifications passées de la LS 06.2025–02.2026, déjà publiées par l'OFSP, 166 brouillons d'Apertus 8B Q8_0." in hp
+    assert "62 prêts (37.3%) · 104 signalés · 17.5% identiques" in hp and "La variante par défaut" in hp
+    assert "moins de corrections" not in txt + hp and "70B" not in txt + hp             # the default lane claims no fewer edits
+    assert "tuned to miss nothing" not in s and "ne rien laisser passer" not in s
     s = _dom(C["p"], "#70b/wb013", "fr-CH,fr")                                         # the optional lane, same numbering
     ctx = html.unescape(re.sub(r"<select.*?</select>", "", re.search(r'<p class="ctx" id="ctxline"[^>]*>(.*?)</p>', s, re.S).group(1), flags=re.S))
-    assert "166 brouillons d'Apertus 70B." in ctx and "66 prêts (39.8%) · 100 signalés · 17.5% identiques" in ctx and "La variante 70B optionnelle" in ctx
+    hp = html.unescape(re.search(r'<div class="lanehelp" id="lanehelp"[^>]*><p>(.*?)</p>', s, re.S).group(1))
+    assert "166 brouillons · 66 prêts · 100 signalés · 17.5% identiques" in ctx
+    assert "166 brouillons d'Apertus 70B." in hp and "66 prêts (39.8%) · 100 signalés · 17.5% identiques" in hp and "La variante 70B optionnelle" in hp
     assert '<option value="70b" selected="">' in s and re.search(r'<tr class="cnt" data-pair="wb013" aria-selected="true">', s)
     s = _dom(C["p"], "#wb013", "en")                 # one numbering: the address is the number
     assert re.search(r'<tr class="cnt" data-pair="wb013" aria-selected="true"><td class="m">.*?</td><td class="m">.*?</td><td class="prd"[^>]*>[^<]*<span class="pc">[^<]*· wb013</span>', s) and "No. wb013" in s
-    assert "explanation (FR)" in s and "Check detail: all" in s
+    assert "explanation (FR)" in s and "Check detail (10 checks, raw output)" in s
 
 
 def test_three_levels_family_accept_and_start_from_old_text():
@@ -162,8 +167,8 @@ def test_save_next_waits_for_a_decision_legend_and_storage_note():
     assert re.fullmatch(r"saved · \d{4}-\d\d-\d\d \d\d:\d\d [+-]\d\d:\d\d · M\. Muster", o["st2"]), o["st2"]     # Zurich time with offset
     assert o["st3"].startswith("decision undone") and o["n3"] == 0, o                                   # a second click says so
     assert "~ flagged, probably fine" in o["key"] and "▲ flagged, to check" in o["key"]
-    assert o["prog"] == "1/166 decided · saved in this browser only · export to keep"
-    probe = ERR + NAME + ("setTimeout(function(){var b=document.getElementById('a-next'),d0=b.getAttribute('aria-disabled')==='true',h=document.querySelector('#acase .sl .sub').textContent;name('A. Muster');"
+    assert o["prog"] == "1/166 decided"                                       # the storage note sits in the export menu
+    probe = ERR + NAME + ("setTimeout(function(){var b=document.getElementById('a-next'),d0=b.getAttribute('aria-disabled')==='true',h=document.querySelector('#acase .adec').title;name('A. Muster');"
                    "document.querySelector('#acase .aw button[data-a=\"wrong\"]').click();var dw=document.getElementById('a-next').getAttribute('aria-disabled')==='true';"
                    "document.querySelector('#acase button[data-a=\"rem\"][data-v=\"exofficio\"]').click();var st=document.getElementById('a-stt');"
                    "var e=document.createElement('pre');e.id='out';e.textContent=JSON.stringify({d0:d0,h:h,dw:dw,d1:document.getElementById('a-next').getAttribute('aria-disabled')==='true',"
@@ -187,7 +192,7 @@ def test_experimental_findings_are_decidable_and_exported_as_their_own_kind():
     assert not o["err"], o["err"]
     assert o["rows"] == 14 + 6 and "Two blind Claude annotators: " in o["h"]                 # the same label line as an issue
     assert o["xi"] == 6 and o["dec"] == 1 and o["kinds"] == ["experimental check"] and o["csv"], {k: o[k] for k in ("xi", "dec", "kinds", "csv")}
-    assert o["head"].endswith("· 1 decided") and o["prog"].startswith("0/18 issues decided")      # outside the 18 issues
+    assert o["head"].endswith("· 1 decided") and o["prog"] == "0/18 decided"      # outside the 18 issues
 
 
 def test_family_labels_distinct_in_every_lane():
@@ -212,7 +217,7 @@ def test_import_merges_several_files_and_accept_edited_says_why():
                    "var b2=document.querySelector('.dec[data-key=\"" + rd["key"] + "\"] button[data-d=\"accept-edited\"]'),w=document.getElementById('ae-" + rd["key"] + "');"
                    "var st=document.querySelector('.lang[data-lang=\"" + rd["lang"] + "\"] .lh1 .st').textContent,tip=(document.querySelector('.lang .n')||{}).title||'';"
                    "var e=document.createElement('pre');e.id='out';e.textContent=JSON.stringify({m:m,d:d[" + json.dumps(it["key"]) + "].decision,n:Object.keys(d).length,"
-                   "dis:b2.disabled,why:w.textContent,hid:w.hidden,st:st,tip:tip,where:document.getElementById('where').textContent,err:window.__err});document.body.appendChild(e)},300)},300);")
+                   "dis:b2.disabled,why:w.textContent,hid:w.hidden,st:st,tip:tip,where:document.getElementById('x-imp').title,err:window.__err});document.body.appendChild(e)},300)},300);")
     o = json.loads(html.unescape(re.search(r'<pre id="out">(.*?)</pre>', _dom(C["p"], "#drafts", "it", probe), re.S).group(1)))
     assert not o["err"], o["err"]
     assert o["m"].startswith("2 file uniti: 2 decisioni sulle bozze") and "In contrasto, tenuta la più recente: " + it["key"] in o["m"], o["m"]
@@ -334,7 +339,7 @@ def test_audit_asks_which_text_is_wrong_odd_first_majority_confirmed_name_requir
         "o.lab=br('langsvc').textContent;o.err=window.__err;out(o)},300);")
     o = _out(_dom(C["p"], "#audit", "en", probe))
     assert not o["err"], o["err"]
-    assert o["order"] == ["IT · differs from the other two", "DE", "FR"] and o["pressed0"] == 0 and o["dis0"] == ["exofficio", "holder"]
+    assert o["order"] == ["[1] IT · differs from the other two", "[2] DE", "[3] FR"] and o["pressed0"] == 0 and o["dis0"] == ["exofficio", "holder"]
     assert o["n0"] == 0 and o["ask"] and o["focus"] == "a-rev" and not o["ask2"] and o["pend"] == "true"   # kept, not saved, without a name
     assert o["kept"] == ["IT"] and o["keptBy"] == "R. Muster"                                      # saved once the name is in
     assert o["conf"].startswith("DE agrees with FR here; IT is the one that differs. Mark DE as wrong anyway?") and o["n1"] == ["IT"] and not o["conf2"]
@@ -374,7 +379,7 @@ def test_juror_sequence_disabled_remedy_then_name_then_note():
     r = o["r"]
     assert (r["wrong"], r["remedy"], r["decided"], r["by"]) == (["IT"], "exofficio", True, "J. Juror") and o["st2"].startswith("✓ IT wrong · Correct ex officio (IT)")
     assert re.fullmatch(r"20\d\d-\d\d-\d\dT\d\d:\d\d:\d\d\+0[12]:00", r["at"]) and o["at"] == r["at"], r["at"]
-    assert o["prog"].startswith("1/18 issues decided · 0/6 experimental"), o["prog"]
+    assert o["prog"] == "1/18 decided", o["prog"]
     head, row = o["csv"].split("\r\n")[:2]
     assert o["csv"].startswith("\ufeff") and head.split(";")[-1] == "Code revision" and r["at"] in row and ";06.10.2026;" in row
     fh, fr = o["f"].split("\r\n")[:2]
@@ -401,7 +406,7 @@ def test_old_decision_files_still_import():
     assert (a["right"], a["actions"], a["wrong"], a["remedy"], a["decided"]) == ("", ["fix_de", "langsvc"], ["DE"], "langsvc", True)
     assert (b["right"], b["actions"], b["remedy"], b["decided"], b["by"]) == ("IT", ["exofficio"], "exofficio", True, "X")
     assert sorted(o["p"]) == ["DE", "langsvc"] and any(x.startswith("Stored by an earlier version of this page: Correct the text: DE; Send to the language service") for x in o["legs"]), o
-    assert o["prog"].startswith("2/18 issues decided")
+    assert o["prog"] == "2/18 decided"
 
 
 def test_exports_in_the_interface_language_with_codes():

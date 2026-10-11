@@ -378,7 +378,6 @@ def fonts_css():
     """@font-face rules with the vendored woff2 files inlined (base64), real fallback stacks in the CSS below."""
     rules = []
     for fam, fn, w, st in (("Public Sans", "PublicSans-latin-wght.woff2", "400 600", "normal"),
-                           ("Archivo", "Archivo-latin-wdth75-wght500-600.woff2", "500 600", "75%"),
                            ("Fragment Mono", "FragmentMono-400-latin.woff2", "400", "normal")):
         p = os.path.join(FONTS, fn)
         if not os.path.exists(p): continue
