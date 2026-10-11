@@ -1,21 +1,21 @@
-# Fallblatt X6: Hemlibra (Zahlwort, experimentell)
+# Fallblatt X6: Hemlibra (Zahlwort, Zusatzmodul)
 
 Spezialitätenliste (SL), Prüfung der Sprachfassungen DE/FR/IT, Lauf vom 06.10.2026 (Phase 1, Pilot).
 
-> **Experimentelle Prüfung, standardmässig aus.** Dieser Befund stammt aus einer Prüfart, die ihr vorab festgelegtes Präzisionsziel nicht erreicht hat; sie ist im Standardlauf ausgeschaltet. Der Befund wurde von beiden blinden Annotatoren bestätigt und wird deshalb zur Prüfung vorgelegt.
+> **Operator- und Negationsmodul, zuschaltbar.** Dieser Befund stammt aus einer Prüfart, die ihr vorab festgelegtes Präzisionsziel nicht erreicht hat; sie ist im Standardlauf ausgeschaltet. Der Befund wurde von beiden blinden Annotatoren bestätigt und wird deshalb zur Prüfung vorgelegt.
 
 | Feld | Inhalt |
 |---|---|
 | Präparat(e) | Hemlibra |
 | Limitierung(en), Kennung in der Publikation | `HEMLIBRA.XXb` |
-| Art der Prüfung | Zahlwort: experimentelle Prüfung, standardmässig aus |
+| Art der Prüfung | Zahlwort: Operator- und Negationsmodul, zuschaltbar |
 | Betroffene Sprachfassung(en) | FR |
 | Abweichung | Zahlwort, FR: DE — · FR 2 |
 | Weicht von den beiden anderen ab | unklar (die dritte Sprache entscheidet es nicht) |
-| Erstmals festgestellt | nicht datiert (die experimentelle Prüfung wird nicht über frühere Stände datiert) |
+| Erstmals festgestellt | nicht datiert (das Operator- und Negationsmodul wird nicht über frühere Stände datiert) |
 | Blinde Einstufung | geringfügig: Form fehlerhaft, Bedeutung erhalten (W01: minor) |
 | Herkunft der Einstufung | zwei blinde Claude-Annotatoren, übereinstimmend; keine Einstufung durch das BAG |
-| Hinweis | experimentelle Prüfart; 31 Befunde im Register, davon 6 bestätigt (eval/results/audit_r15.json) |
+| Hinweis | Operator- und Negationsmodul (zuschaltbar); 31 Befunde im Register, davon 6 bestätigt (eval/results/audit_r15.json) |
 | Nachschlagen | https://sl.bag.admin.ch/sl, Präparat «Hemlibra» suchen, Limitierung in DE, FR und IT vergleichen; Rohdaten: https://epl.bag.admin.ch/static/sl/publication/fhir/foph-sl-publication-20261006-de.ndjson (ebenso `-fr`, `-it`) |
 
 ## Auszüge

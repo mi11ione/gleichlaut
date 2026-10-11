@@ -5,8 +5,8 @@ Vorlage. Die ausgefüllten Fallblätter des Laufs vom 06.10.2026 erzeugt `python
 einer verwandten Limitierung nennen, wie im Register gruppiert) und eines je bestätigtem Befund der experimentellen
 Prüfung. Für einen neuen Lauf wird der Generator erneut ausgeführt; die Vorlage dient der manuellen Erfassung.
 
-> Nur bei Befunden der Runde 5: **Experimentelle Prüfung, standardmässig aus.** Die Prüfart hat ihr vorab festgelegtes
-> Präzisionsziel nicht erreicht; der Befund wurde von beiden blinden Annotatoren bestätigt.
+> Nur bei Befunden der Runde 5: **Operator- und Negationsmodul, zuschaltbar.** Das Modul liefert mehr Kandidaten als die Hauptprüfung
+> und ist deshalb zuschaltbar; dieser Befund wurde von beiden blinden Annotatoren bestätigt.
 
 | Feld | Inhalt |
 |---|---|

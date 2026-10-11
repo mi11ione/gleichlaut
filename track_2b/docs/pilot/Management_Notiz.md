@@ -41,10 +41,10 @@ Register separat gezählt.
   andere Wirkstoffklasse gemeint ist (Angiotensin-II-Antagonist); das BAG hat die Wendung in anderen Limitierungen
   bereits ersetzt. **Forsteo** (IT): «almeno se mesi» statt «sei mesi».
 
-## Experimentelle Prüfung (standardmässig aus)
+## Operator- und Negationsmodul (zuschaltbar)
 
-Eine zusätzliche Prüfung von Vergleichsoperatoren, Verneinungen und Zahlwörtern hat ihr vorab festgelegtes
-Präzisionsziel verfehlt und ist ausgeschaltet. Von ihren 31 Befunden haben die Annotatoren 6 bestätigt, davon 3 real
+Ein Zusatzmodul liest Vergleichsoperatoren, Verneinungen und Zahlwörter. Es liefert mehr Kandidaten als die
+Hauptprüfung und ist deshalb zuschaltbar. Von seinen 31 Befunden haben die Annotatoren 6 bestätigt, davon 3 real
 (`eval/results/audit_r15.json`):
 
 - **Amvuttra** (FR): Abbruchkriterium DE «NIS-Zunahme > 10 Punkte», FR «≤ 10 points».

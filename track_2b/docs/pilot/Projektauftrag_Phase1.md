@@ -77,7 +77,7 @@ rund 1 h hinzu.
 
 | Risiko | Massnahme |
 |---|---|
-| Die Prüfung findet nicht alles (Operatoren, Verneinungen und Zahlwörter sind standardmässig aus) | Phase 1 bestätigt keine Gleichwertigkeit der Fassungen; sie liefert eine Arbeitsliste |
+| Die Prüfung findet nicht alles (Operatoren, Verneinungen und Zahlwörter prüft das zuschaltbare Zusatzmodul) | Phase 1 bestätigt keine Gleichwertigkeit der Fassungen; sie liefert eine Arbeitsliste |
 | Fehlalarme: 10 von 38 Befunden wurden von den Annotatoren nicht bestätigt | Entscheid je Fallblatt; Aufwand ist im Erstlauf eingerechnet |
 | Die Einstufung stammt von Claude-Annotatoren, nicht vom BAG | Ziel 2 misst die Abweichung gegenüber dem BAG |
 | Der Korrekturweg für eine publizierte Limitierung und die massgebende Sprachfassung sind nicht öffentlich dokumentiert | Feld «Sprache der Verfügung: aus dem Dossier» und «Massnahme» auf jedem Fallblatt; Weg durch BAG festzulegen |

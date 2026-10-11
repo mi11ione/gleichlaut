@@ -23,7 +23,7 @@ def test_one_sheet_per_issue():
             for field in ("Sprache der Verfügung | aus dem Dossier", "| Welcher Text ist falsch? |", "| Was ist zu tun? |", "| Visum", "sl.bag.admin.ch/sl",
                           "| Weicht von den beiden anderen ab |"):
                 assert field in s, (f, field)
-            assert ("experimentelle Prüfung, standardmässig aus" in s) == f.startswith("FB-X"), f
+            assert ("Operator- und Negationsmodul, zuschaltbar" in s) == f.startswith("FB-X"), f
 
 
 def test_committed_sheets_are_current():

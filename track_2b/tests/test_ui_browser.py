@@ -72,7 +72,7 @@ def test_audit_tab_opens_with_hash_and_german_default():
     assert "Zwei blinde Claude-Annotatoren: ändert eine Bedingung" in html.unescape(s)                  # on the issue shown
     assert sum(len(i["rows"]) for i in I) == len(C["D"]["audit"]["rows"])            # every finding is in exactly one issue
     assert "Von Amtes wegen" in s and "Sprachdienst" in s and ">GÄL<" not in s
-    assert re.search(r'id="ex-tg" aria-expanded="false">\[\+\] Experimentelle Prüfungen \(ausgeschaltet\) · 6 von 31 Befunden von zwei blinden Annotatoren bestätigt · 0 entschieden</button>', s)
+    assert re.search(r'id="ex-tg" aria-expanded="false">\[\+\] Operator- und Negationsmodul \(zuschaltbar\) · 6 von 31 Befunden von zwei blinden Annotatoren bestätigt · 0 entschieden</button>', s)
     assert "27 Befunde + 11 Terminologie-Hinweise = 38, zusammengefasst in 18 Fällen; 4 davon von den blinden Annotatoren nicht bestätigt (eingeklappt)." in html.unescape(s)
     assert "14 Fälle in der Liste + 4 eingeklappt (nicht bestätigt) = 18 von 18 Fällen · 38 von 38 Befunden und Hinweisen" in html.unescape(s)
 
@@ -181,12 +181,12 @@ def test_experimental_findings_are_decidable_and_exported_as_their_own_kind():
                    "var h=document.getElementById('acase').textContent;name('A. Muster');document.querySelector('#acase button[data-a=\"rem\"][data-v=\"langsvc\"]').click();"
                    "var R=window.GleichlautReview,p=R.payload(),csv=R.auditCsv(),xi=p.audit_issues.filter(function(i){return i.kind==='experimental check'});"
                    "var e=document.createElement('pre');e.id='out';e.textContent=JSON.stringify({rows:rows,h:h,xi:xi.length,dec:xi.filter(function(i){return i.decided}).length,"
-                   "kinds:Object.keys(p.audit_rows).map(function(k){return p.audit_rows[k].kind}),csv:csv.indexOf('experimental check')>=0,"
+                   "kinds:Object.keys(p.audit_rows).map(function(k){return p.audit_rows[k].kind}),csv:csv.indexOf('operator and negation module')>=0,"
                    "head:document.getElementById('ex-tg').textContent,prog:document.getElementById('progress').textContent,err:window.__err});document.body.appendChild(e)},300);")
     o = json.loads(html.unescape(re.search(r'<pre id="out">(.*?)</pre>', _dom(C["p"], "#audit", "en", probe), re.S).group(1)))
     assert not o["err"], o["err"]
     assert o["rows"] == 14 + 6 and "Two blind Claude annotators: " in o["h"]                 # the same label line as an issue
-    assert o["xi"] == 6 and o["dec"] == 1 and o["kinds"] == ["experimental check"] and o["csv"]
+    assert o["xi"] == 6 and o["dec"] == 1 and o["kinds"] == ["experimental check"] and o["csv"], {k: o[k] for k in ("xi", "dec", "kinds", "csv")}
     assert o["head"].endswith("· 1 decided") and o["prog"].startswith("0/18 issues decided")      # outside the 18 issues
 
 

@@ -1,6 +1,6 @@
 # Fallblätter Phase 1: Übersicht
 
-Lauf der Registerprüfung auf der SL-Publikation vom 06.10.2026, ohne Modellaufruf. 38 Befunde in 18 Sachverhalten (ein Fallblatt je Sachverhalt, Gruppierung wie im Register); blinde Einstufung: 16 real, 12 geringfügig, 10 nicht bestätigt (`eval/results/audit_relabel.json`). Dazu die 6 bestätigten Befunde der experimentellen Prüfung (3 real, 3 geringfügig, von 31; `eval/results/audit_r15.json`), experimentelle Prüfung, standardmässig aus.
+Lauf der Registerprüfung auf der SL-Publikation vom 06.10.2026, ohne Modellaufruf. 38 Befunde in 18 Sachverhalten (ein Fallblatt je Sachverhalt, Gruppierung wie im Register); blinde Einstufung: 16 real, 12 geringfügig, 10 nicht bestätigt (`eval/results/audit_relabel.json`). Dazu die 6 bestätigten Befunde des Operator- und Negationsmoduls (3 real, 3 geringfügig, von 31; `eval/results/audit_r15.json`), Operator- und Negationsmodul, zuschaltbar.
 
 Die Einstufung stammt von blinden Claude-Annotatoren, nicht vom BAG. Sie ordnet die Reihenfolge der Prüfung, sie ersetzt den Entscheid nicht.
 
@@ -24,11 +24,11 @@ Die Einstufung stammt von blinden Claude-Annotatoren, nicht vom BAG. Sie ordnet 
 | [16](FB-16_Coveram.md) | Coveram, Perindopril-Amlodipin-Indapamid-Mepha, Perindopril | `COVERAM-PLUS`<br>`PERAMLIND.me`<br>`PERAMLIND.sp`<br>`PERINDAMLIND` | Terminologie | Terminologie, FR: steht «et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II», von BAG anderswo ersetzt durch «et/ou d’un antagoniste des récepteurs de l'angiotensine II» | real | ≤ 19.02.2026 |
 | [17](FB-17_Coveram.md) | Coveram, Perindopril-Amlodipin-Indapamid-Mepha, Perindopril | `COVERAM-PLUS`<br>`PERAMLIND.me`<br>`PERAMLIND.sp`<br>`PERINDAMLIND` | Terminologie | Terminologie, IT: steht «o di un cosiddetti antagonisti del recettore dell'angiotensina», von BAG anderswo ersetzt durch «o di un antagonista del recettore dell'angiotensina» | geringfügig | ≤ 19.02.2026 |
 | [18](FB-18_Jemperli.md) | Jemperli, Opzelura | `JEMPERLI.01---Endometriumkarzinom-Mono`<br>`JEMPERLI.02---Endometriumkarzinom-Kombi`<br>`OPZELURA.01---Vitiligo-Erwachsene-und-Jugendliche-ab-12-Jahren` | Terminologie | Terminologie, FR: steht «limitation doit être communiqué à l’assureur-maladie», von BAG anderswo ersetzt durch «limitation doit être transmis à l'assureur-maladie» | geringfügig | 01.07.2026 – 01.08.2026 |
-| [X1](FB-X1_Amvuttra.md) | Amvuttra | `AMVUTTRA.01a` | Vergleichsoperator (experimentell) | Vergleichsoperator, FR: DE «\> 10» · FR «≤ 10» | real | nicht datiert |
-| [X2](FB-X2_Beyonttra.md) | Beyonttra | `BEYONTTRA` | Verneinung (experimentell) | Verneinung, IT: DE verneint («nicht»), IT nicht | real | nicht datiert |
-| [X3](FB-X3_Deca.md) | Deca | `DECADURABOL2` | Verneinung (experimentell) | Verneinung, IT: IT verneint («inefficaci»), DE nicht | geringfügig | nicht datiert |
-| [X4](FB-X4_Vyndaqel.md) | Vyndaqel | `VYNDAQEL.01b` | Verneinung (experimentell) | Verneinung, IT: DE verneint («nicht»), IT nicht | real | nicht datiert |
-| [X5](FB-X5_Zavicefta.md) | Zavicefta | `ZAVICEFTA2` | Verneinung (experimentell) | Verneinung, FR: FR verneint («n’»), DE nicht | geringfügig | nicht datiert |
-| [X6](FB-X6_Hemlibra.md) | Hemlibra | `HEMLIBRA.XXb` | Zahlwort (experimentell) | Zahlwort, FR: DE — · FR 2 | geringfügig | nicht datiert |
+| [X1](FB-X1_Amvuttra.md) | Amvuttra | `AMVUTTRA.01a` | Vergleichsoperator (Zusatzmodul) | Vergleichsoperator, FR: DE «\> 10» · FR «≤ 10» | real | nicht datiert |
+| [X2](FB-X2_Beyonttra.md) | Beyonttra | `BEYONTTRA` | Verneinung (Zusatzmodul) | Verneinung, IT: DE verneint («nicht»), IT nicht | real | nicht datiert |
+| [X3](FB-X3_Deca.md) | Deca | `DECADURABOL2` | Verneinung (Zusatzmodul) | Verneinung, IT: IT verneint («inefficaci»), DE nicht | geringfügig | nicht datiert |
+| [X4](FB-X4_Vyndaqel.md) | Vyndaqel | `VYNDAQEL.01b` | Verneinung (Zusatzmodul) | Verneinung, IT: DE verneint («nicht»), IT nicht | real | nicht datiert |
+| [X5](FB-X5_Zavicefta.md) | Zavicefta | `ZAVICEFTA2` | Verneinung (Zusatzmodul) | Verneinung, FR: FR verneint («n’»), DE nicht | geringfügig | nicht datiert |
+| [X6](FB-X6_Hemlibra.md) | Hemlibra | `HEMLIBRA.XXb` | Zahlwort (Zusatzmodul) | Zahlwort, FR: DE — · FR 2 | geringfügig | nicht datiert |
 
 «≤ Datum»: bereits im frühesten geprüften Stand 2026 vorhanden. «Datum – Datum»: zwischen diesen beiden publizierten Ständen aufgetreten. Der Stand vom 04.05.2026 enthält nur Deutsch und ist nicht in die Datierung einbezogen.

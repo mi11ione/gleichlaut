@@ -1,5 +1,5 @@
 """Pilot Phase 1: ein GEVER-taugliches Markdown-Fallblatt pro Sachverhalt (issue) des Registerprüfungs-Laufs vom
-6. Oktober 2026, dazu die 6 bestätigten experimentellen Befunde (Runde 5, standardmässig aus) und eine Übersicht.
+6. Oktober 2026, dazu die 6 bestätigten experimentellen Befunde (Operator- und Negationsmodul, zuschaltbar) und eine Übersicht.
 Dasselbe für jeden eigenen Lauf (`gleichlaut audit`, z. B. monatlich in out/audit/): Befunde ohne blinde Einstufung
 sind «noch nicht beurteilt». Deterministisch, nur Standardbibliothek und der Code dieses Repositoriums, keine
 Modellaufrufe, kein Netz.
@@ -37,7 +37,7 @@ OPEN = "noch nicht beurteilt"
 SHORT = {"real": "real", "minor": "geringfügig", "not": "nicht bestätigt", "open": OPEN}
 LABEL = {"real": "real: Bedeutung weicht ab", "minor": "geringfügig: Form fehlerhaft, Bedeutung erhalten",
          "not": "nicht bestätigt: gleiche Bedeutung", "open": OPEN + ": keine blinde Einstufung zu diesem Lauf"}
-EXP = "experimentelle Prüfung, standardmässig aus"
+EXP = "Operator- und Negationsmodul, zuschaltbar"
 # die Antworten des Registers, Wort für Wort (src/gleichlaut/ui/page.py, TX8.de: aWrongQ, aRemQ, rem; Test prüft die Gleichheit)
 WRONG_Q, REM_Q = "Welcher Text ist falsch?", "Was ist zu tun?"
 REM = ("Von Amtes wegen berichtigen", "Mit der Zulassungsinhaberin in der dreijährlichen Überprüfung aufnehmen", "An den Sprachdienst",
@@ -138,7 +138,7 @@ def what_line(w):
 
 
 def dating_line(dt, exp=True):
-    if not dt: return "nicht datiert (die experimentelle Prüfung wird nicht über frühere Stände datiert)" if exp else \
+    if not dt: return "nicht datiert (das Operator- und Negationsmodul wird nicht über frühere Stände datiert)" if exp else \
         "nicht datiert (der Lauf hatte keine früheren Stände des Jahres zum Vergleich)"
     n, m = dt.get("n"), dt.get("m")
     pres = f"; vorhanden in {n} von {m} geprüften Ständen ab diesem Datum" if n and m else ""
@@ -248,12 +248,12 @@ def build(path=None):
                 ("Erstmals festgestellt", dating_line(None)),
                 ("Blinde Einstufung", f"{LABEL[r['label']]} ({r['fid']}: {r['label']})"),
                 ("Herkunft der Einstufung", "zwei blinde Claude-Annotatoren, übereinstimmend; keine Einstufung durch das BAG"),
-                ("Hinweis", "experimentelle Prüfart; 31 Befunde im Register, davon 6 bestätigt (eval/results/audit_r15.json)"),
+                ("Hinweis", "Operator- und Negationsmodul (zuschaltbar); 31 Befunde im Register, davon 6 bestätigt (eval/results/audit_r15.json)"),
                 ("Nachschlagen", f"https://sl.bag.admin.ch/sl, Präparat «{esc(r['product'])}» suchen, Limitierung in DE, FR und IT vergleichen; "
                                  f"Rohdaten: {feed(date, 'de')} (ebenso `-fr`, `-it`)")]
         no = X["issues"][n]["iid"]
         name = f"FB-{no}_{re.sub(r'[^A-Za-z0-9]+', '-', r['product']).strip('-')}.md"
-        files[name] = sheet(no, f"{r['product']} ({KIND[r['xkind']]}, experimentell)", meta,
+        files[name] = sheet(no, f"{r['product']} ({KIND[r['xkind']]}, Zusatzmodul)", meta,
                             [(r["fid"], snip, votes_line(r["label"], ((r15.get(r["fid"]) or {}).get(c, "") for c in ("A", "B", "T"))))], [r["fid"]], exp=True,
                             date=date, src=src, pilot=pilot)
         idx.append((no, name, r["product"], [r["lim"]], [r["xkind"]], [r["lang"]], [w], r["label"], None, True))
@@ -272,7 +272,7 @@ def overview_run(idx, tot, X, n_issues, date, src):
          f"{sum(tot.values())} Befunde in {n_issues} Sachverhalten (ein Fallblatt je Sachverhalt, Gruppierung wie im Register); "
          f"blinde Einstufung: {tot['real']} real, {tot['minor']} geringfügig, {tot['not']} nicht bestätigt, {tot['open']} {OPEN}.", ""]
     if X and X.get("rows"):
-        o += [f"Dazu {X['confirmed']} bestätigte Befunde der experimentellen Prüfung (von {X['n']}), {EXP}.", ""]
+        o += [f"Dazu {X['confirmed']} bestätigte Befunde des Operator- und Negationsmoduls (von {X['n']}), {EXP}.", ""]
     o += ["Befunde «noch nicht beurteilt» sind von niemandem eingestuft; die Fachperson beurteilt sie im Fallblatt. Eine "
           "vorhandene Einstufung stammt von blinden Claude-Annotatoren, nicht vom BAG; sie ordnet die Reihenfolge der "
           "Prüfung, sie ersetzt den Entscheid nicht.", "",
@@ -284,7 +284,7 @@ def overview_run(idx, tot, X, n_issues, date, src):
 
 
 def _idx_row(no, name, prods, lims, kinds, langs, what, L, dt, exp):
-    art = ", ".join(KIND.get(k, k).split(" (")[0] for k in kinds) + (" (experimentell)" if exp else "")
+    art = ", ".join(KIND.get(k, k).split(" (")[0] for k in kinds) + (" (Zusatzmodul)" if exp else "")
     first = "nicht datiert" if not dt else (f"≤ {d(dt['first'])}" if dt.get("earliest") else f"{d(dt['prev'])} – {d(dt['first'])}")
     return (f"| [{no}]({name}) | {esc(prods)} | {'<br>'.join('`' + x + '`' for x in lims)} | {art} | "
             f"{'<br>'.join(esc(what_line(w)) for w in what)} | {SHORT[L]} | {first} |")
@@ -297,7 +297,7 @@ def overview(idx, tot, X, n_issues):
          f"{sum(tot.values())} Befunde in {n_issues} Sachverhalten (ein Fallblatt je Sachverhalt, Gruppierung wie im Register); "
          f"blinde Einstufung: {tot['real']} real, {tot['minor']} geringfügig, {tot['not']} nicht bestätigt "
          "(`eval/results/audit_relabel.json`). Dazu die "
-         f"{X['confirmed']} bestätigten Befunde der experimentellen Prüfung ({real_x} real, {X['confirmed'] - real_x} geringfügig, "
+         f"{X['confirmed']} bestätigten Befunde des Operator- und Negationsmoduls ({real_x} real, {X['confirmed'] - real_x} geringfügig, "
          f"von {X['n']}; `eval/results/audit_r15.json`), {EXP}.", "",
          "Die Einstufung stammt von blinden Claude-Annotatoren, nicht vom BAG. Sie ordnet die Reihenfolge der Prüfung, "
          "sie ersetzt den Entscheid nicht.", "",
