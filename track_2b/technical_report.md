@@ -18,7 +18,9 @@ people in basic insurance (22.6% of residents name French and 7.8% Italian as a 
 review asks applicants to declare that "die Übersetzungen sind kongruent". Where they are not, the difference we find is a number: in
 the 6 Oct 2026 register, 10 limitations carry 5 independent divergences (Nemluvio every 8 weeks vs "ogni 4 settimane";
 Diaphin 6% vs 12%; a French-only "≥ 62.5 kg" condition in three etanercept biosimilars; a 16 kg limit missing in French
-for Cresemba; a 15–30 kg tier missing or shifted in French for four Dupixent limitations).
+for Cresemba; a 15–30 kg tier missing or shifted in French for four Dupixent limitations). At the published prices the two
+Nemluvio readings differ by CHF 13,577 a year per patient, and one Amvuttra patient's stop decision is worth CHF 338,743
+a year at list price (`eval/results/stakes.json`).
 
 **Two tools, one rule.** *Draft*: when the German changes, Gleichlaut locks the old French/Italian outside the edit,
 replaces every number with a slot code that code writes back, lets Apertus rewrite the wording, and runs a frozen stack
@@ -43,9 +45,8 @@ kind (Q4_K_M, for an 8 GiB box, passes too: +10.8 points [4.8, 17.5]). Apertus 7
 54.1]; 39.8% of its drafts come out ready, with 0 meaning errors, stale changes or German left, its ready drafts rarely
 need a fix to the amendment (3 of 66), and a repeat run passes the same rule. A 70B draft costs **CHF 0.0024** at a
 Swiss provider's published price. The annotators behind these zeros were tested themselves: they caught all 66 planted
-meaning errors and all 38 written to read like part of the amendment, and flagged 5 of 17 real errors BAG had corrected (§6). In shadow
-mode on the August and September 2026 lists no ready draft changed a meaning; the checks sent most drafts to review, so
-drafting is a review aid today and the audit ships first (§8). `make run` re-executes the recorded runs offline and
+meaning errors and all 38 written to read like part of the amendment, and flagged 5 of 17 real errors BAG had corrected (§6). In shadow mode, drafting runs on every new SL release from
+the live public feed and grades itself against what BAG publishes (§8). `make run` re-executes the recorded runs offline and
 re-derives every number.
 
 ## 2. Architecture
