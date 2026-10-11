@@ -1,0 +1,233 @@
+{
+ "date": "20260601",
+ "findings": 63,
+ "by_kind": {
+  "editorial": 4,
+  "negation": 18,
+  "number": 21,
+  "number_word": 8,
+  "operator": 4,
+  "terminology": 8
+ },
+ "later": {
+  "20260701": {
+   "counts": {
+    "unchanged": 62,
+    "corrected toward agreement": 0,
+    "changed otherwise": 1,
+    "limitation removed": 0
+   },
+   "followed": 1,
+   "not_unchanged": [
+    {
+     "pid": "G07",
+     "changed": [
+      "de",
+      "fr",
+      "it"
+     ],
+     "still_reported": true,
+     "followed_to": "HEMLIBRA.XXb",
+     "divergent_changed": true,
+     "status": "changed otherwise",
+     "reason": "the finding is still reported",
+     "kind": "negation",
+     "limitation": "HEMLIBRA.XXa",
+     "correction": "IT sentence gains the negation DE states (kein), as FR has"
+    }
+   ]
+  },
+  "20260801": {
+   "counts": {
+    "unchanged": 62,
+    "corrected toward agreement": 0,
+    "changed otherwise": 1,
+    "limitation removed": 0
+   },
+   "followed": 1,
+   "not_unchanged": [
+    {
+     "pid": "G07",
+     "changed": [
+      "de",
+      "fr",
+      "it"
+     ],
+     "still_reported": true,
+     "followed_to": "HEMLIBRA.XXb",
+     "divergent_changed": true,
+     "status": "changed otherwise",
+     "reason": "the finding is still reported",
+     "kind": "negation",
+     "limitation": "HEMLIBRA.XXa",
+     "correction": "IT sentence gains the negation DE states (kein), as FR has"
+    }
+   ]
+  },
+  "20260901": {
+   "counts": {
+    "unchanged": 60,
+    "corrected toward agreement": 0,
+    "changed otherwise": 3,
+    "limitation removed": 0
+   },
+   "followed": 3,
+   "not_unchanged": [
+    {
+     "pid": "G07",
+     "changed": [
+      "de",
+      "fr",
+      "it"
+     ],
+     "still_reported": true,
+     "followed_to": "HEMLIBRA.XXb",
+     "divergent_changed": true,
+     "status": "changed otherwise",
+     "reason": "the finding is still reported",
+     "kind": "negation",
+     "limitation": "HEMLIBRA.XXa",
+     "correction": "IT sentence gains the negation DE states (kein), as FR has"
+    },
+    {
+     "pid": "G09",
+     "changed": [
+      "fr"
+     ],
+     "still_reported": false,
+     "followed_to": "KEYTRUDA.XX---Inf-Konz",
+     "divergent_changed": false,
+     "status": "changed otherwise",
+     "reason": "the divergent language is unchanged",
+     "kind": "negation",
+     "limitation": "KEYTRUDA.XXc",
+     "correction": "DE sentence drops its negation (nicht), which FR and IT lack"
+    },
+    {
+     "pid": "G10",
+     "changed": [
+      "fr"
+     ],
+     "still_reported": true,
+     "followed_to": "KEYTRUDA.XX---Inf-Konz",
+     "divergent_changed": false,
+     "status": "changed otherwise",
+     "reason": "the finding is still reported",
+     "kind": "negation",
+     "limitation": "KEYTRUDA.XXc",
+     "correction": "IT sentence drops its negation (Non), which DE and FR lack"
+    }
+   ]
+  },
+  "20261001": {
+   "counts": {
+    "unchanged": 60,
+    "corrected toward agreement": 0,
+    "changed otherwise": 3,
+    "limitation removed": 0
+   },
+   "followed": 3,
+   "not_unchanged": [
+    {
+     "pid": "G07",
+     "changed": [
+      "de",
+      "fr",
+      "it"
+     ],
+     "still_reported": true,
+     "followed_to": "HEMLIBRA.XXb",
+     "divergent_changed": true,
+     "status": "changed otherwise",
+     "reason": "the finding is still reported",
+     "kind": "negation",
+     "limitation": "HEMLIBRA.XXa",
+     "correction": "IT sentence gains the negation DE states (kein), as FR has"
+    },
+    {
+     "pid": "G09",
+     "changed": [
+      "fr"
+     ],
+     "still_reported": false,
+     "followed_to": "KEYTRUDA.XX---Inf-Konz",
+     "divergent_changed": false,
+     "status": "changed otherwise",
+     "reason": "the divergent language is unchanged",
+     "kind": "negation",
+     "limitation": "KEYTRUDA.XXc",
+     "correction": "DE sentence drops its negation (nicht), which FR and IT lack"
+    },
+    {
+     "pid": "G10",
+     "changed": [
+      "fr"
+     ],
+     "still_reported": true,
+     "followed_to": "KEYTRUDA.XX---Inf-Konz",
+     "divergent_changed": false,
+     "status": "changed otherwise",
+     "reason": "the finding is still reported",
+     "kind": "negation",
+     "limitation": "KEYTRUDA.XXc",
+     "correction": "IT sentence drops its negation (Non), which DE and FR lack"
+    }
+   ]
+  },
+  "20261006": {
+   "counts": {
+    "unchanged": 60,
+    "corrected toward agreement": 0,
+    "changed otherwise": 3,
+    "limitation removed": 0
+   },
+   "followed": 3,
+   "not_unchanged": [
+    {
+     "pid": "G07",
+     "changed": [
+      "de",
+      "fr",
+      "it"
+     ],
+     "still_reported": true,
+     "followed_to": "HEMLIBRA.XXb",
+     "divergent_changed": true,
+     "status": "changed otherwise",
+     "reason": "the finding is still reported",
+     "kind": "negation",
+     "limitation": "HEMLIBRA.XXa",
+     "correction": "IT sentence gains the negation DE states (kein), as FR has"
+    },
+    {
+     "pid": "G09",
+     "changed": [
+      "fr"
+     ],
+     "still_reported": false,
+     "followed_to": "KEYTRUDA.XX---Inf-Konz",
+     "divergent_changed": false,
+     "status": "changed otherwise",
+     "reason": "the divergent language is unchanged",
+     "kind": "negation",
+     "limitation": "KEYTRUDA.XXc",
+     "correction": "DE sentence drops its negation (nicht), which FR and IT lack"
+    },
+    {
+     "pid": "G10",
+     "changed": [
+      "fr"
+     ],
+     "still_reported": true,
+     "followed_to": "KEYTRUDA.XX---Inf-Konz",
+     "divergent_changed": false,
+     "status": "changed otherwise",
+     "reason": "the finding is still reported",
+     "kind": "negation",
+     "limitation": "KEYTRUDA.XXc",
+     "correction": "IT sentence drops its negation (Non), which DE and FR lack"
+    }
+   ]
+  }
+ }
+}

@@ -642,3 +642,6 @@ fb_mixed_edits_saved_pct	33.8	eval/results/fresh166_by_backend.json	m3_seed1.by_
 fb_m3_calls	283	eval/results/fresh166_by_backend.json	m3_seed1.calls	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 fb_m3_tp2_calls	202	eval/results/fresh166_by_backend.json	m3_seed1.calls_by_backend.tp2	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
 fb_m3_fp1_calls	81	eval/results/fresh166_by_backend.json	m3_seed1.calls_by_backend.fp1-nes	{}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+r20_predictions	69	eval/predictions/audit_20261006_predictions.json	counts.predictions	{}	PYTHONPATH=src python3 tools/check_predictions.py build	README/report/notes
+r20_positive	34	eval/predictions/audit_20261006_predictions.json	counts.positive.n	{}	PYTHONPATH=src python3 tools/check_predictions.py build	README/report/notes
+r20_negative	35	eval/predictions/audit_20261006_predictions.json	counts.negative.n	{}	PYTHONPATH=src python3 tools/check_predictions.py build	README/report/notes

@@ -739,3 +739,7 @@ error. The signal is therefore off; the statistics are reported in the summary (
     missing unit word after a number is not one of its rules.
 - **No authority.** A finding says the languages differ or that a passage looks mistyped. Which version is right is for
   BAG to decide; it can be the German (see `odd_one_out`).
+- **BAG as the referee (PREREG R20).** BAG's own later corrections score the audit: the 34 confirmed findings are frozen
+  as predictions and the 35 unconfirmed ones as negative predictions (`eval/predictions/audit_20261006_predictions.json`,
+  sha256 `09cd9df7bf3e…`), each later SL publication is checked with `tools/check_predictions.py check --fetch latest`,
+  and nothing is claimed before the 6-month horizon (6 Apr 2027).

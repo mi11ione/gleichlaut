@@ -377,6 +377,11 @@ for cid, path in (("fb_m3_calls", "m3_seed1.calls"), ("fb_m3_tp2_calls", "m3_see
                   ("fb_m3_fp1_calls", "m3_seed1.calls_by_backend.fp1-nes")):
     C.append((cid, FB, path, "{}", RE))
 
+# PREREG R20: the 6 Oct 2026 audit as frozen predictions, scored against BAG's own later corrections
+PR, PC = "eval/predictions/audit_20261006_predictions.json", "PYTHONPATH=src python3 tools/check_predictions.py build"
+for cid, path in (("r20_predictions", "counts.predictions"), ("r20_positive", "counts.positive.n"), ("r20_negative", "counts.negative.n")):
+    C.append((cid, PR, path, "{}", PC))
+
 if __name__ == "__main__":
     rows = ["id\tvalue\tsource\tpath\tfmt\tcommand\twhere"]
     for cid, src, path, fmt, cmd in C:

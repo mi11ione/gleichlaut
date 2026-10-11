@@ -1,0 +1,465 @@
+{
+ "date": "20261001",
+ "role": "sanity check (a snapshot before the register; changes run backwards in time)",
+ "generated_utc": "2026-10-11T01:04:55+00:00",
+ "predictions_sha256": "09cd9df7bf3e59ca37f3a161ecb190987e978999e6dbf87a42c77cd95ca8d326",
+ "checker_sha256": "bd60addda3fb20469997156377b514ecb240974d4333870a24e30241c80312ca",
+ "audit_sha256": "8c4823a534323c8d5f7d0f45d8ab2334e3fd228a57270010b7f090ec3b1b7526",
+ "snapshot": {
+  "files": [
+   "20261001-de.json",
+   "20261001-fr.json",
+   "20261001-it.json"
+  ],
+  "n_limitations": 1687
+ },
+ "summary": {
+  "positive": {
+   "n": 34,
+   "unchanged": 34,
+   "corrected toward agreement": 0,
+   "changed otherwise": 0,
+   "limitation removed": 0
+  },
+  "negative": {
+   "n": 35,
+   "unchanged": 35,
+   "corrected toward agreement": 0,
+   "changed otherwise": 0,
+   "limitation removed": 0
+  },
+  "still_reported": 69,
+  "by_set": {
+   "issues": {
+    "n": 38,
+    "unchanged": 38,
+    "corrected toward agreement": 0,
+    "changed otherwise": 0,
+    "limitation removed": 0
+   },
+   "experimental": {
+    "n": 31,
+    "unchanged": 31,
+    "corrected toward agreement": 0,
+    "changed otherwise": 0,
+    "limitation removed": 0
+   }
+  }
+ },
+ "results": [
+  {
+   "pid": "N01",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N02",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N03",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N04",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N05",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N06",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N07",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N08",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N09",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N10",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N11",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N12",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N13",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N14",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N15",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N16",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N17",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N18",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N19",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N20",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "N21",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "L01",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "E01",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "E02",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "E03",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "E04",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "E05",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "T01",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "T02",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "T03",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "T04",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "T05",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "T06",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "T07",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "T08",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "T09",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "T10",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "T11",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "O01",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "O02",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "O03",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "O04",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "G01",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "G02",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "G03",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "G04",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "G05",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "G06",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "G07",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "G08",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "G09",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "G10",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "G11",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "G12",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "G13",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "G14",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "G15",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "G16",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "G17",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "G18",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "W01",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "W02",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "W03",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "W04",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "W05",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "W06",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "W07",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "W08",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  },
+  {
+   "pid": "W09",
+   "changed": [],
+   "still_reported": true,
+   "status": "unchanged"
+  }
+ ]
+}

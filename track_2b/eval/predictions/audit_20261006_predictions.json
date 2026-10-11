@@ -1,0 +1,5744 @@
+{
+ "prereg": "eval/prereg/PREREG.md R20",
+ "frozen_utc": "2026-10-11T01:04:00Z",
+ "register": "BAG SL public FHIR feed of 06.10.2026 (20261006); texts: data/audit/audit_texts_20261006.json",
+ "audit": "data/audit/audit_20261006.json (gleichlaut.audit; findings: the 18 issues of the review register, findings_r5: the round-5 checks, off by default)",
+ "labels": "blind Claude annotators, majority of three (PREREG R14 for the issues, R15 for the round-5 findings); confirmed = real or minor",
+ "statuses": [
+  "unchanged",
+  "corrected toward agreement",
+  "changed otherwise",
+  "limitation removed"
+ ],
+ "horizons": {
+  "6 months": "20270406",
+  "12 months": "20271006"
+ },
+ "follow": "a limitation id absent from a later snapshot is followed to a new id (one not in limitation_ids_20261006) with the same product prefix whose German text is the most similar (difflib ratio >= 0.9)",
+ "counts": {
+  "predictions": 69,
+  "positive": {
+   "n": 34,
+   "issues": 28,
+   "experimental": 6
+  },
+  "negative": {
+   "n": 35,
+   "issues": 10,
+   "experimental": 25
+  },
+  "issues": 18,
+  "issue_findings": 38,
+  "experimental_findings": 31,
+  "positive_by_kind": {
+   "editorial": 5,
+   "language": 1,
+   "negation": 4,
+   "number": 11,
+   "number_word": 1,
+   "operator": 1,
+   "terminology": 11
+  },
+  "negative_by_kind": {
+   "negation": 14,
+   "number": 10,
+   "number_word": 8,
+   "operator": 3
+  },
+  "divergent": {
+   "de": 11,
+   "fr": 31,
+   "it": 14,
+   "unclear": 13
+  }
+ },
+ "predictions": [
+  {
+   "pid": "N01",
+   "set": "issues",
+   "issue": "01",
+   "limitation": "DIAPHIN.6-",
+   "product": [
+    "Diaphin"
+   ],
+   "kind": "number",
+   "lang": "it",
+   "divergent": "it",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A20"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "DE has 6 (%), IT does not; IT has 12 (%), DE does not",
+   "state_20261006": {
+    "de": {
+     "6": 1,
+     "12": 0
+    },
+    "fr": {
+     "6": 1,
+     "12": 0
+    },
+    "it": {
+     "6": 0,
+     "12": 1
+    }
+   },
+   "correction": "IT changes 12 (%) to 6 (%), as DE and FR state",
+   "expect": {
+    "de_only": [
+     "6"
+    ],
+    "tgt_only": [
+     "12"
+    ],
+    "divergent": "it",
+    "agreeing": [
+     "de",
+     "fr"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "…brikabgabepreises zuzüglich dem preisbezogenen Zuschlag von 6% zuzüglich MWST. Aufgrund spezieller Vertriebsverhältnisse …",
+    "it": "…ezzo di fabbrica, più il supplemento attinente al prezzo di 12% più la IVA. A causa della situazione particolare della dis…",
+    "fr": "…Détermination du prix pour Diaphin sur la base du prix de fabrique, plus la prime relative au prix de 6%, TVA en sus.…"
+   },
+   "texts_sha256": {
+    "de": "b7a4c88df6b58c572bb84cf9ae0739251d28e43facbe63ccdccad3db9fd6a809",
+    "fr": "ec403f4c46225ce5db8971522b04bbd9983969a5e2c54e7789b3ee066b82b71a",
+    "it": "6c6f9938f6ea660cadf3215b48d5e90c978de8b8f58f0122e46a69ed485696ec"
+   }
+  },
+  {
+   "pid": "N02",
+   "set": "issues",
+   "issue": "02",
+   "limitation": "DUPIXENT.05P",
+   "product": [
+    "Dupixent"
+   ],
+   "kind": "number",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A11"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260601",
+   "description": "DE has 15 (kg), FR does not; FR has 30 (kg), DE does not",
+   "state_20261006": {
+    "de": {
+     "15": 1,
+     "30": 0
+    },
+    "fr": {
+     "15": 0,
+     "30": 1
+    },
+    "it": {
+     "15": 1,
+     "30": 0
+    }
+   },
+   "correction": "FR changes 30 (kg) to 15 (kg), as DE and IT state",
+   "expect": {
+    "de_only": [
+     "15"
+    ],
+    "tgt_only": [
+     "30"
+    ],
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "…ierung von 300 mg alle 4 Wochen bei einem Körpergewicht von 15 - < 60 kg, bzw. von 200 mg alle 2 Wochen bei einem Körperge…",
+    "fr": "…e de 300 mg toutes les 4 semaines pour un poids corporel de 30 kg à moins de 60 kg, ou de 200 mg toutes les 2 semaines pou…",
+    "it": "…Come terapia aggiuntiva con una dose di 300 mg ogni 4 settimane per un peso corporeo di 15 - < 60 kg, o di 200 mg ogni 2 settimane per un peso corporeo di 60 kg o più, nei bambini da 6 a 11 anni di età con asma grave di tipo 2 caratterizzata dai seguenti criteri:…"
+   },
+   "texts_sha256": {
+    "de": "850f6937aba208152725547d804dde796b8c8ee1692aa93294485ba8e3a4bbb9",
+    "fr": "692827631874981a4ed5b3641e41b10abfa3a97803b45738dd0f17c41a93f2d1",
+    "it": "ef5b1fcdacfa374c5a80567d693f668316a55009c7ffc09ac6b77d8304f211b5"
+   }
+  },
+  {
+   "pid": "N03",
+   "set": "issues",
+   "issue": "02",
+   "limitation": "DUPIXENT.05a",
+   "product": [
+    "Dupixent"
+   ],
+   "kind": "number",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A04"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260601",
+   "description": "DE has 15 (kg), FR does not; FR has 30 (kg), DE does not",
+   "state_20261006": {
+    "de": {
+     "15": 1,
+     "30": 0
+    },
+    "fr": {
+     "15": 0,
+     "30": 1
+    },
+    "it": {
+     "15": 1,
+     "30": 0
+    }
+   },
+   "correction": "FR changes 30 (kg) to 15 (kg), as DE and IT state",
+   "expect": {
+    "de_only": [
+     "15"
+    ],
+    "tgt_only": [
+     "30"
+    ],
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "…ierung von 300 mg alle 4 Wochen bei einem Körpergewicht von 15 - < 60 kg, bzw. von 200 mg alle 2 Wochen bei einem Körperge…",
+    "fr": "…e de 300 mg toutes les 4 semaines pour un poids corporel de 30 kg à moins de 60 kg, ou de 200 mg toutes les 2 semaines pou…",
+    "it": "…Come terapia aggiuntiva con una dose di 300 mg ogni 4 settimane per un peso corporeo di 15 - < 60 kg, o di 200 mg ogni 2 settimane per un peso corporeo di 60 kg o più, nei bambini da 6 a 11 anni di età con asma grave di tipo 2 caratterizzata dai seguenti criteri:…"
+   },
+   "texts_sha256": {
+    "de": "ab554636c240cecce2617d4e696bc604f5e1952d35781e18774ae597c15e5e56",
+    "fr": "430d3b416fe835fc54920dfa08d93aed1376d45c155ec610030ec0006c7f1c10",
+    "it": "a44edb90d25383ae4f0d89e72d6ecbdf623d7bac0af0e8d2f4660b51a3ae4b28"
+   }
+  },
+  {
+   "pid": "N04",
+   "set": "issues",
+   "issue": "07",
+   "limitation": "PREVYMIS.01",
+   "product": [
+    "Prevymis"
+   ],
+   "kind": "number",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A10"
+   },
+   "likely_equivalent": true,
+   "first_seen": "20260219",
+   "description": "DE has 15 (kg), FR does not; FR has 5 (kg), DE does not",
+   "state_20261006": {
+    "de": {
+     "5": 0,
+     "15": 1
+    },
+    "fr": {
+     "5": 1,
+     "15": 0
+    },
+    "it": {
+     "5": 0,
+     "15": 1
+    }
+   },
+   "correction": "FR changes 5 (kg) to 15 (kg), as DE and IT state",
+   "expect": {
+    "de_only": [
+     "15"
+    ],
+    "tgt_only": [
+     "5"
+    ],
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "… 30 kg und für pädiatrische Patienten mit einem Gewicht von 15 kg bis unter 30 kg für eine Verabreichung ohne Ciclosporin,…",
+    "fr": "…s 30 kg, ainsi que chez les patients pédiatriques pesant de15 kg à moins de 30 kg pour une administration sans ciclospori…",
+    "it": "…almeno 30 kg, nonché nei pazienti pediatrici con un peso compreso tra 15 kg e meno di 30 kg per una somministrazione senza ciclosporina, che…"
+   },
+   "texts_sha256": {
+    "de": "fced512990339015a12e22aea345de0f6e476c71c27249dabc9d109579cabb4b",
+    "fr": "b3cd845b27c5b81a8e6e278b6bc74ef9e66036975c4d5aa9b5023a89af6189ac",
+    "it": "1a34ae1c7c733997b76d03b803fa661c3a608b50bf993ab2d13c533789b6c894"
+   }
+  },
+  {
+   "pid": "N05",
+   "set": "issues",
+   "issue": "03",
+   "limitation": "BENEPALI4",
+   "product": [
+    "Benepali"
+   ],
+   "kind": "number",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A02"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "FR has 62.5 (kg), DE does not",
+   "state_20261006": {
+    "de": {
+     "62.5": 0
+    },
+    "fr": {
+     "62.5": 1
+    },
+    "it": {
+     "62.5": 0
+    }
+   },
+   "correction": "FR drops 62.5 (kg), as DE and IT state",
+   "expect": {
+    "de_only": [],
+    "tgt_only": [
+     "62.5"
+    ],
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "fr": "… juvénile polyarticulaire active chez les patients pesant ≥ 62.5 kg et de l'arthrite psoriasique en cas de réponse inadéquat…",
+    "de": "…mit polyartikulärem Verlauf und Psoriasis Arthritis, wenn die vorausgegangene antirheumatische Standardtherapie mit krankheitsmodifizierenden Antirheumatika…",
+    "it": "…dell'artrite psoriasica, da adottare nel caso in cui, la precedente terapia antireumatica standard con antireumatici in grado di modificare la malattia…"
+   },
+   "texts_sha256": {
+    "de": "ec62e9696c11e78177ab5696fd6309cab9b0e04d8ee9d1f2c3498534ec851ad5",
+    "fr": "ee8647d2ccf3a74a559815b6744df96865598aaa5a9fe61c275ff3bfce29a9a6",
+    "it": "382612b3ee0a4a9cf35f9c49c3fe8ffe39a215247a30becabaf20952cdb95a5b"
+   }
+  },
+  {
+   "pid": "N06",
+   "set": "issues",
+   "issue": "08",
+   "limitation": "BEYFORTUS.01",
+   "product": [
+    "Beyfortus"
+   ],
+   "kind": "number",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A16"
+   },
+   "likely_equivalent": true,
+   "first_seen": "20260219",
+   "description": "DE has 14 (Tagen), FR does not",
+   "state_20261006": {
+    "de": {
+     "14": 1
+    },
+    "fr": {
+     "14": 0
+    },
+    "it": {
+     "14": 1
+    }
+   },
+   "correction": "FR comes to state 14 (Tagen), as DE and IT state",
+   "expect": {
+    "de_only": [
+     "14"
+    ],
+    "tgt_only": [],
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "…en; ausgenommen sind folgende Fälle: – Geburt innerhalb von 14 Tagen nach Verabreichung der Impfung, – Frühgeburt vor 37 W…",
+    "fr": "…– la naissance a lieu dans les deux semaines suivant l’administration du vaccin, – accouchement prématuré avant 37 semaines de…",
+    "it": "…- la nascita avviene entro 14 giorni dalla somministrazione del vaccino; - si verifica un parto prematuro prima della 37a settimana di età gestazionale;…"
+   },
+   "texts_sha256": {
+    "de": "2db21c94bb70d340d1042b024457e696500fa69e33612f82765ac0c0050e99f6",
+    "fr": "0881261d041de7a8b1b544b7de05677f284f480a794ad4c42e1aa2118f4c3d39",
+    "it": "244159150f45db08870c201a3e44190144bc6336755b8ed565478aa38d998dc7"
+   }
+  },
+  {
+   "pid": "N07",
+   "set": "issues",
+   "issue": "09",
+   "limitation": "CERDELGA",
+   "product": [
+    "Cerdelga"
+   ],
+   "kind": "number",
+   "lang": "fr",
+   "divergent": "de",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A00"
+   },
+   "likely_equivalent": true,
+   "first_seen": "20260219",
+   "description": "DE has 18 (Jahren), FR does not",
+   "state_20261006": {
+    "de": {
+     "18": 1
+    },
+    "fr": {
+     "18": 0
+    },
+    "it": {
+     "18": 0
+    }
+   },
+   "correction": "DE drops 18 (Jahren), as FR and IT state",
+   "expect": {
+    "de_only": [
+     "18"
+    ],
+    "tgt_only": [],
+    "divergent": "de",
+    "agreeing": [
+     "fr",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "Zur Monotherapie bei erwachsenen Patienten ab 18 Jahren mit gesicherter Diagnose eines Morbus Gaucher Typ I,…",
+    "fr": "Pour la monothérapie chez les patients adultes atteints d’une maladie de Gaucher de type I diagnostiquée de manière…",
+    "it": "Per la monoterapia di pazienti adulti con malattia di Gaucher di tipo I che sono metabolizzatori lenti (poor…"
+   },
+   "texts_sha256": {
+    "de": "fb35efb1016e7cef6f3b1febfd6db9211cefac21da0e3c23f3203ed556ce0cb0",
+    "fr": "818414de8c862a76cb2349934f5d97528e7230b83985f8b5aa8c74a5c87044ad",
+    "it": "3e1724d61771168cc1bc9b02e8b3e0ad10a90c06aee5b0d9b4eb6da6c8159d39"
+   }
+  },
+  {
+   "pid": "N08",
+   "set": "issues",
+   "issue": "09",
+   "limitation": "CERDELGA",
+   "product": [
+    "Cerdelga"
+   ],
+   "kind": "number",
+   "lang": "it",
+   "divergent": "de",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A09"
+   },
+   "likely_equivalent": true,
+   "first_seen": "20260219",
+   "description": "DE has 18 (Jahren), IT does not",
+   "state_20261006": {
+    "de": {
+     "18": 1
+    },
+    "fr": {
+     "18": 0
+    },
+    "it": {
+     "18": 0
+    }
+   },
+   "correction": "DE drops 18 (Jahren), as FR and IT state",
+   "expect": {
+    "de_only": [
+     "18"
+    ],
+    "tgt_only": [],
+    "divergent": "de",
+    "agreeing": [
+     "fr",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "Zur Monotherapie bei erwachsenen Patienten ab 18 Jahren mit gesicherter Diagnose eines Morbus Gaucher Typ I,…",
+    "fr": "Pour la monothérapie chez les patients adultes atteints d’une maladie de Gaucher de type I diagnostiquée de manière…",
+    "it": "Per la monoterapia di pazienti adulti con malattia di Gaucher di tipo I che sono metabolizzatori lenti (poor…"
+   },
+   "texts_sha256": {
+    "de": "fb35efb1016e7cef6f3b1febfd6db9211cefac21da0e3c23f3203ed556ce0cb0",
+    "fr": "818414de8c862a76cb2349934f5d97528e7230b83985f8b5aa8c74a5c87044ad",
+    "it": "3e1724d61771168cc1bc9b02e8b3e0ad10a90c06aee5b0d9b4eb6da6c8159d39"
+   }
+  },
+  {
+   "pid": "N09",
+   "set": "issues",
+   "issue": "04",
+   "limitation": "CRESE.Kps.IM",
+   "product": [
+    "Cresemba"
+   ],
+   "kind": "number",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A08"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "DE has 16 (kg), FR does not",
+   "state_20261006": {
+    "de": {
+     "16": 1
+    },
+    "fr": {
+     "16": 0
+    },
+    "it": {
+     "16": 1
+    }
+   },
+   "correction": "FR comes to state 16 (kg), as DE and IT state",
+   "expect": {
+    "de_only": [
+     "16"
+    ],
+    "tgt_only": [],
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "…ter von 6 Jahren und mit einem Körpergewicht von mindestens 16 kg vergütet.",
+    "fr": "…concomitante chez les adultes et les patients pédiatriques à partir de 6 ans.",
+    "it": "…pediatrici a partire dai 6 anni di età e con un peso corporeo di almeno 16 kg."
+   },
+   "texts_sha256": {
+    "de": "8035ec93ba285eaba95a1bec23ef0f099fcba6875ece431d3490bffdfd64679c",
+    "fr": "a9f769919b105be42c939b78a479951ffefa576490fc1a16c597daee74185243",
+    "it": "3ad7211b75ebc65858db240267a5eb3b33fb78d0c0d2bb69ccbdf2104c063d32"
+   }
+  },
+  {
+   "pid": "N10",
+   "set": "issues",
+   "issue": "10",
+   "limitation": "EMGALITY.01",
+   "product": [
+    "Emgality"
+   ],
+   "kind": "number",
+   "lang": "fr",
+   "divergent": "de",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A18"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "DE has 120 (mg), FR does not",
+   "state_20261006": {
+    "de": {
+     "120": 1
+    },
+    "fr": {
+     "120": 0
+    },
+    "it": {
+     "120": 0
+    }
+   },
+   "correction": "DE drops 120 (mg), as FR and IT state",
+   "expect": {
+    "de_only": [
+     "120"
+    ],
+    "tgt_only": [],
+    "divergent": "de",
+    "agreeing": [
+     "fr",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "…hnittswert für die 3 Monate vor Therapiebeginn mit EMGALITY 120 mg reduziert wurde und diese Reduktion anhand eines Migräne…",
+    "fr": "…rapport à la valeur moyenne des 3 mois précédant le début du traitement par EMGALITY et si cette réduction peut être prouvée à partir d’un journal…",
+    "it": "…rispetto al valore medio per i 3 mesi prima dell’inizio della terapia con EMGALITY e che tale diminuzione possa essere comprovata mediante un diario…"
+   },
+   "texts_sha256": {
+    "de": "2a59d6bcba84150086c566d709b961bca0be03a396f001637c5109af48a5be1b",
+    "fr": "f8d937025b219a11a60e23813b6e86aa59e848769dfca029f5681a200a65346d",
+    "it": "7114afea3834683425a0eaef21d6018daf2e8a1b0c488dd026797ec34dde05ec"
+   }
+  },
+  {
+   "pid": "N11",
+   "set": "issues",
+   "issue": "10",
+   "limitation": "EMGALITY.01",
+   "product": [
+    "Emgality"
+   ],
+   "kind": "number",
+   "lang": "it",
+   "divergent": "de",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A03"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "DE has 120 (mg), IT does not",
+   "state_20261006": {
+    "de": {
+     "120": 1
+    },
+    "fr": {
+     "120": 0
+    },
+    "it": {
+     "120": 0
+    }
+   },
+   "correction": "DE drops 120 (mg), as FR and IT state",
+   "expect": {
+    "de_only": [
+     "120"
+    ],
+    "tgt_only": [],
+    "divergent": "de",
+    "agreeing": [
+     "fr",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "…hnittswert für die 3 Monate vor Therapiebeginn mit EMGALITY 120 mg reduziert wurde und diese Reduktion anhand eines Migräne…",
+    "fr": "…rapport à la valeur moyenne des 3 mois précédant le début du traitement par EMGALITY et si cette réduction peut être prouvée à partir d’un journal…",
+    "it": "…rispetto al valore medio per i 3 mesi prima dell’inizio della terapia con EMGALITY e che tale diminuzione possa essere comprovata mediante un diario…"
+   },
+   "texts_sha256": {
+    "de": "2a59d6bcba84150086c566d709b961bca0be03a396f001637c5109af48a5be1b",
+    "fr": "f8d937025b219a11a60e23813b6e86aa59e848769dfca029f5681a200a65346d",
+    "it": "7114afea3834683425a0eaef21d6018daf2e8a1b0c488dd026797ec34dde05ec"
+   }
+  },
+  {
+   "pid": "N12",
+   "set": "issues",
+   "issue": "03",
+   "limitation": "ERELZI2",
+   "product": [
+    "Erelzi"
+   ],
+   "kind": "number",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A12"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "FR has 62.5 (kg), DE does not",
+   "state_20261006": {
+    "de": {
+     "62.5": 0
+    },
+    "fr": {
+     "62.5": 1
+    },
+    "it": {
+     "62.5": 0
+    }
+   },
+   "correction": "FR drops 62.5 (kg), as DE and IT state",
+   "expect": {
+    "de_only": [],
+    "tgt_only": [
+     "62.5"
+    ],
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "fr": "… juvénile polyarticulaire active chez les patients pesant ≥ 62.5 kg et de l'arthrite psoriasique en cas de réponse inadéquat…",
+    "de": "…mit polyartikulärem Verlauf und Psoriasis Arthritis, wenn die vorausgegangene antirheumatische Standardtherapie mit krankheitsmodifizierenden Antirheumatika…",
+    "it": "…dell'artrite psoriasica, da adottare nel caso in cui, la precedente terapia antireumatica standard con antireumatici in grado di modificare la malattia…"
+   },
+   "texts_sha256": {
+    "de": "69802dce69488ee2958b16d33ef22ac89c8c962d1c65192549cf4473338b92ba",
+    "fr": "82b9f9f7ea2355e571ce92f14da442a88085b086dc7735a9c0bdd3b5c47892fa",
+    "it": "d026d973e2f3d83939cba34f3556f97e0e09f4a26c0142a269c1ac13ad5a7f45"
+   }
+  },
+  {
+   "pid": "N13",
+   "set": "issues",
+   "issue": "11",
+   "limitation": "FORSTEO-2",
+   "product": [
+    "Forsteo",
+    "Movymia",
+    "Sondelbay"
+   ],
+   "kind": "number",
+   "lang": "it",
+   "divergent": "it",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "minor",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A19"
+   },
+   "likely_equivalent": true,
+   "first_seen": "20260219",
+   "description": "DE has 6 (monatigen), IT does not",
+   "state_20261006": {
+    "de": {
+     "6": 1
+    },
+    "fr": {
+     "6": 1
+    },
+    "it": {
+     "6": 0
+    }
+   },
+   "correction": "IT comes to state 6 (monatigen), as DE and FR state",
+   "expect": {
+    "de_only": [
+     "6"
+    ],
+    "tgt_only": [],
+    "divergent": "it",
+    "agreeing": [
+     "de",
+     "fr"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "…ebedingten Wirbelkörperfrakturen, die nach einer mindestens 6-monatigen Therapie mit Calcitonin, SERM (selektiver Oestrog…",
+    "fr": "…ostéoporotiques documentées radiologiquement, après une thérapie d'au minimum 6 mois sous Calcitonine, SERM (modulateur sélectif des récepteurs oestrogéniques),…",
+    "it": "…fratture vertebrali osteoporotiche documentate radiologicamente, dopo una terapia di almeno se mesi con Calcitonina, SERM (modulatore selettivo del…"
+   },
+   "texts_sha256": {
+    "de": "0a45bb5b6e73ad09e48a7e62786a2830c24a5395c482351f1e781948fb8590c6",
+    "fr": "648ea138c136a4cb416276006eb40f7a5c24f3342e5bda6dd2149f5dc30e0f4e",
+    "it": "2a71be1948fbe00a3b7ac8e4705c647a95929117cbcdf757cb954acb0687c226"
+   }
+  },
+  {
+   "pid": "N14",
+   "set": "issues",
+   "issue": "12",
+   "limitation": "GALAFOLD3",
+   "product": [
+    "Galafold"
+   ],
+   "kind": "number",
+   "lang": "fr",
+   "divergent": "de",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A17"
+   },
+   "likely_equivalent": true,
+   "first_seen": "20260219",
+   "description": "FR has 2 (jours), DE does not",
+   "state_20261006": {
+    "de": {
+     "2": 0
+    },
+    "fr": {
+     "2": 2
+    },
+    "it": {
+     "2": 2
+    }
+   },
+   "correction": "DE comes to state 2 (jours), as FR and IT state",
+   "expect": {
+    "de_only": [],
+    "tgt_only": [
+     "2"
+    ],
+    "divergent": "de",
+    "agreeing": [
+     "fr",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "fr": "…iqué, à la posologie de 123 mg (1 gélule) une fois tous les deux jours à heure fixe, dans le traitement à long terme des adu…",
+    "it": "…. GALAFOLD al dosaggio di 123 mg (1 capsula) una volta ogni due giorni, alla stessa ora, è indicato per il trattamento a lu…",
+    "de": "…GALAFOLD ist in einer Dosierung von 123 mg (1 Kapsel) einmal an jedem zweiten Tag, jeweils zur gleichen Uhrzeit, für…"
+   },
+   "texts_sha256": {
+    "de": "c820012a0a1b137b943214e3c80bb683b46cce36e3f70fb57250c23697cf42fb",
+    "fr": "2e595ac549732daee65e448fc03bd24134b1aa475dda0499f6f7016a78f15883",
+    "it": "509d745c580075a4c715ea0a1dece58daf541ab28f479d6ce2f1fd5df0ca8966"
+   }
+  },
+  {
+   "pid": "N15",
+   "set": "issues",
+   "issue": "12",
+   "limitation": "GALAFOLD3",
+   "product": [
+    "Galafold"
+   ],
+   "kind": "number",
+   "lang": "it",
+   "divergent": "de",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A01"
+   },
+   "likely_equivalent": true,
+   "first_seen": "20260219",
+   "description": "IT has 2 (giorni), DE does not",
+   "state_20261006": {
+    "de": {
+     "2": 0
+    },
+    "fr": {
+     "2": 2
+    },
+    "it": {
+     "2": 2
+    }
+   },
+   "correction": "DE comes to state 2 (giorni), as FR and IT state",
+   "expect": {
+    "de_only": [],
+    "tgt_only": [
+     "2"
+    ],
+    "divergent": "de",
+    "agreeing": [
+     "fr",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "it": "…. GALAFOLD al dosaggio di 123 mg (1 capsula) una volta ogni due giorni, alla stessa ora, è indicato per il trattamento a lu…",
+    "fr": "…iqué, à la posologie de 123 mg (1 gélule) une fois tous les deux jours à heure fixe, dans le traitement à long terme des adu…",
+    "de": "…GALAFOLD ist in einer Dosierung von 123 mg (1 Kapsel) einmal an jedem zweiten Tag, jeweils zur gleichen Uhrzeit, für…"
+   },
+   "texts_sha256": {
+    "de": "c820012a0a1b137b943214e3c80bb683b46cce36e3f70fb57250c23697cf42fb",
+    "fr": "2e595ac549732daee65e448fc03bd24134b1aa475dda0499f6f7016a78f15883",
+    "it": "509d745c580075a4c715ea0a1dece58daf541ab28f479d6ce2f1fd5df0ca8966"
+   }
+  },
+  {
+   "pid": "N16",
+   "set": "issues",
+   "issue": "13",
+   "limitation": "LEQVIO.01",
+   "product": [
+    "Leqvio"
+   ],
+   "kind": "number",
+   "lang": "fr",
+   "divergent": "de",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A15"
+   },
+   "likely_equivalent": true,
+   "first_seen": "20260219",
+   "description": "DE has 4 (mmol), FR does not",
+   "state_20261006": {
+    "de": {
+     "4": 1
+    },
+    "fr": {
+     "4": 0
+    },
+    "it": {
+     "4": 0
+    }
+   },
+   "correction": "DE drops 4 (mmol), as FR and IT state",
+   "expect": {
+    "de_only": [
+     "4"
+    ],
+    "tgt_only": [],
+    "divergent": "de",
+    "agreeing": [
+     "fr",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "…it einem PCSK9-Inhibitor oder ein LDL-C Wert von kleiner 1 .4 mmol/l erreicht werden. Die Vergütung in Kombination mit de…",
+    "fr": "…traitement par un inhibiteur de PCSK9 ou une valeur de LDL-C inférieure à 1.4 mmol/l doit être atteinte.…",
+    "it": "…trattamento con l’inibitore PCSK9 o un valore di colesterolo LDC inferiore a 1,4 mmol/l.…"
+   },
+   "texts_sha256": {
+    "de": "3cce7e0888185de72f81336591ba7b44fcb6afa3637a61e281d1b379d209a6ea",
+    "fr": "7a76659602e55264862a966df2de33d9e3ac24077baadb83895bbb15722819c5",
+    "it": "80bbd328d4bd23efee3d1e4f4398ce8bd517bea8522dd1e6625302ae15278551"
+   }
+  },
+  {
+   "pid": "N17",
+   "set": "issues",
+   "issue": "13",
+   "limitation": "LEQVIO.01",
+   "product": [
+    "Leqvio"
+   ],
+   "kind": "number",
+   "lang": "it",
+   "divergent": "de",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A14"
+   },
+   "likely_equivalent": true,
+   "first_seen": "20260219",
+   "description": "DE has 4 (mmol), IT does not",
+   "state_20261006": {
+    "de": {
+     "4": 1
+    },
+    "fr": {
+     "4": 0
+    },
+    "it": {
+     "4": 0
+    }
+   },
+   "correction": "DE drops 4 (mmol), as FR and IT state",
+   "expect": {
+    "de_only": [
+     "4"
+    ],
+    "tgt_only": [],
+    "divergent": "de",
+    "agreeing": [
+     "fr",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "…it einem PCSK9-Inhibitor oder ein LDL-C Wert von kleiner 1 .4 mmol/l erreicht werden. Die Vergütung in Kombination mit de…",
+    "fr": "…traitement par un inhibiteur de PCSK9 ou une valeur de LDL-C inférieure à 1.4 mmol/l doit être atteinte.…",
+    "it": "…trattamento con l’inibitore PCSK9 o un valore di colesterolo LDC inferiore a 1,4 mmol/l.…"
+   },
+   "texts_sha256": {
+    "de": "3cce7e0888185de72f81336591ba7b44fcb6afa3637a61e281d1b379d209a6ea",
+    "fr": "7a76659602e55264862a966df2de33d9e3ac24077baadb83895bbb15722819c5",
+    "it": "80bbd328d4bd23efee3d1e4f4398ce8bd517bea8522dd1e6625302ae15278551"
+   }
+  },
+  {
+   "pid": "N18",
+   "set": "issues",
+   "issue": "05",
+   "limitation": "NEMLUVIO.01",
+   "product": [
+    "Nemluvio"
+   ],
+   "kind": "number",
+   "lang": "it",
+   "divergent": "it",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A06"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "DE has 8 (Wochen), IT does not",
+   "state_20261006": {
+    "de": {
+     "8": 1
+    },
+    "fr": {
+     "8": 1
+    },
+    "it": {
+     "8": 0
+    }
+   },
+   "correction": "IT changes 4 to 8 (Wochen), as DE and FR state",
+   "expect": {
+    "de_only": [
+     "8"
+    ],
+    "tgt_only": [],
+    "divergent": "it",
+    "agreeing": [
+     "de",
+     "fr"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "…iner Erhaltungsdosis von 30 mg als subkutane Injektion alle acht Wochen, zur Behandlung erwachsener und jugendlicher Patient…",
+    "fr": "…16, puis d'une dose d'entretien de 30 mg par la suite, en injection sous-cutanée toutes les huit semaines, pour le traitement des patients adultes…",
+    "it": "…successivamente in una dose di mantenimento di 30 mg come iniezione sottocutanea ogni quattro settimane, per il trattamento di pazienti adulti e adolescenti…"
+   },
+   "texts_sha256": {
+    "de": "48ee0b9e0ee5386b9596496522dac17c0f178a6724aa16b7c09601ab00af9874",
+    "fr": "900aa6457652eadc44995ddce808e34aff093d668e9ef816415ed0b166713e6c",
+    "it": "422a89b56f0533dacc8ccdacc8dcacae355960c36e6a03a50fd5e728778e5557"
+   }
+  },
+  {
+   "pid": "N19",
+   "set": "issues",
+   "issue": "03",
+   "limitation": "NEPEXTO",
+   "product": [
+    "Nepexto"
+   ],
+   "kind": "number",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A13"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "FR has 62.5 (kg), DE does not",
+   "state_20261006": {
+    "de": {
+     "62.5": 0
+    },
+    "fr": {
+     "62.5": 1
+    },
+    "it": {
+     "62.5": 0
+    }
+   },
+   "correction": "FR drops 62.5 (kg), as DE and IT state",
+   "expect": {
+    "de_only": [],
+    "tgt_only": [
+     "62.5"
+    ],
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "fr": "… juvénile polyarticulaire active chez les patients pesant ≥ 62.5 kg et de l'arthrite psoriasique en cas de réponse inadéquat…",
+    "de": "…mit polyartikulärem Verlauf und Psoriasis Arthritis, wenn die vorausgegangene antirheumatische Standardtherapie mit krankheitsmodifizierenden Antirheumatika…",
+    "it": "…dell'artrite psoriasica, da adottare nel caso in cui, la precedente terapia antireumatica standard con antireumatici in grado di modificare la malattia…"
+   },
+   "texts_sha256": {
+    "de": "9c52631fb1c0549e77c808e1539dab88e845905740e2f8c1b2ed753511bf7881",
+    "fr": "358360f87db920440d8eced4d757ecde2fa7f818c3481c8e9b237ffd6bba8da5",
+    "it": "e36f238bcf320722f01832f80022cff4fcb760b12bd647a3adc73aa8ca7e19ab"
+   }
+  },
+  {
+   "pid": "N20",
+   "set": "issues",
+   "issue": "06",
+   "limitation": "DUPIXENT.02",
+   "product": [
+    "Dupixent"
+   ],
+   "kind": "number",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A07"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "DE has 30 (kg), FR does not; DE has 15 (kg), FR does not",
+   "state_20261006": {
+    "de": {
+     "15": 3,
+     "30": 2
+    },
+    "fr": {
+     "15": 0,
+     "30": 0
+    },
+    "it": {
+     "15": 3,
+     "30": 2
+    }
+   },
+   "correction": "FR comes to state 30, 15 (kg), as DE and IT state",
+   "expect": {
+    "de_only": [
+     "30",
+     "15"
+    ],
+    "tgt_only": [],
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "… alle zwei Wochen, bei Patienten mit einem Körpergewicht ab 30 kg bis unter 60 kg in einer Anfangsdosis von 400 mg als sub…",
+    "fr": "…injection sous-cutanée toutes les deux semaines, et pour les patients pesant moins de 60 kg à une dose initiale de 400 mg en injection sous-…",
+    "it": "…iniezione sottocutanea ogni due settimane, in pazienti con un peso corporeo da 30 kg a meno di 60 kg a una dose iniziale di 400 mg sotto forma di iniezione…"
+   },
+   "texts_sha256": {
+    "de": "1cfbacca3543399e79cbb7d7e5000031f679d60c2dde40d70bbe4160fed33ee1",
+    "fr": "666cca37a88713f128bb60b1fd54623fd76b56ee150876fcd2f336120ef93ca8",
+    "it": "090c1da66583bfb474490b49054adf5e2383bf1c0ee10b6edb1e83c7de24f23b"
+   }
+  },
+  {
+   "pid": "N21",
+   "set": "issues",
+   "issue": "06",
+   "limitation": "DUPIXENT.02P",
+   "product": [
+    "Dupixent"
+   ],
+   "kind": "number",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit_20261006:A05"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "DE has 30 (kg), FR does not; DE has 15 (kg), FR does not",
+   "state_20261006": {
+    "de": {
+     "15": 3,
+     "30": 2
+    },
+    "fr": {
+     "15": 0,
+     "30": 0
+    },
+    "it": {
+     "15": 3,
+     "30": 2
+    }
+   },
+   "correction": "FR comes to state 30, 15 (kg), as DE and IT state",
+   "expect": {
+    "de_only": [
+     "30",
+     "15"
+    ],
+    "tgt_only": [],
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "… alle zwei Wochen, bei Patienten mit einem Körpergewicht ab 30 kg bis unter 60 kg in einer Anfangsdosis von 400 mg als sub…",
+    "fr": "…injection sous-cutanée toutes les deux semaines, et pour les patients pesant moins de 60 kg à une dose initiale de 400 mg en injection sous-…",
+    "it": "…iniezione sottocutanea ogni due settimane, in pazienti con un peso corporeo da 30 kg a meno di 60 kg a una dose iniziale di 400 mg sotto forma di iniezione…"
+   },
+   "texts_sha256": {
+    "de": "e4a069f01c3ff9c6ed79ccd9339bfe6ea0eba31ede7f58a4cafdc57b85bd7916",
+    "fr": "774824d9c2e2775d7c3ee8f9bfd216835e05018eed99ccf0cbdeda71abbc03b8",
+    "it": "4c6d43b22a22d9c1d9d0714f6299948af2ab7d2d0622ea0a2ecebb1b61f07482"
+   }
+  },
+  {
+   "pid": "L01",
+   "set": "issues",
+   "issue": "14",
+   "limitation": "KEYTRUDA.07---Inj-L-s---Urothelkarzinom--Monotherapie--KN045",
+   "product": [
+    "Keytruda"
+   ],
+   "kind": "language",
+   "lang": "it",
+   "divergent": "it",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit2_20261006:B02"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260801",
+   "description": "The Italian field is written in French (identical to the French text); function words fr=39 vs it=1, trigram margin 2.159.",
+   "state_20261006": {
+    "de": {
+     "written_in": "de"
+    },
+    "fr": {
+     "written_in": "fr"
+    },
+    "it": {
+     "written_in": "fr"
+    }
+   },
+   "correction": "the Italian field gets an Italian text (now French)",
+   "expect": {
+    "detected": "fr",
+    "divergent": "it",
+    "agreeing": [
+     "de",
+     "fr"
+    ]
+   },
+   "excerpt_20261006": {
+    "it": "Carcinome urothélial (monothérapie) KN045 (avec modèle de prix) Monothérapie du carcinome urothélial localement avancé ou métastatique chez les adultes ayant ét…",
+    "de": "Urothelkarzinom (Monotherapie) KN045 (mit Preismodell) Als Monotherapie zur Behandlung des lokal fortgeschrittenen…",
+    "fr": "Carcinome urothélial (monothérapie) KN045 (avec modèle de prix) Monothérapie du carcinome urothélial localement…"
+   },
+   "texts_sha256": {
+    "de": "18a150813eb36900f07631be31c827f8e107b7487bbcf26410d21cca2557b1e8",
+    "fr": "c107f3031b84d806c0527e3851e37e0596854772b5518ffa1518a81963a8ca8d",
+    "it": "c107f3031b84d806c0527e3851e37e0596854772b5518ffa1518a81963a8ca8d"
+   }
+  },
+  {
+   "pid": "E01",
+   "set": "issues",
+   "issue": "13",
+   "limitation": "LEQVIO.01",
+   "product": [
+    "Leqvio"
+   ],
+   "kind": "editorial",
+   "lang": "de",
+   "divergent": "de",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "minor",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit2_20261006:B01"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "Probable typo in the German text: '1 .4' (likely '1.4', rule E1).",
+   "state_20261006": {
+    "de": {
+     "surface": 1,
+     "suggestion": 1
+    },
+    "fr": {
+     "surface": 0,
+     "suggestion": 2
+    },
+    "it": {
+     "surface": 0,
+     "suggestion": 0
+    }
+   },
+   "correction": "DE '1 .4' becomes '1.4'",
+   "expect": {
+    "rule": "E1",
+    "surface": "1 .4",
+    "suggestion": "1.4",
+    "divergent": "de",
+    "agreeing": [
+     "fr",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "…m PCSK9-Inhibitor oder ein LDL-C Wert von kleiner 1 .4 mmol/l erreicht werden. Die Vergütung in Kombinat…",
+    "fr": "…traitement par un inhibiteur de PCSK9 ou une valeur de LDL-C inférieure à 1.4 mmol/l doit être atteinte.…",
+    "it": "…trattamento con l’inibitore PCSK9 o un valore di colesterolo LDC inferiore a 1,4 mmol/l.…"
+   },
+   "texts_sha256": {
+    "de": "3cce7e0888185de72f81336591ba7b44fcb6afa3637a61e281d1b379d209a6ea",
+    "fr": "7a76659602e55264862a966df2de33d9e3ac24077baadb83895bbb15722819c5",
+    "it": "80bbd328d4bd23efee3d1e4f4398ce8bd517bea8522dd1e6625302ae15278551"
+   }
+  },
+  {
+   "pid": "E02",
+   "set": "issues",
+   "issue": "15",
+   "limitation": "DUPIXENT.07",
+   "product": [
+    "Dupixent"
+   ],
+   "kind": "editorial",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "minor",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit2_20261006:B00"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "Probable typo in the French text: 'de15' (likely 'de 15', rule E2).",
+   "state_20261006": {
+    "de": {
+     "surface": 0,
+     "suggestion": 0
+    },
+    "fr": {
+     "surface": 1,
+     "suggestion": 1
+    },
+    "it": {
+     "surface": 0,
+     "suggestion": 0
+    }
+   },
+   "correction": "FR 'de15' becomes 'de 15'",
+   "expect": {
+    "rule": "E2",
+    "surface": "de15",
+    "suggestion": "de 15",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "fr": "…uatre semaines, et chez les patients pesant moins de15 kg à une dose initiale de 200 mg en injection sou…",
+    "de": "…Injektion alle vier Wochen und bei Patienten mit einem Körpergewicht unter 15 kg in einer Anfangsdosis von 200 mg als subkutane Injektion, gefolgt…",
+    "it": "…sottocutanea ogni quattro settimane, e nei pazienti con peso corporeo inferiore a 15 kg con una dose iniziale di 200 mg sotto forma di iniezione sottocutanea,…"
+   },
+   "texts_sha256": {
+    "de": "a782e3a75863004cea302b7c09c8f51458a44972e37e9ba2fe99ccf708826235",
+    "fr": "40204283163640939808d90320c9337aa0013d979c6b042e4ada549f366fa0c3",
+    "it": "3ddcd6c3c0bd4cac02898a41b90624942ba9f971e03c580a6f3ff32466f16631"
+   }
+  },
+  {
+   "pid": "E03",
+   "set": "issues",
+   "issue": "15",
+   "limitation": "DUPIXENT.07P",
+   "product": [
+    "Dupixent"
+   ],
+   "kind": "editorial",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "minor",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit2_20261006:B05"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "Probable typo in the French text: 'de15' (likely 'de 15', rule E2).",
+   "state_20261006": {
+    "de": {
+     "surface": 0,
+     "suggestion": 0
+    },
+    "fr": {
+     "surface": 1,
+     "suggestion": 1
+    },
+    "it": {
+     "surface": 0,
+     "suggestion": 0
+    }
+   },
+   "correction": "FR 'de15' becomes 'de 15'",
+   "expect": {
+    "rule": "E2",
+    "surface": "de15",
+    "suggestion": "de 15",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "fr": "…uatre semaines, et chez les patients pesant moins de15 kg à une dose initiale de 200 mg en injection sou…",
+    "de": "…Injektion alle vier Wochen und bei Patienten mit einem Körpergewicht unter 15 kg in einer Anfangsdosis von 200 mg als subkutane Injektion, gefolgt…",
+    "it": "…sottocutanea ogni quattro settimane, e nei pazienti con peso corporeo inferiore a 15 kg con una dose iniziale di 200 mg sotto forma di iniezione sottocutanea,…"
+   },
+   "texts_sha256": {
+    "de": "4690b4690087db7a5d2b2b723a697b299f646134ef57748fca2a10c8b321dcc8",
+    "fr": "e8721cd0341fac850acc48e9d12828880039ca55ad12751415e9eeb971ab6c8d",
+    "it": "ed212cdf7e262c48abb068de524e7eb34cf117eb8e2dfab4337357d9690d5267"
+   }
+  },
+  {
+   "pid": "E04",
+   "set": "issues",
+   "issue": "07",
+   "limitation": "PREVYMIS.01",
+   "product": [
+    "Prevymis"
+   ],
+   "kind": "editorial",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "minor",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit2_20261006:B04"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "Probable typo in the French text: 'de15' (likely 'de 15', rule E2).",
+   "state_20261006": {
+    "de": {
+     "surface": 0,
+     "suggestion": 0
+    },
+    "fr": {
+     "surface": 1,
+     "suggestion": 0
+    },
+    "it": {
+     "surface": 0,
+     "suggestion": 0
+    }
+   },
+   "correction": "FR 'de15' becomes 'de 15'",
+   "expect": {
+    "rule": "E2",
+    "surface": "de15",
+    "suggestion": "de 15",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "fr": "…, ainsi que chez les patients pédiatriques pesant de15 kg à moins de 30 kg pour une administration sans …",
+    "de": "…von mindestens 30 kg und für pädiatrische Patienten mit einem Gewicht von 15 kg bis unter 30 kg für eine Verabreichung ohne Ciclosporin, die CMV-seropositive…",
+    "it": "…di almeno 30 kg, nonché nei pazienti pediatrici con un peso compreso tra 15 kg e meno di 30 kg per una somministrazione senza ciclosporina, che…"
+   },
+   "texts_sha256": {
+    "de": "fced512990339015a12e22aea345de0f6e476c71c27249dabc9d109579cabb4b",
+    "fr": "b3cd845b27c5b81a8e6e278b6bc74ef9e66036975c4d5aa9b5023a89af6189ac",
+    "it": "1a34ae1c7c733997b76d03b803fa661c3a608b50bf993ab2d13c533789b6c894"
+   }
+  },
+  {
+   "pid": "E05",
+   "set": "issues",
+   "issue": "11",
+   "limitation": "FORSTEO-2",
+   "product": [
+    "Forsteo",
+    "Movymia",
+    "Sondelbay"
+   ],
+   "kind": "editorial",
+   "lang": "it",
+   "divergent": "it",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit2_20261006:B03"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "Probable typo in the Italian text: 'se mesi' (likely 'sei mesi', rule E4).",
+   "state_20261006": {
+    "de": {
+     "surface": 0,
+     "suggestion": 0
+    },
+    "fr": {
+     "surface": 0,
+     "suggestion": 0
+    },
+    "it": {
+     "surface": 1,
+     "suggestion": 0
+    }
+   },
+   "correction": "IT 'se mesi' becomes 'sei mesi'",
+   "expect": {
+    "rule": "E4",
+    "surface": "se mesi",
+    "suggestion": "sei mesi",
+    "divergent": "it",
+    "agreeing": [
+     "de",
+     "fr"
+    ]
+   },
+   "excerpt_20261006": {
+    "it": "…tate radiologicamente, dopo una terapia di almeno se mesi con Calcitonina, SERM (modulatore selettivo del r…",
+    "de": "…osteoporosebedingten Wirbelkörperfrakturen, die nach einer mindestens 6-monatigen Therapie mit Calcitonin, SERM (selektiver Oestrogen-Rezeptor-Modulator), Denosumab…",
+    "fr": "…ostéoporotiques documentées radiologiquement, après une thérapie d'au minimum 6 mois sous Calcitonine, SERM (modulateur sélectif des récepteurs…"
+   },
+   "texts_sha256": {
+    "de": "0a45bb5b6e73ad09e48a7e62786a2830c24a5395c482351f1e781948fb8590c6",
+    "fr": "648ea138c136a4cb416276006eb40f7a5c24f3342e5bda6dd2149f5dc30e0f4e",
+    "it": "2a71be1948fbe00a3b7ac8e4705c647a95929117cbcdf757cb954acb0687c226"
+   }
+  },
+  {
+   "pid": "T01",
+   "set": "issues",
+   "issue": "16",
+   "limitation": "COVERAM-PLUS",
+   "product": [
+    "Coveram"
+   ],
+   "kind": "terminology",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit3_terminology_20261006:C05"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+   "state_20261006": {
+    "de": {
+     "de_term": 1
+    },
+    "fr": {
+     "old": 1,
+     "new": 0
+    },
+    "it": {
+     "same_notice": true
+    }
+   },
+   "correction": "FR 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' becomes 'et/ou d’un antagoniste des récepteurs de l'angiotensine II', BAG's own replacement in 18 other limitations",
+   "expect": {
+    "old_phrase": "et ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine ii",
+    "new_phrase": "et ou d'un antagoniste des récepteurs de l'angiotensine ii",
+    "de_term": "angiotensin-ii-antagonist",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "fr": "…é de COVERAM PLUS et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'…",
+    "de": "Die gleichzeitige Therapie mit COVERAM PLUS und einem Calciumantagonisten des I.T. 02.06. und/oder einem Angiotensin-II-Antagonisten und/oder einem ACE-Hemmer wird von der obligatorischen Krankenpflegeversicherung nicht vergütet.",
+    "it": "La terapia combinata di COVERAM PLUS e di un calcio antagonista I.T. 02.06 e/o di un cosiddetti antagonisti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazione di base."
+   },
+   "texts_sha256": {
+    "de": "fcc15bb34cc85850a42028b8c2f0401ffe28aab2eb1c9f39a51ac720d6d425d7",
+    "fr": "66a9a83617bf47e5a0ba3310ecde83e44095a6733614adc8fed8ef8e3630153b",
+    "it": "9066ad4157140633e3e6289fd7d90b3ca04eb0b5a29d4254ffda02b0ad95feba"
+   }
+  },
+  {
+   "pid": "T02",
+   "set": "issues",
+   "issue": "16",
+   "limitation": "PERAMLIND.me",
+   "product": [
+    "Perindopril-Amlodipin-Indapamid-Mepha"
+   ],
+   "kind": "terminology",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit3_terminology_20261006:C08"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+   "state_20261006": {
+    "de": {
+     "de_term": 1
+    },
+    "fr": {
+     "old": 1,
+     "new": 0
+    },
+    "it": {
+     "same_notice": true
+    }
+   },
+   "correction": "FR 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' becomes 'et/ou d’un antagoniste des récepteurs de l'angiotensine II', BAG's own replacement in 18 other limitations",
+   "expect": {
+    "old_phrase": "et ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine ii",
+    "new_phrase": "et ou d'un antagoniste des récepteurs de l'angiotensine ii",
+    "de_term": "angiotensin-ii-antagonist",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "fr": "…N-INDAPAMID-MEPHA et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'…",
+    "de": "Die gleichzeitige Therapie mit PERINDOPRIL-AMLODIPIN-INDAPAMID-MEPHA und einem Calciumantagonisten des I.T. 02.06. und/oder einem Angiotensin-II-Antagonisten und/oder einem ACE-Hemmer wird von der obligatorischen Krankenpflegeversicherung nicht vergütet.",
+    "it": "La terapia combinata di PERINDOPRIL-AMLODIPIN-INDAPAMID-MEPHA e di un calcio antagonista I.T. 02.06 e/o di un cosiddetti antagonisti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazione di base."
+   },
+   "texts_sha256": {
+    "de": "dcc451f46cb46791481ceade6323a90b84f2ce34ef17b052a5f580dd2e869c47",
+    "fr": "2bab6f4442a5bde9951ba03cc973b8ee32d88fc630e331f356f8cbefe50b9912",
+    "it": "428e75974385e744d8dc9daa4b778556e50d486397b6c77e72f8c6bf1b63013c"
+   }
+  },
+  {
+   "pid": "T03",
+   "set": "issues",
+   "issue": "16",
+   "limitation": "PERAMLIND.sp",
+   "product": [
+    "Perindopril"
+   ],
+   "kind": "terminology",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit3_terminology_20261006:C04"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+   "state_20261006": {
+    "de": {
+     "de_term": 1
+    },
+    "fr": {
+     "old": 1,
+     "new": 0
+    },
+    "it": {
+     "same_notice": true
+    }
+   },
+   "correction": "FR 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' becomes 'et/ou d’un antagoniste des récepteurs de l'angiotensine II', BAG's own replacement in 18 other limitations",
+   "expect": {
+    "old_phrase": "et ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine ii",
+    "new_phrase": "et ou d'un antagoniste des récepteurs de l'angiotensine ii",
+    "de_term": "angiotensin-ii-antagonist",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "fr": "…DAPAMID SPIRIG HC et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'…",
+    "de": "Die gleichzeitige Therapie mit PERINDOPRIL AMLODIPIN INDAPAMID SPIRIG HC und einem Calciumantagonisten des I.T. 02.06. und/oder einem Angiotensin-II-Antagonisten und/oder einem ACE-Hemmer wird von der obligatorischen Krankenpflegeversicherung nicht vergütet.",
+    "it": "La terapia combinata di PERINDOPRIL AMLODIPIN INDAPAMID SPIRIG HC e di un calcio antagonista I.T. 02.06 e/o di un cosiddetti antagonisti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazione di base."
+   },
+   "texts_sha256": {
+    "de": "4595be839225186699d1ff3a0b6c3e08f647143186859ec625c5a9a8c3a4397c",
+    "fr": "264feba92669cd7fe85c67415b58188a142a3736d0b09a80edcf54b0e3b19b18",
+    "it": "00b0318a06ddf567b6cc65695365f580ddfb0bdf8fd115f8ad1b5f0e2b92aa2a"
+   }
+  },
+  {
+   "pid": "T04",
+   "set": "issues",
+   "issue": "16",
+   "limitation": "PERINDAMLIND",
+   "product": [
+    "Perindopril"
+   ],
+   "kind": "terminology",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit3_terminology_20261006:C10"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "The French text says 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' where BAG replaced it with 'et/ou d’un antagoniste des récepteurs de l'angiotensine II' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+   "state_20261006": {
+    "de": {
+     "de_term": 1
+    },
+    "fr": {
+     "old": 1,
+     "new": 0
+    },
+    "it": {
+     "same_notice": true
+    }
+   },
+   "correction": "FR 'et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II' becomes 'et/ou d’un antagoniste des récepteurs de l'angiotensine II', BAG's own replacement in 18 other limitations",
+   "expect": {
+    "old_phrase": "et ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine ii",
+    "new_phrase": "et ou d'un antagoniste des récepteurs de l'angiotensine ii",
+    "de_term": "angiotensin-ii-antagonist",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "fr": "…INDAPAMID ZENTIVA et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'…",
+    "de": "Die gleichzeitige Therapie mit PERINDOPRIL AMLODIPIN INDAPAMID ZENTIVA und einem Calciumantagonisten des I.T. 02.06. und/oder einem Angiotensin-II-Antagonisten und/oder einem ACE-Hemmer wird von der obligatorischen Krankenpflegeversicherung nicht vergütet.",
+    "it": "La terapia combinata di PERINDOPRIL AMLODIPIN INDAPAMID ZENTIVA e di un calcio antagonista I.T. 02.06 e/o di un cosiddetti antagonisti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazione di base."
+   },
+   "texts_sha256": {
+    "de": "d0333b8543ccb068a134783916cbe0dbd9dd3bbdc20be61c55aa83440c4820d6",
+    "fr": "668c3375d2cc35702daf461f5326c0189db4fc6ff9421fc049a94738168c1667",
+    "it": "46234657b41cd465186e2a081628d524cf2bc6a1478b7c16a0f4772ad2463469"
+   }
+  },
+  {
+   "pid": "T05",
+   "set": "issues",
+   "issue": "17",
+   "limitation": "COVERAM-PLUS",
+   "product": [
+    "Coveram"
+   ],
+   "kind": "terminology",
+   "lang": "it",
+   "divergent": "it",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "minor",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit3_terminology_20261006:C09"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+   "state_20261006": {
+    "de": {
+     "de_term": 1
+    },
+    "it": {
+     "old": 1,
+     "new": 0
+    },
+    "fr": {
+     "same_notice": true
+    }
+   },
+   "correction": "IT 'o di un cosiddetti antagonisti del recettore dell'angiotensina' becomes 'o di un antagonista del recettore dell'angiotensina', BAG's own replacement in 18 other limitations",
+   "expect": {
+    "old_phrase": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+    "new_phrase": "o di un antagonista del recettore dell'angiotensina",
+    "de_term": "angiotensin-ii-antagonist",
+    "divergent": "it",
+    "agreeing": [
+     "de",
+     "fr"
+    ]
+   },
+   "excerpt_20261006": {
+    "it": "…ata di COVERAM PLUS e di un calcio antagonista I.T. 02.06 e/o di un cosiddetti antagonisti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazi…",
+    "de": "Die gleichzeitige Therapie mit COVERAM PLUS und einem Calciumantagonisten des I.T. 02.06. und/oder einem Angiotensin-II-Antagonisten und/oder einem ACE-Hemmer wird von der obligatorischen Krankenpflegeversicherung nicht vergütet.",
+    "fr": "Le traitement combiné de COVERAM PLUS et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'assurance de base."
+   },
+   "texts_sha256": {
+    "de": "fcc15bb34cc85850a42028b8c2f0401ffe28aab2eb1c9f39a51ac720d6d425d7",
+    "fr": "66a9a83617bf47e5a0ba3310ecde83e44095a6733614adc8fed8ef8e3630153b",
+    "it": "9066ad4157140633e3e6289fd7d90b3ca04eb0b5a29d4254ffda02b0ad95feba"
+   }
+  },
+  {
+   "pid": "T06",
+   "set": "issues",
+   "issue": "17",
+   "limitation": "PERAMLIND.me",
+   "product": [
+    "Perindopril-Amlodipin-Indapamid-Mepha"
+   ],
+   "kind": "terminology",
+   "lang": "it",
+   "divergent": "it",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "minor",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit3_terminology_20261006:C01"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+   "state_20261006": {
+    "de": {
+     "de_term": 1
+    },
+    "it": {
+     "old": 1,
+     "new": 0
+    },
+    "fr": {
+     "same_notice": true
+    }
+   },
+   "correction": "IT 'o di un cosiddetti antagonisti del recettore dell'angiotensina' becomes 'o di un antagonista del recettore dell'angiotensina', BAG's own replacement in 18 other limitations",
+   "expect": {
+    "old_phrase": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+    "new_phrase": "o di un antagonista del recettore dell'angiotensina",
+    "de_term": "angiotensin-ii-antagonist",
+    "divergent": "it",
+    "agreeing": [
+     "de",
+     "fr"
+    ]
+   },
+   "excerpt_20261006": {
+    "it": "…PIN-INDAPAMID-MEPHA e di un calcio antagonista I.T. 02.06 e/o di un cosiddetti antagonisti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazi…",
+    "de": "Die gleichzeitige Therapie mit PERINDOPRIL-AMLODIPIN-INDAPAMID-MEPHA und einem Calciumantagonisten des I.T. 02.06. und/oder einem Angiotensin-II-Antagonisten und/oder einem ACE-Hemmer wird von der obligatorischen Krankenpflegeversicherung nicht vergütet.",
+    "fr": "Le traitement combiné de PERINDOPRIL-AMLODIPIN-INDAPAMID-MEPHA et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'assurance de base."
+   },
+   "texts_sha256": {
+    "de": "dcc451f46cb46791481ceade6323a90b84f2ce34ef17b052a5f580dd2e869c47",
+    "fr": "2bab6f4442a5bde9951ba03cc973b8ee32d88fc630e331f356f8cbefe50b9912",
+    "it": "428e75974385e744d8dc9daa4b778556e50d486397b6c77e72f8c6bf1b63013c"
+   }
+  },
+  {
+   "pid": "T07",
+   "set": "issues",
+   "issue": "17",
+   "limitation": "PERAMLIND.sp",
+   "product": [
+    "Perindopril"
+   ],
+   "kind": "terminology",
+   "lang": "it",
+   "divergent": "it",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "minor",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit3_terminology_20261006:C07"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+   "state_20261006": {
+    "de": {
+     "de_term": 1
+    },
+    "it": {
+     "old": 1,
+     "new": 0
+    },
+    "fr": {
+     "same_notice": true
+    }
+   },
+   "correction": "IT 'o di un cosiddetti antagonisti del recettore dell'angiotensina' becomes 'o di un antagonista del recettore dell'angiotensina', BAG's own replacement in 18 other limitations",
+   "expect": {
+    "old_phrase": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+    "new_phrase": "o di un antagonista del recettore dell'angiotensina",
+    "de_term": "angiotensin-ii-antagonist",
+    "divergent": "it",
+    "agreeing": [
+     "de",
+     "fr"
+    ]
+   },
+   "excerpt_20261006": {
+    "it": "…INDAPAMID SPIRIG HC e di un calcio antagonista I.T. 02.06 e/o di un cosiddetti antagonisti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazi…",
+    "de": "Die gleichzeitige Therapie mit PERINDOPRIL AMLODIPIN INDAPAMID SPIRIG HC und einem Calciumantagonisten des I.T. 02.06. und/oder einem Angiotensin-II-Antagonisten und/oder einem ACE-Hemmer wird von der obligatorischen Krankenpflegeversicherung nicht vergütet.",
+    "fr": "Le traitement combiné de PERINDOPRIL AMLODIPIN INDAPAMID SPIRIG HC et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'assurance de base."
+   },
+   "texts_sha256": {
+    "de": "4595be839225186699d1ff3a0b6c3e08f647143186859ec625c5a9a8c3a4397c",
+    "fr": "264feba92669cd7fe85c67415b58188a142a3736d0b09a80edcf54b0e3b19b18",
+    "it": "00b0318a06ddf567b6cc65695365f580ddfb0bdf8fd115f8ad1b5f0e2b92aa2a"
+   }
+  },
+  {
+   "pid": "T08",
+   "set": "issues",
+   "issue": "17",
+   "limitation": "PERINDAMLIND",
+   "product": [
+    "Perindopril"
+   ],
+   "kind": "terminology",
+   "lang": "it",
+   "divergent": "it",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "minor",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit3_terminology_20261006:C00"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260219",
+   "description": "The Italian text says 'o di un cosiddetti antagonisti del recettore dell'angiotensina' where BAG replaced it with 'o di un antagonista del recettore dell'angiotensina' for the German 'Angiotensin-II-Antagonisten' in 18 other limitations (latest 19.02.2026).",
+   "state_20261006": {
+    "de": {
+     "de_term": 1
+    },
+    "it": {
+     "old": 1,
+     "new": 0
+    },
+    "fr": {
+     "same_notice": true
+    }
+   },
+   "correction": "IT 'o di un cosiddetti antagonisti del recettore dell'angiotensina' becomes 'o di un antagonista del recettore dell'angiotensina', BAG's own replacement in 18 other limitations",
+   "expect": {
+    "old_phrase": "o di un cosiddetti antagonisti del recettore dell'angiotensina",
+    "new_phrase": "o di un antagonista del recettore dell'angiotensina",
+    "de_term": "angiotensin-ii-antagonist",
+    "divergent": "it",
+    "agreeing": [
+     "de",
+     "fr"
+    ]
+   },
+   "excerpt_20261006": {
+    "it": "…N INDAPAMID ZENTIVA e di un calcio antagonista I.T. 02.06 e/o di un cosiddetti antagonisti del recettore dell'angiotensina II e/o un inibitore ACE non sarà rimborsata dall'assicurazi…",
+    "de": "Die gleichzeitige Therapie mit PERINDOPRIL AMLODIPIN INDAPAMID ZENTIVA und einem Calciumantagonisten des I.T. 02.06. und/oder einem Angiotensin-II-Antagonisten und/oder einem ACE-Hemmer wird von der obligatorischen Krankenpflegeversicherung nicht vergütet.",
+    "fr": "Le traitement combiné de PERINDOPRIL AMLODIPIN INDAPAMID ZENTIVA et d'un antagoniste du calcium I.T. 02.06 et/ou d'un inhibiteur de l'enzyme de conversion de l'angiotensine II et/ou d'un inhibiteur de l'ECA ne sera pas remboursé par l'assurance de base."
+   },
+   "texts_sha256": {
+    "de": "d0333b8543ccb068a134783916cbe0dbd9dd3bbdc20be61c55aa83440c4820d6",
+    "fr": "668c3375d2cc35702daf461f5326c0189db4fc6ff9421fc049a94738168c1667",
+    "it": "46234657b41cd465186e2a081628d524cf2bc6a1478b7c16a0f4772ad2463469"
+   }
+  },
+  {
+   "pid": "T09",
+   "set": "issues",
+   "issue": "18",
+   "limitation": "JEMPERLI.01---Endometriumkarzinom-Mono",
+   "product": [
+    "Jemperli"
+   ],
+   "kind": "terminology",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "minor",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit3_terminology_20261006:C06"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260901",
+   "description": "The French text says 'limitation doit être communiqué à l’assureur-maladie' where BAG replaced it with 'limitation doit être transmis à l'assureur-maladie' for the German 'Limitierung' in 11 other limitations (latest 01.10.2026).",
+   "state_20261006": {
+    "de": {
+     "de_term": 1
+    },
+    "fr": {
+     "old": 1,
+     "new": 0
+    },
+    "it": {
+     "same_notice": false
+    }
+   },
+   "correction": "FR 'limitation doit être communiqué à l’assureur-maladie' becomes 'limitation doit être transmis à l'assureur-maladie', BAG's own replacement in 11 other limitations",
+   "expect": {
+    "old_phrase": "limitation doit être communiqué à l'assureur maladie",
+    "new_phrase": "limitation doit être transmis à l'assureur maladie",
+    "de_term": "limitierung",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "fr": "…t de l'administration. Le code d’indication relatif à cette limitation doit être communiqué à l’assureur-maladie.",
+    "de": "…Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+    "it": "…Il codice di indicazione relativo a questa limitazione deve essere trasmesso alla cassa malati."
+   },
+   "texts_sha256": {
+    "de": "01dee6091b421632973c25e79963dac2dcc18f8073e043b6aac49f1be400dfd7",
+    "fr": "d055a2e5318b9c58be9950649fca3e2ea7c07dc620afdc721bd1ab0176d4c2ae",
+    "it": "113451f8b81636bcbfa19f11d8642d6ed9b24ccfe0a87a625e97d3dee4524236"
+   }
+  },
+  {
+   "pid": "T10",
+   "set": "issues",
+   "issue": "18",
+   "limitation": "JEMPERLI.02---Endometriumkarzinom-Kombi",
+   "product": [
+    "Jemperli"
+   ],
+   "kind": "terminology",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "minor",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit3_terminology_20261006:C03"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260901",
+   "description": "The French text says 'limitation doit être communiqué à l’assureur-maladie' where BAG replaced it with 'limitation doit être transmis à l'assureur-maladie' for the German 'Limitierung' in 11 other limitations (latest 01.10.2026).",
+   "state_20261006": {
+    "de": {
+     "de_term": 1
+    },
+    "fr": {
+     "old": 1,
+     "new": 0
+    },
+    "it": {
+     "same_notice": false
+    }
+   },
+   "correction": "FR 'limitation doit être communiqué à l’assureur-maladie' becomes 'limitation doit être transmis à l'assureur-maladie', BAG's own replacement in 11 other limitations",
+   "expect": {
+    "old_phrase": "limitation doit être communiqué à l'assureur maladie",
+    "new_phrase": "limitation doit être transmis à l'assureur maladie",
+    "de_term": "limitierung",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "fr": "…t de l’administration. Le code d’indication relatif à cette limitation doit être communiqué à l’assureur-maladie.",
+    "de": "…Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+    "it": "…Il codice di indicazione relativo a questa limitazione deve essere trasmesso alla cassa malati."
+   },
+   "texts_sha256": {
+    "de": "dd4d1734d14382095d8c81f0beefa71c054d42194e7ec37799263452d30c44cc",
+    "fr": "6ce318cdb5235307ba59ae80df7070fc57603f841c8956ca2f842ddaa062ece6",
+    "it": "b49ea6eba76752442cd9f7931eab80211063fab490a0f7a2d609c528a245f277"
+   }
+  },
+  {
+   "pid": "T11",
+   "set": "issues",
+   "issue": "18",
+   "limitation": "OPZELURA.01---Vitiligo-Erwachsene-und-Jugendliche-ab-12-Jahren",
+   "product": [
+    "Opzelura"
+   ],
+   "kind": "terminology",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "minor",
+    "confirmed": true,
+    "source": "eval/labels/audit_relabel.tsv:audit3_terminology_20261006:C02"
+   },
+   "likely_equivalent": false,
+   "first_seen": "20260801",
+   "description": "The French text says 'limitation doit être communiqué à l’assureur-maladie' where BAG replaced it with 'limitation doit être transmis à l'assureur-maladie' for the German 'Limitierung' in 11 other limitations (latest 01.10.2026).",
+   "state_20261006": {
+    "de": {
+     "de_term": 1
+    },
+    "fr": {
+     "old": 1,
+     "new": 0
+    },
+    "it": {
+     "same_notice": false
+    }
+   },
+   "correction": "FR 'limitation doit être communiqué à l’assureur-maladie' becomes 'limitation doit être transmis à l'assureur-maladie', BAG's own replacement in 11 other limitations",
+   "expect": {
+    "old_phrase": "limitation doit être communiqué à l'assureur maladie",
+    "new_phrase": "limitation doit être transmis à l'assureur maladie",
+    "de_term": "limitierung",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "fr": "…e est remboursé. Le code d’indication correspondant à cette limitation doit être communiqué à l’assureur-maladie.",
+    "de": "…Der Indikationscode dieser Limitierung ist an den Krankenversicherer zu übermitteln.",
+    "it": "…Il codice di indicazione corrispondente a tale limitazione deve essere comunicato all’assicuratore malattia."
+   },
+   "texts_sha256": {
+    "de": "92142bbb2c18c3407781c73eb72d46cd5981c3ab7f89904d1ba82cc5ead3b3cd",
+    "fr": "a8a85c778f3ee61bce05eb555506a65f5da1e1e27dd03f2f332b2ef6e0fd052e",
+    "it": "4b35a817b4619cae602db921d4602c614436e87760e15d3ea587eac74f497e94"
+   }
+  },
+  {
+   "pid": "O01",
+   "set": "experimental",
+   "issue": "X1",
+   "limitation": "AMVUTTRA.01a",
+   "product": [
+    "Amvuttra"
+   ],
+   "kind": "operator",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_r15_20261006.tsv:R01"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "DE makes 10 a lower bound ('>'), FR an upper bound ('≤').",
+   "state_20261006": {
+    "de": [
+     [
+      "≤ 10",
+      "max"
+     ],
+     [
+      "> 10",
+      "min"
+     ],
+     [
+      "> 10",
+      "min"
+     ]
+    ],
+    "fr": [
+     [
+      "≤ 10",
+      "max"
+     ],
+     [
+      "≤ 10",
+      "max"
+     ],
+     [
+      "≤ 10",
+      "max"
+     ]
+    ],
+    "it": [
+     [
+      "≤ 10",
+      "max"
+     ],
+     [
+      "> 10",
+      "min"
+     ],
+     [
+      "> 10",
+      "min"
+     ]
+    ]
+   },
+   "correction": "FR '≤ 10' becomes a lower bound ('> 10'), as DE and IT state",
+   "expect": {
+    "value": "10",
+    "agreed_dir": "min",
+    "de_dir": "min",
+    "tgt_dir": "max",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "…n folgende Kriterien eingetreten sein müssen: • NIS-Zunahme > 10 Punkte und • Zunahme im PND-Score um > 1 Stufe (PND IIIa zu…",
+    "fr": "…être survenus dans les 12 mois: • augmentation du score NIS ≤ 10 points et • augmentation du score PND > 1 stade (de PND III…",
+    "it": "…ono essere subentrati i seguenti criteri: • aumento del NIS > 10 punti e • aumento del punteggio PND di > 1 livello (anche u…"
+   },
+   "texts_sha256": {
+    "de": "4174064ef4969c749e2225a39117daad314e60b395bf2535648d2b609bab391e",
+    "fr": "08f5b12951c9595f09168706532bfd0e31b1b93af2ca8dbbca0d63dcfbd3e69d",
+    "it": "95d1fe0959c62615ea76281d3becacac8efed08619e891ce641f90fecc87569a"
+   }
+  },
+  {
+   "pid": "O02",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "NPLATE4",
+   "product": [
+    "Nplate"
+   ],
+   "kind": "operator",
+   "lang": "it",
+   "divergent": "unclear",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R18"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "DE makes 20 a lower bound ('mindestens'), IT an upper bound ('inferiore a').",
+   "state_20261006": {
+    "de": [
+     [
+      "mindestens 20",
+      "min"
+     ]
+    ],
+    "fr": [],
+    "it": [
+     [
+      "inferiore a 20",
+      "max"
+     ]
+    ]
+   },
+   "correction": "DE and IT come to state the same direction for 20; which side changes is not predicted",
+   "expect": {
+    "value": "20",
+    "agreed_dir": null,
+    "de_dir": "min",
+    "tgt_dir": "max",
+    "divergent": "unclear",
+    "agreeing": []
+   },
+   "excerpt_20261006": {
+    "de": "…te (10 mcg/kg) auch nach 4 Wochen eine Thrombozytenzahl von mindestens 20 x 109/L nicht erreichen, sollten die Behandlung abbrechen.",
+    "fr": "Le traitement par Nplate doit être interrompu si, après 4 semaines de traitement à la posologie hebdomadaire maximale de 10 mcg/kg, le taux de plaquettes n’a pas atteint au moins 20 × 109/l.",
+    "it": "…ttimanale di 10 mcg/kg, la conta piastrinica risulta ancora inferiore a 20 x 109/l."
+   },
+   "texts_sha256": {
+    "de": "6956c9bea2be608c825465aaf94cbdfa3070bdebf539ccfb017ad6bf64cdbe82",
+    "fr": "18c269316eb2c28fea251ce2a3cc51a5a262f09c876efc87d065e95420251e28",
+    "it": "bbb9e70b3d2602528c63a2cb35f722d1b5ca03a3af5db74cd70d147e250bfc7c"
+   }
+  },
+  {
+   "pid": "O03",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "OPDIVO.03a",
+   "product": [
+    "Opdivo"
+   ],
+   "kind": "operator",
+   "lang": "it",
+   "divergent": "unclear",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R19"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "DE makes 2021 a lower bound ('ab'), IT an upper bound ('fino al').",
+   "state_20261006": {
+    "de": [
+     [
+      "ab 2021",
+      "min"
+     ],
+     [
+      "ab 2021",
+      "min"
+     ]
+    ],
+    "fr": [],
+    "it": [
+     [
+      "fino al 2021",
+      "max"
+     ],
+     [
+      "a partire dal 2021",
+      "min"
+     ]
+    ]
+   },
+   "correction": "DE and IT come to state the same direction for 2021; which side changes is not predicted",
+   "expect": {
+    "value": "2021",
+    "agreed_dir": null,
+    "de_dir": "min",
+    "tgt_dir": "max",
+    "divergent": "unclear",
+    "agreeing": []
+   },
+   "excerpt_20261006": {
+    "de": "…it OPDIVO und YERVOY vor dem 01.09.2021 begonnen und werden ab dem 01.09.2021 weitere Kombinationszyklen verabreicht, gilt pro nachweisli…",
+    "fr": "Si la phase de traitement combiné avec OPDIVO et YERVOY a été commencée avant le 01.09.2021 et si d'autres cycles de combinaison sont administrés après le 01.09.2021, la limitation en vigueur au moment de l'administration s'applique par emballage ou mg d'OPDIVO ou de YERVOY, administré de manière prouvée pour un mélanome à partir du 01.09.2021.",
+    "it": "…rso sulla fase di monoterapia secondo la limitazione valida fino al 31.08.2021. Se la fase di combinazione con OPDIVO e YERVOY è stata ini…"
+   },
+   "texts_sha256": {
+    "de": "bc3c77e5bf13f5b83d6d27ea6e578fb6653b4c718fda448c4b1c5caf06e2818b",
+    "fr": "b490c6575fad122a54978ab2c86db66698c7a76c066d647f9ac440b8d3f06797",
+    "it": "69c491fe6bc5a88dd184116cd9be3038d74dcf806ad1269e612e52c798db7d25"
+   }
+  },
+  {
+   "pid": "O04",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "WYNZORA",
+   "product": [
+    "Wynzora"
+   ],
+   "kind": "operator",
+   "lang": "it",
+   "divergent": "unclear",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R05"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "DE makes 120 an upper bound ('nicht mehr als'), IT a lower bound ('più di').",
+   "state_20261006": {
+    "de": [
+     [
+      "nicht mehr als 120",
+      "max"
+     ]
+    ],
+    "fr": [],
+    "it": [
+     [
+      "più di 120",
+      "min"
+     ]
+    ]
+   },
+   "correction": "DE and IT come to state the same direction for 120; which side changes is not predicted",
+   "expect": {
+    "value": "120",
+    "agreed_dir": null,
+    "de_dir": "max",
+    "tgt_dir": "min",
+    "divergent": "unclear",
+    "agreeing": []
+   },
+   "excerpt_20261006": {
+    "de": "… Pro 4 Tage wird nicht mehr als 60 g (= 1 Tube), pro 8 Tage nicht mehr als 120 g (= 2 Tuben) vergütet.",
+    "fr": "Le remboursement est limité à une quantité maximale de 60 g pour 4 jours (= 1 tube) et 120 g pour 8 jours (=2 tubes).",
+    "it": "…e. Non sono rimborsati più di 60 g (=1 tubo) per 4 giorni e più di 120 g (= 2 tubi) per 8 giorni."
+   },
+   "texts_sha256": {
+    "de": "c089776106c2890f1c1c69e7167f65691abbe3913961c51df8dfceccdd516cd5",
+    "fr": "09e3bf2fc46a49c2fabaa1d5c6d03f1f123e0c8cd593b222f166ca24605614ae",
+    "it": "dd297dda573ef2fa318351b629bb127ebfb336e261114b7ebd2269e17208e64c"
+   }
+  },
+  {
+   "pid": "G01",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "AMVUTTRA.02",
+   "product": [
+    "Amvuttra"
+   ],
+   "kind": "negation",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R22"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "The German sentence is negated (nicht); the aligned French sentence has no negation.",
+   "state_20261006": {
+    "de": {
+     "sentence": "Die Mehrwertsteuer kann nicht zusätzlich zu diesem Anteil des Fabrikabgabepreises zurückgefordert werden.",
+     "negation": [
+      "nicht"
+     ]
+    },
+    "fr": {
+     "sentence": "Il informe l’assureur-maladie du montant correspondant qui est remboursé sur la base du prix de fabrique par emballage d’AMVUTTRA.",
+     "negation": []
+    },
+    "it": {
+     "sentence": "Non può essere richiesto anche il rimborso dell’IVA in aggiunta a questa quota del prezzo di fabbrica.",
+     "negation": [
+      "Non"
+     ]
+    }
+   },
+   "correction": "FR sentence gains the negation DE states (nicht), as IT has",
+   "expect": {
+    "side": "de",
+    "negations": [
+     "nicht"
+    ],
+    "de_sentence": "Die Mehrwertsteuer kann nicht zusätzlich zu diesem Anteil des Fabrikabgabepreises zurückgefordert werden.",
+    "tgt_sentence": "Il informe l’assureur-maladie du montant correspondant qui est remboursé sur la base du prix de fabrique par emballage d’AMVUTTRA.",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "Die Mehrwertsteuer kann nicht zusätzlich zu diesem Anteil des Fabrikabgabepreises zurückgefordert werden.",
+    "fr": "Il informe l’assureur-maladie du montant correspondant qui est remboursé sur la base du prix de fabrique par emballage d’AMVUTTRA.",
+    "it": "Non può essere richiesto anche il rimborso dell’IVA in aggiunta a questa quota del prezzo di fabbrica."
+   },
+   "texts_sha256": {
+    "de": "53c34a1431034bdabef445882cd72217554fac034e381f3e7040ecbfa38c4916",
+    "fr": "425eb24cdfc46c76fada5c664f8c6263fac97404ec5d179f61ead0256e3bcba7",
+    "it": "0669bfc517508886afe090cd66e6fa06c1eb1f9b434133d22f6be67f31d6d4a1"
+   }
+  },
+  {
+   "pid": "G02",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "AMVUTTRA.02",
+   "product": [
+    "Amvuttra"
+   ],
+   "kind": "negation",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R03"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "The French sentence is negated (ne); the aligned German sentence has no negation.",
+   "state_20261006": {
+    "de": {
+     "sentence": "Die Aufforderung zur Rückerstattung soll ab dem Zeitpunkt der Verabreichung erfolgen.",
+     "negation": []
+    },
+    "fr": {
+     "sentence": "La taxe sur la valeur ajoutée ne peut pas être réclamée en plus de cette part du prix de fabrique.",
+     "negation": [
+      "ne"
+     ]
+    },
+    "it": {
+     "sentence": "La richiesta di rimborso deve essere presentata dal momento della somministrazione.",
+     "negation": []
+    }
+   },
+   "correction": "FR sentence drops its negation (ne), which DE and IT lack",
+   "expect": {
+    "side": "fr",
+    "negations": [
+     "ne"
+    ],
+    "de_sentence": "Die Aufforderung zur Rückerstattung soll ab dem Zeitpunkt der Verabreichung erfolgen.",
+    "tgt_sentence": "La taxe sur la valeur ajoutée ne peut pas être réclamée en plus de cette part du prix de fabrique.",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "Die Aufforderung zur Rückerstattung soll ab dem Zeitpunkt der Verabreichung erfolgen.",
+    "fr": "La taxe sur la valeur ajoutée ne peut pas être réclamée en plus de cette part du prix de fabrique.",
+    "it": "La richiesta di rimborso deve essere presentata dal momento della somministrazione."
+   },
+   "texts_sha256": {
+    "de": "53c34a1431034bdabef445882cd72217554fac034e381f3e7040ecbfa38c4916",
+    "fr": "425eb24cdfc46c76fada5c664f8c6263fac97404ec5d179f61ead0256e3bcba7",
+    "it": "0669bfc517508886afe090cd66e6fa06c1eb1f9b434133d22f6be67f31d6d4a1"
+   }
+  },
+  {
+   "pid": "G03",
+   "set": "experimental",
+   "issue": "X2",
+   "limitation": "BEYONTTRA",
+   "product": [
+    "Beyonttra"
+   ],
+   "kind": "negation",
+   "lang": "it",
+   "divergent": "it",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_r15_20261006.tsv:R29"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "The German sentence is negated (nicht); the aligned Italian sentence has no negation.",
+   "state_20261006": {
+    "de": {
+     "sentence": "BEYONTTRA darf nicht mit anderen spezifischen Arzneimitteln zur Behandlung der Transthyretin-Amyloidose (z.B. TTR-Stabilisatoren, TTR-Gen Silencer) kombiniert werden.",
+     "negation": [
+      "nicht"
+     ]
+    },
+    "fr": {
+     "sentence": "BEYONTTRA ne doit pas être combiné avec d’autres médicaments spécifiques pour le traitement de l’amylose à transthyrétine (p. ex. stabilisateurs du TTR, agents silencieux du gène TTR).",
+     "negation": [
+      "ne"
+     ]
+    },
+    "it": {
+     "sentence": "BEYONTTRA on deve essere combinato con altri medicamenti specifici per il trattamento dell’amiloidosi da transtiretina (ad esempio stabilizzatori del TTR, agenti silenziatori del gene TTR).",
+     "negation": []
+    }
+   },
+   "correction": "IT sentence gains the negation DE states (nicht), as FR has",
+   "expect": {
+    "side": "de",
+    "negations": [
+     "nicht"
+    ],
+    "de_sentence": "BEYONTTRA darf nicht mit anderen spezifischen Arzneimitteln zur Behandlung der Transthyretin-Amyloidose (z.B. TTR-Stabilisatoren, TTR-Gen Silencer) kombiniert werden.",
+    "tgt_sentence": "BEYONTTRA on deve essere combinato con altri medicamenti specifici per il trattamento dell’amiloidosi da transtiretina (ad esempio stabilizzatori del TTR, agenti silenziatori del gene TTR).",
+    "divergent": "it",
+    "agreeing": [
+     "de",
+     "fr"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "BEYONTTRA darf nicht mit anderen spezifischen Arzneimitteln zur Behandlung der Transthyretin-Amyloidose (z.B. TTR-Stabilisatoren, TTR-Gen Silencer) kombiniert werden.",
+    "fr": "BEYONTTRA ne doit pas être combiné avec d’autres médicaments spécifiques pour le traitement de l’amylose à transthyrétine (p. ex. stabilisateurs du TTR, agents silencieux du gène TTR).",
+    "it": "BEYONTTRA on deve essere combinato con altri medicamenti specifici per il trattamento dell’amiloidosi da transtiretina (ad esempio stabilizzatori del TTR, agenti silenziatori del gene TTR)."
+   },
+   "texts_sha256": {
+    "de": "e06d4f629226be57ce4c4475b9ebd9ef8c44dac9cf711403d3ab34d90b5fef92",
+    "fr": "157a582a723d93c91272138a81655076cce78c8a4c2ad2d90b02eccb58a08f3b",
+    "it": "ed2583777332d27fe36372471742d30b7c987e2a58a5fe81b26255b5a03566ff"
+   }
+  },
+  {
+   "pid": "G04",
+   "set": "experimental",
+   "issue": "X3",
+   "limitation": "DECADURABOL2",
+   "product": [
+    "Deca"
+   ],
+   "kind": "negation",
+   "lang": "it",
+   "divergent": "unclear",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "minor",
+    "confirmed": true,
+    "source": "eval/labels/audit_r15_20261006.tsv:R28"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "The Italian sentence is negated (inefficaci); the aligned German sentence has no negation.",
+   "state_20261006": {
+    "de": {
+     "sentence": "Vergütung ausschliesslich bei schwerer postmenopausaler Osteoporose, wenn andere Therapieoptionen ausgeschöpft wurden.",
+     "negation": []
+    },
+    "fr": {
+     "sentence": "Prise en charge exclusivement pour le traitement de l’ostéoporose postménopausique sévère, lorsque d’autres options thérapeutiques ont été épuisées.",
+     "negation": []
+    },
+    "it": {
+     "sentence": "Rimborso esclusivamente per il trattamento dell’osteoporosi post-menopausale grave, nel caso in cui altre opzioni terapeutiche si siano rivelate inefficaci.",
+     "negation": [
+      "inefficaci"
+     ]
+    }
+   },
+   "correction": "DE and IT come to agree on the negation of this sentence; which side changes is not predicted",
+   "expect": {
+    "side": "it",
+    "negations": [
+     "inefficaci"
+    ],
+    "de_sentence": "Vergütung ausschliesslich bei schwerer postmenopausaler Osteoporose, wenn andere Therapieoptionen ausgeschöpft wurden.",
+    "tgt_sentence": "Rimborso esclusivamente per il trattamento dell’osteoporosi post-menopausale grave, nel caso in cui altre opzioni terapeutiche si siano rivelate inefficaci.",
+    "divergent": "unclear",
+    "agreeing": []
+   },
+   "excerpt_20261006": {
+    "de": "Vergütung ausschliesslich bei schwerer postmenopausaler Osteoporose, wenn andere Therapieoptionen ausgeschöpft wurden.",
+    "fr": "Prise en charge exclusivement pour le traitement de l’ostéoporose postménopausique sévère, lorsque d’autres options thérapeutiques ont été épuisées.",
+    "it": "Rimborso esclusivamente per il trattamento dell’osteoporosi post-menopausale grave, nel caso in cui altre opzioni terapeutiche si siano rivelate inefficaci."
+   },
+   "texts_sha256": {
+    "de": "0d7dec8db6c711e40ce85e18058b700c9d622ebb6cdd4ccaa863c6d4236d32e2",
+    "fr": "d4816a75a7be409d103d649b9e9f3aa02782de535428de5e2f17aac6694077b1",
+    "it": "398ed5f34e4c50e52766abd819604a981d5c85510c6749f8cf3223656e6cafea"
+   }
+  },
+  {
+   "pid": "G05",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "ERBITUX5",
+   "product": [
+    "Erbitux"
+   ],
+   "kind": "negation",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R00"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "The German sentence is negated (nicht-mutiertem); the aligned French sentence has no negation.",
+   "state_20261006": {
+    "de": {
+     "sentence": "Vergütung bei Patienten mit metastasiertem Kolorektalkarzinom mit nicht-mutiertem Wildtyp-Ras-Gen:",
+     "negation": [
+      "nicht-mutiertem"
+     ]
+    },
+    "fr": {
+     "sentence": "Remboursement pour les patients atteints de carcinome colorectal métastatique présentant le gène RAS de type sauvage:",
+     "negation": []
+    },
+    "it": {
+     "sentence": "Rimborso per i pazienti affetti da carcinoma metastatico del colon-retto con gene RAS senza mutazioni (wild-type):",
+     "negation": [
+      "senza"
+     ]
+    }
+   },
+   "correction": "FR sentence gains the negation DE states (nicht-mutiertem), as IT has",
+   "expect": {
+    "side": "de",
+    "negations": [
+     "nicht-mutiertem"
+    ],
+    "de_sentence": "Vergütung bei Patienten mit metastasiertem Kolorektalkarzinom mit nicht-mutiertem Wildtyp-Ras-Gen:",
+    "tgt_sentence": "Remboursement pour les patients atteints de carcinome colorectal métastatique présentant le gène RAS de type sauvage:",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "Vergütung bei Patienten mit metastasiertem Kolorektalkarzinom mit nicht-mutiertem Wildtyp-Ras-Gen:",
+    "fr": "Remboursement pour les patients atteints de carcinome colorectal métastatique présentant le gène RAS de type sauvage:",
+    "it": "Rimborso per i pazienti affetti da carcinoma metastatico del colon-retto con gene RAS senza mutazioni (wild-type):"
+   },
+   "texts_sha256": {
+    "de": "29c907c4dffc6ada8bd4a58ba3e0ff64971f579aadf30e6fad39592561a0683b",
+    "fr": "18b332b72982adaa4b1f03cdcbf0af223d1ac4d95c76eb5ccfdbfa9233a6216b",
+    "it": "4ad42c7a671e1d36c7cd8c8c81348f01782ac0214e953662e2a06288508a17f5"
+   }
+  },
+  {
+   "pid": "G06",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "GALAFOLD3",
+   "product": [
+    "Galafold"
+   ],
+   "kind": "negation",
+   "lang": "it",
+   "divergent": "it",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R17"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "The German sentence is negated (nicht); the aligned Italian sentence has no negation.",
+   "state_20261006": {
+    "de": {
+     "sentence": "Die Kosten für den Test ob eine bis dato nicht charakterisierte Mutation auf Migalastat anspricht, werden von Amicus Therapeutics Switzerland GmbH, (info@amicusrx.ch) übernommen.",
+     "negation": [
+      "nicht"
+     ]
+    },
+    "fr": {
+     "sentence": "Les coûts du test pour une mutation non caractérisée pour sa sensibilité au migalastat jusqu’à présent seront pris en charge par Amicus Therapeutics Switzerland GmbH (info@amicusrx.ch).",
+     "negation": [
+      "non caractérisée"
+     ]
+    },
+    "it": {
+     "sentence": "I costi del test per verificare se una mutazione finora sconosciuta risponde a migalastat sono coperti da Amicus Therapeutics Switzerland GmbH (info@amicusrx.ch).",
+     "negation": []
+    }
+   },
+   "correction": "IT sentence gains the negation DE states (nicht), as FR has",
+   "expect": {
+    "side": "de",
+    "negations": [
+     "nicht"
+    ],
+    "de_sentence": "Die Kosten für den Test ob eine bis dato nicht charakterisierte Mutation auf Migalastat anspricht, werden von Amicus Therapeutics Switzerland GmbH, (info@amicusrx.ch) übernommen.",
+    "tgt_sentence": "I costi del test per verificare se una mutazione finora sconosciuta risponde a migalastat sono coperti da Amicus Therapeutics Switzerland GmbH (info@amicusrx.ch).",
+    "divergent": "it",
+    "agreeing": [
+     "de",
+     "fr"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "Die Kosten für den Test ob eine bis dato nicht charakterisierte Mutation auf Migalastat anspricht, werden von Amicus Therapeutics Switzerland GmbH, (info@amicusrx.ch) übernommen.",
+    "fr": "Les coûts du test pour une mutation non caractérisée pour sa sensibilité au migalastat jusqu’à présent seront pris en charge par Amicus Therapeutics Switzerland GmbH (info@amicusrx.ch).",
+    "it": "I costi del test per verificare se una mutazione finora sconosciuta risponde a migalastat sono coperti da Amicus Therapeutics Switzerland GmbH (info@amicusrx.ch)."
+   },
+   "texts_sha256": {
+    "de": "c820012a0a1b137b943214e3c80bb683b46cce36e3f70fb57250c23697cf42fb",
+    "fr": "2e595ac549732daee65e448fc03bd24134b1aa475dda0499f6f7016a78f15883",
+    "it": "509d745c580075a4c715ea0a1dece58daf541ab28f479d6ce2f1fd5df0ca8966"
+   }
+  },
+  {
+   "pid": "G07",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "HEMLIBRA.XXb",
+   "product": [
+    "Hemlibra"
+   ],
+   "kind": "negation",
+   "lang": "it",
+   "divergent": "it",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R12"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "The German sentence is negated (kein); the aligned Italian sentence has no negation.",
+   "state_20261006": {
+    "de": {
+     "sentence": "Die Preisberechnung für Blutpräparate erfolgt aufgrund des Fabrikabgabepreises zuzüglich einer Fixmarge wegen der speziellen Verteilersituation (praktisch kein Zwischenhandel) von Fr. 40.-- zuzüglich MWST.",
+     "negation": [
+      "kein"
+     ]
+    },
+    "fr": {
+     "sentence": "Le prix des préparations sanguines est calculé sur la base du prix départ usine plus une marge fixe de Fr. 40.-- plus TVA en raison de la situation particulière de l’approvisionnement (pratiquement pas de commerce intermédiaire).",
+     "negation": [
+      "pas"
+     ]
+    },
+    "it": {
+     "sentence": "Il calcolo del prezzo per i preparati sanguini si basa sul prezzo di fabbrica, maggiorato di un margine fisso di Fr. 40.-- più IVA dovuto alla speciale situazione distributiva (commissioni intermedie praticamente assenti).",
+     "negation": []
+    }
+   },
+   "correction": "IT sentence gains the negation DE states (kein), as FR has",
+   "expect": {
+    "side": "de",
+    "negations": [
+     "kein"
+    ],
+    "de_sentence": "Die Preisberechnung für Blutpräparate erfolgt aufgrund des Fabrikabgabepreises zuzüglich einer Fixmarge wegen der speziellen Verteilersituation (praktisch kein Zwischenhandel) von Fr. 40.-- zuzüglich MWST.",
+    "tgt_sentence": "Il calcolo del prezzo per i preparati sanguini si basa sul prezzo di fabbrica, maggiorato di un margine fisso di Fr. 40.-- più IVA dovuto alla speciale situazione distributiva (commissioni intermedie praticamente assenti).",
+    "divergent": "it",
+    "agreeing": [
+     "de",
+     "fr"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "Die Preisberechnung für Blutpräparate erfolgt aufgrund des Fabrikabgabepreises zuzüglich einer Fixmarge wegen der speziellen Verteilersituation (praktisch kein Zwischenhandel) von Fr. 40.-- zuzüglich MWST.",
+    "fr": "Le prix des préparations sanguines est calculé sur la base du prix départ usine plus une marge fixe de Fr. 40.-- plus TVA en raison de la situation particulière de l’approvisionnement (pratiquement pas de commerce intermédiaire).",
+    "it": "Il calcolo del prezzo per i preparati sanguini si basa sul prezzo di fabbrica, maggiorato di un margine fisso di Fr. 40.-- più IVA dovuto alla speciale situazione distributiva (commissioni intermedie praticamente assenti)."
+   },
+   "texts_sha256": {
+    "de": "006347071961e92d60e4fa613efcf7bb4a76bbf5b360c7c29eb664bf0ab17536",
+    "fr": "ee11bd0499c212057b0174f8ba2b2fb4474587414c96ac4a5759e2d1b8f3f422",
+    "it": "409c268e590db7fd865e403cfd6e8001b9522c5345b52ee41d39f1eb88db964f"
+   }
+  },
+  {
+   "pid": "G08",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "KEYTRUDA.03",
+   "product": [
+    "Keytruda"
+   ],
+   "kind": "negation",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R20"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "The French sentence is negated (non); the aligned German sentence has no negation.",
+   "state_20261006": {
+    "de": {
+     "sentence": "1L plattenepitheliales NSCLC (in Kombination mit Carboplatin und Paclitaxel) KN407 (mit Preismodell) KEYTRUDA in Kombination mit Carboplatin und Paclitaxel zur Erstlinienbehandlung des metastasierten, plattenepithelialen NSCLC bei Erwachsenen, die eine Lebenserwartung von mindestens 3 Monaten haben.",
+     "negation": []
+    },
+    "fr": {
+     "sentence": "1L NSCLC épidermoïde (en association au carboplatine et au paclitaxel) KN407 (avec modèle de prix) KEYTRUDA, en association au carboplatine et au paclitaxel, est indiqué dans le traitement de première ligne du cancer du poumon non à petites cellules (NSCLC) épidermoïde au stade métastatique chez les adultes, qui ont une espérance de vie d'au moins 3 mois.",
+     "negation": [
+      "non"
+     ]
+    },
+    "it": {
+     "sentence": "1L NSCLC squamoso (in associazione a carboplatino e paclitaxel) KN407 (con modello di prezzo) KEYTRUDA, in associazione a carboplatino e paclitaxel, è indicato nel trattamento di prima linea del NSCLC metastatico squamoso negli adulti con un’aspettativa di vita superiore a 3 mesi.",
+     "negation": []
+    }
+   },
+   "correction": "FR sentence drops its negation (non), which DE and IT lack",
+   "expect": {
+    "side": "fr",
+    "negations": [
+     "non"
+    ],
+    "de_sentence": "1L plattenepitheliales NSCLC (in Kombination mit Carboplatin und Paclitaxel) KN407 (mit Preismodell) KEYTRUDA in Kombination mit Carboplatin und Paclitaxel zur Erstlinienbehandlung des metastasierten, plattenepithelialen NSCLC bei Erwachsenen, die eine Lebenserwartung von mindestens 3 Monaten haben.",
+    "tgt_sentence": "1L NSCLC épidermoïde (en association au carboplatine et au paclitaxel) KN407 (avec modèle de prix) KEYTRUDA, en association au carboplatine et au paclitaxel, est indiqué dans le traitement de première ligne du cancer du poumon non à petites cellules (NSCLC) épidermoïde au stade métastatique chez les adultes, qui ont une espérance de vie d'au moins 3 mois.",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "1L plattenepitheliales NSCLC (in Kombination mit Carboplatin und Paclitaxel) KN407 (mit Preismodell) KEYTRUDA in Kombination mit Carboplatin und Paclitaxel zur Erstlinienbehandlung des metastasierten, plattenepithelialen NSCLC bei Erwachsenen, die eine Lebenserwartung von mindestens 3 Monaten haben.",
+    "fr": "1L NSCLC épidermoïde (en association au carboplatine et au paclitaxel) KN407 (avec modèle de prix) KEYTRUDA, en association au carboplatine et au paclitaxel, est indiqué dans le traitement de première ligne du cancer du poumon non à petites cellules (NSCLC) épidermoïde au stade métastatique chez les…",
+    "it": "1L NSCLC squamoso (in associazione a carboplatino e paclitaxel) KN407 (con modello di prezzo) KEYTRUDA, in associazione a carboplatino e paclitaxel, è indicato nel trattamento di prima linea del NSCLC metastatico squamoso negli adulti con un’aspettativa di vita superiore a 3 mesi."
+   },
+   "texts_sha256": {
+    "de": "9bf65b8bfe3dfdfd46fc1ba8239789c46dc29acff5c3e323db0cf46fa4a386e6",
+    "fr": "17f113227498ab72fdbe75e990e88a0149d39674bc231f2090dad4b583814d75",
+    "it": "2e29a25b3aff1c110bb3d8aaa506912d50a4359cc9a574985863a91d967695aa"
+   }
+  },
+  {
+   "pid": "G09",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "KEYTRUDA.03---Inj-L-s---1L-plattenepitheliales-NSCLC-KN407",
+   "product": [
+    "Keytruda"
+   ],
+   "kind": "negation",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R15"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "The French sentence is negated (non); the aligned German sentence has no negation.",
+   "state_20261006": {
+    "de": {
+     "sentence": "1L plattenepitheliales NSCLC (in Kombination mit Carboplatin und Paclitaxel) KN407 (mit Preismodell) KEYTRUDA in Kombination mit Carboplatin und Paclitaxel zur Erstlinienbehandlung des metastasierten, plattenepithelialen NSCLC bei Erwachsenen, die eine Lebenserwartung von mindestens 3 Monaten haben.",
+     "negation": []
+    },
+    "fr": {
+     "sentence": "1L NSCLC épidermoïde (en association au carboplatine et au paclitaxel) KN407 (avec modèle de prix) KEYTRUDA, en association au carboplatine et au paclitaxel, est indiqué dans le traitement de première ligne du cancer du poumon non à petites cellules (NSCLC) épidermoïde au stade métastatique chez les adultes, qui ont une espérance de vie d'au moins 3 mois.",
+     "negation": [
+      "non"
+     ]
+    },
+    "it": {
+     "sentence": "1L NSCLC squamoso (in associazione a carboplatino e paclitaxel) KN407 (con modello di prezzo) KEYTRUDA, in associazione a carboplatino e paclitaxel, è indicato nel trattamento di prima linea del NSCLC metastatico squamoso negli adulti con un’aspettativa di vita superiore a 3 mesi.",
+     "negation": []
+    }
+   },
+   "correction": "FR sentence drops its negation (non), which DE and IT lack",
+   "expect": {
+    "side": "fr",
+    "negations": [
+     "non"
+    ],
+    "de_sentence": "1L plattenepitheliales NSCLC (in Kombination mit Carboplatin und Paclitaxel) KN407 (mit Preismodell) KEYTRUDA in Kombination mit Carboplatin und Paclitaxel zur Erstlinienbehandlung des metastasierten, plattenepithelialen NSCLC bei Erwachsenen, die eine Lebenserwartung von mindestens 3 Monaten haben.",
+    "tgt_sentence": "1L NSCLC épidermoïde (en association au carboplatine et au paclitaxel) KN407 (avec modèle de prix) KEYTRUDA, en association au carboplatine et au paclitaxel, est indiqué dans le traitement de première ligne du cancer du poumon non à petites cellules (NSCLC) épidermoïde au stade métastatique chez les adultes, qui ont une espérance de vie d'au moins 3 mois.",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "1L plattenepitheliales NSCLC (in Kombination mit Carboplatin und Paclitaxel) KN407 (mit Preismodell) KEYTRUDA in Kombination mit Carboplatin und Paclitaxel zur Erstlinienbehandlung des metastasierten, plattenepithelialen NSCLC bei Erwachsenen, die eine Lebenserwartung von mindestens 3 Monaten haben.",
+    "fr": "1L NSCLC épidermoïde (en association au carboplatine et au paclitaxel) KN407 (avec modèle de prix) KEYTRUDA, en association au carboplatine et au paclitaxel, est indiqué dans le traitement de première ligne du cancer du poumon non à petites cellules (NSCLC) épidermoïde au stade métastatique chez les…",
+    "it": "1L NSCLC squamoso (in associazione a carboplatino e paclitaxel) KN407 (con modello di prezzo) KEYTRUDA, in associazione a carboplatino e paclitaxel, è indicato nel trattamento di prima linea del NSCLC metastatico squamoso negli adulti con un’aspettativa di vita superiore a 3 mesi."
+   },
+   "texts_sha256": {
+    "de": "494ee9e5b94c2a74f8096fbe4319f37d60d969f17d3e24dee6b79c8743e8cafe",
+    "fr": "0d85779e03b89134b7b99249c462b492c1440128950d033fc8b807bcf2d8713a",
+    "it": "3868c8af4dc8f8d94dbeb10a9a97735c518951283c05138f514c5f886d5b98d7"
+   }
+  },
+  {
+   "pid": "G10",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "KEYTRUDA.XX---Inf-Konz",
+   "product": [
+    "Keytruda"
+   ],
+   "kind": "negation",
+   "lang": "it",
+   "divergent": "it",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R30"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "The Italian sentence is negated (Non); the aligned German sentence has no negation.",
+   "state_20261006": {
+    "de": {
+     "sentence": "Die Aufforderung zur Rückerstattung soll zeitnah zur Verabreichung erfolgen.",
+     "negation": []
+    },
+    "fr": {
+     "sentence": "La demande de remboursement doit être faite dans un délai rapproché après l'administration.",
+     "negation": []
+    },
+    "it": {
+     "sentence": "Non si può applicare l’IVA in aggiunta a questo importo del prezzo di fabbrica.",
+     "negation": [
+      "Non"
+     ]
+    }
+   },
+   "correction": "IT sentence drops its negation (Non), which DE and FR lack",
+   "expect": {
+    "side": "it",
+    "negations": [
+     "Non"
+    ],
+    "de_sentence": "Die Aufforderung zur Rückerstattung soll zeitnah zur Verabreichung erfolgen.",
+    "tgt_sentence": "Non si può applicare l’IVA in aggiunta a questo importo del prezzo di fabbrica.",
+    "divergent": "it",
+    "agreeing": [
+     "de",
+     "fr"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "Die Aufforderung zur Rückerstattung soll zeitnah zur Verabreichung erfolgen.",
+    "fr": "La demande de remboursement doit être faite dans un délai rapproché après l'administration.",
+    "it": "Non si può applicare l’IVA in aggiunta a questo importo del prezzo di fabbrica."
+   },
+   "texts_sha256": {
+    "de": "17b474bd9faf0e28c537b41b277f1bbd778ce3a6395515537970af8c94d7ad17",
+    "fr": "926baba06b8f5752eef657c7e31978a5f943171b2e63f0d736c44a607e3bcb83",
+    "it": "022c168a87c8b9315adce01933f5e6e63ecc368b18d950f9696d6d2a3aad2390"
+   }
+  },
+  {
+   "pid": "G11",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "LIORESAL",
+   "product": [
+    "Baclofen",
+    "Lioresal"
+   ],
+   "kind": "negation",
+   "lang": "fr",
+   "divergent": "de",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R02"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "The German sentence is negated (Therapierefraktäre); the aligned French sentence has no negation.",
+   "state_20261006": {
+    "de": {
+     "sentence": "Therapierefraktäre Spastizität.",
+     "negation": [
+      "Therapierefraktäre"
+     ]
+    },
+    "fr": {
+     "sentence": "Spasticité résistante au traitement.",
+     "negation": []
+    },
+    "it": {
+     "sentence": "Spasticità resistente al trattamento.",
+     "negation": []
+    }
+   },
+   "correction": "DE sentence drops its negation (Therapierefraktäre), which FR and IT lack",
+   "expect": {
+    "side": "de",
+    "negations": [
+     "Therapierefraktäre"
+    ],
+    "de_sentence": "Therapierefraktäre Spastizität.",
+    "tgt_sentence": "Spasticité résistante au traitement.",
+    "divergent": "de",
+    "agreeing": [
+     "fr",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "Therapierefraktäre Spastizität.",
+    "fr": "Spasticité résistante au traitement.",
+    "it": "Spasticità resistente al trattamento."
+   },
+   "texts_sha256": {
+    "de": "f684e7eb572302a10266163b695b2a0488eb06fe549a5bd9cc704d0fc3248cf9",
+    "fr": "d1fdc8a51de85a48bfa2697d8e4a0be57984b3e4bca70aec99f684abe0054177",
+    "it": "944e12a1c4ab1aeb174c652f56cec9637150a76f7bc44dd43f93f8eafa5e3f6b"
+   }
+  },
+  {
+   "pid": "G12",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "LIORESAL",
+   "product": [
+    "Baclofen",
+    "Lioresal"
+   ],
+   "kind": "negation",
+   "lang": "it",
+   "divergent": "de",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R06"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "The German sentence is negated (Therapierefraktäre); the aligned Italian sentence has no negation.",
+   "state_20261006": {
+    "de": {
+     "sentence": "Therapierefraktäre Spastizität.",
+     "negation": [
+      "Therapierefraktäre"
+     ]
+    },
+    "fr": {
+     "sentence": "Spasticité résistante au traitement.",
+     "negation": []
+    },
+    "it": {
+     "sentence": "Spasticità resistente al trattamento.",
+     "negation": []
+    }
+   },
+   "correction": "DE sentence drops its negation (Therapierefraktäre), which FR and IT lack",
+   "expect": {
+    "side": "de",
+    "negations": [
+     "Therapierefraktäre"
+    ],
+    "de_sentence": "Therapierefraktäre Spastizität.",
+    "tgt_sentence": "Spasticità resistente al trattamento.",
+    "divergent": "de",
+    "agreeing": [
+     "fr",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "Therapierefraktäre Spastizität.",
+    "fr": "Spasticité résistante au traitement.",
+    "it": "Spasticità resistente al trattamento."
+   },
+   "texts_sha256": {
+    "de": "f684e7eb572302a10266163b695b2a0488eb06fe549a5bd9cc704d0fc3248cf9",
+    "fr": "d1fdc8a51de85a48bfa2697d8e4a0be57984b3e4bca70aec99f684abe0054177",
+    "it": "944e12a1c4ab1aeb174c652f56cec9637150a76f7bc44dd43f93f8eafa5e3f6b"
+   }
+  },
+  {
+   "pid": "G13",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "MABTHERA.02",
+   "product": [
+    "MabThera"
+   ],
+   "kind": "negation",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R07"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "The German sentence is negated (nicht); the aligned French sentence has no negation.",
+   "state_20261006": {
+    "de": {
+     "sentence": "- Bei nicht abgeschlossener Familienplanung (Infertilitätsrisiko).",
+     "negation": [
+      "nicht"
+     ]
+    },
+    "fr": {
+     "sentence": "- lorsque le patient souhaite encore avoir un ou des enfants (risque d’infertilité).",
+     "negation": []
+    },
+    "it": {
+     "sentence": "- se la pianificazione familiare non è conclusa (rischio di infertilità).",
+     "negation": [
+      "non"
+     ]
+    }
+   },
+   "correction": "FR sentence gains the negation DE states (nicht), as IT has",
+   "expect": {
+    "side": "de",
+    "negations": [
+     "nicht"
+    ],
+    "de_sentence": "- Bei nicht abgeschlossener Familienplanung (Infertilitätsrisiko).",
+    "tgt_sentence": "- lorsque le patient souhaite encore avoir un ou des enfants (risque d’infertilité).",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "- Bei nicht abgeschlossener Familienplanung (Infertilitätsrisiko).",
+    "fr": "- lorsque le patient souhaite encore avoir un ou des enfants (risque d’infertilité).",
+    "it": "- se la pianificazione familiare non è conclusa (rischio di infertilità)."
+   },
+   "texts_sha256": {
+    "de": "edaa2dd1b99c5f8111d73339ec238e760e7d1f254bcb070439d416d617965672",
+    "fr": "cce355a6645bba87308bac688a52c913707093a323a5e55827cb5b73480c20e7",
+    "it": "b6cbdfe1f84f1670bcd633c2706769f7e08dc9dc6f7324b88551947933c5de7d"
+   }
+  },
+  {
+   "pid": "G14",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "RIXATHON.02",
+   "product": [
+    "Rixathon"
+   ],
+   "kind": "negation",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R10"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "The German sentence is negated (nicht); the aligned French sentence has no negation.",
+   "state_20261006": {
+    "de": {
+     "sentence": "- Bei nicht abgeschlossener Familienplanung (Infertilitätsrisiko).",
+     "negation": [
+      "nicht"
+     ]
+    },
+    "fr": {
+     "sentence": "- lorsque le patient souhaite encore avoir un ou des enfants (risque d’infertilité).",
+     "negation": []
+    },
+    "it": {
+     "sentence": "- se la pianificazione familiare non è conclusa (rischio di infertilità).",
+     "negation": [
+      "non"
+     ]
+    }
+   },
+   "correction": "FR sentence gains the negation DE states (nicht), as IT has",
+   "expect": {
+    "side": "de",
+    "negations": [
+     "nicht"
+    ],
+    "de_sentence": "- Bei nicht abgeschlossener Familienplanung (Infertilitätsrisiko).",
+    "tgt_sentence": "- lorsque le patient souhaite encore avoir un ou des enfants (risque d’infertilité).",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "- Bei nicht abgeschlossener Familienplanung (Infertilitätsrisiko).",
+    "fr": "- lorsque le patient souhaite encore avoir un ou des enfants (risque d’infertilité).",
+    "it": "- se la pianificazione familiare non è conclusa (rischio di infertilità)."
+   },
+   "texts_sha256": {
+    "de": "b470d6c27a7ac651cfc17b51f2a44972cdeeb7411fa16e2a99ad05eb0ac7e396",
+    "fr": "e267483309406d39bb327788af88e3c90ad7db2a3cd074b9b1607fa0acba7164",
+    "it": "1eb241c5705de81cd4f3eedda91ab8c871a62d39f73530fb28a134a6d4d34b30"
+   }
+  },
+  {
+   "pid": "G15",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "RUXIENCE.02",
+   "product": [
+    "Ruxience"
+   ],
+   "kind": "negation",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R21"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "The German sentence is negated (nicht); the aligned French sentence has no negation.",
+   "state_20261006": {
+    "de": {
+     "sentence": "- Bei nicht abgeschlossener Familienplanung (Infertilitätsrisiko).",
+     "negation": [
+      "nicht"
+     ]
+    },
+    "fr": {
+     "sentence": "- lorsque le patient souhaite encore avoir un ou des enfants (risque d’infertilité).",
+     "negation": []
+    },
+    "it": {
+     "sentence": "- se la pianificazione familiare non è conclusa (rischio di infertilità).",
+     "negation": [
+      "non"
+     ]
+    }
+   },
+   "correction": "FR sentence gains the negation DE states (nicht), as IT has",
+   "expect": {
+    "side": "de",
+    "negations": [
+     "nicht"
+    ],
+    "de_sentence": "- Bei nicht abgeschlossener Familienplanung (Infertilitätsrisiko).",
+    "tgt_sentence": "- lorsque le patient souhaite encore avoir un ou des enfants (risque d’infertilité).",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "- Bei nicht abgeschlossener Familienplanung (Infertilitätsrisiko).",
+    "fr": "- lorsque le patient souhaite encore avoir un ou des enfants (risque d’infertilité).",
+    "it": "- se la pianificazione familiare non è conclusa (rischio di infertilità)."
+   },
+   "texts_sha256": {
+    "de": "64dd12eddbef96c07d111cad3288fb1aaaa8f60f080bb9860976080445800592",
+    "fr": "fcf227a29c6c65b928863708779d2e9e56e87e2e7aed82aca1fb96a079282b69",
+    "it": "0093bc5942657b9aadcf2c2f82801426dbc851e9fb95be7786b20bd37b710ddf"
+   }
+  },
+  {
+   "pid": "G16",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "TRUXIMA.02",
+   "product": [
+    "Truxima"
+   ],
+   "kind": "negation",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R23"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "The German sentence is negated (nicht); the aligned French sentence has no negation.",
+   "state_20261006": {
+    "de": {
+     "sentence": "- Bei nicht abgeschlossener Familienplanung (Infertilitätsrisiko).",
+     "negation": [
+      "nicht"
+     ]
+    },
+    "fr": {
+     "sentence": "- lorsque le patient souhaite encore avoir un ou des enfants (risque d’infertilité).",
+     "negation": []
+    },
+    "it": {
+     "sentence": "- se la pianificazione familiare non è conclusa (rischio di infertilità).",
+     "negation": [
+      "non"
+     ]
+    }
+   },
+   "correction": "FR sentence gains the negation DE states (nicht), as IT has",
+   "expect": {
+    "side": "de",
+    "negations": [
+     "nicht"
+    ],
+    "de_sentence": "- Bei nicht abgeschlossener Familienplanung (Infertilitätsrisiko).",
+    "tgt_sentence": "- lorsque le patient souhaite encore avoir un ou des enfants (risque d’infertilité).",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "- Bei nicht abgeschlossener Familienplanung (Infertilitätsrisiko).",
+    "fr": "- lorsque le patient souhaite encore avoir un ou des enfants (risque d’infertilité).",
+    "it": "- se la pianificazione familiare non è conclusa (rischio di infertilità)."
+   },
+   "texts_sha256": {
+    "de": "a7470ee8b214a634f529b561364f59ce76962e5b59d396f5b8cec6321dab17b5",
+    "fr": "ccd7662f245658ea31b418384da1107176af209b1b335c189896947de0e837f0",
+    "it": "7c49565145d067ca7a812c569f6389732252c9c452a1e5e178073653fdb9d4a9"
+   }
+  },
+  {
+   "pid": "G17",
+   "set": "experimental",
+   "issue": "X4",
+   "limitation": "VYNDAQEL.01b",
+   "product": [
+    "Vyndaqel"
+   ],
+   "kind": "negation",
+   "lang": "it",
+   "divergent": "it",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "real",
+    "confirmed": true,
+    "source": "eval/labels/audit_r15_20261006.tsv:R11"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "The German sentence is negated (nicht); the aligned Italian sentence has no negation.",
+   "state_20261006": {
+    "de": {
+     "sentence": "VYNDAQEL darf nicht mit anderen spezifischen Arzneimitteln zur Behandlung der Transthyretin-Amyloidose (z.B. TTR-Stabilisatoren, TTR-Gen Silencer) kombiniert werden.",
+     "negation": [
+      "nicht"
+     ]
+    },
+    "fr": {
+     "sentence": "VYNDAQEL ne doit pas être combiné avec d’autres médicaments spécifiques pour le traitement de l’amylose à transthyrétine (p. ex. stabilisateurs du TTR, agents silencieux du gène TTR).",
+     "negation": [
+      "ne"
+     ]
+    },
+    "it": {
+     "sentence": "VYNDAQEL on deve essere combinato con altri medicamenti specifici per il trattamento dell’amiloidosi da transtiretina (ad esempio stabilizzatori del TTR, agenti silenziatori del gene TTR).",
+     "negation": []
+    }
+   },
+   "correction": "IT sentence gains the negation DE states (nicht), as FR has",
+   "expect": {
+    "side": "de",
+    "negations": [
+     "nicht"
+    ],
+    "de_sentence": "VYNDAQEL darf nicht mit anderen spezifischen Arzneimitteln zur Behandlung der Transthyretin-Amyloidose (z.B. TTR-Stabilisatoren, TTR-Gen Silencer) kombiniert werden.",
+    "tgt_sentence": "VYNDAQEL on deve essere combinato con altri medicamenti specifici per il trattamento dell’amiloidosi da transtiretina (ad esempio stabilizzatori del TTR, agenti silenziatori del gene TTR).",
+    "divergent": "it",
+    "agreeing": [
+     "de",
+     "fr"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "VYNDAQEL darf nicht mit anderen spezifischen Arzneimitteln zur Behandlung der Transthyretin-Amyloidose (z.B. TTR-Stabilisatoren, TTR-Gen Silencer) kombiniert werden.",
+    "fr": "VYNDAQEL ne doit pas être combiné avec d’autres médicaments spécifiques pour le traitement de l’amylose à transthyrétine (p. ex. stabilisateurs du TTR, agents silencieux du gène TTR).",
+    "it": "VYNDAQEL on deve essere combinato con altri medicamenti specifici per il trattamento dell’amiloidosi da transtiretina (ad esempio stabilizzatori del TTR, agenti silenziatori del gene TTR)."
+   },
+   "texts_sha256": {
+    "de": "77a3d7a0dc204ff78cad0b3dce9559bfd0909b35cdae5ce88a991b1d28564436",
+    "fr": "e3385148a11dfaa2b4888d47365629608dcb73dd48891ae02ccd28172cae67e4",
+    "it": "2aeb2a1e9e77ad34eec57b255fa41795f7a358c28a1f7d4c7cd46f60ac0f2257"
+   }
+  },
+  {
+   "pid": "G18",
+   "set": "experimental",
+   "issue": "X5",
+   "limitation": "ZAVICEFTA2",
+   "product": [
+    "Zavicefta"
+   ],
+   "kind": "negation",
+   "lang": "fr",
+   "divergent": "fr",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "minor",
+    "confirmed": true,
+    "source": "eval/labels/audit_r15_20261006.tsv:R04"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "The French sentence is negated (n’); the aligned German sentence has no negation.",
+   "state_20261006": {
+    "de": {
+     "sentence": "Die Pfizer AG vergütet dem Leistungserbringer, bei dem eine angebrochene Packung ZAVICEFTA verfällt, auf dessen erste Aufforderung hin den Anteil des Fabrikabgabepreises für die Anzahl der verfallenen Ampullen zurück.",
+     "negation": []
+    },
+    "fr": {
+     "sentence": "À la première demande d’un prestataire de service n’ayant pas utilisé l’intégralité du contenu d’une boîte de ZAVICEFTA, la société Pfizer AG rembourse à celui-ci la part du prix de fabrique proportionnelle au nombre d’ampoules non utilisées.",
+     "negation": [
+      "non utilisées.",
+      "n’"
+     ]
+    },
+    "it": {
+     "sentence": "Nel caso in cui scada un pacchetto aperto di ZAVICEFTA, Pfizer AG rimborsa al prestatore di servizi, alla sua prima richiesta, la quota del prezzo di fabbrica per la consegna corrispondente al numero di flaconcini scaduti.",
+     "negation": []
+    }
+   },
+   "correction": "FR sentence drops its negation (n’), which DE and IT lack",
+   "expect": {
+    "side": "fr",
+    "negations": [
+     "n’"
+    ],
+    "de_sentence": "Die Pfizer AG vergütet dem Leistungserbringer, bei dem eine angebrochene Packung ZAVICEFTA verfällt, auf dessen erste Aufforderung hin den Anteil des Fabrikabgabepreises für die Anzahl der verfallenen Ampullen zurück.",
+    "tgt_sentence": "À la première demande d’un prestataire de service n’ayant pas utilisé l’intégralité du contenu d’une boîte de ZAVICEFTA, la société Pfizer AG rembourse à celui-ci la part du prix de fabrique proportionnelle au nombre d’ampoules non utilisées.",
+    "divergent": "fr",
+    "agreeing": [
+     "de",
+     "it"
+    ]
+   },
+   "excerpt_20261006": {
+    "de": "Die Pfizer AG vergütet dem Leistungserbringer, bei dem eine angebrochene Packung ZAVICEFTA verfällt, auf dessen erste Aufforderung hin den Anteil des Fabrikabgabepreises für die Anzahl der verfallenen Ampullen zurück.",
+    "fr": "À la première demande d’un prestataire de service n’ayant pas utilisé l’intégralité du contenu d’une boîte de ZAVICEFTA, la société Pfizer AG rembourse à celui-ci la part du prix de fabrique proportionnelle au nombre d’ampoules non utilisées.",
+    "it": "Nel caso in cui scada un pacchetto aperto di ZAVICEFTA, Pfizer AG rimborsa al prestatore di servizi, alla sua prima richiesta, la quota del prezzo di fabbrica per la consegna corrispondente al numero di flaconcini scaduti."
+   },
+   "texts_sha256": {
+    "de": "69a0f8daf1604dfc2477856d529c7fb651b1e546af610a7c402b6fbc528bb119",
+    "fr": "0ec0c3260d0bf3a6c62735774249b9dc0ca0fe844dd8c6cb8bbc690b901aad66",
+    "it": "a4d82de4bb1d1d0cb3c128d01c339b8398e69dfc92c590268717137ccaaeaba0"
+   }
+  },
+  {
+   "pid": "W01",
+   "set": "experimental",
+   "issue": "X6",
+   "limitation": "HEMLIBRA.XXb",
+   "product": [
+    "Hemlibra"
+   ],
+   "kind": "number_word",
+   "lang": "fr",
+   "divergent": "unclear",
+   "prediction": "BAG corrects it",
+   "confirmed": true,
+   "blind_label": {
+    "final": "minor",
+    "confirmed": true,
+    "source": "eval/labels/audit_r15_20261006.tsv:R09"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "FR has 2 (number word), DE does not (in the aligned sentence).",
+   "state_20261006": {
+    "de": {
+     "2": 1
+    },
+    "fr": {
+     "2": 2
+    },
+    "it": {
+     "2": 1
+    }
+   },
+   "correction": "DE (nothing) and FR (2) come to state the same value at this place; which side changes is not predicted",
+   "expect": {
+    "de_only": [],
+    "tgt_only": [
+     "2"
+    ],
+    "divergent": "unclear",
+    "agreeing": []
+   },
+   "excerpt_20261006": {
+    "de": "Für alle Indikationen gelten folgende Vergütungsvoraussetzungen:",
+    "fr": "Pour toutes les deux indications, les conditions de remboursement suivantes s’ap…",
+    "it": "Per tutte le indicazioni valgono le seguenti condizioni di rimborso:"
+   },
+   "texts_sha256": {
+    "de": "006347071961e92d60e4fa613efcf7bb4a76bbf5b360c7c29eb664bf0ab17536",
+    "fr": "ee11bd0499c212057b0174f8ba2b2fb4474587414c96ac4a5759e2d1b8f3f422",
+    "it": "409c268e590db7fd865e403cfd6e8001b9522c5345b52ee41d39f1eb88db964f"
+   }
+  },
+  {
+   "pid": "W02",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "IDEFIRIX",
+   "product": [
+    "Idefirix"
+   ],
+   "kind": "number_word",
+   "lang": "it",
+   "divergent": "unclear",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R08"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "DE has 5 (number word), IT does not (in the aligned sentence).",
+   "state_20261006": {
+    "de": {
+     "5": 2
+    },
+    "fr": {
+     "5": 2
+    },
+    "it": {
+     "5": 2
+    }
+   },
+   "correction": "DE (5) and IT (nothing) come to state the same value at this place; which side changes is not predicted",
+   "expect": {
+    "de_only": [
+     "5"
+    ],
+    "tgt_only": [],
+    "divergent": "unclear",
+    "agreeing": []
+   },
+   "excerpt_20261006": {
+    "de": "Zu den fünf Universitätsspitälern gehören das Inselspital Bern, das Uni…",
+    "fr": "Les cinq hôpitaux universitaires comprennent l’Hôpital de l’Île de Berne, l’Hôpital universitaire de Bâle, les Hôpitaux universitaires de Genève (HUG), le Centre hospitalier universitaire vaudois (CHUV) et l’Hôpital universitaire de Zurich.",
+    "it": "Inselspital di Berna, Ospedale universitario di Basilea, Hôpitaux Universitaires de Genève (HUG), Centre hospitalier universitaire vaudois (CHUV) e Ospedale universitario di Zurigo."
+   },
+   "texts_sha256": {
+    "de": "0475cf86d38b142d7d78eb41f2116a14f6c123b462ae4bc8780b63702ba7bd26",
+    "fr": "fe903e939aeaf2a749a52419feaca4acc928146d9e6ed99cf953492731c521b2",
+    "it": "24354ebaf86314b3ffa958e541b6e8223e243cbdfb3b6d8824cef2ba5a28a2b2"
+   }
+  },
+  {
+   "pid": "W03",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "LEQVIO.01",
+   "product": [
+    "Leqvio"
+   ],
+   "kind": "number_word",
+   "lang": "it",
+   "divergent": "unclear",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R14"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "IT has 5 (volte), DE does not (in the aligned sentence).",
+   "state_20261006": {
+    "de": {
+     "5": 1
+    },
+    "fr": {
+     "5": 1
+    },
+    "it": {
+     "5": 1
+    }
+   },
+   "correction": "DE (nothing) and IT (5 (volte)) come to state the same value at this place; which side changes is not predicted",
+   "expect": {
+    "de_only": [],
+    "tgt_only": [
+     "5"
+    ],
+    "divergent": "unclear",
+    "agreeing": []
+   },
+   "excerpt_20261006": {
+    "de": "Diagnose und Erstverordnung sowie regelmässige Kontrollen müssen durch einen Facharzt FMH der Angiologie, Diabetologie / Endokrinologie, Kardiologie, Nephrologie oder Neurologie durchgeführt werden.",
+    "fr": "• une tentative de traitement avec plusieurs statines a conduit à des myalgies ou • à une augmentation de la créatinine kinase d’au moins cinq fois la valeur normale supérieure ou • une hépatopathie sévère est survenue sous traitement avec une statine.",
+    "it": "…rificato un aumento della creatinina chinasi pari ad almeno cinque volte il limite superiore di normalità, oppure • in caso di…"
+   },
+   "texts_sha256": {
+    "de": "3cce7e0888185de72f81336591ba7b44fcb6afa3637a61e281d1b379d209a6ea",
+    "fr": "7a76659602e55264862a966df2de33d9e3ac24077baadb83895bbb15722819c5",
+    "it": "80bbd328d4bd23efee3d1e4f4398ce8bd517bea8522dd1e6625302ae15278551"
+   }
+  },
+  {
+   "pid": "W04",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "PRALUENT.01a",
+   "product": [
+    "Praluent"
+   ],
+   "kind": "number_word",
+   "lang": "it",
+   "divergent": "unclear",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R24"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "IT has 5 (volte), DE does not (in the aligned sentence).",
+   "state_20261006": {
+    "de": {
+     "5": 1
+    },
+    "fr": {
+     "5": 1
+    },
+    "it": {
+     "5": 1
+    }
+   },
+   "correction": "DE (nothing) and IT (5 (volte)) come to state the same value at this place; which side changes is not predicted",
+   "expect": {
+    "de_only": [],
+    "tgt_only": [
+     "5"
+    ],
+    "divergent": "unclear",
+    "agreeing": []
+   },
+   "excerpt_20261006": {
+    "de": "Diagnose und Erstverordnung sowie regelmässige Kontrollen müssen durch einen Facharzt FMH der Angiologie, Diabetologie / Endokrinologie, Kardiologie, Nephrologie oder Neurologie durchgeführt werden.",
+    "fr": "• une tentative de traitement avec plusieurs statines a conduit à des myalgies ou • à une augmentation de la créatinine kinase d’au moins cinq fois la valeur normale supérieure ou • une hépatopathie sévère est survenue sous traitement avec une statine.",
+    "it": "…rificato un aumento della creatinina chinasi pari ad almeno cinque volte il limite superiore di normalità, oppure • in caso di…"
+   },
+   "texts_sha256": {
+    "de": "719cfddce43bbfb1303f1f10dcacb31713312fdbc22e033ace472d22720675a9",
+    "fr": "27c999558171c4f7e39b5f82d8b91e2c3de9fab57ece680fdf65d9204b4a2df0",
+    "it": "c899bc1a42697ee8c407708810b3679a93fa8f139849586bc7d4e2187d35b73c"
+   }
+  },
+  {
+   "pid": "W05",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "REPATHA.01a",
+   "product": [
+    "Repatha"
+   ],
+   "kind": "number_word",
+   "lang": "it",
+   "divergent": "unclear",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R26"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "IT has 5 (volte), DE does not (in the aligned sentence).",
+   "state_20261006": {
+    "de": {
+     "5": 1
+    },
+    "fr": {
+     "5": 1
+    },
+    "it": {
+     "5": 1
+    }
+   },
+   "correction": "DE (nothing) and IT (5 (volte)) come to state the same value at this place; which side changes is not predicted",
+   "expect": {
+    "de_only": [],
+    "tgt_only": [
+     "5"
+    ],
+    "divergent": "unclear",
+    "agreeing": []
+   },
+   "excerpt_20261006": {
+    "de": "Diagnose und Erstverordnung sowie regelmässige Kontrollen müssen durch einen Facharzt FMH der Angiologie, Diabetologie / Endokrinologie, Kardiologie, Nephrologie oder Neurologie durchgeführt werden.",
+    "fr": "• une tentative de traitement avec plusieurs statines a conduit à des myalgies ou • à une augmentation de la créatinine kinase d’au moins cinq fois la valeur normale supérieure ou • une hépatopathie sévère est survenue sous traitement avec une statine.",
+    "it": "…rificato un aumento della creatinina chinasi pari ad almeno cinque volte il limite superiore di normalità, oppure • in caso di…"
+   },
+   "texts_sha256": {
+    "de": "f9a6898919a2f47e18e6b889ac9539229dce78516cf40eef65d8c255426e6b5b",
+    "fr": "db9508debfaa9c616b25946d4b859bd1a21051c3094a920fe21848bd28aa099b",
+    "it": "fe9a291221e8fa34ecdf84a3f77ae9017a5fc018b2f5fb2084a938a369bf6067"
+   }
+  },
+  {
+   "pid": "W06",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "STELARAPP4",
+   "product": [
+    "Stelara"
+   ],
+   "kind": "number_word",
+   "lang": "fr",
+   "divergent": "unclear",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R13"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "DE has 3 (number word), FR does not (in the aligned sentence).",
+   "state_20261006": {
+    "de": {
+     "3": 1
+    },
+    "fr": {
+     "3": 0
+    },
+    "it": {
+     "3": 0
+    }
+   },
+   "correction": "DE (3) and FR (nothing) come to state the same value at this place; which side changes is not predicted",
+   "expect": {
+    "de_only": [
+     "3"
+    ],
+    "tgt_only": [],
+    "divergent": "unclear",
+    "agreeing": []
+   },
+   "excerpt_20261006": {
+    "de": "…iasis, bei denen eine Phototherapie oder eine der folgenden drei systemischen Therapien (Ciclosporin, Methotrexat, Acitretin…",
+    "fr": "Traitement des patients adultes et des enfants à partir de 6 ans atteints de formes sévères de psoriasis en plaque, qui n'ont pas répondu à la photothérapie ou à l'un des traitements systémiques conventionnels suivants (ciclosporine, méthotrexate, acitrétine).",
+    "it": "Trattamento di pazienti adulti e bambini a partire dai 6 anni di età con psoriasi a placche severa, che non hanno risposto a la fototerapia o uno dei seguenti trattamenti sistemici convenzionali (ciclosporina, metotrexato, acitretina) non abbiano prodotto alcun successo terapeutico."
+   },
+   "texts_sha256": {
+    "de": "96f487a081a623f347405208bf8c00bb43ef79418cded184b6fa75fd2e740ce1",
+    "fr": "94326c7213efcfe600aecf0a72396b7d9ebac22955e1e96ac01bc571cb4d6465",
+    "it": "df90d77ba5fa8126fd38111fbb58fd1557e6a18df34c5fed80c4e4f3d674beb1"
+   }
+  },
+  {
+   "pid": "W07",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "STELARAPP4",
+   "product": [
+    "Stelara"
+   ],
+   "kind": "number_word",
+   "lang": "it",
+   "divergent": "unclear",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R25"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "DE has 3 (number word), IT does not (in the aligned sentence).",
+   "state_20261006": {
+    "de": {
+     "3": 1
+    },
+    "fr": {
+     "3": 0
+    },
+    "it": {
+     "3": 0
+    }
+   },
+   "correction": "DE (3) and IT (nothing) come to state the same value at this place; which side changes is not predicted",
+   "expect": {
+    "de_only": [
+     "3"
+    ],
+    "tgt_only": [],
+    "divergent": "unclear",
+    "agreeing": []
+   },
+   "excerpt_20261006": {
+    "de": "…iasis, bei denen eine Phototherapie oder eine der folgenden drei systemischen Therapien (Ciclosporin, Methotrexat, Acitretin…",
+    "fr": "Traitement des patients adultes et des enfants à partir de 6 ans atteints de formes sévères de psoriasis en plaque, qui n'ont pas répondu à la photothérapie ou à l'un des traitements systémiques conventionnels suivants (ciclosporine, méthotrexate, acitrétine).",
+    "it": "Trattamento di pazienti adulti e bambini a partire dai 6 anni di età con psoriasi a placche severa, che non hanno risposto a la fototerapia o uno dei seguenti trattamenti sistemici convenzionali (ciclosporina, metotrexato, acitretina) non abbiano prodotto alcun successo terapeutico."
+   },
+   "texts_sha256": {
+    "de": "96f487a081a623f347405208bf8c00bb43ef79418cded184b6fa75fd2e740ce1",
+    "fr": "94326c7213efcfe600aecf0a72396b7d9ebac22955e1e96ac01bc571cb4d6465",
+    "it": "df90d77ba5fa8126fd38111fbb58fd1557e6a18df34c5fed80c4e4f3d674beb1"
+   }
+  },
+  {
+   "pid": "W08",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "TEPKINLY.01a",
+   "product": [
+    "Tepkinly"
+   ],
+   "kind": "number_word",
+   "lang": "fr",
+   "divergent": "unclear",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R27"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "DE has 2 (number word), FR does not (in the aligned sentence).",
+   "state_20261006": {
+    "de": {
+     "2": 1
+    },
+    "fr": {
+     "2": 0
+    },
+    "it": {
+     "2": 1
+    }
+   },
+   "correction": "DE (2) and FR (nothing) come to state the same value at this place; which side changes is not predicted",
+   "expect": {
+    "de_only": [
+     "2"
+    ],
+    "tgt_only": [],
+    "divergent": "unclear",
+    "agreeing": []
+   },
+   "excerpt_20261006": {
+    "de": "… B‐Zell-Lymphom (diffuse large B-cell lymphoma, DLBCL) nach zwei oder mehr systemischen Therapielinien, einschliesslich eine…",
+    "fr": "TEPKINLY est remboursé en monothérapie pour le traitement des patients adultes atteints d'un lymphome diffus à grandes cellules B (LDGCB) en rechute ou réfractaire après au moins deuxlignes de traitement systémique, incluant un anticorps anti-CD20, - qui ne sont pas éligibles à un traitement par …",
+    "it": "TEPKINLY è rimborsato come monoterapia per il trattamento di pazienti adulti con linfoma diffuso a grandi cellule B (DLBCL) recidivante o refrattario dopo due precedenti linee di terapia sistemica, incluso un anticorpo anti-CD20, - che non sono idonei alla terapia con cellule CAR-T anti-CD19 o …"
+   },
+   "texts_sha256": {
+    "de": "7fd25b4e06a7fdd6ee9499e380ec6860d52e1d6737af4aae1a837b62abe3f2cb",
+    "fr": "20fe0647ef364245f16dd6cc6d1aaabe094e16c0ec451dc45de71bdfcca77d16",
+    "it": "6b7adfb7b97bc998663bd62d442cdbc0fd0de41b2f45d640b974774f0d0d0a50"
+   }
+  },
+  {
+   "pid": "W09",
+   "set": "experimental",
+   "issue": null,
+   "limitation": "TEPKINLY.01b",
+   "product": [
+    "Tepkinly"
+   ],
+   "kind": "number_word",
+   "lang": "fr",
+   "divergent": "unclear",
+   "prediction": "no correction (not confirmed: negative prediction)",
+   "confirmed": false,
+   "blind_label": {
+    "final": "not",
+    "confirmed": false,
+    "source": "eval/labels/audit_r15_20261006.tsv:R16"
+   },
+   "likely_equivalent": false,
+   "first_seen": null,
+   "description": "DE has 2 (number word), FR does not (in the aligned sentence).",
+   "state_20261006": {
+    "de": {
+     "2": 1
+    },
+    "fr": {
+     "2": 0
+    },
+    "it": {
+     "2": 1
+    }
+   },
+   "correction": "DE (2) and FR (nothing) come to state the same value at this place; which side changes is not predicted",
+   "expect": {
+    "de_only": [
+     "2"
+    ],
+    "tgt_only": [],
+    "divergent": "unclear",
+    "agreeing": []
+   },
+   "excerpt_20261006": {
+    "de": "… B‐Zell-Lymphom (diffuse large B-cell lymphoma, DLBCL) nach zwei oder mehr systemischen Therapielinien, einschliesslich eine…",
+    "fr": "TEPKINLY est remboursé en monothérapie pour le traitement des patients adultes atteints d'un lymphome diffus à grandes cellules B (LDGCB) en rechute ou réfractaire après au moins deuxlignes de traitement systémique, incluant un anticorps anti-CD20, - qui ne sont pas éligibles à un traitement par …",
+    "it": "TEPKINLY è rimborsato come monoterapia per il trattamento di pazienti adulti con linfoma diffuso a grandi cellule B (DLBCL) recidivante o refrattario dopo due precedenti linee di terapia sistemica, incluso un anticorpo anti-CD20, - che non sono idonei alla terapia con cellule CAR-T anti-CD19 o …"
+   },
+   "texts_sha256": {
+    "de": "ad95ce1d4f18dac4e79204a5ab95276ae8670d6ded016cad83e29e0bd2c3818e",
+    "fr": "fb2e1bd3b8586d6994bebfab0538acdeeb6d6dbaff8e7779946aea1726f95c15",
+    "it": "7de88447d61b972ce0c13b4b3be23dec36b0b56f1402d11476c94c0bdf7b027d"
+   }
+  }
+ ],
+ "limitation_ids_20261006": [
+  "070110",
+  "070240",
+  "070810-NEU",
+  "070840",
+  "071330",
+  "0808-NEU",
+  "1010",
+  "120PISL",
+  "240PTEBEHERW",
+  "2X2MCI48H",
+  "ABEVMY.01a---Kolorektalkarzinom",
+  "ABEVMY.02a---Lungenkarzinom",
+  "ABEVMY.03a---Nierenzellkarzinom",
+  "ABEVMY.04a---Mammakarzinom",
+  "ABEVMY.05a---Ovarialkarzinom",
+  "ABEVMY.06a---Zervixkarzinom",
+  "ABEVMY.07a---Glioblastom",
+  "ABEVMY.08a---HCC",
+  "ABEVMY.09a---Ovarialkarzinom-2L",
+  "ABEVMY.RB",
+  "ABILIFY",
+  "ABIRATAccor2",
+  "ABIRATDevat2",
+  "ABIRATSand02",
+  "ABIRATSpiri2",
+  "ABIRATViatr2",
+  "ABIRATZenti2",
+  "ABRAXANE",
+  "ABRILADA4",
+  "ABRYSVO-01",
+  "ACCOFIL",
+  "ACLASTA3",
+  "ACTEMRA6",
+  "ACTIQ",
+  "ACTONEL.01",
+  "ACTONEL2",
+  "ACTOS2",
+  "ADARTREL",
+  "ADCETRIS.01",
+  "ADCETRIS.02",
+  "ADCETRIS.03",
+  "ADCETRIS.04",
+  "ADCETRIS.05",
+  "ADCETRIS.Ein",
+  "ADCIRCA",
+  "ADELPHANESID",
+  "ADEMPAS",
+  "ADEMPAS2",
+  "ADENURIC",
+  "ADTRALZA.01b",
+  "AFINITOR4",
+  "AFQLIR.01",
+  "AFSTYLA",
+  "AGIOLAXGRAND",
+  "AGOMELATIN",
+  "AIMOVIG.01",
+  "AJOVY.01",
+  "AKEEGA.01---mCRPC-BRCA",
+  "AKEEGA.02---mHSPC-BRCA2",
+  "AKEEGA.XX---Einleitung",
+  "AKYNZEO",
+  "AKYNZEO.02",
+  "ALACARE",
+  "ALDARA.01",
+  "ALECEN.NSCLC",
+  "ALFAMINO",
+  "ALGIFOR",
+  "ALHEMO.01",
+  "ALHEMO.02a",
+  "ALHEMO.Einl",
+  "ALIMTA-4",
+  "ALIMTA.Komb2",
+  "ALIMTA.Kombi",
+  "ALITRECUTAN",
+  "ALITRETINOIN",
+  "ALKERAN",
+  "ALKERAN1",
+  "ALKINDI",
+  "ALLERGOVIT",
+  "ALOXI",
+  "ALPROLIX2",
+  "ALTUVOCT.01",
+  "ALUNBRIG.02",
+  "ALUNBRIG1L",
+  "ALYFTREK.01",
+  "AMBISOME",
+  "AMELUZ3",
+  "AMGEVITA-5",
+  "AMGEVITA20-2",
+  "AMLODVALVIA2",
+  "AMLOVALHCTM2",
+  "AMLOVALSAND2",
+  "AMLOVALZENT2",
+  "AMLVALHCTSA2",
+  "AMLVALMEPTE2",
+  "AMVUTTRA.01a",
+  "AMVUTTRA.02",
+  "ANDEMBRY",
+  "ANESDERM",
+  "ANTABUS",
+  "ANTIDRYcalm",
+  "ANZUPGO",
+  "APOGOFERTSPR",
+  "APOGOPEN",
+  "APREMILAST-ACCORD.XX",
+  "APREMILAST-DEVATIS.XX",
+  "APREMILAST-LEMAN.XX",
+  "APREMILAST-MEPHA.XX",
+  "APREMILAST-SPIRIG-HC.XX",
+  "AQUIPTA.01a",
+  "ARANESP4",
+  "ARANESP5",
+  "ARCOXIA",
+  "ARLEVERT",
+  "ASACOL",
+  "ASPAVELI.01a",
+  "ATARAX",
+  "ATGAM.01",
+  "ATOR-EZE-ZEN",
+  "ATOZET3",
+  "ATRIANCE",
+  "ATROMED",
+  "ATTENTIN",
+  "AUGMENTIN",
+  "AULIN",
+  "AVALOX",
+  "AVASTIN.01",
+  "AVASTIN.02",
+  "AVASTIN.05",
+  "AVASTIN.06",
+  "AVASTIN.09",
+  "AVASTIN3.03a",
+  "AVASTIN3.04a",
+  "AVASTINGLIO",
+  "AVASTINHCC",
+  "AVTOZMA.01",
+  "AVTOZMA.02",
+  "AVTOZMA.03",
+  "AVTOZMA.Anf",
+  "BACLOFEN",
+  "BALVERSA",
+  "BAQSIMI",
+  "BAVENCIO4",
+  "BCG-medac.01---nicht-invasiver-urothelialer-Harnblasenkarzinome",
+  "BENDAMUACCOR",
+  "BENDAMUSANDO",
+  "BENEPALI4",
+  "BENLYSTA.Ein",
+  "BENLYSTA.LN",
+  "BENLYSTA.SLE",
+  "BEOVU.01a",
+  "BERINERT3",
+  "BESPONSA",
+  "BESREMI.01",
+  "BEVACIZU3.03",
+  "BEVACIZU3.04",
+  "BEVACIZUM.01",
+  "BEVACIZUM.02",
+  "BEVACIZUM.05",
+  "BEVACIZUM.06",
+  "BEVACIZUM.09",
+  "BEVACIZUM.10",
+  "BEVACIZUM.RB",
+  "BEVACIZUMAB4",
+  "BEVACIZUMABK",
+  "BEXSERO",
+  "BEYFORTUS.01",
+  "BEYONTTRA",
+  "BIMZELX.01",
+  "BIMZELX.01a",
+  "BIMZELX.02",
+  "BIMZELX.02a",
+  "BIMZELX.03b",
+  "BIMZELX.03c",
+  "BIMZELX.04b",
+  "BIMZELX.04c",
+  "BIMZELX.05",
+  "BIMZELX.05a",
+  "BINOCRIT",
+  "BLINCYTO.01a",
+  "BLINCYTO.02a",
+  "BLINCYTO.03a",
+  "BLINCYTO.04a",
+  "BLINCYTO.Ein",
+  "BLUTPRODUKTE",
+  "BONDRONAT3",
+  "BONVIVA",
+  "BORTEZACliq",
+  "BORTEZOMIBAC",
+  "BORTEZOMSAND",
+  "BORTEZOMSPIR",
+  "BOSULIF2",
+  "BOSUTINIBSAN",
+  "BOSUTINIBSPI",
+  "BOTOX4",
+  "BOTOX4a",
+  "BRAFTOVI2.01",
+  "BRILIQU60.01",
+  "BRILIQU90.01",
+  "BRIUMVI",
+  "BRIVIACT",
+  "BRUKINSA.01",
+  "BRUKINSA.Ein",
+  "BRUKUNSA.02a",
+  "BUCCOLAM",
+  "BUVIDAL",
+  "BYDUREONBCIS",
+  "BYOOVIZ3",
+  "CABAZ.LAB.02",
+  "CABAZ.SPI.02",
+  "CABAZ.VIA-02",
+  "CABAZACCORD2",
+  "CABAZITSA.02",
+  "CABAZITTE.02",
+  "CABLIVI.01",
+  "CABOMETYX.01",
+  "CABOMETYX.02",
+  "CABOMETYX.XX",
+  "CADUET4",
+  "CAELYX3",
+  "CALPEROS-D3",
+  "CALQUENCE.00",
+  "CALQUENCE.04",
+  "CALQUEtab.01",
+  "CALQUEtab.02",
+  "CALQUEtab.03",
+  "CAMPRAL",
+  "CAMZYOS.01",
+  "CANCIDAS",
+  "CANDESAR-AM2",
+  "CAPRELSA3",
+  "CAPVAXIVE.01",
+  "CAPVAXIVE.02",
+  "CAPVAXIVE.03",
+  "CAPVAXIVE.XX",
+  "CARDIOLITE",
+  "CARDURA",
+  "CARMENTHIN",
+  "CARNITENE2",
+  "CARNITENEpar",
+  "CAVERJECT",
+  "CAYSTON",
+  "CELEBREX",
+  "CELLCEPT",
+  "CELSENTRI",
+  "CERDELGA",
+  "CERNEVIT",
+  "CHLOTADGA.01",
+  "CHOLESTERING",
+  "CHOLIB2",
+  "CIBINQO",
+  "CIMIFEMIN",
+  "CIMZIA5",
+  "CITRAFLEET",
+  "COAMOXILABAT",
+  "COLCTAB",
+  "COLPERMIN",
+  "COMIRNATY1",
+  "COMPETACT",
+  "COPAXONE",
+  "CORDARONE",
+  "CORTIMENTMMX",
+  "COSENTYX.01",
+  "COSENTYX.02",
+  "COSENTYX.03",
+  "COSENTYX.04",
+  "COSENTYX.05",
+  "COTELLIC.01",
+  "COVALSAMLO2",
+  "COVERAM-PLUS",
+  "CREON",
+  "CRESE.Kps.IA",
+  "CRESE.Kps.IM",
+  "CRESE.Lsg.IA",
+  "CRESE.Lsg.IM",
+  "CRESTASTATIN",
+  "CRESTOR",
+  "CUBICIN",
+  "CUPRIOR",
+  "CUVITRU",
+  "CYRAMZA.01",
+  "CYRAMZA.02",
+  "CYTOTECT",
+  "D3VITACAPS",
+  "DACEPTON.01a",
+  "DACEPTON.30",
+  "DACOGEN",
+  "DALINGO.01",
+  "DAPTOMYCINAC",
+  "DAPTOMYCINLA",
+  "DARZALEX-04",
+  "DARZALEX.01b",
+  "DARZALEX.01c",
+  "DARZALEX.02b",
+  "DARZALEX.02c",
+  "DARZALEX.03b",
+  "DARZALEX.03c",
+  "DARZALEX.05a",
+  "DARZALEX.05b",
+  "DARZALEX.06",
+  "DARZALEX.07c",
+  "DARZALEX.07d",
+  "DARZALEX.08a",
+  "DARZALEX.08b",
+  "DARZALEX.09",
+  "DARZALEX.10",
+  "DARZALEX.SC",
+  "DARZALEXEINa",
+  "DARZALEXENDc",
+  "DATSCAN2",
+  "DECADURABOL2",
+  "DECAPEPTYL",
+  "DECITABSA.02",
+  "DEKRISTOL",
+  "DEMILOS.01",
+  "DENOSUME.01",
+  "DESFERAL2",
+  "DEURSIL",
+  "DEXAMGALEGF",
+  "DIAMICRON",
+  "DIAPHIN.6-",
+  "DIBASE",
+  "DIBASE01",
+  "DIFICLIR2",
+  "DIFLUCAN",
+  "DIMETHY-ACCO",
+  "DIMETHY-MEPH",
+  "DIMETHY-SAND",
+  "DIMETHY-SPIR",
+  "DIMETHY-VIAT",
+  "DOPTELET",
+  "DOXORACLI.01",
+  "DUODOPA.01",
+  "DUPHALACGRAN",
+  "DUPIXENT.01",
+  "DUPIXENT.01P",
+  "DUPIXENT.02",
+  "DUPIXENT.02P",
+  "DUPIXENT.03P",
+  "DUPIXENT.03a",
+  "DUPIXENT.04",
+  "DUPIXENT.04P",
+  "DUPIXENT.05P",
+  "DUPIXENT.05a",
+  "DUPIXENT.06-Pen---Chronische-Rhinosinusitis-mit-Nasenpolypen--CR",
+  "DUPIXENT.07",
+  "DUPIXENT.07P",
+  "DUPIXENT.08",
+  "DUPIXENT.08P",
+  "DUPIXENT.09",
+  "DUPIXENT.09P",
+  "DUPIXENT.10",
+  "DUPIXENT.10P",
+  "DUPIXENT.XXP",
+  "DUPIXENT.XXa",
+  "DYSPORT2",
+  "EBGLYSS.01",
+  "EBIXA2",
+  "ECALTA2",
+  "ECALTA3",
+  "ECOMUCYL",
+  "EDURANT",
+  "EFLUELDA",
+  "EINGESTPAT",
+  "ELAHERE",
+  "ELAPRASE1",
+  "ELDISINE",
+  "ELIDEL",
+  "ELMIRON",
+  "ELOCTA.01",
+  "ELREXFIO.01",
+  "ELUCIREM",
+  "ELUCIREM.30",
+  "ELVANSE",
+  "ELZONRIS.01a",
+  "EMEND125-80",
+  "EMETCHEMOTHE",
+  "EMGALITY.01",
+  "EMLA",
+  "EMPLICITI.01",
+  "EMPLICITI.02",
+  "EMT.TEN.M-01",
+  "EMT.TEN.M-02",
+  "ENBREL4",
+  "ENCEPURab-3J",
+  "ENERZAIR",
+  "ENFLONSIA.01",
+  "ENHERTU-XX",
+  "ENHERTU.01",
+  "ENHERTU.02",
+  "ENHERTU.03",
+  "ENSPRYNG",
+  "ENSTILAR1",
+  "ENTOCORTENEM",
+  "ENTRESTO4",
+  "ENTYVIO",
+  "ENTYVIO2",
+  "EPCLUSA5",
+  "EPIDYOLEX.01",
+  "EPIDYOLEX.02",
+  "EPIDYOLEX.03",
+  "EPIDYOLEX.Ei",
+  "EPIDYOLEX.en",
+  "EPLERENON",
+  "EPOTHETATEVA",
+  "EPREXRENAN",
+  "EPREXSYMPTAN",
+  "EPREXWAHL",
+  "ERBITUX5",
+  "ERELZI2",
+  "ERIVEDGE2",
+  "ERLEADA",
+  "ESBRIET",
+  "ESIDREX",
+  "EUTHYROX",
+  "EVENITY.01a",
+  "EVEROLIMUSZE",
+  "EVFRAXY.01",
+  "EVISTA",
+  "EVRYSDI.01a",
+  "EXELON",
+  "EXFORGE-HCT2",
+  "EXFORGEa",
+  "EXPO-SCHWANG",
+  "EXPO-TRANSPL",
+  "EYLEA.01",
+  "EYLEA.02",
+  "EYLEA.XX",
+  "EYLEA7.1",
+  "EZE-ATOR-MEP",
+  "EZE-ATOR-SAN",
+  "EZE-ATOR-SPI",
+  "EZET-ROS-AXA",
+  "EZET-ROS-MEP",
+  "EZET-ROS-SAN",
+  "EZET-ROS-SPI",
+  "EZET-ROS-VIA",
+  "EZETIMIB",
+  "EZETROL",
+  "EZETROSZENTI",
+  "EZETSIMVMeTe",
+  "EZETSIMVSand",
+  "EZETSIMVZent",
+  "EZMEKLY.01---Monotherapie-p-diatrisch",
+  "Eltrombopag-Generika.03a",
+  "Eltrombopag-Generika.04a",
+  "EzetSimvSpir",
+  "FABHALTA.01",
+  "FAMPYRA",
+  "FASENRA.01",
+  "FASENRA.02",
+  "FASLODEX",
+  "FERRIPROX2",
+  "FIBROGAMMIN",
+  "FILGRASTIM",
+  "FIRAZYR2",
+  "FIRDAPSE",
+  "FLAMMAZINEGF",
+  "FLIXABI.01",
+  "FLIXABI.02",
+  "FLIXABI.03",
+  "FLIXABI.04",
+  "FLIXABI.05",
+  "FLIXABI.06",
+  "FLIXABI.XX",
+  "FLUDARA",
+  "FLUIMUCIL-2",
+  "FLUVASTMEPHA",
+  "FORSTEO-2",
+  "FORXIGA.10mg",
+  "FORXIGA.5mg",
+  "FORXIGA.HFPM",
+  "FORXIGA.HFR",
+  "FORXIGACKD",
+  "FOSAVANCE",
+  "FOSAVANCE2",
+  "FRUZAQLA.01",
+  "FSME-ab-3J.",
+  "FULVESTRANT",
+  "FYCOMPA",
+  "FYCOMPA2",
+  "GALAFOLD3",
+  "GALVUMET3",
+  "GALVUS4",
+  "GATINARGP",
+  "GAZYVARO.03",
+  "GAZYVARO.04",
+  "GAZYVARO.FLr",
+  "GAZYVARO4",
+  "GENOTROPIN",
+  "GENOTROPIN-2",
+  "GFIMPFUNG",
+  "GILENYA3",
+  "GIOTRIF",
+  "GIVLAARI.01",
+  "GLASSIA",
+  "GLIVEC",
+  "GLIVECGIST",
+  "GLYXAMBI",
+  "GRAFALON.Kom",
+  "GRAFALON.Pr-",
+  "GRANDFR.I.TP",
+  "GRANDFR.Impf",
+  "GRANDFRERE",
+  "GRANDFRERE10",
+  "GRANDFRERE11",
+  "GRANDFRERE12",
+  "GRANDFRERE2",
+  "GRANDFRERE4",
+  "GRANDFRERE5",
+  "GRANDFRERE6",
+  "GRANDFRERE7",
+  "GRANDFRERE8",
+  "GRANDFRERE9",
+  "HALAVEN3",
+  "HAVRIX1440",
+  "HAVRIX720",
+  "HBVAXPRODIAL",
+  "HEIMBEH",
+  "HEMANGIOL",
+  "HEMGENIX.01---H-mophilie-B-bei-M-nner",
+  "HEMLIBRA.01",
+  "HEMLIBRA.02",
+  "HEMLIBRA.03",
+  "HEMLIBRA.04",
+  "HEMLIBRA.XXb",
+  "HEPATECT",
+  "HEPCLUDEX.01",
+  "HEPENZE",
+  "HEPSERA",
+  "HERCEPERJ.01",
+  "HERCEPERJ.02",
+  "HERCEPTINSC",
+  "HERPES-SIMPL",
+  "HERPES-ZENTI",
+  "HERPESSIMIM2",
+  "HERPESSIMIMM",
+  "HERPESZOSTER",
+  "HERZUPERJ.01",
+  "HERZUPERJ.02",
+  "HIZENTRA",
+  "HUKYNDRA2",
+  "HULIO4",
+  "HUMATROPE",
+  "HUMATROPE-2",
+  "HUMIRA20mg",
+  "HUMIRA6",
+  "HYCAMTIN",
+  "HYCAMTIN-2",
+  "HYMPAVZI.01",
+  "HYMPAVZI.02",
+  "HYMPAVZI.XX",
+  "HYQVIA.01",
+  "HYRIMOZ20mg2",
+  "HYRIMOZ4",
+  "IBRANCE.01a",
+  "IBRANCE.01b",
+  "IBRANCE.02a",
+  "IBRANCE.02b",
+  "IBRANCE.03a",
+  "IBRANCE.03b",
+  "IBRANCEEND",
+  "ICLUSIG",
+  "IDACIO4",
+  "IDEFIRIX",
+  "IGVENAKEDRIO",
+  "ILARIS.01",
+  "ILARIS.01a",
+  "ILARIS.03a",
+  "ILARIS.04a",
+  "ILARIS.05a",
+  "ILARIS.Anf",
+  "ILARISfmf.05",
+  "ILARIShid.04",
+  "ILARIStra.03",
+  "ILUMETRI3",
+  "ILUMETRI4",
+  "IMATINIB",
+  "IMBRUV.Ein",
+  "IMBRUVICA.01",
+  "IMBRUVICA.02",
+  "IMBRUVICA.03",
+  "IMBRUVICA.04",
+  "IMBRUVICA.05",
+  "IMBRUVICA.06",
+  "IMBRUVICA.07",
+  "IMFINZI.01a",
+  "IMFINZI.02a",
+  "IMFINZI.03a",
+  "IMFINZI.04a",
+  "IMFINZI.05",
+  "IMFINZI.06",
+  "IMIQUIMOD.LE",
+  "IMJUDO-HCC",
+  "IMLYGIC2",
+  "IMMUNATE",
+  "IMNOVID",
+  "IMNOVID.01",
+  "IMNOVID.03",
+  "IMNOVID.04",
+  "IMPORTALGP",
+  "IMPORTALGP12",
+  "IMRALDI3",
+  "IMULDOSA.01",
+  "IMULDOSA.02",
+  "IMULDOSA.03",
+  "INDIVINA2",
+  "INEGY",
+  "INFLECTRA3",
+  "INLYTA",
+  "INSPRA",
+  "INSPRA2",
+  "INTELENCE2",
+  "INTRATECT2",
+  "INTUNIV",
+  "INVOKANA.01",
+  "IRESSA2",
+  "ISENTRESS2",
+  "ISTURISA",
+  "IVEMEND2",
+  "IXIFI.01",
+  "IXIFI.02",
+  "IXIFI.03",
+  "IXIFI.04",
+  "IXIFI.05",
+  "IXIFI.06",
+  "IXIFI.XX",
+  "Impfung.TP",
+  "JADENU",
+  "JAKAVI3",
+  "JANUMET3",
+  "JANUVIA5",
+  "JARDIANC.04a",
+  "JARDIANCE-MET.01",
+  "JARDIANCE.01",
+  "JARDIANCE5",
+  "JARDIANCE6",
+  "JAYPIRCA.01",
+  "JAYPIRCA.02",
+  "JAYPIRCA.XX",
+  "JEMPERLI.01---Endometriumkarzinom-Mono",
+  "JEMPERLI.02---Endometriumkarzinom-Kombi",
+  "JENTADUETO3",
+  "JEVTANA2",
+  "JINARC.01",
+  "JIVI",
+  "JORVEZA.End",
+  "JORVEZA.Erh2",
+  "JORVEZA.Ind2",
+  "JUBBONTI.01",
+  "JYLAMVO",
+  "KADCYLA.01",
+  "KADCYLA2mono",
+  "KALCIPOS-D3",
+  "KALYDECO-150",
+  "KALYDECO-gra",
+  "KANJINTI.01",
+  "KANJINTI.02",
+  "KAPANOL",
+  "KAPRUVIA.01",
+  "KEPPRA",
+  "KERENDIA",
+  "KESIMPTA",
+  "KETESSEGF",
+  "KEVZARA-01",
+  "KEYTRUDA.01",
+  "KEYTRUDA.01---Inj-L-s---1L-NSCLC--Monotherapie--KN024",
+  "KEYTRUDA.02",
+  "KEYTRUDA.02---Inj-L-s---1L-nicht-plattenepitheliales-NSCLC-KN189",
+  "KEYTRUDA.03",
+  "KEYTRUDA.03---Inj-L-s---1L-plattenepitheliales-NSCLC-KN407",
+  "KEYTRUDA.04",
+  "KEYTRUDA.04---Inj-L-s---2L-NSCLC--Monotherapie--KN010",
+  "KEYTRUDA.05a",
+  "KEYTRUDA.05a---Inj-L-s---KN006",
+  "KEYTRUDA.06a---Inj-L-s---KN054",
+  "KEYTRUDA.06c",
+  "KEYTRUDA.07",
+  "KEYTRUDA.07---Inj-L-s---Urothelkarzinom--Monotherapie--KN045",
+  "KEYTRUDA.08",
+  "KEYTRUDA.08---Inj-L-s---1L-HNSCC-KN048",
+  "KEYTRUDA.09",
+  "KEYTRUDA.09---Inj-L-s---HNSCC--Monotherapie--KN040",
+  "KEYTRUDA.10",
+  "KEYTRUDA.10---Inj-L-s---Klassisches-Hodgkin-Lymphom--Monotherapi",
+  "KEYTRUDA.11",
+  "KEYTRUDA.12",
+  "KEYTRUDA.12---Inj-L-s---3L-rrPMBCL--Monotherapie--KN170",
+  "KEYTRUDA.13",
+  "KEYTRUDA.13---Inj-L-s---1L-CRC-mit-hoher-MSI-H--Monotherapie--KN",
+  "KEYTRUDA.14---Inj-L-s---2L-CRC-mit-hoher-MSI-H--Monotherapie--KN",
+  "KEYTRUDA.14a",
+  "KEYTRUDA.15",
+  "KEYTRUDA.15---Inj-L-s---2L-Endometriumkarzinom--Magenkarzinom--D",
+  "KEYTRUDA.16",
+  "KEYTRUDA.16---Inj-L-s---1L-Persistierendes--rezidivierendes-oder",
+  "KEYTRUDA.17",
+  "KEYTRUDA.17---Inj-L-s---Lokal-rezidiverendes--nicht-resezierbare",
+  "KEYTRUDA.18",
+  "KEYTRUDA.18---Inj-L-s---1L-fortgeschrittenes-RCC-KN581",
+  "KEYTRUDA.19",
+  "KEYTRUDA.19---Inj-L-s---2L-Endometriumkarzinom-KN775",
+  "KEYTRUDA.20",
+  "KEYTRUDA.20a---Inj-L-s---KN811",
+  "KEYTRUDA.21",
+  "KEYTRUDA.21a---Inj-L-s---KN859",
+  "KEYTRUDA.22",
+  "KEYTRUDA.22---Inj-L-s---Bili-res-Karzinom-KN966",
+  "KEYTRUDA.23",
+  "KEYTRUDA.23a---Inj-L-s---Triple-negatives-Mammakarzinom--TNBC--n",
+  "KEYTRUDA.24",
+  "KEYTRUDA.24a---Inj-L-s---KNA18",
+  "KEYTRUDA.25",
+  "KEYTRUDA.25a---Inj-L-s---KN564",
+  "KEYTRUDA.26",
+  "KEYTRUDA.26a---Inj-L-s---KN091",
+  "KEYTRUDA.XX---Inf-Konz",
+  "KEYTRUDA.XXa---Inj-L-s",
+  "KIMMTRAK.01",
+  "KISPLYX.01",
+  "KISQALI.01",
+  "KISQALI.02",
+  "KISQALI.03",
+  "KISQALI.04",
+  "KISQALI.XX",
+  "KLACID",
+  "KLACIDGRANDF",
+  "KLEINPACKUNG",
+  "KLISYRI",
+  "KOMBIGLYZE3",
+  "KOSELUGO.01---Monotherapie",
+  "KUVAN",
+  "KYPROLIS.02a",
+  "KYPROLIS.03a",
+  "KYPROLIS.04a",
+  "KYPROLIS.05a",
+  "KYPROLIS.06",
+  "KYPROLIS.07",
+  "KYPROLIS.XX",
+  "KYTRIL2",
+  "KYTRIL3",
+  "KYTTAMED.01",
+  "L-POLAMIDON1",
+  "L-POLAMIDON2",
+  "LAITEA",
+  "LATUDA2",
+  "LAZCLUZE.01a",
+  "LAZCLUZE.01b",
+  "LECIGON",
+  "LEDAGA.01",
+  "LEMTRADA5",
+  "LENALI.AC.09",
+  "LENALI.BM.09",
+  "LENALI.DE.09",
+  "LENALI.SA.09",
+  "LENALI.SP.09",
+  "LENALI.TE.09",
+  "LENALI.VI.09",
+  "LENALI.ZE.09",
+  "LENALIAC.08",
+  "LENALIAC.11a",
+  "LENALIAC.12a",
+  "LENALIAC.13",
+  "LENALIAC.14",
+  "LENALIAC.15",
+  "LENALIBM.08",
+  "LENALIBM.11a",
+  "LENALIBM.12a",
+  "LENALIBM.13",
+  "LENALIBM.14",
+  "LENALIBM.15",
+  "LENALIDE.08",
+  "LENALIDE.11a",
+  "LENALIDE.12a",
+  "LENALIDE.13",
+  "LENALIDE.14",
+  "LENALIDE.15",
+  "LENALIDOMDEV",
+  "LENALIDOMID1",
+  "LENALIDOMSAN",
+  "LENALIDOMSPI",
+  "LENALIDOMTEV",
+  "LENALIDOMVIA",
+  "LENALIDOMZEN",
+  "LENALIDOMbms",
+  "LENALISA.08",
+  "LENALISA.11a",
+  "LENALISA.12a",
+  "LENALISA.13",
+  "LENALISA.14",
+  "LENALISA.15",
+  "LENALISP.08",
+  "LENALISP.11a",
+  "LENALISP.12a",
+  "LENALISP.13",
+  "LENALISP.14",
+  "LENALISP.15",
+  "LENALITE.08",
+  "LENALITE.11a",
+  "LENALITE.12a",
+  "LENALITE.13",
+  "LENALITE.14",
+  "LENALITE.15",
+  "LENALIVI.08",
+  "LENALIVI.11a",
+  "LENALIVI.12a",
+  "LENALIVI.13",
+  "LENALIVI.14",
+  "LENALIVI.15",
+  "LENALIZE.08",
+  "LENALIZE.11a",
+  "LENALIZE.12a",
+  "LENALIZE.13",
+  "LENALIZE.14",
+  "LENALIZE.15",
+  "LENVIMA.01",
+  "LENVIMA.02",
+  "LENVIMA.03",
+  "LEQVIO.01",
+  "LEVOSERT",
+  "LIBTAYO-EINF",
+  "LIBTAYO.01a",
+  "LIBTAYO.02a",
+  "LIBTAYO.03",
+  "LIBTAYO.04",
+  "LIORESAL",
+  "LITAK",
+  "LIVAZO2",
+  "LIVTENCIT.01",
+  "LIXIM-PATCH2",
+  "LODOTRA",
+  "LONSURF.01",
+  "LONSURF.02",
+  "LONSURF.03",
+  "LONSURF.XX",
+  "LORVIQUA.01",
+  "LUCENTIS3",
+  "LUPKYNIS",
+  "LUXTURNA",
+  "LYNPARZA.01a",
+  "LYNPARZA.02",
+  "LYNPARZA.03a",
+  "LYNPARZA.04a",
+  "LYNPARZA.05",
+  "LYNPARZA.06",
+  "LYTGOBI.01",
+  "MABTHERA.01",
+  "MABTHERA.02",
+  "MABTHERA.03a",
+  "MABTHERA1400",
+  "MALARIA",
+  "MALARONE",
+  "MAVENCLAD.01---aktive-RRMS",
+  "MAVENCLAD.02---hochaktive-RRMS",
+  "MAVIRET3",
+  "MAX2INJIN48H",
+  "MAYZENT",
+  "MEKIN.NSC.03",
+  "MEKIN.adj.02",
+  "MEKIN.met.01",
+  "MEKTOVI-2.01",
+  "MENOPUR",
+  "MENQUADFI2",
+  "MENVEO-TP",
+  "MENVEO03",
+  "MENVEO5er",
+  "MERONEM",
+  "METHADDICT",
+  "METHREXX",
+  "METHYLPHEN02",
+  "METOPIRON",
+  "MIACALCICNAS",
+  "MIACALCICPAR",
+  "MICROLAX",
+  "MICTONET",
+  "MICTONORM.01",
+  "MILUPAPREGO",
+  "MIMPARA2",
+  "MINJUVI.01a",
+  "MIRCERA",
+  "MIRVASO",
+  "MITEM",
+  "MMRVAXPROGF",
+  "MODASOMIL2",
+  "MODIGRAF",
+  "MONTELUKAST",
+  "MOUNJARO.01",
+  "MOUNJARO.01K",
+  "MOUNJARO.02",
+  "MOUNJARO.02K",
+  "MOUNJARO.Ein",
+  "MOVENTIG",
+  "MULTAQ",
+  "MUTAFLOR",
+  "MVASI.01",
+  "MVASI.02",
+  "MVASI.05",
+  "MVASI.06",
+  "MVASI.09",
+  "MVASI.10",
+  "MVASI.R-B",
+  "MVASI3.03",
+  "MVASI3.04",
+  "MVASIGLIO2",
+  "MVASIKOM",
+  "MYNZEPLI.01",
+  "MYOVIEW2",
+  "MYOZYME4",
+  "MYSOLINE",
+  "NAGLAZYMEnew",
+  "NATULAN",
+  "NAUSEMETCHEM",
+  "NEBIDO2",
+  "NEBILET-PLUS",
+  "NEMLUVIO.01",
+  "NEMLUVIO.02a",
+  "NEMLUVIO.03a",
+  "NEMLUVIO.XX",
+  "NEOCATEINFAN",
+  "NEOTIGASON",
+  "NEPEXTO",
+  "NEULASTA",
+  "NEUPOGEN",
+  "NEUPRO1",
+  "NEUPRO3",
+  "NEUPRO4",
+  "NEXAVAR3",
+  "NEXPOVIO.01",
+  "NEXVIADYME2",
+  "NGENLA",
+  "NILEMDO.01",
+  "NIMOTOP",
+  "NINLARO-01",
+  "NINTEDANIB.MEPHA.01",
+  "NINTEDANIB.MEPHA.02",
+  "NINTEDANIB.MEPHA.03",
+  "NINTEDANIB.MEPHA.XX",
+  "NINTEDANIB.SANDOZ.01a",
+  "NINTEDANIB.SANDOZ.02",
+  "NINTEDANIB.SANDOZ.03",
+  "NINTEDANIB.SANDOZ.XX",
+  "NINTEDANIB.SPIRIG.HC.01",
+  "NINTEDANIB.SPIRIG.HC.02",
+  "NINTEDANIB.SPIRIG.HC.03",
+  "NINTEDANIB.SPIRIG.HC.XX",
+  "NINTEDANIB.ZENTIVA.01",
+  "NINTEDANIB.ZENTIVA.02",
+  "NINTEDANIB.ZENTIVA.03",
+  "NINTEDANIB.ZENTIVA.XX",
+  "NORDIMET",
+  "NORDITROPIN2",
+  "NOVONORM",
+  "NOVOTHYRAL",
+  "NOXAFIL2",
+  "NOXAFIL3",
+  "NPLATE4",
+  "NUBEQA.01a",
+  "NUBEQA.02",
+  "NUBEQA.Einl",
+  "NUCALA-02",
+  "NUCALA.01",
+  "NUCALA.03---COPD",
+  "NUCALA.KoGu",
+  "NULOJIX",
+  "NUMETA-NEO",
+  "NUMETA-PED",
+  "NUROFENJF",
+  "NUSTENDI.01",
+  "OBODENCE.01",
+  "OCREVUS.01b",
+  "OCREVUS.01c",
+  "OCTAGAM",
+  "OCTOSTIM",
+  "OCTOSTIM2",
+  "ODOMZO2",
+  "OFEV.01a",
+  "OFEV.02a",
+  "OFEV.03a",
+  "OFEV.XX",
+  "OGIVRPER.01a",
+  "OGIVRPERJ.01",
+  "OGIVRPERJ.02",
+  "OLMAMLHCTME2",
+  "OLMAMLSAND02",
+  "OLMAMLSPIR2",
+  "OLMAMLZENT02",
+  "OLMEAMLO.ZE2",
+  "OLMEAMLOMEP2",
+  "OLUMIANT.01",
+  "OLUMIANT.02",
+  "OLUMIANT.Ein",
+  "OMJJARA",
+  "OMLYCLO.02",
+  "OMNITROPE",
+  "OMNITROPE-RB",
+  "OMVOHDst.01b",
+  "OMVOHDstf.02a",
+  "OMVOHPen.01b",
+  "OMVOHPen.02a",
+  "ONCASPAR",
+  "ONCOVIN",
+  "ONGLYZA3",
+  "ONPATTRO-1",
+  "ONTOZRY.01",
+  "OPDIVO-22095.XX",
+  "OPDIVO.01",
+  "OPDIVO.01---NSCLC-Mono",
+  "OPDIVO.02---Melanom-Monotherapie",
+  "OPDIVO.02a",
+  "OPDIVO.03---Melanom-Kombitherapie",
+  "OPDIVO.03a",
+  "OPDIVO.04",
+  "OPDIVO.04---Nierenzellkarzinom--RCC-",
+  "OPDIVO.05",
+  "OPDIVO.05---Plattenepithelkarzinom-im-Kopf-Hals-Bereich--SCCHN-",
+  "OPDIVO.06",
+  "OPDIVO.07---Melanom-adjuvant",
+  "OPDIVO.07a",
+  "OPDIVO.08",
+  "OPDIVO.08---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H",
+  "OPDIVO.09",
+  "OPDIVO.09---OC-oder-GEJC-adjuvant",
+  "OPDIVO.10",
+  "OPDIVO.10---RCC-Nierenzellkarzinom",
+  "OPDIVO.11",
+  "OPDIVO.11---Kolorektales-Karzinom--CRC--mit-dMMR-MSI-H",
+  "OPDIVO.12",
+  "OPDIVO.12---MIUC-adjuvant",
+  "OPDIVO.13",
+  "OPDIVO.13--",
+  "OPDIVO.14",
+  "OPDIVO.15",
+  "OPDIVO.16",
+  "OPDIVO.16---GC-GEJC-OC",
+  "OPDIVO.17",
+  "OPDIVO.18",
+  "OPDIVO.18---1L-RCC-in-Kombination-mit-Cabozantinib",
+  "OPDIVOEINF8",
+  "OPDUALAG.01a",
+  "OPFOLDA2",
+  "OPSUMIT",
+  "OPZELURA.01---Vitiligo-Erwachsene-und-Jugendliche-ab-12-Jahren",
+  "ORACEA",
+  "ORENCIAINJ",
+  "ORENCIATROCK",
+  "ORKAMBI.02",
+  "ORKAMBI.gran",
+  "ORKAMBI.tabl",
+  "ORLADEYO",
+  "ORLISTATMEPH",
+  "ORLISTATSAND",
+  "ORLISTATSP84",
+  "ORLISTATSPIR",
+  "ORSERDU.01",
+  "ORSERDU.86mg",
+  "OSENVELT",
+  "OSPOLOT",
+  "OSPOLOTSusp",
+  "OSVYRTI.01",
+  "OTEZLA.01",
+  "OTEZLA.02",
+  "OTEZLA.03",
+  "OTEZLA.XX",
+  "OTEZLA4",
+  "OVALEAP",
+  "OYAVAS.01",
+  "OYAVAS.02",
+  "OYAVAS.05a",
+  "OYAVAS.06",
+  "OYAVAS.09",
+  "OYAVAS.10",
+  "OYAVAS.R-B",
+  "OYAVAS3.03",
+  "OYAVAS3.04",
+  "OYAVASGLIO2",
+  "OZEMPIC.01",
+  "OZURDEX4",
+  "PAMORELIN.01",
+  "PARENTANW",
+  "PARSABIV",
+  "PAVBLU.01",
+  "PAXLOVID.01",
+  "PEGASYS",
+  "PEMAZYRE",
+  "PEMETRACC.02",
+  "PEMETRACC.03",
+  "PEMETRACC.Ko",
+  "PEMETRACCliq",
+  "PEMETREXED",
+  "PEMETRSA.01",
+  "PEMETRSA.02",
+  "PEMETRSA.03",
+  "PEMETRSA.Kom",
+  "PEMETRSP.01",
+  "PEMETRSP.02",
+  "PEMETRSP.03",
+  "PEMETRSP.Kom",
+  "PEMETRTE.01",
+  "PEMETRTE.02",
+  "PEMETRTE.03",
+  "PEMETRTE.Kom",
+  "PEMETRVI.01",
+  "PEMETRVI.02",
+  "PEMETRVI.03",
+  "PEMETRVI.Kom",
+  "PENTASA",
+  "PERAMLIND.me",
+  "PERAMLIND.sp",
+  "PERENTEROL",
+  "PERINDAMLIND",
+  "PERJETA.01",
+  "PERJETA.02",
+  "PERJETA.03",
+  "PHEBURANE",
+  "PHESGO.01",
+  "PHESGO.02",
+  "PHESGO.03",
+  "PHOSPHONORM",
+  "PHYSIOTENS",
+  "PIFELTRO.01",
+  "PIQRAY",
+  "PIRFEMEPH.01",
+  "PIRFESAND.01",
+  "PIRFESPIR.01",
+  "PITAVASTMEPH",
+  "PITAVASTSAND",
+  "PITAVASTSPIR",
+  "PITAVASTZENT",
+  "PKMERZ",
+  "PLAQUENIL2",
+  "PLENADREN.01",
+  "POLIVY.01",
+  "POLVAC",
+  "POMALI.Ac.01",
+  "POMALI.Ac.03",
+  "POMALI.Ac.04",
+  "POMALI.AcAUS",
+  "POMALI.De.01",
+  "POMALI.De.03",
+  "POMALI.De.04",
+  "POMALI.DeAUS",
+  "POMALI.SPIR2",
+  "POMALI.Sa.01",
+  "POMALI.Sa.03",
+  "POMALI.Sa.04",
+  "POMALI.SaAUS",
+  "POMALI.TE.01",
+  "POMALI.TE.03",
+  "POMALI.TE.04",
+  "POMALI.TeAUS",
+  "POMALI.Ze.01",
+  "POMALI.Ze.03",
+  "POMALI.Ze.04",
+  "POMALI.Zent2",
+  "POMBILITI2",
+  "PONVORY-neu",
+  "POTELIGEO.01",
+  "PRALUENT.01a",
+  "PRAMIPERSA",
+  "PRAMIPEX-SPI",
+  "PRAMIPEXERZE",
+  "PRAMIPEXOLER",
+  "PRASUGREL",
+  "PRAVASTMepha",
+  "PRAVASTSandz",
+  "PRAVASTSpiri",
+  "PREVENA20.02",
+  "PREVENAR13-3",
+  "PREVENAR20-2",
+  "PREVYMIS.01",
+  "PREVYMIS.01a",
+  "PREVYMIS.02",
+  "PREVYMIS.Inf",
+  "PRIALT",
+  "PRILIDLE.01",
+  "PRILIDLEMAN",
+  "PRIVIGEN3",
+  "PROCORALAN4",
+  "PROCYSBI",
+  "PROLASTIN",
+  "PROLASTINliq",
+  "PROLIA3",
+  "PROPYCIL",
+  "PROTOPIC",
+  "PRUCAL.SP.01",
+  "PULMOZYME",
+  "PYZCHIVA.01",
+  "PYZCHIVA.02",
+  "PYZCHIVA.03",
+  "PaclitaAlbSp",
+  "PactaAlAc.01",
+  "PactaAlAc.02",
+  "Pomali.Sp.01",
+  "Pomali.Sp.03",
+  "Pomali.Sp.04",
+  "QARZIBA.01",
+  "QARZIBA.02",
+  "QARZIBA.KoGu",
+  "QINLOCK.01",
+  "QTERN",
+  "QUETIAPIN",
+  "QUETIAPINMEP",
+  "QUETIAPINXR",
+  "QUETIAPXRZEN",
+  "QUOFENIX",
+  "QUTENZA6",
+  "RANEXA",
+  "RANIVISIO2",
+  "RAYALDEE",
+  "RECORMON2",
+  "REKAMBYS",
+  "REMICADE2",
+  "REMINYL",
+  "REMODULIN",
+  "REMSIMA.01---Aktive-Rheumatoide-Arthritis",
+  "REMSIMA.03---Morbus-Bechterew-Ankylosierende-Spondylitis",
+  "REMSIMA.03---Morbus-Crohn",
+  "REMSIMA.04---Moderate-bis-schwere-Colitis-ulcerosa",
+  "REMSIMA.05---Schwere-Plaque-Psoriasis",
+  "REMSIMA.06---Psoriasis-Arthritis",
+  "REMSIMA.XX---Austausch-Referenzpr-parat-Biosimilar",
+  "REMSIMA4",
+  "RENAGEL",
+  "REPATHA.01a",
+  "RESOLOR3",
+  "RESOTRAN.01",
+  "RESPREEZA",
+  "RETSEVMO.01---2L-NSCLC",
+  "RETSEVMO.02a---MTC",
+  "RETSEVMO.03---2L-PTC",
+  "RETSEVMO.XXa---Filmtabl.",
+  "REVATIO2",
+  "REVLIMID.08",
+  "REVLIMID.09",
+  "REVLIMID.11",
+  "REVLIMID.12a",
+  "REVLIMID.13",
+  "REVLIMID.14",
+  "REVLIMID.15",
+  "REVLIMID10",
+  "REVOLADE.01a---SAA-1L",
+  "REVOLADE.02---SAA-2L-",
+  "REVOLADE.02a---SAA-2L-",
+  "REVOLADE.03a---ITP",
+  "REVOLADE.04a---ITP-Kinder",
+  "REVOLADE.XX---Einleitung",
+  "RIAMETDT",
+  "RIBOMUSTIN",
+  "RIBOMUSTIN2",
+  "RINVOQ.01a",
+  "RINVOQ.02a",
+  "RINVOQ.03a",
+  "RINVOQ.04a",
+  "RINVOQ.05",
+  "RINVOQ.06",
+  "RINVOQ.XXa",
+  "RITALINGF",
+  "RIVA.VIA.vas",
+  "RIVA.vas.Mep",
+  "RIVA.vas.NOB",
+  "RIVA.vas.Spi",
+  "RIVASUR.01",
+  "RIVASavas.01",
+  "RIVAvasZe.01",
+  "RIXATHON.01",
+  "RIXATHON.02",
+  "RIXATHON.03a",
+  "RIXATHON.RB",
+  "ROACCUTANE",
+  "ROCEPHIN2",
+  "ROSUVASNobel",
+  "ROSUVASTAX",
+  "ROSUVASTAX-DROSSAPHARM.01",
+  "ROSUVASTAxa",
+  "ROSUVASTMeph",
+  "ROSUVASTSand",
+  "ROSUVAspirig",
+  "ROSUVAzentiv",
+  "ROTARIX",
+  "ROZLYTREK.01",
+  "ROZLYTREK.02",
+  "RUBRACA.01",
+  "RUDOLACGP",
+  "RUXIENCE.01",
+  "RUXIENCE.02",
+  "RUXIENCE.03a",
+  "RUXIENXE.Bio",
+  "RYBELSUS.01",
+  "RYBREVAN.01b",
+  "RYBREVAN.01c",
+  "RYBREVAN.01d",
+  "RYBREVAN.02b",
+  "RYBREVAN.03b",
+  "RYBREVAN.04a",
+  "RYBREVAN.04b",
+  "RYBREVAN.XXb",
+  "RYBREVAN.XXc",
+  "RYBREVANT.04",
+  "SAIZEN",
+  "SALAGEN",
+  "SALVACYL",
+  "SANDIMMUN",
+  "SANDIMMUN-NE",
+  "SANDOSTATIN",
+  "SANTURIL",
+  "SAPHNELO",
+  "SAPROPT.DIPH",
+  "SAPROPT.Spir",
+  "SARCLISA.01",
+  "SARCLISA.02",
+  "SARCLISA.03",
+  "SARCLISA.XX",
+  "SCEMBLIX.01",
+  "SCHMIDS",
+  "SEBIVO1",
+  "SELINCRO",
+  "SENSICUTAN",
+  "SEQUASE-XR",
+  "SEROQUEL-XR",
+  "SEVIKAR02",
+  "SEVRE-LONG",
+  "SEVRE-LONG2",
+  "SHINGRIX",
+  "SIFROL-ER",
+  "SIGNIFOR",
+  "SIGNIFOR-LAR",
+  "SILDEN.P.MEP",
+  "SILDEN.P.SPI",
+  "SILDEN.P.VIA",
+  "SIMCORA",
+  "SIMPONI3",
+  "SIMVASTATspr",
+  "SIMVASmepha",
+  "SIMVASzentiv",
+  "SITAGLIPTIN-DEVATIS.01",
+  "SKYCLARYS.01",
+  "SKYRIZI.01---Schwere-Plaque-Psoriasis--nur-150-mg-",
+  "SKYRIZI.02---Psoriasis-Arthritis--nur-150-mg-",
+  "SKYRIZI.03---Morbus-Crohn--nur-360-mg-und-600-mg-",
+  "SKYRIZI.04---Colitis-Ulcerosa--nur-180-mg--360-mg--600-mg--2-Stk",
+  "SKYRIZI.XX---EAP",
+  "SLENYTO.01",
+  "SOGROYA.01",
+  "SOLIRIS.02",
+  "SOLIRIS2",
+  "SOMATULINE.01---NET",
+  "SOMAVERT2",
+  "SORTIS",
+  "SPEVIGO.01",
+  "SPIKEVAX.GF",
+  "SPIKEVAX1",
+  "SPINRAZA.01",
+  "SPRAVATO.01",
+  "SPRYCEL2",
+  "SPRYCEL3",
+  "STAMICIS",
+  "STDTHERAPREF",
+  "STEGLATRO2",
+  "STEGLUJAN",
+  "STELARACU2",
+  "STELARAMC",
+  "STELARAPA",
+  "STELARAPP4",
+  "STEQEYMA.01",
+  "STEQEYMA.02",
+  "STEQEYMA.03",
+  "STIVARGA3",
+  "STOBOCLO",
+  "STRATTERA",
+  "STRATTERA2",
+  "STRENSIQ.01",
+  "STRIASCAN",
+  "SUBUTEX",
+  "SULIQUA",
+  "SUNLENCA.01",
+  "SUNLENCA.01a",
+  "SUTENT",
+  "SYCREST2",
+  "SYMDEKO-01",
+  "SYMFONA",
+  "SYMMETREL",
+  "SYNAGIS5",
+  "TABRECTA.01",
+  "TADALA.P.DEV",
+  "TADALA.P.MEP",
+  "TADALA.P.OrP",
+  "TADALA.P.SPI",
+  "TAFINLAR.01",
+  "TAFINLAR.02",
+  "TAFINLAR.03",
+  "TAGRISSO.01a",
+  "TAGRISSO.02a",
+  "TAGRISSO.03",
+  "TAKHZYRO.01a",
+  "TAKHZYRO.01b",
+  "TALOXA",
+  "TALOXA2",
+  "TALTZ.01",
+  "TALTZ.01a",
+  "TALTZ.02",
+  "TALTZ.02a",
+  "TALTZ.03c",
+  "TALTZ.03d",
+  "TALVEY.01a",
+  "TALZENNA",
+  "TARCEVA",
+  "TARCEVA3",
+  "TASIGNA",
+  "TASIGNA2",
+  "TAVNEOS",
+  "TEBOKAN.01",
+  "TECENT.L--04",
+  "TECENT.L--05",
+  "TECENT.L-.01",
+  "TECENT.L-.02",
+  "TECENT.L-.03",
+  "TECENT.L-.06",
+  "TECENTR.01",
+  "TECENTR.02",
+  "TECENTR.03",
+  "TECENTR.06",
+  "TECENTR.ein2",
+  "TECENTR.ein3",
+  "TECENTRIQ.04",
+  "TECENTRIQ.05",
+  "TECFIDERA",
+  "TECVAYLI.01",
+  "TEILPACKUNG",
+  "TENKASI.01",
+  "TENKASI.1200",
+  "TEPKINLY.01a",
+  "TEPKINLY.01b",
+  "TEPMETKO.01",
+  "TESTONE.01",
+  "TESTOSTERONM",
+  "TESTOSTERONS",
+  "TEVIMBRA.01",
+  "TEVIMBRA.02",
+  "TEVIMBRA.03",
+  "TEVIMBRA.XX",
+  "TEZSPIREF.01",
+  "TEZSPIREF.XX",
+  "TEZSPIREFa.02---CRSwNP",
+  "TEZSPIREP.01",
+  "TEZSPIREP.XX",
+  "TEZSPIREPa.02---CRSwNP",
+  "THYROGEN2",
+  "TIVICAY",
+  "TOCILIZSP.01",
+  "TOCILIZSP.02",
+  "TOCILIZSP.03",
+  "TOCILIZSP.An",
+  "TOCTINO",
+  "TOFAC.DE.01",
+  "TOFAC.DE.02",
+  "TOFAC.DE.03",
+  "TOFAC.DE.Ein",
+  "TOFAC.SA.01",
+  "TOFAC.SA.02",
+  "TOFAC.SA.03",
+  "TOFAC.SA.04",
+  "TOFAC.SA.Ein",
+  "TOMUDEX",
+  "TOUJEO",
+  "TRAJENTA3",
+  "TRANEXALE.01",
+  "TRAUMAPLANT",
+  "TRAZIPERJ.01",
+  "TRAZIPERJ.02",
+  "TRECONDI",
+  "TRELEGY",
+  "TREMFYA-PEN",
+  "TREMFYADF.03",
+  "TREMFYADF.04",
+  "TREMFYAPE.02",
+  "TREMFYAPE.03",
+  "TREMFYAPE.04",
+  "TREMFYAPP3",
+  "TREMFYASP.02",
+  "TREMFYASP.03",
+  "TREMFYASP.04",
+  "TRETINAC",
+  "TRIKAFTA-150",
+  "TRIKAFTA-75",
+  "TRIKAFTA-gra",
+  "TRIMBOW",
+  "TRIMBOW.asth",
+  "TRIOGEN",
+  "TRISENOX.01",
+  "TRIT.UNO.150",
+  "TRITTICOUNO",
+  "TRIUMEQ.01",
+  "TRIVERAM",
+  "TRIXEO",
+  "TRODELVY.01",
+  "TRODELVY.02",
+  "TRODELVY.Ein",
+  "TRODELVY.End",
+  "TRULICITY2",
+  "TRUQAP",
+  "TRUVADA",
+  "TRUXIMA.01",
+  "TRUXIMA.02",
+  "TRUXIMA.03a",
+  "TRUXIMA.R-B",
+  "TYMLOS",
+  "TYRUKO.01",
+  "TYSABRI4",
+  "TYVERB",
+  "ULTOMIR.PNH2",
+  "ULTOMIR.aHU2",
+  "UPTRAVI",
+  "UROCIT2",
+  "UROMITEXAN",
+  "USTEKI.SP.01",
+  "USTEKI.SP.02",
+  "USTEKI.SP.03",
+  "VABYSMO.02",
+  "VAFSEO.01",
+  "VALACICLOVIR",
+  "VALSAMLSPIR2",
+  "VANCOCIN3",
+  "VASCORD02",
+  "VAXNEUVANCE",
+  "VEBLOCEMA",
+  "VECTIBIX4",
+  "VEGZELMA.01",
+  "VEGZELMA.02",
+  "VEGZELMA.03a",
+  "VEGZELMA.04a",
+  "VEGZELMA.05",
+  "VEGZELMA.06",
+  "VEGZELMA.07",
+  "VEGZELMA.08",
+  "VEGZELMA.09",
+  "VEGZELMA.10",
+  "VEGZELMA.R-B",
+  "VEKLURY.01a",
+  "VELCADE3",
+  "VELSIPITY.01",
+  "VELTASSA.neu",
+  "VENCLYXTO-01",
+  "VENCLYXTO-02",
+  "VENCLYXTO-03",
+  "VENCLYXTO-04",
+  "VENCLYXTO-XX",
+  "VENTAVIS",
+  "VERQUVO",
+  "VERZENIO.01a",
+  "VERZENIO.02a",
+  "VERZENIO.03a",
+  "VERZENIO.04a",
+  "VERZENIOS.En",
+  "VESANOID",
+  "VESOXX.01new",
+  "VEYVONDI2",
+  "VI-DE-3",
+  "VICTOZA",
+  "VIDAZA2",
+  "VIFEROLD3",
+  "VIMPAT",
+  "VISUDYNE",
+  "VITAFEDIOL",
+  "VITAMIND3",
+  "VITARUB.oral",
+  "VITB12ANK.01",
+  "VITB12DER.01",
+  "VITD3.1000",
+  "VITD3.25000",
+  "VITD3SPIRIGK",
+  "VITD3SPIRIGL",
+  "VITD3STREULK",
+  "VITRAKVImono",
+  "VOCABRIA02",
+  "VOCABRIAinj",
+  "VOKANAMET2",
+  "VOLIBRIS",
+  "VONCENTO2",
+  "VOSEVI.01",
+  "VOTRIENT",
+  "VOTRIENT2",
+  "VOTUBIA2",
+  "VOTUBIA4",
+  "VPRIV",
+  "VUEWAY",
+  "VUEWAY.15ml",
+  "VYDURA3.01",
+  "VYEPTI.01",
+  "VYNDAQEL.01b",
+  "Vi-De-3.L-s",
+  "WAINZUA.01a",
+  "WEGOVY.01---Erwachsene",
+  "WEGOVY.Jugen",
+  "WELLBUTRIN-X",
+  "WELLVONE",
+  "WEZENLA.01",
+  "WEZENLA.02",
+  "WEZENLA.03",
+  "WILENTIN",
+  "WINREVAIR.01",
+  "WYNZORA",
+  "XALKORI-alk",
+  "XALKORI-ros",
+  "XALUPRINE.01",
+  "XANAX",
+  "XARELTO15-20",
+  "XARELTO2",
+  "XARELTO3",
+  "XARELTO98-3",
+  "XARELTOVASCU",
+  "XATRALUNO.01",
+  "XELJANZ.01",
+  "XELJANZ.02",
+  "XELJANZ.03",
+  "XELJANZ.04",
+  "XELJANZ.KoGu",
+  "XENAZINE",
+  "XENICAL",
+  "XEOMIN.01a",
+  "XGEVA3",
+  "XIFAXAN",
+  "XIGDUOXR4",
+  "XIMLUCI.02",
+  "XOFIGO4",
+  "XOLAIR-300mg",
+  "XOLAIR4",
+  "XOLAIRpen",
+  "XOSP21103.01",
+  "XTANDI.01---Kombination-LHRH-Antagonisten",
+  "XTANDI.02---Kombi-LHRH-Antagonisten",
+  "XTANDI.03---Kombi-mit-ADT",
+  "XTANDI.XX---KoGu",
+  "XULTOPHY",
+  "YERVOY.01",
+  "YERVOY.02",
+  "YERVOY.03",
+  "YERVOY.04",
+  "YERVOY.05",
+  "YERVOY.06",
+  "YERVOY.07",
+  "YERVOY.XXa",
+  "YESINTEK.01",
+  "YESINTEK.02",
+  "YESINTEK.03",
+  "YONDELIS",
+  "YUFLYMA2",
+  "YUFLYMA20.01",
+  "YUFLYMA20.02",
+  "YUFLYMA20.03",
+  "YUFLYMA20.XX",
+  "YUVANCI",
+  "ZALTRAP",
+  "ZARZIO",
+  "ZAVESCA",
+  "ZAVICEFTA2",
+  "ZEFFIX",
+  "ZEJULA.01b",
+  "ZEJULA.02",
+  "ZELBORAF.02---Kombination-mit-COTELLIC",
+  "ZEMPLAR-Amp",
+  "ZEMPLAR3",
+  "ZENON.01",
+  "ZENON.02",
+  "ZENTEL",
+  "ZEPOSIA.01",
+  "ZEPOSIA.02a",
+  "ZIRABEV.01",
+  "ZIRABEV.02",
+  "ZIRABEV.03a",
+  "ZIRABEV.04a",
+  "ZIRABEV.05",
+  "ZIRABEV.06",
+  "ZIRABEV.10",
+  "ZIRABEV.R-B",
+  "ZIRABEVGLIO2",
+  "ZIRABEVhcc",
+  "ZIRABEVlynp2",
+  "ZOFRANGRANDF",
+  "ZOLGENSMA.03",
+  "ZOMIG-NASAL",
+  "ZONEGRAN",
+  "ZUTECTRA2",
+  "ZYBAN-2",
+  "ZYCLARA",
+  "ZYDELIG2",
+  "ZYKADIA2",
+  "ZYTIGA4",
+  "ZYVOXID"
+ ]
+}

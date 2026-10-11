@@ -38,6 +38,7 @@ human labels were used.
 | R17 | real errors BAG fixed without a German change (Claude annotators); Apertus 70B as a non-Claude annotator | 17 content changes: needs fix by both 5 (shown) / 7 (hidden), the same 4 severe; Apertus confirms all 49 findings (κ 0.000), flags 2 of 17 |
 | R18 | Apertus 8B log-probability filter on the round-5 audit findings that ship off (threshold from planted copies, applied to the 31 register findings) | planted AUROC 0.955; register kept 13, 2 of 6 confirmed (15.4%): fails, the kinds stay off |
 | R19 | the certified 8B Q8_0 on the identity probes (the 250 MMLU questions, the 792-cell battery): is `fp1-nes` an 8B? | pending |
+| R20 | the 6 Oct 2026 audit as frozen predictions, scored against BAG's own later corrections (an oracle that is not Claude) | pending (first scoring snapshot expected 1 Nov 2026) |
 
 Corrections to statements of fact inside rule text (11 Oct 2026; the rules themselves are unchanged and their text below
 stays as frozen):
@@ -767,6 +768,73 @@ identify the backends.
   some cells (Q8_0 matches the bf16 DPO checkpoint on 638 of 648 parity decisions). The battery's answers are short
   ("Ja.", "schuldig"), so byte identity carries less information than on long text. A v1.5 8B scoring near the shared
   model would not show the shared model is an 8B.
+
+## R20. The audit's findings as predictions, scored against BAG's own later corrections (frozen 11 Oct 2026, before any later SL publication)
+
+A juror: every label behind the audit's precision comes from Claude annotators (R14, R15), and the one non-Claude
+annotator tried, Apertus 70B, does not discriminate (R17). An oracle that is not Claude exists: BAG, when it corrects a
+text in a later SL publication. R20 freezes now what the 6 Oct 2026 audit predicts BAG will correct, and how that is
+scored. On 11 Oct 2026 (01:04 UTC) BAG's resources API names the 6 Oct 2026 feed as the newest; no later data exists.
+
+- **Frozen list** (`eval/predictions/audit_20261006_predictions.json`, sha256 `09cd9df7bf3e59ca37f3a161ecb190987e978999e6dbf87a42c77cd95ca8d326`, in the
+  commit of this section; `tools/check_predictions.py build` from `data/audit/audit_20261006.json`, its shipped texts,
+  the 6 Oct snapshot's limitation ids and the blind labels; deterministic, no model). One record per finding: the 38
+  findings of the register's 18 issues and the 31 round-5 findings, 69 in all. Each record: product, limitation id,
+  kind, the finding's language, the **divergent language** (the odd one out of the three as the register computes it:
+  number findings by the third language's values, operator and negation from the third language's aligned sentence,
+  terminology the target language; `unclear` when the third language does not settle it), what each language states on
+  6 Oct 2026 (the finding's values with their counts, the bounds on the value with their operators, the aligned sentences
+  with their negations, the typo and its correction, the written language, the old and new term), the **predicted
+  correction** in words (e.g. "IT changes 4 to 8 (Wochen), as DE and FR state"; "FR '≤ 10' becomes a lower bound
+  ('> 10'), as DE and IT state"), its machine-readable form, the blind label, and the sha256 of each language's text.
+  **Positive predictions** (BAG corrects it): the 34 findings the blind majority confirmed (real or minor): 28 of the 38
+  register findings and the 6 confirmed round-5 findings. **Negative predictions**: the 35 not confirmed (10 register,
+  25 round-5), marked as such.
+- **Scoring snapshots.** Every SL publication after 6 Oct 2026 (the next is expected 1 Nov 2026), checked with
+  `tools/check_predictions.py check --fetch <date>` (the public FHIR feed, client and user agent of `gleichlaut month
+  --fetch` in the shadow workflow) -> `eval/predictions/check_<date>.json`. The checker and `gleichlaut.audit` are used
+  as at this commit (their sha256 is written into every check file; if either has changed, the scoring runs from this
+  commit's files), with the 6 Oct 2026 language statistics and term pairs.
+- **Status of a prediction in a snapshot** (fixed now; the tool's docstring). *Limitation removed*: the id is absent
+  from the German, the finding's language or the divergent language. *Unchanged*: the three texts are identical (after
+  `nrm`). *Corrected toward agreement*: a text changed, the divergent language's text changed, the same check no longer
+  reports the finding on the new texts, and the divergent language now states what the other two state at that place:
+  numbers and number words: it states the agreed value more often and its own odd value less often than on 6 Oct, and
+  the agreeing side still states the value; operator: it states the value with the agreed direction; negation: the
+  aligned sentence pair (the agreeing side's sentence unchanged) now agrees on negation; typo: the typo occurs less often
+  and its correction more often; terminology: the new term occurs more often and the old one less often; language: the
+  field is in its own language. With the divergent language `unclear`, either the German or the finding's language may be
+  the side that moves (either direction passes). *Changed otherwise*: every other change (the finding still reported, the
+  other side changed, the passage deleted, the divergent language unchanged). A limitation id absent from a later
+  snapshot is followed to a new id (one not among the 6 Oct ids) with the same product prefix and the most similar German
+  text (difflib ratio ≥ 0.9; a tie is not followed).
+- **Measure** (`tools/check_predictions.py score` -> `eval/predictions/score.json`) at two horizons, **6 months**
+  (snapshots dated up to 6 Apr 2027) and **12 months** (up to 6 Oct 2027): **P** = share of the 34 positive predictions
+  corrected toward agreement in at least one scoring snapshot of the horizon (Wilson 95%), against the base rate **B** =
+  share of the 35 negative predictions whose limitation changed in at least one (corrected or changed otherwise).
+  Reported beside: positives changed in any way, negatives corrected toward agreement, removed limitations, the two sets
+  (issues, round 5) apart.
+- **Decision rule.** At a horizon that has passed: **supported** if P > B and the one-sided Fisher exact test of P
+  against B gives p < 0.05; otherwise **not supported**; reported as it comes out, in the results log, the README and
+  `docs/audit.md`. Nothing is claimed before a horizon has passed: a monthly check file is reported as counts only.
+- **How it runs.** No workflow in this repository commits results (all are `contents: read`; the shadow workflow
+  uploads artifacts), so there is no scheduled job. After each SL publication the one command is
+  `PYTHONPATH=src python3 tools/check_predictions.py check --fetch latest && python3 tools/check_predictions.py score`,
+  committed with a results-log line (no model, three public feed downloads).
+- **Checked before the freeze** (no later data). Self-test on the 6 Oct snapshot, the research copy and a fresh fetch of
+  the public feed (byte-identical): 69 of 69 unchanged and still reported (`eval/predictions/check_20261006.json`).
+  Sanity, backwards in time on the 1 Jun, 1 Jul, 1 Aug, 1 Sep and 1 Oct 2026 snapshots (`check_<date>.json`): each dated
+  finding is reported exactly in the snapshots its `first_seen` says, with renamed limitations followed. Backtest: the
+  same audit on the 1 Jun 2026 snapshot gives 63 findings; by 6 Oct 2026 none is corrected toward agreement, 3 changed
+  otherwise (renamed limitations with edited texts) and 60 are unchanged (`eval/predictions/backtest_20260601.json`):
+  flagged texts seldom change on their own.
+- **Caveats stated now.** BAG may correct for reasons unrelated to the audit, correct the side the audit did not
+  predict, or rewrite a limitation (changed otherwise). With 34 and 35 predictions the intervals are wide, and sibling
+  findings (T01–T04, T05–T08, the three etanercept texts) are not independent; the 18 issues are reported beside. The
+  status is mechanical: it reads the values, bounds, negation, typo, term or language at the flagged place, not the whole
+  wording. If anyone sends findings to BAG before a horizon, the date and the findings sent are logged in the results
+  log; corrections after that count as BAG accepting a report rather than as an independent prediction, and both
+  readings are reported.
 
 ## R4. Post-freeze changes
 

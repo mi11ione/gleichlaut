@@ -72,6 +72,10 @@ blind Claude annotators' majority):
 
 In the register the 38 become 18 issues (3 of them probably equivalent wording, shown collapsed); the experimental
 findings are not part of the 18 and are decided and counted on their own.
+A check that does not rest on Claude is pre-registered (R20): the 34 confirmed findings are frozen as predictions that BAG
+will correct them and the 35 unconfirmed ones as negative predictions (`eval/predictions/audit_20261006_predictions.json`,
+sha256 `09cd9df7bf3e…`), scored by `tools/check_predictions.py` against each later SL publication; nothing is claimed
+before the 6-month horizon (6 Apr 2027).
 
 The two meet in the review register. Nemluvio's old Italian already says "every 4 weeks"; the 70B draft (the register's
 "fewer edits" lane) writes "every 8 weeks", matching the German, and the register shows it as a correction to check, not
