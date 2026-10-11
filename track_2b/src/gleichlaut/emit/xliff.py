@@ -23,16 +23,19 @@ the sentence the German drops; else worded as a question) and typography the dra
 wrote departs from BAG's dominant wording of a fixed German sentence (data/termbase/house_sentences_*, gleichlaut.house),
 one advisory note (category gleichlaut:house, priority 9); when the draft departs from BAG's house rendering of a German
 term (data/termbase, gleichlaut.termbase), one advisory note (category gleichlaut:termbase, priority 9); one low-priority
-note (category gleichlaut:checks, priority 10) with the remaining reasons in plain words; and one note (category
-gleichlaut:debug, priority 10) with the raw guard output and its internal codes, for technical support, not a translation
-remark. The raw guard output also stays in the FHIR Provenance.
+note (category gleichlaut:checks, priority 10) with the remaining reasons in plain words. Every note is in the language
+of the file: the raw guard output with its internal codes is not written into the XLIFF (round 13: a translator read it
+as untranslated check output); it stays in the FHIR Provenance (debug_note gives the same text for support).
 write(..., decisions=...): the reviewer's decisions from the review page (JSON export) applied to the same units: accepted
 drafts (as is or edited) -> state="reviewed" (or "final" with final=True), subState gleichlaut:accepted |
-gleichlaut:accepted-edited, target = the accepted text; sent back -> state="initial" subState="gleichlaut:sent-back".
+gleichlaut:accepted-edited, target = the accepted text, segmented on sentence boundaries like the draft (segment.beads
+of the new German and the accepted text); a signed-off unit keeps only the notes that do not describe the draft
+(SIGNED_KEEP: the German change, the old German and old target); sent back -> state="initial" subState="gleichlaut:sent-back".
 <originalData> is not used for context: it holds only the native data of inline codes (<data> elements referenced by
 dataRef), so context there would be invalid use."""
 import os, re
 import xml.etree.ElementTree as ET
+from collections import Counter
 from . import fhir, model_label, segment, triage
 
 NS = "urn:oasis:names:tc:xliff:document:2.0"
@@ -63,7 +66,7 @@ NOTE = {
         "prov_run": "Série enregistrée {run} (modèle non indiqué dans les enregistrements) ; {pipeline}",
         "product": "{product} ; limitation {code} ; LS {old} → {new}",
         "prev_de": "Allemand précédent : {t}", "prev_tgt": "Texte français précédent : {t}",
-        "change": "Changement allemand : {t}", "fine": "probablement sans problème, règle {r} : {why}",
+        "change": "Modification du texte allemand : {t}", "fine": "probablement sans problème, règle {r} : {why}",
         "model_nums": "Nombres écrits par le modèle lui-même (à vérifier) : {x}",
         "review": "Révision : {d}", "reviewed": "Export révisé : {n} unités décidées", "reviewed_1": "Export révisé : 1 unité décidée",
         "accept": "accepté", "accept-edited": "accepté modifié", "send-back": "renvoyé",
@@ -73,7 +76,7 @@ NOTE = {
         "T3": "les nombres changent exactement comme dans l'allemand",
         "T4": "chiffre romain ou sigle, pas de l'allemand",
         "T5": "seuls des nombres changent hors du passage modifié, exactement ceux que l'allemand change ailleurs",
-        "T6": "le changement allemand n'est qu'orthographique (umlaut, trait d'union, majuscule, ponctuation, terminaison)",
+        "T6": "la modification du texte allemand n'est qu'orthographique (umlaut, trait d'union, majuscule, ponctuation, terminaison)",
         "T7": "négation comptée comme un lecteur la compte (« nicht- » préfixe, « ne … pas » une seule fois) : le compte suit l'allemand",
         "T8": "mêmes valeurs ajoutées et retirées des deux côtés, seul le nombre d'occurrences diffère",
         "product_nodate": "{product} ; limitation {code}",
@@ -96,16 +99,20 @@ NOTE = {
         "lex_words": "{w} ({why})", "g4_de": "l'allemand le répète aussi",
         "checks_more": "{n} autres points relevés par les contrôles, non repris ci-dessus : {x}",
         "checks_more_1": "1 autre point relevé par les contrôles, non repris ci-dessus : {x}",
-        "accepted": "Révisé et accepté : la cible est le texte accepté à la révision. Les remarques des contrôles ci-dessous "
-                    "portent sur le brouillon d'origine ({v}).",
+        "accepted": "Révisé et accepté : la cible est le texte retenu à la révision. Les remarques des contrôles sur le "
+                    "brouillon d'origine ({v}) ne s'appliquent plus et ne sont pas reprises.",
         "sent_back": "Renvoyé à la révision : à traduire. Pas de cible ; le brouillon rejeté figure dans la remarque "
                      "« Brouillon rejeté », pas dans la cible.",
         "rejected": "Brouillon rejeté à la révision (ne pas le reprendre tel quel) : {t}",
         "v_ready": "prêt", "v_flagged": "signalé", "v_human": "confié à un traducteur",
-        "reasons": {"Number wrong": "nombre erroné", "German change not applied": "changement allemand non appliqué",
-                    "Content lost": "contenu perdu", "German left / untranslated": "allemand resté / non traduit",
+        "reasons": {"Number wrong": "nombre erroné", "German change not applied": "modification du texte allemand non appliquée",
+                    "Content lost": "contenu perdu", "German left / untranslated": "allemand non traduit",
                     "Terminology": "terminologie", "Wording": "formulation", "Other": "autre"},
-        "order": "Ordre des mots allemand ? Le brouillon écrit {x} (allemand {d}) : en français, le complément suit en principe le nom.",
+        "order": "Ordre des mots allemand ? Le brouillon écrit {x} (allemand {d}) : en français, le complément suit en principe le nom ; à vérifier.",
+        "lock_mirror": "À la place d'une phrase que l'allemand retire (note ci-dessous), le brouillon écrit autre chose : {x} ; à vérifier.",
+        "novel_all": "Aucun mot à vérifier : {n} mots absents des limitations françaises, tous bien formés ou de la famille d'un mot du registre.",
+        "novel_more": "{n} autres mots absents des limitations, bien formés ou de la famille d'un mot du registre, ne sont pas repris",
+        "novel_more_1": "1 autre mot absent des limitations, bien formé ou de la famille d'un mot du registre, n'est pas repris",
         "debug": "Sortie brute des contrôles (codes internes de Gleichlaut, pour l'assistance technique ; pas une remarque de traduction) : {x}"},
  "it": {"ready": "Pronta: tutti i controlli automatici superati. Verificata dal codice, non ancora da una persona: da rivedere.",
         "flagged": "Segnalata: un controllo automatico ha rilevato un problema (vedi le note). Il testo d'arrivo è la bozza, da correggere.",
@@ -162,8 +169,8 @@ NOTE = {
         "lex_words": "{w} ({why})", "g4_de": "anche il tedesco lo ripete",
         "checks_more": "{n} altri punti rilevati dai controlli, non ripresi sopra: {x}",
         "checks_more_1": "1 altro punto rilevato dai controlli, non ripreso sopra: {x}",
-        "accepted": "Rivista e accettata: il testo d'arrivo è quello accettato in revisione. Le note dei controlli qui sotto "
-                    "riguardano la bozza originale ({v}).",
+        "accepted": "Rivista e accettata: il testo d'arrivo è quello accettato in revisione. Le note dei controlli sulla "
+                    "bozza originale ({v}) non si applicano più e non sono riprese.",
         "sent_back": "Rinviata in revisione: da tradurre. Nessun testo d'arrivo; la bozza respinta figura nella nota «Bozza "
                      "respinta», non nel testo d'arrivo.",
         "rejected": "Bozza respinta in revisione (da non riprendere così com'è): {t}",
@@ -171,7 +178,11 @@ NOTE = {
         "reasons": {"Number wrong": "numero errato", "German change not applied": "modifica tedesca non applicata",
                     "Content lost": "contenuto perso", "German left / untranslated": "tedesco rimasto / non tradotto",
                     "Terminology": "terminologia", "Wording": "formulazione", "Other": "altro"},
-        "order": "Ordine delle parole tedesco? La bozza scrive {x} (tedesco {d}): in italiano il complemento segue di norma il nome.",
+        "order": "Ordine delle parole tedesco? La bozza scrive {x} (tedesco {d}): in italiano il complemento segue di norma il nome; da verificare.",
+        "lock_mirror": "Al posto di una frase che il tedesco toglie (nota qui sotto), la bozza scrive altro: {x}; da verificare.",
+        "novel_all": "Nessuna parola da verificare: {n} parole assenti dalle limitazioni italiane, tutte ben formate o della famiglia di una parola del registro.",
+        "novel_more": "altre {n} parole assenti dalle limitazioni, ben formate o della famiglia di una parola del registro, non sono riprese",
+        "novel_more_1": "un'altra parola assente dalle limitazioni, ben formata o della famiglia di una parola del registro, non è ripresa",
         "debug": "Uscita grezza dei controlli (codici interni di Gleichlaut, per l'assistenza tecnica; non una nota di traduzione): {x}"}}
 
 
@@ -200,6 +211,22 @@ def decided_notes(v, d):
         if v.get("draft"): N.append(["rejected", "gleichlaut:rejected-draft", None, "2", nt(L, "rejected", t=v["draft"])])
         return N
     return []
+
+
+# A signed-off unit (accepted as is or edited) keeps only the notes that do not describe the draft: the German change and
+# the old German / old target (the reviewed note replaces the verdict). The reasons, the low-priority notes, the house and
+# termbase advisories and the checks note all describe the draft the reviewer has now decided on, so none is carried over.
+SIGNED_KEEP = ("change", "de-old", "tgt-old")
+
+
+def decided_unit_notes(v, d, prev=True):
+    """-> the notes of a unit with the reviewer's decision d (None: undecided): decided_notes, then unit_notes without
+    its verdict; for a signed-off unit only the SIGNED_KEEP notes of unit_notes."""
+    N = unit_notes(v, prev=prev)
+    if not d: return N
+    head = decided_notes(v, d)
+    if d in ("accept", "accept-edited"): return head + [n for n in N if n[0] in SIGNED_KEEP]
+    return head + [n for n in N if n[0] != "verdict"]
 
 
 def review_text(lang, d, at=None, why=""):
@@ -261,9 +288,9 @@ def ordered_findings(v):
 # internal codes (rule ids, guard ids); the product and German change; the old German and old target text; low-priority
 # notes apart from the reasons (a deletion that mirrors the German's, typography the draft introduced: category
 # gleichlaut:note, priority 8; the house-sentence and termbase advisories: gleichlaut:house / gleichlaut:termbase, priority
-# 9); one low-priority note (category gleichlaut:checks, priority 10) with the reasons not shown above, in plain words; and
-# one note (category gleichlaut:debug, priority 10) with the raw guard output and its codes, kept out of every translator
-# note. Presentation only: every finding is still there, no verdict changes.
+# 9); and one low-priority note (category gleichlaut:checks, priority 10) with the reasons not shown above, in plain words.
+# The raw guard output with its codes (debug_note) is not an XLIFF note (it stays in the FHIR Provenance). Presentation
+# only: every finding is still there, no verdict changes.
 #
 # Every item of reasons() has a tier:
 #   "reason"  may take one of the SHOW slots: findings to check, numbers the model wrote, the pre-existing divergence and
@@ -333,6 +360,49 @@ def _lex_text(v, f, rule):
     return f"{head} ({nt(L, 'fine_plain', why=nt(L, 'lex_words', w=', '.join(shown), why=why))})", False
 
 
+def _novel_text(v, f, rule):
+    """An out-of-vocabulary finding (G7) with words that are probably ordinary (explain.novel_fine), reworded: -> (text,
+    all words ordinary?) or None. Only the words still to check are named; the ordinary ones are counted, not listed
+    (round 13: 17 ordinary words such as « composant », « danger » were listed as never seen)."""
+    if rule or f.get("gid") != "g7" or v["lang"] not in NOTE: return None
+    from . import explain
+    fine, other = explain.novel_fine(v, f)
+    if not fine: return None
+    L = v["lang"]
+    if not other: return nt(L, "novel_all", n=len(fine)), True
+    head = explain.tr(L, "g7", x=explain.words_list(L, [explain.case_in(v.get("draft") or "", w) for w in other]))
+    return f"{head} ({nt(L, 'novel_more', n=len(fine))})", False
+
+
+def _removed_sentences(v):
+    """The old target sentences the draft drops one to one where the German drops their sentence (deleted_by_german,
+    whole), as one string; '' when there are none."""
+    out = []
+    for g in v.get("findings", []):
+        dl = deleted_by_german(g, v)
+        if dl and dl[2]: out.append(dl[3])
+    return " ".join(out)
+
+
+def _lock_text(v, f, removed):
+    """A lock finding ('the draft also changes a passage the German leaves as is') whose every changed passage lies in a
+    sentence the German itself removes and the draft drops with it (_removed_sentences): the German does change that
+    passage, so the finding is worded as what it is, text the draft writes in place of a removed sentence, still to check
+    (round 13, wb004: the lock wording contradicted the deletion note). -> text or None."""
+    import re
+    from . import explain
+    if f.get("gid") != "lock" or not removed or v["lang"] not in NOTE: return None
+    P = re.findall(r"«([^«»]*)» -> «([^«»]*)»", f.get("detail") or "")
+    rw = Counter(w.lower() for w in re.findall(r"\w+", removed))
+    for u, _ in P:
+        W = [w.lower() for w in re.findall(r"\w+", u)]
+        if not W or sum(1 for w in W if rw[w]) < 0.8 * len(W): return None
+    if not P: return None
+    pre = explain.tr(v["lang"], "lock", x="")
+    x = f["text"][len(pre):] if f["text"].startswith(pre) else re.split(r"\s?:\s", f["text"], maxsplit=1)[-1]
+    return nt(v["lang"], "lock_mirror", x=x.strip())
+
+
 def _typo_note(v):
     from . import explain
     L = v["lang"]
@@ -383,16 +453,19 @@ def reasons(v, old=True):
     own notice). Text in the draft's language, no internal codes. Every finding of the view is one item."""
     import re
     from . import explain
-    L = v["lang"]; R = []
+    L = v["lang"]; R = []; removed = _removed_sentences(v) if any(f["gid"] == "lock" for f in v.get("findings", [])) else ""
     if old and v.get("banner"): R.append(dict(kind="divergence", text=v["banner"], low=False, rank=-1, gid="div", rule=None, tier="reason"))
     for f, r in zip(v.get("findings", []), triage.triage(v)):
         if f["gid"] == "corr" and not old: continue
         base = f["text"] + (f" ({explain.corr_note(L)})" if f["corrects"] and f["gid"] != "corr" else "")
         dl = None if r else deleted_by_german(f, v)
-        lx = _lex_text(v, f, r)
+        lx = _lex_text(v, f, r) or _novel_text(v, f, r)
+        lk = None if r else _lock_text(v, f, removed)
         rank, tier = RANK.get(f["gid"], 8), "reason"
-        if lx:                                         # German-looking words that are target words too (or were there)
-            text, low = lx
+        if lx:                                         # German-looking words that are target words too (or were there); new
+            text, low = lx                             # words that are ordinary target words
+        elif lk:                                       # text in place of a sentence the German removes: still to check
+            text, low = lk, False
         elif not r and L in NOTE and f["gid"] == "g4" and v.get("draft") and explain.german_repeats(v, v["draft"], f.get("detail")):
             text, low = f"{base} ({nt(L, 'fine_plain', why=NOTE[L]['g4_de'])})", True
         elif r and L in NOTE:
@@ -418,7 +491,7 @@ def reasons(v, old=True):
     t = _typo_note(v)
     if t: R.append(dict(kind="typography", text=t, low=True, rank=10, gid="typo", rule=None, tier="note"))
     o = _order_note(v)
-    if o: R.append(dict(kind="order", text=o, low=True, rank=10.5, gid="order", rule=None, tier="note"))
+    if o: R.append(dict(kind="order", text=o, low=False, rank=7.5, gid="order", rule=None, tier="reason"))      # to check (round 13)
     if v.get("status") == "flagged" and L in NOTE and not any(x["tier"] == "reason" for x in R):
         F = [x for x in R if x["kind"] == "finding"]
         M = [x for x in F if x["tier"] == "note"]
@@ -451,7 +524,7 @@ def counts(R):
     """-> [to check, probably fine]: the review page's header over the reasons (the same classification as the list):
     findings and model-written numbers shown as reasons to check (record status included); probably fine = every other
     finding (a low reason, a low-priority note, a detail). A reason repeated word for word counts once."""
-    chk = sum(1 for x in R if x["kind"] in ("finding", "model-numbers") and x["tier"] == "reason" and (not x["low"] or x["gid"] == "record"))
+    chk = sum(1 for x in R if x["kind"] in ("finding", "model-numbers", "order") and x["tier"] == "reason" and (not x["low"] or x["gid"] == "record"))
     fine = sum(1 for x in R if x["kind"] == "finding" and not x.get("dup") and x["gid"] != "record"
                and (x["tier"] != "reason" or x["low"]))
     return [chk, fine]
@@ -468,7 +541,7 @@ def explanation(v):
 
 def checks_note(v, R=None):
     """The low-priority note with the reasons not shown above, in plain words (None when there are none). No internal
-    codes: those are in debug_note."""
+    codes (debug_note has them, for support; not written into the XLIFF)."""
     L = v["lang"]; R = reasons(v) if R is None else R; more = [x for x in rest(R) if not x.get("dup")]
     if not more or L not in NOTE: return None
     return nt(L, "checks_more", n=len(more), x=" | ".join(x["text"] for x in more))
@@ -476,7 +549,8 @@ def checks_note(v, R=None):
 
 def debug_note(v):
     """The one note with the raw guard output and its internal codes (Slots, G3c, T7 …), for technical support, not for
-    the translator (category gleichlaut:debug, priority 10); None when the draft has no finding."""
+    the translator; not written into the XLIFF (the FHIR Provenance keeps the raw output). None when the draft has no
+    finding."""
     from . import explain
     F = [(f, r) for f, r in zip(v.get("findings", []), triage.triage(v)) if f.get("detail")]
     if not F or v["lang"] not in NOTE: return None
@@ -506,8 +580,6 @@ def unit_notes(v, prev=True):
     if t: N.append(["termbase", "gleichlaut:termbase", "target", "9", t])
     c = checks_note(v, R)
     if c: N.append(["checks", "gleichlaut:checks", None, "10", c])
-    d = debug_note(v)
-    if d: N.append(["debug", "gleichlaut:debug", None, "10", d])
     return N
 
 
@@ -573,8 +645,7 @@ def unit(file_el, v, dec=None, final=False):
         state, sub = ("final" if final else "reviewed"), ("gleichlaut:accepted-edited" if text is not None else "gleichlaut:accepted")
     elif d == "send-back":
         state, sub = "initial", "gleichlaut:sent-back"
-    head = decided_notes(v, d) if d else []
-    for nid, cat, ap, pr, t in head + [n for n in unit_notes(v, prev=True) if not (head and n[0] == "verdict")]:
+    for nid, cat, ap, pr, t in decided_unit_notes(v, d):
         _note(notes, t, cat, nid, ap, pr)
     if d:
         why = "; ".join(x for x in (reason_text(L, dec.get("reason") or ""), dec.get("note")) if x)

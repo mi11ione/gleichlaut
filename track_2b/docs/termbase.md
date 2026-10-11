@@ -88,13 +88,14 @@ of that output (`termbase.REJECT`, `DROP_VARIANTS`; read by the team's coding ag
 linguist) set aside 11 renderings that are fragments of the real term (« début » for Therapiebeginn, « standard »,
 « lignes », « cellules souches » …) and 4 variants that are not renderings of the term. They stay in the JSON with the
 reason and are neither exported nor used. A BAG Italian translator's review (11 Oct 2026, [below](#fourth-review-11-oct-2026-italian-translator))
-set aside one more, IT Krankenversicherer, and moved three terms to their base form. What ships: **64 house renderings
-(32 French, 32 Italian) and 7 variants**. Re-mining reproduces the files byte for byte. A selection, with support /
+set aside one more, IT Krankenversicherer, and moved three terms to their base form; a BAG French translator's review
+(11 Oct 2026, [below](#fifth-review-11-oct-2026-french-translator)) removed two French variants that are not renderings
+of the term and added a usage note. What ships: **64 house renderings (32 French, 32 Italian) and 5 variants**. Re-mining reproduces the files byte for byte. A selection, with support /
 limitations whose German has the term:
 
 | German | French (share) | Italian (share) |
 |---|---|---|
-| Krankenversicherer | assureur-maladie 505/890 (57%); variant assurance maladie 266 | no dominant rendering (head «assicuratore» 522/889 is a fragment; «assicuratore malattie» 312, «assicurazione malattia» 288, «assicuratore malattia» 160) |
+| Krankenversicherer | assureur-maladie 505/890 (57%); BAG also writes « assurance maladie » (the insurance) in 266, not an admitted term | no dominant rendering (head «assicuratore» 522/889 is a fragment; «assicuratore malattie» 312, «assicurazione malattia» 288, «assicuratore malattia» 160) |
 | Kostengutsprache | garantie de prise en charge 374/611 (61%) | garanzia di assunzione dei costi 365/611 (60%); variant garanzia di assunzione delle spese 91 |
 | Vertrauensarzt | médecin-conseil 522/581 (90%) | medico di fiducia 519/581 (89%) |
 | obligatorische Krankenpflegeversicherung | assurance obligatoire des soins 33/41 (80%) | assicurazione obbligatoria delle cure medico-sanitarie 34/41 (83%) |
@@ -148,8 +149,8 @@ similarity ≥ 0.6). When the draft does write the house rendering, only fewer t
 so ("le brouillon l'écrit 1 fois, l'allemand a le terme 2 fois"); only a draft without it gets "absent du brouillon" /
 "assente dalla bozza".
 
-Recorded variants are matched spelling-tolerantly: "assurance-maladie" is the recorded "assurance maladie" (266
-limitations), "assicurazione malattia" the recorded Italian one.
+Recorded variants are matched spelling-tolerantly: "assurance-maladie" is BAG's recorded practice "assurance maladie" (266
+limitations; since the fifth review not an admitted term, but still BAG's practice for the advisory).
 
 When the old text already fell short of the house rendering, where the non-standard wording sits decides the note:
 
@@ -276,7 +277,8 @@ Presentation only; verdicts, drafts and scores are unchanged. Before / after on 
   `category="gleichlaut:debug" priority="10"` (XLIFF 1.2 `from="gleichlaut-debug"`); the checks note keeps the remaining
   reasons in plain words.
 - **Header equals the list.** "3 issues to check, 2 probably fine" was counted from the triage rules while the list
-  showed the reworded reasons; it differed on 33 / 20 / 25 flagged drafts. It is now counted from the list
+  showed the reworded reasons; it differed on 33 / 21 / 25 flagged drafts (Q4_K_M 20 before round 13, when the German word-order
+  note became a reason to check). It is now counted from the list
   (`xliff.counts`), and the register's ▲ / ~ mark follows it: on the 70B register 49 flagged drafts to check and 51
   with every item probably fine (60 / 40 by the triage rules alone).
 - **Deletions that follow the German one to one** (the German drops a sentence, the draft drops the sentence that
@@ -305,8 +307,7 @@ snapshot:
   «assicuratore-malattie» 19. No full phrase is a majority, so by the rule for a house rendering (M6: more than half)
   there is none; the bare head is set aside as a fragment, like « début » or « standard », and the two «assicurazione»
   variants are dropped as not renderings of the term. The Italian insurer note no longer fires. French
-  « assurance maladie » stays a recorded variant: BAG publishes it in 266 limitations, and a carried-over recorded
-  variant gets no note, so BAG's own amendments are not flagged (the metonymy is the same; a terminologist can decide).
+  « assurance maladie » stayed a recorded variant then (BAG publishes it in 266 limitations); the fifth review removed it.
 - **Poliklinik, Facharzt.** A termbase lists the base form: «policlinico» (the register writes «policlinici»),
   « policlinique » / variant « polyclinique », « spécialiste ». Only the shown form changed (`register_form` keeps the
   mined one); matching is inflection-tolerant and its counts are the mined ones.
@@ -320,6 +321,39 @@ Numbers that changed: 65 → **64** house renderings (Italian 33 → 32), 9 → 
 advisory 29 → 28 (wb088-it, the one advisory where BAG's text differed, is gone: 28 of 28 now agree with BAG); flagged
 drafts with an advisory 21 / 39 / 34 → 18 / 38 / 31. Unchanged: the 22 of the 25 Q8_0 "ready but needs a fix" drafts
 the advisory names, and 27 of the 33 for Q4_K_M.
+
+## Fifth review (11 Oct 2026, French translator)
+
+A BAG French translator read the termbase and the TBX (round 13). The mining rules are unchanged; three review entries
+(`termbase.DROP_VARIANTS`, `PRACTICE`, `USAGE`) were added and the files re-mined from the 6 Oct snapshot:
+
+- **FR Krankenversicherer.** « assurance maladie » is the insurance, not the insurer (as Italian «assicurazione
+  malattia» in the fourth review). It is no longer an admitted term: not a variant in the JSON, not an `admittedTerm` in
+  the TBX. BAG still publishes it in 266 of the 890 French limitations whose German has the term, so the entry keeps it
+  as `practice` and the advisory treats it as before: a draft that introduces it, or writes it in a sentence of its own,
+  gets the note; a sentence carried over unchanged from BAG's text does not. The house rendering stays
+  « assureur-maladie » (505 of 890, 57%).
+- **FR Mehrwertsteuer.** « remboursement de la TVA » (34 limitations) is the VAT refund, not the VAT: dropped as a
+  variant. The house rendering stays « taxe sur la valeur ajoutée » (152 of 248).
+- **Verordnung → « prescription » / «prescrizione».** The German word is also the ordinance (« ordonnance », OAMal).
+  In the register it never is: all 125 limitations with the word mean the medical prescription ("ärztliche Verordnung",
+  "die Verordnung von …", "nach Verordnung durch einen Facharzt"). The entry now carries a usage note in each language of
+  the TBX (`<note>`: prescription, not ordinance) and the head regex leaves out a legal ordinance ("Verordnung über …",
+  "Verordnung des EDI", "Verordnung vom …"), so a German text citing the KVV gets no « prescription » note. Neither
+  changes a count on this register.
+- **FR Originalpräparat → « préparation originale ».** Added only if the mining rule yields it. It does not: all 64
+  French limitations write « la préparation originale », but the rendering is the head « originale » extended only
+  through words that pass the exclusive-evidence test (M5 with M4), and « préparation » is more strongly associated
+  with another German word ("nötig") than with "Originalpräparat". The entry stays set aside as a fragment (house=false,
+  not exported); adding the phrase by hand would break "nothing written by hand".
+- **TBX in the language of each element.** The notes and sources in a French or Italian `langSec` were English ("505 of
+  890 limitations whose German contains the term"). They are now in the langSec's language (« 505 des 890 limitations
+  dont l'allemand contient le terme (57 %) », «505 delle 890 limitazioni il cui tedesco contiene il termine (57%)»); the
+  header, the subject field and the German langSec are in German, the file's `xml:lang`.
+
+Numbers that changed: 7 → **5** variants (French 3 → 1). Unchanged: the 64 house renderings and every count in
+`eval/results/termbase.json` other than the French variant count, and every termbase count in `explain_v2.json` and
+`explain_v3.json` (the advisory fires on the same drafts with the same text).
 
 ## Caveats
 

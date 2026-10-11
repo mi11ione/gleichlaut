@@ -1679,10 +1679,44 @@ def worklist_r5(R, J, d, n=60, seed=SEED_R5):
     return used
 
 
-def r5_block_sha():
-    s = open(os.path.abspath(__file__), encoding="utf-8").read()
+def _r5_block(s=None):
+    s = open(os.path.abspath(__file__), encoding="utf-8").read() if s is None else s
     a = s.index("# " + "=" * 66 + " round 5"); b = s.index("# " + "-" * 66 + " END OF ROUND-5 RULES")
-    return hashlib.sha256(s[a:b].encode("utf-8")).hexdigest()
+    return s[a:b]
+
+
+def r5_block_sha(s=None):
+    """sha256 of the round-5 block's bytes (comments and docstrings included): the fingerprint R15 recorded."""
+    return hashlib.sha256(_r5_block(s).encode("utf-8")).hexdigest()
+
+
+def r5_logic_sha(s=None):
+    """sha256 of the round-5 block's rule logic: its syntax tree without comments, docstrings or layout, serialised by
+    field name and value (fields that are None or empty are left out, so the value is the same on Python 3.9 and 3.12).
+    A comment or docstring edit leaves it unchanged; any change to code, constants or strings changes it."""
+    import ast
+
+    def ser(n):
+        if isinstance(n, ast.AST):
+            F = [(k, ser(v)) for k, v in ast.iter_fields(n) if k not in ("ctx", "type_comment", "kind") and v not in (None, [])]
+            return n.__class__.__name__ + "(" + ",".join(f"{k}={v}" for k, v in F) + ")"
+        if isinstance(n, list): return "[" + ",".join(ser(x) for x in n) + "]"
+        return repr(n)
+    t = ast.parse(_r5_block(s))
+    for n in ast.walk(t):
+        B = getattr(n, "body", None)
+        if isinstance(n, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and B and isinstance(B[0], ast.Expr) \
+                and isinstance(B[0].value, ast.Constant) and isinstance(B[0].value.value, str):
+            n.body = B[1:] or [ast.Pass()]
+    return hashlib.sha256(ser(t).encode("utf-8")).hexdigest()
+
+
+# The R15 freeze (commit 6a2c269, PREREG R15): the block's byte fingerprint as recorded in the results, and its rule-logic
+# fingerprint. The byte fingerprint changed after the freeze with a comment only (5e005cb: the R5_ON comment states the
+# outcome); the logic fingerprint is unchanged since the freeze, and tests/test_audit_r5.py keeps it so (PREREG results log,
+# R15 post-freeze note).
+R5_FROZEN = dict(commit="6a2c269", block_sha256="2d5dcaaf3b7a8c53f8baae797f045708ac843efeef0db692aa383d3a64d8e1bc",
+                 logic_sha256="480ef3e31a9b107af3a342e84b7eba90b950c71e2a5b14ead06f2d81355ffb52")
 
 
 QUESTION_TERM = ("Does the 'lang' text render the German term named in 'finding' with a term that is wrong or that BAG no "
@@ -1794,7 +1828,7 @@ def main(argv=None):
     R5 = run_r5(J, names, F)
     summ["round5"] = dict(note="PREREG R15: operator / negation / number_word, reported apart from the kinds above (findings_r5 in "
                                "audit_<date>.json); 'on' is set by the R15 outcome; number findings carry a display-only 'counterpart'",
-                          rules_sha256=r5_block_sha(), on=dict(R5_ON), findings=len(R5),
+                          rules_sha256=r5_block_sha(), rules_logic_sha256=r5_logic_sha(), on=dict(R5_ON), findings=len(R5),
                           by_kind={k: sum(f["kind"] == k for f in R5) for k in KINDS_R5},
                           by_kind_lang={k: dict(Counter(f["lang"] for f in R5 if f["kind"] == k)) for k in KINDS_R5},
                           by_kind_half={k: dict(Counter(f["half"] for f in R5 if f["kind"] == k)) for k in KINDS_R5},

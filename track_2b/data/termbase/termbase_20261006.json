@@ -28,20 +28,22 @@
    "preferred": "assureur-maladie",
    "support": 505,
    "share": 0.567,
-   "variants": [
+   "variants": [],
+   "house": true,
+   "preferred_tokens": "assureur-maladie",
+   "dice": 0.677,
+   "without_preferred": 549,
+   "dominance": 0.655,
+   "practice": [
     {
      "tokens": "assurance maladie",
      "text": "assurance maladie",
      "limitations": 266,
      "without_preferred": 266,
-     "dice": 0.581
+     "dice": 0.581,
+     "note": "BAG's practice, not a rendering of the term (review)"
     }
-   ],
-   "house": true,
-   "preferred_tokens": "assureur-maladie",
-   "dice": 0.677,
-   "without_preferred": 549,
-   "dominance": 0.655
+   ]
   },
   {
    "term": "Kostengutsprache",
@@ -107,15 +109,7 @@
    "preferred": "taxe sur la valeur ajoutée",
    "support": 152,
    "share": 0.613,
-   "variants": [
-    {
-     "tokens": "remboursement de la tva",
-     "text": "remboursement de la tva",
-     "limitations": 34,
-     "without_preferred": 34,
-     "dice": 0.511
-    }
-   ],
+   "variants": [],
    "house": true,
    "preferred_tokens": "taxe sur la valeur ajoutée",
    "dice": 0.757,
@@ -226,7 +220,8 @@
    "preferred_tokens": "prescription",
    "dice": 0.639,
    "without_preferred": 4,
-   "dominance": 1.0
+   "dominance": 1.0,
+   "usage": "Au sens d'ordonnance médicale (« ärztliche Verordnung ») : « prescription ». Un texte réglementaire (« Verordnung über die Krankenversicherung », KVV) est une « ordonnance » (OAMal) : non couvert par cette entrée."
   },
   {
    "term": "Limitierung",
@@ -1026,7 +1021,8 @@
    "preferred_tokens": "prescrizione",
    "dice": 0.542,
    "without_preferred": 4,
-   "dominance": 1.0
+   "dominance": 1.0,
+   "usage": "Nel senso di prescrizione medica («ärztliche Verordnung»): «prescrizione». Un testo normativo («Verordnung über die Krankenversicherung», OAMal) è un'«ordinanza»: non coperto da questa voce."
   },
   {
    "term": "Limitierung",

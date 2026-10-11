@@ -22,7 +22,7 @@ def test_shipped_termbase_has_the_house_renderings_the_register_uses():
     assert E[("fr", "obligatorische Krankenpflegeversicherung")]["preferred"] == "assurance obligatoire des soins"
     assert E[("it", "obligatorische Krankenpflegeversicherung")]["preferred"] == "assicurazione obbligatoria delle cure medico-sanitarie"
     kv = E[("fr", "Krankenversicherer")]
-    assert kv["preferred"] == "assureur-maladie" and any(v["text"] == "assurance maladie" for v in kv["variants"])
+    assert kv["preferred"] == "assureur-maladie" and not kv["variants"] and [v["text"] for v in kv["practice"]] == ["assurance maladie"]
     for e in E.values():
         if not e.get("house"): continue
         assert e["support"] >= T.MIN_SUPPORT and e["share"] > T.MIN_SHARE and e["support"] <= e["limitations_with_term"]
@@ -45,13 +45,45 @@ def test_translator_review_insurer_base_forms_and_subject_field():
     assert E[("it", "Fabrikabgabepreis")]["preferred"] == "prezzo di fabbrica"
     q = lambda t: f"{{{T.TBX_NS}}}{t}"
     C = ET.parse(T.TBX).getroot().findall(f".//{q('conceptEntry')}")
-    assert C and all(c[0].tag == q("descrip") and c[0].get("type") == "subjectField" and c[0].text.startswith("SL limitations: ") for c in C)
+    assert C and all(c[0].tag == q("descrip") and c[0].get("type") == "subjectField" and c[0].text.startswith("SL-Limitierungen: ") for c in C)
     src = open(T.TBX, encoding="utf-8").read()
     assert "<term>policlinico</term>" in src and "assicurazione malattia" not in src
     # the advisory matches the register's plural through the base form: a draft writing «policlinici» is fine
     v = dict(lang="it", status="ready", de_old="x", de_new="Verschreibung durch die Poliklinik.", tgt_old="y",
              draft="Prescrizione da parte dei policlinici.")
     assert not [a for a in T.advice(v) if a["term"] == "Poliklinik"]
+
+
+def test_french_translator_review_insurer_vat_prescription_and_localised_tbx():
+    """11 Oct 2026, French translator (round 13): « assurance maladie » (the insurance) is not an admitted term for
+    "Krankenversicherer" (the insurer) and « remboursement de la TVA » not one for "Mehrwertsteuer"; « assurance
+    maladie » stays BAG's practice for the advisory (introduced: a note; carried over unchanged: none). "Verordnung" ->
+    « prescription » carries a usage note (prescription, not ordinance) and a legal ordinance is not the head term.
+    FR Originalpräparat stays set aside: the mining extends « originale » only through words that pass the exclusive
+    test, and « préparation » does not. Every TBX text is in the language of its element."""
+    E = _entries()
+    assert not E[("fr", "Mehrwertsteuer")]["variants"] and E[("fr", "Mehrwertsteuer")]["preferred"] == "taxe sur la valeur ajoutée"
+    assert "prescription" in E[("fr", "Verordnung")]["usage"] and "ordonnance" in E[("fr", "Verordnung")]["usage"]
+    assert "ordinanza" in E[("it", "Verordnung")]["usage"]
+    assert not E[("fr", "Originalpräparat")]["house"] and "fragment" in E[("fr", "Originalpräparat")]["note"]
+    assert T.de_count("Verordnung", "nach ärztlicher Verordnung durch einen Facharzt") == 1
+    assert T.de_count("Verordnung", "gemäss Verordnung über die Krankenversicherung (KVV)") == 0
+    assert T.de_count("Verordnung", "Verordnung des EDI über Leistungen") == 0
+    src = open(T.TBX, encoding="utf-8").read()
+    assert "<term>assurance maladie</term>" not in src and "remboursement de la tva" not in src.lower()
+    for en in ("limitations whose", "minority variant", "mined from", "SL limitations", "Mined by"):
+        assert en not in src, en
+    q = lambda t: f"{{{T.TBX_NS}}}{t}"; XL = "{http://www.w3.org/XML/1998/namespace}lang"
+    for ls in ET.parse(T.TBX).getroot().iter(q("langSec")):
+        L = ls.get(XL); txt = " ".join(x.text for x in ls.iter() if x.tag in (q("note"), q("admin")))
+        assert {"de": "Limitierungen", "fr": "limitations", "it": "limitazioni"}[L] in txt, (L, txt)
+    # the advisory: carried over unchanged -> no note; introduced -> a note
+    de = "Die Kostengutsprache durch den Krankenversicherer ist nötig."
+    old = "La garantie de prise en charge par l'assurance maladie est nécessaire."
+    v = dict(lang="fr", status="ready", de_old=de, de_new=de + " Neu.", tgt_old=old, draft=old + " Nouveau.")
+    assert not [a for a in T.advice(v) if a["term"] == "Krankenversicherer"]
+    v = dict(v, tgt_old=old.replace("l'assurance maladie", "l'assureur-maladie"), draft=old + " Nouveau.")
+    assert [(a["term"], a["wrote"]) for a in T.advice(v) if a["term"] == "Krankenversicherer"] == [("Krankenversicherer", "assurance maladie")]
 
 
 def test_tbx_is_valid_and_rebuilt_from_the_json():
@@ -63,7 +95,7 @@ def test_tbx_is_valid_and_rebuilt_from_the_json():
     r = ET.parse(p).getroot(); E = _entries()
     assert len(r.findall(f".//{q('conceptEntry')}")) == len({t for (L, t), e in E.items() if e.get("house")})
     for ts in r.iter(q("termSec")):
-        assert ts.find(q("admin")).get("type") == "source" and re.search(r"BAG SL 06\.10\.2026, \d+ limitations", ts.find(q("admin")).text)
+        assert ts.find(q("admin")).get("type") == "source" and re.search(r"(?:BAG SL 06\.10\.2026, \d+ Limitierungen|OFSP du 06\.10\.2026, \d+\u00a0limitations|UFSP del 06\.10\.2026, \d+ limitazioni)$", ts.find(q("admin")).text)
     src = open(p, encoding="utf-8").read()
     bad = {"wf": src.replace("</body>", "", 1), "status": src.replace("preferredTerm-admn-sts", "bestTerm", 1),
            "term": re.sub(r"<term>[^<]*</term>", "", src, count=1), "ns": src.replace(T.TBX_NS, "urn:x", 1)}

@@ -3,908 +3,899 @@
  <tbxHeader>
   <fileDesc>
    <titleStmt>
-    <title>Gleichlaut SL termbase 06.10.2026 (DE-FR-IT)</title>
+    <title>Gleichlaut SL-Termbase 06.10.2026 (DE-FR-IT)</title>
    </titleStmt>
    <sourceDesc>
-    <p>Mined by Gleichlaut (no model) from the 1688 limitation texts of the BAG Spezialitätenliste, public ePL FHIR feed 06.10.2026: per German term, the French / Italian n-gram most associated with it in the limitations whose German contains it. preferredTerm = the register's dominant rendering; admittedTerm = a minority variant the register also uses. Counts are limitations. Unreviewed: check before adopting.</p>
+    <p>Von Gleichlaut (ohne Sprachmodell) aus den 1688 Limitierungstexten der BAG-Spezialitätenliste gewonnen (öffentlicher ePL-FHIR-Feed 06.10.2026): je deutschem Begriff das französische / italienische N-Gramm, das in den Limitierungen mit diesem Begriff am stärksten mit ihm verbunden ist. preferredTerm = die vorherrschende Wiedergabe im Register; admittedTerm = eine Minderheitsvariante, die das Register ebenfalls verwendet. Zählungen in Limitierungen. Nicht terminologisch geprüft: vor der Übernahme prüfen.</p>
    </sourceDesc>
   </fileDesc>
  </tbxHeader>
  <text>
   <body>
    <conceptEntry id="sl001">
-    <descrip type="subjectField">SL limitations: reimbursement</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Vergütung</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Krankenversicherer</term>
-      <admin type="source">BAG SL 06.10.2026, 890 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 890 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>assureur-maladie</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 505 limitations</admin>
-      <note>505 of 890 limitations whose German contains the term (57%)</note>
-     </termSec>
-     <termSec>
-      <term>assurance maladie</term>
-      <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 266 limitations</admin>
-      <note>minority variant in the register; house rendering: assureur-maladie</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 505 limitations</admin>
+      <note>505 des 890 limitations dont l'allemand contient le terme (57 %)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl002">
-    <descrip type="subjectField">SL limitations: reimbursement</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Vergütung</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Kostengutsprache</term>
-      <admin type="source">BAG SL 06.10.2026, 611 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 611 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>garantie de prise en charge</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 374 limitations</admin>
-      <note>374 of 611 limitations whose German contains the term (61%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 374 limitations</admin>
+      <note>374 des 611 limitations dont l'allemand contient le terme (61 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>garanzia di assunzione dei costi</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 365 limitations</admin>
-      <note>365 of 611 limitations whose German contains the term (60%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 365 limitazioni</admin>
+      <note>365 delle 611 limitazioni il cui tedesco contiene il termine (60%)</note>
      </termSec>
      <termSec>
       <term>garanzia di assunzione delle spese</term>
       <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 91 limitations</admin>
-      <note>minority variant in the register; house rendering: garanzia di assunzione dei costi</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 91 limitazioni</admin>
+      <note>variante minoritaria nel registro; termine in uso: «garanzia di assunzione dei costi»</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl003">
-    <descrip type="subjectField">SL limitations: reimbursement</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Vergütung</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Vertrauensarzt</term>
-      <admin type="source">BAG SL 06.10.2026, 581 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 581 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>médecin-conseil</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 522 limitations</admin>
-      <note>522 of 581 limitations whose German contains the term (90%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 522 limitations</admin>
+      <note>522 des 581 limitations dont l'allemand contient le terme (90 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>medico di fiducia</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 519 limitations</admin>
-      <note>519 of 581 limitations whose German contains the term (89%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 519 limitazioni</admin>
+      <note>519 delle 581 limitazioni il cui tedesco contiene il termine (89%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl004">
-    <descrip type="subjectField">SL limitations: reimbursement</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Vergütung</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Indikationscode</term>
-      <admin type="source">BAG SL 06.10.2026, 345 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 345 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>code d'indication</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 262 limitations</admin>
-      <note>262 of 345 limitations whose German contains the term (76%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 262 limitations</admin>
+      <note>262 des 345 limitations dont l'allemand contient le terme (76 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>codice di indicazione</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 182 limitations</admin>
-      <note>182 of 345 limitations whose German contains the term (53%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 182 limitazioni</admin>
+      <note>182 delle 345 limitazioni il cui tedesco contiene il termine (53%)</note>
      </termSec>
      <termSec>
       <term>codice d'indicazione</term>
       <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 99 limitations</admin>
-      <note>minority variant in the register; house rendering: codice di indicazione</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 99 limitazioni</admin>
+      <note>variante minoritaria nel registro; termine in uso: «codice di indicazione»</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl005">
-    <descrip type="subjectField">SL limitations: prescription and setting</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Verschreibung und Behandlungsort</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Facharzt</term>
-      <admin type="source">BAG SL 06.10.2026, 284 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 284 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>spécialiste</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 165 limitations</admin>
-      <note>165 of 284 limitations whose German contains the term (58%); the register writes «spécialistes»</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 165 limitations</admin>
+      <note>165 des 284 limitations dont l'allemand contient le terme (58 %) ; le registre écrit « spécialistes »</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl006">
-    <descrip type="subjectField">SL limitations: pricing</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Preise</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Mehrwertsteuer</term>
-      <admin type="source">BAG SL 06.10.2026, 248 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 248 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>taxe sur la valeur ajoutée</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 152 limitations</admin>
-      <note>152 of 248 limitations whose German contains the term (61%)</note>
-     </termSec>
-     <termSec>
-      <term>remboursement de la tva</term>
-      <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 34 limitations</admin>
-      <note>minority variant in the register; house rendering: taxe sur la valeur ajoutée</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 152 limitations</admin>
+      <note>152 des 248 limitations dont l'allemand contient le terme (61 %)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl007">
-    <descrip type="subjectField">SL limitations: pricing</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Preise</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Fabrikabgabepreis</term>
-      <admin type="source">BAG SL 06.10.2026, 249 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 249 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>prix de fabrique</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 159 limitations</admin>
-      <note>159 of 249 limitations whose German contains the term (64%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 159 limitations</admin>
+      <note>159 des 249 limitations dont l'allemand contient le terme (64 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>prezzo di fabbrica</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 205 limitations</admin>
-      <note>205 of 249 limitations whose German contains the term (82%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 205 limitazioni</admin>
+      <note>205 delle 249 limitazioni il cui tedesco contiene il termine (82%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl008">
-    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Therapie und Verlauf</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Monotherapie</term>
-      <admin type="source">BAG SL 06.10.2026, 250 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 250 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>monothérapie</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 250 limitations</admin>
-      <note>250 of 250 limitations whose German contains the term (100%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 250 limitations</admin>
+      <note>250 des 250 limitations dont l'allemand contient le terme (100 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>monoterapia</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 243 limitations</admin>
-      <note>243 of 249 limitations whose German contains the term (98%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 243 limitazioni</admin>
+      <note>243 delle 249 limitazioni il cui tedesco contiene il termine (98%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl009">
-    <descrip type="subjectField">SL limitations: reimbursement</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Vergütung</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Rückerstattung</term>
-      <admin type="source">BAG SL 06.10.2026, 166 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 166 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>remboursement</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 159 limitations</admin>
-      <note>159 of 166 limitations whose German contains the term (96%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 159 limitations</admin>
+      <note>159 des 166 limitations dont l'allemand contient le terme (96 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>rimborso</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 165 limitations</admin>
-      <note>165 of 166 limitations whose German contains the term (99%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 165 limitazioni</admin>
+      <note>165 delle 166 limitazioni il cui tedesco contiene il termine (99%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl010">
-    <descrip type="subjectField">SL limitations: pricing</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Preise</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Zulassungsinhaberin</term>
-      <admin type="source">BAG SL 06.10.2026, 138 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 138 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>titulaire de l'autorisation</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 134 limitations</admin>
-      <note>134 of 138 limitations whose German contains the term (97%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 134 limitations</admin>
+      <note>134 des 138 limitations dont l'allemand contient le terme (97 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>titolare dell'omologazione</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 97 limitations</admin>
-      <note>97 of 138 limitations whose German contains the term (70%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 97 limitazioni</admin>
+      <note>97 delle 138 limitazioni il cui tedesco contiene il termine (70%)</note>
      </termSec>
      <termSec>
       <term>titolare dell'autorizzazione</term>
       <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 42 limitations</admin>
-      <note>minority variant in the register; house rendering: titolare dell'omologazione</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 42 limitazioni</admin>
+      <note>variante minoritaria nel registro; termine in uso: «titolare dell'omologazione»</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl011">
-    <descrip type="subjectField">SL limitations: pricing</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Preise</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Preismodell</term>
-      <admin type="source">BAG SL 06.10.2026, 128 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 128 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>modèle de prix</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 103 limitations</admin>
-      <note>103 of 128 limitations whose German contains the term (80%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 103 limitations</admin>
+      <note>103 des 128 limitations dont l'allemand contient le terme (80 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>modello di prezzo</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 106 limitations</admin>
-      <note>106 of 127 limitations whose German contains the term (84%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 106 limitazioni</admin>
+      <note>106 delle 127 limitazioni il cui tedesco contiene il termine (84%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl012">
-    <descrip type="subjectField">SL limitations: prescription and setting</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Verschreibung und Behandlungsort</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Verordnung</term>
-      <admin type="source">BAG SL 06.10.2026, 125 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 125 Limitierungen</admin>
+      <note>Im Sinn der ärztlichen Verordnung (Verschreibung); eine Verordnung als Erlass (KVV, KLV) ist nicht gemeint.</note>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>prescription</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 122 limitations</admin>
-      <note>122 of 125 limitations whose German contains the term (98%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 122 limitations</admin>
+      <note>122 des 125 limitations dont l'allemand contient le terme (98 %)</note>
+      <note>Au sens d'ordonnance médicale (« ärztliche Verordnung ») : « prescription ». Un texte réglementaire (« Verordnung über die Krankenversicherung », KVV) est une « ordonnance » (OAMal) : non couvert par cette entrée.</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>prescrizione</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 122 limitations</admin>
-      <note>122 of 125 limitations whose German contains the term (98%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 122 limitazioni</admin>
+      <note>122 delle 125 limitazioni il cui tedesco contiene il termine (98%)</note>
+      <note>Nel senso di prescrizione medica («ärztliche Verordnung»): «prescrizione». Un testo normativo («Verordnung über die Krankenversicherung», OAMal) è un'«ordinanza»: non coperto da questa voce.</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl013">
-    <descrip type="subjectField">SL limitations: reimbursement</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Vergütung</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Limitierung</term>
-      <admin type="source">BAG SL 06.10.2026, 114 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 114 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>limitation</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 109 limitations</admin>
-      <note>109 of 114 limitations whose German contains the term (96%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 109 limitations</admin>
+      <note>109 des 114 limitations dont l'allemand contient le terme (96 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>limitazione</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 110 limitations</admin>
-      <note>110 of 114 limitations whose German contains the term (96%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 110 limitazioni</admin>
+      <note>110 delle 114 limitazioni il cui tedesco contiene il termine (96%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl014">
-    <descrip type="subjectField">SL limitations: prescription and setting</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Verschreibung und Behandlungsort</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Poliklinik</term>
-      <admin type="source">BAG SL 06.10.2026, 103 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 103 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>policlinique</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 63 limitations</admin>
-      <note>63 of 103 limitations whose German contains the term (61%); the register writes «policliniques»</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 63 limitations</admin>
+      <note>63 des 103 limitations dont l'allemand contient le terme (61 %) ; le registre écrit « policliniques »</note>
      </termSec>
      <termSec>
       <term>polyclinique</term>
       <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 35 limitations</admin>
-      <note>minority variant in the register; house rendering: policlinique</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 35 limitations</admin>
+      <note>variante minoritaire du registre ; terme maison : « policlinique »</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>policlinico</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 85 limitations</admin>
-      <note>85 of 103 limitations whose German contains the term (82%); the register writes «policlinici»</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 85 limitazioni</admin>
+      <note>85 delle 103 limitazioni il cui tedesco contiene il termine (82%); il registro scrive «policlinici»</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl015">
-    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Therapie und Verlauf</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Therapiebeginn</term>
-      <admin type="source">BAG SL 06.10.2026, 95 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 95 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>inizio della terapia</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 77 limitations</admin>
-      <note>77 of 95 limitations whose German contains the term (81%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 77 limitazioni</admin>
+      <note>77 delle 95 limitazioni il cui tedesco contiene il termine (81%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl016">
-    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Therapie und Verlauf</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Antikörper</term>
-      <admin type="source">BAG SL 06.10.2026, 82 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 82 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>anticorps</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 82 limitations</admin>
-      <note>82 of 82 limitations whose German contains the term (100%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 82 limitations</admin>
+      <note>82 des 82 limitations dont l'allemand contient le terme (100 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>anticorpo</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 47 limitations</admin>
-      <note>47 of 82 limitations whose German contains the term (57%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 47 limitazioni</admin>
+      <note>47 delle 82 limitazioni il cui tedesco contiene il termine (57%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl017">
-    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Therapie und Verlauf</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Diagnosestellung</term>
-      <admin type="source">BAG SL 06.10.2026, 75 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 75 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>diagnostic</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 75 limitations</admin>
-      <note>75 of 75 limitations whose German contains the term (100%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 75 limitations</admin>
+      <note>75 des 75 limitations dont l'allemand contient le terme (100 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>diagnosi</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 75 limitations</admin>
-      <note>75 of 75 limitations whose German contains the term (100%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 75 limitazioni</admin>
+      <note>75 delle 75 limitazioni il cui tedesco contiene il termine (100%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl018">
-    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Therapie und Verlauf</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Körpergewicht</term>
-      <admin type="source">BAG SL 06.10.2026, 72 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 72 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>poids corporel</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 47 limitations</admin>
-      <note>47 of 72 limitations whose German contains the term (65%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 47 limitations</admin>
+      <note>47 des 72 limitations dont l'allemand contient le terme (65 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>peso corporeo</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 71 limitations</admin>
-      <note>71 of 72 limitations whose German contains the term (99%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 71 limitazioni</admin>
+      <note>71 delle 72 limitazioni il cui tedesco contiene il termine (99%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl019">
-    <descrip type="subjectField">SL limitations: product status</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Produktstatus</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Originalpräparat</term>
-      <admin type="source">BAG SL 06.10.2026, 64 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 64 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>preparato originale</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 64 limitations</admin>
-      <note>64 of 64 limitations whose German contains the term (100%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 64 limitazioni</admin>
+      <note>64 delle 64 limitazioni il cui tedesco contiene il termine (100%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl020">
-    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Therapie und Verlauf</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Erstlinientherapie</term>
-      <admin type="source">BAG SL 06.10.2026, 64 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 64 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>terapia di prima linea</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 41 limitations</admin>
-      <note>41 of 64 limitations whose German contains the term (64%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 41 limitazioni</admin>
+      <note>41 delle 64 limitazioni il cui tedesco contiene il termine (64%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl021">
-    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Therapie und Verlauf</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Erhaltungstherapie</term>
-      <admin type="source">BAG SL 06.10.2026, 63 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 63 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>traitement d'entretien</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 53 limitations</admin>
-      <note>53 of 63 limitations whose German contains the term (84%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 53 limitations</admin>
+      <note>53 des 63 limitations dont l'allemand contient le terme (84 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>terapia di mantenimento</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 59 limitations</admin>
-      <note>59 of 63 limitations whose German contains the term (94%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 59 limitazioni</admin>
+      <note>59 delle 63 limitazioni il cui tedesco contiene il termine (94%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl022">
-    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Therapie und Verlauf</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Erstlinienbehandlung</term>
-      <admin type="source">BAG SL 06.10.2026, 59 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 59 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>traitement de première ligne</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 50 limitations</admin>
-      <note>50 of 59 limitations whose German contains the term (85%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 50 limitations</admin>
+      <note>50 des 59 limitations dont l'allemand contient le terme (85 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>trattamento di prima linea</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 45 limitations</admin>
-      <note>45 of 59 limitations whose German contains the term (76%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 45 limitazioni</admin>
+      <note>45 delle 59 limitazioni il cui tedesco contiene il termine (76%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl023">
-    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Therapie und Verlauf</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Unverträglichkeit</term>
-      <admin type="source">BAG SL 06.10.2026, 63 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 63 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>intolérance</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 60 limitations</admin>
-      <note>60 of 63 limitations whose German contains the term (95%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 60 limitations</admin>
+      <note>60 des 63 limitations dont l'allemand contient le terme (95 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>intolleranza</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 50 limitations</admin>
-      <note>50 of 63 limitations whose German contains the term (79%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 50 limitazioni</admin>
+      <note>50 delle 63 limitazioni il cui tedesco contiene il termine (79%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl024">
-    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Therapie und Verlauf</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Behandlungsbeginn</term>
-      <admin type="source">BAG SL 06.10.2026, 53 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 53 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>inizio del trattamento</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 45 limitations</admin>
-      <note>45 of 53 limitations whose German contains the term (85%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 45 limitazioni</admin>
+      <note>45 delle 53 limitazioni il cui tedesco contiene il termine (85%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl025">
-    <descrip type="subjectField">SL limitations: product status</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Produktstatus</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Biosimilar</term>
-      <admin type="source">BAG SL 06.10.2026, 49 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 49 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>biosimilaire</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 47 limitations</admin>
-      <note>47 of 49 limitations whose German contains the term (96%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 47 limitations</admin>
+      <note>47 des 49 limitations dont l'allemand contient le terme (96 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>biosimilare</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 47 limitations</admin>
-      <note>47 of 49 limitations whose German contains the term (96%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 47 limitazioni</admin>
+      <note>47 delle 49 limitazioni il cui tedesco contiene il termine (96%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl026">
-    <descrip type="subjectField">SL limitations: product status</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Produktstatus</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Referenzpräparat</term>
-      <admin type="source">BAG SL 06.10.2026, 46 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 46 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>préparation de référence</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 46 limitations</admin>
-      <note>46 of 46 limitations whose German contains the term (100%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 46 limitations</admin>
+      <note>46 des 46 limitations dont l'allemand contient le terme (100 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>prodotto di riferimento</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 46 limitations</admin>
-      <note>46 of 46 limitations whose German contains the term (100%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 46 limitazioni</admin>
+      <note>46 delle 46 limitazioni il cui tedesco contiene il termine (100%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl027">
-    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Therapie und Verlauf</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Verlaufskontrolle</term>
-      <admin type="source">BAG SL 06.10.2026, 46 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 46 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>suivi du traitement</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 30 limitations</admin>
-      <note>30 of 46 limitations whose German contains the term (65%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 30 limitations</admin>
+      <note>30 des 46 limitations dont l'allemand contient le terme (65 %)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl028">
-    <descrip type="subjectField">SL limitations: reimbursement</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Vergütung</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>obligatorische Krankenpflegeversicherung</term>
-      <admin type="source">BAG SL 06.10.2026, 41 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 41 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>assurance obligatoire des soins</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 33 limitations</admin>
-      <note>33 of 41 limitations whose German contains the term (80%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 33 limitations</admin>
+      <note>33 des 41 limitations dont l'allemand contient le terme (80 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>assicurazione obbligatoria delle cure medico-sanitarie</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 34 limitations</admin>
-      <note>34 of 41 limitations whose German contains the term (83%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 34 limitazioni</admin>
+      <note>34 delle 41 limitazioni il cui tedesco contiene il termine (83%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl029">
-    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Therapie und Verlauf</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Kontraindikation</term>
-      <admin type="source">BAG SL 06.10.2026, 42 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 42 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>contre-indication</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 36 limitations</admin>
-      <note>36 of 42 limitations whose German contains the term (86%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 36 limitations</admin>
+      <note>36 des 42 limitations dont l'allemand contient le terme (86 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>controindicazione</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 31 limitations</admin>
-      <note>31 of 42 limitations whose German contains the term (74%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 31 limitazioni</admin>
+      <note>31 delle 42 limitazioni il cui tedesco contiene il termine (74%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl030">
-    <descrip type="subjectField">SL limitations: pricing</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Preise</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Publikumspreis</term>
-      <admin type="source">BAG SL 06.10.2026, 46 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 46 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>prix public</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 46 limitations</admin>
-      <note>46 of 46 limitations whose German contains the term (100%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 46 limitations</admin>
+      <note>46 des 46 limitations dont l'allemand contient le terme (100 %)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl031">
-    <descrip type="subjectField">SL limitations: reimbursement</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Vergütung</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Vergütungskriterien</term>
-      <admin type="source">BAG SL 06.10.2026, 34 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 34 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>critères de remboursement</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 34 limitations</admin>
-      <note>34 of 34 limitations whose German contains the term (100%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 34 limitations</admin>
+      <note>34 des 34 limitations dont l'allemand contient le terme (100 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>criteri di rimborso</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 33 limitations</admin>
-      <note>33 of 34 limitations whose German contains the term (97%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 33 limitazioni</admin>
+      <note>33 delle 34 limitazioni il cui tedesco contiene il termine (97%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl032">
-    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Therapie und Verlauf</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Sekundärprävention</term>
-      <admin type="source">BAG SL 06.10.2026, 34 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 34 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>prévention secondaire</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 34 limitations</admin>
-      <note>34 of 34 limitations whose German contains the term (100%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 34 limitations</admin>
+      <note>34 des 34 limitations dont l'allemand contient le terme (100 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>prevenzione secondaria</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 34 limitations</admin>
-      <note>34 of 34 limitations whose German contains the term (100%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 34 limitazioni</admin>
+      <note>34 delle 34 limitazioni il cui tedesco contiene il termine (100%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl033">
-    <descrip type="subjectField">SL limitations: prescription and setting</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Verschreibung und Behandlungsort</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Erstverschreibung</term>
-      <admin type="source">BAG SL 06.10.2026, 31 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 31 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>première prescription</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 22 limitations</admin>
-      <note>22 of 31 limitations whose German contains the term (71%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 22 limitations</admin>
+      <note>22 des 31 limitations dont l'allemand contient le terme (71 %)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl034">
-    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Therapie und Verlauf</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Primärprävention</term>
-      <admin type="source">BAG SL 06.10.2026, 24 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 24 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>prévention primaire</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 24 limitations</admin>
-      <note>24 of 24 limitations whose German contains the term (100%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 24 limitations</admin>
+      <note>24 des 24 limitations dont l'allemand contient le terme (100 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>prevenzione primaria</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 24 limitations</admin>
-      <note>24 of 24 limitations whose German contains the term (100%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 24 limitazioni</admin>
+      <note>24 delle 24 limitazioni il cui tedesco contiene il termine (100%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl035">
-    <descrip type="subjectField">SL limitations: prescription and setting</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Verschreibung und Behandlungsort</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Erstverordnung</term>
-      <admin type="source">BAG SL 06.10.2026, 23 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 23 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>prescription initiale</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 17 limitations</admin>
-      <note>17 of 23 limitations whose German contains the term (74%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 17 limitations</admin>
+      <note>17 des 23 limitations dont l'allemand contient le terme (74 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>prescrizione iniziale</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 16 limitations</admin>
-      <note>16 of 23 limitations whose German contains the term (70%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 16 limitazioni</admin>
+      <note>16 delle 23 limitazioni il cui tedesco contiene il termine (70%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl036">
-    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Therapie und Verlauf</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Therapieabbruch</term>
-      <admin type="source">BAG SL 06.10.2026, 31 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 31 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>interruzione della terapia</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 29 limitations</admin>
-      <note>29 of 31 limitations whose German contains the term (94%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 29 limitazioni</admin>
+      <note>29 delle 31 limitazioni il cui tedesco contiene il termine (94%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl037">
-    <descrip type="subjectField">SL limitations: product status</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Produktstatus</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Fachinformation</term>
-      <admin type="source">BAG SL 06.10.2026, 22 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 22 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="fr">
      <termSec>
       <term>information professionnelle</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 19 limitations</admin>
-      <note>19 of 22 limitations whose German contains the term (86%)</note>
+      <admin type="source">extrait de la LS de l'OFSP du 06.10.2026, 19 limitations</admin>
+      <note>19 des 22 limitations dont l'allemand contient le terme (86 %)</note>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>informazione professionale</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 15 limitations</admin>
-      <note>15 of 22 limitations whose German contains the term (68%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 15 limitazioni</admin>
+      <note>15 delle 22 limitazioni il cui tedesco contiene il termine (68%)</note>
      </termSec>
     </langSec>
    </conceptEntry>
    <conceptEntry id="sl038">
-    <descrip type="subjectField">SL limitations: therapy and clinical course</descrip>
+    <descrip type="subjectField">SL-Limitierungen: Therapie und Verlauf</descrip>
     <langSec xml:lang="de">
      <termSec>
       <term>Zweitlinientherapie</term>
-      <admin type="source">BAG SL 06.10.2026, 17 limitations</admin>
+      <admin type="source">BAG SL 06.10.2026, 17 Limitierungen</admin>
      </termSec>
     </langSec>
     <langSec xml:lang="it">
      <termSec>
       <term>trattamento di seconda linea</term>
       <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 10 limitations</admin>
-      <note>10 of 17 limitations whose German contains the term (59%)</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 10 limitazioni</admin>
+      <note>10 delle 17 limitazioni il cui tedesco contiene il termine (59%)</note>
      </termSec>
      <termSec>
       <term>terapia di seconda linea</term>
       <termNote type="administrativeStatus">admittedTerm-admn-sts</termNote>
-      <admin type="source">mined from BAG SL 06.10.2026, 5 limitations</admin>
-      <note>minority variant in the register; house rendering: trattamento di seconda linea</note>
+      <admin type="source">estratto dall'ES dell'UFSP del 06.10.2026, 5 limitazioni</admin>
+      <note>variante minoritaria nel registro; termine in uso: «trattamento di seconda linea»</note>
      </termSec>
     </langSec>
    </conceptEntry>

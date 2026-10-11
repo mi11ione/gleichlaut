@@ -776,6 +776,7 @@
  "round5": {
   "note": "PREREG R15: operator / negation / number_word, reported apart from the kinds above (findings_r5 in audit_<date>.json); 'on' is set by the R15 outcome; number findings carry a display-only 'counterpart'",
   "rules_sha256": "2d5dcaaf3b7a8c53f8baae797f045708ac843efeef0db692aa383d3a64d8e1bc",
+  "rules_logic_sha256": "480ef3e31a9b107af3a342e84b7eba90b950c71e2a5b14ead06f2d81355ffb52",
   "on": {
    "operator": false,
    "negation": false,

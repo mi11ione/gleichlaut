@@ -275,40 +275,40 @@ footer p{margin:6px 0 0;overflow-wrap:anywhere;max-width:150ch}
 BODY = r"""<div class="app">
 <header class="bar">
  <span class="wm">Gleichlaut</span>
- <nav class="views" role="tablist" aria-label="Views"><button class="view" role="tab" type="button" id="t-audit" aria-controls="p-audit"></button><button class="view" role="tab" type="button" id="t-drafts" aria-controls="p-drafts"></button></nav>
+ <nav class="views" role="tablist" aria-label="Views" data-aria="views"><button class="view" role="tab" type="button" id="t-audit" aria-controls="p-audit"></button><button class="view" role="tab" type="button" id="t-drafts" aria-controls="p-drafts"></button></nav>
  <div class="tools"><span id="progress"></span>
   <details class="menu" id="xmenu"><summary class="box" id="x-sum"></summary><div class="mm">
    <button class="tb" id="x-dec" type="button"></button><button class="tb" id="x-xlf" type="button"></button><button class="tb" id="x-xlf12" type="button"></button>
    <button class="tb" id="x-copy" type="button"></button><button class="tb" id="x-imp" type="button"></button>
    <button class="tb" id="a-csv-i" type="button"></button><button class="tb" id="a-csv" type="button"></button><button class="tb" id="a-imp" type="button"></button>
    <span class="msg" id="x-msg" aria-live="polite"></span><span class="msg" id="a-msg" aria-live="polite"></span><span class="msg" id="where"></span>
-   <textarea id="copybox" hidden readonly aria-label="Decisions JSON"></textarea></div></details>
-  <label><span id="l-ui" class="vh"></span><select id="ui-lang" aria-label="Interface language"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option></select></label><button class="tb" id="theme" type="button"></button></div>
+   <textarea id="copybox" hidden readonly aria-label="Decisions JSON" data-aria="json"></textarea></div></details>
+  <label><span id="l-ui" class="vh"></span><select id="ui-lang" aria-label="Interface language" data-aria="uil"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option></select></label><button class="tb" id="theme" type="button"></button></div>
 </header>
 <p class="ctx" id="ctxline"></p>
 <div class="work" id="p-audit" role="tabpanel" aria-labelledby="t-audit" hidden>
- <section class="register" aria-label="Issues">
+ <section class="register" aria-label="Issues" data-aria="issues">
   <div class="filters"><div class="fl" id="a-show"></div><div class="fl" id="a-lang"></div><div class="fl" id="a-kind"></div><div class="fl" id="a-since" hidden></div>
 </div>
   <div class="tbl reg-wrap" id="aud-wrap"><table id="aud"><colgroup><col class="a-mk"><col><col class="a-what"></colgroup>
    <thead><tr><th id="ah-no"></th><th id="ah-lim"></th><th id="ah-kind"></th></tr></thead><tbody></tbody></table></div>
   <div class="count" id="a-shown"></div>
  </section>
- <section class="case" id="acase" tabindex="-1" aria-label="Issue"></section>
+ <section class="case" id="acase" tabindex="-1" aria-label="Issue" data-aria="issue"></section>
 </div>
 <div class="work" id="p-drafts" role="tabpanel" aria-labelledby="t-drafts">
- <section class="register" id="register" aria-label="Register">
+ <section class="register" id="register" aria-label="Register" data-aria="register">
   <div class="filters">
    <div class="fl" id="f-status"></div>
    <div class="fl" id="f-lang"></div>
-   <div class="fl"><select id="f-fam" aria-label="Family"></select><input type="search" id="f-q" aria-label="Search product or limitation code"></div>
+   <div class="fl"><select id="f-fam" aria-label="Family" data-aria="family"></select><input type="search" id="f-q" aria-label="Search product or limitation code" data-aria="search"></div>
    <div class="fambar" id="fam-bulk" hidden></div>
   </div>
   <div class="tbl reg-wrap" id="reg-wrap"><table id="reg"><colgroup><col class="c-fr"><col class="c-it"><col class="c-prod"><col></colgroup>
    <thead><tr><th class="m">FR</th><th class="m">IT</th><th id="h-prod"></th><th id="h-chg"></th></tr></thead><tbody></tbody></table></div>
   <div class="count"><span id="shown"></span> <span class="key" id="reg-key"></span></div>
  </section>
- <section class="case" id="case" tabindex="-1" aria-label="Case"></section>
+ <section class="case" id="case" tabindex="-1" aria-label="Case" data-aria="case"></section>
 </div>
 <input type="file" id="imp-file" accept="application/json,.json" multiple class="vh" tabindex="-1" aria-hidden="true">
 <textarea id="clipbox" class="vh" tabindex="-1" aria-hidden="true" readonly></textarea>
@@ -431,21 +431,21 @@ en:{ui:"UI",sub:"Review register",drafts:"drafts",model:"Model",run:"Run",guards
  aHeld:"Held-out half",aCalls:"Model calls",aCsv:"Export CSV",aNone:"No finding matches these filters.",aNoFile:"No audit file in this build.",
  aLegend:"Marks: K known divergence, confirmed in the texts · D decided · red box = conflicting value · underlined = other number · red bar = the language that differs from the other two (not necessarily the wrong one). Decisions: which language states the right condition, and the action (Berichtigung, GÄL, none).",
  aExpl:"explained by {x}",aFix:"probable typo: “{a}” → “{b}”",aSince:"in the SL since {d} ({n} snapshots)",aFoundL:"text in {F}",oddLbl:"odd one out",real:"real",of:"of"},
-fr:{ui:"Interface",sub:"Registre de révision",drafts:"brouillons",model:"Modèle",run:"Série",guards:"Contrôles",items:"Éléments",changes:"Changements",ready:"Prêts",flagged:"Signalés",
+fr:{ui:"Interface",sub:"Registre de révision",drafts:"brouillons",model:"Modèle",run:"Série",guards:"Contrôles",items:"Éléments",changes:"Modifications",ready:"Prêts",flagged:"Signalés",
  exact:"Exact vs règles seules",rule:"Règle préenregistrée",human:"Confiés à un traducteur",divergent:"Ancien texte divergent",decided:"décidés",
  status:"Statut",language:"Langue",open:"Ouverts",all:"Tous",decidedF:"Décidés",divF:"Divergents",allFam:"Toutes les familles",search:"Produit ou code",
- mark:"Marque",no:"N°",product:"Produit",change:"Changement",shown:"changements affichés",xlf:"Exporter XLIFF 2.1",json:"Exporter JSON",copy:"Copier les décisions",
+ mark:"Marque",no:"N°",product:"Produit",change:"Modification",shown:"modifications affichées",xlf:"Exporter XLIFF 2.1",json:"Exporter JSON",copy:"Copier les décisions",
  copied:"Décisions copiées dans le presse-papiers.",selcopy:"Presse-papiers bloqué : le JSON est sélectionné ci-dessous, copiez-le avec Ctrl/Cmd+C.",dl:"Téléchargé",
- s1:"Changement allemand",s2:"Brouillons",s3:"Contrôles",s4:"Décision",ctxA:"Contexte : autour des changements",ctxF:"Contexte : texte entier",de:"Allemand",fr:"Français",it:"Italien",
+ s1:"Modification du texte allemand",s2:"Brouillons",s3:"Contrôles",s4:"Décision",ctxA:"Contexte : autour des modifications",ctxF:"Contexte : texte entier",de:"Allemand",fr:"Français",it:"Italien",
  lready:"prêt",lflagged:"signalé",lhuman:"confié à un traducteur",readyAttn:"prêt (ancien texte à vérifier)",edited:"modifié",reset:"Rétablir le brouillon",editHint:"Cliquez dans le texte pour le modifier sur place.",
  check:"Contrôle",result:"Résultat",finding:"Constat",pass:"ok",fail:"ÉCHEC",na:"s.o.",raw:"détail technique",noChecks:"Pas de contrôle : pas de brouillon machine.",
  accept:"Accepter tel quel",acceptEd:"Accepter modifié",sendBack:"Renvoyer",reason:"Motif",note:"Remarque (pourquoi)",saveNext:"Enregistrer, suivant",keys:"touches 1/2/3 décider · f/i langue · Ctrl/Cmd+Entrée enregistrer, suivant",
  savedAt:"enregistré",openSt:"ouvert",noEdit:"Modifiez d'abord le texte du brouillon (cliquez dedans).",
  humanTxt:"Confié à un traducteur : l'allemand a été réécrit à plus de 60 %",humanShort:"Confié à un traducteur, pas de brouillon machine",humanPrev:"Ancien texte (modifiez-le sur place pour écrire la nouvelle version) :",
- none:"Aucun changement ne correspond à ces filtres.",provenance:"Provenance",
+ none:"Aucune modification ne correspond à ces filtres.",provenance:"Provenance",
  legend:"Marques : ✓ prêt · ▲ signalé · ≠ l'ancien texte a déjà un problème (diverge de l'allemand ou est dans une autre langue) · h confié à un traducteur · A accepté · E accepté modifié · R renvoyé · touches j/k ou ↑/↓ naviguer, Entrée ouvrir, f/i langue, 1/2/3 décider, Ctrl/Cmd+Entrée enregistrer et suivant",
  theme:"Thème",auto:"auto",light:"clair",dark:"sombre",
- reasons:["","Nombre erroné","Changement allemand non appliqué","Contenu perdu","Allemand resté / non traduit","Terminologie","Formulation","Autre"],
+ reasons:["","Nombre erroné","Modification du texte allemand non appliquée","Contenu perdu","Allemand non traduit","Terminologie","Formulation","Autre"],
  tabAudit:"Audit du registre",tabDrafts:"Brouillons",codeOnly:"Prêt signifie : vérifié par le code, pas par une personne.",
  triage:"Constats",chk1:"1 point à vérifier",chkN:"{n} points à vérifier",fine:"{n} probablement sans problème",pf:"probablement sans problème",
  rT1:"T1 vocabulaire",rT2:"T2 verbe modal",rT3:"T3 nombres",rT4:"T4 sigle",
@@ -465,9 +465,9 @@ fr:{ui:"Interface",sub:"Registre de révision",drafts:"brouillons",model:"Modèl
  aLim:"Limitation",aKind:"Type",aOdd:"Diverge",aRight:"Quelle langue a raison ?",aAction:"Mesure · remarque",aNote:"Remarque",aSug:"proposition de l'audit",
  aNoSnip:"pas d'extrait dans le fichier d'audit",aSnapSrc:"extrait de la version de la LS, repéré par position et nombres communs",
  kinds:{number:"nombre",unit:"unité",language:"langue",editorial:"rédactionnel"},aUnclear:"pas clair",acts:{"Berichtigung":"Berichtigung (rectification)","GÄL":"GÄL","none":"aucune","unclear":"pas clair"},
- aShow:"Afficher",aKnownF:"Connues",aAllF:"Toutes",aOpenF:"Ouvertes",aDecF:"Décidées",aKindF:"Type",aShown:"constats affichés",
+ aShow:"Afficher",aKnownF:"Connues",aAllF:"Tous",aOpenF:"Ouverts",aDecF:"Décidés",aKindF:"Type",aShown:"constats affichés",
  aSnap:"Version de la LS",aChecked:"Limitations contrôlées",aFindings:"Constats",aOnLims:"sur {n} limitations",aKnown:"Divergences connues trouvées",aReal:"Réels au contrôle à l'aveugle (nombres)",
- aHeld:"Moitié mise de côté",aCalls:"Appels au modèle",aCsv:"Exporter CSV",aNone:"Aucun constat ne correspond à ces filtres.",aNoFile:"Pas de fichier d'audit dans cette version.",
+ aHeld:"Moitié réservée à l'évaluation",aCalls:"Appels au modèle",aCsv:"Exporter CSV",aNone:"Aucun constat ne correspond à ces filtres.",aNoFile:"Pas de fichier d'audit dans cette version.",
  aLegend:"Marques : K divergence connue, attestée dans les textes · D décidé · cadre rouge = valeur contradictoire · souligné = autre nombre · barre rouge = la langue qui diffère des deux autres (pas forcément la fausse). Décisions : quelle langue dit la bonne condition, et la mesure (Berichtigung, GÄL, aucune).",
  aExpl:"expliqué par {x}",aFix:"coquille probable : « {a} » → « {b} »",aSince:"dans la LS depuis le {d} ({n} versions)",aFoundL:"texte en {F}",oddLbl:"diverge",real:"réels",of:"sur"},
 it:{ui:"Interfaccia",sub:"Registro di revisione",drafts:"bozze",model:"Modello",run:"Serie",guards:"Controlli",items:"Elementi",changes:"Modifiche",ready:"Pronte",flagged:"Segnalate",
@@ -548,13 +548,13 @@ en:{tb:{project:"Project",drawing:"Drawing",sheet:"Sheet",rev:"Rev",date:"Date (
 fr:{tb:{project:"Projet",drawing:"Dessin",sheet:"Feuille",rev:"Rév.",date:"Date (version LS)",freeze:"Gel",model:"Modèle",run:"Série",checked:"Contrôlé par",checkedV:"contrôles gelés"},lfine:"signalé – tous les constats probablement sans problème",lcheck:"signalé – à vérifier",fCheck:"À vérifier",fFine:"Probablement sans problème",
  triSplit:"Tri des signalés (affichage seulement)",triSplitV:"{c} à vérifier · {f} dont tous les constats sont probablement sans problème",
  rT5:"T5 nombres hors du passage",rT6:"T6 orthographe",rT7:"T7 négation",rT8:"T8 mêmes valeurs",
- rdT5:"T5 nombres hors du passage modifié : hors du passage modifié, le brouillon ne change que des nombres, exactement les valeurs que le changement allemand remplace (Ocrevus 944.61 → 731.07).",
- rdT6:"T6 orthographe : le changement allemand non repris n'est qu'orthographique (umlaut/ß, trait d'union comme Zeitpunkt → Zeit-punkt, majuscules, ponctuation) ou une terminaison flexionnelle (bedürfen → bedarf, erste → erst).",
+ rdT5:"T5 nombres hors du passage modifié : hors du passage modifié, le brouillon ne change que des nombres, exactement les valeurs que la modification du texte allemand remplace (Ocrevus 944.61 → 731.07).",
+ rdT6:"T6 orthographe : la modification du texte allemand non reprise n'est qu'orthographique (umlaut/ß, trait d'union comme Zeitpunkt → Zeit-punkt, majuscules, ponctuation) ou une terminaison flexionnelle (bedürfen → bedarf, erste → erst).",
  rdT7:"T7 négation : comptée comme un lecteur la compte (« nicht- » préfixe comme dans nicht-kleinzellig ne compte pas, « ne … pas » compte une fois, « personne » nom ne compte pas), le brouillon change le nombre de négations exactement comme l'allemand.",
  rdT8:"T8 mêmes valeurs : les deux côtés ajoutent et retirent les mêmes valeurs, seul le nombre d'occurrences diffère (Kyprolis : 20481 deux fois en allemand, une fois dans le brouillon).",
  legend:"Marques : ✓ prêt · ~ signalé, tous les constats probablement sans problème · ▲ signalé, à vérifier · ≠ l'ancien texte a déjà un problème (diverge de l'allemand, est dans une autre langue ou emploie un terme que l'OFSP a corrigé ailleurs) · h confié à un traducteur · A accepté · E accepté modifié · R renvoyé · touches j/k ou ↑/↓ naviguer, Entrée ouvrir, f/i langue, 1/2/3 décider, Ctrl/Cmd+Entrée enregistrer et suivant",
  famAll:"Accepter tous les brouillons prêts de cette famille ({n})",famAsk:"Accepter tels quels {n} brouillons prêts encore ouverts ({fr} FR, {it} IT) de la famille « {f} » ? Ceux déjà décidés, modifiés ou avec un avis sur l'ancien texte restent ouverts.",
- famYes:"Confirmer l'acceptation",famNo:"Annuler",famDone:"{n} brouillons prêts acceptés.",famNone:"Aucun brouillon prêt ouvert dans cette famille.",famOf:"Famille",famFilter:"afficher seulement cette famille",famChanges:"{n} changements",
+ famYes:"Confirmer l'acceptation",famNo:"Annuler",famDone:"{n} brouillons prêts acceptés.",famNone:"Aucun brouillon prêt ouvert dans cette famille.",famOf:"Famille",famFilter:"afficher seulement cette famille",famChanges:"{n} modifications",
  startOld:"Partir de l'ancien texte",startOldT:"Remplace le brouillon modifiable par l'ancien texte avec les changements de nombres appliqués par le code ({n}). « Rétablir le brouillon » annule.",startOldDone:"Ancien texte avec {n} changements de nombres faits par le code : à modifier maintenant.",startOldDone1:"Ancien texte avec 1 changement de nombre fait par le code : à modifier maintenant.",
  xlf12:"Exporter XLIFF 1.2",
  acts:{exofficio:"Corriger d'office dans la prochaine publication",holder:"Aborder avec le titulaire lors du réexamen triennal",langsvc:"Transmettre au service linguistique",none:"Aucune mesure (formulation équivalente)",unclear:"Pas clair"},
@@ -614,7 +614,7 @@ fr:{sub:"Registre de révision · Apertus rédige, le code contrôle",divergent:
  tb:{project:"Projet",drawing:"Dessin",sheet:"Feuille",rev:"Rév.",date:"Date (version LS)",lane:"Variante",model:"Modèle",run:"Série",checked:"Contrôlé par",checkedV:"contrôles gelés"},
  lane70:"moins de corrections (optionnelle) : 70B, point d'accès certifié",lane8:"par défaut : 8B sur CPU, hors réseau",laneDef:"variante par défaut : 8B sur CPU, hors réseau",drawingBy:"{l}, {n} brouillons d'Apertus {m}",
  t1h:"Brouillons",t1s:"Apertus rédige, le code contrôle",t1f:"{n} brouillons · {r} prêts · {f} signalés",
- t1t:"Pour {c} changements allemands, Apertus {m} ne réécrit que la formulation française et italienne ; le code écrit chaque nombre. Des contrôles gelés marquent chaque brouillon prêt ou signalé et disent pourquoi, dans la langue du réviseur.",
+ t1t:"Pour {c} modifications du texte allemand, Apertus {m} ne réécrit que la formulation française et italienne ; le code écrit chaque nombre. Des contrôles gelés marquent chaque brouillon prêt ou signalé et disent pourquoi, dans la langue du réviseur.",
  t2h:"Audit du registre",t2s:"code seul, sans modèle",t2f:"{a} constats + {t} avis de terminologie",
  t2t:"Le code lit les {n} limitations en DE/FR/IT (version du {d}) et cherche les endroits où les langues divergent déjà : {k} des {o} divergences connues trouvées.",go:"ouvrir →",
  aFindingsV:"{a} ({b}) + {t} avis de terminologie",aConf:"Confirmés au contrôle à l'aveugle",aConfV:"{r} des {a} constats ({k} connus + {x} nouveaux) · {tr} des {t} avis",
@@ -685,9 +685,9 @@ en:{aLead:"Each row is one issue: a place where the German, French and Italian t
  dB1:"These {c} German changes are past SL updates{p} used to test Gleichlaut, not pending work: BAG has already published their French and Italian. ",
  dB2:"The drafts are meant for translators (in STAR Transit, via XLIFF); accepting, editing or sending back a draft is the translator's decision."},
 fr:{aLead:"Chaque ligne est un cas : un endroit où les textes allemand, français et italien d'une limitation disent des choses différentes dans la LS du {d}, trouvé par le code, sans modèle. Ce qui compte est la version conforme à la décision de l'OFSP, et l'audit ne peut pas savoir laquelle ; vérifiez-la dans le dossier de décision. {a} constats + {t} avis de terminologie en {n} cas ; une décision sur un cas vaut pour tous ses constats (chacun peut aussi être décidé séparément).",
- aKnownHead:"Recensées avant cet audit par notre inventaire antérieur (vérifiées à la main) : {k} sur {n} trouvées",aOtherHead:"Autres constats de l'audit",
+ aKnownHead:"Recensés avant cet audit par notre inventaire antérieur (vérifiés à la main) : {k} sur {n} trouvés",aOtherHead:"Autres constats de l'audit",
  aTermHead:"Avis de terminologie : terme corrigé ailleurs par l'OFSP ({n} cas, {m} avis)",eqHead:"Formulation probablement équivalente ({n})",
- aKnown:"Recensées avant cet audit (inventaire antérieur)",aConf:"Confirmés par des annotateurs IA à l'aveugle (Claude)",aConfV:"{r} des {a} constats ({k} déjà recensés + {x} nouveaux) · {tr} des {t} avis",
+ aKnown:"Recensés avant cet audit (inventaire antérieur)",aConf:"Confirmés par des annotateurs IA à l'aveugle (Claude)",aConfV:"{r} des {a} constats ({k} déjà recensés + {x} nouveaux) · {tr} des {t} avis",
  aFindingsV:"{a} ({b}) + {t} avis de terminologie, en {n} cas",t2f:"{a} constats + {t} avis de terminologie · {n} cas",
  t2t:"Le code lit les {n} limitations en DE/FR/IT (version du {d}) et cherche les endroits où les langues divergent déjà ; il trouve {k} des {o} divergences que notre inventaire antérieur avait recensées.",
  dA:"présent dans les {n} versions depuis le {d}, la plus ancienne que l'audit compare (il peut être plus ancien)",dB:"apparu entre le {p} et le {d} ; présent depuis dans les {n} versions",dC:"vu pour la première fois le {d} ; présent dans {n} des {m} versions depuis",
@@ -703,7 +703,7 @@ fr:{aLead:"Chaque ligne est un cas : un endroit où les textes allemand, frança
  grouping:"des constats forment un cas quand ils nomment la même divergence (mêmes valeurs contradictoires, unité, langue, coquille ou paire de termes) dans le même texte : la même limitation, une limitation sœur du même produit ou le même passage cité ; une coquille qui, selon l'audit, explique une divergence de nombre la rejoint ; un avis de terminologie forme un cas par langue et paire de termes.",
  aLegend:"Marques : K recensé avant cet audit par notre inventaire antérieur · D décidé · cadre rouge = valeur contradictoire · souligné = autre nombre · barre rouge = la langue qui diffère des deux autres (pas forcément la fausse). Cas : {g} Décisions : quelle version correspond à la décision de l'OFSP (l'audit ne peut pas le savoir), et une ou plusieurs mesures. Une décision sur un cas est enregistrée avec chacun de ses constats (limitation, type, langue, valeurs) et reprise au prochain audit.",
  tbA:{rev:"Cas",lane:"Méthode",model:"Comparé à",run:"Limitations contrôlées",checked:"Confirmé par"},revA:"{n} cas · {f} constats",laneA:"code seul, sans modèle",modelA:"{n} versions de la LS, {a} – {b}",checkedA:"annotateurs IA à l'aveugle (Claude)",drawA:"Audit du registre DE/FR/IT, LS du {d}",
- dB1:"Ces {c} changements allemands sont des modifications passées de la LS{p}, utilisées pour tester Gleichlaut, pas du travail en attente : l'OFSP a déjà publié leur français et leur italien. ",
+ dB1:"Ces {c} modifications du texte allemand sont tirées de l'historique de la LS{p} et servent à tester Gleichlaut ; ce n'est pas du travail en attente : l'OFSP en a déjà publié le français et l'italien. ",
  dB2:"Les brouillons sont destinés aux traducteurs (dans STAR Transit, via XLIFF) ; accepter, modifier ou renvoyer un brouillon est la décision du traducteur ou de la traductrice."},
 it:{aLead:"Ogni riga è un caso: un punto in cui i testi tedesco, francese e italiano di una limitazione dicono cose diverse nell'ES del {d}, trovato dal codice, senza modello. Conta la versione conforme alla decisione dell'UFSP, e la verifica non può sapere quale sia; controllarla nel dossier della decisione. {a} rilievi + {t} avvisi di terminologia in {n} casi; una decisione su un caso vale per tutti i suoi rilievi (ognuno può anche essere deciso separatamente).",
  aKnownHead:"Già rilevate dal nostro censimento precedente: trovate {k} su {n}",aOtherHead:"Altri rilievi della verifica",
@@ -735,7 +735,7 @@ de:{gCond:"Ändert eine Bedingung",gEdit:"Tippfehler und Redaktion",gTerm:"Termi
 en:{gCond:"Changes a condition",gEdit:"Typos and editorial",gTerm:"Terminology",ctxAud:"Code compares all {n} limitations in DE/FR/IT, no model. Each issue needs one decision: which text is wrong, and what happens next.",export:"Export",ctxD:"The optional 70B lane; the default 8B on CPU drafts the same changes. Flagged means a person checks it: the checks are tuned to miss nothing.",whereS:"Decisions stay in this browser until exported.",backList:"List",slotsT:"Show number slots",famChange1:"1 change",aThen:"Then",aOr:"Or",aboutH:"About this register",aBind:"What counts is the version that matches BAG's decision; which one that is, the audit cannot know.",
  aKnownHeadS:"Listed by our earlier census · {k} of {n} found",aTermHeadS:"Terminology · {n}",aWhat:"What differs",aDating:"Since when",aNote2:"Note",aTermL:"Term",
  aTexts:"The texts",aActL:"Actions and note",saveNextI:"Next issue",keysA:"j/k or ↑/↓ move · Ctrl/Cmd+Enter save and next",lane:"Lane",laneM:"Method",comparedW:"Compared with"},
-fr:{gCond:"Modifie une condition",gEdit:"Coquilles et rédaction",gTerm:"Terminologie",ctxAud:"Le code compare les {n} limitations en DE/FR/IT, sans modèle. Chaque cas demande une décision : quel texte est faux, et quelle suite lui donner.",export:"Exporter",ctxD:"La variante 70B optionnelle ; la variante par défaut (8B sur CPU) rédige les mêmes modifications. Signalé veut dire : une personne vérifie, les contrôles sont réglés pour ne rien laisser passer.",whereS:"Les décisions restent dans ce navigateur jusqu'à leur exportation.",backList:"Liste",slotsT:"Afficher les emplacements",famChange1:"1 modification",aThen:"Ensuite",aOr:"Ou",aboutH:"À propos de ce registre",aBind:"Ce qui compte est la version conforme à la décision de l'OFSP ; laquelle, l'audit ne peut pas le savoir.",
+fr:{gCond:"Modifie une condition",gEdit:"Coquilles et rédaction",gTerm:"Terminologie",ctxAud:"Le code compare les {n} limitations en DE/FR/IT, sans modèle. Chaque cas demande une décision : quel texte est erroné, et quelle suite lui donner.",export:"Exporter",ctxD:"La variante 70B optionnelle ; la variante par défaut (8B sur CPU) rédige les mêmes modifications. Signalé veut dire : une personne vérifie, les contrôles sont réglés pour ne rien laisser passer.",whereS:"Les décisions restent dans ce navigateur jusqu'à leur exportation.",backList:"Liste",slotsT:"Afficher les emplacements",famChange1:"1 modification",aThen:"Ensuite",aOr:"Ou",aboutH:"À propos de ce registre",aBind:"Ce qui compte est la version conforme à la décision de l'OFSP ; laquelle, l'audit ne peut pas le savoir.",
  aKnownHeadS:"Recensés par notre inventaire antérieur · {k} sur {n} trouvés",aTermHeadS:"Terminologie · {n}",aWhat:"Ce qui diverge",aDating:"Depuis quand",aNote2:"Remarque",aTermL:"Terme",
  aTexts:"Les textes",aActL:"Mesures et remarque",saveNextI:"Cas suivant",keysA:"j/k ou ↑/↓ naviguer · Ctrl/Cmd+Entrée enregistrer et continuer",lane:"Variante",laneM:"Méthode",comparedW:"Comparé avec"},
 it:{gCond:"Modifica una condizione",gEdit:"Refusi e redazione",gTerm:"Terminologia",ctxAud:"Il codice confronta tutte le {n} limitazioni in DE/FR/IT, senza modello. Ogni caso chiede una decisione: quale testo è sbagliato, e come procedere.",export:"Esporta",ctxD:"La variante 70B opzionale; la variante predefinita (8B su CPU) redige le stesse modifiche. Segnalata significa che una persona deve verificarla: i controlli sono tarati per non lasciarsi sfuggire nulla.",whereS:"Le decisioni restano in questo browser finché non vengono esportate.",backList:"Elenco",slotsT:"Mostra i segnaposto",famChange1:"1 modifica",aThen:"Poi",aOr:"Oppure",aboutH:"Informazioni su questo registro",aBind:"Conta la versione conforme alla decisione dell'UFSP; quale sia, la verifica non può saperlo.",
@@ -776,14 +776,14 @@ en:{laneOpt8:"Test set (published) · 8B Q8_0, CPU (default)",laneOpt70:"Test se
 fr:{laneOpt8:"Jeu de test (publié) · 8B Q8_0, CPU (par défaut)",laneOpt70:"Jeu de test (publié) · 70B, point d'accès (moins de corrections)",laneOptLive:"Essai à blanc {m} (hors production) · 8B Q8_0, CPU",
  ctxD8:"La variante par défaut : Apertus 8B sur CPU, hors réseau. Signalé veut dire : une personne vérifie, les contrôles sont réglés pour ne rien laisser passer.",
  ctxDL:"Modifications publiées par l'OFSP au mois {m}, rédigées ensuite à partir du flux public par la variante par défaut (8B sur CPU) pour la mesurer ; le modèle n'a jamais vu le français ni l'italien de l'OFSP. Les textes longs ou réécrits vont au traducteur sans brouillon. Signalé veut dire : une personne vérifie.",
- keyS:[["✓","prêt"],["~","signalé, sans doute correct"],["▲","signalé, à vérifier"],["≠","l'ancien texte a un problème"]],
+ keyS:[["✓","prêt"],["~","signalé, probablement sans problème"],["▲","signalé, à vérifier"],["≠","l'ancien texte a un problème"]],
  saveNext:"Enregistrer, modification suivante",saveNextI:"Enregistrer, cas suivant",
  keys:"j/k ou ↑/↓ naviguer · 1/2/3 décider · f/i langue · Ctrl/Cmd+Entrée enregistrer, suivant",keysA:"j/k ou ↑/↓ naviguer · 1–4 version · Ctrl/Cmd+Entrée enregistrer, suivant",
  needDec:"Décider d'abord (1 accepter · 2 accepter modifié · 3 renvoyer) ; j ou ↓ passe sans décider.",
  needDecA:"Décider d'abord : la bonne version ou une mesure ; j ou ↓ passe sans décider.",
  aDecHint:"Compte comme décidé dès qu'une réponse ci-dessous (une version, ou « pas encore clair ») ou une mesure est choisie ; une remarque seule laisse le cas ouvert.",
  figsA:"{r} prêts ({rp}) · {f} signalés · {x} identiques au texte publié par l'OFSP",figsC:"{r} prêts · {f} signalés · {h} confiés à un traducteur",figsX:"{x} sur {n} identiques au texte publié par l'OFSP",
- lblHeld:"jeu de test mis de côté : modifications passées de la LS {p}, déjà publiées par l'OFSP",lblLive:"essai à blanc {m} (LS {a} → {b}), pas pour la production",
+ lblHeld:"jeu de test réservé à l'évaluation : modifications passées de la LS {p}, déjà publiées par l'OFSP",lblLive:"essai à blanc {m} (LS {a} → {b}), pas pour la production",
  expHead:"Contrôles expérimentaux (désactivés par défaut) · {c} confirmés sur {n}",expNote:"Les contrôles d'opérateur, de négation et de nombre en lettres (5e série) sont désactivés : moins de la moitié de leurs constats étaient réels. Ne figurent ici que les constats confirmés par deux annotateurs à l'aveugle ; ils ne comptent pas dans les cas ci-dessus et aucune décision n'est enregistrée.",
  kindsX:{operator:"opérateur",negation:"négation",number_word:"nombre en lettres"},labX:{real:"confirmé : change le sens",minor:"confirmé : mineur"},
  aNoteOnly:"ouvert · remarque enregistrée, ni version ni mesure choisie",lsNote:"enregistré dans ce navigateur seulement · exporter pour conserver"},
@@ -859,7 +859,7 @@ fr:{rulesOnly:"règles seules",kindExp:"contrôle expérimental",
  whereM:"Pour fusionner les décisions de collègues, choisissez plusieurs fichiers JSON à la fois dans « Importer des décisions » ; pour chaque élément, la décision la plus récente l'emporte.",
  slLink:"LS publique",slLinkT:"ouvrir sl.bag.admin.ch/sl et rechercher « {p} » (il n'existe pas de lien direct stable par produit)",
  decLang:"Langue de la décision",decLangV:"absente des données de l'audit",
- txtChange:"Changement du texte {L} entre le {p} et le {d} : pas dans le dépôt (seuls les textes du {s} sont livrés)"},
+ txtChange:"Modification du texte {L} entre le {p} et le {d} : pas dans le dépôt (seuls les textes du {s} sont livrés)"},
 it:{rulesOnly:"solo regole",kindExp:"controllo sperimentale",
  cntA:"{a} rilievi + {t} avvisi di terminologia = {s}, raggruppati in {n} casi; {e} di questi con formulazione probabilmente equivalente (richiusi).",
  shownL:"{l} casi in elenco + {e} richiusi (formulazione probabilmente equivalente) = {n} casi su {N} · {m} rilievi e avvisi su {M}",
@@ -883,7 +883,7 @@ Object.keys(TX7).forEach(function(L){Object.keys(TX7[L]).forEach(function(k){TX[
 // do; a majority version marked wrong is confirmed inline; the reviewer's name before the first decision; exports in
 // the interface language with machine codes alongside
 var TX8={
-de:{descEn:"Befundtext der Prüfung (englisch, vom Code erzeugt, nicht übersetzt)",enCode:"englisch, vom Code erzeugt",impName:"Name der prüfenden Person aus der Datei übernommen: {n}.",progX:"{d}/{n} experimentell",aWrongQ:"Welcher Text ist falsch?",aWrongSub:"Gemessen am Entscheid des BAG, den die Prüfung nicht kennt. Mehrere Antworten möglich.",oddDiff:"weicht von den beiden anderen ab",
+de:{aria:{views:"Ansichten",issues:"Fälle",issue:"Fall",register:"Register der Änderungen",family:"Familie",search:"Produkt oder Limitierungscode suchen",case:"Änderung",json:"Entscheide (JSON)",uil:"Sprache der Oberfläche"},undone:"Entscheid zurückgenommen (erneut klicken, um zu entscheiden)",frozenW:"eingefroren",descEn:"Befundtext der Prüfung (englisch, vom Code erzeugt, nicht übersetzt)",enCode:"englisch, vom Code erzeugt",impName:"Name der prüfenden Person aus der Datei übernommen: {n}.",progX:"{d}/{n} experimentell",aWrongQ:"Welcher Text ist falsch?",aWrongSub:"Gemessen am Entscheid des BAG, den die Prüfung nicht kennt. Mehrere Antworten möglich.",oddDiff:"weicht von den beiden anderen ab",
  aRemQ:"Was ist zu tun?",rem:{exofficio:"Von Amtes wegen berichtigen",holder:"Mit der Zulassungsinhaberin in der dreijährlichen Überprüfung aufnehmen",langsvc:"An den Sprachdienst",none:"Keine Massnahme (gleichwertige Formulierung)",unclear:"Noch unklar – Entscheiddossier prüfen"},
  remNeedW:"«Von Amtes wegen berichtigen» und «Mit der Zulassungsinhaberin aufnehmen» setzen voraus, dass oben der falsche Text gewählt ist.",
  aMajQ:"{L} stimmt hier mit {M} überein; abweichend ist {O}. {L} trotzdem als falsch markieren?",aMajYes:"Ja, {L} ist falsch",aMajNo:"Abbrechen",
@@ -894,7 +894,7 @@ de:{descEn:"Befundtext der Prüfung (englisch, vom Code erzeugt, nicht übersetz
  aPartW:"offen · {w} als falsch markiert, noch keine Massnahme gewählt",aPartM:"offen · diese Massnahme setzt den falschen Text voraus",aWrongS:"{w} falsch",
  aLegacy:"Von einer früheren Version dieser Seite gespeichert: {x}",aRightS:"Fassung gemäss Entscheid {r}",
  csvHead:["Fall","Befunde","Produkt","Limitierung","Sprachen","Art","kind_code","Werte","Datierung","Vor dieser Prüfung erfasst","Falscher Text","Fassung gemäss Entscheid","Massnahme","action_code","Notiz","Entschieden am","Entschieden von","Prüfung (SL-Stand)","Einzeln entschieden","Code-Revision"]},
-en:{descEn:"Finding text",enCode:"generated by the code",impName:"Reviewer name taken from the file: {n}.",progX:"{d}/{n} experimental",aWrongQ:"Which text is wrong?",aWrongSub:"Measured against BAG's decision, which the audit cannot see. More than one may be wrong.",oddDiff:"differs from the other two",
+en:{aria:{views:"Views",issues:"Issues",issue:"Issue",register:"Register of changes",family:"Family",search:"Search product or limitation code",case:"Change",json:"Decisions (JSON)",uil:"Interface language"},undone:"decision undone (click again to decide)",frozenW:"frozen",descEn:"Finding text",enCode:"generated by the code",impName:"Reviewer name taken from the file: {n}.",progX:"{d}/{n} experimental",aWrongQ:"Which text is wrong?",aWrongSub:"Measured against BAG's decision, which the audit cannot see. More than one may be wrong.",oddDiff:"differs from the other two",
  aRemQ:"What should happen?",rem:{exofficio:"Correct ex officio",holder:"Raise with the holder in the triennial review",langsvc:"Send to the language service",none:"No action (equivalent wording)",unclear:"Not clear yet — check the decision file"},
  remNeedW:"“Correct ex officio” and “Raise with the holder” need the wrong text chosen above.",
  aMajQ:"{L} agrees with {M} here; {O} is the one that differs. Mark {L} as wrong anyway?",aMajYes:"Yes, {L} is wrong",aMajNo:"Cancel",
@@ -905,7 +905,7 @@ en:{descEn:"Finding text",enCode:"generated by the code",impName:"Reviewer name 
  aPartW:"open · {w} marked wrong, no action chosen yet",aPartM:"open · this action needs the wrong text",aWrongS:"{w} wrong",
  aLegacy:"Stored by an earlier version of this page: {x}",aRightS:"version matching the decision {r}",
  csvHead:["Issue","Findings","Product","Limitation","Languages","Kind","kind_code","Values","Dating","Listed before this audit","Wrong text","Version matching the decision","Action","action_code","Note","Decided on","Decided by","Audit (SL of)","Decided separately","Code revision"]},
-fr:{descEn:"Texte du constat (en anglais, produit par le code, non traduit)",enCode:"en anglais, produit par le code",impName:"Nom du réviseur repris du fichier : {n}.",progX:"{d}/{n} expérimentaux",aWrongQ:"Quel texte est erroné ?",aWrongSub:"Par rapport à la décision de l'OFSP, que l'audit ne connaît pas. Plusieurs réponses possibles.",oddDiff:"diffère des deux autres",
+fr:{aria:{views:"Vues",issues:"Liste des cas",issue:"Cas",register:"Registre des modifications",family:"Famille",search:"Rechercher un produit ou un code de limitation",case:"Modification",json:"Décisions (JSON)",uil:"Langue de l'interface"},undone:"décision annulée (cliquez à nouveau pour décider)",frozenW:"gelés",descEn:"Texte du constat (en anglais, produit par le code, non traduit)",enCode:"en anglais, produit par le code",impName:"Nom du réviseur repris du fichier : {n}.",progX:"{d}/{n} expérimentaux",aWrongQ:"Quel texte est erroné ?",aWrongSub:"Par rapport à la décision de l'OFSP, que l'audit ne connaît pas. Plusieurs réponses possibles.",oddDiff:"diffère des deux autres",
  aRemQ:"Que faire ?",rem:{exofficio:"Corriger d'office",holder:"Aborder avec le titulaire lors du réexamen triennal",langsvc:"Transmettre au service linguistique",none:"Aucune mesure (formulation équivalente)",unclear:"Pas encore clair – vérifier le dossier de décision"},
  remNeedW:"« Corriger d'office » et « Aborder avec le titulaire » supposent que le texte erroné soit choisi ci-dessus.",
  aMajQ:"{L} concorde ici avec {M} ; c'est {O} qui diffère. Marquer quand même {L} comme erroné ?",aMajYes:"Oui, {L} est erroné",aMajNo:"Annuler",
@@ -916,7 +916,7 @@ fr:{descEn:"Texte du constat (en anglais, produit par le code, non traduit)",enC
  aPartW:"ouvert · {w} marqué erroné, aucune mesure choisie",aPartM:"ouvert · cette mesure suppose le texte erroné",aWrongS:"{w} erroné",
  aLegacy:"Enregistré par une version antérieure de cette page : {x}",aRightS:"version conforme à la décision {r}",
  csvHead:["Cas","Constats","Produit","Limitation","Langues","Type","kind_code","Valeurs","Datation","Recensé avant cet audit","Texte erroné","Version conforme à la décision","Mesure","action_code","Remarque","Décidé le","Décidé par","Audit (version LS)","Décidé séparément","Révision du code"]},
-it:{descEn:"Testo del rilievo (in inglese, generato dal codice, non tradotto)",enCode:"in inglese, generato dal codice",impName:"Nome del revisore ripreso dal file: {n}.",progX:"{d}/{n} sperimentali",aWrongQ:"Quale testo è errato?",aWrongSub:"Rispetto alla decisione dell'UFSP, che la verifica non conosce. Più risposte possibili.",oddDiff:"diverge dalle altre due",
+it:{aria:{views:"Viste",issues:"Elenco dei casi",issue:"Caso",register:"Registro delle modifiche",family:"Famiglia",search:"Cercare un prodotto o un codice di limitazione",case:"Modifica",json:"Decisioni (JSON)",uil:"Lingua dell'interfaccia"},undone:"decisione annullata (cliccare di nuovo per decidere)",frozenW:"congelati",descEn:"Testo del rilievo (in inglese, generato dal codice, non tradotto)",enCode:"in inglese, generato dal codice",impName:"Nome del revisore ripreso dal file: {n}.",progX:"{d}/{n} sperimentali",aWrongQ:"Quale testo è errato?",aWrongSub:"Rispetto alla decisione dell'UFSP, che la verifica non conosce. Più risposte possibili.",oddDiff:"diverge dalle altre due",
  aRemQ:"Che cosa fare?",rem:{exofficio:"Correggere d'ufficio",holder:"Discutere con il titolare nel riesame triennale",langsvc:"Inviare al servizio linguistico",none:"Nessuna misura (formulazione equivalente)",unclear:"Non ancora chiaro – verificare il dossier della decisione"},
  remNeedW:"«Correggere d'ufficio» e «Discutere con il titolare» presuppongono che sopra sia scelto il testo errato.",
  aMajQ:"{L} concorda qui con {M}; a divergere è {O}. Segnare comunque {L} come errato?",aMajYes:"Sì, {L} è errato",aMajNo:"Annulla",
@@ -1004,8 +1004,8 @@ function chrome(){
  if($("lane-s"))$("lane-s").onchange=function(){var v=this.value;location.hash="#"+(v===DEF?"":v+"/")+"drafts"};
  $("ctxline").title=cap(fmt(t("drawingBy"),{l:LB,n:C.items,m:MS}))+". "+ctx;
  var fz=(M.pipeline.match(/freeze sha256:([0-9a-f]+)/)||[])[1]||"";
- kv("kv-l",[[t("guards"),(M.stack==="g3"?"guards3 (frozen)":"guards v2 (frozen)")+(fz?" · freeze "+fz.slice(0,12):"")],
-  [t("items"),String(D.counts.items)],[t("changes"),String(D.counts.changes)],["Model",M.model],["Run",M.run],
+ kv("kv-l",[[t("guards"),(M.stack==="g3"?"guards3":"guards v2")+" ("+t("frozenW")+")"+(fz?" · "+String((t("tb")||{}).freeze||"freeze").toLowerCase()+" "+fz.slice(0,12):"")],
+  [t("items"),String(D.counts.items)],[t("changes"),String(D.counts.changes)],[t("model"),M.model],[t("run"),M.run],
   [t("lane"),M.lane==="70b"?t("lane70")+" · "+t("laneDef"):M.lane==="8b"?t("lane8"):"—"]]);
  var r=[];
  if(A){r.push([t("ready"),A.unflagged+" · "+pct(A.ready_rate),"",t("codeOnly")]);r.push([t("flagged"),A.flagged+" · "+pct(A.flag_rate)]);
@@ -1023,6 +1023,7 @@ function chrome(){
  D.families.forEach(function(f){var nm=String(f[2]).split(/,| \+\d/)[0],more=String(f[2]).indexOf(",")>=0||/\+\d/.test(f[2]);
   var o=new Option(fmt(t("famOpt"),{f:short(nm,32)+(more?" …":""),w:famNos(f[0]),n:f[1]}),f[0]);o.title=f[2]+" · "+famNos(f[0]);fs.appendChild(o)});fs.value=F.fam;$("f-q").placeholder=t("search");famBar();
  $("h-prod").textContent=t("product");$("h-chg").textContent=t("change");
+ document.querySelectorAll("[data-aria]").forEach(function(e){var a=t("aria")[e.dataset.aria];if(a)e.setAttribute("aria-label",a)});
  $("x-xlf").textContent=t("xlf");$("x-xlf12").textContent=t("xlf12");$("x-copy").textContent=t("copy");$("x-imp").textContent=t("imp");
  $("reg-key").innerHTML=keyHTML(t("keyS"));
  $("reg-key").title=t("legend");progress()}
@@ -1374,13 +1375,14 @@ function famSize(f){return FAMN[f]||0}
 function famTargets(){if(!F.fam)return [];return ITEMS.filter(function(it){return it.g.family===F.fam&&it.status==="ready"&&!dec(it)&&S.edits[it.key]==null&&!oldIssue(it)&&(F.lang==="all"||it.lang===F.lang)})}
 function famBar(){var b=$("fam-bulk");if(!F.fam){b.hidden=true;b.innerHTML="";famAsk=false;famMsg="";return}b.hidden=false;var T=famTargets(),h="";
  if(famAsk&&T.length){var fr=T.filter(function(it){return it.lang==="fr"}).length;
-  h='<span class="q" role="alert">'+esc(fmt(t("famAsk"),{n:T.length,fr:fr,it:T.length-fr,f:FAML[F.fam]||F.fam}))+'</span><button class="box primary" type="button" id="fam-yes">'+esc(t("famYes"))+'</button><button class="box" type="button" id="fam-no">'+esc(t("famNo"))+"</button>"}
+  h='<span class="q" role="alert">'+esc(fmt(t("famAsk"),{n:T.length,fr:fr,it:T.length-fr,f:FAML[F.fam]||F.fam}))+'</span><button class="box primary" type="button" id="fam-yes">'+esc(t("famYes"))+'</button><button class="box" type="button" id="fam-no">'+esc(t("famNo"))+"</button>"+
+   (FPEND&&!who()?dWhoHTML("fam-rev"):"")}
  else h='<button class="box" type="button" id="fam-go"'+(T.length?"":" disabled")+">"+esc(fmt(t("famAll"),{n:T.length}))+"</button>";
  if(famMsg)h+='<span class="msg" aria-live="polite">'+esc(famMsg)+"</span>";else if(!T.length)h+='<span class="msg">'+esc(t("famNone"))+"</span>";
  b.innerHTML=h;var go=$("fam-go"),y=$("fam-yes"),n=$("fam-no");
  if(go)go.onclick=function(){famAsk=true;famMsg="";famBar();var yy=$("fam-yes");if(yy)yy.focus()};
- if(n)n.onclick=function(){famAsk=false;famBar();var g2=$("fam-go");if(g2)g2.focus()};
- if(y)y.onclick=function(){var at=zts(),T2=famTargets();
+ if(n)n.onclick=function(){famAsk=false;FPEND=false;famBar();var g2=$("fam-go");if(g2)g2.focus()};
+ if(y)y.onclick=function(){if(!who()){FPEND=true;DNAME=true;famBar();var fi=$("fam-rev");if(fi)fi.focus();return}FPEND=false;var at=zts(),T2=famTargets();
   T2.forEach(function(it){S.dec[it.key]={decision:"accept",lang:it.lang,status:it.status,edited:false,text:it.draft,reason:"",note:"",bulk:"family "+F.fam,at:at,by:who()}});
   save();famAsk=false;famMsg=fmt(t("famDone"),{n:T2.length});famBar();renderReg();if(sel)renderCase();progress()}}
 $("f-q").oninput=function(){F.q=this.value.trim().toLowerCase();renderReg()};
@@ -1448,7 +1450,7 @@ function langHTML(g,L,live){var it=g.items[L],ed=S.edits[it.key],LL=L.toUpperCas
    '<span class="why2" id="ae-'+esc(it.key)+'"'+(S.edits[it.key]==null?"":" hidden")+">"+esc(t("noEdit2"))+"</span>"+
    "<label>"+esc(t("reason"))+'<select data-f="reason">'+t("reasons").map(function(r,i){var v=TX.en.reasons[i];return '<option value="'+esc(v)+'"'+(d.reason===v?" selected":"")+">"+esc(r||"—")+"</option>"}).join("")+"</select></label>"+
    "<label>"+esc(t("note"))+'<textarea data-f="note" lang="'+L+'">'+esc(d.note||"")+"</textarea></label>"+
-   '<div class="stt">'+esc(d.decision?t("savedAt")+" · "+zts(d.at).slice(0,16).replace("T"," "):t("openSt"))+"</div></div>"}
+   '<div class="stt" aria-live="polite">'+esc(d.decision?t("savedAt")+" · "+zshow(d.at)+(d.by?" · "+d.by:""):t("openSt"))+"</div></div>"}
  else a+="<div></div>";
  return a+"</article>"}
 function caseHTML(g,live){var Ls=langs(g),one=Ls.length<2?" one":"",h="",nf=famSize(g.family);
@@ -1461,7 +1463,7 @@ function caseHTML(g,live){var Ls=langs(g),one=Ls.length<2?" one":"",h="",nf=famS
   '</div><div class="txt de" lang="de">'+segs(g.de,live&&ctxMode,false)+"</div></section>";
  h+='<section class="sec"><div class="sl"><span class="no">2</span><span class="t">'+esc(t("s2"))+"</span>"+(live?'<button class="tb sp" type="button" id="slots" aria-pressed="'+SLOTS+'" title="'+esc(t("keyNum")[0])+'">'+esc(t("slotsT"))+"</button>":"")+
   '</div><div class="drafts'+one+'">'+Ls.map(function(L){return langHTML(g,L,live)}).join("")+"</div></section>";
- if(live){var ok=caseDecided(g);h+='<div class="save"><button class="box primary" type="button" id="savenext"'+(ok?"":" disabled")+' aria-describedby="sn-why">'+esc(t("saveNext"))+'</button><span class="hint" id="sn-why">'+esc(ok?t("keys"):t("needDec"))+"</span></div>"}
+ if(live){var ok=caseDecided(g);h+=dWhoHTML("d-rev")+'<div class="save"><button class="box primary" type="button" id="savenext"'+(ok?"":" disabled")+' aria-describedby="sn-why">'+esc(t("saveNext"))+'</button><span class="hint" id="sn-why">'+esc(ok?t("keys"):t("needDec"))+"</span></div>"}
  h+='<details class="ids"><summary>'+esc(t("ids"))+"</summary> "+esc(t("family"))+" "+esc(g.family)+(FAML[g.family]?" ("+esc(FAML[g.family])+")":"")+" · "+esc(t("pair"))+" "+esc(g.pair)+" · "+esc(t("itemsL"))+" "+esc(keys)+"</details>";
  return h}
 function edmeta(key){var it=byKey[key],e=S.edits[key]!=null;
@@ -1498,19 +1500,37 @@ function wire(c){
   dv.querySelectorAll("[data-f]").forEach(function(f){f.addEventListener(f.tagName==="SELECT"?"change":"input",function(){var k=dv.dataset.key,d=S.dec[k];
    if(d){d[f.dataset.f]=f.value;save()}else{pend[k]=pend[k]||{};pend[k][f.dataset.f]=f.value}})})});
  var sn=$("savenext");if(sn)sn.onclick=saveNext}
+document.addEventListener("input",function(e){var i=e.target;if(!i.dataset||!i.dataset.drev)return;P.reviewer=i.value;lsSet("gleichlaut:prefs",P);
+ if(who()){i.removeAttribute("aria-invalid");i.removeAttribute("aria-describedby");var q=$(i.id+"-ask");if(q)q.remove();var w=i.closest(".dwho");if(w)w.classList.remove("ask")}});
+document.addEventListener("change",function(e){var i=e.target;if(!i.dataset||!i.dataset.drev||!who())return;
+ if(DPEND)dApplyPend();if(i.id==="fam-rev"&&FPEND){var y=$("fam-yes");if(y)y.click()}});
 var pend={},byKey={};ITEMS.forEach(function(it){byKey[it.key]=it});
+// the reviewer's name, required before the first draft decision as in the audit tab: a decision clicked without it is kept
+// (DPEND) and saved once the name is entered; the family action waits the same way (FPEND)
+var DNAME=false,DPEND=null,FPEND=false;
+function dWhoHTML(id){var ask=DNAME&&!who();return '<div class="who dwho'+(ask?" ask":"")+'"><label>'+esc(t("rev"))+' <input type="text" id="'+id+'" data-drev="1" autocomplete="name" value="'+esc(P.reviewer||"")+'" placeholder="'+esc(t("revPh"))+'"'+
+ (ask?' aria-invalid="true" aria-describedby="'+id+'-ask"':"")+"></label>"+(ask?'<p class="aname" id="'+id+'-ask" role="alert">'+esc(t("aNameAsk"))+"</p>":"")+"</div>"}
+function dWhoRefresh(){document.querySelectorAll(".dwho").forEach(function(w){var i=w.querySelector("input");if(!i)return;var tmp=document.createElement("div");tmp.innerHTML=dWhoHTML(i.id);w.replaceWith(tmp.firstChild)})}
+function dApplyPend(){var p=DPEND;DPEND=null;DNAME=false;dWhoRefresh();document.querySelectorAll(".dec button.pend").forEach(function(b){b.classList.remove("pend")});
+ if(p&&who()&&sel&&sel.items[p.L]&&sel.items[p.L].key===p.k)decide(p.L,p.v)}
+// a record time as the reviewer reads it: Europe/Zurich with its offset (2026-10-11 01:45 +02:00)
+function zshow(x){var z=zts(x);return z.length>=25?z.slice(0,10)+" "+z.slice(11,16)+" "+z.slice(19):z}
 // "2 Accept edited" waits for an edit of the draft text; its reason sits under the buttons
 function aeState(key){var dv=document.querySelector('.dec[data-key="'+key+'"]');if(!dv)return;var b=dv.querySelector('button[data-d="accept-edited"]'),w=dv.querySelector(".why2"),ed=S.edits[key]!=null,d=dec(byKey[key]);
  if(b){b.disabled=!ed&&!(d&&d.decision==="accept-edited");if(b.disabled)b.setAttribute("aria-describedby","ae-"+key);else b.removeAttribute("aria-describedby")}if(w)w.hidden=ed}
 function setFocus(L){if(!sel||!sel.items[L]||langs(sel).indexOf(L)<0)return;focusL=L;document.querySelectorAll(".dec").forEach(function(d){d.classList.toggle("focus",d.dataset.lang===L)})}
 function decide(L,v){var it=sel&&sel.items[L];if(!it)return;var dv=document.querySelector('.dec[data-lang="'+L+'"]'),k=it.key;
  if(v==="accept-edited"&&S.edits[k]==null&&!(S.dec[k]&&S.dec[k].decision==="accept-edited")){var st=dv.querySelector(".stt");st.textContent=t("noEdit2");var ed=document.querySelector('.ed[data-key="'+k+'"]');if(ed)ed.focus();return}
- var cur=S.dec[k];if(cur&&cur.decision===v){delete S.dec[k]}
+ if(!who()){if(!DPEND)DPEND={k:k,L:L,v:v};DNAME=true;dWhoRefresh();var pb=dv.querySelector('button[data-d="'+DPEND.v+'"]');if(pb&&DPEND.k===k)pb.classList.add("pend");
+  dv.querySelector(".stt").textContent=t("aNameAsk");var ni=$("d-rev");if(ni)ni.focus();return}
+ if(DPEND){var p0=DPEND;DPEND=null;DNAME=false;dWhoRefresh();if(!(p0.k===k&&p0.v===v)&&sel.items[p0.L]&&sel.items[p0.L].key===p0.k)decide(p0.L,p0.v)}
+ var cur=S.dec[k],undone=false;if(cur&&cur.decision===v){delete S.dec[k];undone=true}
  else{var reason=dv.querySelector('[data-f="reason"]').value,note=dv.querySelector('[data-f="note"]').value;
   S.dec[k]={decision:v,lang:L,status:it.status,edited:S.edits[k]!=null,text:v==="accept-edited"?S.edits[k]:(it.status==="human"?null:it.draft),reason:reason,note:note,at:zts(),by:who()}}
  delete pend[k];save();
  dv.querySelectorAll("button[data-d]").forEach(function(b){b.setAttribute("aria-pressed",!!S.dec[k]&&S.dec[k].decision===b.dataset.d)});
- dv.querySelector(".stt").textContent=S.dec[k]?t("savedAt")+" · "+zts(S.dec[k].at).slice(0,16).replace("T"," "):t("openSt");refreshRow(sel);progress();snState();aeState(k)}
+ dv.querySelectorAll("button.pend").forEach(function(b){b.classList.remove("pend")});
+ dv.querySelector(".stt").textContent=S.dec[k]?t("savedAt")+" · "+zshow(S.dec[k].at)+(S.dec[k].by?" · "+S.dec[k].by:""):undone?t("undone"):t("openSt");refreshRow(sel);progress();snState();aeState(k)}
 // "save, next" moves on once the change shown has a decision (in one of its languages); j / ↓ skip without deciding
 function caseDecided(g){return !!g&&langs(g).some(function(L){return !!dec(g.items[L])})}
 function snState(){var b=$("savenext"),w=$("sn-why");if(!b)return;var ok=caseDecided(sel);b.disabled=!ok;if(w)w.textContent=ok?t("keys"):t("needDec")}
@@ -1536,6 +1556,34 @@ function x(s){return esc(s).replace(/'/g,"&apos;")}
 function inl(s,a,b,spans,open){var out="",pos=a;(spans||[]).forEach(function(sp){var p=Math.max(sp[0],a),q=Math.min(sp[1],b);if(p>=q||p<pos)return;
   out+=x(s.slice(pos,p))+open(sp)+x(s.slice(p,q))+"</mrk>";pos=q});return out+x(s.slice(pos,b))}
 function note(id,cat,ap,pr,text){return '<note id="'+id+'" category="'+cat+'"'+(ap?' appliesTo="'+ap+'"':"")+' priority="'+pr+'">'+x(text)+"</note>"}
+// sentence segments of an edited target: emit/segment.py ported (sentences, align, merge_short; the same costs and
+// tie-breaks, so an edited unit gets the segments the Python writers give it: tests/test_ui_browser.py compares them)
+var SEG_END=/[.;:!?](\s+)(?=[A-ZÄÖÜÀÂÉÈÊÎÔÛÇ0-9(«"–-])/g,
+ SEG_ABBR=/(?:(?<!\p{L})(?:\p{L}\.\s?){1,3}\p{L}\.|(?<![\p{L}\p{N}_.])(?:z\.\s?Bsp|p\.\s?ex|ad\s+es|bzw|resp|vgl|inkl|bspw|evtl|ggf|sog|med|Dr|Prof|St|od|cf|cfr|env|ecc|ev|Ev)\.)$/u,
+ SEG_ABBR_NUM=/(?<![\p{L}\p{N}_.])(?:ca|Nr|nr|Art|art|Abs|al|cpv|Fr|max|mind|min|Ziff|ch|n°|No|no|Kap)\.$/u,
+ SEG_BEADS=[[1,1,0],[1,2,1.2],[2,1,1.2],[2,2,1.8],[1,3,2.4],[3,1,2.4]];
+function segAbbr(s,m){if(s[m.index]!==".")return false;var head=s.slice(0,m.index+1),tail=s.slice(m.index+m[0].length);
+ if(/(?<!\p{L})\p{L}\.$/u.test(head)&&/^(?:\p{L}|Bsp|ex)\./u.test(tail))return true;
+ return SEG_ABBR.test(head)||(SEG_ABBR_NUM.test(head)&&/^\d/.test(tail))}
+function segSent(s){var out=[],a=0,m;SEG_END.lastIndex=0;while((m=SEG_END.exec(s))){if(segAbbr(s,m))continue;var e=m.index+m[0].length;out.push([a,e]);a=e}
+ if(a<s.length||!out.length)out.push([a,s.length]);return out}
+function segNums(s){var o={};(s.match(/\d+(?:[.,'’]\d+)*/g)||[]).forEach(function(x){o[x.replace(/[.,'’]/g,".")]=1});return o}
+function segAlign(src,tgt){var S=segSent(src),T=segSent(tgt);if(!tgt.trim()||!src.trim())return [[0,src.length,0,tgt.length]];
+ var r=Math.max(1,tgt.length)/Math.max(1,src.length),n=S.length,m=T.length,best=[],back=[],i,j;
+ for(i=0;i<=n;i++){best.push([]);back.push([]);for(j=0;j<=m;j++){best[i].push(Infinity);back[i].push(null)}}best[0][0]=0;
+ for(i=0;i<=n;i++)for(j=0;j<=m;j++){if(best[i][j]===Infinity)continue;
+  SEG_BEADS.forEach(function(B){var di=B[0],dj=B[1];if(i+di>n||j+dj>m)return;var a0=S[i][0],a1=S[i+di-1][1],b0=T[j][0],b1=T[j+dj-1][1];
+   var ls=src.slice(a0,a1).trim().length,lt=tgt.slice(b0,b1).trim().length,A=segNums(src.slice(a0,a1)),Bn=segNums(tgt.slice(b0,b1)),x=0,k;
+   for(k in A)if(!Bn[k])x++;for(k in Bn)if(!A[k])x++;
+   var cost=3*Math.abs(Math.log((lt+1)/(r*ls+1)))+B[2]+x;
+   if(best[i][j]+cost<best[i+di][j+dj]){best[i+di][j+dj]=best[i][j]+cost;back[i+di][j+dj]=[i,j]}})}
+ if(best[n][m]===Infinity)return [[0,src.length,0,tgt.length]];
+ var out=[];i=n;j=m;while(i||j){var p=back[i][j];out.push([S[p[0]][0],S[i-1][1],T[p[1]][0],T[j-1][1]]);i=p[0];j=p[1]}return out.reverse()}
+function segShort(t){t=t.trim();return t.length<20||!/\p{L}{2,}/u.test(t)}
+function segBeads(src,tgt){var out=segAlign(src,tgt),k=0;
+ while(out.length>1&&k<out.length){var b=out[k];
+  if(segShort(src.slice(b[0],b[1]))||segShort(tgt.slice(b[2],b[3]))){if(k===0){var nx=out[1];out.splice(0,2,[b[0],nx[1],b[2],nx[3]])}else{var pv=out[k-1];out.splice(k-1,2,[pv[0],b[1],pv[2],b[3]]);k--}continue}
+  k++}return out}
 function xliff(L){var trg=L==="fr"?"fr-CH":"it-CH",u=[],X=D.xn[L],nd=0,colon=L==="fr"?" : ":": ";
  ITEMS.forEach(function(it){if(it.lang!==L)return;var g=it.g,d=dec(it)||null,st=it.status==="human"?["initial","gleichlaut:human"]:["translated","gleichlaut:"+it.status],text=it.status==="human"?null:it.draft,edited=false;
   var acc=d&&(d.decision==="accept"||d.decision==="accept-edited")&&(it.status!=="human"||d.text),back=d&&d.decision==="send-back";
@@ -1548,9 +1596,10 @@ function xliff(L){var trg=L==="fr"?"fr-CH":"it-CH",u=[],X=D.xn[L],nd=0,colon=L==
    note("tgt-old","context:previous-target","target",5,fmt(X.prev_tgt,{t:plain(it.segs,true)}).replace(" : ",colon)),notes="";
   if(acc)notes+=note("verdict","gleichlaut:verdict","target",1,X.accepted[it.status]||X.accepted.flagged);
   if(back){notes+=note("verdict","gleichlaut:verdict",null,1,X.sent_back);if(it.draft)notes+=note("rejected","gleichlaut:rejected-draft",null,2,X.rejected.replace("{t}",it.draft))}
-  it.xn.forEach(function(n){if((acc||back)&&n[0]==="verdict")return;if(n[0]==="checks"||n[0]==="termbase"||n[0]==="notes"){notes+=prev;prev=""}notes+=note(n[0],n[1],n[2],n[3],n[4])});notes+=prev;
+  // a signed-off unit keeps no note about the draft it replaced (emit/xliff.py SIGNED_KEEP): the German change and the old texts only
+  it.xn.forEach(function(n){if((acc||back)&&n[0]==="verdict")return;if(acc&&n[0]!=="change")return;if(n[0]==="checks"||n[0]==="termbase"||n[0]==="notes"){notes+=prev;prev=""}notes+=note(n[0],n[1],n[2],n[3],n[4])});notes+=prev;
   if(d){var why=[X.reasons[d.reason]||d.reason,d.note].filter(Boolean).join("; ");notes+=note("review","gleichlaut:review","target",1,fmt(X.review,{d:X.dec[d.decision]||d.decision}).replace(" : ",colon)+" ("+zts(d.at)+")"+(why?colon+why:""))}
-  var src=g.deNew,beads=text==null?it.bd.map(function(b){return [b[0],b[1],0,0]}):edited?[[0,src.length,0,text.length]]:it.bd,nums=edited?[]:it.nm,c=0,n=0,sx="";
+  var src=g.deNew,beads=text==null?it.bd.map(function(b){return [b[0],b[1],0,0]}):edited?segBeads(src,text):it.bd,nums=edited?[]:it.nm,c=0,n=0,sx="";
   beads.forEach(function(b,k){sx+='<segment id="s'+(k+1)+'" state="'+st[0]+'" subState="'+st[1]+'"><source>'+inl(src,b[0],b[1],g.ch,function(){c++;return '<mrk id="c'+c+'" type="gleichlaut:changed">'})+"</source>"+
    (text!=null?"<target>"+inl(text,b[2],b[3],nums,function(sp){n++;var code=sp[2]!=="model";return '<mrk id="t'+n+'"'+(code?' translate="no"':"")+' type="gleichlaut:'+(code?"code":"model")+'-number"'+(sp[3]?' value="'+x(sp[3])+'"':"")+">"})+"</target>":"")+"</segment>"});
   u.push('<unit id="'+x(it.key)+'" name="'+x(it.cud)+'"><notes>'+notes+"</notes>"+sx+"</unit>")});
@@ -1569,7 +1618,7 @@ function xliff12(L){var trg=L==="fr"?"fr-CH":"it-CH",u=[],X=D.xn[L],nd=0,colon=L
   if(acc){state="signed-off";appr="yes";if(d.decision==="accept-edited"&&d.text){text=d.text;edited=true}}
   else if(back)state="needs-translation";
   if(d)nd++;
-  var src=g.deNew,beads=text==null?it.bd.map(function(b){return [b[0],b[1],0,0]}):edited?[[0,src.length,0,text.length]]:it.bd,code=edited?[]:it.nm.filter(function(n){return n[2]!=="model"});
+  var src=g.deNew,beads=text==null?it.bd.map(function(b){return [b[0],b[1],0,0]}):edited?segBeads(src,text):it.bd,code=edited?[]:it.nm.filter(function(n){return n[2]!=="model"});
   var outer=g.ch.map(function(c){return [c[0],c[1],"c"]}).concat(g.sn.filter(function(n){return !g.ch.some(function(c){return c[0]<=n[0]&&n[1]<=c[1]})}).map(function(n){return [n[0],n[1],"n"]})).sort(function(p,q){return p[0]-q[0]});
   function sm(a,b){var out="",pos=a;outer.forEach(function(sp){var p=Math.max(sp[0],a),q=Math.min(sp[1],b);if(p>=q||p<pos)return;out+=x(src.slice(pos,p));
     out+=sp[2]==="n"?prot()+x(src.slice(p,q))+"</mrk>":'<mrk mtype="x-changed" comment="'+x(X.changed)+'">'+inl(src,p,q,g.sn,prot)+"</mrk>";pos=q});return out+x(src.slice(pos,b))}
@@ -1580,7 +1629,7 @@ function xliff12(L){var trg=L==="fr"?"fr-CH":"it-CH",u=[],X=D.xn[L],nd=0,colon=L
   if(acc)h+=note12("target",1,X.accepted[it.status]||X.accepted.flagged);
   if(back)h+=note12("general",1,X.sent_back);
   var prev12=note12("source",5,fmt(X.prev_de,{t:g.deOld}).replace(" : ",colon))+note12("target",5,fmt(X.prev_tgt,{t:plain(it.segs,true)}).replace(" : ",colon));
-  it.xn.forEach(function(n){if((acc||back)&&n[0]==="verdict")return;if(n[0]==="checks"||n[0]==="termbase"||n[0]==="notes"){h+=prev12;prev12=""}h+=note12(n[2],n[3],n[4],n[0]==="checks"?"gleichlaut-checks":"gleichlaut")});h+=prev12;
+  it.xn.forEach(function(n){if((acc||back)&&n[0]==="verdict")return;if(acc&&n[0]!=="change")return;if(n[0]==="checks"||n[0]==="termbase"||n[0]==="notes"){h+=prev12;prev12=""}h+=note12(n[2],n[3],n[4],n[0]==="checks"?"gleichlaut-checks":"gleichlaut")});h+=prev12;
   if(d){var why=[X.reasons[d.reason]||d.reason,d.note].filter(Boolean).join("; ");h+=note12("target",1,fmt(X.review,{d:X.dec[d.decision]||d.decision}).replace(" : ",colon)+" ("+zts(d.at)+(d.by?", "+d.by:"")+")"+(why?colon+why:""))}
   if(back&&it.draft)h+='<alt-trans alttranstype="rejected" origin="Gleichlaut draft, sent back on review" tool-id="gleichlaut"><target xml:lang="'+trg+'">'+x(it.draft)+"</target></alt-trans>";
   h+='<alt-trans alttranstype="previous-version" origin="SL previous version" tool-id="gleichlaut"><source xml:lang="de-CH">'+x(g.deOld)+'</source><target xml:lang="'+trg+'">'+x(plain(it.segs,true))+"</target></alt-trans></trans-unit>";
@@ -1638,7 +1687,7 @@ function fromHash(){var h=decodeURIComponent(location.hash.slice(1));if(laneOf(h
   if(!(langs(g).some(function(L){return okItem(g.items[L])})))F.status="all";sel=g;return true}return false}
 var fromLink=fromHash()&&TAB==="drafts"&&!!sel;chrome();if(TAB==="audit")renderAudit();else{renderReg();if(sel){markSel(true);renderCase()}}
 if(fromLink)setTimeout(function(){var c=$("case");if(c&&c.getBoundingClientRect().top<64)c.scrollIntoView({block:"start"})},0);
-window.GleichlautReview={xliff:xliff,xliff12:xliff12,payload:payload,importDecisions:importDecisions,setTab:setTab,auditCsv:auditCsv,findingsCsv:findingsCsv};
+window.GleichlautReview={xliff:xliff,xliff12:xliff12,segBeads:segBeads,payload:payload,importDecisions:importDecisions,setTab:setTab,auditCsv:auditCsv,findingsCsv:findingsCsv};
 window.addEventListener("hashchange",function(){if(fromHash()){setTab(TAB);var c=$("case");if(TAB==="drafts"&&c&&c.getBoundingClientRect().top<64)c.scrollIntoView({block:"start"})}});
 })();
 </script>

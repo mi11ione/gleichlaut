@@ -161,7 +161,8 @@ def test_counts_explained_by_sentences_both_remove():
 def test_garbled_german_is_not_called_well_formed_and_german_order_is_noted():
     """A token that starts like a German word of the text ('Folguer', 'Folgore' for 'Folgender') is never 'probably fine:
     a well-formed target word' (rule T1); a code of a German compound written before the target noun ('un CD38
-    anticorps', German 'CD38 Antikörper') gets a low-priority note; verdicts unchanged."""
+    anticorps', German 'CD38 Antikörper') is a reason to check (round 13: not a low-priority 'probably fine' note), counted
+    in the header's 'to check'; verdicts unchanged."""
     from gleichlaut.emit import triage, xliff
     de = "Folgender Code ist an den Krankenversicherer zu übermitteln: 21912.01."
     assert not triage.well_formed("Folguer", "fr", de) and not triage.well_formed("Folgore", "it", de)
@@ -171,9 +172,30 @@ def test_garbled_german_is_not_called_well_formed_and_german_order_is_noted():
     v = V["wb004-fr"]; E = xliff.explanation(v)
     assert v["status"] == "flagged" and not any("Folguer" in t and "bien formé" in t for t, _ in E["top"])
     for k, w in (("wb008-fr", explain.q("fr", "CD38 anticorps")), ("wb008-it", explain.q("it", "CD38 anticorpo"))):
-        n = xliff.explanation(V[k])["note"]
-        assert n and w in n and ("Ordre des mots allemand" in n or "Ordine delle parole tedesco" in n), (k, n)
+        E = xliff.explanation(V[k]); top = [t for t, low in E["top"] if w in t and not low]
+        assert top and ("Ordre des mots allemand" in top[0] or "Ordine delle parole tedesco" in top[0]), (k, E)
+        assert ("à vérifier" in top[0] or "da verificare" in top[0]) and w not in (E["note"] or "") and E["counts"][0] >= 1
     assert V["wb008-fr"]["status"] == "flagged"
+
+
+def test_round13_explanations_consistent_ordinary_words_not_listed():
+    """Round 13 (French translator), wording only, verdicts unchanged: wb004 no longer says the draft changes 'a passage
+    the German does not change' where the German removes that sentence (the deletion note says so); wb012's novelty
+    reason names only the words still to check, not the ordinary ones (well-formed, shared with the German register, or of
+    a register word family)."""
+    from gleichlaut.emit import xliff
+    meta, views = load("q8_0"); V = {v["key"]: v for v in views}
+    v = V["wb004-fr"]; E = xliff.explanation(v)
+    assert v["status"] == "flagged" and not any("que l'allemand ne change pas" in t for t, _ in E["top"])
+    assert any(t.startswith("À la place d'une phrase que l'allemand retire") and "Folguer" in t and not low for t, low in E["top"])
+    assert "Suppression conforme" in E["note"]
+    v = V["wb012-fr"]; t = next(t for t, _ in xliff.explanation(v)["top"] if t.startswith("Mot jamais vu"))
+    for w in ("composant", "danger", "maternelle", "vaccinal", "immunité"): assert w not in t, (w, t)
+    assert "humorale" in t and "autres mots absents des limitations" in t and v["status"] == "flagged"
+    fine, other = explain.novel_fine(v, next(f for f in v["findings"] if f["gid"] == "g7"))
+    assert len(fine) >= 15 and "folguer" not in [w.lower() for w in fine]
+    f7 = next(f for f in V["wb004-fr"]["findings"] if f["gid"] == "g7")
+    assert explain.novel_fine(V["wb004-fr"], f7) == ([], ["folguer"]) or explain.novel_fine(V["wb004-fr"], f7)[0] == []
 
 
 def test_singular_and_plural_in_the_notes():

@@ -962,3 +962,17 @@ data the change was designed on is labelled "dev" in every table.
   and 2 < 4 of the 6 confirmed kept: **fails**; operator, negation and number_word stay off and the blind spots stand.
   The 8B tells a planted one-word flip from its untouched sentence, but not the register's real divergences from its
   alignment and parser artefacts (`eval/results/audit_apertus_filter.json`).
+- **R15 post-freeze note (R4), 11 Oct 2026:** the round-5 block's byte fingerprint recorded in the results
+  (`rules_sha256` `2d5dcaaf…`, commit 6a2c269 and the run commit 8b3eb89) differs from the code since 5e005cb (`0a869fe9…`).
+  What changed: one comment, on the `R5_ON` line ("set by the R15 outcome" became "R15 outcome: no kind passed; all
+  off"); `R5_ON` itself stayed all `False`. Later commits changed `audit.py` outside the block only (display: register
+  excerpts from the sentence alignment, f10d3bd). Evidence that the outputs are identical: the frozen code (8b3eb89) and
+  HEAD (f10d3bd) re-run in separate trees on the 6 Oct 2026 register and on the R15 held planted set (seed 20261016,
+  800 copies): the 31 round-5 findings, the 38 existing findings, and every per-type recall, subtype, miss and baseline
+  count are identical between the two, and identical to the committed `audit_injection_r15_held.json` (operator 74.5%,
+  negation dropped 44.0%, added 55.5%, number word 84.0%). Why the fingerprint drifted: it hashed bytes, comments
+  included. Fix: a second fingerprint of the rule logic only (`audit.r5_logic_sha`: the block's syntax tree without
+  comments, docstrings or layout; the same on Python 3.9 and 3.12), `480ef3e3…`, equal at 6a2c269, 8b3eb89, 5e005cb and
+  HEAD; recorded as `rules_logic_sha256` in the audit summary and `eval/results/audit_r15.json`, with the byte
+  fingerprint kept as recorded. `tests/test_audit_r5.py` fails if the logic or the record drifts. No rule, finding or
+  result changed.

@@ -10,13 +10,14 @@ unverified, 1.2 is the safe exchange format). One file per target language, one 
   <note>s (annotates target / source), all in the target language, are the notes of XLIFF 2.1 (xliff.unit_notes): the
   verdict, at most three plain reasons without internal codes, the product and German change, the old German and the old
   target, the low-priority notes (a deletion that mirrors the German's, typography; priority="8"), the house-sentence and
-  termbase advisories when there are any (priority="9"), one note from="gleichlaut-checks" priority="10" with the remaining
-  reasons in plain words, and one note from="gleichlaut-debug" priority="10" with the raw guard output and its internal
-  codes (for technical support, not a translation remark); <alt-trans alttranstype="previous-version"> holds the old German -> old target pair so the
-  CAT tool shows the previous version beside the draft.
+  termbase advisories when there are any (priority="9"), and one note from="gleichlaut-checks" priority="10" with the
+  remaining reasons in plain words; no raw guard output (that stays in the FHIR Provenance). A signed-off unit keeps only
+  the German change and the old texts (xliff.decided_unit_notes). <alt-trans alttranstype="previous-version"> holds the
+  old German -> old target pair so the CAT tool shows the previous version beside the draft.
   Segmentation: the same segments as XLIFF 2.1 (segment.beads: aligned sentences, very short segments such as a lone
   code number merged into the previous one), written the 1.2 way: <seg-source> and <target> each hold one
-  <mrk mtype="seg" mid="k"> per segment, with matching mids; <source> keeps the whole new German text.
+  <mrk mtype="seg" mid="k"> per segment, with matching mids; <source> keeps the whole new German text. A reviewer's
+  edited target is segmented the same way (segment.beads of the new German and the edited text), never one segment.
 Validated against the OASIS XLIFF 1.2 strict XSD (data/schemas/xliff-1.2/) by validate.validate_xliff12."""
 import os
 import xml.etree.ElementTree as ET
@@ -64,10 +65,12 @@ def _source(tu, v, lang, beads):
 
 
 def _target(t, v, beads, lang, text=None):
-    """target = the draft (or a reviewer's edited text, then one segment and no number markers), one <mrk mtype="seg">
-    per segment (mids as in seg-source), code numbers protected inside."""
+    """target = the draft (or a reviewer's edited text, then without number markers), one <mrk mtype="seg"> per segment
+    (mids as in seg-source), code numbers protected inside."""
     if text is not None:
-        ET.SubElement(t, _q("mrk"), {"mtype": "seg", "mid": "1"}).text = text; return
+        for k, (_, _, b0, b1) in enumerate(beads, 1):
+            ET.SubElement(t, _q("mrk"), {"mtype": "seg", "mid": str(k)}).text = text[b0:b1]
+        return
     out = v["draft"]; code = [(a, b) for a, b, _, who, _ in v["numbers"] if who == "code"]; num_c = xliff.nt(lang, "code_number")
     for k, (_, _, b0, b1) in enumerate(beads, 1):
         m = ET.SubElement(t, _q("mrk"), {"mtype": "seg", "mid": str(k)})
@@ -90,7 +93,7 @@ def trans_unit(body, v, dec=None, final=False):
     if d == "accept-edited" and (dec.get("text") or "").strip(): text = dec["text"]
     tu = ET.SubElement(body, _q("trans-unit"), {"id": v["key"], "resname": v["cud_id"], "approved": "yes" if d in ("accept", "accept-edited") else "no",
                                                  f"{{{XMLNS}}}space": "preserve"})
-    B = beads_of(v) if text is None else [(0, len(v["de_new"]), 0, len(text))]
+    B = beads_of(v) if text is None else segment.beads(v["de_new"], text)        # an edited target keeps sentence segments
     _source(tu, v, L, B)
     if d == "send-back":
         ET.SubElement(tu, _q("target"), {"state": "needs-translation", f"{{{XMLNS}}}lang": lang})
@@ -98,9 +101,8 @@ def trans_unit(body, v, dec=None, final=False):
         st = ("final" if final else "signed-off") if d in ("accept", "accept-edited") else STATE[v["status"]]
         t = ET.SubElement(tu, _q("target"), {"state": st, f"{{{XMLNS}}}lang": lang})
         _target(t, v, B, L, text)
-    head = xliff.decided_notes(v, d) if d else []
-    for nid, cat, ap, pr, tx in head + [n for n in xliff.unit_notes(v, prev=True) if not (head and n[0] == "verdict")]:   # the notes of XLIFF 2.1
-        _note(tu, tx, {None: "general"}.get(ap, ap), pr, {"checks": "gleichlaut-checks", "debug": "gleichlaut-debug"}.get(nid, "gleichlaut"))
+    for nid, cat, ap, pr, tx in xliff.decided_unit_notes(v, d):                                             # the notes of XLIFF 2.1
+        _note(tu, tx, {None: "general"}.get(ap, ap), pr, "gleichlaut-checks" if nid == "checks" else "gleichlaut")
     if d:
         why = "; ".join(x for x in (xliff.reason_text(L, dec.get("reason") or ""), dec.get("note")) if x)
         _note(tu, xliff.review_text(L, d, dec.get("at"), why), "target", "1")

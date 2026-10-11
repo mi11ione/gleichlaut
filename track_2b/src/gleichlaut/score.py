@@ -595,7 +595,7 @@ def audit_r15():
                 number_word=dict(recall=dict(number_word=rp("number_word") >= 0.6), precision=pp("number_word")))
     dec = {k: dict(pass_=all(v["recall"].values()) and v["precision"], **v) for k, v in crit.items()}
     dec = {k: dict(**{x: y for x, y in v.items() if x != "pass_"}, **{"pass": v["pass_"], "on": A.R5_ON[k]}) for k, v in dec.items()}
-    return dict(prereg="R15", rules_sha256=S["rules_sha256"], seed=H["seed"], recall=held, recall_dev=dev,
+    return dict(prereg="R15", rules_sha256=S["rules_sha256"], rules_logic_sha256=S["rules_logic_sha256"], seed=H["seed"], recall=held, recall_dev=dev,
                 register=dict(findings=S["findings"], by_kind=S["by_kind"], by_kind_half=S["by_kind_half"], limitations=S["limitations"],
                               real_or_minor=sum(v["real_or_minor"] for v in prec.values()), real=sum(v["real"] for v in prec.values())),
                 precision=prec, labels=dict(records=len(lab), agreement=len(agree), kappa=kappa,

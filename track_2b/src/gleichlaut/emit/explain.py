@@ -14,7 +14,7 @@ names a German old / new pair only when the two sides are recognisably the same 
 mirror (a 'removed more than the German' finding whose lost words sit where the German itself removes text, by aligned
 sentence beads), tally_mirrored (a negation / modal-verb count explained by sentences both sides remove) and typography
 (spacing the draft introduces; a note, not a check). measure_v2() writes eval/results/explain_v2.json."""
-import difflib, re
+import difflib, os, re
 from collections import Counter
 from .. import core
 
@@ -28,7 +28,7 @@ NAMES = {
     "lock":   {"fr": "Modifications limitées au changement", "it": "Modifiche limitate al cambiamento", "en": "Edits stay inside the change"},
     "slot":   {"fr": "Nombres / négation / verbes modaux", "it": "Numeri / negazione / verbi modali", "en": "Numbers / negation / modal verbs"},
     "unknown": {"fr": "Nombres / négation / verbes modaux", "it": "Numeri / negazione / verbi modali", "en": "Numbers / negation / modal verbs"},
-    "g1":     {"fr": "Allemand resté", "it": "Tedesco rimasto", "en": "German left"},
+    "g1":     {"fr": "Allemand non traduit", "it": "Tedesco rimasto", "en": "German left"},
     "g2":     {"fr": "Changement appliqué", "it": "Modifica applicata", "en": "Change applied"},
     "g3":     {"fr": "Contenu perdu", "it": "Contenuto perso", "en": "Content dropped"},
     "g4":     {"fr": "Répétition", "it": "Ripetizione", "en": "Duplication"},
@@ -136,7 +136,7 @@ T = {
            "en": "Word never seen in target-language limitations (typo?): {x}"},
     # what the check knows: the change is not found, translated, at its place in the draft (it may be missing, left in
     # German, or written elsewhere: Omvoh wb013 has the addition, untranslated, outside the changed passage)
-    "g2_rep": {"fr": "Le changement allemand {u} → {v} n'est pas trouvé, traduit, à sa place dans le brouillon.",
+    "g2_rep": {"fr": "La modification allemande {u} → {v} n'est pas trouvée, traduit, à sa place dans le brouillon.",
                "it": "Il cambiamento tedesco {u} → {v} non risulta tradotto al posto giusto nella bozza.",
                "en": "The German change {u} → {v} is not found translated in the right place in the draft."},
     "g2_add": {"fr": "L'ajout allemand {v} n'est pas trouvé, traduit, à sa place dans le brouillon.",
@@ -607,6 +607,38 @@ def lexicon_fine(v, f):
     S, FW = termbase.shared(L), set(audit.FW["de"])
     old = v.get("tgt_old") or ""
     fine = [w for w in W if w.lower() not in FW and (w.lower() in S or re.search(r"(?<!\w)" + re.escape(w) + r"(?!\w)", old, re.I))]
+    return fine, [w for w in W if w not in fine]
+
+
+FAMILY_MIN = 3        # novel_fine: a register word family needs this many limitation texts (document frequency, summed)
+_VOC = {}
+
+
+def _family(w, L):
+    """True when the target register (the G7 vocabulary: words of the target-language limitations with their document
+    frequency) has words of w's family: w has >= 7 letters and register words starting with its first max(6, len - 3)
+    letters occur in >= FAMILY_MIN limitation texts ('composant' / 'composée', 'composite'; 'vaccinal' / 'vaccination')."""
+    if len(w) < 7 or L not in ("fr", "it"): return False
+    if L not in _VOC:
+        import json
+        _VOC[L] = json.load(open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "frozen", "g3",
+                                              f"vocab_{L}.json"), encoding="utf-8"))
+    st = w.lower()[:max(6, len(w) - 3)]
+    return sum(n for x, n in _VOC[L].items() if x.startswith(st)) >= FAMILY_MIN
+
+
+def novel_fine(v, f):
+    """-> (words of an out-of-vocabulary finding (G7) that are probably ordinary words, the other words): a word is
+    ordinary when it is well-formed in the target language by triage rule T1 on its own (no German letter sequence, not a
+    word or a garbled stem of the German text), when the German and target registers share it (termbase.shared), or when
+    the register has its word family (_family). Wording only: the finding, its triage and the verdict are unchanged."""
+    if f.get("gid") != "g7" or v.get("lang") not in ("fr", "it"): return [], []
+    from . import triage
+    from .. import termbase
+    L = v["lang"]; d = v.get("draft") or ""; S = termbase.shared(L)
+    W = triage._words(f.get("detail") or "")
+    fine = [w for w in W if w.lower() in S or _family(w, L)
+            or triage.well_formed(case_in(d, w), L, v.get("de_new") or "", v.get("tgt_old") or "")]
     return fine, [w for w in W if w not in fine]
 
 

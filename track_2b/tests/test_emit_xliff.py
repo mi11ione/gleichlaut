@@ -53,8 +53,8 @@ def test_units_carry_verdict_draft_and_context():
 def test_at_most_three_plain_reasons_and_one_checks_note():
     """Translator-facing notes: at most three reasons without internal codes; every finding is still in the unit (the
     low-priority notes in one note category gleichlaut:note, priority 8; the remaining reasons in plain words in one note
-    category gleichlaut:checks, priority 10; the raw guard output with its codes only in one note category
-    gleichlaut:debug, priority 10)."""
+    category gleichlaut:checks, priority 10; the raw guard output with its codes is not an XLIFF note: round 13, it stays
+    in the FHIR Provenance)."""
     meta, views = load("fresh166"); d = tempfile.mkdtemp(prefix="gl-xlf-all-"); V = {v["key"]: v for v in views}
     code = explain.CODE
     n_notes = []
@@ -64,15 +64,14 @@ def test_at_most_three_plain_reasons_and_one_checks_note():
             tb = [n for n in N if n.get("category") == "gleichlaut:termbase"]      # termbase advisory: its own note
             hs = [n for n in N if n.get("category") == "gleichlaut:house"]           # house-sentence advisory: its own note
             assert len(tb) <= 1 and all(n.get("priority") == "9" for n in tb + hs) and len(hs) <= 1
-            n_notes.append(len(N) - len(tb) - len(hs) - sum(n.get("category") == "gleichlaut:debug" for n in N))
+            n_notes.append(len(N) - len(tb) - len(hs))
             reasons = [n for n in N if n.get("category") in ("gleichlaut:finding", "gleichlaut:divergence", "gleichlaut:model-numbers",
-                                                             "gleichlaut:summary")]
+                                                             "gleichlaut:summary", "gleichlaut:order")]
             checks = [n for n in N if n.get("category") == "gleichlaut:checks"]
-            debug = [n for n in N if n.get("category") == "gleichlaut:debug"]
             low = [n for n in N if n.get("category") == "gleichlaut:note"]
-            assert len(reasons) <= 3 and len(debug) == (1 if any(f.get("detail") for f in v["findings"]) else 0)
+            assert len(reasons) <= 3 and not [n for n in N if n.get("category") == "gleichlaut:debug"]
             assert len(checks) == (1 if [x for x in xliff.rest(xliff.reasons(v)) if not x.get("dup")] else 0)
-            assert all(not code.search(n.text) for n in N if n.get("category") != "gleichlaut:debug"), u.get("id")
+            assert all(not code.search(n.text) for n in N), u.get("id")
             R = xliff.reasons(v)
             assert len([x for x in R if x["kind"] == "finding"]) == len(v["findings"])          # reworded, never dropped
             assert [n.text for n in reasons] == [x["text"] for x in xliff.top(R)]
@@ -80,8 +79,6 @@ def test_at_most_three_plain_reasons_and_one_checks_note():
             assert bool(low) == bool(xliff.notes(R))
             if checks:
                 assert checks[0].get("priority") == "10" and all(x["text"] in checks[0].text for x in xliff.rest(R) if not x.get("dup"))
-            if debug:
-                assert debug[0].get("priority") == "10" and all(explain.clip(f["detail"], 220)[:60] in debug[0].text for f in v["findings"] if f.get("detail"))
             assert [n.get("priority") for n in reasons] == ["3" if x["low"] else "1" for x in xliff.top(R)]
             assert not any(x.get("tally") and x["rule"] for x in xliff.top(R))      # a probably-fine count never takes a slot
             if v["status"] == "flagged": assert reasons, u.get("id")              # a flagged draft always says why
@@ -121,7 +118,7 @@ def test_header_counts_what_the_reasons_list_shows():
         if c[0] == 0: assert all(x["low"] for x in xliff.top(R)), v["key"]          # nothing to check is shown as one
 
 
-def test_house_sentence_note_and_debug_note_in_both_xliff_versions():
+def test_house_sentence_note_in_both_xliff_versions_and_no_raw_check_output():
     from gleichlaut.emit import xliff12
     V = {v["key"]: v for v in load("fresh166")[1]}
     v = V["wb013-fr"]                               # 'communiqué' where BAG writes 'transmis' (111 limitations)
@@ -131,13 +128,13 @@ def test_house_sentence_note_and_debug_note_in_both_xliff_versions():
     N = xliff.unit_notes(v); ids = [n[0] for n in N]
     assert ids.index("house") < ids.index("checks") if "checks" in ids else True
     assert [n[1:4] for n in N if n[0] == "house"] == [["gleichlaut:house", "target", "9"]]
-    assert [n[1:4] for n in N if n[0] == "debug"] == [["gleichlaut:debug", None, "10"]]
+    assert not [n for n in N if n[0] == "debug"] and xliff.debug_note(v)          # raw output: FHIR Provenance only
     d = tempfile.mkdtemp(prefix="gl-xlf-house-"); meta = load("fresh166")[0]
     for p in xliff.write([v], meta, d): assert validate.validate_xliff(p) == [], p
     for p in xliff12.write([v], meta, d):
         assert validate.validate_xliff12(p) == [], p
         src = open(p, encoding="utf-8").read()
-        assert 'from="gleichlaut-debug"' in src and "Phrase maison" in src
+        assert 'gleichlaut-debug' not in src and "Slots:" not in src and "Phrase maison" in src
 
 
 def test_mirror_is_decided_by_aligned_position_not_by_word_counts():
@@ -186,6 +183,40 @@ def test_review_decisions_sent_back_has_no_target_and_accepted_drops_the_flagged
     rj = [a for a in T[fl[0]["key"]].findall(N12 + "alt-trans") if a.get("alttranstype") == "rejected"]
     assert len(rj) == 1 and "".join(rj[0].find(N12 + "target").itertext()) == fl[0]["draft"]
     assert T[fl[1]["key"]].get("approved") == "yes" and T[fl[1]["key"]].find(N12 + "target").get("state") == "signed-off"
+
+
+def test_edited_unit_keeps_sentence_segments_and_signed_off_units_drop_draft_notes():
+    """Round 13 (French federal translator): an edited target is segmented on sentence boundaries like the draft (XLIFF 2.1
+    segments, XLIFF 1.2 <mrk mtype="seg">, same count as the seg-source), and a signed-off unit (accepted as is or edited)
+    keeps no note about the draft it replaced (reasons, low-priority notes, advisories, checks): only the reviewed note,
+    the German change, the old German and old target, and the review note."""
+    from gleichlaut.emit import segment, xliff12
+    meta, views = load("fresh166"); d = tempfile.mkdtemp(prefix="gl-xlf-ed-")
+    fl = [v for v in views if v["status"] == "flagged" and v["lang"] == "fr" and len(segment.beads(v["de_new"], v["draft"])) >= 3
+          and len(xliff.unit_notes(v)) > 5][:2]
+    assert len(fl) == 2
+    ed = fl[0]["draft"].replace(". ", ".  ", 1).rstrip() + " Phrase ajoutée à la révision."
+    D = {fl[0]["key"]: dict(decision="accept-edited", text=ed, reason="Wording", note="", at="2026-10-11T10:00:00Z"),
+         fl[1]["key"]: dict(decision="accept", reason="", note="", at="2026-10-11T10:01:00Z")}
+    for p in xliff.write(fl, meta, d, D) + xliff12.write(fl, meta, d, D):
+        assert (validate.validate_xliff12(p) if p.endswith(".xliff12.xlf") else validate.validate_xliff(p)) == [], p
+    want = segment.beads(fl[0]["de_new"], ed); assert len(want) >= 3
+    r = ET.parse(os.path.join(d, "gleichlaut-fresh166-de-CH_fr-CH-reviewed.xlf")).getroot()
+    U = {u.get("id"): u for u in r.iter(X + "unit")}
+    S = U[fl[0]["key"]].findall(X + "segment")
+    assert len(S) == len(want) and "".join("".join(s.find(X + "target").itertext()) for s in S) == ed
+    for v in fl:
+        ids = [n.get("id") for n in U[v["key"]].find(X + "notes")]
+        assert ids == ["verdict", "change", "de-old", "tgt-old", "review"], (v["key"], ids)
+    N12 = "{urn:oasis:names:tc:xliff:document:1.2}"
+    T = {t.get("id"): t for t in ET.parse(os.path.join(d, "gleichlaut-fresh166-de-CH_fr-CH-reviewed.xliff12.xlf")).getroot().iter(N12 + "trans-unit")}
+    t = T[fl[0]["key"]]
+    M = [m for m in t.find(N12 + "target") if m.get("mtype") == "seg"]
+    assert len(M) == len(want) == len([m for m in t.find(N12 + "seg-source") if m.get("mtype") == "seg"])
+    assert "".join("".join(m.itertext()) for m in M) == ed
+    for v in fl:
+        assert len(T[v["key"]].findall(N12 + "note")) == 5
+        assert not any(n.get("from") == "gleichlaut-checks" for n in T[v["key"]].findall(N12 + "note"))
 
 
 def test_sentence_segments_and_changed_marks():

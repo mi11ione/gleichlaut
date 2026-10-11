@@ -31,8 +31,8 @@ style) for terminology tools (gleichlaut_sl_termbase_<date>.tbx). Rules, fixed b
 
 Advisory (presentation only; emit/xliff.py and the review page): for a draft whose new German contains a term with a
 house rendering, a low-priority note in the reviewer's language when the draft introduces a recorded minority variant
-(more occurrences than the old target text; variants matched spelling-tolerantly, so 'assurance-maladie' is the recorded
-'assurance maladie'), or writes the house rendering fewer times than the German has the term while the old text did not
+(more occurrences than the old target text; variants, and BAG's practice that is not a rendering (PRACTICE), matched
+spelling-tolerantly, so 'assurance-maladie' is the recorded 'assurance maladie'), or writes the house rendering fewer times than the German has the term while the old text did not
 fall short in the same way (the gap is the draft's, not the old text's; the note says how often the draft writes it when
 it does, never 'absent'), or writes a recorded variant or another non-standard wording in a sentence it inserted or
 rewrote (not one of the old text's sentences: the wording is the draft's own). Softer ("kept"): the draft falls short, the
@@ -72,7 +72,9 @@ HEADS = [
     ("Verschreibung", r"Verschreibung(?:en)?"),
     ("Zulassungsinhaberin", r"Zulassungsinhaberin(?:nen)?"),
     ("Preismodell", r"Preismodell(?:e|s|en)?"),
-    ("Verordnung", r"Verordnung(?:en)?"),
+    # a medical prescription ("ärztliche Verordnung"); not an ordinance ("Verordnung über die Krankenversicherung", "Verordnung
+    # des EDI", "Verordnung vom 27. Juni 1995"), which none of the register's 125 limitations with the word uses
+    ("Verordnung", r"Verordnung(?:en)?(?!\s+(?:über\s|des\s+(?:EDI|Bundesrates|Eidgenössischen)\b|vom\s+\d))"),
     ("Limitierung", r"Limitierung(?:en)?"),
     ("Universitätsklinik", r"Universitätsklinik(?:en)?"),
     ("Poliklinik", r"Poliklinik(?:en)?"),
@@ -398,10 +400,27 @@ REJECT = {("fr", "Universitätsklinik"): "fragment (« universitaires »)", ("fr
           # whose German has the term): no phrase is a majority, so no dominant rendering (M6), as for the other fragments
           ("it", "Krankenversicherer"): "fragment («assicuratore»; the full phrase splits: «assicuratore malattie» 312, "
                                         "«assicurazione malattia» 288, «assicuratore malattia» 160 of 889 limitations)"}
-DROP_VARIANTS = {("fr", "Mehrwertsteuer"): {"récupérée", "réclamée"}, ("fr", "Körpergewicht"): {"pesant"},
+DROP_VARIANTS = {("fr", "Mehrwertsteuer"): {"récupérée", "réclamée", "remboursement de la tva"}, ("fr", "Körpergewicht"): {"pesant"},
                  ("it", "Erstlinienbehandlung"): {"linea di pazienti adulti"},
                  # the insurance («assicurazione»), not the insurer: not a rendering of Krankenversicherer (translator's review)
-                 ("it", "Krankenversicherer"): {"assicurazione malattia", "assicurazione malattie"}}
+                 ("it", "Krankenversicherer"): {"assicurazione malattia", "assicurazione malattie"},
+                 # French translator's review (11 Oct 2026, round 13): « assurance maladie » is the insurance, not the insurer
+                 # (as Italian «assicurazione malattia»); « remboursement de la TVA » is the VAT refund, not the VAT
+                 ("fr", "Krankenversicherer"): {"assurance maladie"}}
+# A dropped variant that BAG nevertheless publishes for the term in many limitations (« assurance maladie »: 266 of the 890
+# French limitations whose German has "Krankenversicherer"). Not exported and not an admitted term; for the advisory it stays
+# BAG's practice: a draft that introduces it or writes it in a sentence of its own gets the note, a sentence carried over
+# unchanged from BAG's text does not (as before the review). Kept in the entry as "practice".
+PRACTICE = {("fr", "Krankenversicherer"): {"assurance maladie"}}
+# Usage notes (TBX <note>, JSON "usage"), in the language of the langSec: where the house rendering is right only in one
+# sense of the German term. Verordnung: all 125 register limitations mean the medical prescription.
+USAGE = {("fr", "Verordnung"): "Au sens d'ordonnance médicale («\u00a0ärztliche Verordnung\u00a0»)\u00a0: «\u00a0prescription\u00a0». "
+                               "Un texte réglementaire («\u00a0Verordnung über die Krankenversicherung\u00a0», KVV) est une "
+                               "«\u00a0ordonnance\u00a0» (OAMal)\u00a0: non couvert par cette entrée.",
+         ("it", "Verordnung"): "Nel senso di prescrizione medica («ärztliche Verordnung»): «prescrizione». Un testo normativo "
+                               "(«Verordnung über die Krankenversicherung», OAMal) è un'«ordinanza»: non coperto da questa voce.",
+         ("de", "Verordnung"): "Im Sinn der ärztlichen Verordnung (Verschreibung); eine Verordnung als Erlass (KVV, KLV) ist "
+                               "nicht gemeint."}
 # Review (11 Oct 2026): a term is listed in its base form (singular), as a termbase lists it; the mined surface form stays
 # in "register_form" and the matching (preferred_tokens, inflection-tolerant) is unchanged. Counts are the mined ones.
 LEMMA = {("fr", "Poliklinik"): {"policliniques": "policlinique", "polycliniques": "polyclinique"},
@@ -423,7 +442,11 @@ SUBJECT_DEFAULT = "SL limitations: therapy and clinical course"
 def review(entries):
     for e in entries:
         k = (e["lang"], e["term"])
-        if k in DROP_VARIANTS: e["variants"] = [v for v in e["variants"] if v["text"] not in DROP_VARIANTS[k]]
+        if k in DROP_VARIANTS:
+            pr = [v for v in e["variants"] if v["text"] in PRACTICE.get(k, ())]
+            e["variants"] = [v for v in e["variants"] if v["text"] not in DROP_VARIANTS[k]]
+            if pr: e["practice"] = [dict(v, note="BAG's practice, not a rendering of the term (review)") for v in pr]
+        if k in USAGE and e.get("house"): e["usage"] = USAGE[k]
         if k in REJECT and e.get("house"): e["house"] = False; e["note"] = f"rejected on review: {REJECT[k]}"
         if k in LEMMA:
             if e.get("preferred") in LEMMA[k]: e["register_form"] = e["preferred"]; e["preferred"] = LEMMA[k][e["preferred"]]
@@ -494,10 +517,32 @@ def _d(d): return f"{d[6:8]}.{d[4:6]}.{d[:4]}" if isinstance(d, str) and re.full
 
 
 # ------------------------------------------------------------------------------------------------------- TBX
+TBX_TEXT = {
+    "de": dict(src="BAG SL {date}, {n} Limitierungen"),
+    "fr": dict(src="extrait de la LS de l'OFSP du {date}, {n}\u00a0limitations",
+               pref="{k} des {n}\u00a0limitations dont l'allemand contient le terme ({p}\u00a0%)",
+               form="\u00a0; le registre écrit «\u00a0{f}\u00a0»",
+               var="variante minoritaire du registre\u00a0; terme maison\u00a0: «\u00a0{h}\u00a0»"),
+    "it": dict(src="estratto dall'ES dell'UFSP del {date}, {n} limitazioni",
+               pref="{k} delle {n} limitazioni il cui tedesco contiene il termine ({p}%)",
+               form="; il registro scrive «{f}»",
+               var="variante minoritaria nel registro; termine in uso: «{h}»")}
+# Concept-level text is in the file's language (xml:lang="de"): subject field and header.
+SUBJECT_DE = {"reimbursement": "Vergütung", "pricing": "Preise", "prescription and setting": "Verschreibung und Behandlungsort",
+              "product status": "Produktstatus", "therapy and clinical course": "Therapie und Verlauf"}
+
+
+def subject_de(term):
+    k = SUBJECT_OF.get(term, SUBJECT_DEFAULT).split(": ", 1)[1]
+    return "SL-Limitierungen: " + SUBJECT_DE[k]
+
+
 def tbx(tb):
     """TBX-Basic, TBX v3 (ISO 30042:2019) DCA style: one conceptEntry per German term with at least one house rendering;
     the house rendering is preferredTerm-admn-sts, BAG's own minority variants admittedTerm-admn-sts, each with its
-    source ('mined from BAG SL <date>, n limitations')."""
+    source. Every text is in the language of its element: the header and the subject field in German (the file's
+    xml:lang), a term's source and notes in the language of its langSec (TBX_TEXT), plus a usage note where the house
+    rendering holds in one sense of the German term only (USAGE)."""
     import xml.etree.ElementTree as ET
     ET.register_namespace("", TBX_NS)
     q = lambda t: f"{{{TBX_NS}}}{t}"
@@ -505,12 +550,13 @@ def tbx(tb):
     m = tb["meta"]; date = _d(m["date"])
     root = ET.Element(q("tbx"), {"type": "TBX-Basic", "style": "dca", XL: "de"})
     fd = ET.SubElement(ET.SubElement(root, q("tbxHeader")), q("fileDesc"))
-    ET.SubElement(ET.SubElement(fd, q("titleStmt")), q("title")).text = f"Gleichlaut SL termbase {date} (DE-FR-IT)"
+    ET.SubElement(ET.SubElement(fd, q("titleStmt")), q("title")).text = f"Gleichlaut SL-Termbase {date} (DE-FR-IT)"
     ET.SubElement(ET.SubElement(fd, q("sourceDesc")), q("p")).text = (
-        f"Mined by Gleichlaut (no model) from the {m['limitations']} limitation texts of the BAG Spezialitätenliste, public ePL "
-        f"FHIR feed {date}: per German term, the French / Italian n-gram most associated with it in the limitations whose "
-        "German contains it. preferredTerm = the register's dominant rendering; admittedTerm = a minority variant the "
-        "register also uses. Counts are limitations. Unreviewed: check before adopting.")
+        f"Von Gleichlaut (ohne Sprachmodell) aus den {m['limitations']} Limitierungstexten der BAG-Spezialitätenliste "
+        f"gewonnen (öffentlicher ePL-FHIR-Feed {date}): je deutschem Begriff das französische / italienische N-Gramm, das in "
+        "den Limitierungen mit diesem Begriff am stärksten mit ihm verbunden ist. preferredTerm = die vorherrschende "
+        "Wiedergabe im Register; admittedTerm = eine Minderheitsvariante, die das Register ebenfalls verwendet. Zählungen in "
+        "Limitierungen. Nicht terminologisch geprüft: vor der Übernahme prüfen.")
     body = ET.SubElement(ET.SubElement(root, q("text")), q("body"))
     by = defaultdict(dict)
     for e in tb["entries"]: by[e["term"]][e["lang"]] = e
@@ -520,26 +566,28 @@ def tbx(tb):
         if not E: continue
         k += 1
         ce = ET.SubElement(body, q("conceptEntry"), {"id": f"sl{k:03d}"})
-        ET.SubElement(ce, q("descrip"), {"type": "subjectField"}).text = SUBJECT_OF.get(term, SUBJECT_DEFAULT)
+        ET.SubElement(ce, q("descrip"), {"type": "subjectField"}).text = subject_de(term)
         de = ET.SubElement(ce, q("langSec"), {XL: "de"})
         ts = ET.SubElement(de, q("termSec")); ET.SubElement(ts, q("term")).text = term.split(" / ")[-1]
         n_de = max(e["limitations_with_term"] for e in E.values())
-        ET.SubElement(ts, q("admin"), {"type": "source"}).text = f"BAG SL {date}, {n_de} limitations"
+        ET.SubElement(ts, q("admin"), {"type": "source"}).text = TBX_TEXT["de"]["src"].format(date=date, n=n_de)
+        if ("de", term) in USAGE: ET.SubElement(ts, q("note")).text = USAGE[("de", term)]
         for L in LANGS:
             e = E.get(L)
             if not e: continue
+            X = TBX_TEXT[L]
             ls = ET.SubElement(ce, q("langSec"), {XL: L})
             ts = ET.SubElement(ls, q("termSec")); ET.SubElement(ts, q("term")).text = e["preferred"]
             ET.SubElement(ts, q("termNote"), {"type": "administrativeStatus"}).text = "preferredTerm-admn-sts"
-            ET.SubElement(ts, q("admin"), {"type": "source"}).text = f"mined from BAG SL {date}, {e['support']} limitations"
-            ET.SubElement(ts, q("note")).text = (f"{e['support']} of {e['limitations_with_term']} limitations whose German "
-                                                 f"contains the term ({round(100 * e['share'])}%)"
-                                                 + (f"; the register writes «{e['register_form']}»" if e.get("register_form") else ""))
+            ET.SubElement(ts, q("admin"), {"type": "source"}).text = X["src"].format(date=date, n=e["support"])
+            ET.SubElement(ts, q("note")).text = (X["pref"].format(k=e["support"], n=e["limitations_with_term"], p=round(100 * e["share"]))
+                                                 + (X["form"].format(f=e["register_form"]) if e.get("register_form") else ""))
+            if e.get("usage"): ET.SubElement(ts, q("note")).text = e["usage"]
             for v in e["variants"]:
                 vs = ET.SubElement(ls, q("termSec")); ET.SubElement(vs, q("term")).text = v["text"]
                 ET.SubElement(vs, q("termNote"), {"type": "administrativeStatus"}).text = "admittedTerm-admn-sts"
-                ET.SubElement(vs, q("admin"), {"type": "source"}).text = f"mined from BAG SL {date}, {v['limitations']} limitations"
-                ET.SubElement(vs, q("note")).text = f"minority variant in the register; house rendering: {e['preferred']}"
+                ET.SubElement(vs, q("admin"), {"type": "source"}).text = X["src"].format(date=date, n=v["limitations"])
+                ET.SubElement(vs, q("note")).text = X["var"].format(h=e["preferred"])
     return ET.ElementTree(root)
 
 
@@ -680,7 +728,7 @@ def advice(v, tb=None):
         p = e.get("preferred_tokens") or " ".join(toks(e["preferred"]))
         rx = _loose(p); p_new, p_old = len(rx.findall(dn)), len(rx.findall(on))
         fp = _ortho(surface(p))
-        V = [(w, f) for w in e["variants"] for f in (_ortho(surface(w["tokens"])),) if f != fp]
+        V = [(w, f) for w in e["variants"] + e.get("practice", []) for f in (_ortho(surface(w["tokens"])),) if f != fp]
         intro = [w for w, f in V if _fcount(f, fd) > _fcount(f, fo)]
         gap = max(0, n_new - p_new) > max(0, n_old - p_old)
         a = dict(term=term.split(" / ")[-1], preferred=e["preferred"], support=e["support"], n_de=n_new, n_draft=p_new)
@@ -769,9 +817,9 @@ def _kept(e, p, ws, pd, po, L, new_idx):
     """the non-standard wording of a term that the draft keeps from the old text (advice, kind "kept"), or None: a
     spelling variant of the house rendering both have ('assureur maladie', 'médecin conseil'); else, in text the draft
     inserted or rewrote (within NEAR tokens), the wording most similar to the house rendering (as _fuzzy) that the old
-    text also uses ('caisse maladie'). Never one of BAG's own recorded minority variants ('assurance maladie', 266
-    limitations: BAG's practice, not the draft's), nor a plural or other inflection of the house rendering itself."""
-    V = [_ortho(surface(w["tokens"])) for w in e["variants"]]
+    text also uses ('caisse maladie'). Never one of BAG's own recorded minority variants or practice ('assurance maladie',
+    266 limitations: BAG's practice, not the draft's), nor a plural or other inflection of the house rendering itself."""
+    V = [_ortho(surface(w["tokens"])) for w in e["variants"] + e.get("practice", [])]
     def recorded(g):
         o = _ortho(surface(g))
         return any(o == v or _contains(o, v) or _contains(v, o) for v in V)

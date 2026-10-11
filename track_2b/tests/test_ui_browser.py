@@ -13,6 +13,7 @@ with another is marked wrong, still imports decision files of the earlier page, 
 language with machine codes alongside.
 Runs under pytest or as `python3 tests/test_ui_browser.py`."""
 import html, json, os, re, shutil, subprocess, sys, tempfile, unittest
+import xml.etree.ElementTree as ET
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src"))
 from gleichlaut.emit import validate
 from gleichlaut.ui import build
@@ -81,10 +82,13 @@ def test_landing_is_the_audit_tab_and_drafts_by_hash():
     assert s.index('id="t-audit"') < s.index('id="t-drafts"')
     s = _dom(C["p"], "#drafts", "fr-CH,fr")
     assert re.search(r'id="t-drafts"[^>]*aria-selected="true"', s) and "Brouillons" in s and "Exporter les décisions (JSON)" in s
+    for lab in ("Vues", "Liste des cas", "Registre des modifications", "Famille", "Modification", "Langue de l'interface"):   # round 13
+        assert f'aria-label="{html.escape(lab, quote=False)}"' in s.replace("&#39;", "'"), lab
+    assert not re.search(r'aria-label="(?:Views|Issues|Family|Register|Case|Interface language)"', s)
     ctx = re.search(r'<p class="ctx" id="ctxline"[^>]*>(.*?)</p>', s, re.S).group(1); txt = html.unescape(re.sub(r"<select.*?</select>", "", ctx, flags=re.S))
     assert '<option value="8b" selected="">Jeu de test (publié) · 8B Q8_0, CPU (par défaut)</option>' in ctx and '<option value="70b">Jeu de test (publié) · 70B, point d\'accès (moins de corrections)</option>' in html.unescape(ctx)
     assert '<option value="aug2026">Essai à blanc 08.2026 (hors production) · 8B Q8_0, CPU</option>' in ctx
-    assert "Jeu de test mis de côté : modifications passées de la LS 06.2025–02.2026, déjà publiées par l'OFSP, 166 brouillons d'Apertus 8B Q8_0." in txt
+    assert "Jeu de test réservé à l'évaluation : modifications passées de la LS 06.2025–02.2026, déjà publiées par l'OFSP, 166 brouillons d'Apertus 8B Q8_0." in txt
     assert "62 prêts (37.3%) · 104 signalés · 17.5% identiques" in txt and "La variante par défaut" in txt
     assert "moins de corrections" not in txt and "70B" not in txt                       # the default lane claims no fewer edits
     s = _dom(C["p"], "#70b/wb013", "fr-CH,fr")                                         # the optional lane, same numbering
@@ -103,14 +107,17 @@ def test_three_levels_family_accept_and_start_from_old_text():
     fl = next(it for g in D["groups"] for it in g["items"].values() if it.get("rt") and it["rt"][1] > 0)
     probe = ERR + ("setTimeout(function(){var R=window.GleichlautReview,f=document.getElementById('f-fam');f.value=" + json.dumps(fam) + ";f.onchange();"
                    "var q1=document.getElementById('fam-bulk').textContent;document.getElementById('fam-go').click();var q2=document.getElementById('fam-bulk').textContent;"
-                   "document.getElementById('fam-yes').click();var n=Object.keys(R.payload().decisions).length;"
+                   "document.getElementById('fam-yes').click();var n0=Object.keys(R.payload().decisions).length,fr=document.getElementById('fam-rev');"
+                   "fr.value='R. Muster';fr.dispatchEvent(new Event('input',{bubbles:true}));fr.dispatchEvent(new Event('change',{bubbles:true}));"
+                   "var D0=R.payload().decisions,n=Object.keys(D0).length,by=n?D0[Object.keys(D0)[0]].by:null;"
                    "location.hash='#" + fl["key"][:-3] + "';setTimeout(function(){var b=document.querySelector('[data-start=\"" + fl["key"] + "\"]');if(b)b.click();"
-                   "var e=document.createElement('pre');e.id='out';e.textContent=JSON.stringify({q1:q1,q2:q2,n:n,ed:R.payload().edits[" + json.dumps(fl["key"]) + "]||null,"
+                   "var e=document.createElement('pre');e.id='out';e.textContent=JSON.stringify({q1:q1,q2:q2,n0:n0,n:n,by:by,ed:R.payload().edits[" + json.dumps(fl["key"]) + "]||null,"
                    "marks:document.querySelectorAll('#reg .mk.f').length,b:!!b,err:window.__err});document.body.appendChild(e)},300)},300);")
     s = _dom(C["p"], "#drafts", "en", probe)
     o = json.loads(html.unescape(re.search(r'<pre id="out">(.*?)</pre>', s, re.S).group(1)))
     assert not o["err"], o["err"]
     assert o["q1"].startswith("Accept all ready drafts of this edit family") and "Confirm accept" in o["q2"] and o["n"] >= 2
+    assert o["n0"] == 0 and o["by"] == "R. Muster"            # the family action waits for the reviewer's name, then runs
     assert o["ed"] and o["ed"] != next(it for g in D["groups"] for it in g["items"].values() if it["key"] == fl["key"]).get("draft")
 
 
@@ -135,12 +142,22 @@ def test_lane_select_switches_and_hash_keeps_the_lane():
 
 def test_save_next_waits_for_a_decision_legend_and_storage_note():
     C = _page()
-    probe = ERR + ("setTimeout(function(){var b=document.getElementById('savenext'),d0=b.disabled,w0=document.getElementById('sn-why').textContent;"
-                   "document.querySelector('.dec button[data-d=\"accept\"]').click();var d1=document.getElementById('savenext').disabled;"
-                   "var e=document.createElement('pre');e.id='out';e.textContent=JSON.stringify({d0:d0,w0:w0,d1:d1,label:b.textContent,"
-                   "key:document.getElementById('reg-key').textContent,prog:document.getElementById('progress').textContent,err:window.__err});document.body.appendChild(e)},300);")
+    probe = ERR + ("setTimeout(function(){var R=window.GleichlautReview,b=document.getElementById('savenext'),d0=b.disabled,w0=document.getElementById('sn-why').textContent;"
+                   "function st(){return document.querySelector('.dec .stt').textContent}"
+                   "document.querySelector('.dec button[data-d=\"accept\"]').click();var d1=document.getElementById('savenext').disabled,ask=!!document.getElementById('d-rev-ask'),st1=st(),"
+                   "n1=Object.keys(R.payload().decisions).length,nm=document.getElementById('d-rev');"
+                   "nm.value='M. Muster';nm.dispatchEvent(new Event('input',{bubbles:true}));nm.dispatchEvent(new Event('change',{bubbles:true}));"
+                   "var d2=document.getElementById('savenext').disabled,st2=st(),D0=R.payload().decisions,by=D0[Object.keys(D0)[0]].by,at=D0[Object.keys(D0)[0]].at,prog=document.getElementById('progress').textContent;"
+                   "document.querySelector('.dec button[data-d=\"accept\"]').click();var st3=st(),n3=Object.keys(R.payload().decisions).length;"
+                   "var e=document.createElement('pre');e.id='out';e.textContent=JSON.stringify({d0:d0,w0:w0,d1:d1,ask:ask,st1:st1,n1:n1,d2:d2,st2:st2,by:by,at:at,st3:st3,n3:n3,label:b.textContent,"
+                   "key:document.getElementById('reg-key').textContent,prog:prog,err:window.__err});document.body.appendChild(e)},300);")
     o = json.loads(html.unescape(re.search(r'<pre id="out">(.*?)</pre>', _dom(C["p"], "#drafts", "en", probe), re.S).group(1)))
-    assert not o["err"] and o["d0"] is True and o["d1"] is False and o["label"] == "Save, next change" and o["w0"].startswith("Decide first"), o
+    assert not o["err"] and o["d0"] is True and o["label"] == "Save, next change" and o["w0"].startswith("Decide first"), o
+    # round 13: no decision without the reviewer's name (inline prompt, the first click kept and saved once the name is in)
+    assert o["d1"] is True and o["ask"] and o["st1"].startswith("Enter your name first") and o["n1"] == 0, o
+    assert o["d2"] is False and o["by"] == "M. Muster" and re.fullmatch(r"\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d[+-]\d\d:\d\d", o["at"]), o
+    assert re.fullmatch(r"saved · \d{4}-\d\d-\d\d \d\d:\d\d [+-]\d\d:\d\d · M\. Muster", o["st2"]), o["st2"]     # Zurich time with offset
+    assert o["st3"].startswith("decision undone") and o["n3"] == 0, o                                   # a second click says so
     assert "~ flagged, probably fine" in o["key"] and "▲ flagged, to check" in o["key"]
     assert o["prog"] == "1/166 decided · saved in this browser only · export to keep"
     probe = ERR + NAME + ("setTimeout(function(){var b=document.getElementById('a-next'),d0=b.getAttribute('aria-disabled')==='true',h=document.querySelector('#acase .sl .sub').textContent;name('A. Muster');"
@@ -252,6 +269,46 @@ def test_page_xliff_export_validates():
         if L == "fr":
             assert 'state="reviewed" subState="gleichlaut:accepted-edited"' in x and "Texte révisé : 5 mg." in x
             assert 'state="initial" subState="gleichlaut:sent-back"' in x and "Révision : accepté modifié" in x
+
+
+def test_page_segments_an_edited_target_like_python_and_signed_off_units_keep_no_draft_notes():
+    """Round 13: the page's sentence segmenter (segBeads) equals emit/segment.beads on every draft and old target of the
+    page; an edited unit is exported in sentence segments (XLIFF 2.1 and 1.2), and a signed-off unit carries no note about
+    the draft it replaced, nor raw check output."""
+    from gleichlaut.emit import segment
+    from gleichlaut.emit import load
+    C = _page(); D = C["D"]
+    views = load("q8_0")[1]
+    pairs = [[v["de_new"], v["draft"]] for v in views if v.get("draft")] + [[v["de_new"], v["tgt_old"]] for v in views if v.get("tgt_old")]
+    pairs += [["Die Therapie wird vergütet. Max. 4 Zyklen, z. B. bei Rezidiv. Nr. 3 gilt.", "Le traitement est remboursé. Max. 4 cycles, p. ex. en cas de récidive. Le n° 3 s'applique."]]
+    fl = next(it for g in D["groups"] for it in g["items"].values() if it["status"] == "flagged" and it["lang"] == "fr" and len(it["bd"]) >= 3)
+    draft = "".join(s_[1] for s_ in fl["segs"] if s_[0] != "d")
+    ed = draft.rstrip() + " Phrase ajoutée à la révision."
+    dec = {"run_sha256": D["meta"]["run_sha256"], "decisions": {fl["key"]: {"decision": "accept-edited", "text": ed, "reason": "Wording", "note": "", "at": "2026-10-11T10:00:00Z"}}}
+    dp = os.path.join(C["d"], "segpairs.js"); open(dp, "w", encoding="utf-8").write("window.__P=" + json.dumps(pairs, ensure_ascii=False) + ";")
+    probe = ERR + ("setTimeout(function(){var R=window.GleichlautReview;R.importDecisions(" + json.dumps(dec, ensure_ascii=False) + ");"
+                   "var o={b:window.__P.map(function(p){return R.segBeads(p[0],p[1])}),x:R.xliff('fr'),x12:R.xliff12('fr'),err:window.__err};"
+                   "var e=document.createElement('pre');e.id='out';e.textContent=JSON.stringify(o);document.body.appendChild(e)},300);")
+    page = open(C["p"], encoding="utf-8").read().replace("</head>", '<script src="segpairs.js"></script></head>', 1)
+    q = os.path.join(C["d"], "seg.html"); open(q, "w", encoding="utf-8").write(page)
+    o = _out(_dom(q, "#drafts", "en", probe))
+    assert not o["err"], o["err"]
+    py = [[list(b) for b in segment.beads(a, t)] for a, t in pairs]
+    bad = [i for i, (x, y) in enumerate(zip(o["b"], py)) if x != y]
+    assert len(o["b"]) == len(py) > 100 and not bad, [(pairs[i][1][:80], o["b"][i], py[i]) for i in bad[:3]]
+    want = segment.beads(next(v["de_new"] for v in views if v["key"] == fl["key"]), ed)
+    X2 = "{urn:oasis:names:tc:xliff:document:2.0}"; X12 = "{urn:oasis:names:tc:xliff:document:1.2}"
+    u = next(u for u in ET.fromstring(o["x"].encode()).iter(X2 + "unit") if u.get("id") == fl["key"])
+    S = u.findall(X2 + "segment")
+    assert len(S) == len(want) >= 3 and "".join("".join(s_.find(X2 + "target").itertext()) for s_ in S) == ed
+    assert [n.get("id") for n in u.find(X2 + "notes")] == ["verdict", "change", "de-old", "tgt-old", "review"]
+    t = next(t for t in ET.fromstring(o["x12"].encode()).iter(X12 + "trans-unit") if t.get("id") == fl["key"])
+    M = [m for m in t.find(X12 + "target") if m.get("mtype") == "seg"]
+    assert len(M) == len(want) and "".join("".join(m.itertext()) for m in M) == ed and len(t.findall(X12 + "note")) == 5
+    assert "Slots:" not in o["x12"] and "gleichlaut-debug" not in o["x12"] and "Sortie brute" not in o["x12"] + o["x"]
+    for x, val in ((o["x"], validate.validate_xliff), (o["x12"], validate.validate_xliff12)):
+        p = os.path.join(C["d"], "seg-out" + (".xliff12.xlf" if val is validate.validate_xliff12 else ".xlf")); open(p, "w", encoding="utf-8").write(x)
+        assert val(p) == [], val(p)[:3]
 
 
 DIAPHIN = "DIAPHIN.6-|number|it|12,6"

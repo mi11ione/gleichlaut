@@ -39,7 +39,7 @@ for c in api.check(item, "Prix de facturation par application et patient 230.27 
     print(c["check"], c["ok"], c["severity"], c["sentence"])
 # lock True ok Contrôle « Modifications limitées au changement » réussi.
 # slot False flag Les nombres ne suivent pas l'allemand : allemand ajoute 222.41, retire 230.27 ; brouillon aucun changement.
-# g1 True ok Contrôle « Allemand resté » réussi.
+# g1 True ok Contrôle « Allemand non traduit » réussi.
 # ... g2 to g7
 ```
 

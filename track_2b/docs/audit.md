@@ -590,7 +590,9 @@ Two jurors called flipped operators, dropped negations and number words the lega
 "congruence checked" stamp would give false assurance exactly there. Round 5 adds three checks for them. R15 fixed the
 evaluation, the pass rule per kind and the decision before any of the rules existed (commit `28fe22b`). The rules were
 then written on the dev half only, and frozen in commit `6a2c269`; the sha256 of the round-5 block is `2d5dcaaf…`
-(`summary.round5.rules_sha256`). They are stdlib only and call no model.
+(`summary.round5.rules_sha256`, bytes as frozen) and of its rule logic `480ef3e3…` (`rules_logic_sha256`: the syntax tree
+without comments or docstrings; a comment edit after the freeze moved the byte hash only, PREREG results log, R15
+post-freeze note; `tests/test_audit_r5.py` checks it). They are stdlib only and call no model.
 
 - **`operator`.** Each value (digits or a number word) that has a comparison word right before it, or right after it
   and its unit, gets a direction: a lower bound (mindestens, ab, über, mehr als, ≥ / au moins, plus de, dès / almeno,

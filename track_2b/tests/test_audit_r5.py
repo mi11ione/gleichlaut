@@ -96,3 +96,24 @@ def test_committed_r15_results_are_consistent():
     s = score.audit_r15()
     assert set(s["recall"]) == set(I.TYPES_R15) and set(s["decision"]) == set(A.KINDS_R5)
     for k, d in s["decision"].items(): assert d["on"] == A.R5_ON[k] == d["pass"]
+
+
+def test_round5_rule_fingerprint_matches_the_frozen_rules():
+    """The R15 freeze (commit 6a2c269) holds: the round-5 rule logic (syntax tree without comments, docstrings or layout)
+    is the frozen one, and the committed audit summary and R15 result record it. The byte fingerprint R15 recorded
+    (rules_sha256) is that of the frozen commit; it is kept as recorded (PREREG results log, R15 post-freeze note).
+    A change to the rules makes this test fail: it needs a new pre-registration, not a new fingerprint."""
+    assert A.r5_logic_sha() == A.R5_FROZEN["logic_sha256"]
+    S = json.load(open(os.path.join(ROOT, "data", "audit", "audit_20261006_summary.json"), encoding="utf-8"))["round5"]
+    R = json.load(open(os.path.join(ROOT, "eval", "results", "audit_r15.json"), encoding="utf-8"))
+    assert S["rules_logic_sha256"] == R["rules_logic_sha256"] == A.R5_FROZEN["logic_sha256"]
+    assert S["rules_sha256"] == R["rules_sha256"] == A.R5_FROZEN["block_sha256"]
+    # a comment or docstring edit leaves the logic fingerprint alone; a constant does not
+    s = open(A.__file__, encoding="utf-8").read(); b = A._r5_block(s)
+    assert A.r5_logic_sha(s.replace(b, b.replace("# set by", "# (edited) set by").replace('KINDS_R5 = (', '# a new comment\nKINDS_R5 = ('))) == A.r5_logic_sha()
+    assert A.r5_logic_sha(s.replace(b, b.replace("ALIGN_MAX, ALIGN_MAX_UNEVEN = 0.4, 0.2", "ALIGN_MAX, ALIGN_MAX_UNEVEN = 0.4, 0.3"))) != A.r5_logic_sha()
+    import shutil, subprocess
+    if not shutil.which("git"): raise unittest.SkipTest("no git: the frozen commit's bytes are not checked")
+    r = subprocess.run(["git", "show", A.R5_FROZEN["commit"] + ":track_2b/src/gleichlaut/audit.py"], cwd=ROOT, capture_output=True, text=True)
+    if r.returncode: raise unittest.SkipTest("frozen commit not in this checkout")
+    assert A.r5_block_sha(r.stdout) == A.R5_FROZEN["block_sha256"] and A.r5_logic_sha(r.stdout) == A.R5_FROZEN["logic_sha256"]
