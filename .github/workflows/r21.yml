@@ -1,0 +1,73 @@
+# PREREG R21: variant v4-system (the v3-terms house-wording block plus one fixed system message replacing the chat
+# template's default "Apertus 1.5 Omni" system turn; track_2b/src/gleichlaut/v4system.py) with the certified Apertus 8B
+# GGUF Q8_0 on CPU runners, one set per dispatch: fresh166 (the held-out 166, as R1 / M2) or a live month
+# (20260801-20260901, 20260901-20261001; the committed items, routed as the shadow workflow routes them).
+# Every shard first verifies the build certificate of the loaded GGUF (cli.certified_gguf) and stops without one; every
+# exchange (request as sent, response) is recorded (exchanges.jsonl) so that `make run` re-executes the run.
+#   gh workflow run r21.yml -R mi11ione/gleichlaut -f set=fresh166 -f shards=13
+# Manual trigger only. Resume: resume_run=<run id>.
+name: r21-8b
+on:
+  workflow_dispatch:
+    inputs:
+      set: { description: "fresh166, 20260801-20260901 or 20260901-20261001", required: true, default: "fresh166" }
+      shards: { description: "number of shards", required: true, default: "13" }
+      resume_run: { description: "run id whose shard artifacts to resume from (empty = fresh)", required: false, default: "" }
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs: { matrix: "${{ steps.m.outputs.matrix }}" }
+    steps:
+      - id: m
+        env: { N: "${{ inputs.shards }}", S: "${{ inputs.set }}" }
+        run: |
+          case "$S" in fresh166|20260801-20260901|20260901-20261001) ;; *) echo "unknown set $S"; exit 1;; esac
+          python3 -c "import json, os; n = int(os.environ['N']); print('matrix=' + json.dumps({'include':[{'k':k,'n':n} for k in range(n)]}))" >> $GITHUB_OUTPUT
+  shard:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    permissions: { contents: read, actions: read }
+    strategy: { fail-fast: false, max-parallel: 20, matrix: "${{ fromJson(needs.plan.outputs.matrix) }}" }
+    defaults: { run: { working-directory: track_2b } }
+    env:
+      URL_q8_0: https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf
+      SHA_q8_0: dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d
+      ART: "r21-${{ inputs.set }}-${{ matrix.k }}of${{ matrix.n }}"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: { python-version: "3.12" }
+      - uses: actions/cache@v6
+        with: { path: track_2b/models, key: "gguf-q8_0" }
+      - name: fetch and verify GGUF
+        run: |
+          mkdir -p models; F=models/q8_0.gguf
+          [ -f $F ] || curl -sSL --retry 5 -A gleichlaut/0.1 -o $F "$URL_q8_0"
+          echo "$SHA_q8_0  $F" | sha256sum -c -
+      - name: restore shard from an earlier run
+        if: inputs.resume_run != ''
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: gh run download ${{ inputs.resume_run }} -R ${{ github.repository }} -n "$ART" -D out/r21 || echo "no earlier artifact for $ART"
+      - run: CMAKE_ARGS="-DGGML_NATIVE=OFF" pip install --require-hashes -r requirements.txt -r requirements-offline.txt
+      - name: run shard (build certificate verified first)
+        run: |
+          PYTHONPATH=src python tools/r21_system.py run --set ${{ inputs.set }} --gguf models/q8_0.gguf --gguf-sha256 $SHA_q8_0 \
+            --shard ${{ matrix.k }} --of ${{ matrix.n }}
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with: { name: "${{ env.ART }}", path: track_2b/out/r21, if-no-files-found: warn }
+  gather:
+    needs: shard
+    if: always()
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: track_2b } }
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: { python-version: "3.12" }
+      - uses: actions/download-artifact@v7
+        with: { pattern: "r21-${{ inputs.set }}-*", path: track_2b/out/r21parts }
+      - run: PYTHONPATH=src python tools/r21_system.py gather --set ${{ inputs.set }} --in out/r21parts
+      - uses: actions/upload-artifact@v7
+        with: { name: "r21-${{ inputs.set }}-merged", path: "track_2b/data/r21/runs/${{ inputs.set }}_q8_0" }

@@ -306,8 +306,16 @@ def _capture(prompt, tag, cap, max_tokens): raise _Captured(prompt, max_tokens)
 
 
 def _pipeline(ask, variant="frozen", terms_date=None):
-    """the SL pipeline: the frozen one (default), or the experimental v3-terms variant (PREREG R12, gleichlaut.v3terms)."""
+    """the SL pipeline: the frozen one (default), or an experimental variant: v3-terms (PREREG R12, gleichlaut.v3terms) or
+    v4-system (PREREG R21, gleichlaut.v4system: v3-terms plus one fixed system message; the house wording of each item comes
+    from its own old snapshot unless --terms-date is given)."""
     if variant in (None, "frozen"): return core.Pipeline(ask, "g3")
+    if variant == "v4-system":
+        from . import v4system
+        try:
+            if terms_date: v4system.resources(terms_date)
+            return v4system.SystemPipeline(ask, terms_date)
+        except FileNotFoundError as e: raise UsageError(str(e))
     if variant != "v3-terms": raise UsageError(f"unknown variant {variant!r}")
     if not terms_date: raise UsageError("--variant v3-terms needs --terms-date YYYYMMDD (the snapshot the house wording is mined from)")
     from . import v3terms

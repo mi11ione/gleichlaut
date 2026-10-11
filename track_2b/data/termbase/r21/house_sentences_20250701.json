@@ -1,0 +1,1550 @@
+{
+ "meta": {
+  "generated_by": "gleichlaut termbase --date 20250701",
+  "date": "20250701",
+  "source": "BAG Spezialitätenliste release 01.07.2025, XML capture 20250731/Preparations.xml (sha256 102f691db6cc465c926db6c12e5510b586cdd799d75125f3f1c7a4344bb5352c)",
+  "limitations": 1367,
+  "unit": "aligned sentence bead (emit.segment.align); German side = the sentence",
+  "rules": {
+   "min_support": 10,
+   "min_share": 0.5,
+   "min_words": 3,
+   "variant_min": 2,
+   "max_variants": 5
+  },
+  "normalisation": "numbers and codes as '#', whitespace collapsed, typographic apostrophes as ', no space before : ; ! ? » ) ] , . or after « ( [",
+  "note": "Mined from the register itself (gleichlaut.house, docs/termbase.md). Counts are limitations; 'share' = support / limitations whose German has the sentence. house=false: no dominant rendering, not used."
+ },
+ "entries": [
+  {
+   "lang": "fr",
+   "de": "Folgender Code ist an den Krankenversicherer zu übermitteln:",
+   "de_text": "Folgender Code ist an den Krankenversicherer zu übermitteln:",
+   "limitations": 203,
+   "rendering": "Le code suivant doit être transmis à l'assureur-maladie:",
+   "text": "Le code suivant doit être transmis à l'assureur-maladie:",
+   "support": 89,
+   "share": 0.438,
+   "variants": [
+    {
+     "key": "Le code suivant doit être transmis à l'assurance maladie:",
+     "text": "Le code suivant doit être transmis à l'assurance maladie:",
+     "limitations": 57
+    },
+    {
+     "key": "Le code suivant doit être transmis à l'assurance-maladie:",
+     "text": "Le code suivant doit être transmis à l'assurance-maladie:",
+     "limitations": 47
+    },
+    {
+     "key": "Le code suivant doit être transmis à l'assureur maladie:",
+     "text": "Le code suivant doit être transmis à l'assureur maladie:",
+     "limitations": 5
+    },
+    {
+     "key": "Le code d'indication suivant doit être transmis à l'assureur-maladie:",
+     "text": "Le code d'indication suivant doit être transmis à l'assureur-maladie:",
+     "limitations": 2
+    },
+    {
+     "key": "Le code suivant doit être transmis à la caisse maladie:",
+     "text": "Le code suivant doit être transmis à la caisse maladie:",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.44 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Die Mehrwertsteuer kann nicht zusätzlich zu diesem Anteil des Fabrikabgabepreises zurückgefordert werden.",
+   "de_text": "Die Mehrwertsteuer kann nicht zusätzlich zu diesem Anteil des Fabrikabgabepreises zurückgefordert werden.",
+   "limitations": 143,
+   "rendering": "La taxe sur la valeur ajoutée ne peut pas être exigée en sus de ce montant.",
+   "text": "La taxe sur la valeur ajoutée ne peut pas être exigée en sus de ce montant.",
+   "support": 13,
+   "share": 0.091,
+   "variants": [
+    {
+     "key": "La taxe sur la valeur ajoutée ne peut pas être exigée en sus de cette partie du prix de fabrique.",
+     "text": "La taxe sur la valeur ajoutée ne peut pas être exigée en sus de cette partie du prix de fabrique.",
+     "limitations": 12
+    },
+    {
+     "key": "La demande du remboursement de la TVA sur ce montant n'est pas admissible.",
+     "text": "La demande du remboursement de la TVA sur ce montant n'est pas admissible.",
+     "limitations": 9
+    },
+    {
+     "key": "La TVA ne peut pas être récupérée en plus de cette part du prix de fabrique.",
+     "text": "La TVA ne peut pas être récupérée en plus de cette part du prix de fabrique.",
+     "limitations": 8
+    },
+    {
+     "key": "La taxe sur la valeur ajoutée ne peut pas être exigée en plus de cette part du prix de fabrique.",
+     "text": "La taxe sur la valeur ajoutée ne peut pas être exigée en plus de cette part du prix de fabrique.",
+     "limitations": 8
+    },
+    {
+     "key": "La taxe sur la valeur ajoutée ne peut pas être exigée en plus de cette part du prix départ usine.",
+     "text": "La taxe sur la valeur ajoutée ne peut pas être exigée en plus de cette part du prix départ usine.",
+     "limitations": 8
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.09 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Folgender Indikationscode ist an den Krankenversicherer zu übermitteln:",
+   "de_text": "Folgender Indikationscode ist an den Krankenversicherer zu übermitteln:",
+   "limitations": 132,
+   "rendering": "Le code d'indication suivant doit être transmis à l'assureur-maladie:",
+   "text": "Le code d'indication suivant doit être transmis à l'assureur-maladie:",
+   "support": 96,
+   "share": 0.727,
+   "variants": [
+    {
+     "key": "Le code suivant doit être transmis à l'assurance maladie:",
+     "text": "Le code suivant doit être transmis à l'assurance maladie:",
+     "limitations": 13
+    },
+    {
+     "key": "Le code d'indication suivant doit être transmis à l'assurance maladie:",
+     "text": "Le code d'indication suivant doit être transmis à l'assurance maladie:",
+     "limitations": 8
+    },
+    {
+     "key": "Le code suivant doit être transmis à l'assureur-maladie:",
+     "text": "Le code suivant doit être transmis à l'assureur-maladie:",
+     "limitations": 7
+    },
+    {
+     "key": "Le code suivant doit être transmis à l'assurance-maladie:",
+     "text": "Le code suivant doit être transmis à l'assurance-maladie:",
+     "limitations": 6
+    },
+    {
+     "key": "Le code d'indication suivant doit être transmis à l'assureur maladie:",
+     "text": "Le code d'indication suivant doit être transmis à l'assureur maladie:",
+     "limitations": 2
+    }
+   ],
+   "house": true
+  },
+  {
+   "lang": "fr",
+   "de": "Die Aufforderung zur Rückerstattung soll ab dem Zeitpunkt der Verabreichung erfolgen.",
+   "de_text": "Die Aufforderung zur Rückerstattung soll ab dem Zeitpunkt der Verabreichung erfolgen.",
+   "limitations": 108,
+   "rendering": "La demande de remboursement doit intervenir à partir du moment de l'administration.",
+   "text": "La demande de remboursement doit intervenir à partir du moment de l'administration.",
+   "support": 32,
+   "share": 0.296,
+   "variants": [
+    {
+     "key": "La demande de remboursement doit être faite à partir du moment de l'administration.",
+     "text": "La demande de remboursement doit être faite à partir du moment de l'administration.",
+     "limitations": 21
+    },
+    {
+     "key": "La demande de remboursement doit être effectuée à partir du moment de l'administration.",
+     "text": "La demande de remboursement doit être effectuée à partir du moment de l'administration.",
+     "limitations": 11
+    },
+    {
+     "key": "La demande de remboursement doit être faite dès l'administration.",
+     "text": "La demande de remboursement doit être faite dès l'administration.",
+     "limitations": 10
+    },
+    {
+     "key": "La demande de remboursement doit intervenir à compter de la date d'administration du traitement.",
+     "text": "La demande de remboursement doit intervenir à compter de la date d'administration du traitement.",
+     "limitations": 8
+    },
+    {
+     "key": "La demande de remboursement doit être effectuée à partir du début de l'administration.",
+     "text": "La demande de remboursement doit être effectuée à partir du début de l'administration.",
+     "limitations": 6
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.30 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Die Behandlung bedarf der Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation des Vertrauensarztes.",
+   "de_text": "Die Behandlung bedarf der Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation des Vertrauensarztes.",
+   "limitations": 46,
+   "rendering": "Le traitement est soumis à l'accord de prise en charge par l'assurance-maladie après consultation du médecin conseil.",
+   "text": "Le traitement est soumis à l'accord de prise en charge par l'assurance-maladie après consultation du médecin conseil.",
+   "support": 6,
+   "share": 0.13,
+   "variants": [
+    {
+     "key": "Le traitement nécessite une garantie de prise en charge des coûts par l'assureur-maladie, après consultation préalable du médecin-conseil.",
+     "text": "Le traitement nécessite une garantie de prise en charge des coûts par l'assureur-maladie, après consultation préalable du médecin-conseil.",
+     "limitations": 6
+    },
+    {
+     "key": "Le traitement nécessite l'accord sur la prise en charge des frais par l'assureur-maladie après consultation préalable du médecin-conseil.",
+     "text": "Le traitement nécessite l'accord sur la prise en charge des frais par l'assureur-maladie après consultation préalable du médecin-conseil.",
+     "limitations": 4
+    },
+    {
+     "key": "Le traitement nécessite une garantie de prise en charge des frais par l'assureur maladie, après consultation préalable du médecin conseil.",
+     "text": "Le traitement nécessite une garantie de prise en charge des frais par l'assureur maladie, après consultation préalable du médecin conseil.",
+     "limitations": 4
+    },
+    {
+     "key": "Les coûts ne sont pris en charge que si l'assureur maladie a accordé une garantie de prise en charge après consultation préalable du médecin-conseil.",
+     "text": "Les coûts ne sont pris en charge que si l'assureur maladie a accordé une garantie de prise en charge après consultation préalable du médecin-conseil.",
+     "limitations": 4
+    },
+    {
+     "key": "Après garantie de prise en charge des coûts par l'assureur-maladie après consultation préalable du médecin-conseil.",
+     "text": "Après garantie de prise en charge des coûts par l'assureur-maladie après consultation préalable du médecin-conseil.",
+     "limitations": 3
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.13 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Nur bis zur Progression der Krankheit.",
+   "de_text": "Nur bis zur Progression der Krankheit.",
+   "limitations": 39,
+   "rendering": "Seulement jusqu'à progression de la maladie.",
+   "text": "Seulement jusqu'à progression de la maladie.",
+   "support": 26,
+   "share": 0.667,
+   "variants": [
+    {
+     "key": "Le traitement sera remboursé jusqu'à la progression de la maladie.",
+     "text": "Le traitement sera remboursé jusqu'à la progression de la maladie.",
+     "limitations": 9
+    },
+    {
+     "key": "Uniquement jusqu'à la progression de la maladie.",
+     "text": "Uniquement jusqu'à la progression de la maladie.",
+     "limitations": 4
+    }
+   ],
+   "house": true
+  },
+  {
+   "lang": "fr",
+   "de": "Folgender Indikationscode ist zu übermitteln:",
+   "de_text": "Folgender Indikationscode ist zu übermitteln:",
+   "limitations": 35,
+   "rendering": "Le code d'indication suivant doit être transmis:",
+   "text": "Le code d'indication suivant doit être transmis :",
+   "support": 22,
+   "share": 0.629,
+   "variants": [
+    {
+     "key": "Le code de l'indication suivant doit être transmis:",
+     "text": "Le code de l'indication suivant doit être transmis:",
+     "limitations": 13
+    }
+   ],
+   "house": true
+  },
+  {
+   "lang": "fr",
+   "de": "Die Aufforderung zur Rückvergütung soll ab dem Zeitpunkt der Verabreichung erfolgen.",
+   "de_text": "Die Aufforderung zur Rückvergütung soll ab dem Zeitpunkt der Verabreichung erfolgen.",
+   "limitations": 32,
+   "rendering": "La demande de remboursement doit être faite à partir du moment de l'administration.",
+   "text": "La demande de remboursement doit être faite à partir du moment de l'administration.",
+   "support": 14,
+   "share": 0.438,
+   "variants": [
+    {
+     "key": "La demande de remboursement doit être effectuée à compter de l'administration.",
+     "text": "La demande de remboursement doit être effectuée à compter de l'administration.",
+     "limitations": 3
+    },
+    {
+     "key": "La demande de remboursement doit être effectuée à partir du moment de l'administration.",
+     "text": "La demande de remboursement doit être effectuée à partir du moment de l'administration.",
+     "limitations": 3
+    },
+    {
+     "key": "La demande de remboursement doit être faite dès de le début de l'administration du traitement.",
+     "text": "La demande de remboursement doit être faite dès de le début de l'administration du traitement.",
+     "limitations": 3
+    },
+    {
+     "key": "La demande de remboursement doit être effectuée à partir du début de l'administration.",
+     "text": "La demande de remboursement doit être effectuée à partir du début de l'administration.",
+     "limitations": 2
+    },
+    {
+     "key": "La demande de remboursement doit être présentée à compter de la date d'administration.",
+     "text": "La demande de remboursement doit être présentée à compter de la date d'administration.",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.44 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Bei Erwachsenen ab # bis und mit # Jahren wird eine Behandlung mit Statinen vergütet im Rahmen der Sekundärprävention kardiovaskulärer Ereignisse sowie im Rahmen der Primärprävention bei Personen mit hohem oder sehr hohem Risiko nach AGLA-Risikokategorie sowie bei Personen mit einem Risiko von über #% nach AGLA-Risikokategorie.",
+   "de_text": "Bei Erwachsenen ab … bis und mit … Jahren wird eine Behandlung mit Statinen vergütet im Rahmen der Sekundärprävention kardiovaskulärer Ereignisse sowie im Rahmen der Primärprävention bei Personen mit hohem oder sehr hohem Risiko nach AGLA-Risikokategorie sowie bei Personen mit einem Risiko von über …% nach AGLA-Risikokategorie.",
+   "limitations": 29,
+   "rendering": "Chez les adultes de # à # ans, le traitement par statines est remboursé en prévention secondaire d'événements cardiovasculaires ainsi qu'en prévention primaire chez les personnes à risque élevé ou très élevé, selon la catégorie de risque du GSLA, et chez les personnes présentant un risque supérieur à #% selon la catégorie de risque du GSLA.",
+   "text": "Chez les adultes de … à … ans, le traitement par statines est remboursé en prévention secondaire d'événements cardiovasculaires ainsi qu'en prévention primaire chez les personnes à risque élevé ou très élevé, selon la catégorie de risque du GSLA, et chez les personnes présentant un risque supérieur à …% selon la catégorie de risque du GSLA.",
+   "support": 28,
+   "share": 0.966,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "fr",
+   "de": "Bei Personen über # Jahren wird eine neu beginnende Statin-Therapie nur vergütet im Rahmen der Sekundärprävention kardiovaskulärer Ereignisse sowie im Rahmen der Primärprävention bei Personen mit hohem oder sehr hohem Risiko nach AGLA-Risikokategorie.",
+   "de_text": "Bei Personen über … Jahren wird eine neu beginnende Statin-Therapie nur vergütet im Rahmen der Sekundärprävention kardiovaskulärer Ereignisse sowie im Rahmen der Primärprävention bei Personen mit hohem oder sehr hohem Risiko nach AGLA-Risikokategorie.",
+   "limitations": 29,
+   "rendering": "Un traitement par statine initié chez les personnes de plus de # ans, est remboursé uniquement en prévention secondaire d'événements cardiovasculaires et en prévention primaire chez les personnes présentant un risque élevé ou très élevé selon la catégorie de risque du GSLA.",
+   "text": "Un traitement par statine initié chez les personnes de plus de … ans, est remboursé uniquement en prévention secondaire d'événements cardiovasculaires et en prévention primaire chez les personnes présentant un risque élevé ou très élevé selon la catégorie de risque du GSLA.",
+   "support": 29,
+   "share": 1.0,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "fr",
+   "de": "Eine entsprechend bis und mit # Jahren gestartete Statin-Therapie wird auch nach Vollendung des #. Lebensjahres weiter vergütet.",
+   "de_text": "Eine entsprechend bis und mit … Jahren gestartete Statin-Therapie wird auch nach Vollendung des …. Lebensjahres weiter vergütet.",
+   "limitations": 29,
+   "rendering": "Un traitement par statine continue d'être remboursé après l'âge de # ans révolus s'il a été débuté jusqu'à l'âge de # ans (inclus).",
+   "text": "Un traitement par statine continue d'être remboursé après l'âge de … ans révolus s'il a été débuté jusqu'à l'âge de … ans (inclus).",
+   "support": 29,
+   "share": 1.0,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "fr",
+   "de": "Sie gibt dem Krankenversicherer die Höhe der Rückerstattung bekannt.",
+   "de_text": "Sie gibt dem Krankenversicherer die Höhe der Rückerstattung bekannt.",
+   "limitations": 26,
+   "rendering": "Il indique à l'assureur-maladie la hauteur du remboursement.",
+   "text": "Il indique à l'assureur-maladie la hauteur du remboursement.",
+   "support": 5,
+   "share": 0.192,
+   "variants": [
+    {
+     "key": "L'assureur est alors informé du montant du remboursement.",
+     "text": "L'assureur est alors informé du montant du remboursement.",
+     "limitations": 4
+    },
+    {
+     "key": "Elle communique le montant du remboursement à l'assureur-maladie.",
+     "text": "Elle communique le montant du remboursement à l'assureur-maladie.",
+     "limitations": 3
+    },
+    {
+     "key": "Elle informe l'assureur-maladie du montant du remboursement.",
+     "text": "Elle informe l'assureur-maladie du montant du remboursement.",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.19 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Falls nach # Wochen kein therapeutischer Erfolg eingetreten ist, ist die Behandlung abzubrechen.",
+   "de_text": "Falls nach … Wochen kein therapeutischer Erfolg eingetreten ist, ist die Behandlung abzubrechen.",
+   "limitations": 23,
+   "rendering": "En l'absence de succès thérapeutique après # semaines, le traitement doit être interrompu.",
+   "text": "En l'absence de succès thérapeutique après … semaines, le traitement doit être interrompu.",
+   "support": 13,
+   "share": 0.565,
+   "variants": [
+    {
+     "key": "Si aucun résultat thérapeutique n'est obtenu après # semaines, le traitement doit être interrompu.",
+     "text": "Si aucun résultat thérapeutique n'est obtenu après … semaines, le traitement doit être interrompu.",
+     "limitations": 4
+    },
+    {
+     "key": "En l'absence de succès thérapeutique au bout de # semaines, il faut arrêter le traitement.",
+     "text": "En l'absence de succès thérapeutique au bout de … semaines, il faut arrêter le traitement.",
+     "limitations": 3
+    }
+   ],
+   "house": true
+  },
+  {
+   "lang": "fr",
+   "de": "Nach Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation des Vertrauensarztes.",
+   "de_text": "Nach Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation des Vertrauensarztes.",
+   "limitations": 20,
+   "rendering": "À la suite de la garantie de prise en charge par l'assureur maladie après consultation préalable du médecin-conseil.",
+   "text": "À la suite de la garantie de prise en charge par l'assureur maladie après consultation préalable du médecin-conseil.",
+   "support": 3,
+   "share": 0.15,
+   "variants": [
+    {
+     "key": "Après accord de prise en charge des frais par l'assureur-maladie, après consultation préalable du médecin-conseil.",
+     "text": "Après accord de prise en charge des frais par l'assureur-maladie, après consultation préalable du médecin-conseil.",
+     "limitations": 2
+    },
+    {
+     "key": "Après garantie de prise en charge des coûts par l'assureur-maladie après consultation préalable du médecin-conseil.",
+     "text": "Après garantie de prise en charge des coûts par l'assureur-maladie après consultation préalable du médecin-conseil.",
+     "limitations": 2
+    },
+    {
+     "key": "Après la garantie de prise en charge des frais par l'assureur-maladie après consultation du médecin-conseil.",
+     "text": "Après la garantie de prise en charge des frais par l'assureur-maladie après consultation du médecin-conseil.",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.15 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Die Gesamtmenge der Packung darf nicht direkt an eine versicherte Person abgegeben werden.",
+   "de_text": "Die Gesamtmenge der Packung darf nicht direkt an eine versicherte Person abgegeben werden.",
+   "limitations": 18,
+   "rendering": "La quantité totale de l'emballage ne peut pas être remise directement à un assuré.",
+   "text": "La quantité totale de l'emballage ne peut pas être remise directement à un assuré.",
+   "support": 17,
+   "share": 0.944,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "fr",
+   "de": "Klinisch stabile Patienten mit initialem Befund einer Progression können bis zur Bestätigung der Progression der Erkrankung weiter behandelt werden.",
+   "de_text": "Klinisch stabile Patienten mit initialem Befund einer Progression können bis zur Bestätigung der Progression der Erkrankung weiter behandelt werden.",
+   "limitations": 17,
+   "rendering": "Les patients cliniquement stables après la découverte initiale d'une progression peuvent continuer à être traités jusqu'à la confirmation de la progression de la maladie.",
+   "text": "Les patients cliniquement stables après la découverte initiale d'une progression peuvent continuer à être traités jusqu'à la confirmation de la progression de la maladie.",
+   "support": 10,
+   "share": 0.588,
+   "variants": [
+    {
+     "key": "Chez les patients cliniquement stables dont la maladie était initialement en progression, le traitement peut être poursuivi jusqu'à confirmation de la progression de la maladie.",
+     "text": "Chez les patients cliniquement stables dont la maladie était initialement en progression, le traitement peut être poursuivi jusqu'à confirmation de la progression de la maladie.",
+     "limitations": 3
+    }
+   ],
+   "house": true
+  },
+  {
+   "lang": "fr",
+   "de": "Die Aufforderung zur Rückvergütung soll in der Regel innerhalb von # Monaten nach Verabreichung erfolgen.",
+   "de_text": "Die Aufforderung zur Rückvergütung soll in der Regel innerhalb von … Monaten nach Verabreichung erfolgen.",
+   "limitations": 16,
+   "rendering": "La demande de remboursement doit intervenir en règle générale dans les # mois qui suivent l'administration.",
+   "text": "La demande de remboursement doit intervenir en règle générale dans les … mois qui suivent l'administration.",
+   "support": 15,
+   "share": 0.938,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "fr",
+   "de": "Der Preis für die verabreichte Teilpackung ist proportional zum Publikumspreis der verwendeten Packung zu berechnen.",
+   "de_text": "Der Preis für die verabreichte Teilpackung ist proportional zum Publikumspreis der verwendeten Packung zu berechnen.",
+   "limitations": 15,
+   "rendering": "Le prix de l'emballage individuel remis est calculé proportionnellement au prix public de l'emballage utilisé.",
+   "text": "Le prix de l'emballage individuel remis est calculé proportionnellement au prix public de l'emballage utilisé.",
+   "support": 15,
+   "share": 1.0,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "fr",
+   "de": "Die Zulassungsinhaberin gibt dem Krankenversicherer die Höhe der Rückerstattung bekannt.",
+   "de_text": "Die Zulassungsinhaberin gibt dem Krankenversicherer die Höhe der Rückerstattung bekannt.",
+   "limitations": 15,
+   "rendering": "Le titulaire de l'autorisation communique le montant du remboursement à l'assurance-maladie.",
+   "text": "Le titulaire de l'autorisation communique le montant du remboursement à l'assurance-maladie.",
+   "support": 6,
+   "share": 0.4,
+   "variants": [
+    {
+     "key": "La titulaire de l'autorisation communiquera à l'assureur-maladie le montant du remboursement.",
+     "text": "La titulaire de l'autorisation communiquera à l'assureur-maladie le montant du remboursement.",
+     "limitations": 3
+    },
+    {
+     "key": "Le titulaire de l'autorisation informe l'assureur-maladie du montant du remboursement.",
+     "text": "Le titulaire de l'autorisation informe l'assureur-maladie du montant du remboursement.",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.40 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Die Mehrwertsteuer kann nicht zusätzlich zu diesem Betrag zurückgefordert werden.",
+   "de_text": "Die Mehrwertsteuer kann nicht zusätzlich zu diesem Betrag zurückgefordert werden.",
+   "limitations": 14,
+   "rendering": "La taxe sur la valeur ajoutée ne peut pas être exigée en sus de ce montant.",
+   "text": "La taxe sur la valeur ajoutée ne peut pas être exigée en sus de ce montant.",
+   "support": 12,
+   "share": 0.857,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "fr",
+   "de": "Eine Kostengutsprache hat den entsprechenden Indikationscode (#.XX) zu enthalten.",
+   "de_text": "Eine Kostengutsprache hat den entsprechenden Indikationscode (….XX) zu enthalten.",
+   "limitations": 14,
+   "rendering": "Une garantie de prise en charge doit contenir le code correspondant à l'indication (#.XX).",
+   "text": "Une garantie de prise en charge doit contenir le code correspondant à l'indication (….XX).",
+   "support": 8,
+   "share": 0.571,
+   "variants": [
+    {
+     "key": "L'accord de prise en charge doit contenir le code correspondant à l'indication (#.XX).",
+     "text": "L'accord de prise en charge doit contenir le code correspondant à l'indication (….XX).",
+     "limitations": 2
+    },
+    {
+     "key": "Un accord de prise en charge doit contenir le code correspondant d'indication (#.XX).",
+     "text": "Un accord de prise en charge doit contenir le code correspondant d'indication (….XX).",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.57 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Die Mehrwertsteuer kann nicht zusätzlich zurückgefordert werden.",
+   "de_text": "Die Mehrwertsteuer kann nicht zusätzlich zurückgefordert werden.",
+   "limitations": 13,
+   "rendering": "La taxe sur la valeur ajoutée ne peut pas être remboursée en plus de ce montant.",
+   "text": "La taxe sur la valeur ajoutée ne peut pas être remboursée en plus de ce montant.",
+   "support": 6,
+   "share": 0.462,
+   "variants": [
+    {
+     "key": "La taxe sur la valeur ajoutée ne peut pas être remboursée en sus.",
+     "text": "La taxe sur la valeur ajoutée ne peut pas être remboursée en sus.",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.46 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Abwicklung der Rückvergütung: a.) Der Leistungserbringer holt beim Krankenversicherer eine Kostengutsprache nach vorheriger Konsultation des Vertrauensarztes ein. Dem Vertrauensarzt werden Diagnose, Gewicht des Patienten und die Dosierung bekanntgegeben. b.) Der Krankenversicherer bestätigt dem Leistungserbringer die Kostengutsprache. c.) Der Leistungserbringer stellt dem Krankversicherer die Rechnungen während der ganzen Therapiedauer über die vollen Medikamentenkosten. d.) Der Krankenversicherer bezahlt dem Leistungserbringer den vollen Rechnungsbetrag.",
+   "de_text": "Abwicklung der Rückvergütung: a.) Der Leistungserbringer holt beim Krankenversicherer eine Kostengutsprache nach vorheriger Konsultation des Vertrauensarztes ein. Dem Vertrauensarzt werden Diagnose, Gewicht des Patienten und die Dosierung bekanntgegeben. b.) Der Krankenversicherer bestätigt dem Leistungserbringer die Kostengutsprache. c.) Der Leistungserbringer stellt dem Krankversicherer die Rechnungen während der ganzen Therapiedauer über die vollen Medikamentenkosten. d.) Der Krankenversicherer bezahlt dem Leistungserbringer den vollen Rechnungsbetrag.",
+   "limitations": 12,
+   "rendering": "Déroulement du remboursement: a.) Le fournisseur de prestations demande la prise en charge des coûts auprès de l'assureur-maladie après consultation du médecin-conseil à qui on communique le diagnostic, le poids du patient et la posologie. b.) L'assureur-maladie confirme la prise en charge des coûts au fournisseur de prestations. c.) Pendant toute la durée du traitement, le fournisseur de prestations facture l'intégralité des coûts liés au médicament à l'assureur-maladie. d.) L'assureur-maladie règle l'intégralité du montant facturé au fournisseur de prestations.",
+   "text": "Déroulement du remboursement: a.) Le fournisseur de prestations demande la prise en charge des coûts auprès de l'assureur-maladie après consultation du médecin-conseil à qui on communique le diagnostic, le poids du patient et la posologie. b.) L'assureur-maladie confirme la prise en charge des coûts au fournisseur de prestations. c.) Pendant toute la durée du traitement, le fournisseur de prestations facture l'intégralité des coûts liés au médicament à l'assureur-maladie. d.) L'assureur-maladie règle l'intégralité du montant facturé au fournisseur de prestations.",
+   "support": 6,
+   "share": 0.5,
+   "variants": [
+    {
+     "key": "Déroulement du remboursement: a.) Le fournisseur de prestations demande la prise en charge des coûts auprès de l'assureur-maladie après consultation du médecin-conseil à qui on communique le diagnostic, le poids du patient et la posologie. b.) L'assureur-maladie confirme la prise en charge des frais au fournisseur de prestations. c.) Pendant toute la durée du traitement, le fournisseur de prestations facture l'intégralité des coûts liés au médicament à l'assureur-maladie. d.) L'assureur-maladie règle l'intégralité du montant facturé au fournisseur de prestations.",
+     "text": "Déroulement du remboursement: a.) Le fournisseur de prestations demande la prise en charge des coûts auprès de l'assureur-maladie après consultation du médecin-conseil à qui on communique le diagnostic, le poids du patient et la posologie. b.) L'assureur-maladie confirme la prise en charge des frais au fournisseur de prestations. c.) Pendant toute la durée du traitement, le fournisseur de prestations facture l'intégralité des coûts liés au médicament à l'assureur-maladie. d.) L'assureur-maladie règle l'intégralité du montant facturé au fournisseur de prestations.",
+     "limitations": 6
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.50 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Der Krankenversicherer erhebt eine allfällige Kostenbeteiligung einzig auf dem Betrag nach Rückvergütung.",
+   "de_text": "Der Krankenversicherer erhebt eine allfällige Kostenbeteiligung einzig auf dem Betrag nach Rückvergütung.",
+   "limitations": 12,
+   "rendering": "L'assureur-maladie prélève une éventuelle participation aux coûts uniquement sur le montant après remboursement.",
+   "text": "L'assureur-maladie prélève une éventuelle participation aux coûts uniquement sur le montant après remboursement.",
+   "support": 12,
+   "share": 1.0,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "fr",
+   "de": "Im tiers garant vergütet der Krankenversicherer dem Versicherten dementsprechend die vollen Medikamentenkosten.",
+   "de_text": "Im tiers garant vergütet der Krankenversicherer dem Versicherten dementsprechend die vollen Medikamentenkosten.",
+   "limitations": 12,
+   "rendering": "Dans le cadre du système «tiers garant», l'assureur-maladie rembourse à l'assuré l'intégralité des coûts liés au médicament.",
+   "text": "Dans le cadre du système «tiers garant», l'assureur-maladie rembourse à l'assuré l'intégralité des coûts liés au médicament.",
+   "support": 12,
+   "share": 1.0,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "fr",
+   "de": "Nach zwei Jahren ununterbrochener Therapie bedarf die Behandlung einer erneuten Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation des Vertrauensarztes.",
+   "de_text": "Nach zwei Jahren ununterbrochener Therapie bedarf die Behandlung einer erneuten Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation des Vertrauensarztes.",
+   "limitations": 12,
+   "rendering": "Prise en charge par l'assurance maladie après consultation préalable du médecin conseil et renouvellement de la prise en charge après deux ans de traitement ininterrompu.",
+   "text": "Prise en charge par l'assurance maladie après consultation préalable du médecin conseil et renouvellement de la prise en charge après deux ans de traitement ininterrompu.",
+   "support": 11,
+   "share": 0.917,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "fr",
+   "de": "Der Preis für die verabreichte Teilmenge ist proportional zum Publikumspreis der verwendeten Packung zu berechnen.",
+   "de_text": "Der Preis für die verabreichte Teilmenge ist proportional zum Publikumspreis der verwendeten Packung zu berechnen.",
+   "limitations": 11,
+   "rendering": "Le prix de la quantité administrée est calculé proportionnellement au prix public de l'emballage utilisé.",
+   "text": "Le prix de la quantité administrée est calculé proportionnellement au prix public de l'emballage utilisé.",
+   "support": 2,
+   "share": 0.182,
+   "variants": [
+    {
+     "key": "Le prix de la quantité partielle est calculé proportionnellement au prix public de l'emballage utilisé.",
+     "text": "Le prix de la quantité partielle est calculé proportionnellement au prix public de l'emballage utilisé.",
+     "limitations": 2
+    },
+    {
+     "key": "Le prix de la quantité partielle individuelle remise est calculé proportionnellement au prix public de l'emballage utilisé.",
+     "text": "Le prix de la quantité partielle individuelle remise est calculé proportionnellement au prix public de l'emballage utilisé.",
+     "limitations": 2
+    },
+    {
+     "key": "Le prix de la quantité partielle remise est calculé proportionnellement au prix public de l'emballage utilisé.",
+     "text": "Le prix de la quantité partielle remise est calculé proportionnellement au prix public de l'emballage utilisé.",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.18 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Die Mehrwertsteuer kann nicht zusätzlich zu den Rückvergütungsbeträgen zurückgefordert werden.",
+   "de_text": "Die Mehrwertsteuer kann nicht zusätzlich zu den Rückvergütungsbeträgen zurückgefordert werden.",
+   "limitations": 11,
+   "rendering": "La TVA ne peut pas être exigée en plus des montants remboursés.",
+   "text": "La TVA ne peut pas être exigée en plus des montants remboursés.",
+   "support": 2,
+   "share": 0.182,
+   "variants": [
+    {
+     "key": "La TVA ne peut pas être récupérée en plus des montants remboursés.",
+     "text": "La TVA ne peut pas être récupérée en plus des montants remboursés.",
+     "limitations": 2
+    },
+    {
+     "key": "La taxe sur la valeur ajoutée ne peut pas être réclamée en plus des montants de remboursement.",
+     "text": "La taxe sur la valeur ajoutée ne peut pas être réclamée en plus des montants de remboursement.",
+     "limitations": 2
+    },
+    {
+     "key": "La taxe sur la valeur ajoutée ne peut pas être récupérée en plus des montants de remboursement.",
+     "text": "La taxe sur la valeur ajoutée ne peut pas être récupérée en plus des montants de remboursement.",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.18 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Die Verschreibung kann nur durch Fachärzte der Dermatologie oder dermatologische Universitätskliniken/Polikliniken erfolgen.",
+   "de_text": "Die Verschreibung kann nur durch Fachärzte der Dermatologie oder dermatologische Universitätskliniken/Polikliniken erfolgen.",
+   "limitations": 11,
+   "rendering": "La prescription ne peut être rédigée que par des dermatologues ou des hôpitaux universitaires/policliniques spécialisé(e)s en dermatologie.",
+   "text": "La prescription ne peut être rédigée que par des dermatologues ou des hôpitaux universitaires/policliniques spécialisé(e)s en dermatologie.",
+   "support": 4,
+   "share": 0.364,
+   "variants": [
+    {
+     "key": "Seuls des spécialistes en dermatologie ou des hôpitaux universitaires/policliniques dermatologiques sont habilités à prescrire ce médicament.",
+     "text": "Seuls des spécialistes en dermatologie ou des hôpitaux universitaires/policliniques dermatologiques sont habilités à prescrire ce médicament.",
+     "limitations": 4
+    },
+    {
+     "key": "La prescription médicale ne peut être délivrée que par des médecins spécialisés en dermatologie ou appartenant aux hôpitaux universitaires/policliniques spécialisés en dermatologie.",
+     "text": "La prescription médicale ne peut être délivrée que par des médecins spécialisés en dermatologie ou appartenant aux hôpitaux universitaires/policliniques spécialisés en dermatologie.",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.36 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Es wird lediglich die abgegebene Teilpackung, die zur Therapie notwendig ist, vergütet.",
+   "de_text": "Es wird lediglich die abgegebene Teilpackung, die zur Therapie notwendig ist, vergütet.",
+   "limitations": 11,
+   "rendering": "Seule l'emballage individuel nécessaire pour la thérapie est remboursé.",
+   "text": "Seule l'emballage individuel nécessaire pour la thérapie est remboursé.",
+   "support": 9,
+   "share": 0.818,
+   "variants": [],
+   "house": false,
+   "note": "no dominant rendering (share 0.82 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Für alle vergütungspflichtigen Indikationen gilt:",
+   "de_text": "Für alle vergütungspflichtigen Indikationen gilt:",
+   "limitations": 11,
+   "rendering": "Valable pour toutes les indications remboursées:",
+   "text": "Valable pour toutes les indications remboursées:",
+   "support": 5,
+   "share": 0.455,
+   "variants": [
+    {
+     "key": "Ceci s'applique à toutes les indications prises en charge:",
+     "text": "Ceci s'applique à toutes les indications prises en charge:",
+     "limitations": 2
+    },
+    {
+     "key": "Valable pour toutes les indications remboursables:",
+     "text": "Valable pour toutes les indications remboursables :",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.46 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Nur nach vorgängiger Kostengutsprache durch den Krankenversicherer nach vorheriger Konsultation des Vertrauensarztes.",
+   "de_text": "Nur nach vorgängiger Kostengutsprache durch den Krankenversicherer nach vorheriger Konsultation des Vertrauensarztes.",
+   "limitations": 11,
+   "rendering": "Uniquement après accord préalable sur la prise en charge des frais par l'assureur-maladie après consultation du médecin-conseil.",
+   "text": "Uniquement après accord préalable sur la prise en charge des frais par l'assureur-maladie après consultation du médecin-conseil.",
+   "support": 6,
+   "share": 0.545,
+   "variants": [],
+   "house": false,
+   "note": "no dominant rendering (share 0.55 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Bei Patienten, die nach # Wochen kein Ansprechen nach HiSCR von mindestens #% zeigen, ist die Behandlung abzubrechen.",
+   "de_text": "Bei Patienten, die nach … Wochen kein Ansprechen nach HiSCR von mindestens …% zeigen, ist die Behandlung abzubrechen.",
+   "limitations": 10,
+   "rendering": "Le traitement doit être abandonné chez les patients qui n'atteignent pas une réponse HiSCR d'au moins # % après # semaines.",
+   "text": "Le traitement doit être abandonné chez les patients qui n'atteignent pas une réponse HiSCR d'au moins … % après … semaines.",
+   "support": 9,
+   "share": 0.9,
+   "variants": [],
+   "house": false,
+   "note": "no dominant rendering (share 0.90 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Eine Kostengutsprache hat den entsprechenden Indikationscode (#) zu enthalten.",
+   "de_text": "Eine Kostengutsprache hat den entsprechenden Indikationscode (…) zu enthalten.",
+   "limitations": 10,
+   "rendering": "Une garantie de prise en charge des frais doit contenir le code d'indication correspondant (#).",
+   "text": "Une garantie de prise en charge des frais doit contenir le code d'indication correspondant (…).",
+   "support": 9,
+   "share": 0.9,
+   "variants": [],
+   "house": false,
+   "note": "no dominant rendering (share 0.90 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Falls nach #-wöchiger Behandlung kein therapeutischer Erfolg eingetreten ist, ist die Behandlung abzubrechen.",
+   "de_text": "Falls nach …-wöchiger Behandlung kein therapeutischer Erfolg eingetreten ist, ist die Behandlung abzubrechen.",
+   "limitations": 10,
+   "rendering": "Le traitement doit être interrompu si aucun succès thérapeutique n'est obtenu après # semaines de traitement.",
+   "text": "Le traitement doit être interrompu si aucun succès thérapeutique n'est obtenu après … semaines de traitement.",
+   "support": 5,
+   "share": 0.5,
+   "variants": [
+    {
+     "key": "Si aucun résultat thérapeutique n'est obtenu après # semaines de traitement, celui-ci doit être interrompu.",
+     "text": "Si aucun résultat thérapeutique n'est obtenu après … semaines de traitement, celui-ci doit être interrompu.",
+     "limitations": 3
+    },
+    {
+     "key": "Le traitment doit être interrompu si aucun succès thérapeutique n'est obtenu après # semaines de traitement.",
+     "text": "Le traitment doit être interrompu si aucun succès thérapeutique n'est obtenu après … semaines de traitement.",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.50 not above 0.5)"
+  },
+  {
+   "lang": "fr",
+   "de": "Nach # Wochen ununterbrochener Therapie bedarf die Behandlung einer erneuten Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation des Vertrauensarztes.",
+   "de_text": "Nach … Wochen ununterbrochener Therapie bedarf die Behandlung einer erneuten Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation des Vertrauensarztes.",
+   "limitations": 10,
+   "rendering": "Renouvellement de la garantie de prise en charge des coûts par l'assurance maladie après consultation préalable du médecin-conseil après # semaines de traitement ininterrompu.",
+   "text": "Renouvellement de la garantie de prise en charge des coûts par l'assurance maladie après consultation préalable du médecin-conseil après … semaines de traitement ininterrompu.",
+   "support": 9,
+   "share": 0.9,
+   "variants": [],
+   "house": false,
+   "note": "no dominant rendering (share 0.90 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Folgender Code ist an den Krankenversicherer zu übermitteln:",
+   "de_text": "Folgender Code ist an den Krankenversicherer zu übermitteln:",
+   "limitations": 202,
+   "rendering": "All'assicuratore malattie deve essere inviato il seguente codice:",
+   "text": "All'assicuratore malattie deve essere inviato il seguente codice:",
+   "support": 49,
+   "share": 0.243,
+   "variants": [
+    {
+     "key": "Il seguente codice deve essere trasmesso all'assicurazione malattia:",
+     "text": "Il seguente codice deve essere trasmesso all'assicurazione malattia:",
+     "limitations": 35
+    },
+    {
+     "key": "Il seguente codice deve essere trasmesso all'assicuratore malattie:",
+     "text": "Il seguente codice deve essere trasmesso all'assicuratore malattie:",
+     "limitations": 28
+    },
+    {
+     "key": "Il codice da comunicare all'assicurazione malattia è il seguente:",
+     "text": "Il codice da comunicare all'assicurazione malattia è il seguente:",
+     "limitations": 17
+    },
+    {
+     "key": "Il seguente codice deve essere trasmesso alla cassa malati:",
+     "text": "Il seguente codice deve essere trasmesso alla cassa malati:",
+     "limitations": 17
+    },
+    {
+     "key": "Il seguente codice deve essere inviato all'assicuratore:",
+     "text": "Il seguente codice deve essere inviato all'assicuratore:",
+     "limitations": 8
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.24 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Die Mehrwertsteuer kann nicht zusätzlich zu diesem Anteil des Fabrikabgabepreises zurückgefordert werden.",
+   "de_text": "Die Mehrwertsteuer kann nicht zusätzlich zu diesem Anteil des Fabrikabgabepreises zurückgefordert werden.",
+   "limitations": 141,
+   "rendering": "Non è possibile richiedere il rimborso dell'IVA oltre a questa quota del prezzo di fabbrica.",
+   "text": "Non è possibile richiedere il rimborso dell'IVA oltre a questa quota del prezzo di fabbrica.",
+   "support": 21,
+   "share": 0.149,
+   "variants": [
+    {
+     "key": "Non è possibile richiedere, oltre a tale quota del prezzo di fabbrica, la restituzione dell'imposta sul valore aggiunto.",
+     "text": "Non è possibile richiedere, oltre a tale quota del prezzo di fabbrica, la restituzione dell'imposta sul valore aggiunto.",
+     "limitations": 10
+    },
+    {
+     "key": "L'IVA non può essere recuperata in aggiunta alla percentuale del prezzo di fabbrica.",
+     "text": "L'IVA non può essere recuperata in aggiunta alla percentuale del prezzo di fabbrica.",
+     "limitations": 9
+    },
+    {
+     "key": "Non si può applicare l'IVA in aggiunta a questo importo.",
+     "text": "Non si può applicare l'IVA in aggiunta a questo importo.",
+     "limitations": 8
+    },
+    {
+     "key": "Non è possibile richiedere il rimborso dell'IVA in aggiunta a questa percentuale del prezzo di fabbrica.",
+     "text": "Non è possibile richiedere il rimborso dell'IVA in aggiunta a questa percentuale del prezzo di fabbrica.",
+     "limitations": 7
+    },
+    {
+     "key": "L'IVA non può essere richiesta in aggiunta a questa percentuale del prezzo franco fabbrica.",
+     "text": "L'IVA non può essere richiesta in aggiunta a questa percentuale del prezzo franco fabbrica.",
+     "limitations": 5
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.15 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Folgender Indikationscode ist an den Krankenversicherer zu übermitteln:",
+   "de_text": "Folgender Indikationscode ist an den Krankenversicherer zu übermitteln:",
+   "limitations": 131,
+   "rendering": "Il seguente codice d'indicazione deve essere comunicato all'assicurazione malattia:",
+   "text": "Il seguente codice d'indicazione deve essere comunicato all'assicurazione malattia:",
+   "support": 70,
+   "share": 0.534,
+   "variants": [
+    {
+     "key": "All'assicuratore malattie deve essere inviato il seguente codice:",
+     "text": "All'assicuratore malattie deve essere inviato il seguente codice:",
+     "limitations": 15
+    },
+    {
+     "key": "Il seguente codice deve essere trasmesso all'assicuratore malattie:",
+     "text": "Il seguente codice deve essere trasmesso all'assicuratore malattie:",
+     "limitations": 8
+    },
+    {
+     "key": "Il codice d'indicazione da comunicare all'assicurazione malattia è il seguente:",
+     "text": "Il codice d'indicazione da comunicare all'assicurazione malattia è il seguente:",
+     "limitations": 6
+    },
+    {
+     "key": "Il seguente codice di indicazione deve essere trasmesso:",
+     "text": "Il seguente codice di indicazione deve essere trasmesso:",
+     "limitations": 6
+    },
+    {
+     "key": "All'assicuratore deve essere comunicato il seguente codice dell'indicazione:",
+     "text": "All'assicuratore deve essere comunicato il seguente codice dell'indicazione:",
+     "limitations": 4
+    }
+   ],
+   "house": true
+  },
+  {
+   "lang": "it",
+   "de": "Die Aufforderung zur Rückerstattung soll ab dem Zeitpunkt der Verabreichung erfolgen.",
+   "de_text": "Die Aufforderung zur Rückerstattung soll ab dem Zeitpunkt der Verabreichung erfolgen.",
+   "limitations": 106,
+   "rendering": "La richiesta di rimborso deve essere presentata a partire dalla data di somministrazione.",
+   "text": "La richiesta di rimborso deve essere presentata a partire dalla data di somministrazione.",
+   "support": 35,
+   "share": 0.33,
+   "variants": [
+    {
+     "key": "La richiesta di rimborso deve essere effettuata a partire dal momento della somministrazione.",
+     "text": "La richiesta di rimborso deve essere effettuata a partire dal momento della somministrazione.",
+     "limitations": 25
+    },
+    {
+     "key": "La richiesta di rimborso deve essere presentata a partire dal momento della somministrazione.",
+     "text": "La richiesta di rimborso deve essere presentata a partire dal momento della somministrazione.",
+     "limitations": 12
+    },
+    {
+     "key": "La richiesta di rimborso deve avvenire a partire dal momento della somministrazione.",
+     "text": "La richiesta di rimborso deve avvenire a partire dal momento della somministrazione.",
+     "limitations": 10
+    },
+    {
+     "key": "La richiesta di rimborso deve essere effettuata dal momento della somministrazione.",
+     "text": "La richiesta di rimborso deve essere effettuata dal momento della somministrazione.",
+     "limitations": 6
+    },
+    {
+     "key": "La richiesta di rimborso deve essere presentata a partire dalla data della somministrazione.",
+     "text": "La richiesta di rimborso deve essere presentata a partire dalla data della somministrazione.",
+     "limitations": 4
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.33 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Die Behandlung bedarf der Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation des Vertrauensarztes.",
+   "de_text": "Die Behandlung bedarf der Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation des Vertrauensarztes.",
+   "limitations": 46,
+   "rendering": "Il trattamento richiede una garanzia di assunzione dei costi da parte dell'assicuratore malattie previa consultazione del medico di fiducia.",
+   "text": "Il trattamento richiede una garanzia di assunzione dei costi da parte dell'assicuratore malattie previa consultazione del medico di fiducia.",
+   "support": 6,
+   "share": 0.13,
+   "variants": [
+    {
+     "key": "Per la terapia è necessaria la garanzia di assunzione dei costi da parte dell'assicuratore malattia previa consultazione del medico di fiducia.",
+     "text": "Per la terapia è necessaria la garanzia di assunzione dei costi da parte dell'assicuratore malattia previa consultazione del medico di fiducia.",
+     "limitations": 6
+    },
+    {
+     "key": "Il trattamento richiede la garanzia di assunzione delle spese da parte della cassa malati previa consultazione del medico di fiducia.",
+     "text": "Il trattamento richiede la garanzia di assunzione delle spese da parte della cassa malati previa consultazione del medico di fiducia.",
+     "limitations": 4
+    },
+    {
+     "key": "L'assunzione dei costi avviene solo con una garanzia di assunzione dei costi da parte dell'assicuratore malattie previa consultazione del medico di fiducia.",
+     "text": "L'assunzione dei costi avviene solo con una garanzia di assunzione dei costi da parte dell'assicuratore malattie previa consultazione del medico di fiducia.",
+     "limitations": 4
+    },
+    {
+     "key": "Il trattamento richiede la garanzia di assunzione delle spese da parte dell'assicuratore dopo previa consultazione del medico di fiducia.",
+     "text": "Il trattamento richiede la garanzia di assunzione delle spese da parte dell'assicuratore dopo previa consultazione del medico di fiducia.",
+     "limitations": 3
+    },
+    {
+     "key": "Dopo accordo preventivo da parte del medico di fiducia e garanzia di assunzione dei costi da parte dell'assicurazione malattia.",
+     "text": "Dopo accordo preventivo da parte del medico di fiducia e garanzia di assunzione dei costi da parte dell'assicurazione malattia.",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.13 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Nur bis zur Progression der Krankheit.",
+   "de_text": "Nur bis zur Progression der Krankheit.",
+   "limitations": 39,
+   "rendering": "Soltanto fino alla progressione della malattia.",
+   "text": "Soltanto fino alla progressione della malattia.",
+   "support": 24,
+   "share": 0.615,
+   "variants": [
+    {
+     "key": "Solo fino alla progressione della malattia.",
+     "text": "Solo fino alla progressione della malattia.",
+     "limitations": 13
+    },
+    {
+     "key": "Solo fino a progressione della malattia.",
+     "text": "Solo fino a progressione della malattia.",
+     "limitations": 2
+    }
+   ],
+   "house": true
+  },
+  {
+   "lang": "it",
+   "de": "Folgender Indikationscode ist zu übermitteln:",
+   "de_text": "Folgender Indikationscode ist zu übermitteln:",
+   "limitations": 35,
+   "rendering": "Il seguente codice di indicazione deve essere trasmesso:",
+   "text": "Il seguente codice di indicazione deve essere trasmesso:",
+   "support": 22,
+   "share": 0.629,
+   "variants": [
+    {
+     "key": "Deve essere trasmesso il seguente codice di indicazione:",
+     "text": "Deve essere trasmesso il seguente codice di indicazione:",
+     "limitations": 13
+    }
+   ],
+   "house": true
+  },
+  {
+   "lang": "it",
+   "de": "Die Aufforderung zur Rückvergütung soll ab dem Zeitpunkt der Verabreichung erfolgen.",
+   "de_text": "Die Aufforderung zur Rückvergütung soll ab dem Zeitpunkt der Verabreichung erfolgen.",
+   "limitations": 32,
+   "rendering": "La richiesta di rimborso deve essere presentata a partire dal momento della somministrazione.",
+   "text": "La richiesta di rimborso deve essere presentata a partire dal momento della somministrazione.",
+   "support": 13,
+   "share": 0.406,
+   "variants": [
+    {
+     "key": "La richiesta di rimborso deve essere effettuata a partire dal momento della somministrazione.",
+     "text": "La richiesta di rimborso deve essere effettuata a partire dal momento della somministrazione.",
+     "limitations": 6
+    },
+    {
+     "key": "La richiesta di rimborso deve essere presentata a partire dal momento dell'amministrazione.",
+     "text": "La richiesta di rimborso deve essere presentata a partire dal momento dell'amministrazione.",
+     "limitations": 3
+    },
+    {
+     "key": "La richiesta di rimborso dovrà essere presentata a partire dal momento della somministrazione.",
+     "text": "La richiesta di rimborso dovrà essere presentata a partire dal momento della somministrazione.",
+     "limitations": 3
+    },
+    {
+     "key": "La domanda di rimborso deve essere presentata a partire dalla data di amministrazione.",
+     "text": "La domanda di rimborso deve essere presentata a partire dalla data di amministrazione.",
+     "limitations": 2
+    },
+    {
+     "key": "La richiesta di rimborso va fatta a partire dal momento della somministrazione.",
+     "text": "La richiesta di rimborso va fatta a partire dal momento della somministrazione.",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.41 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Bei Erwachsenen ab # bis und mit # Jahren wird eine Behandlung mit Statinen vergütet im Rahmen der Sekundärprävention kardiovaskulärer Ereignisse sowie im Rahmen der Primärprävention bei Personen mit hohem oder sehr hohem Risiko nach AGLA-Risikokategorie sowie bei Personen mit einem Risiko von über #% nach AGLA-Risikokategorie.",
+   "de_text": "Bei Erwachsenen ab … bis und mit … Jahren wird eine Behandlung mit Statinen vergütet im Rahmen der Sekundärprävention kardiovaskulärer Ereignisse sowie im Rahmen der Primärprävention bei Personen mit hohem oder sehr hohem Risiko nach AGLA-Risikokategorie sowie bei Personen mit einem Risiko von über …% nach AGLA-Risikokategorie.",
+   "limitations": 29,
+   "rendering": "Per gli adulti di età compresa tra i # e i # anni, il trattamento con statine viene rimborsato nell'ambito della prevenzione secondaria di eventi cardiovascolari e della prevenzione primaria in persone a rischio elevato o molto elevato secondo la categoria di rischio del GSLA e in quelle con un rischio superiore all'# % secondo la categoria di rischio del GSLA.",
+   "text": "Per gli adulti di età compresa tra i … e i … anni, il trattamento con statine viene rimborsato nell'ambito della prevenzione secondaria di eventi cardiovascolari e della prevenzione primaria in persone a rischio elevato o molto elevato secondo la categoria di rischio del GSLA e in quelle con un rischio superiore all'… % secondo la categoria di rischio del GSLA.",
+   "support": 29,
+   "share": 1.0,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "it",
+   "de": "Eine entsprechend bis und mit # Jahren gestartete Statin-Therapie wird auch nach Vollendung des #.",
+   "de_text": "Eine entsprechend bis und mit … Jahren gestartete Statin-Therapie wird auch nach Vollendung des ….",
+   "limitations": 29,
+   "rendering": "Una terapia con statine iniziata entro i # anni continuerà a essere rimborsata anche dopo aver superato questa età.",
+   "text": "Una terapia con statine iniziata entro i … anni continuerà a essere rimborsata anche dopo aver superato questa età.",
+   "support": 29,
+   "share": 1.0,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "it",
+   "de": "Lebensjahres weiter vergütet. Bei Personen über # Jahren wird eine neu beginnende Statin-Therapie nur vergütet im Rahmen der Sekundärprävention kardiovaskulärer Ereignisse sowie im Rahmen der Primärprävention bei Personen mit hohem oder sehr hohem Risiko nach AGLA-Risikokategorie.",
+   "de_text": "Lebensjahres weiter vergütet. Bei Personen über … Jahren wird eine neu beginnende Statin-Therapie nur vergütet im Rahmen der Sekundärprävention kardiovaskulärer Ereignisse sowie im Rahmen der Primärprävention bei Personen mit hohem oder sehr hohem Risiko nach AGLA-Risikokategorie.",
+   "limitations": 29,
+   "rendering": "Per le persone di età superiore ai # anni che iniziano una terapia con statine, quest'ultima sarà rimborsata soltanto nell'ambito della prevenzione secondaria di eventi cardiovascolari e della prevenzione primaria in persone a rischio elevato o molto elevato secondo la categoria di rischio del GSLA.",
+   "text": "Per le persone di età superiore ai … anni che iniziano una terapia con statine, quest'ultima sarà rimborsata soltanto nell'ambito della prevenzione secondaria di eventi cardiovascolari e della prevenzione primaria in persone a rischio elevato o molto elevato secondo la categoria di rischio del GSLA.",
+   "support": 29,
+   "share": 1.0,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "it",
+   "de": "Sie gibt dem Krankenversicherer die Höhe der Rückerstattung bekannt.",
+   "de_text": "Sie gibt dem Krankenversicherer die Höhe der Rückerstattung bekannt.",
+   "limitations": 25,
+   "rendering": "Renderà noto all'assicurazione malattia l'ammontare del rimborso.",
+   "text": "Renderà noto all'assicurazione malattia l'ammontare del rimborso.",
+   "support": 5,
+   "share": 0.2,
+   "variants": [
+    {
+     "key": "La ditta comunica alla cassa malati l'ammontare del rimborso.",
+     "text": "La ditta comunica alla cassa malati l'ammontare del rimborso.",
+     "limitations": 3
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.20 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Falls nach # Wochen kein therapeutischer Erfolg eingetreten ist, ist die Behandlung abzubrechen.",
+   "de_text": "Falls nach … Wochen kein therapeutischer Erfolg eingetreten ist, ist die Behandlung abzubrechen.",
+   "limitations": 23,
+   "rendering": "In assenza di successo terapeutico dopo # settimane, il trattamento deve essere interrotto.",
+   "text": "In assenza di successo terapeutico dopo … settimane, il trattamento deve essere interrotto.",
+   "support": 9,
+   "share": 0.391,
+   "variants": [
+    {
+     "key": "Se, dopo # settimane, non si osserva alcun successo terapeutico, il trattamento va interrotto.",
+     "text": "Se, dopo … settimane, non si osserva alcun successo terapeutico, il trattamento va interrotto.",
+     "limitations": 4
+    },
+    {
+     "key": "Il trattamento deve essere interrotto qualora non si osservi alcun successo terapeutico dopo # settimane.",
+     "text": "Il trattamento deve essere interrotto qualora non si osservi alcun successo terapeutico dopo … settimane.",
+     "limitations": 3
+    },
+    {
+     "key": "Nel caso in cui dopo # settimane non sia comparso alcun successo terapeutico, il trattamento va interrotto.",
+     "text": "Nel caso in cui dopo … settimane non sia comparso alcun successo terapeutico, il trattamento va interrotto.",
+     "limitations": 3
+    },
+    {
+     "key": "Se dopo # settimane non si ottiene alcun successo terapeutico, il trattamento deve essere interrotto.",
+     "text": "Se dopo … settimane non si ottiene alcun successo terapeutico, il trattamento deve essere interrotto.",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.39 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Nach Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation des Vertrauensarztes.",
+   "de_text": "Nach Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation des Vertrauensarztes.",
+   "limitations": 20,
+   "rendering": "Dopo conferma del rimborso dei costi da parte della cassa malati, previa consultazione del medico fiduciario.",
+   "text": "Dopo conferma del rimborso dei costi da parte della cassa malati, previa consultazione del medico fiduciario.",
+   "support": 2,
+   "share": 0.1,
+   "variants": [
+    {
+     "key": "Dopo garanzia di assunzione delle spese da parte della cassa malattia previa consultazione del medico di fiducia.",
+     "text": "Dopo garanzia di assunzione delle spese da parte della cassa malattia previa consultazione del medico di fiducia.",
+     "limitations": 2
+    },
+    {
+     "key": "Dopo la garanzia di rimborso dei costi da parte dell'assicurazione malattia, previa consultazione ed approvazione da parte del medico di fiducia.",
+     "text": "Dopo la garanzia di rimborso dei costi da parte dell'assicurazione malattia, previa consultazione ed approvazione da parte del medico di fiducia.",
+     "limitations": 2
+    },
+    {
+     "key": "Previa garanzia di assunzione delle spese da parte dell'assicuratore malattia dopo avere consultato il medico di fiducia.",
+     "text": "Previa garanzia di assunzione delle spese da parte dell'assicuratore malattia dopo avere consultato il medico di fiducia.",
+     "limitations": 2
+    },
+    {
+     "key": "È necessaria la garanzia di assunzione dei costi da parte dell'assicurazione malattie, previa consultazione del medico di fiducia.",
+     "text": "È necessaria la garanzia di assunzione dei costi da parte dell'assicurazione malattie, previa consultazione del medico di fiducia.",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.10 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Die Gesamtmenge der Packung darf nicht direkt an eine versicherte Person abgegeben werden.",
+   "de_text": "Die Gesamtmenge der Packung darf nicht direkt an eine versicherte Person abgegeben werden.",
+   "limitations": 18,
+   "rendering": "La quantità totale presente nella confezione non può essere dispensata direttamente a una persona assicurata.",
+   "text": "La quantità totale presente nella confezione non può essere dispensata direttamente a una persona assicurata.",
+   "support": 15,
+   "share": 0.833,
+   "variants": [
+    {
+     "key": "La quantità totale presente nella confezione non può essere dispensata direttamente ad una persona assicurata.",
+     "text": "La quantità totale presente nella confezione non può essere dispensata direttamente ad una persona assicurata.",
+     "limitations": 2
+    }
+   ],
+   "house": true
+  },
+  {
+   "lang": "it",
+   "de": "Klinisch stabile Patienten mit initialem Befund einer Progression können bis zur Bestätigung der Progression der Erkrankung weiter behandelt werden.",
+   "de_text": "Klinisch stabile Patienten mit initialem Befund einer Progression können bis zur Bestätigung der Progression der Erkrankung weiter behandelt werden.",
+   "limitations": 17,
+   "rendering": "I pazienti clinicamente stabili con un riscontro iniziale di progressione della malattia possono proseguire il trattamento fino a quando la progressione non è confermata.",
+   "text": "I pazienti clinicamente stabili con un riscontro iniziale di progressione della malattia possono proseguire il trattamento fino a quando la progressione non è confermata.",
+   "support": 5,
+   "share": 0.294,
+   "variants": [
+    {
+     "key": "I pazienti clinicamente stabili con un riscontro iniziale di progressione possono proseguire il trattamento fino alla conferma della progressione.",
+     "text": "I pazienti clinicamente stabili con un riscontro iniziale di progressione possono proseguire il trattamento fino alla conferma della progressione.",
+     "limitations": 5
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.29 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Die Aufforderung zur Rückvergütung soll in der Regel innerhalb von # Monaten nach Verabreichung erfolgen.",
+   "de_text": "Die Aufforderung zur Rückvergütung soll in der Regel innerhalb von … Monaten nach Verabreichung erfolgen.",
+   "limitations": 16,
+   "rendering": "Normalmente occorre richiedere il rimborso entro tre mesi dalla somministrazione.",
+   "text": "Normalmente occorre richiedere il rimborso entro tre mesi dalla somministrazione.",
+   "support": 12,
+   "share": 0.75,
+   "variants": [
+    {
+     "key": "Normalmente occorre richiedere il rimborso entro sei mesi dalla somministrazione.",
+     "text": "Normalmente occorre richiedere il rimborso entro sei mesi dalla somministrazione.",
+     "limitations": 3
+    }
+   ],
+   "house": true
+  },
+  {
+   "lang": "it",
+   "de": "Der Preis für die verabreichte Teilpackung ist proportional zum Publikumspreis der verwendeten Packung zu berechnen.",
+   "de_text": "Der Preis für die verabreichte Teilpackung ist proportional zum Publikumspreis der verwendeten Packung zu berechnen.",
+   "limitations": 15,
+   "rendering": "Il prezzo per l'imballaggio individuale va calcolato in modo proporzionale al prezzo al pubblico della confezione utilizzata.",
+   "text": "Il prezzo per l'imballaggio individuale va calcolato in modo proporzionale al prezzo al pubblico della confezione utilizzata.",
+   "support": 15,
+   "share": 1.0,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "it",
+   "de": "Die Zulassungsinhaberin gibt dem Krankenversicherer die Höhe der Rückerstattung bekannt.",
+   "de_text": "Die Zulassungsinhaberin gibt dem Krankenversicherer die Höhe der Rückerstattung bekannt.",
+   "limitations": 15,
+   "rendering": "La titolare dell'omologazione comunica all'assicurazione malattie l'entità del rimborso.",
+   "text": "La titolare dell'omologazione comunica all'assicurazione malattie l'entità del rimborso.",
+   "support": 6,
+   "share": 0.4,
+   "variants": [
+    {
+     "key": "La titolare dell'omologazione comunica all'assicurazione malattia l'importo del rimborso.",
+     "text": "La titolare dell'omologazione comunica all'assicurazione malattia l'importo del rimborso.",
+     "limitations": 4
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.40 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Die Mehrwertsteuer kann nicht zusätzlich zu diesem Betrag zurückgefordert werden.",
+   "de_text": "Die Mehrwertsteuer kann nicht zusätzlich zu diesem Betrag zurückgefordert werden.",
+   "limitations": 14,
+   "rendering": "Non si può applicare l'IVA in aggiunta a questo importo.",
+   "text": "Non si può applicare l'IVA in aggiunta a questo importo.",
+   "support": 12,
+   "share": 0.857,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "it",
+   "de": "Eine Kostengutsprache hat den entsprechenden Indikationscode (#.XX) zu enthalten.",
+   "de_text": "Eine Kostengutsprache hat den entsprechenden Indikationscode (….XX) zu enthalten.",
+   "limitations": 14,
+   "rendering": "Tale garanzia di assunzione dei costi deve contenere il codice di indicazione corrispondente (#.XX).",
+   "text": "Tale garanzia di assunzione dei costi deve contenere il codice di indicazione corrispondente (….XX).",
+   "support": 6,
+   "share": 0.429,
+   "variants": [
+    {
+     "key": "L'approvazione dei costi deve includere il corrispondente codice di indicazione (#.XX).",
+     "text": "L'approvazione dei costi deve includere il corrispondente codice di indicazione (….XX).",
+     "limitations": 2
+    },
+    {
+     "key": "Una garanzia di assunzione dei costi deve contenere il codice di indicazione corrispondente (#.XX).",
+     "text": "Una garanzia di assunzione dei costi deve contenere il codice di indicazione corrispondente (….XX).",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.43 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Die Mehrwertsteuer kann nicht zusätzlich zurückgefordert werden.",
+   "de_text": "Die Mehrwertsteuer kann nicht zusätzlich zurückgefordert werden.",
+   "limitations": 13,
+   "rendering": "Non è previsto anche il rimborso dell'IVA.",
+   "text": "Non è previsto anche il rimborso dell'IVA.",
+   "support": 5,
+   "share": 0.385,
+   "variants": [
+    {
+     "key": "L'imposta sul valore aggiunto non può essere ulteriormente recuperata.",
+     "text": "L'imposta sul valore aggiunto non può essere ulteriormente recuperata.",
+     "limitations": 2
+    },
+    {
+     "key": "Non è possibile richiedere il rimborso dell'IVA oltre a questa quota del prezzo di fabbrica.",
+     "text": "Non è possibile richiedere il rimborso dell'IVA oltre a questa quota del prezzo di fabbrica.",
+     "limitations": 2
+    },
+    {
+     "key": "Non è possibile richiedere il rimborso dell'iva oltre a questa quota del prezzo di fabbrica.",
+     "text": "Non è possibile richiedere il rimborso dell'iva oltre a questa quota del prezzo di fabbrica.",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.39 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Abwicklung der Rückvergütung: a.) Der Leistungserbringer holt beim Krankenversicherer eine Kostengutsprache nach vorheriger Konsultation des Vertrauensarztes ein.",
+   "de_text": "Abwicklung der Rückvergütung: a.) Der Leistungserbringer holt beim Krankenversicherer eine Kostengutsprache nach vorheriger Konsultation des Vertrauensarztes ein.",
+   "limitations": 12,
+   "rendering": "Svolgimento del rimborso: a.) Il fornitore di prestazioni richiede all'assicurazione malattia la garanzia di assunzione dei costi dopo aver consultato il medico di fiducia.",
+   "text": "Svolgimento del rimborso: a.) Il fornitore di prestazioni richiede all'assicurazione malattia la garanzia di assunzione dei costi dopo aver consultato il medico di fiducia.",
+   "support": 12,
+   "share": 1.0,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "it",
+   "de": "Dem Vertrauensarzt werden Diagnose, Gewicht des Patienten und die Dosierung bekanntgegeben. b.) Der Krankenversicherer bestätigt dem Leistungserbringer die Kostengutsprache. c.) Der Leistungserbringer stellt dem Krankversicherer die Rechnungen während der ganzen Therapiedauer über die vollen Medikamentenkosten. d.) Der Krankenversicherer bezahlt dem Leistungserbringer den vollen Rechnungsbetrag.",
+   "de_text": "Dem Vertrauensarzt werden Diagnose, Gewicht des Patienten und die Dosierung bekanntgegeben. b.) Der Krankenversicherer bestätigt dem Leistungserbringer die Kostengutsprache. c.) Der Leistungserbringer stellt dem Krankversicherer die Rechnungen während der ganzen Therapiedauer über die vollen Medikamentenkosten. d.) Der Krankenversicherer bezahlt dem Leistungserbringer den vollen Rechnungsbetrag.",
+   "limitations": 12,
+   "rendering": "Al medico di fiducia vengono comunicati diagnosi, peso del paziente e posologia. b.) L'assicurazione malattia conferma al fornitore di prestazioni la garanzia di assunzione dei costi. c.) Il fornitore di prestazioni fattura all'assicurazione malattia tutti i costi dei medicamenti per l'intera durata della terapia. d.) L'assicurazione malattia paga al fornitore di prestazioni l'intero importo fatturato.",
+   "text": "Al medico di fiducia vengono comunicati diagnosi, peso del paziente e posologia. b.) L'assicurazione malattia conferma al fornitore di prestazioni la garanzia di assunzione dei costi. c.) Il fornitore di prestazioni fattura all'assicurazione malattia tutti i costi dei medicamenti per l'intera durata della terapia. d.) L'assicurazione malattia paga al fornitore di prestazioni l'intero importo fatturato.",
+   "support": 12,
+   "share": 1.0,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "it",
+   "de": "Der Krankenversicherer erhebt eine allfällige Kostenbeteiligung einzig auf dem Betrag nach Rückvergütung.",
+   "de_text": "Der Krankenversicherer erhebt eine allfällige Kostenbeteiligung einzig auf dem Betrag nach Rückvergütung.",
+   "limitations": 12,
+   "rendering": "L'assicurazione malattia rileva un'eventuale partecipazione ai costi unicamente sull'importo dopo il rimborso.",
+   "text": "L'assicurazione malattia rileva un'eventuale partecipazione ai costi unicamente sull'importo dopo il rimborso.",
+   "support": 12,
+   "share": 1.0,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "it",
+   "de": "Im tiers garant vergütet der Krankenversicherer dem Versicherten dementsprechend die vollen Medikamentenkosten.",
+   "de_text": "Im tiers garant vergütet der Krankenversicherer dem Versicherten dementsprechend die vollen Medikamentenkosten.",
+   "limitations": 12,
+   "rendering": "Nel sistema del terzo garante l'assicurazione malattia rimborsa all'assicurato tutte le spese sostenute per i medicamenti.",
+   "text": "Nel sistema del terzo garante l'assicurazione malattia rimborsa all'assicurato tutte le spese sostenute per i medicamenti.",
+   "support": 12,
+   "share": 1.0,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "it",
+   "de": "Nach zwei Jahren ununterbrochener Therapie bedarf die Behandlung einer erneuten Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation des Vertrauensarztes.",
+   "de_text": "Nach zwei Jahren ununterbrochener Therapie bedarf die Behandlung einer erneuten Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation des Vertrauensarztes.",
+   "limitations": 12,
+   "rendering": "Rimborso da parte dell'assicurazione sanitaria previa consultazione del medico di fiducia e rinnovo del rimborso dopo due anni di trattamento ininterrotto.",
+   "text": "Rimborso da parte dell'assicurazione sanitaria previa consultazione del medico di fiducia e rinnovo del rimborso dopo due anni di trattamento ininterrotto.",
+   "support": 11,
+   "share": 0.917,
+   "variants": [],
+   "house": true
+  },
+  {
+   "lang": "it",
+   "de": "Der Preis für die verabreichte Teilmenge ist proportional zum Publikumspreis der verwendeten Packung zu berechnen.",
+   "de_text": "Der Preis für die verabreichte Teilmenge ist proportional zum Publikumspreis der verwendeten Packung zu berechnen.",
+   "limitations": 11,
+   "rendering": "Il prezzo per la quantità parziale individuale va calcolato in modo proporzionale al prezzo al pubblico della confezione utilizzata.",
+   "text": "Il prezzo per la quantità parziale individuale va calcolato in modo proporzionale al prezzo al pubblico della confezione utilizzata.",
+   "support": 4,
+   "share": 0.364,
+   "variants": [
+    {
+     "key": "Il prezzo per la quantità parziale va calcolato in modo proporzionale al prezzo al pubblico della confezione utilizzata.",
+     "text": "Il prezzo per la quantità parziale va calcolato in modo proporzionale al prezzo al pubblico della confezione utilizzata.",
+     "limitations": 4
+    },
+    {
+     "key": "Il prezzo della quantità somministrata è calcolato proporzionalmente al prezzo pubblico della confezione utilizzata.",
+     "text": "Il prezzo della quantità somministrata è calcolato proporzionalmente al prezzo pubblico della confezione utilizzata.",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.36 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Die Mehrwertsteuer kann nicht zusätzlich zu den Rückvergütungsbeträgen zurückgefordert werden.",
+   "de_text": "Die Mehrwertsteuer kann nicht zusätzlich zu den Rückvergütungsbeträgen zurückgefordert werden.",
+   "limitations": 11,
+   "rendering": "L'IVA non può essere richiesta in aggiunta agli importi di rimborso.",
+   "text": "L'IVA non può essere richiesta in aggiunta agli importi di rimborso.",
+   "support": 2,
+   "share": 0.182,
+   "variants": [
+    {
+     "key": "L'imposta sul valore aggiunto non può essere richiesta in aggiunta agli importi di rimborso.",
+     "text": "L'imposta sul valore aggiunto non può essere richiesta in aggiunta agli importi di rimborso.",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.18 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Die Verschreibung kann nur durch Fachärzte der Dermatologie oder dermatologische Universitätskliniken/Polikliniken erfolgen.",
+   "de_text": "Die Verschreibung kann nur durch Fachärzte der Dermatologie oder dermatologische Universitätskliniken/Polikliniken erfolgen.",
+   "limitations": 11,
+   "rendering": "La prescrizione può essere effettuata solo da medici specialisti in dermatologia o da cliniche dermatologiche universitarie/policlinici.",
+   "text": "La prescrizione può essere effettuata solo da medici specialisti in dermatologia o da cliniche dermatologiche universitarie/policlinici.",
+   "support": 5,
+   "share": 0.455,
+   "variants": [
+    {
+     "key": "La prescrizione deve essere effettuata unicamente da medici specialisti in dermatologia o da Cliniche Universitarie di Dermatologia/Servizi di Dermatologia di Policlinici.",
+     "text": "La prescrizione deve essere effettuata unicamente da medici specialisti in dermatologia o da Cliniche Universitarie di Dermatologia/Servizi di Dermatologia di Policlinici.",
+     "limitations": 4
+    },
+    {
+     "key": "La prescrizione può essere effettuata solo da medici specialisti in dermatologia o da cliniche universitarie/policlinici dermatologici.",
+     "text": "La prescrizione può essere effettuata solo da medici specialisti in dermatologia o da cliniche universitarie/policlinici dermatologici.",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.46 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Es wird lediglich die abgegebene Teilpackung, die zur Therapie notwendig ist, vergütet.",
+   "de_text": "Es wird lediglich die abgegebene Teilpackung, die zur Therapie notwendig ist, vergütet.",
+   "limitations": 11,
+   "rendering": "Viene rimborsata soltanto la parte della confezione consegnata che risulti necessaria per la terapia.",
+   "text": "Viene rimborsata soltanto la parte della confezione consegnata che risulti necessaria per la terapia.",
+   "support": 9,
+   "share": 0.818,
+   "variants": [],
+   "house": false,
+   "note": "no dominant rendering (share 0.82 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Für alle vergütungspflichtigen Indikationen gilt:",
+   "de_text": "Für alle vergütungspflichtigen Indikationen gilt:",
+   "limitations": 11,
+   "rendering": "Per tutte le indicazioni soggette a rimborso si applica:",
+   "text": "Per tutte le indicazioni soggette a rimborso si applica:",
+   "support": 3,
+   "share": 0.273,
+   "variants": [
+    {
+     "key": "A tutte le indicazioni con obbligo di rimunerazione si applica quanto segue:",
+     "text": "A tutte le indicazioni con obbligo di rimunerazione si applica quanto segue:",
+     "limitations": 2
+    },
+    {
+     "key": "Per tutte le indicazioni con obbligo di rimunerazione si applica:",
+     "text": "Per tutte le indicazioni con obbligo di rimunerazione si applica:",
+     "limitations": 2
+    },
+    {
+     "key": "Per tutte le indicazioni rimborsabili:",
+     "text": "Per tutte le indicazioni rimborsabili:",
+     "limitations": 2
+    }
+   ],
+   "house": false,
+   "note": "no dominant rendering (share 0.27 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Bei Patienten, die nach # Wochen kein Ansprechen nach HiSCR von mindestens #% zeigen, ist die Behandlung abzubrechen.",
+   "de_text": "Bei Patienten, die nach … Wochen kein Ansprechen nach HiSCR von mindestens …% zeigen, ist die Behandlung abzubrechen.",
+   "limitations": 10,
+   "rendering": "Il trattamento deve essere interrotto nei pazienti che non raggiungono almeno il #% di risposta HiSCR dopo # settimane.",
+   "text": "Il trattamento deve essere interrotto nei pazienti che non raggiungono almeno il …% di risposta HiSCR dopo … settimane.",
+   "support": 9,
+   "share": 0.9,
+   "variants": [],
+   "house": false,
+   "note": "no dominant rendering (share 0.90 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Eine Kostengutsprache hat den entsprechenden Indikationscode (#) zu enthalten.",
+   "de_text": "Eine Kostengutsprache hat den entsprechenden Indikationscode (…) zu enthalten.",
+   "limitations": 10,
+   "rendering": "Una garanzia di assunzione delle spese deve includere il codice di indicazione (#).",
+   "text": "Una garanzia di assunzione delle spese deve includere il codice di indicazione (…).",
+   "support": 9,
+   "share": 0.9,
+   "variants": [],
+   "house": false,
+   "note": "no dominant rendering (share 0.90 not above 0.5)"
+  },
+  {
+   "lang": "it",
+   "de": "Nach # Wochen ununterbrochener Therapie bedarf die Behandlung einer erneuten Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation des Vertrauensarztes.",
+   "de_text": "Nach … Wochen ununterbrochener Therapie bedarf die Behandlung einer erneuten Kostengutsprache durch den Krankenversicherer nach vorgängiger Konsultation des Vertrauensarztes.",
+   "limitations": 10,
+   "rendering": "Dopo # settimane di trattamento ininterrotto, il trattamento richiede una nuova garanzia dell'assunzione dei costi da parte dell'assicurazione malattie, previa consultazione del medico di fiducia.",
+   "text": "Dopo … settimane di trattamento ininterrotto, il trattamento richiede una nuova garanzia dell'assunzione dei costi da parte dell'assicurazione malattie, previa consultazione del medico di fiducia.",
+   "support": 9,
+   "share": 0.9,
+   "variants": [],
+   "house": false,
+   "note": "no dominant rendering (share 0.90 not above 0.5)"
+  }
+ ]
+}

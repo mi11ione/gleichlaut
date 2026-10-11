@@ -4,7 +4,8 @@ cache     hash-addressed replay of recorded responses (data/cache/responses/<sha
           exact request payload {model, messages, max_tokens, temperature}, the same key the development gateway used,
           so a replay hit proves that the prompt was rebuilt byte-for-byte. A miss is an error, never a silent call.
 openai    any OpenAI-compatible endpoint: LLM_BASE_URL, LLM_API_KEY, LLM_NAME (the judges' / a user-controlled endpoint).
-          Plain user message only (no system message of ours, no prefill). The official Apertus v1.5 template, if the server uses
+          Plain user message only (no system message of ours, no prefill; only the experimental PREREG R21 variant
+          v4-system passes `system=`, which puts one system message first). The official Apertus v1.5 template, if the server uses
           it, then adds its default system turn ("You are Apertus 1.5 Omni, ...") and a developer turn ("Deliberation:
           disabled / Tool Capabilities: disabled"), as the GGUF template does for llamacpp (docs/research/chat-template.md).
           It backs off on 429 and checks the response `model` field against the requested model on every call.
@@ -95,9 +96,14 @@ def endpoint_id(url):
 def _now(): return datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
 
 
-def payload_key(model, prompt, max_tokens, temperature=0.0, **extra):
-    payload = dict(model=model, messages=[{"role": "user", "content": prompt}], max_tokens=max_tokens,
-                   temperature=temperature, **extra)
+def messages(prompt, system=None):
+    """the chat messages of one request: the user message alone (the frozen pipeline: the chat template then adds its
+    default system turn), or a system message first (only the PREREG R21 variant v4-system passes one)."""
+    return ([{"role": "system", "content": system}] if system is not None else []) + [{"role": "user", "content": prompt}]
+
+
+def payload_key(model, prompt, max_tokens, temperature=0.0, system=None, **extra):
+    payload = dict(model=model, messages=messages(prompt, system), max_tokens=max_tokens, temperature=temperature, **extra)
     return hashlib.sha256(json.dumps(payload, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
 
 
@@ -118,8 +124,8 @@ class Cache:
         self.hits, self.misses = 0, []
         self.endpoint = "recorded responses (data/cache)"
 
-    def __call__(self, prompt, tag, cap, max_tokens):
-        h = payload_key(self.model, prompt, max_tokens, 0.0, **self.extra)
+    def __call__(self, prompt, tag, cap, max_tokens, system=None):
+        h = payload_key(self.model, prompt, max_tokens, 0.0, system=system, **self.extra)
         p = os.path.join(self.root, h[:2], h + ".json")
         if not os.path.exists(p):
             self.misses.append(h)
@@ -192,9 +198,9 @@ class OpenAI:
                      f"GLEICHLAUT_TIMEOUT {self.timeout:g} s, GLEICHLAUT_RETRIES {self.retries}, GLEICHLAUT_DEADLINE {self.deadline:g} s)")
         raise EndpointError(self.dead)
 
-    def __call__(self, prompt, tag, cap, max_tokens):
+    def __call__(self, prompt, tag, cap, max_tokens, system=None):
         extra = {} if self.seed is None else {"seed": self.seed}
-        body = dict(model=self.model, messages=[{"role": "user", "content": prompt}], max_tokens=max_tokens, temperature=0.0, **extra)
+        body = dict(model=self.model, messages=messages(prompt, system), max_tokens=max_tokens, temperature=0.0, **extra)
         url = self.base + ("/chat/completions" if not self.base.endswith("/chat/completions") else "")
         hdr = {"Content-Type": "application/json", "User-Agent": "gleichlaut/0.1"}
         if self.key: hdr["Authorization"] = f"Bearer {self.key}"
@@ -216,7 +222,7 @@ class OpenAI:
         meta = dict(prompt_tokens=u.get("prompt_tokens"), completion_tokens=u.get("completion_tokens"),
                     secs=round(time.time() - t0, 2), model_served=served, seed=self.seed, cached=False, backend=fp,
                     system_fingerprint=fp)
-        key = payload_key(self.model, prompt, max_tokens, 0.0, **extra)
+        key = payload_key(self.model, prompt, max_tokens, 0.0, system=system, **extra)
         if self.record_to: write_cache(self.record_to, key, text, meta)
         _log(self.log, dict(meta, ts=_now(), endpoint=self.endpoint, key=key, tag=tag, model=self.model))
         return strip_think(text), dict(meta, key=key)
@@ -230,7 +236,7 @@ class Stub:
     def __init__(self, log=None):
         self.model, self.endpoint, self.log, self.calls = "stub", "stub://local", log, 0
 
-    def __call__(self, prompt, tag, cap, max_tokens):
+    def __call__(self, prompt, tag, cap, max_tokens, system=None):
         m = self.RX.search(prompt); self.calls += 1
         text = m.group(1) if m else ""
         meta = dict(prompt_tokens=0, completion_tokens=0, secs=0.0, model_served="stub", seed=None, cached=False, backend="stub",
@@ -342,21 +348,22 @@ class LlamaCpp:
                 if s[:1].isspace() and w in gl2.BANWORDS[L]: bad[L].append(i)
         self.bad = {L: np.array(v, dtype=np.int64) for L, v in bad.items()}
 
-    def __call__(self, prompt, tag, cap, max_tokens):
+    def __call__(self, prompt, tag, cap, max_tokens, system=None):
         lang = self.lang_of_prompt(prompt)
         bad, np = self.bad[lang], self.np
         def mask(ids, logits):
             logits[bad] = -np.inf
             return logits
         t0 = time.time()
-        r = self.llm.create_chat_completion(messages=[{"role": "user", "content": prompt}], max_tokens=max_tokens, temperature=0.0,
+        r = self.llm.create_chat_completion(messages=messages(prompt, system), max_tokens=max_tokens, temperature=0.0,
                                             logits_processor=self.LP([mask]))
         text = r["choices"][0]["message"]["content"]
         meta = dict(secs=round(time.time() - t0, 2), model_served=self.model, completion_tokens=r.get("usage", {}).get("completion_tokens"),
                     prompt_tokens=r.get("usage", {}).get("prompt_tokens"), cached=False)
         # The key is the sha256 of the request sent above (model, the one user message, max_tokens, temperature), as for the
         # 70B. The digit / number-word mask is not part of it: it acts on the logits during generation, not on the request.
-        key = payload_key(self.model, prompt, max_tokens, 0.0)
+        # system: None for every certified run (the template's default system turn); PREREG R21's variant passes one.
+        key = payload_key(self.model, prompt, max_tokens, 0.0, system=system)
         if self.record_to: write_cache(self.record_to, key, text, {k: meta[k] for k in ("prompt_tokens", "completion_tokens", "secs")})
         _log(self.log, dict(meta, tag=tag, ts=_now(), endpoint=self.endpoint, model=self.model, key=key))
         return strip_think(text), dict(meta, key=key)
