@@ -43,8 +43,10 @@ divergences (the list its rules were built around, so not a recall measure), plu
 finds **93.0%** of changed numbers and 94.0% of fields in the wrong language (77.2% [74.5, 79.7] over five fault types).
 Its newest checks found three divergences nobody had listed: Amvuttra's French stop rule says an NIS increase "≤ 10"
 points where German and Italian say "> 10", and the Italian of Beyonttra and Vyndaqel says "on deve" (for "non deve"),
-so a ban on combining reads as an obligation. As a control, the same checks over seven federal health acts (5,991
-aligned provisions) confirm no divergence among 26 candidates (R24): the drift is in the SL's own texts. These checks ship off by default until their precision is tuned (§6).
+so a ban on combining reads as an obligation. The same checks over seven federal health acts (5,991 aligned
+provisions) confirm none of 26 candidates (R24); a 2025 erratum shows a code divergence in KLV Art. 4 (French corrected,
+Italian not) that lies outside the number check's scope. Courts decide on such divergences: BGE 144 V 14 followed the
+French and Italian over a German-only wording in the KLV rule BAG uses to price SL medicines. These checks ship off by default until their precision is tuned (§6).
 
 **Results: drafting.** On a pre-registered held-out set of 166 French/Italian amendments from SL changes between Jun
 2025 and Feb 2026 (154 in edit patterns never seen during design; checks and resources hashed before any output

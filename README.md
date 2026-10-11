@@ -65,9 +65,10 @@ measured too: Q8_0 saves 12.2 points more edits than Q4_K_M on the same items.
   ([docs/pilot/](track_2b/docs/pilot/)); `make pilot-pack` builds it, with the offline register, reproducibly.
 - **Pays off every month:** new divergences keep arriving. The June, August and September 2026 releases each added
   new ones, and a monthly run puts them in front of a decision the day BAG publishes.
-- **Aimed where the problem is:** the same audit over seven federal health acts (5,991 aligned provisions, KVG to
-  HMG), which pass through the federal language services, confirms no divergence among its 26 candidates; the SL's own
-  texts are where the three languages drift, and that is where Gleichlaut works.
+- **Divergences decide real money:** the Federal Supreme Court ruled on a German-only wording in the very KLV rule BAG
+  uses to price SL medicines and followed the French and Italian (BGE 144 V 14); a Thurgau court freed an insured
+  person from a year's premiums over a German/French-Italian divergence in the KVG (TVR 2016 Nr. 35)
+  ([cases](track_2b/docs/research/language-versions-in-court.md)).
 - **Beyond the SL:** the same audit runs on MiGeL and the Analysenliste, BAG's other trilingual lists, and the drafting
   lane on federal statutes.
 - **Running every month:** shadow mode drafts each new SL release on the live public feed and grades itself against
