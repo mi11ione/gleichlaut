@@ -39,6 +39,7 @@ human labels were used.
 | R18 | Apertus 8B log-probability filter on the round-5 audit findings that ship off (threshold from planted copies, applied to the 31 register findings) | planted AUROC 0.955; register kept 13, 2 of 6 confirmed (15.4%): fails, the kinds stay off |
 | R19 | the certified 8B Q8_0 on the identity probes (the 250 MMLU questions, the 792-cell battery): is `fp1-nes` an 8B? | MMLU 78.4% (shared model 84.4%, v1 8B 70.8%); text equal to fp1-nes in 40.7% of cells, decisions 88.6% (fp1-nes) vs 90.4% (tp2): inconclusive (O4) |
 | R20 | the 6 Oct 2026 audit as frozen predictions, scored against BAG's own later corrections (an oracle that is not Claude) | pending (first scoring snapshot expected 1 Nov 2026) |
+| R21 | a task-specific system message on top of the house wording (v4-system, certified Q8_0): fresh 166 (A) and both live months (B) | pending |
 
 Corrections to statements of fact inside rule text (11 Oct 2026; the rules themselves are unchanged and their text below
 stays as frozen):
@@ -835,6 +836,85 @@ scored. On 11 Oct 2026 (01:04 UTC) BAG's resources API names the 6 Oct 2026 feed
   wording. If anyone sends findings to BAG before a horizon, the date and the findings sent are logged in the results
   log; corrections after that count as BAG accepting a report rather than as an independent prediction, and both
   readings are reported.
+
+## R21. A task-specific system message with the house wording (variant v4-system), fresh 166 and both live months (frozen 11 Oct 2026, before any model run)
+
+An Apertus-team juror: every run so far used the chat template's default multimodal persona ("You are Apertus 1.5 Omni,
+a multimodal assistant ...", `docs/research/chat-template.md`), since the pipeline sends one user message; a
+pre-registered task-specific system prompt should be tried. R21 tests one fixed system message on top of v3-terms (R12).
+
+- **Variant v4-system** (`src/gleichlaut/v4system.py`, outside `frozen/`; frozen code and `freeze.json` unchanged).
+  v3-terms exactly as R12 defines it (the frozen pipeline, the same house-wording block and block rules, `v3terms.py`
+  unchanged) plus **one system message**, sent first in every request of the item (draft, lock retry, re-ask), which
+  replaces the template's default system turn; the template's developer turn ("Deliberation: disabled / Tool
+  Capabilities: disabled") stays. Guards, re-ask, routing, slot codes, decoding (greedy, the digit / number-word mask) and
+  the frozen code are unchanged; the system message is the only difference from v3-terms, and from the frozen request
+  where an item has no house wording. The text, verbatim (UTF-8, no trailing newline):
+
+  > You maintain the French and Italian versions of Swiss drug-reimbursement limitations (BAG Spezialitätenliste). When the German text of a limitation is amended, you amend the French or Italian text: change only what the German change requires, keep every other word of the old text, use BAG's established terminology given in the request, and output only the amended paragraph.
+
+  sha256 `a81624dc3341e9add1447dbff1cc1dc45c6800acba0fbf3319c9927480cf848f`. Mechanism: the backends take an optional `system` (`backends.messages`); the variant
+  passes it, nothing else does. With the variant off, the request and its key are the frozen ones byte for byte, and the
+  recorded R9 calls still replay (`tests/test_r21.py`).
+- **House wording per item: the snapshot before the item's change** (its own `snap_old`), by the unchanged mining code.
+  Live months: the committed R12 files (`data/termbase/r12/*_20260801.json`, `*_20260901.json`), unchanged, so the
+  user prompts are R12's v3-terms prompts byte for byte (their pre-registered sha256 in `r12_blocks.json`; test). Fresh
+  166: 12 items start from the release of 1 Jun 2025 and 154 from 1 Jul 2025 (`snap_old`; their new texts are from
+  1 Jul 2025 and 19 Feb 2026). Those two snapshots exist only as BAG's XML captures the fresh set was built from
+  (`frozen/build_fresh.py` SNAPS: `wb2025/20250611/Preparations.xml`, sha256 `ab071ebad1d5…`, and
+  `wb2025/20250731/Preparations.xml`, sha256 `102f691db6cc…`; research tree, not vendored: 63 MB each). `tools/r21_system.py
+  mine` reads them with `sl.ingest.load_xml` (the frozen exporter emulation, as the backtest does), keeps one text per
+  limitation code as `sl.ingest` does (the first; 0 conflicts), and runs `termbase.mine`, `house.mine` and
+  `termbase.shared_words` unchanged -> `data/termbase/r21/{termbase,house_sentences,shared_words}_<date>.json` and the
+  TBX. The mining code is today's, with the reviewers' exclusions added after R12 (e.g. Italian «assicuratore»).
+- **Review of the 2025 renderings, fixed now** (the R12 review rule, "a fragment, not a rendering", made mechanical;
+  `r21_system.review`): a 2025 house term rendering is dropped when (a) `termbase.DROP_VARIANTS` lists it for the term,
+  (b) its words are a strict contiguous part of the term's house rendering in the shipped, reviewed 6 Oct 2026 termbase,
+  or (c) it shares no word of four or more letters with that entry's rendering or variants. It only removes entries;
+  every wording in a block comes from the item's old snapshot. Dropped: 1 Jun 2025 (6) FR Fabrikabgabepreis «prix»,
+  Referenzpräparat «biosimilaire», Verlaufskontrolle «effectués que par un spécialiste», IT Erstlinienbehandlung «linea
+  di pazienti adulti», Referenzpräparat «biosimilare», Zweitlinientherapie «seconda linea»; 1 Jul 2025 (8) the same six plus
+  FR Kostengutsprache «prise en charge» and Erstlinienbehandlung «traitement de première». Left: 53 and 50 house terms, 35 and 30 house sentences. Disclosed: this rule was written after looking at
+  the mined 2025 entries and the blocks they give (built from the old snapshot and the new German only; no model output
+  and no published FR/IT of the items was looked at). One wrong entry passes the rule and stays: FR
+  Krankheitsprogression «survenue» (1 Jun 2025; in one item's block).
+- **Committed with this rule** (in the commit that follows it, before any run): `eval/prereg/r21_prompts.json`
+  (`tools/r21_system.py prompts`; `--check` reproduces it byte for byte): the system message and its sha256; per set and
+  drafted item the terms date, the block and the sha256 of the first request's user prompt under the frozen pipeline,
+  v3-terms and v4-system. Fresh 166: 166 drafted, 154 model calls, 141 user prompts changed by a block (the other 13
+  differ from the frozen request only by the system message); August 22 drafted, 22 calls, 19 changed; September 44,
+  40, 40 (as R12).
+- **Runs** (GitHub Actions CPU runners only, workflow `r21-8b`, `tools/r21_system.py run`; nothing runs a model on a
+  team machine). Every shard first verifies the build certificate `8b-q8_0-fresh166` of the loaded GGUF
+  (`cli.certified_gguf`, sha256 `dea904ad…`) and stops without it. Every exchange (the request as sent, system message
+  included, and the response) is recorded in the run's own folder (`data/r21/runs/<set>_q8_0/exchanges.jsonl`, with
+  `records.jsonl`, `calls.jsonl`, `summary.json`), and `make run` re-executes each run from it. **(A)** `set=fresh166`:
+  the 166 held-out items, each through the pipeline as in R1 (M2) (`m1 run`: every item, no routing); comparator: the
+  certified R1 (M2) Q8_0 run. **(B)** `set=20260801-20260901` and `set=20260901-20261001`: the committed items, routed
+  and recorded as the shadow workflow does (`cli.draft_items`; the variant is not certified, so `status` is "flagged"
+  with a review reason and `guard_status` keeps the guards' verdict, which is scored, as in R12); comparators: the
+  frozen Q8_0 runs (R7, R10) and the v3-terms Q8_0 runs (R12). Q8_0 only; no 70B run.
+- **Labels.** Every v4-system draft the guards mark ready that differs from BAG's published text, and for (A) also a
+  seeded sample of 20 flagged drafts (seed 20261009, as R1; descriptive, no criterion), except drafts byte-identical to
+  an already-labelled draft of the same item (fresh 166: the 70B reference labels, the R1 Q4_K_M and Q8_0 labels, R9;
+  months: the R7 / R10 and R12 labels), which reuse that label. Pooled over the three sets, one record per distinct
+  (set, item, draft), shuffled with seed 20261021, neutral ids, R1 protocol (`eval/labels/PROTOCOL.md`: two fresh blind
+  Claude annotators, the second in reverse order, the R11 operational note on long lines; a third on every disagreement
+  on needs_fix or class, or any REAL) -> `eval/labels/r21_system_ready.tsv`. No human labels.
+- **Scored by R0** (`score.r21_system()` in `replay`, `eval/results/r21_system.json`). (A) exactly as R1 (M2): n = 166,
+  unflagged REAL ≤ 1%, unflagged stale + German ≤ 2%, exact minus rules-only exact ≥ +5 points (paired bootstrap 95%
+  CI), flagged ≤ 70%; any unlabelled ready non-exact draft fails the set. Beside it the certified run's numbers, and
+  paired: identical outputs, flag agreement, drafts identical to BAG's text gained and lost. (B) as R10 / R12: per month
+  n = drafts compared with BAG's text (status ≠ human), the same four criteria on the guards' verdict, frozen, v3-terms
+  and v4-system side by side.
+- **What is and is not unseen, stated now.** The live months informed R12 and this variant: R12's block and the
+  juror's proposal came from their failures, and v4-system adds to that block, so (B) is not an unseen test. The fresh
+  166 were not used to design v3-terms or this system message; they were used before for the frozen pipeline (R1, R9,
+  R13), and their mined 2025 blocks were read when the review rule above was written.
+- **Decision, stated now.** v4-system becomes a **candidate default** only if it meets R0 on (A) **and** on at least one
+  live month in (B). Otherwise it is reported as it comes out, criterion by criterion, and the frozen default stays.
+  Either way this repository does not change the default: a candidate is reported for the team to decide, after which a
+  default change would need its own record. The variant is not changed after any output is seen.
 
 ## R4. Post-freeze changes
 
