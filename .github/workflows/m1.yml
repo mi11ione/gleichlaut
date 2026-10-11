@@ -23,9 +23,9 @@ jobs:
     strategy: { fail-fast: false, matrix: { k: "${{ fromJson(needs.plan.outputs.idx) }}" } }
     defaults: { run: { working-directory: track_2b } }
     env:
-      URL_q4_k_m: https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf
+      URL_q4_k_m: https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/248ec68a63e219e3f061e4c946fc8a20d63b9975/apertus-v1.5-8b-text-q4_k_m.gguf
       SHA_q4_k_m: a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299
-      URL_q8_0: https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf
+      URL_q8_0: https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/2028c3184c0fa060b4259b33ee25e836da6896e5/apertus-v1.5-8b-text-q8_0.gguf
       SHA_q8_0: dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d
     steps:
       - uses: actions/checkout@v7

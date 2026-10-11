@@ -7,7 +7,7 @@ endpoint as an optional variant.
 
 | Job | When | Needs | Command |
 |---|---|---|---|
-| audit | quarterly, or monthly after the publication | the public feed only (no model, no endpoint, no secret) | `gleichlaut feeds --latest`, then `gleichlaut.sl.ingest <date>`, then `gleichlaut audit --date <date> --fail-on-findings` (exit 8 on findings not marked likely equivalent) |
+| audit | quarterly, or monthly after the publication | the public feed only (no model, no endpoint, no secret) | `gleichlaut audit --date latest --fetch --fail-on-new` (the one audit command, as `make audit` and docs/operations.md §0; exit 8 only for findings not in the previous run and not decided) |
 | month (default: 8B) | the 2nd of each month (BAG publishes on the 1st) | the offline image or a venv with `requirements-offline.txt`, the GGUF on a read-only path, **4 CPU cores and 16 GiB RAM** (Q8_0; 8 GiB with Q4_K_M) | `gleichlaut month --backend llamacpp --gguf /models/apertus-v1.5-8b-text-q8_0.gguf --from previous --to latest --fetch --emit` |
 | certify (8B, once) | only with an HMAC key; again after a GGUF / llama-cpp-python / frozen-code change | nothing (seconds, no network) | `gleichlaut certify --import-run data/runs/8b_q8_0_fresh166_g3_final.jsonl --gguf-sha256 dea904ad… --labels eval/labels/m1_q8_0_fresh166.tsv` (Q4_K_M: `8b_q4_k_m_…`, `a037df8d…`, `m1_q4_k_m_…`) |
 | canary (70B variant) | monthly, before the 70B month run (the 2nd, 19:00 on systemd; an init container on Kubernetes) | the certified endpoint and its key | `gleichlaut certify --backend openai --canary 40` |
@@ -65,7 +65,7 @@ to `ReadWritePaths=`); node_exporter's textfile collector then exposes `gleichla
 
 | File | Contents |
 |---|---|
-| [`kubernetes/gleichlaut.yaml`](kubernetes/gleichlaut.yaml) | the default 8B lane: data PVC (state/ and out/), **models PVC (ReadWriteOnce: written once, then mounted read-only)**, ConfigMap, CronJob `gleichlaut-month` (offline image; requests and limits 4 CPU, 16 GiB / 18 GiB for Q8_0, 8 GiB / 10 GiB for Q4_K_M; 2nd of the month 06:00 Zurich, 12 h deadline), CronJob `gleichlaut-audit` (quarterly, the 3rd 07:00, `--fail-on-findings`) |
+| [`kubernetes/gleichlaut.yaml`](kubernetes/gleichlaut.yaml) | the default 8B lane: data PVC (state/ and out/), **models PVC (ReadWriteOnce: written once, then mounted read-only)**, ConfigMap, CronJob `gleichlaut-month` (offline image; requests and limits 4 CPU, 16 GiB / 18 GiB for Q8_0, 8 GiB / 10 GiB for Q4_K_M; 2nd of the month 06:00 Zurich, 12 h deadline), CronJob `gleichlaut-audit` (quarterly, the 3rd 07:00, `--fail-on-new`) |
 | [`kubernetes/certify-job.yaml`](kubernetes/certify-job.yaml) | one-off Jobs, applied one at a time with `-l`: `gleichlaut-fetch-gguf` (fills the models PVC from Hugging Face or your mirror; proxy, CA and `GLEICHLAUT_MODEL_URL` from the ConfigMap; resumes an interrupted download), `gleichlaut-certify-build` (signed build certificate from the M2 run of Q8_0, or the M1 run of Q4_K_M; seconds), `gleichlaut-certify-build-local` (the suite on the cluster's CPU; hours), `gleichlaut-certify-endpoint` (the 70B) |
 | [`kubernetes/models-loader.yaml`](kubernetes/models-loader.yaml) | the no-egress alternative to the fetch Job: a loader pod for `kubectl cp` and a sha256 check |
 | [`kubernetes/gleichlaut-70b.yaml`](kubernetes/gleichlaut-70b.yaml) | the 70B variant: ConfigMap with the endpoint, CronJob `gleichlaut-month-70b` (the 2nd 20:00, after the 8B month's deadline) with the canary as an init container |
@@ -133,13 +133,13 @@ in `gleichlaut-config` (the fetch Job then fetches and checks that file), change
 |---|---|---|---|
 | 0 | success | | none (optionally a "ran" heartbeat: alert if no success in 35 days; `gleichlaut_last_run_timestamp_seconds`) |
 | 1 | reproduction or validation failed | developer | ticket: do not use this build |
-| 2 | usage error, bad item file, missing configuration (no certified GGUF and no `LLM_BASE_URL`, llama-cpp-python missing: use the offline image, CA file, key file, GGUF sha256 mismatch) | operator | ticket |
+| 2 | usage error, bad item file, missing snapshots (audit without `--fetch`), missing configuration (no certified GGUF and no `LLM_BASE_URL`, llama-cpp-python missing: use the offline image, CA file, key file, GGUF sha256 mismatch) | operator | ticket |
 | 3 | 70B canary outside tolerance, or 70B drafting refused (latest canary failed or older than 31 days) | operator | **page during office hours**: stop drafting on the endpoint, re-certify, or draft with the local 8B |
 | 4 | 70B endpoint not certified (missing, expired, FAIL, does not verify) | operator | ticket: `make certify-endpoint` |
 | 5 | certificate FAIL | operator | ticket: this model must not draft the SL lane |
 | 6 | endpoint or feed failed after retries (timeout ≤ about 5 min per request), or feed not yet published, or the GGUF download failed | none at first | the next run resumes. Page if two runs in a row exit 6 |
 | 7 | certificate PENDING_REVIEW | reviewer | ticket: label `needs_review`, then `certify --resolve` |
-| 8 | `audit --fail-on-findings`: divergences in the register | reviewer | ticket: read `out/audit/audit_<date>_summary.json` (a result, not a fault) |
+| 8 | `audit --fail-on-new`: divergences not in the previous run and not decided (`--fail-on-findings`: any open divergence) | reviewer | ticket: read `out/audit/audit_<date>_new.json` (a result, not a fault; persisting findings do not page again) |
 | 130 | interrupted | none | re-run |
 
 An uncertified 8B build is not an exit code: the month runs and every item is marked for review (`review_reason`; the

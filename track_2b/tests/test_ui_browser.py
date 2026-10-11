@@ -450,3 +450,38 @@ def test_gever_csv_label_and_excerpts_export_names_and_lane_help():
     assert o["fa"] == "gleichlaut-audit-decisions-20261006.json" and "audit" in o["ka"] and "decisions" not in o["ka"]
     assert o["fd"].startswith("gleichlaut-decisions-") and "audit" not in o["fd"] and "audit" not in o["kd"] and "decisions" in o["kd"]
     assert o["h0"] and not o["h1"] and o["qe"] == "true" and "probably fine" in o["ht"] and "divergent" in o["ht"] and "identity not verified" in o["ht"]
+
+
+def test_clear_my_decisions_and_name_confirms_inline_and_csv_cells_cannot_be_formulas():
+    """Federal operator (11 Oct 2026): on file:// Chrome shares one local storage across local files, and shared
+    workstation profiles mix reviewers, so the export menu clears this page's decisions and the reviewer's name from the
+    browser, after an inline confirmation (Cancel keeps everything; other sites' keys, the theme and the language stay).
+    Every CSV cell that a spreadsheet would read as a formula (= + - @, tab, CR) gets a leading apostrophe. Off the demo
+    host the demo notice is hidden."""
+    C = _page()
+    probe = ERR + NAME + ("setTimeout(function(){var R=window.GleichlautReview,o={},A=function(){return Object.keys(R.auditPayload().audit||{}).length};"
+        "o.cells=['=1+2','+x','-x','@SUM(A1)','\\tx','\\rx','ok','a;b','\u2014 5'].map(R.csvCell);"
+        "name('=HYPERLINK(\"http://x\")');bw('IT').click();br('exofficio').click();o.csv=R.auditCsv();o.f=R.findingsCsv();"
+        "try{localStorage.setItem('other-app','1')}catch(e){}"
+        "var b=document.getElementById('x-clr'),q=document.getElementById('x-clr-q');o.lab=b.textContent;o.n0=A();o.q0=q.hidden;"
+        "b.click();o.q1=q.hidden;o.bh=b.hidden;o.qt=q.textContent;o.n1=A();"
+        "document.getElementById('x-clr-no').click();o.q2=q.hidden;o.n2=A();"
+        "b.click();document.getElementById('x-clr-yes').click();o.n3=A();o.who=R.auditPayload().reviewer;o.msg=document.getElementById('x-clr-msg').textContent;"
+        "var ks={};for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);ks[k]=localStorage.getItem(k)}o.ks=ks;"
+        "o.demo=document.getElementById('demo').hidden;o.err=window.__err;out(o)},300);")
+    o = _out(_dom(C["p"], "#audit", "en", probe))
+    assert not o["err"], o["err"]
+    assert o["cells"] == ["'=1+2", "'+x", "'-x", "'@SUM(A1)", "\"'\tx\"", "\"'\rx\"", "ok", "\"a;b\"", "\u2014 5"], o["cells"]
+    assert ';"\'=HYPERLINK(""http://x"")";' in o["csv"] and ";=HYPERLINK" not in o["csv"] and ';"=HYPERLINK' not in o["csv"]
+    assert ';"\'=HYPERLINK(""http://x"")";' in o["f"] and ";=HYPERLINK" not in o["f"]
+    assert o["lab"] == "Clear my decisions and name from this browser" and o["n0"] >= 1 and o["q0"] is True
+    assert o["q1"] is False and o["bh"] is True and "Export first" in o["qt"] and o["n1"] == o["n0"]      # asks, clears nothing yet
+    assert o["q2"] is True and o["n2"] == o["n0"]                                                        # Cancel keeps everything
+    assert o["n3"] == 0 and o["who"] == "" and o["msg"].startswith("Cleared"), o
+    ks = o["ks"]
+    assert ks.get("other-app") == "1" and "reviewer" not in json.loads(ks.get("gleichlaut:prefs") or "{}")
+    for k, v in ks.items():
+        if k.startswith("gleichlaut:") and k != "gleichlaut:prefs": assert json.loads(v) in ({}, {"dec": {}, "edits": {}}), (k, v)
+    assert o["demo"] is True
+    src = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "gleichlaut", "ui", "page.py"), encoding="utf-8").read()
+    assert "mi11ion\\.io" in src and "not for production use" in src and "nicht für den produktiven Einsatz" in src

@@ -6,7 +6,8 @@
 #                       ./models: 8.6 GB for the default q8_0, 5.1 GB for BUILD=q4_k_m)
 #   make test           unit and reproduction tests (in Docker)
 #   make audit          DE<->FR/IT congruence audit of the whole register on the latest feed (AUDIT_DATE=YYYYMMDD for another
-#                       date). No model, no endpoint: fetches the public feed if missing -> ./out/audit
+#                       date). No model, no endpoint: fetches the public feed if missing -> ./out/audit (gitignored). The
+#                       same command as make local-audit, the systemd unit and docs/operations.md section 0
 #   make feeds          list the published BAG feed dates (public resources API + polite HEAD probes)
 # The SL default lane is the local Apertus 8B GGUF on CPU (offline image, air-gapped; PREREG R1). The 70B on a certified
 # endpoint is the optional "fewer edits" lane (targets ending in -70b / -endpoint, and the canary).
@@ -28,9 +29,12 @@
 #   MONTH_ARGS="--emit ..."  extra arguments for gleichlaut month (e.g. --emit writes XLIFF/FHIR + the review register)
 #   make fake-endpoint  an OpenAI-compatible fake on 127.0.0.1:8099 for test environments (FAKE_MODE=recorded|echo|...)
 #   make local-run      the same as `make run` without Docker (Python >= 3.9; lxml optional)
+#   make local-audit    the same as `make audit` without Docker (AUDIT_DATE, AUDIT_ARGS; AUDIT_OUT=DIR instead of ./out/audit)
 #   make pilot-pack     the phase-1 pilot pack (Variante A) as one checksummed, reproducible zip in ./dist (gitignored):
 #                       offline register, Fallblätter MD + PDF, Entscheidvorlage, Management-Notiz, Schutzbedarfsanalyse,
-#                       Projektauftrag, SHA256SUMS. Fails when the Fallblätter or their PDFs are not current. No model, no network
+#                       Projektauftrag, SHA256SUMS. Fails when the Fallblätter or their PDFs are not current. No model, no network.
+#                       Same content, same bytes: its expected sha256 is recorded in docs/pilot/README.md (rebuild from the
+#                       commit and compare; `python3 tools/pilot_pack.py --check`, `--readme` rewrites it after a change)
 #   make pilot-pdf      re-render docs/pilot/pdf/ (python-markdown + headless Chrome; dev step, then commit the PDFs)
 #   make install-dev    pip install -e . (the `gleichlaut` console script; library: docs/api.md)
 #   make lock / sbom    re-lock the hash-pinned requirements (network: PyPI JSON API) / regenerate docs/sbom.json
@@ -137,16 +141,14 @@ month-70b:
 	  $(IMAGE) python -m gleichlaut month --backend openai $(if $(ALLOW_STALE_CANARY),--allow-stale-canary) $(MONTH_SEL) $(MONTH_ARGS)
 
 # The audit needs no model and no endpoint: only the public feed of one date (fetched once, ~3 x 90 MB streamed into
-# ~3 x 5.5 MB snapshots under out/hist). AUDIT_ARGS is passed through to `gleichlaut audit`.
+# ~3 x 5.5 MB snapshots under out/hist). One entry point with the same defaults on every path (make audit, make local-audit,
+# the systemd unit, the CronJob, plain Python): `gleichlaut audit --date latest --fetch` -> out/audit (gitignored; never
+# data/audit/, the committed evidence). AUDIT_ARGS is passed through (e.g. --fail-on-new); AUDIT_OUT=DIR writes elsewhere.
+AUDIT_SEL = --date $(AUDIT_DATE) --fetch $(if $(AUDIT_OUT),--out $(AUDIT_OUT))
 audit:
 	docker build --target base -t $(IMAGE) .
 	mkdir -p out/hist out/audit
-	docker run --rm $(PROXY) $(CA) $(AS_ME) -v $(CURDIR)/out:/app/out $(IMAGE) sh -c '\
-	  d=$(AUDIT_DATE); if [ "$$d" = latest ]; then d=$$(python -m gleichlaut feeds --latest) || exit 6; fi; \
-	  for L in de fr it; do [ -f out/hist/$$d-$$L.json ] || python -m gleichlaut.sl.ingest $$d --langs $$L || exit 6; done; \
-	  T=; [ $$(ls out/hist/*-de.json 2>/dev/null | wc -l) -lt 2 ] && { T="--terms data/audit/term_pairs_20261006.json"; \
-	    echo "one snapshot only: terminology uses the term pairs learned from the 2026 snapshots (data/audit/term_pairs_20261006.json)"; }; \
-	  python -m gleichlaut audit --hist out/hist --date $$d --out out/audit $$T $(AUDIT_ARGS)'
+	docker run --rm $(PROXY) $(CA) $(AS_ME) -v $(CURDIR)/out:/app/out $(IMAGE) python -m gleichlaut audit --date $(AUDIT_DATE) --fetch $(AUDIT_ARGS)
 
 feeds:
 	docker build --target base -t $(IMAGE) .
@@ -163,7 +165,7 @@ local-test:
 	PYTHONPATH=src python3 tests/run.py
 
 local-audit:
-	PYTHONPATH=src python3 -m gleichlaut audit $(AUDIT_ARGS)
+	PYTHONPATH=src python3 -m gleichlaut audit $(AUDIT_SEL) $(AUDIT_ARGS)
 
 backtest:
 	PYTHONPATH=src python3 -m gleichlaut backtest

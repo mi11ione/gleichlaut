@@ -1,6 +1,9 @@
-# Congruence audit of the whole register on the latest feed (docs/operations.md §0): no model, no endpoint.
-# --fail-on-findings: exit 8 when a finding is not marked likely equivalent (the audit's own triage), so the alert reaches a reviewer
-# (alert.sh: severity reviewer). Exit codes -> alerts: docs/deploy/README.md.
+# Congruence audit of the whole register on the latest feed (docs/operations.md §0): no model, no endpoint. The same
+# command as make audit, make local-audit and the plain-Python line in docs/operations.md §0 (one entry point, same defaults).
+# --fail-on-new: exit 8 only when a finding (not marked likely equivalent) is not in the previous run and not decided in a
+# review-page export dropped into /var/lib/gleichlaut/out/audit/decisions/, so a reviewer is paged once per new finding,
+# not every month for findings that persist (alert.sh: severity reviewer). --fail-on-findings (exit 8 whenever any open
+# finding exists) is still available. Exit codes -> alerts: docs/deploy/README.md.
 [Unit]
 Description=Gleichlaut DE-FR-IT congruence audit (no model)
 Wants=network-online.target
@@ -15,7 +18,8 @@ WorkingDirectory=/opt/gleichlaut/track_2b
 EnvironmentFile=-/etc/gleichlaut/gleichlaut.env
 Environment=PYTHONPATH=/opt/gleichlaut/track_2b/src PYTHONDONTWRITEBYTECODE=1
 Environment=GLEICHLAUT_STATE=/var/lib/gleichlaut/state GLEICHLAUT_OUT=/var/lib/gleichlaut/out GLEICHLAUT_HIST=/var/lib/gleichlaut/out/hist
-ExecStart=/bin/sh -c 'd=$$(/opt/gleichlaut/venv/bin/python -m gleichlaut feeds --latest) && /opt/gleichlaut/venv/bin/python -m gleichlaut.sl.ingest $$d && exec /opt/gleichlaut/venv/bin/python -m gleichlaut audit --hist /var/lib/gleichlaut/out/hist --date $$d --out /var/lib/gleichlaut/out/audit --fail-on-findings'
+# writes /var/lib/gleichlaut/out/audit (GLEICHLAUT_OUT/audit); snapshots in GLEICHLAUT_HIST
+ExecStart=/opt/gleichlaut/venv/bin/python -m gleichlaut audit --date latest --fetch --fail-on-new
 StateDirectory=gleichlaut
 TimeoutStartSec=1h
 # hardening: read-only system, writes only to /var/lib/gleichlaut

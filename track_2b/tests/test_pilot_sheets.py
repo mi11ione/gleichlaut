@@ -31,6 +31,31 @@ def test_committed_sheets_are_current():
     assert r.returncode == 0, r.stdout[-2000:] + r.stderr[-2000:]
 
 
+def test_sheets_for_any_audit_run_unlabelled_marked_not_yet_assessed():
+    """tools/pilot_sheets.py --run DIR: the sheets of an operator's own run (a monthly `gleichlaut audit` in out/audit/),
+    labels optional; a finding without a blind label is «noch nicht beurteilt», and the pilot's sheets are untouched."""
+    import json, shutil
+    A = json.load(open(av.AUDIT, encoding="utf-8")); A["summary"]["date"] = "20261106"
+    with tempfile.TemporaryDirectory() as run:
+        json.dump(A, open(os.path.join(run, "audit_20261106.json"), "w", encoding="utf-8"), ensure_ascii=False)
+        shutil.copy(os.path.join(os.path.dirname(av.AUDIT), "audit_texts_20261006.json"), os.path.join(run, "audit_texts_20261106.json"))
+        r = subprocess.run([sys.executable, TOOL, "--run", run], capture_output=True, text=True)
+        assert r.returncode == 0, r.stdout[-2000:] + r.stderr[-2000:]
+        out = os.path.join(run, "fallblaetter-20261106"); fs = sorted(os.listdir(out))
+        D = av.data(hist=None)
+        assert len([f for f in fs if f.startswith("FB-")]) == len(D["issues"]) and not any(f.startswith("FB-X") for f in fs)
+        ov = open(os.path.join(out, "00_Uebersicht.md"), encoding="utf-8").read()
+        assert "Laufs vom 06.11.2026" in ov and "38 noch nicht beurteilt" in ov and "0 real" in ov
+        s = open(os.path.join(out, "FB-05_Nemluvio.md"), encoding="utf-8").read()
+        assert "| Blinde Einstufung | noch nicht beurteilt" in s and "Lauf vom 06.11.2026 (eigener Lauf)" in s
+        assert "foph-sl-publication-20261106-de.ndjson" in s and "Quelle: `audit_20261106.json`" in s
+        assert "**acht Wochen**" in s and "**quattro settimane**" in s           # the excerpts from the run's own texts file
+        r = subprocess.run([sys.executable, TOOL, "--run", run, "--check"], capture_output=True, text=True)
+        assert r.returncode == 0, r.stdout
+    r = subprocess.run([sys.executable, TOOL, "--check"], capture_output=True, text=True)       # the pilot pack's 20261006
+    assert r.returncode == 0, r.stdout
+
+
 def test_pdfs_are_current_and_the_memo_fits_one_page():
     """docs/pilot/pdf/: one PDF per Fallblatt plus the Entscheidvorlage and the Management-Notiz, rendered from the current
     sources (tools/pilot_pdf.py --check: source hash and PDF hash as recorded in SOURCES.sha256); the memo is one page."""
@@ -77,3 +102,15 @@ def test_pack_is_reproducible_and_checksummed():
                      "Schutzbedarfsanalyse_Phase1.md", "fallblaetter/FB-01_Diaphin.md", "pdf/FB-01_Diaphin.pdf", "register/gleichlaut-register.html"):
             assert need in names, need
         assert open(os.path.join(a, za[0] + ".sha256")).read().split()[0] == hashlib.sha256(A).hexdigest()
+        # the trusted value lives outside the zip: docs/pilot/README.md records the zip's sha256 (and the content's), and
+        # this tree must build exactly that (rebuild from the commit and compare; pilot_pack.check, as --check)
+        sys.path.insert(0, os.path.join(ROOT, "tools"))
+        import pilot_pack, zlib
+        st = dict(zip=za[0], sha256=hashlib.sha256(A).hexdigest(), content=hashlib.sha256(z.read(top + "SHA256SUMS")).hexdigest(),
+                  zlib=zlib.ZLIB_RUNTIME_VERSION)
+        assert pilot_pack.check(st) == 0, (pilot_pack.recorded(), st)
+        rd = open(pilot_pack.README, encoding="utf-8").read()
+        assert "git checkout <commit>" in rd and "cosign" in rd and "minisign" in rd and st["sha256"] in rd or pilot_pack.recorded()["zlib"] != st["zlib"]
+        i = z.getinfo(top + "SHA256SUMS"); assert i.date_time == (2026, 10, 6, 0, 0, 0)       # not the commit time
+        reg = z.read(top + "register/gleichlaut-register.html").decode("utf-8")
+        assert '"rev": "' + pilot_pack.src_rev() + '"' in reg or '"rev":"' + pilot_pack.src_rev() + '"' in reg

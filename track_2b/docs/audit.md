@@ -8,13 +8,17 @@ The audit separates the two cases: **"the old French/Italian already disagrees w
 It is deterministic code: no model calls, Python standard library only.
 
 ```bash
-PYTHONPATH=src python3 -m gleichlaut.audit --hist DIR --date 20261006 --out data/audit \
-    [--worklist DIR] [--worklist-new DIR] [--worklist-terms DIR] [--no-dating] [--terms FILE] [--fail-on-findings]
-PYTHONPATH=src python3 -m gleichlaut.audit --list migel|al --file PATH [--out data/audit] [--worklist DIR] [--fail-on-findings]
+PYTHONPATH=src python3 -m gleichlaut audit --date latest --fetch [--fail-on-new]       # operators: -> out/audit (docs/operations.md §0)
+PYTHONPATH=src python3 -m gleichlaut.audit --hist DIR --date 20261006 --evidence \      # research / replay: -> data/audit
+    [--worklist DIR] [--worklist-new DIR] [--worklist-terms DIR] [--no-dating] [--terms FILE | --mine-terms] [--fail-on-findings]
+PYTHONPATH=src python3 -m gleichlaut.audit --list migel|al --file PATH [--out DIR | --evidence] [--worklist DIR] [--fail-on-findings]
 ```
 
-`gleichlaut audit ...` passes the same arguments through. `--hist` defaults to `$GLEICHLAUT_HIST`. The SL run writes five
-files to `--out`:
+`gleichlaut audit ...` passes the same arguments through (and adds exit 8, `--fail-on-new` and the metrics file).
+`--hist` defaults to `$GLEICHLAUT_HIST`, `--date` to `latest`. Output goes to `out/audit/` (`$GLEICHLAUT_AUDIT_OUT`,
+`--out DIR`); the committed files in `data/audit/` are written only with `--evidence`, and `--out data/audit` without it
+is refused (exit 2), so an ad-hoc run cannot overwrite the evidence the register, the tests and the pilot pack read. The
+SL run writes five files:
 
 - `audit_<date>.json`: every finding, plus the hits on the fresh items;
 - `audit_<date>_summary.json`: the counts;
@@ -235,14 +239,16 @@ check says little here.
    (fetches missing feeds, writes `out/audit`), or by hand `python -m gleichlaut.sl.ingest YYYYMMDD --out DIR`
    into `$GLEICHLAUT_HIST`. Keep the earlier snapshots of the same year in that dir: dating and terminology mining
    use them.
-2. `python -m gleichlaut.audit --hist DIR --date YYYYMMDD --out data/audit` (add `--fail-on-findings` in a scheduled job).
+2. `python -m gleichlaut audit --hist DIR --date YYYYMMDD` (writes `out/audit/`; add `--fail-on-new` in a scheduled job).
    This writes the five files above; the register needs `audit_<date>.json` and `audit_texts_<date>.json`, the review page
    (`audit_item`) needs `lang_stats_<date>.json.gz` and `term_pairs_<date>.json`.
-3. Build the review page with the new file: `gleichlaut ui --audit data/audit/audit_<date>.json` (the UI's `--audit`
+3. Build the review page with the new file: `gleichlaut ui --audit out/audit/audit_<date>.json` (the UI's `--audit`
    option). Note that `audit_item` still reads the 20261006 statistics and pairs by default; pass `stats=`/`terms=` or
    update `STATS`/`TERMS` when a new quarter becomes the reference.
 4. Optional: `--worklist-terms DIR` / `--worklist-new DIR` for blind labelling. For MiGeL/AL, download the current xlsx
    from the BAG page and run `--list migel|al --file PATH`.
+5. Case sheets for GEVER: `python3 tools/pilot_sheets.py --run out/audit` (one sheet per issue of the newest run, plus an
+   overview, in `out/audit/fallblaetter-<date>/`; findings without a blind label are marked «noch nicht beurteilt»).
 
 ## Every finding
 

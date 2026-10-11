@@ -32,7 +32,7 @@
 # and SSL_CERT_FILE: /etc/gleichlaut/ca/ca.pem in the ConfigMap. Every pod that talks to the network mounts it.
 # Jobs (the schedules never overlap on the RWO data PVC; tests check it from the deadlines):
 #   gleichlaut-month   2nd of the month 06:00 Zurich (12 h deadline: done by 18:00): shadow mode with the local 8B
-#   gleichlaut-audit   quarterly, the 3rd 07:00: the DE<->FR/IT congruence audit (no model, no endpoint, no secret); exit 8 on findings
+#   gleichlaut-audit   quarterly, the 3rd 07:00: the DE<->FR/IT congruence audit (no model, no endpoint, no secret); exit 8 on new findings
 #   gleichlaut-month-70b (gleichlaut-70b.yaml, optional) the 2nd 20:00, after this lane's deadline
 # The 70B "fewer edits" variant (certified endpoint, canary): gleichlaut-70b.yaml.
 # Pods run as uid 10001 (the image's user), non-root, no privilege escalation, all capabilities dropped, read-only root
@@ -142,7 +142,7 @@ spec:
   failedJobsHistoryLimit: 3
   jobTemplate:
     spec:
-      backoffLimit: 0                 # exit 8 (divergences found) is a result, not a fault: never retried
+      backoffLimit: 0                 # exit 8 (new divergences found) is a result, not a fault: never retried
       activeDeadlineSeconds: 3600
       template:
         metadata: { labels: { app: gleichlaut, job: audit } }
@@ -162,9 +162,9 @@ spec:
               command: [sh, -c]
               args:
                 - |
-                  d=$(python -m gleichlaut feeds --latest) || exit 6
-                  for L in de fr it; do [ -f /app/out/hist/$d-$L.json ] || python -m gleichlaut.sl.ingest $d --langs $L || exit 6; done
-                  exec python -m gleichlaut audit --hist /app/out/hist --date $d --out /app/out/audit --fail-on-findings
+                  # the one entry point (as make audit and the systemd unit): fetches the missing feeds, writes /app/out/audit;
+                  # exit 8 only for findings not in the previous run and not decided (/app/out/audit/decisions/)
+                  exec python -m gleichlaut audit --date latest --fetch --fail-on-new
               envFrom: [{ configMapRef: { name: gleichlaut-config } }]
               securityContext:
                 allowPrivilegeEscalation: false

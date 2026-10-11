@@ -9,9 +9,11 @@
   draft      draft FR/IT for an item file (docs/item-schema.json) through a backend; resumable records + summary
   live       the live slice alone (5 Fedlex items) through LLM_BASE_URL or a local GGUF
   emit, ui   XLIFF 2.1 / FHIR and the review page (over a recorded run; --records/--items where the build supports them)
-  audit      the DE<->FR/IT congruence audit of the whole register (gleichlaut.audit; no model; arguments passed through;
-             --fail-on-findings exits 8 when a finding is not marked likely equivalent, --fail-on-findings=KIND,...
-             when any finding of those kinds exists: for monitoring)
+  audit      the DE<->FR/IT congruence audit of the whole register (gleichlaut.audit; no model): --date latest|YYYYMMDD
+             (default latest) --fetch (download missing feeds) -> out/audit ($GLEICHLAUT_AUDIT_OUT; data/audit/ only with
+             --evidence); --fail-on-new exits 8 for findings not in the previous run and not decided (the scheduled
+             default), --fail-on-findings when any finding is not marked likely equivalent, --fail-on-findings=KIND,...
+             when any finding of those kinds exists
   termbase   mine BAG's house FR/IT renderings of recurring German limitation terms from one snapshot (no model) and
              write the termbase JSON + a TBX-Basic file for terminology tools: [--tbx OUT] [--json OUT] [--hist DIR]
              [--date YYYYMMDD] [--house OUT]; mining also writes the house sentences (BAG's dominant wording of fixed German
@@ -43,11 +45,11 @@ Monitoring: --metrics-file PATH (or GLEICHLAUT_METRICS_DIR=DIR -> DIR/gleichlaut
 and certify writes a Prometheus textfile (node_exporter textfile collector): exit code, duration, last run time, item
 counts by status, model calls, shadow comparison, audit findings by kind.
 
-Exit codes: 0 ok | 1 reproduction or validation failed | 2 usage / bad input / missing configuration (incl. the local
-8B lane without llama-cpp-python: use the offline image) | 3 canary outside tolerance, or drafting refused because the
-latest canary failed or is stale | 4 refused: endpoint not certified | 5 certificate FAIL | 6 endpoint or feed failed
-(records so far are kept; re-run to resume) | 7 certificate PENDING_REVIEW | 8 audit --fail-on-findings found
-divergences | 130 interrupted.  GLEICHLAUT_DEBUG=1 shows tracebacks."""
+Exit codes: 0 ok | 1 reproduction or validation failed | 2 usage / bad input / missing configuration or snapshots (incl.
+the local 8B lane without llama-cpp-python: use the offline image) | 3 canary outside tolerance, or drafting refused
+because the latest canary failed or is stale | 4 refused: endpoint not certified | 5 certificate FAIL | 6 endpoint or
+feed failed (records so far are kept; re-run to resume) | 7 certificate PENDING_REVIEW | 8 audit --fail-on-new /
+--fail-on-findings found divergences | 130 interrupted.  GLEICHLAUT_DEBUG=1 shows tracebacks."""
 import argparse, datetime, inspect, json, os, re, sys, time, urllib.error, urllib.request
 from collections import Counter
 from . import core, backends
@@ -55,11 +57,12 @@ from . import core, backends
 # The two certified 8B builds (PREREG R1: M1 Q4_K_M, M2 Q8_0; build certificates in eval/certificates/). GLEICHLAUT_BUILD
 # picks one, Q8_0 by default (0 errors in its ready drafts, 12.2 points more edits saved than Q4_K_M:
 # eval/results/size_compare.json); GLEICHLAUT_MODEL_URL / GLEICHLAUT_MODEL_SHA256 override both (any other file needs its
-# own certificate).
+# own certificate). The URLs name the Hugging Face commit recorded in docs/dependencies.md (resolve/<revision>, not
+# resolve/main), so a later push to those third-party repositories cannot change what is fetched; the sha256 check stays.
 BUILDS = {
-    "q8_0": ("https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf",
+    "q8_0": ("https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/2028c3184c0fa060b4259b33ee25e836da6896e5/apertus-v1.5-8b-text-q8_0.gguf",
              "dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d"),       # 8.6 GB, a 16 GiB box (default)
-    "q4_k_m": ("https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf",
+    "q4_k_m": ("https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/248ec68a63e219e3f061e4c946fc8a20d63b9975/apertus-v1.5-8b-text-q4_k_m.gguf",
                "a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299"),     # 5.1 GB, an 8 GiB box
 }
 BUILD = os.environ.get("GLEICHLAUT_BUILD") or "q8_0"
@@ -766,7 +769,14 @@ def _audit_kinds():
 
 
 def cmd_audit(rest):
-    """gleichlaut audit [--fail-on-findings | --fail-on-findings=KIND,...] <audit arguments>.
+    """gleichlaut audit [--date latest|YYYYMMDD] [--fetch] [--out DIR] [--fail-on-new [--decided PATH]...]
+                        [--fail-on-findings | --fail-on-findings=KIND,...] <audit arguments>.
+    The one entry point of the audit (make audit, make local-audit, the systemd unit, the Kubernetes CronJob and plain
+    Python all call it with the same defaults; gleichlaut.audit.main does the work).
+    --fail-on-new           exit 8 only for findings (not marked likely equivalent) that the previous run in the same
+                            output dir did not have and that no decision export marks as decided (--decided FILE|DIR,
+                            repeatable; default <out>/decisions/ when it exists). The first run counts every finding as new.
+                            Writes audit_<date>_new.json next to the summary. For the scheduler: pages once per new finding.
     --fail-on-findings      passed through to gleichlaut.audit, which fails when a finding is not marked likely equivalent
                             (its own triage); reported here as exit 8, the monitoring code (not 1, a broken build)
     --fail-on-findings=K,.. exit 8 when the summary counts any finding of these kinds (number, unit, language, editorial,
@@ -774,20 +784,40 @@ def cmd_audit(rest):
     The summary's counts also feed the metrics textfile (--metrics-file / GLEICHLAUT_METRICS_DIR)."""
     from . import audit
     kinds_all = _audit_kinds()
-    bare, kinds, args = False, None, []
-    for x in rest:
+    bare, kinds, new, dec, args, i = False, None, False, [], [], 0
+    while i < len(rest):
+        x = rest[i]; i += 1
         if x == "--fail-on-findings": bare = True
         elif x.startswith("--fail-on-findings="):
             kinds = tuple(k for k in x.split("=", 1)[1].split(",") if k)
             bad = [k for k in kinds if k not in kinds_all]
             if bad or not kinds: raise UsageError(f"--fail-on-findings=KINDS takes a comma-separated subset of {','.join(kinds_all)}")
+        elif x == "--fail-on-new": new = True
+        elif x == "--decided":
+            if i >= len(rest): raise UsageError("--decided takes a decision export (JSON) or a directory of them")
+            dec.append(rest[i]); i += 1
+        elif x.startswith("--decided="): dec.append(x.split("=", 1)[1])
         else: args.append(x)
+    if dec and not new: raise UsageError("--decided goes with --fail-on-new")
+    if new and (bare or kinds): raise UsageError("give one of --fail-on-new and --fail-on-findings")
+    ap = argparse.ArgumentParser(add_help=False); ap.add_argument("--date", default=None); ap.add_argument("--out", default=None)
+    ap.add_argument("--evidence", action="store_true")
+    k, _ = ap.parse_known_args(args)
+    try: out0 = audit.out_dir(k.out, k.evidence) if hasattr(audit, "out_dir") else (k.out or os.path.join(OUT, "audit"))
+    except ValueError: out0 = None                   # audit.main refuses it (exit 2)
+    prior = None
+    if new and out0:
+        R = audit.runs(out0)
+        if R:
+            try: prior = audit.run_state(R[-1][1])
+            except (OSError, ValueError) as e: print(f"warning: --fail-on-new: cannot read the previous run {R[-1][1]}: {e}", file=sys.stderr)
+    if hasattr(audit, "LAST_RUN"): audit.LAST_RUN.clear()
     native = bare and _accepts("gleichlaut.audit", "--fail-on-findings")
     rc = audit.main(args + (["--fail-on-findings"] if native else [])) or 0
-    ap = argparse.ArgumentParser(add_help=False); ap.add_argument("--date", default=None)
-    ap.add_argument("--out", default=getattr(audit, "DEST", os.path.join(OUT, "audit")))
-    k, _ = ap.parse_known_args(args); date = k.date or "20261006"
-    p = os.path.join(k.out, f"audit_{date}_summary.json")
+    run = dict(getattr(audit, "LAST_RUN", None) or {})
+    date = run.get("date") or (k.date if k.date and k.date != "latest" else "20261006")
+    out = run.get("out") or out0 or k.out or os.path.join(OUT, "audit")
+    p = os.path.join(out, f"audit_{date}_summary.json")
     summ = None
     if os.path.exists(p):
         try: summ = json.load(open(p, encoding="utf-8"))
@@ -799,6 +829,8 @@ def cmd_audit(rest):
         print(f"audit {date}: findings not marked likely equivalent (--fail-on-findings): exit {EXIT_FINDINGS}; details in {p}",
               file=sys.stderr)
         return EXIT_FINDINGS
+    if new and not rc:
+        return _audit_new(audit, out, date, prior, dec or [os.path.join(out, "decisions")])
     if (kinds is None and not bare) or rc: return rc
     if not isinstance(summ, dict): raise UsageError(f"--fail-on-findings: the audit wrote no summary at {p}")
     kinds = kinds or kinds_all
@@ -808,6 +840,32 @@ def cmd_audit(rest):
               file=sys.stderr)
         return EXIT_FINDINGS
     return rc
+
+
+def _audit_new(audit, out, date, prior, dec):
+    """--fail-on-new: compare this run with the run that was newest in the output dir before it; write
+    audit_<date>_new.json; exit 8 when an open finding is neither in that run nor decided."""
+    cur = os.path.join(out, f"audit_{date}.json")
+    if not os.path.exists(cur): raise UsageError(f"--fail-on-new: the audit wrote no {cur}")
+    C = audit.run_state(cur); D = audit.decided(dec)
+    base = prior["sigs"] if prior else set()
+    N = [(s, f) for s, f in C["open"] if s not in base and s not in D]
+    rep = dict(date=date, previous_run=dict(date=prior["date"], file=os.path.basename(prior["path"])) if prior else None,
+               decided_from=[p for p in dec if os.path.exists(p)], decided=len(D), open=len(C["open"]), new=len(N),
+               note="open = not marked likely equivalent; new = open, not in the previous run of this output dir, and not "
+                    "decided in a review-page export (same signature: limitation | kind | language | values)",
+               findings=[dict(signature=s, fid=f.get("fid"), id=f.get("id"), product=f.get("product"), kind=f.get("kind"),
+                              lang=f.get("lang"), description=f.get("description") or f.get("detail")) for s, f in N])
+    p = os.path.join(out, f"audit_{date}_new.json")
+    with open(p, "w", encoding="utf-8") as fh: json.dump(rep, fh, ensure_ascii=False, indent=1)
+    _METRICS.update(audit_new=len(N), audit_open=len(C["open"]))
+    since = f"the previous run ({prior['date']})" if prior else "no previous run in " + out + " (first run: every open finding is new)"
+    if N:
+        print(f"audit {date}: {len(N)} new finding(s) of {len(C['open'])} open, against {since}, {len(D)} decided "
+              f"(--fail-on-new): exit {EXIT_FINDINGS}; details in {p}", file=sys.stderr)
+        return EXIT_FINDINGS
+    print(f"audit {date}: no new finding ({len(C['open'])} open, all in {since} or decided); {p}", file=sys.stderr)
+    return EXIT_OK
 
 
 def _pop_metrics(argv):
@@ -853,6 +911,9 @@ def write_metrics(path, cmd, rc, secs, m=None):
     if "audit_findings" in m:
         g("gleichlaut_audit_findings", "audit findings by kind",
           [((("kind", k),), m["audit_findings"].get(k, 0)) for k in m.get("audit_kinds") or AUDIT_KINDS])
+        if m.get("audit_new") is not None:
+            g("gleichlaut_audit_new_findings", "open findings not in the previous run and not decided (--fail-on-new)", [((), m["audit_new"])])
+            g("gleichlaut_audit_open_findings", "findings not marked likely equivalent", [((), m["audit_open"])])
         if m.get("audit_limitations_with_finding") is not None:
             g("gleichlaut_audit_limitations_with_finding", "limitations with at least one finding", [((), m["audit_limitations_with_finding"])])
     d = os.path.dirname(os.path.abspath(path)); os.makedirs(d, exist_ok=True)

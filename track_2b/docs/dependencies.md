@@ -48,10 +48,18 @@ weights, is a different model build and has to be evaluated again (m1 workflow) 
 |---|---|---|
 | 1 | `swiss-ai/Apertus-v1.5-8B` | the official weights (safetensors, 18.4 GB; multimodal: text, image, audio) |
 | 2 | `andreasmartin/apertus-v1.5-8b-text` (revision `c0e7eeb6`, card `base_model: swiss-ai/Apertus-v1.5-8B`) | a third-party **text-only** extraction: the vision and audio towers removed, so llama.cpp can convert it |
-| 3 | `Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF` (revision `248ec68a`, 5 Sep 2026) | `apertus-v1.5-8b-text-q4_k_m.gguf`, made from step 2 with llama.cpp through ggml.ai's GGUF-my-repo space (its card says so; tag `gguf-my-repo`) |
+| 3 | `Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF` (revision `248ec68a63e219e3f061e4c946fc8a20d63b9975`, 5 Sep 2026) | `apertus-v1.5-8b-text-q4_k_m.gguf`, made from step 2 with llama.cpp through ggml.ai's GGUF-my-repo space (its card says so; tag `gguf-my-repo`) |
 | pin | `BUILD=q4_k_m` (the 8 GiB option) | `a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299`, 5,059,027,136 bytes |
-| 3' (Q8_0) | `andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF` (revision `2028c318`, 16 Aug 2026) | `apertus-v1.5-8b-text-q8_0.gguf`, made from step 2 by the same author, through GGUF-my-repo (tag `gguf-my-repo`) |
+| 3' (Q8_0) | `andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF` (revision `2028c3184c0fa060b4259b33ee25e836da6896e5`, 16 Aug 2026) | `apertus-v1.5-8b-text-q8_0.gguf`, made from step 2 by the same author, through GGUF-my-repo (tag `gguf-my-repo`) |
 | pin | `BUILD=q8_0` (the default) | `dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d`, 8,567,121,856 bytes |
+
+**Download URLs are pinned to these revisions**, not to `resolve/main`, in `gleichlaut.cli.BUILDS`,
+`tools/supply_chain.py` (the SBOM) and the workflows:
+`https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/2028c3184c0fa060b4259b33ee25e836da6896e5/apertus-v1.5-8b-text-q8_0.gguf`
+and
+`https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/248ec68a63e219e3f061e4c946fc8a20d63b9975/apertus-v1.5-8b-text-q4_k_m.gguf`.
+A later push to either third-party repository therefore cannot change what `fetch-gguf` downloads; the sha256 check after
+every download stays as the second guard (a mirror set with `GLEICHLAUT_MODEL_URL` is checked against the same sha256).
 
 **Chat template.** Both GGUFs embed a `tokenizer.chat_template` byte-identical to the official `swiss-ai/Apertus-v1.5-8B`
 template (sha256 `d23af2850029e9df88bb017e06e0c14a0462604588f1dbe4f519cdfac3e260e0`, 16,614 bytes; checked 10 Oct 2026

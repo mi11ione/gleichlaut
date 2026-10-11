@@ -236,7 +236,7 @@ footer{border-top:1px solid var(--hair);margin-top:32px;padding:10px 0 32px;colo
 .menu{position:relative}.menu>summary{list-style:none;cursor:pointer}.menu>summary::-webkit-details-marker{display:none}
 .menu>summary::after{content:" ▾"}
 .menu .mm{position:absolute;right:0;top:calc(100% + 6px);z-index:10;background:var(--paper);border:1px solid var(--ink);padding:8px 12px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:240px;font:400 13px/1.4 var(--sans)}
-.menu .mm .tb{color:var(--ink)}.menu .mm .msg{color:var(--ink2);font:400 11px/1.4 var(--mono)}
+.menu .mm .tb{color:var(--ink)}.menu .mm .clrq{color:var(--ink)}.ctx.demo{color:var(--ink);font-weight:600}.menu .mm .msg{color:var(--ink2);font:400 11px/1.4 var(--mono)}
 .who{margin-top:10px;font:400 12px/1.4 var(--mono);color:var(--ink2)}.who input{background:none;border:0;border-bottom:1px solid var(--hair);padding:2px 0;font:400 14px/1.4 var(--sans);color:var(--ink);min-width:220px}
 footer h3{font:500 13px/1.4 var(--sans);color:var(--ink);margin:0 0 8px}
 footer p{margin:6px 0 0;overflow-wrap:anywhere;max-width:150ch}
@@ -285,10 +285,12 @@ BODY = r"""<div class="app">
    <button class="tb" id="x-copy" type="button"></button><button class="tb" id="x-imp" type="button"></button>
    <button class="tb" id="a-csv-i" type="button"></button><button class="tb" id="a-csv" type="button"></button><button class="tb" id="a-imp" type="button"></button>
    <span class="msg" id="x-msg" aria-live="polite"></span><span class="msg" id="a-msg" aria-live="polite"></span><span class="msg" id="where"></span>
+   <button class="tb" id="x-clr" type="button"></button><span class="msg clrq" id="x-clr-q" role="group" hidden><span id="x-clr-t"></span> <button class="tb" id="x-clr-yes" type="button"></button> <button class="tb" id="x-clr-no" type="button"></button></span><span class="msg" id="x-clr-msg" aria-live="polite"></span>
    <textarea id="copybox" hidden readonly aria-label="Decisions JSON" data-aria="json"></textarea></div></details>
   <label><span id="l-ui" class="vh"></span><select id="ui-lang" aria-label="Interface language" data-aria="uil"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option></select></label><button class="tb" id="theme" type="button"></button></div>
 </header>
 <p class="ctx" id="ctxline"></p>
+<p class="ctx demo" id="demo" role="note" hidden></p>
 <p class="lanehelp" id="lanehelp" hidden></p>
 <div class="work" id="p-audit" role="tabpanel" aria-labelledby="t-audit" hidden>
  <section class="register" aria-label="Issues" data-aria="issues">
@@ -965,6 +967,23 @@ it:{gNot:"Non confermati dagli annotatori ({n})",blind2:"Due annotatori Claude a
  laneQ:"Spiegare varianti e stati",
  laneHelp:"Insieme di prova: 166 modifiche pubblicate, redatte di nuovo per misurare lo strumento; predefinita Apertus 8B Q8_0 su CPU (build certificato), opzionale Apertus 70B come servito da Public AI (identità non verificata). Prova in parallelo: un mese del flusso reale, non produttiva. Stati: ✓ pronta (tutti i controlli superati) · ~ probabilmente in ordine (segnalata, ogni rilievo probabilmente innocuo) · ▲ da verificare · ≠ divergente (il testo precedente diverge già dal tedesco) · h affidata a un traduttore."}};
 Object.keys(TX9).forEach(function(L){Object.keys(TX9[L]).forEach(function(k){TX[L][k]=TX9[L][k]})});
+// federal operator (11 Oct 2026): clear this browser's decisions and name (shared workstation profiles; Chrome shares one
+// local storage across every file:// page), and the demo host says it is not for production use
+var TX10={
+de:{clr:"Meine Entscheide und meinen Namen aus diesem Browser löschen",clrQ:"Alle Entscheide, Notizen und den Namen löschen, die diese Seite in diesem Browser gespeichert hat? Vorher exportieren, wenn sie noch gebraucht werden.",
+ clrYes:"Ja, löschen",clrNo:"Abbrechen",clrDone:"Gelöscht: Dieser Browser hält keine Entscheide und keinen Namen dieser Seite mehr.",
+ demo:"Demo-Seite (Cloudflare, betrieben vom Projektteam, nicht vom BAG): nicht für den produktiven Einsatz. Hier keine echten Entscheide oder Namen erfassen; für den Pilot die lokale Datei oder ein Hosting des Bundes verwenden."},
+en:{clr:"Clear my decisions and name from this browser",clrQ:"Delete every decision, note and the name this page keeps in this browser? Export first if they are still needed.",
+ clrYes:"Yes, clear",clrNo:"Cancel",clrDone:"Cleared: this browser keeps no decisions and no name of this page.",
+ demo:"Demo site (Cloudflare, run by the project team, not by the FOPH): not for production use. Do not enter real decisions or names here; for the pilot use the local file or federal hosting."},
+fr:{clr:"Effacer mes décisions et mon nom de ce navigateur",clrQ:"Effacer toutes les décisions, les remarques et le nom que cette page garde dans ce navigateur ? Exportez-les d'abord si elles servent encore.",
+ clrYes:"Oui, effacer",clrNo:"Annuler",clrDone:"Effacé : ce navigateur ne garde plus aucune décision ni aucun nom de cette page.",
+ demo:"Site de démonstration (Cloudflare, exploité par l'équipe du projet, pas par l'OFSP) : pas pour un usage productif. N'y saisissez ni vraies décisions ni noms ; pour le pilote, utilisez le fichier local ou un hébergement de la Confédération."},
+it:{clr:"Cancella le mie decisioni e il mio nome da questo browser",clrQ:"Cancellare tutte le decisioni, le note e il nome che questa pagina conserva in questo browser? Prima esportarli, se servono ancora.",
+ clrYes:"Sì, cancella",clrNo:"Annulla",clrDone:"Cancellato: questo browser non conserva più decisioni né nomi di questa pagina.",
+ demo:"Sito dimostrativo (Cloudflare, gestito dal team del progetto, non dall'UFSP): non per l'uso produttivo. Non inserire qui decisioni reali né nomi; per il pilota usare il file locale o un hosting della Confederazione."}};
+Object.keys(TX10).forEach(function(L){Object.keys(TX10[L]).forEach(function(k){TX[L][k]=TX10[L][k]})});
+var DEMO=/(^|\.)mi11ion\.io$/i.test(location.hostname||"");          // the demo host (Cloudflare); a local file or federal hosting is not
 function nT(k,n,o){o=o||{};o.n=n;return fmt(n===1&&TX[UL][k+"1"]!=null?t(k+"1"):t(k),o)}
 function pickUI(){if(TX[P.ui])return P.ui;var L=[];try{L=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||""]}catch(e){}
  for(var i=0;i<L.length;i++){var c=String(L[i]||"").slice(0,2).toLowerCase();if(TX[c])return c}return "de"}
@@ -1022,6 +1041,8 @@ function chrome(){
  $("t-audit").tabIndex=TAB==="audit"?0:-1;$("t-drafts").tabIndex=TAB==="drafts"?0:-1;
  $("p-audit").hidden=TAB!=="audit";$("p-drafts").hidden=TAB!=="drafts";
  $("x-sum").textContent=t("export");$("x-dec").textContent=t(TAB==="audit"&&AU?"exportDecA":"exportDec");$("where").textContent=t("where")+" "+t("whereM");
+ $("x-clr").textContent=t("clr");$("x-clr-t").textContent=t("clrQ");$("x-clr-yes").textContent=t("clrYes");$("x-clr-no").textContent=t("clrNo");
+ $("demo").hidden=!DEMO;$("demo").textContent=DEMO?t("demo"):"";
  ["x-xlf","x-xlf12","x-copy","x-imp","x-msg"].forEach(function(i){$(i).hidden=TAB==="audit"});["a-csv-i","a-csv","a-imp","a-msg"].forEach(function(i){$(i).hidden=TAB!=="audit"});
  var fz1=(M.pipeline.match(/freeze sha256:([0-9a-f]+)/)||[])[1]||"";
  $("prov").textContent=M.pipeline.split(";")[0]+(fz1?" · freeze "+fz1.slice(0,12):"")+" · outputs "+M.run_sha256.slice(0,12)+(M.rev?" · rev "+M.rev:"")+" · "+t("whereS");
@@ -1384,7 +1405,9 @@ function exText(r,L){var s=trimSeg(r&&r.snip?r.snip[L]:null);return s&&s.length?
 // that Excel (de-CH) opens it in columns
 function auditCsv(){var H=t("csvHead"),lines=[H.slice(0,-1).concat(t("csvMore"),H.slice(-1))].concat(IS.map(iRow),XIS.map(iRow));
  return "﻿"+lines.map(function(l){return l.map(csvCellS).join(";")}).join("\r\n")+"\r\n"}
-function csvCellS(s){s=String(s==null?"":s);return /[";\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
+// every CSV cell: a cell that a spreadsheet would read as a formula (it starts with = + - @, a tab or a CR; the note and the
+// reviewer name are free text) gets a leading apostrophe (OWASP CSV injection), then the usual quoting
+function csvCellS(s){s=String(s==null?"":s);if(/^[=+\-@\t\r]/.test(s))s="'"+s;return /[";\n\r\t]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
 // the JSON exports: codes (kind, wrong, remedy, right, actions) for machines, labels in the interface language at export
 // time (kind_label, action_label, ui_lang) for the record
 function rKindLab(r){return r.kind==="experimental"?t("kinds").experimental+(r.xkind?" ("+(t("kindsX")[r.xkind]||r.xkind)+")":""):(t("kinds")[r.kind]||r.kind)}
@@ -1735,6 +1758,15 @@ function pickImport(target){var f=$("imp-file");f.value="";f.onchange=function()
  function done(){var m;try{m=importDecisions(out.length===1?out[0]:out)}catch(e){m=t("impBad")}$(target).textContent=m;chrome();if(TAB==="audit")renderAudit();else{renderReg();renderCase()}}
  fs.forEach(function(file){var rd=new FileReader();rd.onload=function(){try{out.push(JSON.parse(rd.result))}catch(e){out.push(null)}if(--left===0)done()};rd.readAsText(file)})};f.click()}
 $("x-imp").onclick=function(){pickImport("x-msg")};$("a-imp").onclick=function(){pickImport("a-msg")};
+// clear this browser: every gleichlaut:* key of this origin (decisions of every lane and audit, the reviewer's name); the
+// theme and the interface language stay. Asks inline first; nothing is cleared without the second click.
+function clearMine(){var ks=[];try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf("gleichlaut:")===0&&k!=="gleichlaut:prefs")ks.push(k)}
+  ks.forEach(function(k){localStorage.removeItem(k)})}catch(e){}
+ delete P.reviewer;lsSet("gleichlaut:prefs",P);S={dec:{},edits:{}};SA={};ANAME=false;PEND=null;AWC=null;return ks.length}
+$("x-clr").onclick=function(){$("x-clr-q").hidden=false;$("x-clr").hidden=true;$("x-clr-msg").textContent="";$("x-clr-no").focus()};
+$("x-clr-no").onclick=function(){$("x-clr-q").hidden=true;$("x-clr").hidden=false;$("x-clr").focus()};
+$("x-clr-yes").onclick=function(){clearMine();$("x-clr-q").hidden=true;$("x-clr").hidden=false;chrome();if(TAB==="audit")renderAudit();else{renderReg();renderCase()}
+ $("x-clr-msg").textContent=t("clrDone")};
 // ------------------------------------------------------------------ print: one case per page (drafts tab)
 window.addEventListener("beforeprint",function(){if(TAB==="drafts")$("print").innerHTML=VIS.map(function(g){return '<article class="pcase">'+caseHTML(g,false)+"</article>"}).join("")});
 window.addEventListener("afterprint",function(){$("print").innerHTML=""});
@@ -1745,7 +1777,7 @@ function fromHash(){var h=decodeURIComponent(location.hash.slice(1));if(laneOf(h
   if(!(langs(g).some(function(L){return okItem(g.items[L])})))F.status="all";sel=g;return true}return false}
 var fromLink=fromHash()&&TAB==="drafts"&&!!sel;chrome();if(TAB==="audit")renderAudit();else{renderReg();if(sel){markSel(true);renderCase()}}
 if(fromLink)setTimeout(function(){var c=$("case");if(c&&c.getBoundingClientRect().top<64)c.scrollIntoView({block:"start"})},0);
-window.GleichlautReview={xliff:xliff,xliff12:xliff12,segBeads:segBeads,payload:payload,auditPayload:auditPayload,draftsPayload:draftsPayload,decFile:decFile,importDecisions:importDecisions,setTab:setTab,auditCsv:auditCsv,findingsCsv:findingsCsv};
+window.GleichlautReview={clearMine:clearMine,csvCell:csvCellS,xliff:xliff,xliff12:xliff12,segBeads:segBeads,payload:payload,auditPayload:auditPayload,draftsPayload:draftsPayload,decFile:decFile,importDecisions:importDecisions,setTab:setTab,auditCsv:auditCsv,findingsCsv:findingsCsv};
 window.addEventListener("hashchange",function(){if(fromHash()){setTab(TAB);var c=$("case");if(TAB==="drafts"&&c&&c.getBoundingClientRect().top<64)c.scrollIntoView({block:"start"})}});
 })();
 </script>

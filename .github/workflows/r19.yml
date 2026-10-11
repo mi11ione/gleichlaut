@@ -26,7 +26,7 @@ jobs:
     strategy: { fail-fast: false, max-parallel: 20, matrix: "${{ fromJson(needs.plan.outputs.matrix) }}" }
     defaults: { run: { working-directory: track_2b } }
     env:
-      URL_q8_0: https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf
+      URL_q8_0: https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/2028c3184c0fa060b4259b33ee25e836da6896e5/apertus-v1.5-8b-text-q8_0.gguf
       SHA_q8_0: dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d
       ART: "r19-${{ matrix.k }}of${{ matrix.n }}"
     steps:

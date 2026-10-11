@@ -132,10 +132,14 @@ def _clip(s, n=300):
 
 
 _HIST = {}
+_TEXTS_DIR = []                                     # the folder of the audit file data() last read (its audit_texts_<date>.json)
+
+
 def _bundled_texts(date, lim):
     """the texts shipped in data/audit/audit_texts_<date>.json (every limitation with a finding), for builds without
-    the snapshot files, e.g. the published Pages build."""
-    p = os.path.join(os.path.dirname(AUDIT), f"audit_texts_{date}.json")
+    the snapshot files, e.g. the published Pages build; for another audit file (an operator's run in out/audit/), the
+    audit_texts_<date>.json next to it."""
+    p = os.path.join(_TEXTS_DIR[-1] if _TEXTS_DIR else os.path.dirname(AUDIT), f"audit_texts_{date}.json")
     if p not in _HIST: _HIST[p] = json.load(open(p, encoding="utf-8"))["texts"] if os.path.exists(p) else {}
     return dict(_HIST[p].get(lim, {}))
 
@@ -578,6 +582,7 @@ def experimental(A, date, labels=None, hist=None):
 def data(path=AUDIT, results=RESULTS, hist=None):
     """-> dict(meta, rows) for the page, or None when there is no audit file."""
     if not path or not os.path.exists(path): return None
+    _TEXTS_DIR[:] = [os.path.dirname(os.path.abspath(path))]
     A = json.load(open(path, encoding="utf-8"))
     F = A.get("findings", A if isinstance(A, list) else [])
     S = A.get("summary", {}) if isinstance(A, dict) else {}

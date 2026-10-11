@@ -369,7 +369,7 @@ def test_docs_and_help_say_the_same_about_the_lanes():
     assert "4 GB RAM" not in ops and "review-only on SL" not in ops and "Air-gapped 8B lane (optional)" not in ops
     assert "SL default lane" not in docs["docs/dependencies.md"].split("Apertus v1.5 70B")[1].split("\n")[0]
     assert "What a self-hosted 70B costs" in docs["docs/target-architecture.md"]
-    assert "corpus sl -> 70B on a certified endpoint" not in cli.__doc__ and "8 audit --fail-on-findings" in cli.__doc__
+    assert "corpus sl -> 70B on a certified endpoint" not in cli.__doc__ and "8 audit --fail-on-new /\n--fail-on-findings" in cli.__doc__
     assert "make month-offline" in backends.LLAMA_MISSING
 
 
@@ -404,7 +404,7 @@ def test_deploy_manifests_for_the_8b_lane():
     k = read(f"{K8S}/gleichlaut.yaml")
     assert "gleichlaut-offline" in k and "requests: { cpu: \"4\", memory: 16Gi }" in k and "limits: { cpu: \"4\", memory: 18Gi }" in k
     assert "--gguf, /models/apertus-v1.5-8b-text-q8_0.gguf" in k
-    assert "{ name: models, mountPath: /models, readOnly: true }" in k and "--fail-on-findings" in k
+    assert "{ name: models, mountPath: /models, readOnly: true }" in k and "--fail-on-new" in k
     np_ = read(f"{K8S}/networkpolicy.yaml")
     assert "kind: NetworkPolicy" in np_ and "epl.bag.admin.ch" in np_ and "toFQDNs" in np_ and "lane: 70b" in np_
     cj = read(f"{K8S}/certify-job.yaml")

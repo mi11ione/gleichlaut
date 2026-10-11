@@ -38,12 +38,19 @@ Rahmen und Quellen: [adoption.md](../adoption.md) §3.
   Volltexte der betroffenen Limitierungen), erzeugt mit `python3 -m gleichlaut ui`. Sie ruft keinen Server auf, lädt kein
   Skript von Dritten und funktioniert auch als lokal geöffnete Datei.
 - **Kein Login, keine serverseitige Speicherung:** Entscheide, Notizen und der Name der prüfenden Person liegen nur im
-  lokalen Speicher des Browsers (`localStorage`, pro Browserprofil und Seite). Nichts wird an einen Server übermittelt.
+  lokalen Speicher des Browsers (`localStorage`, pro Browserprofil und Herkunft der Seite). Nichts wird an einen Server
+  übermittelt. Zwei Grenzen: Chrome behandelt alle als Datei (`file://`) geöffneten Seiten als eine Herkunft, sodass
+  jede lokal geöffnete Datei desselben Profils diesen Speicher lesen kann; und auf einem gemeinsam genutzten
+  Arbeitsplatzprofil sieht die nächste Person Entscheide und Namen der vorherigen und könnte unter deren Namen
+  weiterarbeiten. Das Register hat dafür im Menü «Export» die Schaltfläche «Meine Entscheide und meinen Namen aus diesem
+  Browser löschen» (mit Bestätigung in der Zeile; Darstellung und Sprache bleiben). Vorher exportieren. **[O2] [O8]**
 - **Exporte sind Dateien:** CSV (für GEVER) und JSON, vom Browser heruntergeladen; Ablage durch die prüfende Person.
   Ein Import führt Entscheide mehrerer Dateien zusammen.
-- **Heutiges Hosting (Demo):** Cloudflare Pages unter `mi11ion.io` (Betreiber: Projektteam, nicht das BAG). Der von
-  Cloudflare eingefügte Web-Analytics-Beacon ist entfernt; die Seite wird mit `Cache-Control: no-transform`
-  ausgeliefert, damit der Dienst nichts einfügt. **[O7]**
+- **Heutiges Hosting (Demo):** Cloudflare unter `gleichlaut.mi11ion.io` (Betreiber: Projektteam, nicht das BAG). **Die
+  Demo-Seite ist nicht für den produktiven Einsatz bestimmt:** dort werden keine echten Entscheide und keine Namen
+  erfasst, und sie ist weder Teil des Pilots noch ein Dienst des BAG; die Seite sagt das selbst in einer Zeile über dem
+  Register. Der von Cloudflare eingefügte Web-Analytics-Beacon ist entfernt; die Seite wird mit
+  `Cache-Control: no-transform` ausgeliefert, damit der Dienst nichts einfügt. **[O7]**
 - **Empfehlung für Phase 1:** Variante A (nur Dateien: Fallblätter, gegebenenfalls die HTML-Datei lokal geöffnet) oder
   dieselbe statische Datei auf einer Infrastruktur des Bundes (z. B. internem Webserver oder GEVER-Ablage). Das
   Demo-Hosting ist nicht für den produktiven Einsatz gedacht. **[O8]**
@@ -59,7 +66,9 @@ Rahmen und Quellen: [adoption.md](../adoption.md) §3.
 Das Visum auf dem Fallblatt (Name, Datum) ist gewöhnliche Geschäftsverwaltung in GEVER und nicht Teil des Werkzeugs.
 Im Register gibt die prüfende Person ihren Namen ein; er wird mit jedem Entscheid im Browser gespeichert und in die
 Exporte geschrieben (wie das Visum). Das ist eine Personendatei über Mitarbeitende im Rahmen der Geschäftsverwaltung; sie
-verlässt den Browser nur als exportierte Datei. **[O2]**
+verlässt den Browser nur als exportierte Datei. Damit sie nicht bei der nächsten Person auf einem gemeinsam genutzten
+Profil bleibt, löscht die Schaltfläche «Meine Entscheide und meinen Namen aus diesem Browser löschen» Name und Entscheide
+(Abschnitt 2a). **[O2]**
 
 ## 4. Informationsschutz (Klassifizierung, ISG Art. 13)
 
@@ -101,13 +110,13 @@ Bundesinfrastruktur genutzt, nicht über das Demo-Hosting. **Zu bestätigen durc
 | Nr. | Punkt |
 |---|---|
 | O1 | Übertragung in P041-Hi01 V5.1.1; Bestätigung, dass P041, Si001 und P042 zum Zeitpunkt des Pilots gelten (ISV Art. 51 Abs. 1; Revision des ISG in Vorbereitung) |
-| O2 | Bestätigung «keine Personendaten», gegebenenfalls mit der Datenschutzberatung des Amtes |
+| O2 | Bestätigung «keine Personendaten», gegebenenfalls mit der Datenschutzberatung des Amtes; dabei der Name der prüfenden Person und ihre Entscheide im lokalen Browserspeicher: auf gemeinsam genutzten Arbeitsplatzprofilen sieht die nächste Person sie; Regel, dass jede Person vor dem Verlassen exportiert und «Meine Entscheide und meinen Namen aus diesem Browser löschen» wählt, oder persönliche Browserprofile |
 | O3 | Klassifizierung der Entscheide und Massnahmen vor der Berichtigung einer Publikation |
 | O4 | Variante B: Zulässigkeit der Ausführung von Python oder Docker auf dem vorgesehenen Gerät; ausgehender GET auf `epl.bag.admin.ch` |
 | O5 | Ablageort und Aufbewahrung der Fallblätter und Laufergebnisse in GEVER |
 | O6 | Annahme des Restrisikos durch die Informationssicherheitsverantwortliche Person (Direktion oder delegiertes Mitglied der Geschäftsleitung; ISV Art. 27 Abs. 4, Art. 36) |
-| O7 | Register: Zulässigkeit des heutigen Demo-Hostings (Cloudflare, Drittanbieter) für Testzwecke; Bestätigung, dass für den Pilot nur die lokale Datei oder ein Hosting des Bundes genutzt wird |
-| O8 | Register: Ort der statischen Datei (lokal, interner Webserver, GEVER-Ablage); Browser-Richtlinie für `localStorage` auf den Arbeitsplätzen des BAG |
+| O7 | Register: Zulässigkeit des heutigen Demo-Hostings (Cloudflare, Drittanbieter) für Testzwecke; Bestätigung, dass es nicht produktiv genutzt wird (keine echten Entscheide, keine Namen) und dass für den Pilot nur die lokale Datei oder ein Hosting des Bundes genutzt wird |
+| O8 | Register: Ort der statischen Datei (lokal, interner Webserver, GEVER-Ablage); Browser-Richtlinie für `localStorage` auf den Arbeitsplätzen des BAG. Als lokale Datei (`file://`) teilt Chrome den Speicher mit allen anderen lokal geöffneten Dateien desselben Profils; ein interner Webserver gibt dem Register eine eigene Herkunft. Löschen nach der Sitzung mit der Schaltfläche im Register oder durch die Richtlinie (z. B. Löschen der Websitedaten beim Schliessen) |
 
 ## 9. Unterschriften
 

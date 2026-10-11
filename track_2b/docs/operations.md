@@ -20,20 +20,36 @@ All commands run from `track_2b/`. `make` targets run in Docker. The same comman
 
 ## 0. Use it tomorrow: the congruence audit (monthly or quarterly, no model)
 
+One command, the same on every path (Docker, plain Python, the systemd unit and the Kubernetes CronJob all run it with
+the same defaults and get the same findings on the same feed):
+
 ```bash
-make audit                         # Docker: fetch the latest public feed if missing, audit every limitation -> out/audit/
+make audit                         # Docker:  gleichlaut audit --date latest --fetch
+make local-audit                   # no Docker, the same command: PYTHONPATH=src python3 -m gleichlaut audit --date latest --fetch
 make audit AUDIT_DATE=20261001     # a given feed date (`make feeds` lists the published ones)
-PYTHONPATH=src python3 -m gleichlaut audit --hist out/hist --date 20261006 --out out/audit    # without Docker
 ```
 
 `gleichlaut audit` compares the numbers of every German limitation with its French and Italian text and lists the
 divergences that are already published (a dose, a duration, an age that differs between the languages). It is
-deterministic, uses only the public feed (three plain GET requests to `epl.bag.admin.ch`, or none if the snapshots are
-already in `out/hist/`), sends nothing anywhere, and calls no model, so it needs no endpoint, no certificate and no
-approval for a new IT service. Run it after each monthly publication, or at least once a quarter before the triennial
-review. Output: `out/audit/audit_<date>.json` (every finding with its context) and `audit_<date>_summary.json`. The
-rules and their measured precision are in [docs/audit.md](audit.md). All arguments of `gleichlaut audit` are passed
-through unchanged (`AUDIT_ARGS=...` with `make`).
+deterministic, uses only the public feed (`--fetch`: three plain GET requests to `epl.bag.admin.ch` for the feeds not yet
+in `out/hist/`, none when they are there), sends nothing anywhere, and calls no model, so it needs no endpoint, no
+certificate and no approval for a new IT service. Run it after each monthly publication, or at least once a quarter
+before the triennial review. The rules and their measured precision are in [docs/audit.md](audit.md).
+
+| Default | Value |
+|---|---|
+| `--date` | `latest`: with `--fetch` the newest published feed (BAG's resources API); without it the newest complete snapshot in `out/hist/` (`$GLEICHLAUT_HIST`) |
+| output | `out/audit/` (gitignored; `$GLEICHLAUT_AUDIT_OUT`, `--out DIR`, or `AUDIT_OUT=DIR` with `make local-audit`): `audit_<date>.json` (every finding with its context), `audit_<date>_summary.json`, `audit_texts_<date>.json`, `lang_stats_<date>.json.gz`. Never `data/audit/`: that is the committed evidence of the 6 Oct 2026 run, written only by the research path (`--evidence`); `--out data/audit` without it is refused (exit 2) |
+| terminology pairs | the shipped pairs (`data/audit/term_pairs_20261006.json`, mined from the nine usable 2026 snapshots) unless the snapshot folder holds at least as many usable snapshots of the year; then they are mined from those (`--mine-terms` forces mining, `--terms FILE` names a file). On a fresh install with one snapshot the 6 Oct 2026 feed gives the published 38 findings |
+| alerting | none by default; `--fail-on-new` (the scheduled units) exits 8 only for findings that the previous run in the same output folder did not have and that no review-page decision export in `out/audit/decisions/` (or `--decided FILE`) marks as decided; it writes `audit_<date>_new.json`. `--fail-on-findings` exits 8 whenever an open finding exists (§6) |
+| exit codes | 0 done, 2 no snapshot for the date (add `--fetch`) or a bad argument, 6 the feed could not be fetched (not yet published, or the network; the next run retries), 8 findings with `--fail-on-new` / `--fail-on-findings` |
+
+All arguments of `gleichlaut audit` are passed through unchanged (`AUDIT_ARGS=...` with `make`).
+
+**Case sheets for your own runs.** `python3 tools/pilot_sheets.py --run out/audit` writes one GEVER-ready Markdown case
+sheet per issue of the newest run in `out/audit/` (and an overview) to `out/audit/fallblaetter-<date>/`; findings
+without a blind label are marked «noch nicht beurteilt» (`--date YYYYMMDD` for another run, `--out DIR` elsewhere). The
+pilot pack's sheets of 6 Oct 2026 stay as they are (`docs/pilot/fallblaetter/`).
 
 ## 1. Install
 
@@ -370,13 +386,13 @@ gleichlaut ui   --records out/month/<run>/records.jsonl --items out/month/<run>/
 |---|---|---|
 | 0 | success | |
 | 1 | reproduction or validation failed (`run`, `replay`, `emit`) | do not use this build; see the step that failed |
-| 2 | usage error, bad item file (message lists the schema problems), missing configuration (no certified GGUF and `LLM_BASE_URL` unset, gateway dir unset, llama-cpp-python not installed for `--backend llamacpp`, GGUF sha256 mismatch), missing snapshots | fix the input or the configuration; the 8B lane runs in the offline image (`make month`) |
+| 2 | usage error, bad item file (message lists the schema problems), missing configuration (no certified GGUF and `LLM_BASE_URL` unset, gateway dir unset, llama-cpp-python not installed for `--backend llamacpp`, GGUF sha256 mismatch), missing snapshots (`month`, `audit` without `--fetch`, an empty snapshot folder), `audit --out` inside `data/audit/` without `--evidence` | fix the input or the configuration; add `--fetch`; the 8B lane runs in the offline image (`make month`) |
 | 3 | canary outside tolerance; or `draft`/`month` refused because the latest canary failed or is older than 31 days | `make canary`; on a failure re-certify, or `--air-gapped`; a stale canary can be overridden with `--allow-stale-canary` (logged) |
 | 4 | refused: no certificate for this 70B endpoint and model that verifies (missing, FAIL, expired, other frozen code, files or HMAC do not match, records do not re-score to PASS) | `make certify-endpoint`; the message names the reason |
 | 5 | certificate FAIL | do not use the endpoint for the SL lane |
 | 6 | endpoint or feed failed (unreachable, timeout or `GLEICHLAUT_DEADLINE` reached after retries, HTTP error, non-Apertus model served, served model not seen at certification, feed not published yet). For `live`: the live slice failed | records so far are kept; fix and re-run to resume |
 | 7 | certificate PENDING_REVIEW | label `needs_review`, then `certify --resolve` |
-| 8 | `audit --fail-on-findings`: the audit found divergences (not marked likely equivalent, or of the given kinds) | read `out/audit/audit_<date>_summary.json`; a result for a reviewer, not a fault |
+| 8 | `audit --fail-on-new`: divergences (not marked likely equivalent) that the previous run did not have and that are not decided; `audit --fail-on-findings`: any such divergence (or any of the given kinds) | read `out/audit/audit_<date>_new.json` (`_summary.json`); a result for a reviewer, not a fault |
 | 130 | interrupted | re-run to resume |
 
 Errors are one line on stderr, with no traceback (`GLEICHLAUT_DEBUG=1` shows it). `make run` exits 0 when the
@@ -388,15 +404,21 @@ variant, certification Jobs, a NetworkPolicy). It also lists which exit code sho
 configuration (operator), 3 is model drift of the 70B endpoint (operator, stop drafting on it), 6 is an outage (retry
 next run, page if it repeats), 8 is audit findings (reviewer), and 1 is a broken build (developer).
 
-**Monitoring.** `gleichlaut audit --fail-on-findings` exits 8 when a finding is not marked likely equivalent (the audit's
-own triage; `gleichlaut.audit` itself exits 1, which the command reports as 8 so that 1 keeps meaning a broken build), and
+**Monitoring.** `gleichlaut audit --fail-on-new` (the default of the systemd unit and the CronJob) exits 8 only for a
+finding that is not marked likely equivalent, was not in the previous run in the same output folder, and is not decided
+in a review-page export (`gleichlaut-audit-decisions-<date>.json`, dropped into `out/audit/decisions/` or named with
+`--decided FILE|DIR`). Findings are matched by the key the review page stores decisions under (limitation | kind |
+language | values), not by their rank numbers, which shift between feeds. The first run counts every open finding as new;
+after that a persisting finding does not page again. `audit_<date>_new.json` lists what was new.
+`gleichlaut audit --fail-on-findings` exits 8 whenever a finding is not marked likely equivalent (the audit's own triage;
+`gleichlaut.audit` itself exits 1, which the command reports as 8 so that 1 keeps meaning a broken build), and
 `--fail-on-findings=number,unit,language,editorial,terminology` (any subset) exits 8 when any finding of those kinds
 exists. A scheduler or monitor then sees divergences without parsing JSON.
 `--metrics-file PATH` (or `GLEICHLAUT_METRICS_DIR=DIR`) on `month`, `draft`, `audit` and `certify` writes a Prometheus
 textfile for node_exporter's textfile collector, atomically, also when the run fails: `gleichlaut_last_run_exit_code`,
 `gleichlaut_last_run_success`, `gleichlaut_last_run_duration_seconds`, `gleichlaut_last_run_timestamp_seconds`,
 `gleichlaut_items{status=...}`, `gleichlaut_model_calls`, `gleichlaut_tokens`, `gleichlaut_shadow_items` /
-`gleichlaut_shadow_rate_percent` (shadow mode) and `gleichlaut_audit_findings{kind=...}`, each with a `job` label.
+`gleichlaut_shadow_rate_percent` (shadow mode), `gleichlaut_audit_findings{kind=...}` and, with `--fail-on-new`, `gleichlaut_audit_new_findings` and `gleichlaut_audit_open_findings`, each with a `job` label.
 
 ## 6b. Test environments: a fake endpoint
 
@@ -500,7 +522,7 @@ as Sigstore policy-controller / Kyverno) before a pod may run. Not done yet: the
 ## 11. Quick reference
 
 ```bash
-make audit                                     # the no-model congruence audit of the whole register (monthly / quarterly)
+make audit                                     # the no-model congruence audit of the whole register (monthly / quarterly) -> out/audit
 make fetch-gguf                                # once: the pinned 8B GGUF into ./models (sha256-checked)
 make certify                                   # once: the 8B build certificate into ./state (signed with a key)
 make feeds                                     # published BAG feed dates
@@ -513,7 +535,7 @@ make canary                                    # 70B lane: monthly, before draft
 make month-70b                                 # 70B lane: shadow mode through the certified endpoint
 PYTHONPATH=src python3 -m gleichlaut month --items sl-team.json --dry-run     # prompts, slot maps, routing; no request
 PYTHONPATH=src python3 -m gleichlaut draft --items x.json --out out/x --backend stub   # wiring test, no model
-PYTHONPATH=src python3 -m gleichlaut audit --hist out/hist --date 20261006 --fail-on-findings --metrics-file m.prom   # monitoring
+PYTHONPATH=src python3 -m gleichlaut audit --date latest --fetch --fail-on-new --metrics-file m.prom   # monitoring (= make local-audit AUDIT_ARGS=...)
 ```
 
 Developers who want to use the checks in their own tool (a Python API, rebuilt check resources, a prompt for another

@@ -18,11 +18,11 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOCKS = [("requirements.in", "requirements.txt", "base image and plain-Python installs (XLIFF/FHIR validation)"),
          ("requirements-offline.in", "requirements-offline.txt", "offline image only: in-process llama.cpp for the Apertus 8B GGUF")]
 GGUF_Q8 = dict(name="apertus-v1.5-8b-text-q8_0.gguf", sha256="dea904ad80cd725ec89962abae464477f5d8114d1f4377514f381f7dc2ed202d",
-               size=8567121856, url="https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/main/apertus-v1.5-8b-text-q8_0.gguf",
+               size=8567121856, url="https://huggingface.co/andreasmartin/apertus-v1.5-8b-text-Q8_0-GGUF/resolve/2028c3184c0fa060b4259b33ee25e836da6896e5/apertus-v1.5-8b-text-q8_0.gguf",
                ref="apertus-8b-gguf-q8_0", version="Q8_0", build="q8_0", cert="eval/certificates/8b-q8_0-fresh166.json",
                role="the default build (GLEICHLAUT_BUILD=q8_0; 16 GiB RAM)")
 GGUF_Q4 = dict(name="apertus-v1.5-8b-text-q4_k_m.gguf", sha256="a037df8d87ff6caacee794ee85f55342f2152e0d359b7389033300c3bee5f299",
-               size=5059027136, url="https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/main/apertus-v1.5-8b-text-q4_k_m.gguf",
+               size=5059027136, url="https://huggingface.co/Colby/apertus-v1.5-8b-text-Q4_K_M-GGUF/resolve/248ec68a63e219e3f061e4c946fc8a20d63b9975/apertus-v1.5-8b-text-q4_k_m.gguf",
                ref="apertus-8b-gguf-q4_k_m", version="Q4_K_M", build="q4_k_m", cert="eval/certificates/8b-q4_k_m-fresh166.json",
                role="the option for an 8 GiB box (GLEICHLAUT_BUILD=q4_k_m)")
 GGUF = GGUF_Q8                                                   # the default build (gleichlaut.cli.BUILD)

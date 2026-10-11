@@ -28,10 +28,15 @@ Round 4 (pre-registered block 'round 4'):
   likely_equivalent / equivalence  a triage field on number findings (Q1-Q5, typo link); never changes ids, ranks, counts
   --list migel|al --file PATH  the same checks on MiGeL / Analysenliste xlsx (gleichlaut.audit_lists)
 
-usage: python3 -m gleichlaut.audit [--hist DIR] [--date 20261006] [--out data/audit] [--items data/items/items_fresh.json]
-                                   [--worklist DIR] [--worklist-new DIR] [--worklist-terms DIR] [--no-dating]
-                                   [--terms FILE] [--fail-on-findings]
-       python3 -m gleichlaut.audit --list migel|al --file PATH [--date D] [--out data/audit] [--worklist DIR]"""
+Operators run it as `gleichlaut audit` (cli.cmd_audit: the one entry point; exit 8 for findings, --fail-on-new, metrics).
+Output goes to --out, default $GLEICHLAUT_AUDIT_OUT, else $GLEICHLAUT_OUT/audit, else track_2b/out/audit (gitignored);
+the committed evidence in data/audit/ is written only with --evidence (the research / replay path), and --out inside
+data/audit/ without it is refused (exit 2). Missing snapshots are exit 2 (usage), a feed that cannot be fetched exit 6.
+
+usage: python3 -m gleichlaut.audit [--hist DIR] [--date latest|YYYYMMDD] [--fetch] [--out DIR | --evidence]
+                                   [--items data/items/items_fresh.json] [--worklist DIR] [--worklist-new DIR]
+                                   [--worklist-terms DIR] [--no-dating] [--terms FILE | --mine-terms] [--fail-on-findings]
+       python3 -m gleichlaut.audit --list migel|al --file PATH [--date D] [--out DIR | --evidence] [--worklist DIR]"""
 import argparse, hashlib, json, os, random, re, sys
 from collections import Counter, defaultdict
 from . import core
@@ -39,7 +44,8 @@ from .sl import hist_dir
 from .sl.ingest import nrm
 
 NUMW = core.gl2.NUMW
-DEST = os.path.join(core.ROOT, "data", "audit")
+DEST = os.path.join(core.ROOT, "data", "audit")       # the committed evidence (read by the page, the tests, audit_item)
+EXIT_USAGE, EXIT_FEED = 2, 6                         # = cli.EXIT_USAGE / EXIT_ENDPOINT (docs/operations.md section 6)
 SEED = 20261009
 KNOWN = {"NEMLUVIO.01": [("it", "lacks", "8")], "DIAPHIN.6-": [("it", "adds", "12"), ("it", "lacks", "6")],
          "NEPEXTO": [("fr", "adds", "62.5")], "BENEPALI4": [("fr", "adds", "62.5")], "ERELZI2": [("fr", "adds", "62.5")],
@@ -1748,11 +1754,117 @@ def mine_from(H, date, J, items=None):
     return P, meta
 
 
+def default_out():
+    """Where an ad-hoc or scheduled run writes: $GLEICHLAUT_AUDIT_OUT, else $GLEICHLAUT_OUT/audit, else track_2b/out/audit
+    (gitignored). Never data/audit/: that is the committed evidence, written only with --evidence."""
+    return os.environ.get("GLEICHLAUT_AUDIT_OUT") or os.path.join(os.environ.get("GLEICHLAUT_OUT") or os.path.join(core.ROOT, "out"), "audit")
+
+
+def out_dir(out=None, evidence=False):
+    """-> the output directory of a run; ValueError when --out points into data/audit/ without --evidence (an ad-hoc run
+    must never overwrite the committed evidence) or --evidence is combined with another --out."""
+    ev = os.path.realpath(DEST)
+    if evidence:
+        if out and os.path.realpath(out) != ev: raise ValueError(f"--evidence writes to {DEST} only; drop --out {out}")
+        return DEST
+    o = out or default_out(); r = os.path.realpath(o)
+    if r == ev or r.startswith(ev + os.sep):
+        raise ValueError(f"refusing to write into {o}: data/audit/ holds the committed evidence (the register, the tests and the "
+                         f"pilot pack read it). Ad-hoc and scheduled runs write to {default_out()} (or --out DIR, "
+                         f"$GLEICHLAUT_AUDIT_OUT); the research / replay path adds --evidence")
+    return o
+
+
+def missing_langs(H, date):
+    return [L for L in LANGS if not os.path.exists(os.path.join(H, f"{date}-{L}.json"))]
+
+
+def latest_local(H):
+    """the newest date with all three languages in the snapshot dir, or None."""
+    try: ds = sorted({f.split("-")[0] for f in os.listdir(H) if re.fullmatch(r"\d{8}-(de|fr|it)\.json", f)}, reverse=True)
+    except OSError: return None
+    return next((d for d in ds if not missing_langs(H, d)), None)
+
+
+def terms_source(H, date):
+    """None (mine the terminology pairs from the snapshots at hand) or the shipped pairs file, the same rule on every path
+    (make audit, make local-audit, systemd, Kubernetes, plain Python): the pairs are mined only when the snapshot dir holds at
+    least as many usable snapshots of the year as the shipped pairs were mined from (9 for 2026); with fewer (one snapshot
+    on a fresh install, a few months later) mining would find fewer of BAG's own corrections and the counts would depend
+    on how many feeds the box happens to keep."""
+    try: need = len(json.load(open(TERMS, encoding="utf-8"))["meta"]["snapshots"])
+    except (OSError, ValueError, KeyError, TypeError): return None
+    return None if len(snapshots(H, date)) >= need else TERMS
+
+
+# ------------------------------------------------------------------ --fail-on-new (gleichlaut audit): what is new since the last run
+def signatures(F):
+    """The key of each finding, in order: the one the review page stores a decision under across audit runs
+    (ui.audit_view.signature: limitation | kind | language | values, '#2'.. on a repeat), so it does not depend on the rank
+    numbers (N01, T03, ...) that shift from one feed to the next."""
+    from .ui import audit_view as av
+    from .emit.explain import term_parts
+    out, seen = [], set()
+    for f in F:
+        kind, L = av._kind(f), f.get("lang")
+        sig = av.signature(f, f.get("id"), L, kind, av._vals(f), term_parts(f, L) if kind == "terminology" else None); n = 2
+        while sig in seen: sig = sig.split("#")[0] + f"#{n}"; n += 1
+        seen.add(sig); out.append(sig)
+    return out
+
+
+def runs(out):
+    """[(date, path)] of the SL audit runs in an output dir, oldest first."""
+    try: fs = os.listdir(out)
+    except OSError: return []
+    return sorted((m.group(1), os.path.join(out, f)) for f in fs for m in [re.fullmatch(r"audit_(\d{8})\.json", f)] if m)
+
+
+def run_state(path):
+    """-> dict(date, path, sigs: every finding of that run, open: the sigs not marked likely equivalent)."""
+    A = json.load(open(path, encoding="utf-8")); F = A.get("findings") or []
+    S = signatures(F)
+    return dict(date=(A.get("summary") or {}).get("date"), path=path, sigs=set(S),
+                open=[(s, f) for s, f in zip(S, F) if not f.get("likely_equivalent")])
+
+
+def decided(paths):
+    """Signatures already decided, from the review page's decision exports (gleichlaut-audit-decisions-<date>.json:
+    audit_rows[sig].decided, or the raw 'audit' map with a remedy or actions); a path may be a directory of them."""
+    fs = []
+    for p in paths or []:
+        if os.path.isdir(p): fs += sorted(os.path.join(p, f) for f in os.listdir(p) if f.endswith(".json"))
+        elif os.path.exists(p): fs.append(p)
+    out = set()
+    for p in fs:
+        try: D = json.load(open(p, encoding="utf-8"))
+        except (OSError, ValueError): print(f"warning: --decided: cannot read {p}", file=sys.stderr); continue
+        if not isinstance(D, dict): continue
+        rows = D.get("audit_rows") if isinstance(D.get("audit_rows"), dict) else {}
+        out |= {k for k, v in rows.items() if isinstance(v, dict) and v.get("decided")}
+        raw = D.get("audit") if isinstance(D.get("audit"), dict) else {}
+        out |= {k for k, v in raw.items() if k not in rows and isinstance(v, dict) and (v.get("remedy") or v.get("actions") or v.get("action") or v.get("right"))}
+    return out
+
+
+LAST_RUN = {}                                        # date and out of the last main() run, for cli.cmd_audit
+
+
+def _err(msg, code):
+    print(f"error: {msg}", file=sys.stderr); return code
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="gleichlaut.audit", description=__doc__.split("\n\n")[0])
     ap.add_argument("--hist", help="snapshot dir (default: $GLEICHLAUT_HIST or track_2b/out/hist)")
-    ap.add_argument("--date", default=None, help="snapshot date YYYYMMDD (default 20261006; for --list: from the file name)")
-    ap.add_argument("--out", default=DEST)
+    ap.add_argument("--date", default=None, help="snapshot date YYYYMMDD or 'latest' (the default: with --fetch the newest "
+                    "published feed, else the newest complete snapshot in --hist; for --list: from the file name)")
+    ap.add_argument("--fetch", action="store_true", help="download the missing de/fr/it feeds of the date from BAG (public; "
+                    "'latest' is then asked from BAG's resources API)")
+    ap.add_argument("--out", default=None, help="output dir (default: $GLEICHLAUT_AUDIT_OUT, else $GLEICHLAUT_OUT/audit, else "
+                    "out/audit; never data/audit/ without --evidence)")
+    ap.add_argument("--evidence", action="store_true", help="write the committed evidence in data/audit/ (research / replay "
+                    "path only; the register, the tests and the pilot pack read it)")
     ap.add_argument("--items", default=os.path.join(core.ROOT, "data", "items", "items_fresh.json"),
                     help="item set: fresh-item hits, and its recorded BAG amendments as a terminology source ('' = none)")
     ap.add_argument("--worklist", help="write the blind round-2 worklist (number findings) + key map to this dir")
@@ -1760,21 +1872,56 @@ def main(argv=None):
     ap.add_argument("--worklist-terms", help="write the blind worklist of all terminology findings + key map to this dir")
     ap.add_argument("--worklist-r5", help="write the blind round-5 worklist (PREREG R15: operator/negation/number_word) + key map")
     ap.add_argument("--no-dating", action="store_true", help="skip the run over the earlier snapshots of the year")
-    ap.add_argument("--terms", help="use this term_pairs_<date>.json instead of mining the pairs from the snapshots")
+    ap.add_argument("--terms", help="use this term_pairs_<date>.json instead of the default (terms_source())")
+    ap.add_argument("--mine-terms", action="store_true", help="mine the terminology pairs from the snapshots at hand, however few")
     ap.add_argument("--list", choices=("migel", "al"), help="audit another trilingual BAG list (xlsx) instead of the SL")
     ap.add_argument("--file", help="with --list: the list's xlsx file")
     ap.add_argument("--fail-on-findings", action="store_true",
-                    help="exit 1 when any finding is not marked likely_equivalent (for CI / scheduled runs)")
+                    help="exit 1 when any finding is not marked likely_equivalent (gleichlaut audit reports it as exit 8)")
     a = ap.parse_args(argv)
+    LAST_RUN.clear()
+    try: a.out = out_dir(a.out, a.evidence)
+    except ValueError as e: return _err(e, EXIT_USAGE)
     if a.list:
         from . import audit_lists
+        if not a.file or not os.path.exists(a.file):
+            return _err(f"--list {a.list}: give the list's xlsx with --file (not found: {a.file})", EXIT_USAGE)
         return audit_lists.run_list(a)
-    a.date = a.date or "20261006"
     H = hist_dir(a.hist)
-    if not os.path.exists(os.path.join(H, f"{a.date}-de.json")): sys.exit(f"no snapshot {a.date} in {H}")
+    if a.date in (None, "latest"):
+        if a.fetch:
+            from .sl import feeds
+            try: d, how = feeds.resolve_latest(a.hist)
+            except ValueError as e: return _err(f"FEED FAILED: {e}", EXIT_FEED)
+            print(f"--date latest = {d} ({how})", file=sys.stderr)
+        else:
+            d = latest_local(H)
+            if d is None:
+                return _err(f"no snapshot in {H} (all three of <date>-de/-fr/-it.json): add --fetch to download the latest "
+                            "feed from BAG, or point --hist at a directory that has them", EXIT_USAGE)
+        a.date = d
+    if not re.fullmatch(r"\d{8}", a.date): return _err(f"--date takes YYYYMMDD or latest, not {a.date!r}", EXIT_USAGE)
+    miss = missing_langs(H, a.date)
+    if miss and a.fetch:
+        from .sl import ingest
+        for L in miss:
+            try: ingest.fetch(a.date, L, H)
+            except (OSError, ValueError) as e:
+                return _err(f"FEED FAILED: cannot fetch the {a.date} {L} feed ({ingest.url(a.date, L)}): "
+                            f"{getattr(e, 'reason', None) or e} (not published yet, or the network; the next run retries)", EXIT_FEED)
+        miss = missing_langs(H, a.date)
+    if miss:
+        return _err(f"no snapshot {a.date} in {H}: missing " + ", ".join(f"{a.date}-{L}.json" for L in miss)
+                    + "; add --fetch to download them from BAG, or point --hist at a directory that has them", EXIT_USAGE)
+    LAST_RUN.update(date=a.date, out=a.out)
     J, names = load(H, a.date); st = build_stats(J)
     os.makedirs(a.out, exist_ok=True)
-    if a.terms: P = load_terms(a.terms); PM = dict(source=a.terms)
+    if not a.terms and not a.mine_terms:
+        a.terms = terms_source(H, a.date)
+        if a.terms:
+            print(f"{len(snapshots(H, a.date))} usable snapshot(s) of {a.date[:4]} in {H}: terminology uses the shipped term pairs "
+                  f"({os.path.relpath(a.terms, core.ROOT)}); --mine-terms mines them from the snapshots at hand", file=sys.stderr)
+    if a.terms: P = load_terms(a.terms); PM = dict(source=os.path.relpath(a.terms, core.ROOT) if os.path.abspath(a.terms).startswith(core.ROOT) else a.terms)
     else: P, PM = mine_from(H, a.date, J, a.items or None)
     tp = os.path.join(a.out, f"term_pairs_{a.date}.json")
     if not a.terms: json.dump(dict(meta=PM, pairs=P), open(tp, "w"), ensure_ascii=False, indent=1)
