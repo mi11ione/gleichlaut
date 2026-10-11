@@ -41,6 +41,7 @@ human labels were used.
 | R20 | the 6 Oct 2026 audit as frozen predictions, scored against BAG's own later corrections (an oracle that is not Claude) | pending (first scoring snapshot expected 1 Nov 2026) |
 | R21 | a task-specific system message on top of the house wording (v4-system, certified Q8_0): fresh 166 (A) and both live months (B) | A meets R0 (13.9% identical, +7.8; frozen 17.5%); no live month (Aug 1 REAL, Sep flagged 70.7%): not a candidate, default unchanged |
 | R22 | stricter alignment for the operator and negation module (round 5b), held half of the register and R15's held planted set | held precision 19.0% → 40.0% (2 of 5; dev 2 of 2); planted operator 66.5%, dropped negation 43.0%; the three finds kept: fails the precision bar, stays opt-in |
+| R23 | the first BAG feed after 6 Oct 2026 (unseen window): the frozen default and v4-system, under R0 | pending (void if no feed by 15 Oct 2026) |
 
 Corrections to statements of fact inside rule text (11 Oct 2026; the rules themselves are unchanged and their text below
 stays as frozen):
@@ -989,6 +990,47 @@ beside the frozen R15 block (which stays byte for byte as frozen, `R5_ON` untouc
   precision, Wilson 95% intervals, held recall for added negations and number words. This repository does not flip the
   default itself: a pass is reported for the maintainers to integrate (`score.audit_r22` -> `eval/results/audit_r22.json`,
   re-derived by `replay`).
+
+## R23. The first BAG feed after 6 Oct 2026: the frozen default and v4-system on an unseen window (frozen 11 Oct 2026, before any post-20261006 feed exists)
+
+R21's v4-system met R0 on the held-out 166 but on neither live month, and both live months informed its design. R23
+fixes now, before BAG publishes it, the window that can test it unseen.
+
+- **Feeds so far, and why 20261001 → 20261006 is not a test.** BAG's public feeds published to date (`gleichlaut
+  feeds`): 20260219, 20260304, 20260401, 20260601, 20260701, 20260801, 20260901, 20261001, 20261006 (20260504 is
+  excluded, a publisher bug). The 20261001 → 20261006 window (14 German changes, 28 FR/IT items) is **not unseen**: all
+  28 items are in `data/items/items_oos.json` (the out-of-sample 2026 set, later a design set), so it is not used here.
+- **Window.** From 20261006 to the **first feed BAG publishes after 20261006 and on or before 15 Oct 2026, 23:59
+  CEST**, as `gleichlaut feeds` lists it (call that date D). If no such feed appears, or it cannot be fetched and mined,
+  R23 is **void**, and the results log says so; no other window is substituted.
+- **Items.** Mined exactly as in R10: `gleichlaut month --from 20261006 --to D --fetch --dry-run` (the shadow workflow's
+  plan job), unchanged, copied to `data/shadow/20261006-D/items.json`. Any item whose (de_old, de_new, lang) equals an item
+  of any committed item set (`data/items/*.json`, `data/shadow/*/items.json`) is **seen**: excluded from the verdict and
+  counted. The rest is the **unseen set**. Both lanes draft every mined item; the verdict uses the unseen set, and
+  whole-window numbers are reported beside it. If the unseen set has fewer than 10 items compared with BAG's text
+  (status != human), R23 reports descriptively and claims nothing.
+- **Lanes** (GitHub Actions CPU runners only; every shard verifies the build certificate `8b-q8_0-fresh166` of the
+  loaded GGUF, sha256 `dea904ad…`, and stops without it; every request and response recorded in the run's own folder;
+  nothing runs a model on a team machine). **(1) Frozen shipped default**: certified Q8_0, variant frozen, through the
+  shadow workflow (`gh workflow run shadow.yml -f from=20261006 -f to=D -f build=q8_0 -f variant=frozen`), its mined
+  items checked equal to the committed file -> `data/shadow/20261006-D/q8_0/`. **(2) v4-system**: R21's variant
+  unchanged (`v4system.py`, system message sha256 `a81624dc…`, the v3-terms block of R12), house wording mined only from
+  the 20261006 snapshot (the committed `data/termbase/{termbase,house_sentences,shared_words}_20261006.json`, unchanged),
+  through workflow `r21-8b` with the new window added as a set (tooling only; the request record and per-item prompt
+  sha256 committed before the run, as `r21_prompts.json`) -> `data/r21/runs/20261006-D_q8_0/`. As in R12/R21 the variant
+  is not certified, so its `guard_status` is scored. No change to either lane after any output is seen.
+- **Labels.** Every ready draft of either lane that differs from BAG's published text, pooled, one record per distinct
+  (item, draft), shuffled with seed 20261023, neutral ids, by `eval/labels/PROTOCOL.md` (two fresh blind Claude
+  annotators, the second in reverse order; a third on every disagreement on needs_fix or class, or any REAL) ->
+  `eval/labels/r23_live_ready.tsv`. No human labels.
+- **Rule: R0 unchanged**, per lane on the unseen set, n = unseen drafts compared with BAG's text: exact (identical)
+  minus the no-model start's (rules-only) exact ≥ +5 points on the same n; flagged ≤ 70%; unflagged REAL ≤ 1%;
+  unflagged stale + German ≤ 2%. Each holds / fails; "meets R0" only if all four hold. Scoring code is committed before
+  any lane runs (`score.r23_live()` in `replay`, `eval/results/r23_live.json`).
+- **Decision, stated now.** If v4-system meets R0 on the unseen set, it becomes a **candidate default** (it already met
+  R0 on the held-out 166); the shipped default changes only after that result is reported, in its own commit. If it
+  does not, the frozen default stays. The frozen lane's result is reported either way as the third live window.
+  Whatever comes out is reported as is, criterion by criterion.
 
 ## R4. Post-freeze changes
 
