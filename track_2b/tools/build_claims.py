@@ -51,6 +51,7 @@ C = [  # id, source, path, fmt, command
  ("ag_kappa", "eval/results/agreement_fresh166.json", "kappa", "{:.3f}", RE),
  ("blind_agree", "eval/results/fresh166_blind.json", "annotators.agree", "{}", RE), ("blind_n", "eval/results/fresh166_blind.json", "annotators.n", "{}", RE),
  ("blind_kappa", "eval/results/fresh166_blind.json", "annotators.kappa", "{:.3f}", RE),
+ ("r22_held_before", "eval/results/audit_r22.json", "precision.r15.held.precision_pct", "{:.1f}", RE), ("r22_held_after", "eval/results/audit_r22.json", "precision.r22.held.precision_pct", "{:.1f}", RE),
  ("arl_reg_strict", "eval/results/audit_relabel.json", "sets.register.confirmed_strict_real", "{}", RE), ("arl_reg_strict_pct", "eval/results/audit_relabel.json", "sets.register.precision_strict_pct", "{:.1f}", RE),
  ("arl_lists_strict", "eval/results/audit_relabel.json", "sets.lists.confirmed_strict_real", "{}", RE),
  ("tie_n", "eval/results/agreement_fresh166.json", "tiebreak.disagreements", "{}", RE),

@@ -238,8 +238,8 @@ At this volume a per-token Swiss endpoint costs CHF 0.14 a month; dedicated 70B 
 
 - **What the evaluation rests on.** Ten of the twelve confirmed audit findings re-confirm the census the rules were
   built around; beyond it, 1 of 11 number findings is confirmed. The experimental operator and negation checks find
-  74.5% of planted operator flips but 6 of their 31 register findings are confirmed, and an 8B log-probability filter
-  (R18) did not raise that (2 of 13 kept). Labels are by blind Claude annotators: on 17 real errors BAG itself corrected
+  74.5% of planted operator flips but 6 of their 31 register findings are confirmed, and neither an 8B log-probability filter
+  (R18; 2 of 13 kept) nor stricter sentence alignment (R22; held-half precision 19.0% to 40.0%) reached the pre-registered bar. Labels are by blind Claude annotators: on 17 real errors BAG itself corrected
   (R17) both flagged 5 with BAG's text shown, accepting a 10-item house-wording sweep as equivalent; Apertus 70B as a
   second annotator did not discriminate (κ 0.000). The 70B rows describe the shared endpoint as Public AI served it
   (see Models and builds). On the live months the checks flagged 81.8–92.7% of drafts, so neither met the 70% flag cap of R0; house
