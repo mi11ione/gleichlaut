@@ -131,7 +131,7 @@ The 8B runs on the CPU you already have (200.5 s per draft for the default Q8_0,
 runner). The 70B costs **CHF 0.0024 per draft** at a Swiss provider's published price: CHF 0.14 a month at today's volume, CHF 1.36 at
 ten times. Every number here is in [claims.tsv](claims.tsv) with the file and command that produce it.
 
-**Model size is measured, not assumed.** On SL conditions every build passes the same pre-registered safety rule, so
+**The 8B against the 70B as Public AI served it, on the same items.** On SL conditions every build passes the same pre-registered safety rule, so
 the 8B on a CPU is sufficient and is the default: nothing leaves the building. The default build is Q8_0, which passes
 with no error among its ready drafts; Q4_K_M passes by one item (1.81% stale or German against the 2% limit). On
 identical drafts the rates are close (17.5% for the 70B and Q8_0, 16.9% for Q4_K_M; no equivalence test, and the 8B

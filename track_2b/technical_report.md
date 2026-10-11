@@ -113,10 +113,10 @@ text, numbers as slot codes; the model returns the amended paragraph. The 70B wr
 drafts it wrote a number word itself ("due", "quatre", "quattro"), and all 3 were flagged; the 8B's logit mask blocks every digit
 token and the number words two to twelve as whole tokens (a word split across tokens or above twelve could still appear;
 none did in its 166 drafts).
-**Size is measured on the same items in both directions.** SL conditions (pre-registered R1, same pipeline, same 166
+**The 8B is compared with the 70B as Public AI served it, on the same items, in both directions.** SL conditions (pre-registered R1, same pipeline, same 166
 items): both 8B GGUF builds pass the rule (Q4_K_M: flagged 63.9%, ready drafts 0 meaning errors and 3 stale or German;
 Q8_0: flagged 62.7%, ready drafts 0 / 0 / 0), so under R1 the SL default is the local 8B. In this pipeline, with one run per
-build and no bf16 8B run, quantisation mattered about as much as size: Q8_0 has the same exact-match rate as the 70B (no equivalence test); on edits saved (33.1% vs 42.4%) the aggregate difference [−1.3, 20.2]
+build and no bf16 8B run, quantisation mattered about as much as the step to the served 70B (which also differs in the digit mask and, possibly, the template): Q8_0 has the same exact-match rate as the 70B (no equivalence test); on edits saved (33.1% vs 42.4%) the aggregate difference [−1.3, 20.2]
 includes zero, though the 70B needs fewer edits on 81 items and Q8_0 on 26; Q4_K_M is clearly behind (20.9%; against
 the 70B [8.7, 34.9], against Q8_0 [6.0, 19.9], paired 95% CIs of the difference in edits saved). If an office certifies its own 70B endpoint and the result carries over (unverified: we do not know which model Public AI
 served), the 70B is worth it where editing time matters (ready drafts needing a fix: 3 of 66, against 25 of 62 for Q8_0 and 33 of 60 for Q4_K_M, mostly one
@@ -184,7 +184,7 @@ fewer token edits to reach BAG's published text (95% CI [31.0, 54.1]); 59.1% few
 
 **Stability.** The seeded rerun reproduced 69.9% of final outputs byte-for-byte and the ready/flagged verdict with
 κ 0.963. Outputs at temperature 0 differ between calls, possibly because requests are routed between the two serving
-backends; either way, this is why certification re-runs the whole suite on the endpoint it certifies.
+backends or because of batch non-determinism on one backend; either way, this is why certification re-runs the whole suite on the endpoint it certifies.
 
 **Audit.** On the 6 Oct 2026 register, numeric check: 21 findings in 17 limitations; all 10 known divergent limitations
 and all 13 of their known values are among them; the blind majority finds 11 of the 21 real (52.4%, Wilson
