@@ -20,7 +20,7 @@ Italian note flags that the old Italian already said "every 4 weeks".](track_2b/
 
 **Audit, today, with no model.** Gleichlaut reads all 1,688 limitations of BAG's Spezialitätenliste in German, French
 and Italian and turns them into **18 issues** to decide, each with the three texts side by side and the conflicting
-values marked. Two blind annotators confirm **12 findings that change a reimbursement condition**: Nemluvio's
+values marked. Two blind Claude annotators confirm **12 findings that change a reimbursement condition**: Nemluvio's
 interval, Diaphin's surcharge, the 16 kg limit missing in Cresemba's French, a French-only 62.5 kg rule in three
 etanercept products, Dupixent's weight tiers. Its operator and negation module found what nobody had listed: Amvuttra's
 reversed stop rule, and an Italian typo in Beyonttra and Vyndaqel ("on deve" for "non deve") that turns a ban on
