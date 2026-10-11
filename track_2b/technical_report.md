@@ -10,6 +10,7 @@ Numbers never reach the model; frozen deterministic checks decide what is ready.
 - **Declared maturity:** the audit is a deployable prototype; drafting is a feasibility study running in shadow mode
 
 **At a glance.**
+
 - **The problem:** Swiss drug-reimbursement conditions are binding in German, French and Italian, and some disagree:
   for one Nemluvio patient the two readings differ by CHF 13,577 a year.
 - **The audit ships today, with no model:** 18 issues to decide; 12 confirmed findings change a condition.
