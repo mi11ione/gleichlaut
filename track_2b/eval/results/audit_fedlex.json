@@ -1,0 +1,210 @@
+{
+ "annotators": {
+  "agree": 26,
+  "agree_pct": 100.0,
+  "answer_agree": 26,
+  "kappa": null,
+  "n": 26,
+  "tiebreak": 0
+ },
+ "answers": {
+  "not": 26
+ },
+ "by_act": {
+  "AMZV": 1,
+  "HMG": 3,
+  "KLV": 3,
+  "KVG": 8,
+  "KVV": 10,
+  "VAM": 1,
+  "VAZV": 0
+ },
+ "by_kind": {
+  "editorial": 0,
+  "language": 0,
+  "number": 26,
+  "unit": 0
+ },
+ "by_kind_lang": {
+  "editorial": {},
+  "language": {},
+  "number": {
+   "fr": 8,
+   "it": 18
+  },
+  "unit": {}
+ },
+ "confirmed": 0,
+ "confirmed_by_act": {},
+ "corpus": {
+  "AMZV": {
+   "aligned_units": 556,
+   "eli": "cc/2001/517",
+   "sha256": {
+    "de": "55b2669b3d82d154",
+    "fr": "84ea3055cdea92f7",
+    "it": "8b08af182b6a9df4"
+   },
+   "sr": "812.212.22",
+   "table_guard": {
+    "cells": 49,
+    "tables": 5
+   },
+   "unaligned": {
+    "de": 162,
+    "fr": 179,
+    "it": 185
+   },
+   "version": "2026-07-01"
+  },
+  "HMG": {
+   "aligned_units": 1002,
+   "eli": "cc/2001/422",
+   "sha256": {
+    "de": "56d669d9be42b1bd",
+    "fr": "66194db86227e06f",
+    "it": "5a07c30e5e8504c8"
+   },
+   "sr": "812.21",
+   "table_guard": {
+    "cells": 0,
+    "tables": 0
+   },
+   "unaligned": {
+    "de": 0,
+    "fr": 0,
+    "it": 0
+   },
+   "version": "2025-01-01"
+  },
+  "KLV": {
+   "aligned_units": 859,
+   "eli": "cc/1995/4964_4964_4964",
+   "sha256": {
+    "de": "b61a18e3d47cdddb",
+    "fr": "475dc00703fc9224",
+    "it": "ed2b68f067fb2f09"
+   },
+   "sr": "832.112.31",
+   "table_guard": {
+    "cells": 69,
+    "tables": 3
+   },
+   "unaligned": {
+    "de": 98,
+    "fr": 94,
+    "it": 97
+   },
+   "version": "2026-08-01"
+  },
+  "KVG": {
+   "aligned_units": 938,
+   "eli": "cc/1995/1328_1328_1328",
+   "sha256": {
+    "de": "32b0745cd3827c26",
+    "fr": "c107fc65b90f3413",
+    "it": "71e4d35953fb3156"
+   },
+   "sr": "832.10",
+   "table_guard": {
+    "cells": 0,
+    "tables": 0
+   },
+   "unaligned": {
+    "de": 1,
+    "fr": 3,
+    "it": 3
+   },
+   "version": "2026-07-01"
+  },
+  "KVV": {
+   "aligned_units": 1725,
+   "eli": "cc/1995/3867_3867_3867",
+   "sha256": {
+    "de": "1aed66cafd38b948",
+    "fr": "6c50c78fd8b14d74",
+    "it": "5fdfbefdc0d33986"
+   },
+   "sr": "832.102",
+   "table_guard": {
+    "cells": 0,
+    "tables": 0
+   },
+   "unaligned": {
+    "de": 1,
+    "fr": 2,
+    "it": 3
+   },
+   "version": "2026-08-01"
+  },
+  "VAM": {
+   "aligned_units": 600,
+   "eli": "cc/2018/588",
+   "sha256": {
+    "de": "6c88f4076e2baffc",
+    "fr": "6214fea53d3fb1e3",
+    "it": "4122d34cc3632cd8"
+   },
+   "sr": "812.212.21",
+   "table_guard": {
+    "cells": 0,
+    "tables": 0
+   },
+   "unaligned": {
+    "de": 6,
+    "fr": 6,
+    "it": 13
+   },
+   "version": "2026-01-01"
+  },
+  "VAZV": {
+   "aligned_units": 311,
+   "eli": "cc/2006/558",
+   "sha256": {
+    "de": "cfa1055dcb0dc817",
+    "fr": "482a90cd3a0a3b21",
+    "it": "bb6782edd576033e"
+   },
+   "sr": "812.212.23",
+   "table_guard": {
+    "cells": 0,
+    "tables": 0
+   },
+   "unaligned": {
+    "de": 0,
+    "fr": 0,
+    "it": 0
+   },
+   "version": "2026-07-01"
+  }
+ },
+ "count_only_differences": 46,
+ "findings": 26,
+ "labels": "two fresh blind Claude annotators (the second in reverse order) and a third on differing answers (eval/labels/PROTOCOL.md, R14 set-up); eval/labels/audit_fedlex.tsv",
+ "likely_equivalent": {
+  "number": 12,
+  "of": 26
+ },
+ "likely_equivalent_vs_label": {
+  "eq:not": 12,
+  "neq:not": 14
+ },
+ "minor": [],
+ "model_calls": 0,
+ "precision_pct": 0.0,
+ "precision_strict_pct": 0.0,
+ "precision_strict_wilson95": [
+  0.0,
+  12.9
+ ],
+ "precision_wilson95": [
+  0.0,
+  12.9
+ ],
+ "prereg": "R24",
+ "real": 0,
+ "real_divergences": [],
+ "run_date": "2026-10-11",
+ "unbound_differences": 104,
+ "units": 5991
+}

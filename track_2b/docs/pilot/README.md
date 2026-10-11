@@ -46,8 +46,8 @@ Signieren ist Sache des Betriebs: Wer das Paket weitergibt, signiert die ZIP-Dat
 | Paket | erwarteter Wert |
 |---|---|
 | ZIP-Datei | `gleichlaut-pilot-phase1-20261006.zip` (58 Dateien) |
-| sha256 der ZIP-Datei | `45fee00e27b915a5b8c1856f2642d07538eceaf82e5703a75c1cc2aa3faf9833` |
-| sha256 von SHA256SUMS (Inhalt aller Dateien) | `cc89ff1b888f475a3e52715e1b66a5654611f9c25b9cf99eaae944930165b4a8` |
+| sha256 der ZIP-Datei | `c8007c2549eed1ec1a2b8b2a34f868a4bd58ed7ece82b518476ab2d75dd8e74c` |
+| sha256 von SHA256SUMS (Inhalt aller Dateien) | `4b5d313ecc37ad8edaadc84121de0a58d1f318afdbe90e04cfe072dbf920a502` |
 | gebaut mit | Python zipfile, Deflate Stufe 9, zlib 1.2.12 |
 
 <!-- /pilot-pack-sha256 -->

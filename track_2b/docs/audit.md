@@ -233,6 +233,52 @@ worklists (`eval/labels/audit_migel_20260701.tsv`, `audit_al_20260701.tsv`): 7 r
 structured. Most language fields are too short to judge (MiGeL DE 870 of 1,304; AL DE 1,294 of 1,933), so the language
 check says little here.
 
+## Binding federal law: the acts behind the SL (PREREG R24)
+
+The SL rests on federal acts whose language versions are equally binding (PublG, SR 170.512, Art. 14 para. 1) and
+whose structure (article, paragraph, letter, item) is the same in German, French and Italian. R24 runs the shipped audit
+on seven of them, with nothing changed but an adapter that reads Fedlex and aligns:
+
+```bash
+PYTHONPATH=src python3 -m gleichlaut.audit_fedlex --fetch DIR      # online once: SPARQL + filestore AKN XML, manifest
+PYTHONPATH=src python3 -m gleichlaut.audit_fedlex --extract DIR    # -> data/fedlex_audit/texts_20261011.json.gz
+PYTHONPATH=src python3 -m gleichlaut.audit_fedlex --run            # -> data/audit/audit_fedlex_20261011.json (offline)
+```
+
+- **Corpus** (fixed in R24 before any fetch): KVG (832.10), KVV (832.102), KLV (832.112.31), HMG (812.21), VAM
+  (812.212.21), AMZV (812.212.22), VAZV (812.212.23); for each the latest DE/FR/IT consolidated version applicable on
+  11 Oct 2026 (KVG 1 Jul 2026, KVV and KLV 1 Aug 2026, HMG 1 Jan 2025, VAM 1 Jan 2026, AMZV and VAZV 1 Jul 2026).
+  Fetched once with `hackapertus-research/0.1`, ≥ 1.1 s between requests, XML from `www.fedlex.admin.ch/filestore`
+  (robots.txt disallows `fedlex.data.admin.ch/filestore`); URLs and sha256 in `data/fedlex_audit/manifest.json`. The
+  committed file is the extracted, aligned text (public law). KLV Annexes 1–4 are in the consolidated text as headings
+  only; their content is published by reference outside the SR.
+- **Alignment.** Every AKN leaf with an `eId` (paragraph, item, list introduction) by its `eId`; other text (headings,
+  annex blocks, table cells) by the nearest `eId` ancestor and its tag/index path. Footnotes and structural labels are
+  left out. A unit counts when its key exists in all three languages; a table's cells only when the table has the same
+  cell keys in all three (table guard). 5,991 units are aligned; 268 DE, 284 FR and 301 IT units are not (mostly AMZV
+  and KLV tables whose rows differ between languages).
+- **Checks.** `audit.run_all` exactly as for MiGeL and AL: number, unit, language, editorial, register statistics from
+  the corpus, no terminology pairs (they are mined from the SL), round 5 off.
+
+**Result** (`eval/results/audit_fedlex.json`, `score.audit_fedlex`, re-derived by `replay`). 26 findings, all `number`
+(FR 8, IT 18; KVV 10, KVG 8, HMG 3, KLV 3, VAM 1, AMZV 1, VAZV 0); unit, language and editorial 0. Two fresh blind
+Claude annotators answered `not` on all 26 (26 of 26 agree; no tie-break needed): **0 confirmed, precision 0 of 26
+[0.0, 12.9]**. On the SL register the same checks have 17 of 27 confirmed. Every finding is a value the other version
+writes in a form the number rules do not reconcile: a number word above twelve or an ordinal (`tredicesima settimana`,
+`cinquantaseiesimo giorno`, `fünfzehn Jahre`, `treize mois`), a period word (`quadriennio`, `riesame triennale`),
+`doppelt` against `deux fois`, `hälftig` against `50 per cento`, and the Italian "up to 18 completed years" where the
+German says `Kinder` (5 findings in KVG Art. 64 and KVV Art. 93 and 103). 12 of the 26 are already marked
+`likely_equivalent`. The `Kinder` five rest on a legal reading: both annotators take them as the same group, but the
+acts give the age in more than one place (KVV Art. 3 para. 2 for family members: up to 18 completed years; KVG Art. 16
+para. 5, risk equalisation only: under 19 on 31 December), so a lawyer may want to confirm it.
+
+What this shows: on binding federal law the checks find no divergence that the annotators confirm, while on the SL's
+own limitation texts they confirm 17. The confirmed SL divergences are therefore not something the checks find in any
+trilingual text: in these acts there is none to confirm. The false findings are the known number-word and rephrasing
+class. Caveats: one run, seven acts, one date; the number check sees only values
+bound to a unit, so a divergence in wording (an obligation, a scope, a cross-reference) is outside what it can find; the
+labels are Claude's (`eval/labels/PROTOCOL.md`).
+
 ## Quarterly path (BAG officer)
 
 1. Fetch the SL feed of the date into a snapshot dir: `make audit AUDIT_DATE=YYYYMMDD` does steps 1–2 in Docker

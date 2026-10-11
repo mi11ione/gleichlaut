@@ -42,7 +42,7 @@ human labels were used.
 | R21 | a task-specific system message on top of the house wording (v4-system, certified Q8_0): fresh 166 (A) and both live months (B) | A meets R0 (13.9% identical, +7.8; frozen 17.5%); no live month (Aug 1 REAL, Sep flagged 70.7%): not a candidate, default unchanged |
 | R22 | stricter alignment for the operator and negation module (round 5b), held half of the register and R15's held planted set | held precision 19.0% → 40.0% (2 of 5; dev 2 of 2); planted operator 66.5%, dropped negation 43.0%; the three finds kept: fails the precision bar, stays opt-in |
 | R23 | the first BAG feed after 6 Oct 2026 (unseen window): the frozen default and v4-system, under R0 | pending (void if no feed by 15 Oct 2026) |
-| R24 | the shipped audit (defaults, round 5 off) on 7 federal acts behind the SL (KVG, KVV, KLV, HMG, VAM, AMZV, VAZV), DE/FR/IT aligned by article | pending |
+| R24 | the shipped audit (defaults, round 5 off) on 7 federal acts behind the SL (KVG, KVV, KLV, HMG, VAM, AMZV, VAZV), DE/FR/IT aligned by article | 5,991 aligned units, 26 findings (all number), 0 confirmed by two blind annotators (26 of 26 agree): precision 0 of 26 [0, 12.9] |
 
 Corrections to statements of fact inside rule text (11 Oct 2026; the rules themselves are unchanged and their text below
 stays as frozen):
@@ -1372,3 +1372,32 @@ data the change was designed on is labelled "dev" in every table.
   `Q03`): all found. **Outcome:** recall and the three finds hold, held precision 40.0% < 50%: **fails**; the module
   stays opt-in and the R22 rules are not switched on (`eval/results/audit_r22.json`, `data/audit/audit_r22_20261006.json`,
   `eval/results/audit_injection_r22_{held,dev}.json`, `eval/labels/audit_r22_20261006.tsv`).
+- **R24, 11 Oct 2026:** pre-registered at commit 79ab800 (19:46:57 UTC) before any of the texts was fetched; the
+  first request went out at 19:47:10 UTC (30 requests, 19:47–19:51 UTC, `hackapertus-research/0.1`, ≥ 1.1 s apart;
+  XML from `www.fedlex.admin.ch/filestore`). Adapter (`gleichlaut.audit_fedlex`) and the extracted aligned texts committed
+  at f93d78c, before any audit check ran on them (`data/fedlex_audit/manifest.json`, `texts_20261011.json.gz`).
+  **Two adapter choices made after the fetch, on structure alone, before any check ran:** (a) a *table guard*: the
+  cells of a table are aligned only when the table has the same cell keys in all three languages (AMZV 5 tables / 49
+  cells and KLV 3 / 69 left out: a row added in one language would shift the positional keys of every row below it);
+  (b) inline markup is joined as rendered (`13<sup>a</sup>` = `13a`; `units.text_of` puts a space at every tag).
+  **Corpus** (latest DE/FR/IT version applicable on 11 Oct 2026; each SR number resolved to the one in-force work):
+  KVG `cc/1995/1328_1328_1328` 2026-07-01, KVV `cc/1995/3867_3867_3867` 2026-08-01, KLV `cc/1995/4964_4964_4964`
+  2026-08-01 (later version 2027-01-01 not yet applicable), HMG `cc/2001/422` 2025-01-01 (2027-01-01 not yet
+  applicable), VAM `cc/2018/588` 2026-01-01, AMZV `cc/2001/517` 2026-07-01, VAZV `cc/2006/558` 2026-07-01; 21 files,
+  sha256 in the manifest. KLV Annexes 1, 1a, 2, 3 and 4 are in the consolidated text as headings only (their content is
+  published by reference outside the SR), so only the headings are in the corpus. **Aligned units: 5,991** (KVG 938,
+  KVV 1,725, KLV 859, HMG 1,002, VAM 600, AMZV 556, VAZV 311); unaligned (key in one or two languages only, or table
+  guard): DE 268, FR 284, IT 301, mostly AMZV and KLV tables. **Findings** (shipped defaults, `pairs=[]`, `r5=False`):
+  **26**, all `number` (FR 8, IT 18; KVV 10, KVG 8, HMG 3, KLV 3, VAM 1, AMZV 1, VAZV 0); unit, language and
+  editorial 0; 12 of the 26 marked `likely_equivalent`. **Labels:** two fresh blind Claude annotators (the second in
+  reverse order) answered `not` on all 26 (answers agree 26 of 26; κ undefined, one class); no tie-break was needed.
+  Their notes name the same few reasons: a value written as a word on the other side beyond the audit's number words
+  2..12 (`tredicesima`, `ventitreesima`, `cinquantaseiesimo`, `sedici`, `treize`, `trente`, `fünfzehn`, `zwanzig`), a
+  period noun or adjective (`quadriennio`, `triennale`, `quadriennali`), `doppelt` = `deux fois`, `hälftig` = `50 per
+  cento`, `Kinder` = Italian "up to 18 completed years" (5 findings, read by both as the same group), `innerhalb eines Jahres` = `douze
+  mois`, `vier Jahre nach Inkrafttreten` = the end of the fourth year.
+  **Outcome:** 0 confirmed, precision **0 of 26 = 0.0%** [0.0, 12.9] (strict real 0). As stated in R24, a valid
+  result: on 5,991 aligned units of binding federal law the shipped checks find no divergence that the annotators
+  confirm, where the same checks confirm 17 of 27 on the SL register; every finding here is a rendering the number
+  rules do not reconcile (`eval/results/audit_fedlex.json`, `data/audit/audit_fedlex_20261011.json`,
+  `eval/labels/audit_fedlex.tsv`).

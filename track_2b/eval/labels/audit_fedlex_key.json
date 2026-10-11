@@ -1,0 +1,161 @@
+{
+ "seed": 20261024,
+ "ids": {
+  "F00": {
+   "key": "832.10|art_64/para_7/lbl_b",
+   "fid": "N20",
+   "kind": "number",
+   "lang": "it"
+  },
+  "F01": {
+   "key": "832.102|art_105/para_1",
+   "fid": "N08",
+   "kind": "number",
+   "lang": "it"
+  },
+  "F02": {
+   "key": "832.102|art_93/para_1",
+   "fid": "N13",
+   "kind": "number",
+   "lang": "it"
+  },
+  "F03": {
+   "key": "812.21|art_74/para_1",
+   "fid": "N05",
+   "kind": "number",
+   "lang": "it"
+  },
+  "F04": {
+   "key": "812.21|art_14_a/para_1/lbl_b/lbl_3",
+   "fid": "N04",
+   "kind": "number",
+   "lang": "fr"
+  },
+  "F05": {
+   "key": "832.10|art_55/para_1",
+   "fid": "N18",
+   "kind": "number",
+   "lang": "fr"
+  },
+  "F06": {
+   "key": "832.102|art_65_b/para_3",
+   "fid": "N12",
+   "kind": "number",
+   "lang": "it"
+  },
+  "F07": {
+   "key": "832.10|art_54/para",
+   "fid": "N16",
+   "kind": "number",
+   "lang": "it"
+  },
+  "F08": {
+   "key": "832.112.31|art_38/para_5",
+   "fid": "N26",
+   "kind": "number",
+   "lang": "it"
+  },
+  "F09": {
+   "key": "832.102|disp_u17/para",
+   "fid": "N15",
+   "kind": "number",
+   "lang": "fr"
+  },
+  "F10": {
+   "key": "832.10|disp_u23/para",
+   "fid": "N22",
+   "kind": "number",
+   "lang": "fr"
+  },
+  "F11": {
+   "key": "832.102|art_93/para_3",
+   "fid": "N14",
+   "kind": "number",
+   "lang": "it"
+  },
+  "F12": {
+   "key": "832.102|art_127/para",
+   "fid": "N11",
+   "kind": "number",
+   "lang": "fr"
+  },
+  "F13": {
+   "key": "832.102|art_105/para_2",
+   "fid": "N09",
+   "kind": "number",
+   "lang": "it"
+  },
+  "F14": {
+   "key": "832.112.31|art_34_h/para_1",
+   "fid": "N25",
+   "kind": "number",
+   "lang": "it"
+  },
+  "F15": {
+   "key": "832.10|disp_u23/para",
+   "fid": "N23",
+   "kind": "number",
+   "lang": "it"
+  },
+  "F16": {
+   "key": "812.212.22|annex_1/lvl_u1/lvl_1/content[0]/p[4]",
+   "fid": "N02",
+   "kind": "number",
+   "lang": "fr"
+  },
+  "F17": {
+   "key": "832.10|art_54_a/para_1",
+   "fid": "N17",
+   "kind": "number",
+   "lang": "it"
+  },
+  "F18": {
+   "key": "832.102|art_103/para_6",
+   "fid": "N07",
+   "kind": "number",
+   "lang": "it"
+  },
+  "F19": {
+   "key": "812.212.21|art_77/para_1/lbl_b",
+   "fid": "N01",
+   "kind": "number",
+   "lang": "fr"
+  },
+  "F20": {
+   "key": "832.10|art_74/para_2",
+   "fid": "N21",
+   "kind": "number",
+   "lang": "it"
+  },
+  "F21": {
+   "key": "832.102|art_105/para_3",
+   "fid": "N10",
+   "kind": "number",
+   "lang": "it"
+  },
+  "F22": {
+   "key": "812.21|art_11_b/para_4",
+   "fid": "N03",
+   "kind": "number",
+   "lang": "it"
+  },
+  "F23": {
+   "key": "832.112.31|art_34_d/para_2/lbl_b",
+   "fid": "N24",
+   "kind": "number",
+   "lang": "fr"
+  },
+  "F24": {
+   "key": "832.102|art_103/para_2",
+   "fid": "N06",
+   "kind": "number",
+   "lang": "it"
+  },
+  "F25": {
+   "key": "832.10|art_64/para_4",
+   "fid": "N19",
+   "kind": "number",
+   "lang": "it"
+  }
+ }
+}

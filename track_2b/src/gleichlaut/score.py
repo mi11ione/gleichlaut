@@ -2047,3 +2047,52 @@ def _r21_run(s):
     S_ = json.load(open(os.path.join(DATA, "r21", "runs", f"{s}_q8_0", "summary.json"), encoding="utf-8"))
     return {k: S_[k] for k in ("shards", "gates", "gates_verified", "gguf_sha256", "llama_cpp_python", "calls", "exchanges", "models_served",
                                "prompt_tokens", "completion_tokens", "cpu_secs", "system_sha256") if k in S_}
+
+
+def audit_fedlex():
+    """PREREG R24: the shipped audit (defaults: number, unit, language, editorial; no terminology; round 5 off) on the
+    seven federal acts behind the SL, DE/FR/IT aligned by structure (gleichlaut.audit_fedlex). Re-runs the audit on the
+    committed aligned texts and requires the committed findings; re-merges the raw blind labels (two annotators, a third
+    on differing answers) and requires the committed eval/labels/audit_fedlex.tsv. Confirmed = real or minor."""
+    from . import audit_fedlex as X
+    T = X.load_texts(); F, S = X.run(T)
+    C = json.load(open(X.OUT, encoding="utf-8"))
+    assert [(f["id"], f["lang"], f["fid"], f["description"]) for f in F] == \
+           [(f["id"], f["lang"], f["fid"], f["description"]) for f in C["findings"]], "audit_fedlex findings drifted"
+    man = json.load(open(X.MANIFEST, encoding="utf-8"))
+    corpus = {a["abbr"]: dict(sr=sr, eli=man["acts"][sr]["eli"], version=a["version"], aligned_units=a["aligned"],
+                              unaligned=a["unaligned"], table_guard=a["table_guard"],
+                              sha256={L: man["acts"][sr]["files"][L]["sha256"][:16] for L in X.LANGS})
+              for sr, a in sorted(T["acts"].items())}
+    out = dict(prereg="R24", run_date=T["run_date"], model_calls=0, corpus=corpus, units=S["n_units"],
+               findings=len(F), by_kind=S["by_kind"], by_kind_lang=S["by_kind_lang"], by_act=S["by_act"],
+               likely_equivalent=S["likely_equivalent"], unbound_differences=S["unbound_differences"],
+               count_only_differences=S["count_only_differences"])
+    if not os.path.exists(os.path.join(LABELS, "audit_fedlex.tsv")): return dict(out, labels=None)
+    rows = X.merge()
+    assert open(os.path.join(LABELS, "audit_fedlex.tsv"), encoding="utf-8").read().splitlines() == X.merged_lines(rows), \
+        "audit_fedlex.tsv is not the merge of the raw labels"
+    conf = lambda a: "yes" if a in ("real", "minor") else "no"
+    n = len(rows); cm = sum(r["final_confirmed"] == "yes" for r in rows); real = [r for r in rows if r["final"] == "real"]
+    by = {f["id"] + "|" + f["lang"]: f for f in F}
+
+    def show(r):
+        f = by[r["key"] + "|" + r["lang"]]; t = T["acts"][f["act"]]["texts"][f["eid"]]
+        return dict(uid=r["uid"], act=r["act"], ref=r["ref"], eid=f["eid"], lang=r["lang"], finding=f["description"],
+                    answers=[r["A"], r["B"]] + ([r["T"]] if r["T"] else []), notes=[r[f"note_{x}"] for x in "ABT" if r[f"note_{x}"]],
+                    de=t["de"], fr=t["fr"], it=t["it"])
+    out.update(labels="two fresh blind Claude annotators (the second in reverse order) and a third on differing answers "
+                      "(eval/labels/PROTOCOL.md, R14 set-up); eval/labels/audit_fedlex.tsv",
+               annotators=dict(_kappa_yes([conf(r["A"]) for r in rows], [conf(r["B"]) for r in rows]),
+                               answer_agree=sum(r["A"] == r["B"] for r in rows), tiebreak=sum(bool(r["T"]) for r in rows)),
+               answers=dict(sorted(Counter(r["final"] for r in rows).items())),
+               confirmed=cm, precision_pct=round(100 * cm / n, 1) if n else None,
+               precision_wilson95=[round(v, 1) for v in wilson(cm, n)] if n else None,
+               real=len(real), precision_strict_pct=round(100 * len(real) / n, 1) if n else None,
+               precision_strict_wilson95=[round(v, 1) for v in wilson(len(real), n)] if n else None,
+               confirmed_by_act=dict(sorted(Counter(r["act"].split()[-1] for r in rows if r["final_confirmed"] == "yes").items())),
+               likely_equivalent_vs_label=dict(Counter(f"{'eq' if by[r['key'] + '|' + r['lang']]['likely_equivalent'] else 'neq'}:{r['final']}" for r in rows)),
+               real_divergences=[show(r) for r in sorted(real, key=lambda r: (r["act"], r["ref"], r["lang"]))],
+               minor=[dict(uid=r["uid"], act=r["act"], ref=r["ref"], lang=r["lang"], notes=[r[f"note_{x}"] for x in "ABT" if r[f"note_{x}"]])
+                      for r in rows if r["final"] == "minor"])
+    return out

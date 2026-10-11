@@ -1,0 +1,27 @@
+uid	key	act	ref	lang	kind	A	B	T	final	final_confirmed	note_A	note_B	note_T
+F00	832.10|art_64/para_7/lbl_b	SR 832.10 KVG	Art. 64 para. 7 let. b	it	number	not	not		not	no	IT spells out tredicesima; same week 13.	13th week written as tredicesima; same	
+F01	832.102|art_105/para_1	SR 832.102 KVV	Art. 105 para. 1	it	number	not	not		not	no	IT tredicesima settimana = 13th week; same condition.	13th week written as tredicesima; same	
+F02	832.102|art_93/para_1	SR 832.102 KVV	Art. 93 para. 1	it	number	not	not		not	no	IT makes explicit KVG definition of children (under 18); same values.	Kinder vs under 18; same per KVG definition	
+F03	812.21|art_74/para_1	SR 812.21 HMG	Art. 74 para. 1	it	number	not	not		not	no	DE weitere Amtsdauer of four years = IT ulteriore quadriennio.	vier Jahre vs quadriennio; same	
+F04	812.21|art_14_a/para_1/lbl_b/lbl_3	SR 812.21 HMG	Art. 14a para. 1 let. b no. 3	fr	number	not	not		not	no	FR spells trente/quinze ans; same 30/15 years.	15-jährigen vs quinze ans; same	
+F05	832.10|art_55/para_1	SR 832.10 KVG	Art. 55 para. 1	fr	number	not	not		not	no	FR deux fois = DE doppelt; au moins is natural reading of DE.	doppelt so stark vs au moins deux fois; same threshold	
+F06	832.102|art_65_b/para_3	SR 832.102 KVV	Art. 65b para. 3	it	number	not	not		not	no	DE hälftig = IT 50 per cento each.	hälftig gewichtet vs 50 per cento each; same	
+F07	832.10|art_54/para	SR 832.10 KVG	Art. 54 para	it	number	not	not		not	no	IT obiettivi quadriennali = four years.	jeweils für vier Jahre vs obiettivi quadriennali; same	
+F08	832.112.31|art_38/para_5	SR 832.112.31 KLV	Art. 38 para. 5	it	number	not	not		not	no	IT riesame triennale = every three years.	alle drei Jahre vs riesame triennale; same	
+F09	832.102|disp_u17/para	SR 832.102 KVV	disp_u17 para	fr	number	not	not		not	no	FR douze mois = DE innerhalb eines Jahres.	innerhalb eines Jahres vs dans les douze mois; same period	
+F10	832.10|disp_u23/para	SR 832.10 KVG	disp_u23 para	fr	number	not	not		not	no	FR end of fourth year = DE four years after entry into force.	vier Jahre nach Inkrafttreten vs fin de la quatrième année; same	
+F11	832.102|art_93/para_3	SR 832.102 KVV	Art. 93 para. 3	it	number	not	not		not	no	IT figli under 18 = DE Kinder (KVG children under 18).	Kinder vs figli under 18; KVG children are under 18, same	
+F12	832.102|art_127/para	SR 832.102 KVV	Art. 127 para	fr	number	not	not		not	no	FR trente jours = 30 days.	30 Tagen vs trente jours; same	
+F13	832.102|art_105/para_2	SR 832.102 KVV	Art. 105 para. 2	it	number	not	not		not	no	IT ventitreesima settimana = 23rd week.	23rd week written as ventitreesima; same	
+F14	832.112.31|art_34_h/para_1	SR 832.112.31 KLV	Art. 34h para. 1	it	number	not	not		not	no	IT riesame triennale = every three years.	alle drei Jahre vs riesame triennale; same	
+F15	832.10|disp_u23/para	SR 832.10 KVG	disp_u23 para	it	number	not	not		not	no	IT end of fourth year = four years; finding value identical.	vier Jahre nach Inkrafttreten vs end of fourth year after; same deadline	
+F16	812.212.22|annex_1/lvl_u1/lvl_1/content[0]/p[4]	SR 812.212.22 AMZV	annex_1 lvl_u1 lvl_1 content[0] p[4]	fr	number	not	not		not	no	FR deux fois = DE doppelt so gross.	doppelt so gross vs deux fois plus grands; same	
+F17	832.10|art_54_a/para_1	SR 832.10 KVG	Art. 54a para. 1	it	number	not	not		not	no	IT obiettivi quadriennali = four years.	jeweils für vier Jahre vs obiettivi quadriennali; same period	
+F18	832.102|art_103/para_6	SR 832.102 KVV	Art. 103 para. 6	it	number	not	not		not	no	IT under-18 insured = DE Kinder; amounts 92/33/30 identical.	Kinder equals under 18 per KVG; explicit rephrasing only	
+F19	812.212.21|art_77/para_1/lbl_b	SR 812.212.21 VAM	Art. 77 para. 1 let. b	fr	number	not	not		not	no	DE zwanzig Jahren = FR 20 ans.	zwanzig vs 20 ans; same	
+F20	832.10|art_74/para_2	SR 832.10 KVG	Art. 74 para. 2	it	number	not	not		not	no	IT sedici settimane = 16 weeks.	16 weeks written as sedici settimane; same	
+F21	832.102|art_105/para_3	SR 832.102 KVV	Art. 105 para. 3	it	number	not	not		not	no	IT cinquantaseiesimo giorno = 56th day.	56th day written out as cinquantaseiesimo; same	
+F22	812.21|art_11_b/para_4	SR 812.21 HMG	Art. 11b para. 4	it	number	not	not		not	no	DE fünfzehn Jahren = IT 15 anni.	fünfzehn Jahre vs 15 anni; same	
+F23	832.112.31|art_34_d/para_2/lbl_b	SR 832.112.31 KLV	Art. 34d para. 2 let. b	fr	number	not	not		not	no	FR treize mois = 13 Monaten.	13 months written as treize mois; same	
+F24	832.102|art_103/para_2	SR 832.102 KVV	Art. 103 para. 2	it	number	not	not		not	no	IT under-18 insured = DE Kinder; 700/350 identical.	Kinder equals insured under 18 per KVG; explicit rephrasing only	
+F25	832.10|art_64/para_4	SR 832.10 KVG	Art. 64 para. 4	it	number	not	not		not	no	IT under 18 = KVG definition of Kinder; same condition.	Kinder in KVG means under 18; IT makes the age explicit, same condition	

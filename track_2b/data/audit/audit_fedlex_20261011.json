@@ -1,0 +1,1213 @@
+{
+"summary": {
+"generated_by": "python3 -m gleichlaut.audit_fedlex --run",
+"prereg": "R24",
+"run_date": "2026-10-11",
+"model_calls": 0,
+"checks": "audit.run_all defaults: number, unit, language, editorial; pairs=[] (no terminology); r5=False",
+"n_units": 5991,
+"findings_all": 26,
+"by_kind": {
+"number": 26,
+"unit": 0,
+"language": 0,
+"editorial": 0
+},
+"by_kind_lang": {
+"number": {
+"fr": 8,
+"it": 18
+},
+"unit": {},
+"language": {},
+"editorial": {}
+},
+"by_act": {
+"HMG": 3,
+"VAM": 1,
+"AMZV": 1,
+"VAZV": 0,
+"KVG": 8,
+"KVV": 10,
+"KLV": 3
+},
+"units_by_act": {
+"HMG": 1002,
+"VAM": 600,
+"AMZV": 556,
+"VAZV": 311,
+"KVG": 938,
+"KVV": 1725,
+"KLV": 859
+},
+"likely_equivalent": {
+"number": 12,
+"of": 26
+},
+"count_only_differences": 46,
+"unbound_differences": 104,
+"suppressed": {
+"one": 19,
+"period_word": 1,
+"glued": 45
+},
+"language_fields_judged": {
+"de": 3738,
+"fr": 3931,
+"it": 3539
+},
+"language_fields_too_short": {
+"de": 2253,
+"fr": 2060,
+"it": 2452
+},
+"unit_one_sided": []
+},
+"findings": [
+{
+"id": "812.212.21|art_77/para_1/lbl_b",
+"product": [
+"VAM"
+],
+"lang": "fr",
+"kind": "number",
+"score": 9,
+"half": "held",
+"group": "c30aab5275",
+"de_only": [],
+"tgt_only": [
+{
+"value": "20",
+"n": 1,
+"unit": "ans",
+"src": "digit",
+"context": [
+"pendant [20] ans à compter de la dernière saisie si celle-ci était fondé…"
+]
+}
+],
+"description": "FR has 20 (ans), DE does not",
+"rank": 1,
+"fid": "N01",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"pendant [20] ans à compter de la dernière saisie si celle-ci était fondé…"
+],
+"explained_by": [],
+"likely_equivalent": true,
+"equivalence": "Q4 spelled out: 20 = 'zwanzig'",
+"counterpart": {},
+"act": "812.212.21",
+"eid": "art_77/para_1/lbl_b",
+"abbr": "VAM",
+"ref": "Art. 77 para. 1 let. b"
+},
+{
+"id": "812.212.22|annex_1/lvl_u1/lvl_1/content[0]/p[4]",
+"product": [
+"AMZV"
+],
+"lang": "fr",
+"kind": "number",
+"score": 9,
+"half": "held",
+"group": "28ded8add9",
+"de_only": [],
+"tgt_only": [
+{
+"value": "2",
+"n": 1,
+"unit": "fois",
+"src": "word",
+"context": [
+"… utilisés pour l’indication du dosage doivent être au moins [deux] fois plus grands que ceux utilisés pour l’indication de la …"
+]
+}
+],
+"description": "FR has 2 (fois), DE does not",
+"rank": 2,
+"fid": "N02",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"… utilisés pour l’indication du dosage doivent être au moins [deux] fois plus grands que ceux utilisés pour l’indication de la …"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"counterpart": {},
+"act": "812.212.22",
+"eid": "annex_1/lvl_u1/lvl_1/content[0]/p[4]",
+"abbr": "AMZV",
+"ref": "annex_1 lvl_u1 lvl_1 content[0] p[4]"
+},
+{
+"id": "812.21|art_11_b/para_4",
+"product": [
+"HMG"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "dev",
+"group": "9dabcc75cc",
+"de_only": [],
+"tgt_only": [
+{
+"value": "15",
+"n": 1,
+"unit": "anni",
+"src": "digit",
+"context": [
+"Su richiesta, l’Istituto concede una protezione di [15] anni alla documentazione che si riferisce a un medicamento …"
+]
+}
+],
+"description": "IT has 15 (anni), DE does not",
+"rank": 3,
+"fid": "N03",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"Su richiesta, l’Istituto concede una protezione di [15] anni alla documentazione che si riferisce a un medicamento …"
+],
+"explained_by": [],
+"likely_equivalent": true,
+"equivalence": "Q4 spelled out: 15 = 'fünfzehn'",
+"counterpart": {},
+"act": "812.21",
+"eid": "art_11_b/para_4",
+"abbr": "HMG",
+"ref": "Art. 11b para. 4"
+},
+{
+"id": "812.21|art_14_a/para_1/lbl_b/lbl_3",
+"product": [
+"HMG"
+],
+"lang": "fr",
+"kind": "number",
+"score": 9,
+"half": "held",
+"group": "39c40c9164",
+"de_only": [
+{
+"value": "15",
+"n": 1,
+"unit": "jährigen",
+"src": "digit",
+"context": [
+"der Nachweis der 30- beziehungsweise [15]-jährigen medizinischen Verwendung;"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 15 (jährigen), FR does not",
+"rank": 4,
+"fid": "N04",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"der Nachweis der 30- beziehungsweise [15]-jährigen medizinischen Verwendung;"
+],
+"explained_by": [],
+"likely_equivalent": true,
+"equivalence": "Q4 spelled out: 15 = 'quinze'",
+"counterpart": {},
+"act": "812.21",
+"eid": "art_14_a/para_1/lbl_b/lbl_3",
+"abbr": "HMG",
+"ref": "Art. 14a para. 1 let. b no. 3"
+},
+{
+"id": "812.21|art_74/para_1",
+"product": [
+"HMG"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "held",
+"group": "a20cf8ae01",
+"de_only": [
+{
+"value": "4",
+"n": 1,
+"unit": "Jahren",
+"src": "word",
+"context": [
+"…Bundesrat bezeichnet die Revisionsstelle für eine Dauer von [vier] Jahren. Sie kann jeweils für eine weitere Amtsdauer wiederg…"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 4 (Jahren), IT does not",
+"rank": 5,
+"fid": "N05",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"…Bundesrat bezeichnet die Revisionsstelle für eine Dauer von [vier] Jahren. Sie kann jeweils für eine weitere Amtsdauer wiederg…"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"counterpart": {},
+"act": "812.21",
+"eid": "art_74/para_1",
+"abbr": "HMG",
+"ref": "Art. 74 para. 1"
+},
+{
+"id": "832.102|art_103/para_2",
+"product": [
+"KVV"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "dev",
+"group": "5c145a4b5b",
+"de_only": [],
+"tgt_only": [
+{
+"value": "18",
+"n": 1,
+"unit": "anni",
+"src": "digit",
+"context": [
+"…50 franchi per gli assicurati che non hanno ancora compiuto [18] anni."
+]
+}
+],
+"description": "IT has 18 (anni), DE does not",
+"rank": 6,
+"fid": "N06",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"…50 franchi per gli assicurati che non hanno ancora compiuto [18] anni."
+],
+"explained_by": [],
+"likely_equivalent": true,
+"equivalence": "Q3 adults: '18 anni' = 'Erwachsene'",
+"counterpart": {},
+"act": "832.102",
+"eid": "art_103/para_2",
+"abbr": "KVV",
+"ref": "Art. 103 para. 2"
+},
+{
+"id": "832.102|art_103/para_6",
+"product": [
+"KVV"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "dev",
+"group": "c82b12607b",
+"de_only": [],
+"tgt_only": [
+{
+"value": "18",
+"n": 1,
+"unit": "anni",
+"src": "digit",
+"context": [
+"…33 franchi per gli assicurati che non hanno ancora compiuto [18] anni."
+]
+}
+],
+"description": "IT has 18 (anni), DE does not",
+"rank": 7,
+"fid": "N07",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"…33 franchi per gli assicurati che non hanno ancora compiuto [18] anni."
+],
+"explained_by": [],
+"likely_equivalent": true,
+"equivalence": "Q3 adults: '18 anni' = 'Erwachsene'",
+"counterpart": {},
+"act": "832.102",
+"eid": "art_103/para_6",
+"abbr": "KVV",
+"ref": "Art. 103 para. 6"
+},
+{
+"id": "832.102|art_105/para_1",
+"product": [
+"KVV"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "held",
+"group": "97854d914c",
+"de_only": [
+{
+"value": "13",
+"n": 1,
+"unit": "Schwangerschaftswoche",
+"src": "digit",
+"context": [
+"…gerschaft begleitet, ermittelt den mutmasslichen Beginn der [13]. Schwangerschaftswoche und gibt ihn auf der Rechnung an."
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 13 (Schwangerschaftswoche), IT does not",
+"rank": 8,
+"fid": "N08",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"…gerschaft begleitet, ermittelt den mutmasslichen Beginn der [13]. Schwangerschaftswoche und gibt ihn auf der Rechnung an."
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"counterpart": {},
+"act": "832.102",
+"eid": "art_105/para_1",
+"abbr": "KVV",
+"ref": "Art. 105 para. 1"
+},
+{
+"id": "832.102|art_105/para_2",
+"product": [
+"KVV"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "held",
+"group": "87a85855ad",
+"de_only": [
+{
+"value": "23",
+"n": 1,
+"unit": "Schwangerschaftswoche",
+"src": "digit",
+"context": [
+"Eine Totgeburt nach der [23]. Schwangerschaftswoche gilt als Niederkunft."
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 23 (Schwangerschaftswoche), IT does not",
+"rank": 9,
+"fid": "N09",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"Eine Totgeburt nach der [23]. Schwangerschaftswoche gilt als Niederkunft."
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"counterpart": {},
+"act": "832.102",
+"eid": "art_105/para_2",
+"abbr": "KVV",
+"ref": "Art. 105 para. 2"
+},
+{
+"id": "832.102|art_105/para_3",
+"product": [
+"KVV"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "dev",
+"group": "d7d9f1191e",
+"de_only": [
+{
+"value": "56",
+"n": 1,
+"unit": "Tag",
+"src": "digit",
+"context": [
+"Die Frist nach Artikel 64 Absatz 7 Buchstabe b KVG endet am [56]. Tag nach der Niederkunft um 24 Uhr."
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 56 (Tag), IT does not",
+"rank": 10,
+"fid": "N10",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"Die Frist nach Artikel 64 Absatz 7 Buchstabe b KVG endet am [56]. Tag nach der Niederkunft um 24 Uhr."
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"counterpart": {},
+"act": "832.102",
+"eid": "art_105/para_3",
+"abbr": "KVV",
+"ref": "Art. 105 para. 3"
+},
+{
+"id": "832.102|art_127/para",
+"product": [
+"KVV"
+],
+"lang": "fr",
+"kind": "number",
+"score": 9,
+"half": "held",
+"group": "82c6055590",
+"de_only": [
+{
+"value": "30",
+"n": 1,
+"unit": "Tagen",
+"src": "digit",
+"context": [
+"…z 2 ATSG verlangt, so hat der Versicherer sie innerhalb von [30] Tagen zu erlassen."
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 30 (Tagen), FR does not",
+"rank": 11,
+"fid": "N11",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"…z 2 ATSG verlangt, so hat der Versicherer sie innerhalb von [30] Tagen zu erlassen."
+],
+"explained_by": [],
+"likely_equivalent": true,
+"equivalence": "Q4 spelled out: 30 = 'trente'",
+"counterpart": {},
+"act": "832.102",
+"eid": "art_127/para",
+"abbr": "KVV",
+"ref": "Art. 127 para"
+},
+{
+"id": "832.102|art_65_b/para_3",
+"product": [
+"KVV"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "dev",
+"group": "7d5641d5b2",
+"de_only": [],
+"tgt_only": [
+{
+"value": "50",
+"n": 1,
+"unit": "per cento",
+"src": "digit",
+"context": [
+"…omico sono presi in considerazione con una ponderazione del [50] per cento ciascuno i prezzi determinati come indicato al ca…"
+]
+}
+],
+"description": "IT has 50 (per cento), DE does not",
+"rank": 12,
+"fid": "N12",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"…omico sono presi in considerazione con una ponderazione del [50] per cento ciascuno i prezzi determinati come indicato al ca…"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"counterpart": {},
+"act": "832.102",
+"eid": "art_65_b/para_3",
+"abbr": "KVV",
+"ref": "Art. 65b para. 3"
+},
+{
+"id": "832.102|art_93/para_1",
+"product": [
+"KVV"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "held",
+"group": "26e7334db8",
+"de_only": [],
+"tgt_only": [
+{
+"value": "18",
+"n": 1,
+"unit": "anni",
+"src": "digit",
+"context": [
+"…00 franchi per gli assicurati che non hanno ancora compiuto [18] anni. Un assicuratore può offrire franchigie diverse per gl…"
+]
+}
+],
+"description": "IT has 18 (anni), DE does not",
+"rank": 13,
+"fid": "N13",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"…00 franchi per gli assicurati che non hanno ancora compiuto [18] anni. Un assicuratore può offrire franchigie diverse per gl…"
+],
+"explained_by": [],
+"likely_equivalent": true,
+"equivalence": "Q3 adults: '18 anni' = 'Erwachsene'",
+"counterpart": {},
+"act": "832.102",
+"eid": "art_93/para_1",
+"abbr": "KVV",
+"ref": "Art. 93 para. 1"
+},
+{
+"id": "832.102|art_93/para_3",
+"product": [
+"KVV"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "dev",
+"group": "d05c410016",
+"de_only": [],
+"tgt_only": [
+{
+"value": "18",
+"n": 1,
+"unit": "anni",
+"src": "digit",
+"context": [
+"… figli di una stessa famiglia che non hanno ancora compiuto [18] anni sono assicurati presso lo stesso assicuratore, la loro…"
+]
+}
+],
+"description": "IT has 18 (anni), DE does not",
+"rank": 14,
+"fid": "N14",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"… figli di una stessa famiglia che non hanno ancora compiuto [18] anni sono assicurati presso lo stesso assicuratore, la loro…"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"counterpart": {},
+"act": "832.102",
+"eid": "art_93/para_3",
+"abbr": "KVV",
+"ref": "Art. 93 para. 3"
+},
+{
+"id": "832.102|disp_u17/para",
+"product": [
+"KVV"
+],
+"lang": "fr",
+"kind": "number",
+"score": 9,
+"half": "dev",
+"group": "55672e41cc",
+"de_only": [],
+"tgt_only": [
+{
+"value": "12",
+"n": 1,
+"unit": "mois",
+"src": "word",
+"context": [
+"…1 décembre 2015. 3 Les assureurs doivent soumettre dans les [douze] mois à l’OFSP, pour approbation, les placements visés à l’a…"
+]
+}
+],
+"description": "FR has 12 (mois), DE does not",
+"rank": 15,
+"fid": "N15",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"…1 décembre 2015. 3 Les assureurs doivent soumettre dans les [douze] mois à l’OFSP, pour approbation, les placements visés à l’a…"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"counterpart": {},
+"act": "832.102",
+"eid": "disp_u17/para",
+"abbr": "KVV",
+"ref": "disp_u17 para"
+},
+{
+"id": "832.10|art_54/para",
+"product": [
+"KVG"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "held",
+"group": "6120d06fd8",
+"de_only": [
+{
+"value": "4",
+"n": 1,
+"unit": "Jahre",
+"src": "word",
+"context": [
+"…cherten, der Kantone und der Leistungserbringer jeweils für [vier] Jahre für die Leistungen Kosten- und Qualitätsziele fest."
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 4 (Jahre), IT does not",
+"rank": 16,
+"fid": "N16",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"…cherten, der Kantone und der Leistungserbringer jeweils für [vier] Jahre für die Leistungen Kosten- und Qualitätsziele fest."
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"counterpart": {},
+"act": "832.10",
+"eid": "art_54/para",
+"abbr": "KVG",
+"ref": "Art. 54 para"
+},
+{
+"id": "832.10|art_54_a/para_1",
+"product": [
+"KVG"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "held",
+"group": "5483d4d8b1",
+"de_only": [
+{
+"value": "4",
+"n": 1,
+"unit": "Jahre",
+"src": "word",
+"context": [
+"…Qualitätsziele seine Kosten- und Qualitätsziele jeweils für [vier] Jahre festlegen."
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 4 (Jahre), IT does not",
+"rank": 17,
+"fid": "N17",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"…Qualitätsziele seine Kosten- und Qualitätsziele jeweils für [vier] Jahre festlegen."
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"counterpart": {},
+"act": "832.10",
+"eid": "art_54_a/para_1",
+"abbr": "KVG",
+"ref": "Art. 54a para. 1"
+},
+{
+"id": "832.10|art_55/para_1",
+"product": [
+"KVG"
+],
+"lang": "fr",
+"kind": "number",
+"score": 9,
+"half": "dev",
+"group": "76aae19656",
+"de_only": [],
+"tgt_only": [
+{
+"value": "2",
+"n": 1,
+"unit": "fois",
+"src": "word",
+"context": [
+"…e dans l’assurance de soins obligatoire augmentent au moins [deux] fois plus que la moyenne de l’évolution générale des prix e…"
+]
+}
+],
+"description": "FR has 2 (fois), DE does not",
+"rank": 18,
+"fid": "N18",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"…e dans l’assurance de soins obligatoire augmentent au moins [deux] fois plus que la moyenne de l’évolution générale des prix e…"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"counterpart": {},
+"act": "832.10",
+"eid": "art_55/para_1",
+"abbr": "KVG",
+"ref": "Art. 55 para. 1"
+},
+{
+"id": "832.10|art_64/para_4",
+"product": [
+"KVG"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "dev",
+"group": "95cfaee33f",
+"de_only": [],
+"tgt_only": [
+{
+"value": "18",
+"n": 2,
+"unit": "anni",
+"src": "digit",
+"context": [
+"Per gli assicurati fino ai [18] anni compiuti non è dovuta alcuna franchigia e l’importo ma…",
+"…o. Più componenti di una stessa famiglia di età inferiore a [18] anni compiuti, assicurati dal medesimo assicuratore, pagano…"
+]
+}
+],
+"description": "IT has 18 (anni), DE does not",
+"rank": 19,
+"fid": "N19",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"Per gli assicurati fino ai [18] anni compiuti non è dovuta alcuna franchigia e l’importo ma…"
+],
+"explained_by": [],
+"likely_equivalent": true,
+"equivalence": "Q3 adults: '18 anni' = 'erwachsene'",
+"counterpart": {},
+"act": "832.10",
+"eid": "art_64/para_4",
+"abbr": "KVG",
+"ref": "Art. 64 para. 4"
+},
+{
+"id": "832.10|art_64/para_7/lbl_b",
+"product": [
+"KVG"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "held",
+"group": "388d389948",
+"de_only": [
+{
+"value": "13",
+"n": 1,
+"unit": "Schwangerschaftswoche",
+"src": "digit",
+"context": [
+"Leistungen nach den Artikeln 25 und 25a, die ab der [13]. Schwangerschaftswoche, während der Niederkunft und bis ach…"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 13 (Schwangerschaftswoche), IT does not",
+"rank": 20,
+"fid": "N20",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"Leistungen nach den Artikeln 25 und 25a, die ab der [13]. Schwangerschaftswoche, während der Niederkunft und bis ach…"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"counterpart": {},
+"act": "832.10",
+"eid": "art_64/para_7/lbl_b",
+"abbr": "KVG",
+"ref": "Art. 64 para. 7 let. b"
+},
+{
+"id": "832.10|art_74/para_2",
+"product": [
+"KVG"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "dev",
+"group": "7245dc494c",
+"de_only": [
+{
+"value": "16",
+"n": 1,
+"unit": "Wochen",
+"src": "digit",
+"context": [
+"Das Taggeld ist während [16] Wochen zu leisten, wovon mindestens acht Wochen nach der Ni…"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 16 (Wochen), IT does not",
+"rank": 21,
+"fid": "N21",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"Das Taggeld ist während [16] Wochen zu leisten, wovon mindestens acht Wochen nach der Ni…"
+],
+"explained_by": [],
+"likely_equivalent": true,
+"equivalence": "Q4 spelled out: 16 = 'sedici'",
+"counterpart": {},
+"act": "832.10",
+"eid": "art_74/para_2",
+"abbr": "KVG",
+"ref": "Art. 74 para. 2"
+},
+{
+"id": "832.10|disp_u23/para",
+"product": [
+"KVG"
+],
+"lang": "fr",
+"kind": "number",
+"score": 9,
+"half": "held",
+"group": "00086a1ddb",
+"de_only": [
+{
+"value": "4",
+"n": 1,
+"unit": "Jahre",
+"src": "word",
+"context": [
+"… 2 Hat der Kanton seinen Anteil nach Artikel 65 Absatz 1ter [vier] Jahre nach Inkrafttreten dieser Änderung nicht festgelegt, …"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 4 (Jahre), FR does not",
+"rank": 22,
+"fid": "N22",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "de",
+"third": "it",
+"suggested_action": null,
+"context": [
+"… 2 Hat der Kanton seinen Anteil nach Artikel 65 Absatz 1ter [vier] Jahre nach Inkrafttreten dieser Änderung nicht festgelegt, …"
+],
+"explained_by": [],
+"likely_equivalent": true,
+"equivalence": "Q2 interval: '4 Jahre' = 'quatrième année'",
+"counterpart": {},
+"act": "832.10",
+"eid": "disp_u23/para",
+"abbr": "KVG",
+"ref": "disp_u23 para"
+},
+{
+"id": "832.10|disp_u23/para",
+"product": [
+"KVG"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "held",
+"group": "6e75395535",
+"de_only": [
+{
+"value": "4",
+"n": 1,
+"unit": "Jahre",
+"src": "word",
+"context": [
+"… 2 Hat der Kanton seinen Anteil nach Artikel 65 Absatz 1ter [vier] Jahre nach Inkrafttreten dieser Änderung nicht festgelegt, …"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 4 (Jahre), IT does not",
+"rank": 23,
+"fid": "N23",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "de",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"… 2 Hat der Kanton seinen Anteil nach Artikel 65 Absatz 1ter [vier] Jahre nach Inkrafttreten dieser Änderung nicht festgelegt, …"
+],
+"explained_by": [],
+"likely_equivalent": true,
+"equivalence": "Q2 interval: '4 Jahre' = 'quarto anno'",
+"counterpart": {},
+"act": "832.10",
+"eid": "disp_u23/para",
+"abbr": "KVG",
+"ref": "disp_u23 para"
+},
+{
+"id": "832.112.31|art_34_d/para_2/lbl_b",
+"product": [
+"KLV"
+],
+"lang": "fr",
+"kind": "number",
+"score": 9,
+"half": "dev",
+"group": "8af4a8f97c",
+"de_only": [
+{
+"value": "13",
+"n": 1,
+"unit": "Monaten",
+"src": "digit",
+"context": [
+"am 1. Januar des Überprüfungsjahres seit weniger als [13] Monaten in der Spezialitätenliste gelistet sind;"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 13 (Monaten), FR does not",
+"rank": 24,
+"fid": "N24",
+"languages": [
+"de",
+"fr"
+],
+"odd_one_out": "fr",
+"third": "it",
+"suggested_action": null,
+"context": [
+"am 1. Januar des Überprüfungsjahres seit weniger als [13] Monaten in der Spezialitätenliste gelistet sind;"
+],
+"explained_by": [],
+"likely_equivalent": true,
+"equivalence": "Q4 spelled out: 13 = 'treize'",
+"counterpart": {},
+"act": "832.112.31",
+"eid": "art_34_d/para_2/lbl_b",
+"abbr": "KLV",
+"ref": "Art. 34d para. 2 let. b"
+},
+{
+"id": "832.112.31|art_34_h/para_1",
+"product": [
+"KLV"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "dev",
+"group": "25a075b168",
+"de_only": [
+{
+"value": "3",
+"n": 1,
+"unit": "Jahre",
+"src": "word",
+"context": [
+"… sich aufgrund der Überprüfung der Aufnahmebedingungen alle [drei] Jahre eine Preissenkung, so wird der ermittelte Senkungssat…"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 3 (Jahre), IT does not",
+"rank": 25,
+"fid": "N25",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"… sich aufgrund der Überprüfung der Aufnahmebedingungen alle [drei] Jahre eine Preissenkung, so wird der ermittelte Senkungssat…"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"counterpart": {},
+"act": "832.112.31",
+"eid": "art_34_h/para_1",
+"abbr": "KLV",
+"ref": "Art. 34h para. 1"
+},
+{
+"id": "832.112.31|art_38/para_5",
+"product": [
+"KLV"
+],
+"lang": "it",
+"kind": "number",
+"score": 9,
+"half": "dev",
+"group": "045cc650b2",
+"de_only": [
+{
+"value": "3",
+"n": 1,
+"unit": "Jahre",
+"src": "word",
+"context": [
+"…olgt im Rahmen der Überprüfung der Aufnahmebedingungen alle [drei] Jahre oder nach Aufnahme des ersten Generikums oder des ers…"
+]
+}
+],
+"tgt_only": [],
+"description": "DE has 3 (Jahre), IT does not",
+"rank": 26,
+"fid": "N26",
+"languages": [
+"de",
+"it"
+],
+"odd_one_out": "it",
+"third": "fr",
+"suggested_action": null,
+"context": [
+"…olgt im Rahmen der Überprüfung der Aufnahmebedingungen alle [drei] Jahre oder nach Aufnahme des ersten Generikums oder des ers…"
+],
+"explained_by": [],
+"likely_equivalent": false,
+"equivalence": null,
+"counterpart": {},
+"act": "832.112.31",
+"eid": "art_38/para_5",
+"abbr": "KLV",
+"ref": "Art. 38 para. 5"
+}
+]
+}

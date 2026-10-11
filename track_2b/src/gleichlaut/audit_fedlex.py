@@ -268,11 +268,68 @@ def worklist(F, T, d):
     return W, K
 
 
+LAB = os.path.join(core.ROOT, "eval", "labels")
+COLS = ("uid", "key", "act", "ref", "lang", "kind", "A", "B", "T", "final", "final_confirmed", "note_A", "note_B", "note_T")
+
+
+def read_tsv(path):
+    lines = open(path, encoding="utf-8").read().splitlines()
+    return {c[0]: dict(ans=c[1].strip().lower(), note=c[2] if len(c) > 2 else "") for c in (l.split("\t") for l in lines[1:] if l.strip())}
+
+
+def tiebreak(A, B, d=LAB):
+    """R24: every finding where A and B answer differently -> a new shuffled worklist (seed 20261025, ids T00...)."""
+    W = {w["id"]: w for w in json.load(open(os.path.join(d, "audit_fedlex_worklist.json"), encoding="utf-8"))}
+    ids = sorted(i for i in W if A[i]["ans"] != B[i]["ans"]); random.Random(SEED_T).shuffle(ids)
+    TW, TK = [], {}
+    for j, i in enumerate(ids): TW.append(dict(W[i], id=f"T{j:02d}")); TK[f"T{j:02d}"] = i
+    json.dump(TW, open(os.path.join(d, "audit_fedlex_tiebreak_worklist.json"), "w"), ensure_ascii=False, indent=1)
+    json.dump(dict(seed=SEED_T, ids=TK), open(os.path.join(d, "audit_fedlex_tiebreak_key.json"), "w"), ensure_ascii=False, indent=1)
+    return TW
+
+
+def merge(d=LAB):
+    """raw A/B/T labels + keys -> rows (COLS) by neutral id. final = the answer >= 2 of three share, else T's (A's when A
+    and B agree); confirmed = real or minor; final_confirmed = majority of three on confirmed (R14)."""
+    K = json.load(open(os.path.join(d, "audit_fedlex_key.json"), encoding="utf-8"))["ids"]
+    W = {w["id"]: w for w in json.load(open(os.path.join(d, "audit_fedlex_worklist.json"), encoding="utf-8"))}
+    A, B = read_tsv(os.path.join(d, "audit_fedlex_A.tsv")), read_tsv(os.path.join(d, "audit_fedlex_B.tsv"))
+    tp = os.path.join(d, "audit_fedlex_T.tsv")
+    T = read_tsv(tp) if os.path.exists(tp) else {}
+    tk = json.load(open(os.path.join(d, "audit_fedlex_tiebreak_key.json"), encoding="utf-8"))["ids"] if T else {}
+    Ti = {i: T[t] for t, i in tk.items()}
+    conf = lambda a: "yes" if a in ("real", "minor") else "no"
+    out = []
+    for i in sorted(K):
+        a, b, t = A[i], B[i], Ti.get(i)
+        assert a["ans"] in ("real", "minor", "not") and b["ans"] in ("real", "minor", "not"), i
+        if a["ans"] != b["ans"]:
+            assert t, f"{i}: A and B differ and no tie-break label"
+            cs = [a["ans"], b["ans"], t["ans"]]; fin = next((c for c in cs if cs.count(c) >= 2), t["ans"])
+            fc = max(("yes", "no"), key=[conf(c) for c in cs].count)
+        else:
+            fin, fc = a["ans"], conf(a["ans"])
+        out.append(dict(uid=i, key=K[i]["key"], act=W[i]["act"], ref=W[i]["ref"], lang=W[i]["lang"], kind=W[i]["kind"],
+                        A=a["ans"], B=b["ans"], T=t["ans"] if t else "", final=fin, final_confirmed=fc,
+                        note_A=a["note"], note_B=b["note"], note_T=t["note"] if t else ""))
+    return out
+
+
+def merged_lines(rows):
+    return ["\t".join(COLS)] + ["\t".join(r[h].replace("\t", " ") for h in COLS) for r in rows]
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="python3 -m gleichlaut.audit_fedlex")
     ap.add_argument("--fetch", metavar="DIR"); ap.add_argument("--extract", metavar="DIR")
     ap.add_argument("--run", action="store_true"); ap.add_argument("--worklist", metavar="DIR")
+    ap.add_argument("--tiebreak", action="store_true", help="eval/labels A/B -> the tie-break worklist")
+    ap.add_argument("--merge", action="store_true", help="eval/labels A/B/T -> eval/labels/audit_fedlex.tsv")
     a = ap.parse_args(argv)
+    if a.tiebreak:
+        print("tie-break:", len(tiebreak(read_tsv(os.path.join(LAB, "audit_fedlex_A.tsv")), read_tsv(os.path.join(LAB, "audit_fedlex_B.tsv")))), "records")
+    if a.merge:
+        open(os.path.join(LAB, "audit_fedlex.tsv"), "w", encoding="utf-8").write("\n".join(merged_lines(merge())) + "\n")
     if a.fetch:
         m = fetch(a.fetch)
         for sr, x in m["acts"].items(): print(sr, x["abbr"], x.get("version"), x.get("missing", "ok"))
