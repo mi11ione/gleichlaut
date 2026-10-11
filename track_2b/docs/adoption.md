@@ -6,7 +6,7 @@ calls no model, and needs no new tool. Drafting comes later. It first runs in sh
 and then inside the office on unpublished German (phase 3).
 
 Facts about BAG's process come from [sl-process.md](sl-process.md) and keep its labels: **VERIFIED** means we fetched
-the source, **UNVERIFIED** means we found no public source. Every number comes from a file in this repository, and the
+the source, **not public** means no public source settles the point (the entry says what the record does show). Every number comes from a file in this repository, and the
 file is named next to the number. Numbers marked *assumption* were not measured. They are there to be replaced by the
 office's own figures.
 
@@ -63,18 +63,21 @@ and the 8B Q8_0 has 25 of 62 ([README](../README.md)).
 
 | Role | Proposed owner | Status |
 |---|---|---|
-| Business owner, all phases | BAG Sektion Arzneimittelaufnahmen | VERIFIED: BAG decides limitations (KVV Art. 73), and the section head signed the 2023 publication circular (sl-process §2). UNVERIFIED: whether the section would sponsor a pilot. We have no contact yet |
+| Business owner, all phases | BAG Sektion Arzneimittelaufnahmen | VERIFIED: BAG decides limitations (KVV Art. 73), and the section head signed the 2023 publication circular (sl-process §2). Open: whether the section would sponsor a pilot. There has been no contact |
 | Readers of audit findings (phase 1) | the scientific staff assigned to the product | VERIFIED: ePL assigns applications to scientific staff ("WiMi zuteilen", sl-process §2.5). Hypothesis: that they would own corrections |
-| Language side (phases 2 and 3) | whoever writes FR/IT today: section staff, the BAG Sprachdienste, or external translators | UNVERIFIED (sl-process §6). Finding this out is the first question of the pilot |
-| Technical operator | phases 1 and 2: anyone who may run Docker or Python, for example the ePL team (epl@bag.admin.ch). Phase 3: the office's IT service provider | the ePL team: VERIFIED. Which provider runs BAG's servers: UNVERIFIED |
+| Language side (phases 2 and 3) | whoever writes FR/IT today: section staff, the BAG Sprachdienste, or external translators | VERIFIED: the federal default is the language services ("in der Regel von den Sprachdiensten der Bundesverwaltung", SpDV Art. 10), and the BAG has its own. Not public: whether SL limitations follow that default (sl-process §6). Confirming this is the first question of the pilot |
+| Technical operator | phases 1 and 2: anyone who may run Docker or Python, for example the ePL team (epl@bag.admin.ch). Phase 3: the office's IT service provider | the ePL team: VERIFIED. Which provider runs BAG's servers: not public (the ePL page names no operator) |
 | Information security | the office's information security officer (Informationssicherheitsbeauftragte, ISV Art. 37). Residual risks are accepted by the Informationssicherheitsverantwortliche, that is, the director or a delegated member of management (ISV Art. 27 para. 4, Art. 36) | the federal law is VERIFIED. The persons are not known to us |
 | Language technology standard | Federal Chancellery (BK), Kompetenzzentrum Sprachtechnologien. Consulted in phase 3, not needed before | VERIFIED: in 2018 the Federal Council tasked the BK with standardising CAT, MT and terminology (sl-process §7) |
 
 **No new tool for translators.** Transit is the CAT tool of all federal language services: "Vor ein paar Jahren wurde
-für alle Sprachdienste der Bundesverwaltung das Übersetzungstool Transit eingeführt" (sl-process §7, VERIFIED). Transit
-unpacks and packs XLIFF projects (VERIFIED). Gleichlaut writes XLIFF 2.1 and 1.2, both validated against the OASIS
-schemas. Which XLIFF version the federal Transit setup accepts is UNVERIFIED, which is why the round trip is an exit
-criterion. The federal setup also already provides for MT providers other than DeepL. The federal CAT tool "verfügt
+für alle Sprachdienste der Bundesverwaltung das Übersetzungstool Transit eingeführt", and the ISB standard A734 makes it
+mandatory ("Es MUSS folgendes Standardprodukt eingesetzt werden: − CAT-Tool Star Transit"; sl-process §7, VERIFIED).
+Transit unpacks an XLIFF project and packs the translation back as XLIFF; packing a Transit project as XLIFF needs STAR
+CLM (STAR Feature Guide SP18, VERIFIED). So the XLIFF has to come from outside Transit, which is what Gleichlaut provides.
+Gleichlaut writes XLIFF 2.1 and 1.2, both validated against the OASIS schemas. STAR's public documentation names no XLIFF
+version and lists the extensions `*.xliff` and `*.zip` (not public which version the federal setup takes; sl-process §7).
+That is why the round trip is an exit criterion. The federal setup also already provides for MT providers other than DeepL. The federal CAT tool "verfügt
 über die Möglichkeit, DeepL Pro oder einen anderen MÜ-Dienstleister einzubinden" (KOSD DeepL report 2019, sl-process
 §7). Gleichlaut does not need that plug-in slot, because its drafts arrive already filled into the XLIFF. Whether a
 plug-in integration is worth building later is a question for the BK.
@@ -166,15 +169,17 @@ or ticket system.
 Everything above runs on what BAG already publishes, so phase 1 needs no access, no data transfer and no one's
 permission. It also settles the points that only the office can confirm from the inside:
 
-- **Owners.** Section 2 names the roles the public record points to (VERIFIED / UNVERIFIED as marked); the first audit
+- **Owners.** Section 2 names the roles the public record points to (VERIFIED / not public as marked); the first audit
   hand-over confirms them.
 - **The reviewer.** The labels so far come from blind annotators under a fixed protocol anyone can re-run
   ([PROTOCOL.md](../eval/labels/PROTOCOL.md)); a BAG translator reading the ready drafts uses the same worklists, and a
   timed comparison drops into the shadow month without any change to the pipeline.
-- **The ePL hand-off.** Gleichlaut reads the public feed's own FHIR format (VERIFIED, sl-process §4); if the internal
-  editor exports differently, `gleichlaut items` also takes the documented item file (`docs/item-schema.json`).
+- **The ePL hand-off.** Gleichlaut reads the public feed's own FHIR format (VERIFIED, sl-process §4). The BAG-side app has
+  an "Import / Export" screen, but its formats are not public (sl-process §4); if the internal editor exports differently,
+  `gleichlaut items` also takes the documented item file (`docs/item-schema.json`).
 - **The Transit hand-off.** Gleichlaut writes both XLIFF 1.2 and 2.1, each validated against the OASIS schema, so
-  whichever version the federal Transit setup expects is already there (sl-process §7).
+  whichever version the federal Transit setup expects is already there (sl-process §7). STAR documents `*.xliff` and `*.zip`
+  as the XLIFF extensions; Gleichlaut's `*.xlf` files are renamed or zipped for the hand-off.
 - **The 70B lane.** It is defined by certificate, not by a vendor: any endpoint the office controls qualifies once it
   passes `make certify-endpoint`.
 - **Protection needs.** Section 3 is a starting draft for the office's information security officer, written against

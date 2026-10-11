@@ -1,6 +1,6 @@
 # Sources and verified facts (Gleichlaut, Track 2B)
 
-Accessed 2026-10-09. Fetches used the User-Agent `hackapertus-research/0.1`. Every item gives a URL and the exact figure or quote. **UNVERIFIED** means a claim that no primary source confirmed. Notes marked "(own computation)" are numbers we derived from the primary files; they were not published by the source.
+Accessed 2026-10-09. Fetches used the User-Agent `hackapertus-research/0.1`. Every item gives a URL and the exact figure or quote. **UNVERIFIED** means a claim that no primary source confirmed. **Not public** (used for the SL process points re-checked on 2026-10-11, see [sl-process.md](sl-process.md)) means no public source settles the point, and the entry states what the public record shows. Notes marked "(own computation)" are numbers we derived from the primary files; they were not published by the source.
 
 ---
 
@@ -79,7 +79,7 @@ Accessed 2026-10-09. Fetches used the User-Agent `hackapertus-research/0.1`. Eve
 
 ### 2.4 Who translates SL texts
 
-- **UNVERIFIED.** No public source we found says who translates SL limitation texts (BAG language service, Federal Chancellery or the marketing authorisation holder).
+- **Not public.** No public source says who translates SL limitation texts (BAG language service, Federal Chancellery or the marketing authorisation holder). The public record gives the federal default: Sprachdiensteverordnung (SpDV, SR 172.081) Art. 10 Abs. 1, "Die Übersetzungen und die anderen Sprachdienstleistungen für die Bundesverwaltung werden in der Regel von den Sprachdiensten der Bundesverwaltung erbracht" (https://www.fedlex.admin.ch/eli/cc/2012/771/de). Details and the searches behind "not public": [sl-process.md](sl-process.md) §6.
 - Related facts:
   - The SL Handbuch says application forms "in einer Amtssprache (deutsch, französisch, italienisch) auszufüllen" (multiple sections, e.g. Key Facts forms).
   - The SL triennial-review checklist in the SL app (https://sl.bag.admin.ch/assets/i18n/de.json, key `sl.request.expediency.changes.formulationLimitation`): "Falls eine Limitierung vorhanden ist, ist diese wissenschaftlich eindeutig und klar verständlich formuliert und die Übersetzungen sind kongruent?"
@@ -123,8 +123,8 @@ Accessed 2026-10-09. Fetches used the User-Agent `hackapertus-research/0.1`. Eve
 - XLIFF 2.2 exists as a "Committee Specification 13 March 2025" (Part 1: Core), not an OASIS Standard: https://docs.oasis-open.org/xliff/xliff-core/v2.2/xliff-core-v2.2-part1.html
 - CAT tools in Swiss federal translation services:
   - **ISB IKT-Vorgabe A734 "Übersetzungslösung BUND"**, version 1.0, in force 15 June 2020: "Im Einsatzgebiet Übersetzungen gilt eine Einproduktstrategie. [...] Es MUSS folgendes Standardprodukt eingesetzt werden: − CAT-Tool Star Transit der Firma Star AG". The WTO tender "Übersetzungslösung Bund (18012) 701" was awarded on 26 September 2019. Translation services named: "Die Sprachdienste der Departemente stellen Übersetzungen bzw. Revisionen ins Französische, Italienische, Deutsche und - teilweise - ins Englische sicher (die Schweizerische Bundeskanzlei BK zusätzlich ins Rätoromanische)." https://www.bk.admin.ch/dam/de/sd-web/eGerKT54ncdB/a734_1-0_genehmigt.pdf
-    - Whether A734 v1.0 is still the current version: **UNVERIFIED**. The document itself provides for a review "spätestens vier Jahre nach der Genehmigung".
-  - **STAR Transit XLIFF 2.x support: UNVERIFIED.** Only user-forum reports exist (e.g. https://www.proz.com/forum/transit_support/344081-is_it_still_not_possible_to_create_xliff_files.html), and they concern XLIFF import/export in general, not 2.x.
+    - Whether a later version has replaced A734 v1.0 is not public. On 2026-10-11 the bk.admin.ch link above still served v1.0 ("Diese Version: 1.0", "Status (diese Version): Genehmigt"). The document itself provides for a review "spätestens vier Jahre nach der Genehmigung".
+  - **STAR Transit XLIFF version support: not public.** STAR's current documentation (User's Guide SP18 2025-08, Product Guide SP18 2026-01, Feature Guide SP18 2026-04, "Tips & Tricks for All File Formats" SP18 2026-01, release notes) names no XLIFF version. The file-format reference lists "File extensions: *.xliff *.zip" and "Standard function for Transit Freelance Pro and Professional" (https://www.star-group.net/-downloads-/document/2024/TransitNXT_Usage_TipsAndTricksForAllFileFormats_ENG.pdf). The Feature Guide marks "Pack project as XLIFF file" as "CLM" ("CLM = combined with STAR CLM"), while unpacking XLIFF and sending back the translation as XLIFF are standard (https://www.star-group.net/-downloads-/document/1927/TransitNXT_FeatureGuide_ENG.pdf, p. 8). Details: [sl-process.md](sl-process.md) §7.
   - Trados Studio / memoQ XLIFF 2.x support: **UNVERIFIED** (forum and Wikipedia only, e.g. https://proz.com/forum/cat_tools_technical_help/327422-support_for_xliff_20_and_later.html). Neither tool is shown to be in federal use.
   - Okapi Framework has an "XLIFF-2 Filter": https://okapiframework.org/wiki/index.php/XLIFF-2_Filter
 

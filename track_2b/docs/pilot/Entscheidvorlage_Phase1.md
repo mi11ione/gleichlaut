@@ -33,9 +33,9 @@ bestätigen». Rechtsgrundlagen werden hier nicht ergänzt.
 |---|---|---|
 | Korrektur von Amtes wegen | durch den Rechtsdienst zu bestätigen | Das BAG entscheidet über die Limitierung (KVV Art. 73; KLV Art. 31 Abs. 1; §2.1). Belegt sind Anpassungen durch das BAG bei Einschränkung durch Swissmedic (Handbuch SL Ziff. B.14.3, Art. 65g Abs. 1 KVV) und in der periodischen Überprüfung (Levothyroxin 2025; §2.3). Ein Verfahren zur Berichtigung einer Sprachfassung ist öffentlich nicht dokumentiert (§10): durch den Rechtsdienst zu bestätigen |
 | Mit der Zulassungsinhaberin in der Überprüfung | durch den Rechtsdienst zu bestätigen | Das ePL-Formular der Überprüfung alle drei Jahre fragt die Zulassungsinhaberin, ob «die Übersetzungen sind kongruent»; inhaltliche Änderungen verlangen ein GÄL oder IND (Hilfetext; §5) |
-| An den Sprachdienst | durch den Rechtsdienst zu bestätigen | Die Sprachdienste des BAG bestehen (Checkliste 2017; §6); eine Zuständigkeit für SL-Limitierungen ist nicht dokumentiert |
+| An den Sprachdienst | durch den Rechtsdienst zu bestätigen | Übersetzungen erbringen «in der Regel» die Sprachdienste (SpDV Art. 10; §6); die Sprachdienste des BAG bestehen (Checkliste 2017; §6). Ob das für SL-Limitierungen gilt, ist nicht öffentlich |
 | Keine Massnahme | durch den Rechtsdienst zu bestätigen | durch den Rechtsdienst zu bestätigen |
-| Noch unklar | durch den Rechtsdienst zu bestätigen | Massgebende Sprachfassung und Sprache des Verfügungsentwurfs sind öffentlich nicht belegt (§3, §6) |
+| Noch unklar | durch den Rechtsdienst zu bestätigen | Eine Regel zur massgebenden Sprachfassung ist nicht öffentlich (§3). Verfahrenssprache ist in der Regel die des Gesuchs (VwVG Art. 33a Abs. 1; §2.4); ob der Entwurf FR/IT enthält, ist nicht öffentlich (§6) |
 
 Anhang (nicht Gegenstand dieses Antrags): Entwürfe von FR/IT-Texten mit Apertus sind die Phasen 2 und 3
 ([adoption.md](../adoption.md)).

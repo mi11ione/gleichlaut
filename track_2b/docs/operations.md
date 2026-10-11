@@ -422,7 +422,10 @@ by `tests/test_xliff_import.py`):
 - Scripting translate-toolkit: `unit.target = "..."` on a target holding `<mrk>` elements keeps the elements and puts
   the new text in front (the target doubles); edit through `unit.rich_target`.
 - STAR Transit, the federal translation service's tool, is proprietary and was not available to the project; Okapi
-  Tikal was not installed on the test machine. The exchange files are plain XLIFF 1.2 strict and 2.1 core.
+  Tikal was not installed on the test machine. The exchange files are plain XLIFF 1.2 strict and 2.1 core. STAR's public
+  documentation names no XLIFF version; it lists unpacking an XLIFF project and sending the translation back as XLIFF as
+  standard functions, and `*.xliff` and `*.zip` as the extensions, so the `*.xlf` files are renamed or zipped for the
+  hand-off ([sl-process.md](sl-process.md) §7).
 
 ## 6. Exit codes
 
@@ -571,7 +574,7 @@ make fetch-gguf                                # once: the pinned 8B GGUF into .
 make certify                                   # once: the 8B build certificate into ./state (signed with a key)
 make feeds                                     # published BAG feed dates
 make month ITEMS=sl-team.json                  # pre-publication drafting with the local 8B, --network none
-gleichlaut items --from-fhir OLD-de.ndjson DRAFT.json --out sl-team.json    # items from FHIR exports (ePL draft export: unverified)
+gleichlaut items --from-fhir OLD-de.ndjson DRAFT.json --out sl-team.json    # items from FHIR exports (ePL's internal export format: not public)
 make month                                     # shadow mode with the local 8B: --from previous --to latest
 make month FROM=20260901 TO=20261001           # shadow mode on a given pair of published feeds
 make certify-endpoint                          # 70B lane: once per endpoint + model, and every 90 days; exit 0 / 5 / 7
