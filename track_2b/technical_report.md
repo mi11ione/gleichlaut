@@ -28,11 +28,11 @@ never sees a number (it wrote 0 digits in 285 calls; 3 number words it wrote wer
 
 **Results: the audit.** It reduces 1,688 limitations to **18 issues** to decide (27 findings). Two blind Claude
 annotators (a third on disagreements) confirm **12 findings that change a condition**, among them all five known
-divergences, plus 5 minor ones such as typos next to numbers. On 1,000 divergences planted into clean limitations it
+divergences (the list its rules were built around, so not a recall measure), plus 5 minor ones such as typos next to numbers. On 1,000 divergences planted into clean limitations it
 finds **93.0%** of changed numbers and 94.0% of fields in the wrong language (77.2% [74.5, 79.7] over five fault types).
 Its newest checks found three divergences nobody had listed: Amvuttra's French stop rule says an NIS increase "≤ 10"
 points where German and Italian say "> 10", and the Italian of Beyonttra and Vyndaqel says "on deve" (for "non deve"),
-so a ban on combining reads as an obligation. They run as experimental checks while their precision is tuned (§6).
+so a ban on combining reads as an obligation. These checks ship off by default until their precision is tuned (§6).
 
 **Results: drafting.** On a pre-registered held-out set of 166 French/Italian amendments from SL changes between Jun
 2025 and Feb 2026 (154 in edit patterns never seen during design; checks and resources hashed before any output
@@ -180,7 +180,7 @@ German changes. Every ready non-exact draft was read in full; a seeded 20 flagge
 
 **Reviewer effort.** Starting from the draft instead of the old text with updated numbers, a translator makes 42.4%
 fewer token edits to reach BAG's published text (95% CI [31.0, 54.1]); 59.1% fewer on ready drafts; fewer on 114 of
-166 items, more on 29. Of a seeded 20 flagged drafts, 13 needed no change: the checks are tuned to miss nothing.
+166 items, more on 29. Of a seeded 20 flagged drafts, 13 needed no change: the checks are tuned to flag generously.
 
 **Stability.** The seeded rerun reproduced 69.9% of final outputs byte-for-byte and the ready/flagged verdict with
 κ 0.963. Outputs at temperature 0 differ between calls, possibly because requests are routed between the two serving
@@ -283,7 +283,8 @@ test; the frozen default stays.
 A fixed task-specific system message replacing the default persona (`Apertus 1.5 Omni`), on top of that block (R21,
 pre-registered, Q8_0), meets R0 on the held-out 166 (13.9% identical, +7.8; frozen 17.5%) but on neither live month
 (August: 1 REAL among ready; September: 70.7% flagged), so the default stays.
-Next: the mined termbase as a pre-registered check resource (it already names the term in 22 of the 25 Q8_0 ready
+Outside confirmation: the 6 Oct 2026 audit is frozen as 69 hashed predictions (R20), to be scored against BAG's own
+corrections in its next publications. Next: the mined termbase as a pre-registered check resource (it already names the term in 22 of the 25 Q8_0 ready
 drafts that need a fix), a direction-flip check, and a Swiss 70B endpoint certified with `make certify-endpoint`.
 
 ## License
