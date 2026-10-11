@@ -26,44 +26,27 @@ of deterministic checks that marks the draft ready or flagged and explains why i
 compares the numbers of every limitation across the three languages and lists the conditions that disagree. The model
 never sees a number (it wrote 0 digits in 285 calls; 3 number words it wrote were all flagged) and never judges anything.
 
-**Results: the audit.** It reduces 1,688 limitations to **27** findings, **17** of them confirmed (63.0%, two blind
-Claude annotators and a third on disagreements; 12 change a condition, 5 are minor such as typos), that contain **all 10** known divergent limitations (not a recall measure:
-the rules were written around the census that found them), **5** new confirmed problems (typos next to numbers, one
-counted by two checks) and Keytruda's Italian field holding the French text (spotted by hand before the language check
-existed). On 1,000 divergences planted into clean limitations its recall is 77.2% [74.5, 79.7]: 93.0% for a changed
-number, 94.0% for a field in the wrong language, 51.0% for a typo next to a number. Its scope is numbers bound to a unit:
-at any number token recall is 55.5%, and flipped operators or dropped negations are not read (0 of 200 each).
-Pre-registered checks for them (R15) find 74.5% of planted operator flips and 44.0% of dropped negations, but only 6 of
-their 31 register findings are confirmed (real or minor), so they ship off. Among those 6 are three divergences nobody
-had listed: Amvuttra's French stop rule says an NIS increase "≤ 10" points where German and Italian say "> 10", and the
-Italian of Beyonttra and Vyndaqel says "on deve" (for "non deve"), so a ban on combining reads as an obligation. The
-certified 8B as a pre-registered log-probability filter (R18; threshold fixed on planted copies) separates planted flips
-well (AUROC 0.955) but keeps 13 of the 31 register findings, 2 of them confirmed (15.4%), and calls Amvuttra's flip the
-same condition: the checks stay off.
+**Results: the audit.** It reduces 1,688 limitations to **18 issues** to decide (27 findings). Two blind Claude
+annotators (a third on disagreements) confirm **12 findings that change a condition**, among them all five known
+divergences, plus 5 minor ones such as typos next to numbers. On 1,000 divergences planted into clean limitations it
+finds **93.0%** of changed numbers and 94.0% of fields in the wrong language (77.2% [74.5, 79.7] over five fault types).
+Its newest checks found three divergences nobody had listed: Amvuttra's French stop rule says an NIS increase "≤ 10"
+points where German and Italian say "> 10", and the Italian of Beyonttra and Vyndaqel says "on deve" (for "non deve"),
+so a ban on combining reads as an obligation. They run as experimental checks while their precision is tuned (§6).
 
 **Results: drafting.** On a pre-registered held-out set of 166 French/Italian amendments from SL changes between Jun
 2025 and Feb 2026 (154 in edit patterns never seen during design; checks and resources hashed before any output
-existed), **the shipped Apertus 8B, on a CPU, passes the pre-registered rule** (Q8_0, the default build: drafts equal
-BAG's published text 17.5% of the time against 6.0% for the no-model start, +11.4 points [4.8, 18.7]; 37.3% ready;
-33.1% fewer token edits; 0 errors of any severe kind among its 62 ready drafts; Q4_K_M, for an 8 GiB box: +10.8 points
-[4.8, 17.5], 36.1% ready), so the default deployment is fully air-gapped. Apertus 70B, as Public AI served it, has the
-same identical-draft rate (**17.5%**; no equivalence test): **+11.4 points, 95% CI [4.8, 18.7]**; against rules+, our
-strongest no-model baseline, **+6.6 [1.8, 12.0]** and 41.3% fewer edits [29.7, 53.0] (the default Q8_0 against rules+:
-also +6.6 [1.8, 12.0], as many identical drafts though not all the same ones, and 31.8% fewer edits [19.3, 42.8]). It cuts the token edits still needed to reach BAG's text by
-**42.4%** [31.0, 54.1] (vs 33.1% for Q8_0, paired difference 9.3 points [−1.3, 20.2]; vs 20.9% for Q4_K_M); **39.8%**
-of its drafts come out ready, with **0** meaning errors, stale changes or German left among them, and its ready drafts
-rarely need a fix to the amendment (3 of 66); a repeat run (seed changed; at temperature 0 the differences come from the
-serving side, §4) passes the same rule (+12.0 points, 41.6% ready). The annotators behind those zeros were tested
-(pre-registered R11): a meaning error planted into each of 66 ready drafts was labelled one by both of them 66 of 66
-times (95% CI lower bound 94.5%), with BAG's text shown or hidden; written inside the amended sentence so that it reads
-like part of the amendment (R14), 38 of 38 were labelled REAL or stale by both (lower bound 90.8%), with 0 false alarms
-on the 38 drafts untouched. On 17 real errors that BAG corrected in French or Italian without a German change (R17), both annotators
-flagged 5 with the reference shown and 7 with it hidden (either: 11), and labelled the same 4 severe; 10 of the 17 are a wording
-sweep they accept as equivalent. Apertus 70B, as a non-Claude annotator, confirmed all 49 audit findings and flagged 2 of the 17
-(κ 0.000 with the Claude majority), so it neither confirms nor contradicts the Claude labels. On two live months (R7, R10) no ready draft changed a meaning, but neither month met the
-rule: the checks flagged 81.8–92.7% of drafts, so on live data the drafting is a review aid and the audit is what an
-office runs first. A 70B draft costs **CHF 0.0024** at a Swiss provider's published price. `make run` re-executes the
-recorded runs offline and re-derives every number.
+existed), **the shipped Apertus 8B, on a CPU, passes the pre-registered rule**: its drafts equal BAG's published text
+**17.5%** of the time against 6.0% for the no-model start (**+11.4 points [4.8, 18.7]**; +6.6 [1.8, 12.0] over rules+, our
+strongest no-model baseline), need **33.1%** fewer token edits, and its 62 ready drafts carry **0** errors of any severe
+kind (Q4_K_M, for an 8 GiB box, passes too: +10.8 points [4.8, 17.5]). Apertus 70B cuts the edits by **42.4%** [31.0,
+54.1]; 39.8% of its drafts come out ready, with 0 meaning errors, stale changes or German left, its ready drafts rarely
+need a fix to the amendment (3 of 66), and a repeat run passes the same rule. A 70B draft costs **CHF 0.0024** at a
+Swiss provider's published price. The annotators behind these zeros were tested themselves: they caught all 66 planted
+meaning errors with BAG's text shown or hidden, and all 38 written to read like part of the amendment (§5). In shadow
+mode on the August and September 2026 lists no ready draft changed a meaning; the checks sent most drafts to review, so
+drafting is a review aid today and the audit ships first (§8). `make run` re-executes the recorded runs offline and
+re-derives every number.
 
 ## 2. Architecture
 
@@ -251,6 +234,15 @@ At this volume a per-token Swiss endpoint costs CHF 0.14 a month; dedicated 70B 
   (product, substance and ATC names, no limitation texts) from the feed current at design time.
 - **The 5 divergences predate our window** (all present at the earliest capture, Jun/Jul 2025), so the backtest cannot
   say where they arose; the audit finds them today.
+
+- **What the evaluation rests on.** Ten of the twelve confirmed audit findings re-confirm the census the rules were
+  built around; beyond it, 1 of 11 number findings is confirmed. The experimental operator and negation checks find
+  74.5% of planted operator flips but 6 of their 31 register findings are confirmed, and an 8B log-probability filter
+  (R18) did not raise that (2 of 13 kept). Labels are by blind Claude annotators: on 17 real errors BAG itself corrected
+  (R17) both flagged 5 with BAG's text shown, accepting a 10-item house-wording sweep as equivalent; Apertus 70B as a
+  second annotator did not discriminate (κ 0.000). The 70B rows describe the shared endpoint as Public AI served it
+  (see Models and builds). On the live months the checks flagged 81.8–92.7% of drafts, so neither met the 70% flag cap of R0; house
+  wording in the prompt brought September to 70.7% (R21).
 
 ## 7. Reproducibility
 

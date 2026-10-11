@@ -4,7 +4,7 @@
 amends a condition in German, Gleichlaut drafts the matching French and Italian change with Apertus, and it audits the
 whole register for places where the languages already disagree. Numbers never reach the model; code writes them.
 
-Track 2B · team 444 · maturity: feasibility study · Apertus v1.5 8B (local GGUF of a third-party text-only extraction) + 70B (as served by Public AI) ·
+Track 2B · team 444 · audit pilot-ready, drafting in shadow mode · Apertus v1.5 8B (local, CPU, air-gapped) + 70B (optional endpoint) ·
 **[open the review register](https://gleichlaut.mi11ion.io/)** · [demo video](https://gleichlaut.mi11ion.io/demo.mp4) · [technical report](technical_report.md)
 
 ## The job

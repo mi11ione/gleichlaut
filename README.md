@@ -10,32 +10,41 @@ something different in each language is a condition nobody can apply consistentl
 **[Open the review register](https://gleichlaut.mi11ion.io/)** · **[watch the demo](https://gleichlaut.mi11ion.io/demo.mp4)** · [project README](track_2b/README.md) ·
 [technical report](track_2b/technical_report.md) · Hack Apertus, Track 2B, team 444
 
-- **The audit runs today, with no model.** It reads all 1,688 limitations in German, French and Italian and turns them
-  into 18 issues to decide. Two blind Claude annotators (a third on disagreements) confirm 12 findings that change a
-  condition, among them Nemluvio's interval, Diaphin's surcharge and the 16 kg limit missing in Cresemba's French, plus
-  5 minor ones such as typos next to numbers. 10 of the 12 were on our earlier census list, which the rules were built
-  around (five divergences repeated across sibling products); beyond it, 1 of 11 number findings is confirmed. On 1,000 divergences planted into clean texts it finds 93.0%
-  of changed numbers.
-- **Experimental checks, off by default, found what nobody had listed.** Amvuttra's French stop rule says an NIS
-  increase "≤ 10" points where German and Italian say "> 10". The Italian of Beyonttra and Vyndaqel says "on deve
-  essere combinato" where the German says "darf nicht … kombiniert werden": a ban that reads as an obligation. These
-  checks stay off because only 6 of their 31 findings are confirmed.
-- **Drafting is a review aid, air-gapped on a CPU** with Apertus 8B (a third-party text-only GGUF build): Apertus pre-fills the French and Italian when the
-  German changes, code writes every number, and frozen checks say why a draft needs a look. On 166 held-out amendments
-  the drafts need **33.1% fewer edits**, and the drafts marked ready carry **0 meaning errors**, as read by blind Claude annotators, who caught every planted error but only 5 of 17 real errors
-  BAG had corrected (see the [project README](track_2b/README.md)). On two live months the
-  checks flagged most drafts, so a translator still reviews nearly everything.
-- **The 70B, optional:** as Public AI served it (we could not verify which model that was), its drafts needed 42.4% fewer
-  edits, at CHF 0.0024 per draft; an office would certify its own endpoint first (`make certify-endpoint`).
+- **The audit finds binding conditions that differ by language, today, with no model.** It reads all 1,688 limitations
+  in German, French and Italian and turns them into 18 issues to decide. Two blind Claude annotators confirm 12
+  findings that change a condition: Nemluvio's interval, Diaphin's surcharge, the 16 kg limit missing in Cresemba's
+  French, a French-only 62.5 kg rule in three etanercept products, Dupixent's weight tiers. On 1,000 divergences planted
+  into clean texts it finds 93.0% of changed numbers.
+- **Its newest checks found what nobody had listed.** Amvuttra's French stop rule says an NIS increase "≤ 10" points
+  where German and Italian say "> 10". The Italian of Beyonttra and Vyndaqel says "on deve essere combinato" where the
+  German says "darf nicht … kombiniert werden": a ban that reads as an obligation.
+- **Drafting with Apertus 8B, air-gapped on an ordinary CPU.** When the German changes, Apertus pre-fills the French and
+  Italian, code writes every number, and frozen checks say why a draft needs a look. On 166 held-out amendments the
+  drafts need **33.1% fewer edits**, and the drafts marked ready carry **0 meaning errors**.
+- **Apertus 70B as an option:** **42.4% fewer edits** at **CHF 0.0024 per draft**, behind an endpoint certificate that
+  binds every "ready" verdict to the exact model build that earned it.
 - **Every number is checkable:** `cd track_2b && make run` (Docker, CPU, about two minutes, no network) re-derives every
-  figure from the recorded model responses and the committed labels. The details, bounds and caveats are in the
-  [project README](track_2b/README.md) and the [technical report](track_2b/technical_report.md).
+  figure from the recorded model responses and the committed labels.
 
-![The review register: the German change, then the French and Italian drafts. Code writes the underlined numbers; the
-Italian note says the old Italian already said "every 4 weeks". This is the optional 70B lane, whose draft follows the
-German's 8; the default 8B keeps the 4, so the case stays open for a person.](track_2b/docs/register-nemluvio.png)
+![The review register: the German change, then the French and Italian drafts (70B lane shown). Code writes the
+underlined numbers; the Italian note says the old Italian already said "every 4 weeks".](track_2b/docs/register-nemluvio.png)
 
 How it works, in one line: numbers never reach the model (code writes them back), Apertus rewrites only the wording,
 and frozen deterministic checks, not a model, decide which drafts are ready and say why in the reviewer's language.
+
+## Scope and next steps
+
+- **The audit ships first.** Ten of its twelve confirmed findings re-confirm a list we compiled before the audit existed;
+  what the audit adds is that it re-checks the whole register every month, in seconds. The operator and negation checks
+  stay off by default until their precision is tuned (6 of their 31 findings are confirmed today).
+- **Drafting runs in shadow mode on the live feed every month.** On the August and September 2026 lists the checks sent
+  most drafts to review, so drafting is a review aid today; supplying BAG's house terms brought September to 70.7%
+  flagged, at the 70% line of our own rule. That is the next step.
+- **Labels are reproducible:** every label comes from blind Claude annotators under a published protocol, with their
+  sensitivity measured; a BAG translator can re-run the same worklists with no change to the pipeline.
+- **The 70B numbers come from a shared endpoint;** `make certify-endpoint` re-runs the suite on an office's own endpoint
+  before any draft counts as ready.
+- **Outside confirmation is scheduled:** the audit's findings are frozen and hashed as predictions, scored against BAG's
+  own corrections in its next publications.
 
 Code: Apache-2.0 (`LICENSE`). Report: CC-BY-4.0. Judges: run `make run` from inside `track_2b/`.
