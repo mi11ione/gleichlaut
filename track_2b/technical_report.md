@@ -39,11 +39,11 @@ so a ban on combining reads as an obligation. These checks ship off by default u
 existed), **the shipped Apertus 8B, on a CPU, passes the pre-registered rule**: its drafts equal BAG's published text
 **17.5%** of the time against 6.0% for the no-model start (**+11.4 points [4.8, 18.7]**; +6.6 [1.8, 12.0] over rules+, our
 strongest no-model baseline), need **33.1%** fewer token edits, and its 62 ready drafts carry **0** errors of any severe
-kind (Q4_K_M, for an 8 GiB box, passes too: +10.8 points [4.8, 17.5]). Apertus 70B cuts the edits by **42.4%** [31.0,
+kind (Q4_K_M, for an 8 GiB box, passes too: +10.8 points [4.8, 17.5]). Apertus 70B, as Public AI served it, cuts the edits by **42.4%** [31.0,
 54.1]; 39.8% of its drafts come out ready, with 0 meaning errors, stale changes or German left, its ready drafts rarely
 need a fix to the amendment (3 of 66), and a repeat run passes the same rule. A 70B draft costs **CHF 0.0024** at a
 Swiss provider's published price. The annotators behind these zeros were tested themselves: they caught all 66 planted
-meaning errors with BAG's text shown or hidden, and all 38 written to read like part of the amendment (§5). In shadow
+meaning errors and all 38 written to read like part of the amendment, and flagged 5 of 17 real errors BAG had corrected (§6). In shadow
 mode on the August and September 2026 lists no ready draft changed a meaning; the checks sent most drafts to review, so
 drafting is a review aid today and the audit ships first (§8). `make run` re-executes the recorded runs offline and
 re-derives every number.

@@ -12,7 +12,7 @@ something different in each language is a condition nobody can apply consistentl
 
 - **The audit finds binding conditions that differ by language, today, with no model.** It reads all 1,688 limitations
   in German, French and Italian and turns them into 18 issues to decide. Two blind Claude annotators confirm 12
-  findings that change a condition, re-confirming the census list its rules were built around: Nemluvio's interval, Diaphin's surcharge, the 16 kg limit missing in Cresemba's
+  findings that change a condition, 10 of them re-confirming the census list its rules were built around: Nemluvio's interval, Diaphin's surcharge, the 16 kg limit missing in Cresemba's
   French, a French-only 62.5 kg rule in three etanercept products, Dupixent's weight tiers. On 1,000 divergences planted
   into clean texts it finds 93.0% of changed numbers.
 - **Its experimental checks (off by default) found what nobody had listed.** Amvuttra's French stop rule says an NIS increase "≤ 10" points
@@ -21,14 +21,14 @@ something different in each language is a condition nobody can apply consistentl
 - **Drafting with Apertus 8B, air-gapped on an ordinary CPU.** When the German changes, Apertus pre-fills the French and
   Italian, code writes every number, and frozen checks say why a draft needs a look. On 166 held-out amendments the
   drafts need **33.1% fewer edits**, and the drafts marked ready carry **0 meaning errors** in the blind labels.
-- **Apertus 70B as an option:** **42.4% fewer edits** at **CHF 0.0024 per draft** on the shared Public AI endpoint
-  (which model it serves we could not verify); in an office it runs behind an endpoint certificate that binds every
-  "ready" verdict to the certified endpoint and the model name it serves.
+- **Apertus 70B as an option:** **42.4% fewer edits** on the shared Public AI endpoint (which model it serves we could
+  not verify), at **CHF 0.0024 per draft** at a Swiss provider's price; an office would admit its own endpoint through a certificate, which
+  ties every "ready" verdict to that endpoint and the model name it reports.
 - **Every number is checkable:** `cd track_2b && make run` (Docker, CPU, about two minutes, no network) re-derives every
   figure from the recorded model responses and the committed labels.
 
-![The review register: the German change, then the French and Italian drafts (70B lane shown). Code writes the
-underlined numbers; the Italian note says the old Italian already said "every 4 weeks".](track_2b/docs/register-nemluvio.png)
+![The review register: the German change, then the French and Italian drafts (70B lane shown; the default 8B keeps the
+old 4). Code writes the underlined numbers; the Italian note says the old Italian already said "every 4 weeks".](track_2b/docs/register-nemluvio.png)
 
 How it works, in one line: numbers never reach the model (code writes them back), Apertus rewrites only the wording,
 and frozen deterministic checks, not a model, decide which drafts are ready and say why in the reviewer's language.
