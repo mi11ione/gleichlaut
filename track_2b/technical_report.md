@@ -228,7 +228,11 @@ re-run by anyone.
 | 10× | 574 | $1.59 | CHF 1.36 | 2.7 h |
 
 At this volume a per-token Swiss endpoint costs CHF 0.14 a month; dedicated 70B hardware pays only across many lists
-(MiGeL and the Analysenliste carry limitation columns in the same three languages).
+(MiGeL and the Analysenliste carry limitation columns in the same three languages). Translator time, as a lower bound
+without a timed study: the keystroke-level model (Card, Moran & Newell 1980, *CACM* 23(7); K = 0.12 s per keystroke for
+a good typist) prices only the typing. Counting inserted characters plus one keystroke per deleted run, the 8B default
+saves 41.3 keystrokes per text on the fresh 166, at least 4.7 minutes a month at this volume [2.8, 7.6] (11.1 at the
+model's 0.28 s for a 40 wpm typist; 70B 5.7); on the two live months 2.4 (70B 3.5). Reading and checking are not counted.
 
 ## 6. Design limits we measured
 

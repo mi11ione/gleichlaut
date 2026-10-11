@@ -701,3 +701,15 @@ stakes_diaphin_pct	5.7	eval/results/stakes.json	headline.diaphin_pct	{:.1f}	pyth
 stakes_diaphin_pack_max	20.78	eval/results/stakes.json	cases.1.chf_difference_per_pack_max	{:.2f}	python3 tools/stakes.py	README/report/notes
 stakes_etanercept_max	10,850	eval/results/stakes.json	headline.etanercept_chf_per_patient_year_max	{:,.0f}	python3 tools/stakes.py	README/report/notes
 stakes_dupixent_asthma	7,208	eval/results/stakes.json	headline.dupixent_asthma_chf_per_patient_year	{:,.0f}	python3 tools/stakes.py	README/report/notes
+ks_k_good	0.12	eval/results/keystroke_proxy.json	method.k_seconds.good_typist_90wpm	{:.2f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+ks_k_avg40	0.28	eval/results/keystroke_proxy.json	method.k_seconds.average_non_secretary_typist_40wpm	{:.2f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+ks_q8_per_text	41.3	eval/results/keystroke_proxy.json	fresh166.q8_0.keystrokes_saved_per_text	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+ks_q8_secs	5.0	eval/results/keystroke_proxy.json	fresh166.q8_0.seconds_saved_per_text.good_typist_90wpm	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+ks_q8_min	4.7	eval/results/keystroke_proxy.json	fresh166.q8_0.minutes_per_month_at_volume.good_typist_90wpm	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+ks_q8_min_lo	2.8	eval/results/keystroke_proxy.json	fresh166.q8_0.minutes_per_month_at_volume_ci95.good_typist_90wpm.0	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+ks_q8_min_hi	7.6	eval/results/keystroke_proxy.json	fresh166.q8_0.minutes_per_month_at_volume_ci95.good_typist_90wpm.1	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+ks_q8_min_avg40	11.1	eval/results/keystroke_proxy.json	fresh166.q8_0.minutes_per_month_at_volume.average_non_secretary_typist_40wpm	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+ks_70b_min	5.7	eval/results/keystroke_proxy.json	fresh166.70b.minutes_per_month_at_volume.good_typist_90wpm	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+ks_live_q8_min	2.4	eval/results/keystroke_proxy.json	live.q8_0.pooled.minutes_per_month_at_volume.good_typist_90wpm	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+ks_live_70b_min	3.5	eval/results/keystroke_proxy.json	live.70b.pooled.minutes_per_month_at_volume.good_typist_90wpm	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes
+ks_volume	57.4	eval/results/keystroke_proxy.json	method.fr_it_items_per_month	{:.1f}	PYTHONPATH=src python3 -m gleichlaut.replay --write	README/report/notes

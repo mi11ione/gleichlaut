@@ -32,6 +32,9 @@ reviewer's own language. On 166 held-out amendments, with every check frozen bef
 
 - **Apertus 8B, on an ordinary CPU, fully offline:** **33.1% fewer edits** to reach BAG's published text, almost three
   times as many drafts word for word identical to it as the no-model start, and **0 meaning errors** in its ready drafts.
+  At typing speed alone that is at least **4.7 minutes a month** at today's volume (41.3 fewer keystrokes per text at
+  0.12 s each: [keystroke-level model](https://doi.org/10.1145/358886.358895), Card, Moran & Newell 1980); reading and
+  checking time come on top.
 - **Apertus 70B, optional:** **42.4% fewer edits**, at **CHF 0.0024 per draft**.
 - **On the live feed too:** on BAG's August and September 2026 lists, the shipped 8B's drafts needed **28.4% fewer
   edits** [14.9, 38.6] and the 70B's **51.8%** [29.7, 68.7], ready and flagged drafts alike: the same picture as the

@@ -1,0 +1,482 @@
+{
+ "fresh166": {
+  "70b": {
+   "items_draft_fewer": 125,
+   "items_draft_more": 20,
+   "keystrokes_from_draft": 8024,
+   "keystrokes_from_rules": 16228,
+   "keystrokes_saved": 8204,
+   "keystrokes_saved_pct": 50.6,
+   "keystrokes_saved_per_text": 49.4,
+   "keystrokes_saved_per_text_ci95": [
+    28.6,
+    78.2
+   ],
+   "minutes_per_month_at_volume": {
+    "average_non_secretary_typist_40wpm": 13.2,
+    "average_skilled_typist_55wpm": 9.5,
+    "good_typist_90wpm": 5.7
+   },
+   "minutes_per_month_at_volume_ci95": {
+    "average_non_secretary_typist_40wpm": [
+     7.7,
+     21.0
+    ],
+    "average_skilled_typist_55wpm": [
+     5.5,
+     15.0
+    ],
+    "good_typist_90wpm": [
+     3.3,
+     9.0
+    ]
+   },
+   "n": 166,
+   "per_char_deletion": {
+    "keystrokes_from_draft": 14089,
+    "keystrokes_from_rules": 29157,
+    "keystrokes_saved_per_text": 90.8
+   },
+   "seconds_saved_per_text": {
+    "average_non_secretary_typist_40wpm": 13.84,
+    "average_skilled_typist_55wpm": 9.88,
+    "good_typist_90wpm": 5.93
+   },
+   "seconds_saved_per_text_ci95": {
+    "average_non_secretary_typist_40wpm": [
+     8.01,
+     21.9
+    ],
+    "average_skilled_typist_55wpm": [
+     5.72,
+     15.64
+    ],
+    "good_typist_90wpm": [
+     3.43,
+     9.39
+    ]
+   }
+  },
+  "q8_0": {
+   "items_draft_fewer": 126,
+   "items_draft_more": 17,
+   "keystrokes_from_draft": 9373,
+   "keystrokes_from_rules": 16228,
+   "keystrokes_saved": 6855,
+   "keystrokes_saved_pct": 42.2,
+   "keystrokes_saved_per_text": 41.3,
+   "keystrokes_saved_per_text_ci95": [
+    24.0,
+    66.1
+   ],
+   "minutes_per_month_at_volume": {
+    "average_non_secretary_typist_40wpm": 11.1,
+    "average_skilled_typist_55wpm": 7.9,
+    "good_typist_90wpm": 4.7
+   },
+   "minutes_per_month_at_volume_ci95": {
+    "average_non_secretary_typist_40wpm": [
+     6.4,
+     17.7
+    ],
+    "average_skilled_typist_55wpm": [
+     4.6,
+     12.7
+    ],
+    "good_typist_90wpm": [
+     2.8,
+     7.6
+    ]
+   },
+   "n": 166,
+   "per_char_deletion": {
+    "keystrokes_from_draft": 16268,
+    "keystrokes_from_rules": 29157,
+    "keystrokes_saved_per_text": 77.6
+   },
+   "seconds_saved_per_text": {
+    "average_non_secretary_typist_40wpm": 11.56,
+    "average_skilled_typist_55wpm": 8.26,
+    "good_typist_90wpm": 4.96
+   },
+   "seconds_saved_per_text_ci95": {
+    "average_non_secretary_typist_40wpm": [
+     6.72,
+     18.52
+    ],
+    "average_skilled_typist_55wpm": [
+     4.8,
+     13.23
+    ],
+    "good_typist_90wpm": [
+     2.88,
+     7.94
+    ]
+   }
+  }
+ },
+ "live": {
+  "70b": {
+   "20260801-20260901": {
+    "items_draft_fewer": 18,
+    "items_draft_more": 3,
+    "keystrokes_from_draft": 927,
+    "keystrokes_from_rules": 1938,
+    "keystrokes_saved": 1011,
+    "keystrokes_saved_pct": 52.2,
+    "keystrokes_saved_per_text": 46.0,
+    "keystrokes_saved_per_text_ci95": [
+     5.7,
+     108.8
+    ],
+    "minutes_per_month_at_volume": {
+     "average_non_secretary_typist_40wpm": 12.3,
+     "average_skilled_typist_55wpm": 8.8,
+     "good_typist_90wpm": 5.3
+    },
+    "minutes_per_month_at_volume_ci95": {
+     "average_non_secretary_typist_40wpm": [
+      1.5,
+      29.1
+     ],
+     "average_skilled_typist_55wpm": [
+      1.1,
+      20.8
+     ],
+     "good_typist_90wpm": [
+      0.7,
+      12.5
+     ]
+    },
+    "minutes_saved_on_compared_items": 2.0,
+    "n": 22,
+    "per_char_deletion": {
+     "keystrokes_from_draft": 1714,
+     "keystrokes_from_rules": 3496,
+     "keystrokes_saved_per_text": 81.0
+    },
+    "seconds_saved_per_text": {
+     "average_non_secretary_typist_40wpm": 12.87,
+     "average_skilled_typist_55wpm": 9.19,
+     "good_typist_90wpm": 5.51
+    },
+    "seconds_saved_per_text_ci95": {
+     "average_non_secretary_typist_40wpm": [
+      1.59,
+      30.47
+     ],
+     "average_skilled_typist_55wpm": [
+      1.14,
+      21.76
+     ],
+     "good_typist_90wpm": [
+      0.68,
+      13.06
+     ]
+    }
+   },
+   "20260901-20261001": {
+    "items_draft_fewer": 31,
+    "items_draft_more": 4,
+    "keystrokes_from_draft": 909,
+    "keystrokes_from_rules": 1797,
+    "keystrokes_saved": 888,
+    "keystrokes_saved_pct": 49.4,
+    "keystrokes_saved_per_text": 21.7,
+    "keystrokes_saved_per_text_ci95": [
+     9.9,
+     36.8
+    ],
+    "minutes_per_month_at_volume": {
+     "average_non_secretary_typist_40wpm": 5.8,
+     "average_skilled_typist_55wpm": 4.1,
+     "good_typist_90wpm": 2.5
+    },
+    "minutes_per_month_at_volume_ci95": {
+     "average_non_secretary_typist_40wpm": [
+      2.7,
+      9.8
+     ],
+     "average_skilled_typist_55wpm": [
+      1.9,
+      7.0
+     ],
+     "good_typist_90wpm": [
+      1.1,
+      4.2
+     ]
+    },
+    "minutes_saved_on_compared_items": 1.8,
+    "n": 41,
+    "per_char_deletion": {
+     "keystrokes_from_draft": 1282,
+     "keystrokes_from_rules": 4348,
+     "keystrokes_saved_per_text": 74.8
+    },
+    "seconds_saved_per_text": {
+     "average_non_secretary_typist_40wpm": 6.06,
+     "average_skilled_typist_55wpm": 4.33,
+     "good_typist_90wpm": 2.6
+    },
+    "seconds_saved_per_text_ci95": {
+     "average_non_secretary_typist_40wpm": [
+      2.78,
+      10.29
+     ],
+     "average_skilled_typist_55wpm": [
+      1.99,
+      7.35
+     ],
+     "good_typist_90wpm": [
+      1.19,
+      4.41
+     ]
+    }
+   },
+   "pooled": {
+    "items_draft_fewer": 49,
+    "items_draft_more": 7,
+    "keystrokes_from_draft": 1836,
+    "keystrokes_from_rules": 3735,
+    "keystrokes_saved": 1899,
+    "keystrokes_saved_pct": 50.8,
+    "keystrokes_saved_per_text": 30.1,
+    "keystrokes_saved_per_text_ci95": [
+     12.3,
+     55.5
+    ],
+    "minutes_per_month_at_volume": {
+     "average_non_secretary_typist_40wpm": 8.1,
+     "average_skilled_typist_55wpm": 5.8,
+     "good_typist_90wpm": 3.5
+    },
+    "minutes_per_month_at_volume_ci95": {
+     "average_non_secretary_typist_40wpm": [
+      3.3,
+      14.9
+     ],
+     "average_skilled_typist_55wpm": [
+      2.3,
+      10.6
+     ],
+     "good_typist_90wpm": [
+      1.4,
+      6.4
+     ]
+    },
+    "n": 63,
+    "per_char_deletion": {
+     "keystrokes_from_draft": 2996,
+     "keystrokes_from_rules": 7844,
+     "keystrokes_saved_per_text": 77.0
+    },
+    "seconds_saved_per_text": {
+     "average_non_secretary_typist_40wpm": 8.44,
+     "average_skilled_typist_55wpm": 6.03,
+     "good_typist_90wpm": 3.62
+    },
+    "seconds_saved_per_text_ci95": {
+     "average_non_secretary_typist_40wpm": [
+      3.43,
+      15.55
+     ],
+     "average_skilled_typist_55wpm": [
+      2.45,
+      11.11
+     ],
+     "good_typist_90wpm": [
+      1.47,
+      6.66
+     ]
+    }
+   }
+  },
+  "q8_0": {
+   "20260801-20260901": {
+    "items_draft_fewer": 22,
+    "items_draft_more": 0,
+    "keystrokes_from_draft": 1251,
+    "keystrokes_from_rules": 1938,
+    "keystrokes_saved": 687,
+    "keystrokes_saved_pct": 35.4,
+    "keystrokes_saved_per_text": 31.2,
+    "keystrokes_saved_per_text_ci95": [
+     18.3,
+     48.4
+    ],
+    "minutes_per_month_at_volume": {
+     "average_non_secretary_typist_40wpm": 8.4,
+     "average_skilled_typist_55wpm": 6.0,
+     "good_typist_90wpm": 3.6
+    },
+    "minutes_per_month_at_volume_ci95": {
+     "average_non_secretary_typist_40wpm": [
+      4.9,
+      13.0
+     ],
+     "average_skilled_typist_55wpm": [
+      3.5,
+      9.3
+     ],
+     "good_typist_90wpm": [
+      2.1,
+      5.6
+     ]
+    },
+    "minutes_saved_on_compared_items": 1.4,
+    "n": 22,
+    "per_char_deletion": {
+     "keystrokes_from_draft": 2209,
+     "keystrokes_from_rules": 3496,
+     "keystrokes_saved_per_text": 58.5
+    },
+    "seconds_saved_per_text": {
+     "average_non_secretary_typist_40wpm": 8.74,
+     "average_skilled_typist_55wpm": 6.25,
+     "good_typist_90wpm": 3.75
+    },
+    "seconds_saved_per_text_ci95": {
+     "average_non_secretary_typist_40wpm": [
+      5.12,
+      13.54
+     ],
+     "average_skilled_typist_55wpm": [
+      3.65,
+      9.67
+     ],
+     "good_typist_90wpm": [
+      2.19,
+      5.8
+     ]
+    }
+   },
+   "20260901-20261001": {
+    "items_draft_fewer": 28,
+    "items_draft_more": 2,
+    "keystrokes_from_draft": 1143,
+    "keystrokes_from_rules": 1797,
+    "keystrokes_saved": 654,
+    "keystrokes_saved_pct": 36.4,
+    "keystrokes_saved_per_text": 16.0,
+    "keystrokes_saved_per_text_ci95": [
+     6.6,
+     31.2
+    ],
+    "minutes_per_month_at_volume": {
+     "average_non_secretary_typist_40wpm": 4.3,
+     "average_skilled_typist_55wpm": 3.1,
+     "good_typist_90wpm": 1.8
+    },
+    "minutes_per_month_at_volume_ci95": {
+     "average_non_secretary_typist_40wpm": [
+      1.8,
+      8.4
+     ],
+     "average_skilled_typist_55wpm": [
+      1.3,
+      6.0
+     ],
+     "good_typist_90wpm": [
+      0.8,
+      3.6
+     ]
+    },
+    "minutes_saved_on_compared_items": 1.3,
+    "n": 41,
+    "per_char_deletion": {
+     "keystrokes_from_draft": 2618,
+     "keystrokes_from_rules": 4348,
+     "keystrokes_saved_per_text": 42.2
+    },
+    "seconds_saved_per_text": {
+     "average_non_secretary_typist_40wpm": 4.47,
+     "average_skilled_typist_55wpm": 3.19,
+     "good_typist_90wpm": 1.91
+    },
+    "seconds_saved_per_text_ci95": {
+     "average_non_secretary_typist_40wpm": [
+      1.85,
+      8.73
+     ],
+     "average_skilled_typist_55wpm": [
+      1.32,
+      6.24
+     ],
+     "good_typist_90wpm": [
+      0.79,
+      3.74
+     ]
+    }
+   },
+   "pooled": {
+    "items_draft_fewer": 50,
+    "items_draft_more": 2,
+    "keystrokes_from_draft": 2394,
+    "keystrokes_from_rules": 3735,
+    "keystrokes_saved": 1341,
+    "keystrokes_saved_pct": 35.9,
+    "keystrokes_saved_per_text": 21.3,
+    "keystrokes_saved_per_text_ci95": [
+     12.1,
+     34.0
+    ],
+    "minutes_per_month_at_volume": {
+     "average_non_secretary_typist_40wpm": 5.7,
+     "average_skilled_typist_55wpm": 4.1,
+     "good_typist_90wpm": 2.4
+    },
+    "minutes_per_month_at_volume_ci95": {
+     "average_non_secretary_typist_40wpm": [
+      3.2,
+      9.1
+     ],
+     "average_skilled_typist_55wpm": [
+      2.3,
+      6.5
+     ],
+     "good_typist_90wpm": [
+      1.4,
+      3.9
+     ]
+    },
+    "n": 63,
+    "per_char_deletion": {
+     "keystrokes_from_draft": 4827,
+     "keystrokes_from_rules": 7844,
+     "keystrokes_saved_per_text": 47.9
+    },
+    "seconds_saved_per_text": {
+     "average_non_secretary_typist_40wpm": 5.96,
+     "average_skilled_typist_55wpm": 4.26,
+     "good_typist_90wpm": 2.55
+    },
+    "seconds_saved_per_text_ci95": {
+     "average_non_secretary_typist_40wpm": [
+      3.4,
+      9.52
+     ],
+     "average_skilled_typist_55wpm": [
+      2.43,
+      6.8
+     ],
+     "good_typist_90wpm": [
+      1.45,
+      4.08
+     ]
+    }
+   }
+  }
+ },
+ "method": {
+  "covers": "typing only: a lower bound on time saved; reading, checking, deciding and cursor movement are not counted",
+  "fr_it_items_per_month": 57.4,
+  "headline_k": "good_typist_90wpm",
+  "k_seconds": {
+   "average_non_secretary_typist_40wpm": 0.28,
+   "average_skilled_typist_55wpm": 0.2,
+   "good_typist_90wpm": 0.12
+  },
+  "source": "Card, S. K., Moran, T. P., Newell, A. (1980). The keystroke-level model for user performance time with interactive systems. Communications of the ACM 23(7), 396-410. doi:10.1145/358886.358895 (operator K)",
+  "unit": "keystrokes to reach the text BAG published: inserted characters + one per deleted run (difflib character alignment of the normalised texts); variant per_char_deletion counts every deleted character"
+ }
+}

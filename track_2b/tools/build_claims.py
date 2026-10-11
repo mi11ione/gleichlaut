@@ -429,6 +429,22 @@ for cid, path, fmt in (("stakes_nemluvio_chf", "headline.nemluvio_chf_per_patien
                        ("stakes_dupixent_asthma", "headline.dupixent_asthma_chf_per_patient_year", "{:,.0f}")):
     C.append((cid, ST, path, fmt, "python3 tools/stakes.py"))
 
+# Typing time saved, lower bound: keystroke-level model (Card, Moran & Newell 1980), score.keystroke_proxy
+KS = "eval/results/keystroke_proxy.json"
+for cid, path, fmt in (("ks_k_good", "method.k_seconds.good_typist_90wpm", "{:.2f}"),
+                       ("ks_k_avg40", "method.k_seconds.average_non_secretary_typist_40wpm", "{:.2f}"),
+                       ("ks_q8_per_text", "fresh166.q8_0.keystrokes_saved_per_text", "{:.1f}"),
+                       ("ks_q8_secs", "fresh166.q8_0.seconds_saved_per_text.good_typist_90wpm", "{:.1f}"),
+                       ("ks_q8_min", "fresh166.q8_0.minutes_per_month_at_volume.good_typist_90wpm", "{:.1f}"),
+                       ("ks_q8_min_lo", "fresh166.q8_0.minutes_per_month_at_volume_ci95.good_typist_90wpm.0", "{:.1f}"),
+                       ("ks_q8_min_hi", "fresh166.q8_0.minutes_per_month_at_volume_ci95.good_typist_90wpm.1", "{:.1f}"),
+                       ("ks_q8_min_avg40", "fresh166.q8_0.minutes_per_month_at_volume.average_non_secretary_typist_40wpm", "{:.1f}"),
+                       ("ks_70b_min", "fresh166.70b.minutes_per_month_at_volume.good_typist_90wpm", "{:.1f}"),
+                       ("ks_live_q8_min", "live.q8_0.pooled.minutes_per_month_at_volume.good_typist_90wpm", "{:.1f}"),
+                       ("ks_live_70b_min", "live.70b.pooled.minutes_per_month_at_volume.good_typist_90wpm", "{:.1f}"),
+                       ("ks_volume", "method.fr_it_items_per_month", "{:.1f}")):
+    C.append((cid, KS, path, fmt, RE))
+
 if __name__ == "__main__":
     rows = ["id\tvalue\tsource\tpath\tfmt\tcommand\twhere"]
     for cid, src, path, fmt, cmd in C:

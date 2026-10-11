@@ -395,6 +395,99 @@ def live_edits(months=("20260801-20260901", "20260901-20261001"), lanes=("q8_0",
     return out
 
 
+# Keystroke-level model (Card, Moran & Newell 1980, Communications of the ACM 23(7):396-410, doi:10.1145/358886.358895),
+# operator K (seconds per keystroke, from one-minute typing tests): 0.12 good typist (90 wpm), 0.20 average skilled
+# typist (55 wpm), 0.28 average non-secretary typist (40 wpm). The headline uses 0.12: the faster the typist, the less time.
+KLM_K = {"good_typist_90wpm": 0.12, "average_skilled_typist_55wpm": 0.20, "average_non_secretary_typist_40wpm": 0.28}
+
+
+def keystrokes(src, dst):
+    """Keystrokes to turn src into dst on the character level (difflib alignment of the two normalised texts, autojunk
+    off): every inserted character is one keystroke; a deleted run counts once per run (as if the run were selected
+    for free and deleted with one key) -> conservative. Also returns the variant with one keystroke per deleted char."""
+    import difflib
+    ins = dch = dsp = 0
+    for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, src, dst, autojunk=False).get_opcodes():
+        if op in ("delete", "replace"): dch += i2 - i1; dsp += 1
+        if op in ("insert", "replace"): ins += j2 - j1
+    return ins + dsp, ins + dch
+
+
+def keystroke_proxy(months=("20260801-20260901", "20260901-20261001")):
+    """Translator time as a lower bound (no human study): the keystrokes saved by starting from the draft instead of the
+    rules-only start (`keystrokes`, to reach the text BAG published), converted to seconds with the KLM K operator.
+    Typing time only: reading, checking and deciding are not covered, so the true saving is larger whenever the draft
+    is used. Net over every item (ready and flagged drafts alike; items where the draft needs more keystrokes count
+    negative), the fresh 166 (8B Q8_0 default and 70B) and the two live months (lanes q8_0 and 70b), scaled to today's
+    volume (economics(): FR/IT items per month); per-text 95% interval by the cluster bootstrap over German changes
+    (4,000 resamples, seed 7) as in post_edit."""
+    import random
+    norm = core.lock.norm; vol = economics()["fr_it_items_per_month"]
+
+    def block(R):
+        n = len(R); kr, kd = sum(r["rules"] for r in R), sum(r["draft"] for r in R)
+        cr, cd = sum(r["rules_c"] for r in R), sum(r["draft_c"] for r in R)
+        per = (kr - kd) / n
+        by = {}
+        for r in R: s = by.setdefault(r["pair"], [0, 0]); s[0] += r["rules"] - r["draft"]; s[1] += 1
+        cl = [by[k] for k in sorted(by)]; rng = random.Random(7); bs = []
+        for _ in range(4000):
+            smp = [rng.choice(cl) for _ in cl]
+            bs.append(sum(s[0] for s in smp) / sum(s[1] for s in smp))
+        bs.sort(); ci = [bs[int(0.025 * len(bs))], bs[int(0.975 * len(bs))]]
+        e = dict(n=n, keystrokes_from_rules=kr, keystrokes_from_draft=kd, keystrokes_saved=kr - kd,
+                 keystrokes_saved_pct=round(100 * (kr - kd) / kr, 1) if kr else 0.0,
+                 keystrokes_saved_per_text=round(per, 1), keystrokes_saved_per_text_ci95=[round(v, 1) for v in ci],
+                 items_draft_fewer=sum(r["draft"] < r["rules"] for r in R), items_draft_more=sum(r["draft"] > r["rules"] for r in R),
+                 per_char_deletion=dict(keystrokes_from_rules=cr, keystrokes_from_draft=cd, keystrokes_saved_per_text=round((cr - cd) / n, 1)))
+        e["seconds_saved_per_text"] = {k: round(per * s, 2) for k, s in KLM_K.items()}
+        e["seconds_saved_per_text_ci95"] = {k: [round(v * s, 2) for v in ci] for k, s in KLM_K.items()}
+        e["minutes_per_month_at_volume"] = {k: round(per * s * vol / 60, 1) for k, s in KLM_K.items()}
+        e["minutes_per_month_at_volume_ci95"] = {k: [round(v * s * vol / 60, 1) for v in ci] for k, s in KLM_K.items()}
+        return e
+
+    def row(pair, rules, draft, gold, cache={}):
+        if (rules, gold) not in cache: cache[(rules, gold)] = keystrokes(rules, gold)
+        (a, ac), (b, bc) = cache[(rules, gold)], keystrokes(draft, gold)
+        return dict(pair=pair, rules=a, draft=b, rules_c=ac, draft_c=bc)
+
+    out = dict(method=dict(
+        unit="keystrokes to reach the text BAG published: inserted characters + one per deleted run (difflib character "
+             "alignment of the normalised texts); variant per_char_deletion counts every deleted character",
+        k_seconds=KLM_K, headline_k="good_typist_90wpm",
+        source="Card, S. K., Moran, T. P., Newell, A. (1980). The keystroke-level model for user performance time with "
+               "interactive systems. Communications of the ACM 23(7), 396-410. doi:10.1145/358886.358895 (operator K)",
+        covers="typing only: a lower bound on time saved; reading, checking, deciding and cursor movement are not counted",
+        fr_it_items_per_month=vol), fresh166={}, live={})
+    I = {x["key"]: x for x in load_items("items/items_fresh.json")}
+    for lane, run in (("q8_0", RUNS["q8_0"]["final"]), ("70b", RUNS["fresh166"]["final"])):
+        F = load_jsonl(run)
+        R = [row(x["pair"], norm(core.gl2.rules(x["de_old"], x["de_new"], x["tgt_old"], x["lang"])[0]), norm(F[k]["out"]),
+                 norm(x["tgt_new"])) for k, x in I.items()]
+        out["fresh166"][lane] = block(R)
+    for lane in ("q8_0", "70b"):
+        rows = []
+        for m in months:
+            base = os.path.join(DATA, "shadow", m); fp = os.path.join(base, lane, "records.jsonl")
+            if not os.path.exists(fp): continue
+            I = {x["key"]: x for x in json.load(open(os.path.join(base, "items.json"), encoding="utf-8"))}
+            for l in open(fp, encoding="utf-8"):
+                r = json.loads(l); x = I.get(r["key"])
+                if not x or not x.get("tgt_new") or "out" not in r: continue
+                rows.append(dict(month=m, **row(m + ":" + r["key"].rsplit("-", 1)[0],
+                                                norm(core.gl2.rules(x["de_old"], x["de_new"], x["tgt_old"], x["lang"])[0]),
+                                                norm(r["out"]), norm(x["tgt_new"]))))
+        o = {}
+        for g in list(months) + ["pooled"]:
+            R = [r for r in rows if g == "pooled" or r["month"] == g]
+            if not R: continue
+            o[g] = block(R)
+            if g != "pooled":       # the compared items of that month as they came, at the headline K
+                o[g]["minutes_saved_on_compared_items"] = round(o[g]["keystrokes_saved"] * KLM_K["good_typist_90wpm"] / 60, 1)
+        out["live"][lane] = o
+    return out
+
+
 def shadow_month(run="20260901-20261001", r0=False):
     """A shadow month on the public feed (items mined by the shadow workflow from BAG's feeds of the two dates), drafted by
     every model whose run folder exists (q4_k_m, q8_0: shadow workflow, CPU, --network none; 70b: development gateway),
