@@ -6,8 +6,8 @@ keeps them in step with Apertus.**
 In today's official list, Nemluvio is reimbursed "every 8 weeks" in German and French and "ogni 4 settimane" in
 Italian: at the published price, the two readings differ by **CHF 13,577 a year per patient**. Diaphin's surcharge is
 6% in German and French and 12% in Italian. Gleichlaut's operator and negation module adds Amvuttra, whose French stop
-rule says an NIS increase "≤ 10" points where German and Italian say "> 10": one patient's stop decision is worth
-**CHF 338,743 a year** at list price ([formulas](track_2b/eval/results/stakes.json)). Same drug, same law, two answers. Gleichlaut flags each one.
+rule says an NIS increase "≤ 10" points where German and Italian say "> 10": the stop rule governs **CHF 338,743 a year** per patient
+at list price ([formulas](track_2b/eval/results/stakes.json)). Same drug, same law, two answers. Gleichlaut flags each one.
 
 **[Open the review register](https://gleichlaut.mi11ion.io/)** · **[Watch the 2-minute demo](https://gleichlaut.mi11ion.io/demo.mp4)** ·
 [Project README](track_2b/README.md) · [Technical report](track_2b/technical_report.md) · Hack Apertus, Track 2B, team 444
@@ -21,7 +21,7 @@ Italian note flags that the old Italian already said "every 4 weeks".](track_2b/
 and Italian and turns them into **18 issues** to decide, each with the three texts side by side and the conflicting
 values marked. Two blind Claude annotators confirm **12 findings that change a reimbursement condition**: Nemluvio's
 interval, Diaphin's surcharge, the 16 kg limit missing in Cresemba's French, a French-only 62.5 kg rule in three
-etanercept products, Dupixent's weight tiers. Its operator and negation module (opt-in) found divergences not on any list we found: Amvuttra's
+etanercept products, Dupixent's weight tiers. Its operator and negation module (opt-in) found divergences that appear on no list we could find: Amvuttra's
 reversed stop rule, and an Italian typo in Beyonttra and Vyndaqel ("on deve" for "non deve") that turns a ban on
 combining into an obligation. On 1,000 divergences planted into clean texts it finds **93.0%** of changed numbers.
 

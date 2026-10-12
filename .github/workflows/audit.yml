@@ -1,0 +1,22 @@
+# The monthly congruence audit on BAG's live public feed (no model, a few minutes on one runner): the same command as
+# `make local-audit`, run on the 2nd of every month at 05:00 UTC (BAG publishes on the 1st; shadow.yml drafts at 06:00)
+# and on demand. The findings are uploaded as the artifact audit-<date>.
+#   gh workflow run audit.yml -R mi11ione/gleichlaut
+name: audit
+on:
+  schedule: [{ cron: "0 5 2 * *" }]
+  workflow_dispatch:
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    defaults: { run: { working-directory: track_2b } }
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: { python-version: "3.12" }
+      - name: install (hash-pinned)
+        run: pip install --require-hashes -r requirements.txt
+      - name: audit the latest published feed (no model)
+        run: PYTHONPATH=src python3 -m gleichlaut audit --date latest --fetch --out out/audit
+      - uses: actions/upload-artifact@v7
+        with: { name: audit-${{ github.run_id }}, path: track_2b/out/audit, retention-days: 90 }

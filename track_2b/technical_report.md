@@ -37,11 +37,11 @@ of deterministic checks that marks the draft ready or flagged and explains why i
 compares the numbers of every limitation across the three languages and lists the conditions that disagree. The model
 never sees a number (it wrote 0 digits in 285 calls; 3 number words it wrote were all flagged) and never judges anything.
 
-**Results: the audit.** It reduces 1,688 limitations to **18 issues** to decide (27 findings). Two blind Claude
+**Results: the audit.** It reduces 1,688 limitations to **18 issues** to decide (27 findings plus 11 terminology notices). Two blind Claude
 annotators (a third on disagreements) confirm **12 findings that change a condition**, among them all five known
-divergences (the list its rules were built around, so not a recall measure), plus 5 minor ones such as typos next to numbers. On 1,000 divergences planted into clean limitations it
+divergences (the list its rules were built around, so not a recall measure); 5 more are minor, such as typos next to numbers. On 1,000 divergences planted into clean limitations it
 finds **93.0%** of changed numbers and 94.0% of fields in the wrong language (77.2% [74.5, 79.7] over five fault types).
-Its newest checks found three divergences not on any list we found: Amvuttra's French stop rule says an NIS increase "≤ 10"
+Its newest checks found three divergences that appear on no list we could find: Amvuttra's French stop rule says an NIS increase "≤ 10"
 points where German and Italian say "> 10", and the Italian of Beyonttra and Vyndaqel says "on deve" (for "non deve"),
 so a ban on combining reads as an obligation. The same checks over seven federal health acts (5,991 aligned
 provisions) confirm none of 26 candidates (R24); a 2025 erratum shows a code divergence in KLV Art. 4 (French corrected,
