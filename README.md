@@ -21,7 +21,7 @@ Italian note flags that the old Italian already said "every 4 weeks".](track_2b/
 and Italian and turns them into **18 issues** to decide, each with the three texts side by side and the conflicting
 values marked. Two blind Claude annotators confirm **12 findings that change a reimbursement condition**: Nemluvio's
 interval, Diaphin's surcharge, the 16 kg limit missing in Cresemba's French, a French-only 62.5 kg rule in three
-etanercept products, Dupixent's weight tiers. Its operator and negation module found what nobody had listed: Amvuttra's
+etanercept products, Dupixent's weight tiers. Its operator and negation module (opt-in) found divergences not on any list we found: Amvuttra's
 reversed stop rule, and an Italian typo in Beyonttra and Vyndaqel ("on deve" for "non deve") that turns a ban on
 combining into an obligation. On 1,000 divergences planted into clean texts it finds **93.0%** of changed numbers.
 
@@ -48,7 +48,7 @@ accordingly: judging equivalence, typing numeric conditions and filtering findin
 default and nothing leaves the building; the 70B buys more edits saved where an office wants it. Quantisation is
 measured too: Q8_0 saves 12.2 points more edits than Q4_K_M on the same items.
 
-## Built to be used
+## Fits BAG's process
 
 - **Cost against benefit:** one audit run takes about a minute of CPU and no model, and puts every binding condition
   that differs by language in front of a decision, each worth thousands of francs per patient-year; a draft costs
@@ -59,7 +59,7 @@ measured too: Q8_0 saves 12.2 points more edits than Q4_K_M on the same items.
   shape (ClinicalUseDefinition), so they land in BAG's data model, not a new one.
 - **Fits the existing process:** drafts map onto the French and Italian fields of BAG's ePL editor; translators get XLIFF
   for STAR Transit and a TBX termbase mined from BAG's own wording; decisions export as CSV for the federal records
-  system (GEVER); the audit answers the "translations congruent?" question of BAG's triennial review for the whole list.
+  system (GEVER); the audit gives BAG its own check of the "translations congruent?" question in its triennial review, for the whole list.
 - **Ready to hand over:** a German phase-1 pack with a one-page decision memo and one case sheet per issue
   ([docs/pilot/](track_2b/docs/pilot/)); `make pilot-pack` builds it, with the offline register, reproducibly.
 - **Pays off every month:** new divergences keep arriving. The June, August and September 2026 releases each added
