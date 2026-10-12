@@ -4,7 +4,8 @@
 #   gh workflow run audit.yml -R mi11ione/gleichlaut
 name: audit
 on:
-  schedule: [{ cron: "0 5 2 * *" }]
+  schedule:
+    - cron: "0 5 2 * *"
   workflow_dispatch:
 jobs:
   audit:
@@ -19,4 +20,7 @@ jobs:
       - name: audit the latest published feed (no model)
         run: PYTHONPATH=src python3 -m gleichlaut audit --date latest --fetch --out out/audit
       - uses: actions/upload-artifact@v7
-        with: { name: audit-${{ github.run_id }}, path: track_2b/out/audit, retention-days: 90 }
+        with:
+          name: audit-${{ github.run_id }}
+          path: track_2b/out/audit
+          retention-days: 90
