@@ -37,7 +37,7 @@ reviewer's own language. On 166 held-out amendments, with every check frozen bef
   held-out test, on the texts BAG actually published that month.
 
 **Every number re-runs.** `cd track_2b && make run` (Docker, CPU, a few minutes, no network) re-executes every
-recorded model call and re-derives every figure; [claims.tsv](track_2b/claims.tsv) maps each number to its source.
+recorded model call and re-derives the results; [claims.tsv](track_2b/claims.tsv) maps each number to its source.
 
 ## Why Apertus, and why this size
 
