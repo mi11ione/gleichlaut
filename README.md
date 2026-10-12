@@ -62,8 +62,8 @@ measured too: Q8_0 saves 12.2 points more edits than Q4_K_M on the same items.
   system (GEVER); the audit gives BAG its own check of the "translations congruent?" question in its triennial review, for the whole list.
 - **Ready to hand over:** a German phase-1 pack with a one-page decision memo and one case sheet per issue
   ([docs/pilot/](track_2b/docs/pilot/)); `make pilot-pack` builds it, with the offline register, reproducibly.
-- **Pays off every month:** new divergences keep arriving. The June, August and September 2026 releases each added
-  new ones, and a monthly run puts them in front of a decision the day BAG publishes.
+- **Pays off every month:** new divergences keep arriving (since 1 August 2026 Keytruda's Italian field has held the
+  French text), and a monthly run puts them in front of a decision the day BAG publishes.
 - **Divergences decide real money:** the Federal Supreme Court ruled on a German-only wording in the very KLV rule BAG
   uses to price SL medicines and followed the French and Italian (BGE 144 V 14); a Thurgau court freed an insured
   person from a year's premiums over a German/French-Italian divergence in the KVG (TVR 2016 Nr. 35)
