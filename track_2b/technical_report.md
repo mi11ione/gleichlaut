@@ -3,7 +3,7 @@
 Keeping the French and Italian of Switzerland's drug-reimbursement conditions in step with the German, with Apertus.
 Numbers never reach the model; frozen deterministic checks decide what is ready.
 
-- **Track:** Track 2B: Gleichlaut
+- **Track:** Track 2B (Own project)
 - **Event:** Online
 - **Team:** 444
 - **Review register (live):** https://gleichlaut.mi11ion.io/ · **Demo video:** https://gleichlaut.mi11ion.io/demo.mp4

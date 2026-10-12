@@ -7,8 +7,7 @@ In today's official list, Nemluvio is reimbursed "every 8 weeks" in German and F
 Italian: at the published price, the two readings differ by **CHF 13,577 a year per patient**. Diaphin's surcharge is
 6% in German and French and 12% in Italian. Gleichlaut's operator and negation module adds Amvuttra, whose French stop
 rule says an NIS increase "≤ 10" points where German and Italian say "> 10": one patient's stop decision is worth
-**CHF 338,743 a year** at list price ([formulas](track_2b/eval/results/stakes.json)). Same drug, same law, three
-answers. Gleichlaut flags each one.
+**CHF 338,743 a year** at list price ([formulas](track_2b/eval/results/stakes.json)). Same drug, same law, two answers. Gleichlaut flags each one.
 
 **[Open the review register](https://gleichlaut.mi11ion.io/)** · **[Watch the 2-minute demo](https://gleichlaut.mi11ion.io/demo.mp4)** ·
 [Project README](track_2b/README.md) · [Technical report](track_2b/technical_report.md) · Hack Apertus, Track 2B, team 444
@@ -68,8 +67,8 @@ measured too: Q8_0 saves 12.2 points more edits than Q4_K_M on the same items.
 - **Divergences decide real money:** the Federal Supreme Court ruled on a German-only wording in the very KLV rule BAG
   uses to price SL medicines and followed the French and Italian (BGE 144 V 14); a Thurgau court freed an insured
   person from a year's premiums over a German/French-Italian divergence in the KVG (TVR 2016 Nr. 35)
-  ([cases](track_2b/docs/research/language-versions-in-court.md)). And BAG works on it: in 2026 it revised 17 French or
-  Italian limitations in substance while the German stayed unchanged.
+  ([cases](track_2b/docs/research/language-versions-in-court.md)). And BAG works on it: in 2026 it reworded 17 French or
+  Italian limitations while the German stayed unchanged.
 - **Beyond the SL:** the same audit runs on MiGeL and the Analysenliste, BAG's other trilingual lists, and the drafting
   lane on federal statutes.
 - **Running every month:** shadow mode drafts each new SL release on the live public feed and grades itself against
