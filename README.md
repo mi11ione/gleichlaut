@@ -1,7 +1,7 @@
 # Gleichlaut
 
 **Switzerland's drug-reimbursement conditions are law in three languages. Gleichlaut finds where they disagree, and
-keeps them in step with Apertus.**
+drafts the matching change with Apertus.**
 
 In today's official list, Nemluvio is reimbursed "every 8 weeks" in German and French and "ogni 4 settimane" in
 Italian: at the published price, the two readings differ by **CHF 13,577 a year per patient**. Diaphin's surcharge is
@@ -48,7 +48,7 @@ accordingly: judging equivalence, typing numeric conditions and filtering findin
 default and nothing leaves the building; the 70B buys more edits saved where an office wants it. Quantisation is
 measured too: Q8_0 saves 12.2 points more edits than Q4_K_M on the same items.
 
-## Fits BAG's process
+## Maps onto BAG's process
 
 - **Cost against benefit:** one audit run takes about a minute of CPU and no model, and puts every binding condition
   that differs by language in front of a decision, each worth thousands of francs per patient-year; a draft costs
